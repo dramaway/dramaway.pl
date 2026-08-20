@@ -8,7 +8,7 @@ Co już jest w CMS, luki konwersji, mapa vs live: **[migration/fundacja-status.m
 | | |
 |--|--|
 | **Ostatnia aktualizacja** | 2026-08-21 (~00:15) — treść fundacji + Art Generacje w Sanity; stop przed Figmą |
-| **Gałąź / HEAD** | `main` @ `0c153d5` + docs (status migracji) |
+| **Gałąź / HEAD** | `main` @ `38400ec` |
 | **Remote** | brak (tylko lokalny git) |
 | **Owner Sanity (na razie)** | Jan Mirecki — transfer ownership później OK |
 
