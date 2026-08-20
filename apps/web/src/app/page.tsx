@@ -10,12 +10,13 @@ export default function Home() {
         fundacja.dramaway.pl
       </h1>
       <p className="text-lg text-muted-foreground">
-        Scaffold: Next.js 15, Tailwind CSS v4, shadcn/ui. Design from Figma and
-        Sanity come next.
+        Scaffold: Next.js 15, Tailwind CSS v4, shadcn/ui. Preview reads{" "}
+        <code className="text-sm">person</code> and <code className="text-sm">page</code>{" "}
+        from Sanity (GROQ).
       </p>
       <div className="flex flex-wrap gap-3">
         <Link className={cn(buttonVariants())} href="/preview">
-          Preview extracted content
+          Preview Sanity content
         </Link>
         <a
           className={cn(buttonVariants({ variant: "outline" }))}

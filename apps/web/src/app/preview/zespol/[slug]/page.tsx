@@ -1,17 +1,27 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getFundacjaExtract } from "@/lib/fundacja-extract";
+import { PortableBody } from "@/components/portable-body";
+import { getPersonBySlug, getPersonSlugs } from "@/lib/sanity/fetch";
+import { urlFor } from "@/lib/sanity/image";
 
 type Props = { params: Promise<{ slug: string }> };
 
+export const revalidate = 60;
+
 export async function generateStaticParams() {
-  return getFundacjaExtract().people.map((p) => ({ slug: p.slug }));
+  const slugs = await getPersonSlugs();
+  return slugs.filter(Boolean).map((slug) => ({ slug }));
 }
 
 export default async function PersonPreviewPage({ params }: Props) {
   const { slug } = await params;
-  const person = getFundacjaExtract().people.find((p) => p.slug === slug);
+  const person = await getPersonBySlug(slug);
   if (!person) notFound();
+
+  const photoUrl = person.photo
+    ? urlFor(person.photo).width(400).height(500).fit("crop").url()
+    : null;
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-12">
@@ -19,20 +29,24 @@ export default async function PersonPreviewPage({ params }: Props) {
         <Link href="/preview/zespol" className="hover:underline">
           Zespół
         </Link>{" "}
-        / {person.title}
+        / {person.name}
       </p>
       <h1 className="mt-2 text-3xl font-semibold tracking-tight">
-        {person.title}
+        {person.name}
       </h1>
-      {person.photo ? (
-        <p className="mt-2 text-xs text-muted-foreground">
-          Legacy photo file: {person.photo}
-        </p>
+      {person.role ? (
+        <p className="mt-1 text-muted-foreground">{person.role}</p>
       ) : null}
-      <article
-        className="prose prose-neutral mt-8 max-w-none dark:prose-invert"
-        dangerouslySetInnerHTML={{ __html: person.bodyHtml }}
-      />
+      {photoUrl ? (
+        <Image
+          src={photoUrl}
+          alt={person.name}
+          width={400}
+          height={500}
+          className="mt-6 h-auto w-48 object-cover"
+        />
+      ) : null}
+      <PortableBody value={person.bio} />
     </main>
   );
 }

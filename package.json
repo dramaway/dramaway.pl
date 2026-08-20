@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "pnpm --filter web dev",
+    "dev:all": "pnpm --filter web --filter studio --parallel dev",
     "dev:web": "pnpm --filter web dev",
     "dev:studio": "pnpm --filter studio dev",
     "build": "pnpm --filter web build",
@@ -10,7 +11,8 @@
     "build:studio": "pnpm --filter studio build",
     "lint": "pnpm --filter web lint",
     "extract:fundacja": "python3 scripts/extract_fundacja.py",
-    "migrate:fundacja": "node --env-file=apps/studio/.env scripts/migrate-fundacja.mjs"
+    "migrate:fundacja": "node --env-file=apps/studio/.env scripts/migrate-fundacja.mjs",
+    "migrate:art-generacje": "node --env-file=apps/studio/.env scripts/migrate-art-generacje.mjs"
   },
   "engines": {
     "node": ">=22.12"

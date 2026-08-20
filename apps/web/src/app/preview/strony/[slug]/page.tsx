@@ -1,20 +1,20 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getFundacjaExtract } from "@/lib/fundacja-extract";
+import { PortableBody } from "@/components/portable-body";
+import { getPageBySlug, getPageSlugs } from "@/lib/sanity/fetch";
 
 type Props = { params: Promise<{ slug: string }> };
 
+export const revalidate = 60;
+
 export async function generateStaticParams() {
-  const data = getFundacjaExtract();
-  return [...data.pages, ...data.news].map((p) => ({ slug: p.slug }));
+  const slugs = await getPageSlugs();
+  return slugs.filter(Boolean).map((slug) => ({ slug }));
 }
 
 export default async function PagePreviewPage({ params }: Props) {
   const { slug } = await params;
-  const data = getFundacjaExtract();
-  const page =
-    data.pages.find((p) => p.slug === slug) ||
-    data.news.find((p) => p.slug === slug);
+  const page = await getPageBySlug(slug);
   if (!page) notFound();
 
   return (
@@ -29,12 +29,10 @@ export default async function PagePreviewPage({ params }: Props) {
         {page.title}
       </h1>
       <p className="mt-1 text-xs text-muted-foreground">
-        Drupal path: {page.path} · type: {page.drupalType}
+        slug: {page.slug}
+        {page.isNews ? " · aktualność" : ""}
       </p>
-      <article
-        className="prose prose-neutral mt-8 max-w-none dark:prose-invert"
-        dangerouslySetInnerHTML={{ __html: page.bodyHtml }}
-      />
+      <PortableBody value={page.body} />
     </main>
   );
 }

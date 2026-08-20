@@ -1,6 +1,8 @@
 import { readFileSync, existsSync } from "fs";
 import path from "path";
 
+/** Local Drupal extract (gitignored JSON). Preview routes now read Sanity; keep for migrate/debug. */
+
 export type ExtractedItem = {
   nid: number;
   type: "page" | "person" | "news";
