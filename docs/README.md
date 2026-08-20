@@ -2,6 +2,12 @@
 
 Mapa dokumentów projektu. Treść po polsku; nazwy plików ADR i ścieżek kodu — po angielsku.
 
+## Handoff (start sesji)
+
+| Plik | Opis |
+|------|------|
+| [HANDOFF.md](HANDOFF.md) | **Aktualny stan projektu i następne kroki** — czytaj na starcie nowego czatu; aktualizuj na bieżąco |
+
 ## Koncept
 
 | Plik | Opis |
@@ -11,8 +17,8 @@ Mapa dokumentów projektu. Treść po polsku; nazwy plików ADR i ścieżek kodu
 
 ## Decyzje (ADR)
 
-| Plik | Decyzja |
-|------|---------|
+| Plik | Opis |
+|------|------|
 | [decisions/ADR-001-stack.md](decisions/ADR-001-stack.md) | Next.js 15, Tailwind v4, shadcn, Sanity, Netlify |
 | [decisions/ADR-002-repo-and-language.md](decisions/ADR-002-repo-and-language.md) | Git lokalny, język EN/PL, dumpów nie ma w repo |
 | [decisions/ADR-003-content-model-and-mvp.md](decisions/ADR-003-content-model-and-mvp.md) | Zakres MVP i typy treści Sanity |
@@ -31,4 +37,4 @@ Mapa dokumentów projektu. Treść po polsku; nazwy plików ADR i ścieżek kodu
 ## Źródło konceptu
 
 Założenia IA i stacku pochodzą z kickoffu projektu (mapa serwisu + decyzje techniczne).  
-Paczka pod inną rolę współpracy (`dramaway-setup-ustalenia/`) **nie** jest kanonem w repo — wyciągnięty kanon żyje tu, w `docs/`.
+Paczka pod inną rolę współpracy (`private/dramaway-setup-ustalenia/`) **nie** jest kanonem w repo — wyciągnięty kanon żyje tu, w `docs/`.

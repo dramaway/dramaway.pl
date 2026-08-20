@@ -31,6 +31,7 @@ scripts/           # migration scripts (later)
 
 | Topic | Path |
 |-------|------|
+| **Session handoff (start here)** | `docs/HANDOFF.md` |
 | Docs hub | `docs/README.md` |
 | IA | `docs/concept/ia.md` |
 | Art Generacje | `docs/concept/art-generacje.md` |
@@ -55,12 +56,13 @@ scripts/           # migration scripts (later)
 
 ```bash
 pnpm install
-pnpm extract:fundacja   # needs private/dumps/drama_mfund_*.sql
-pnpm dev               # http://localhost:3000 — see /preview for extracted content
-pnpm dev:studio        # needs SANITY_STUDIO_PROJECT_ID in apps/studio/.env
+pnpm extract:fundacja    # optional local JSON from dump
+pnpm migrate:fundacja    # needs SANITY_API_WRITE_TOKEN in apps/studio/.env
+pnpm dev               # http://localhost:3000
+pnpm dev:studio        # http://localhost:3333
 ```
 
-Local materials (dumps, FTP mirror, PDFs) live only under `private/`.
+At session start: read `docs/HANDOFF.md` and keep it updated.
 
 ## Knowledge index
 

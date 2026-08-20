@@ -41,21 +41,20 @@ Hub: [docs/README.md](docs/README.md)
 
 ## Uruchomienie lokalne
 
-Wymaga Node 20+ i [pnpm](https://pnpm.io/).
+Wymaga Node **≥ 22.12** i [pnpm](https://pnpm.io/).
 
 ```bash
 pnpm install
-pnpm extract:fundacja   # opcjonalnie: JSON z dumpa → apps/web/src/data/extracted/
-pnpm dev               # Next.js → http://localhost:3000
-pnpm dev:studio        # Sanity Studio → http://localhost:3333 (po project id)
+pnpm extract:fundacja    # opcjonalnie: JSON z dumpa
+pnpm migrate:fundacja    # fundacja → Sanity (token w apps/studio/.env)
+pnpm dev               # http://localhost:3000
+pnpm dev:studio        # http://localhost:3333
 ```
 
-- Frontend: `apps/web` — m.in. surowy podgląd `/preview` (zespół, strony z dumpa)  
-- CMS: `apps/studio` — schematy stub  
-- Lokalne materiały (dumpy, FTP, PDF): tylko w `private/` (poza gitem)  
-- Studio: skopiuj `apps/studio/.env.example` → `.env` i uzupełnij `SANITY_STUDIO_PROJECT_ID`
-
-Import do Sanity (chmura) — osobny krok; `/preview` czyta lokalny JSON, nie wymaga konta Sanity.
+- Frontend: `apps/web` — `/preview` nadal z lokalnego JSON; podłączenie GROQ = następny krok  
+- CMS: `apps/studio` (Sanity **v6**) — treści fundacji już w dataset `production`  
+- Lokalne materiały: tylko `private/`  
+- **Stan sesji / co dalej:** [docs/HANDOFF.md](docs/HANDOFF.md)
 
 ## Status repozytorium
 

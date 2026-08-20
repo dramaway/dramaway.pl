@@ -26,6 +26,9 @@ knowledge:
       priority: high
 
   documentation:
+    - path: docs/HANDOFF.md
+      description: "Living session handoff — status and next steps"
+      priority: critical
     - path: docs/README.md
       description: "Documentation map"
       priority: high
