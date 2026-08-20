@@ -9,10 +9,17 @@
     "build:web": "pnpm --filter web build",
     "build:studio": "pnpm --filter studio build",
     "lint": "pnpm --filter web lint",
-    "extract:fundacja": "python3 scripts/extract_fundacja.py"
+    "extract:fundacja": "python3 scripts/extract_fundacja.py",
+    "migrate:fundacja": "node --env-file=apps/studio/.env scripts/migrate-fundacja.mjs"
   },
   "engines": {
     "node": ">=22.12"
   },
-  "packageManager": "pnpm@11.9.0"
+  "packageManager": "pnpm@11.9.0",
+  "dependencies": {
+    "@portabletext/block-tools": "^5.2.0",
+    "@sanity/client": "^7.26.2",
+    "@sanity/schema": "^6.10.1",
+    "jsdom": "^30.0.1"
+  }
 }
