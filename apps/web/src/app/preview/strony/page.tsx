@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { publicPathForPageSlug } from "@/lib/routes";
 import { getNewsPages, getPages } from "@/lib/sanity/fetch";
 
 export const metadata = { title: "Strony — preview" };
@@ -25,7 +26,7 @@ export default async function PagesPreviewPage() {
           {pages.map((page) => (
             <li key={page._id} className="py-3">
               <Link
-                href={`/preview/strony/${page.slug}`}
+                href={publicPathForPageSlug(page.slug)}
                 className="font-medium hover:underline"
               >
                 {page.title}
@@ -45,7 +46,7 @@ export default async function PagesPreviewPage() {
             {news.map((item) => (
               <li key={item._id} className="py-3">
                 <Link
-                  href={`/preview/strony/${item.slug}`}
+                  href={publicPathForPageSlug(item.slug)}
                   className="font-medium hover:underline"
                 >
                   {item.title}

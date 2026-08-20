@@ -90,3 +90,17 @@ export const projectBySlugQuery = `*[_type == "project" && slug.current == $slug
 }`;
 
 export const projectSlugsQuery = `*[_type == "project" && defined(slug.current)].slug.current`;
+
+export const pagesBySlugsQuery = `*[_type == "page" && slug.current in $slugs] {
+  _id,
+  title,
+  "slug": slug.current,
+  "isNews": false
+}`;
+
+export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
+  title,
+  tagline,
+  centrumUrl,
+  footerNote
+}`;

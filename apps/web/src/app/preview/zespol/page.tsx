@@ -25,7 +25,7 @@ export default async function TeamPreviewPage() {
           {people.map((person) => (
             <li key={person._id} className="py-4">
               <Link
-                href={`/preview/zespol/${person.slug}`}
+                href={`/zespol/${person.slug}`}
                 className="text-lg font-medium hover:underline"
               >
                 {person.name}

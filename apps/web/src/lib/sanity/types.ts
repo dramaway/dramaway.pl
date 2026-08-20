@@ -38,6 +38,13 @@ export type PageDetail = {
   body: PortableContent;
 };
 
+export type SiteSettings = {
+  title: string | null;
+  tagline: string | null;
+  centrumUrl: string | null;
+  footerNote: string | null;
+};
+
 export type ContentCounts = {
   people: number;
   pages: number;

@@ -29,6 +29,8 @@
 - **Szkolenia i spektakle** → odsyła do `centrum.dramaway.pl` (poza MVP migracji)
 - **Kontakt** `/kontakt`
 
+Publiczne trasy w Next (`apps/web/src/lib/routes.ts`) składają ten szkielet: prefiks z tej IA + `slug.current` z Sanity (ostatni segment aliasu Drupal). Listingi `/`, `/projekty`, `/zespol`, `/fundacja` nie mają dokumentu CMS — to widoki. Mapa 301 na premierę (stare `node/N`, osobne landingi edycji, aliasy newsów) jest osobnym zadaniem.
+
 ## Ekosystem domen (kontekst)
 
 | Domena | W MVP |

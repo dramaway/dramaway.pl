@@ -30,7 +30,7 @@ export default async function ProjectsPreviewPage() {
           {projects.map((project) => (
             <li key={project._id} className="py-4">
               <Link
-                href={`/preview/projekty/${project.slug}`}
+                href={`/projekty/${project.slug}`}
                 className="font-medium hover:underline"
               >
                 {project.title}

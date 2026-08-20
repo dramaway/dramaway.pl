@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "DramaWay — Fundacja",
-  description: "Nowa strona fundacja.dramaway.pl (scaffold)",
+  description: "Fundacja Drama Way",
 };
 
 export default function RootLayout({

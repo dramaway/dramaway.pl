@@ -70,11 +70,8 @@ export default async function PreviewIndexPage() {
         >
           Strony
         </Link>
-        <Link
-          className={cn(buttonVariants({ variant: "ghost" }))}
-          href="/"
-        >
-          ← Scaffold home
+        <Link className={cn(buttonVariants({ variant: "ghost" }))} href="/">
+          ← Strona publiczna
         </Link>
       </div>
     </main>

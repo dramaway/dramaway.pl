@@ -54,7 +54,8 @@ pnpm dev:studio        # http://localhost:3333 (tylko Studio)
 pnpm dev:all           # oba naraz
 ```
 
-- Frontend: `apps/web` — `/preview` czyta `person`, `page`, `project` z Sanity (GROQ)  
+- Frontend: `apps/web` — publiczne trasy z IA (`/projekty`, `/zespol`, `/fundacja`…); `/preview` to inwentarz CMS  
+
 - CMS: `apps/studio` (Sanity **v6**) — treści fundacji + Art Generacje (edycje) w dataset `production`  
 - **Co zmigrowane / czego nie:** [docs/migration/fundacja-status.md](docs/migration/fundacja-status.md)  
 - Lokalne materiały: tylko `private/`  

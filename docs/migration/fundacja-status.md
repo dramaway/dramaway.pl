@@ -18,19 +18,19 @@ Sanity dataset production (person, page + assety)
         ↓  pnpm migrate:art-generacje
 Sanity project + editions (Art Generacje, archiwum)
         ↓  GROQ
-Next /preview  (nie JSON z dysku)
+Next — trasy publiczne z IA (`/projekty/…`, `/zespol/…`, `/fundacja/…`)
 ```
 
 Live CMS: projekt Sanity **Dramaway**, id `tr2qdg9j`, dataset `production`.  
-Podgląd: `http://localhost:3000/preview` (`pnpm dev`). Studio: `:3333`.
+Publiczne: `http://localhost:3000` (`pnpm dev`). Inwentarz CMS: `/preview`. Studio: `:3333`.
 
 ## Co leży w Sanity
 
 | Typ | Ile | Skąd | Preview |
 |-----|-----|------|---------|
-| `person` | 7 | Drupal `czlonek_zespolu` | `/preview/zespol` |
-| `page` | 23 + 2 newsy | Drupal `page` + opublikowane `aktualnosc` | `/preview/strony` |
-| `project` | 4 | rozbicie stron Drupal, nie nowy dump | `/preview/projekty` |
+| `person` | 7 | Drupal `czlonek_zespolu` | `/zespol` |
+| `page` | 23 + 2 newsy | Drupal `page` + opublikowane `aktualnosc` | `/fundacja/…`, `/metody`, `/kontakt`, korzeń |
+| `project` | 4 | rozbicie stron Drupal, nie nowy dump | `/projekty` |
 | assety | ~74 | pliki z FTP mirror + tokeny Media `[[{fid…}]]` | w body / zdjęciach osób |
 
 Newsy są **nadal `page`**: tytuł `[Aktualność] …`, slug `aktualnosc-…`. Osobnego typu nie ma.
@@ -43,7 +43,7 @@ Archiwum bez edycji: Teatr Codzienny, TO MI GRA, BOAL IN PRACTICE.
 
 **1:1 (nody):** zespół (7), kontakt, metody, szkolenia i spektakle, projekty-karty, fundacja (statut, sprawozdania, zarząd, jak wesprzeć), aktualności z homepage.
 
-**Świadomie nie jako dokumenty:** `/`, `/projekty`, `/zespol`, `/fundacja` — w Drupalu listingi taksonomii, nie nody. Na `/preview` jest płaska lista dokumentów, nie menu Drupal.
+**Świadomie nie jako dokumenty:** `/`, `/projekty`, `/zespol`, `/fundacja` — w Drupalu listingi taksonomii, nie nody. W Next są to widoki (nawigacja z IA, nie `siteSettings`).
 
 **Nie przenosiliśmy:** 2 nieopublikowane newsy, 2 `simplenews`. Sitemap XML na live jest popsuty (tylko homepage) — weryfikacja była menu + listing projektów + HTTP na ścieżkach z dumpa.
 
@@ -89,11 +89,11 @@ pnpm dev:all
 
 Write token **tylko** `apps/studio/.env` → `SANITY_API_WRITE_TOKEN`. Nigdy `NEXT_PUBLIC_*` ani `apps/web/.env.local`. Dataset jest publiczny — Next czyta bez tokenu.
 
-## Następne kroki (sobota, przed Figmą)
+## Następne kroki
 
-1. Porównać `/preview/projekty/art-generacje` z live; kotwice w Studio.
-2. Czytelnia — gdy pojawi się dump `drama_teatr`; kuracja, nie hurt.
-3. Opcjonalnie: `person.role`.
-4. **Figma** — start UI; uściślić `edition.outcomes`.
+1. Figma na istniejących URL-ach; uściślić `edition.outcomes`.
+2. Mapa 301 przed premierą (osobne zadanie — nie w `lib/routes.ts`).
+3. Porównać `/projekty/art-generacje` z live; kotwice w Studio.
+4. Czytelnia — gdy pojawi się dump `drama_teatr`; kuracja, nie hurt.
 
 Szczegóły produktu Art Generacje (nie stan migracji): [art-generacje.md](../concept/art-generacje.md).

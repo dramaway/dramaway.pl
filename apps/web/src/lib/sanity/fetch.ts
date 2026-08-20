@@ -6,6 +6,7 @@ import {
   newsListQuery,
   pageBySlugQuery,
   pageSlugsQuery,
+  pagesBySlugsQuery,
   pagesListQuery,
   peopleListQuery,
   personBySlugQuery,
@@ -13,6 +14,7 @@ import {
   projectBySlugQuery,
   projectSlugsQuery,
   projectsListQuery,
+  siteSettingsQuery,
 } from "./queries";
 import type {
   ContentCounts,
@@ -22,7 +24,9 @@ import type {
   PersonListItem,
   ProjectDetail,
   ProjectListItem,
+  SiteSettings,
 } from "./types";
+import { NEWS_SLUG_PREFIX } from "@/lib/routes";
 
 const revalidate = { next: { revalidate: 60 } };
 
@@ -54,6 +58,33 @@ export async function getNewsPages(): Promise<PageListItem[]> {
 
 export async function getPageBySlug(slug: string): Promise<PageDetail | null> {
   return sanityClient.fetch(pageBySlugQuery, { slug }, revalidate);
+}
+
+/** Root Drupal aliases: try the slug, then the migrated `aktualnosc-` prefix. */
+export async function getPageByPublicSlug(
+  slug: string,
+): Promise<PageDetail | null> {
+  const direct = await getPageBySlug(slug);
+  if (direct) return direct;
+  return getPageBySlug(`${NEWS_SLUG_PREFIX}${slug}`);
+}
+
+export async function getPagesBySlugs(
+  slugs: readonly string[],
+): Promise<PageListItem[]> {
+  const rows: PageListItem[] = await sanityClient.fetch(
+    pagesBySlugsQuery,
+    { slugs: [...slugs] },
+    revalidate,
+  );
+  const bySlug = new Map(rows.map((row) => [row.slug, row]));
+  return slugs
+    .map((slug) => bySlug.get(slug))
+    .filter((row): row is PageListItem => Boolean(row));
+}
+
+export async function getSiteSettings(): Promise<SiteSettings | null> {
+  return sanityClient.fetch(siteSettingsQuery, {}, revalidate);
 }
 
 export async function getPageSlugs(): Promise<string[]> {
