@@ -5,7 +5,7 @@ Stan sesji i „co robić jutro”: [HANDOFF.md](../HANDOFF.md).
 Inwentarz dumpów (ile nodów jakiego typu): [drupal-inventory.md](drupal-inventory.md).  
 Model docelowy: [ADR-003](../decisions/ADR-003-content-model-and-mvp.md).
 
-Ostatnia weryfikacja treści: **2026-08-21**.
+Ostatnia weryfikacja treści: **2026-08-21** (sesja zamknięta; ciąg dalszy w sobotę).
 
 ## Pipeline
 
@@ -89,11 +89,11 @@ pnpm dev:all
 
 Write token **tylko** `apps/studio/.env` → `SANITY_API_WRITE_TOKEN`. Nigdy `NEXT_PUBLIC_*` ani `apps/web/.env.local`. Dataset jest publiczny — Next czyta bez tokenu.
 
-## Następne kroki (merytorycznie, przed Figmą)
+## Następne kroki (sobota, przed Figmą)
 
-1. Rzucić okiem na `/preview/projekty/art-generacje` i dokument Project w Studio.
+1. Porównać `/preview/projekty/art-generacje` z live; kotwice w Studio.
 2. Czytelnia — gdy pojawi się dump `drama_teatr`; kuracja, nie hurt.
-3. Opcjonalnie: ręczna korekta kotwic w Studio, `person.role`.
-4. **Figma** — tu start UI; przy okazji uściślić `edition.outcomes` (spektakle / wydarzenia / rezultaty).
+3. Opcjonalnie: `person.role`.
+4. **Figma** — start UI; uściślić `edition.outcomes`.
 
 Szczegóły produktu Art Generacje (nie stan migracji): [art-generacje.md](../concept/art-generacje.md).

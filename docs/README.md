@@ -6,7 +6,7 @@ Mapa dokumentów projektu. Treść po polsku; nazwy plików ADR i ścieżek kodu
 
 | Plik | Opis |
 |------|------|
-| [HANDOFF.md](HANDOFF.md) | **Aktualny stan projektu i następne kroki** — czytaj na starcie nowego czatu; aktualizuj na bieżąco |
+| [HANDOFF.md](HANDOFF.md) | **Start sesji (sobota: tu)** — stan, następny krok |
 
 ## Koncept
 
