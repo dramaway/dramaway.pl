@@ -47,12 +47,15 @@ Wymaga Node **≥ 22.12** i [pnpm](https://pnpm.io/).
 pnpm install
 pnpm extract:fundacja    # opcjonalnie: JSON z dumpa
 pnpm migrate:fundacja    # fundacja → Sanity (token w apps/studio/.env)
-pnpm dev               # http://localhost:3000
-pnpm dev:studio        # http://localhost:3333
+pnpm migrate:art-generacje  # Art Generacje → project.editions
+pnpm dev               # http://localhost:3000 (tylko Next)
+pnpm dev:studio        # http://localhost:3333 (tylko Studio)
+pnpm dev:all           # oba naraz
 ```
 
-- Frontend: `apps/web` — `/preview` nadal z lokalnego JSON; podłączenie GROQ = następny krok  
-- CMS: `apps/studio` (Sanity **v6**) — treści fundacji już w dataset `production`  
+- Frontend: `apps/web` — `/preview` czyta `person`, `page`, `project` z Sanity (GROQ)  
+- CMS: `apps/studio` (Sanity **v6**) — treści fundacji + Art Generacje (edycje) w dataset `production`  
+- **Co zmigrowane / czego nie:** [docs/migration/fundacja-status.md](docs/migration/fundacja-status.md)  
 - Lokalne materiały: tylko `private/`  
 - **Stan sesji / co dalej:** [docs/HANDOFF.md](docs/HANDOFF.md)
 

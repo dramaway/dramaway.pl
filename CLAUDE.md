@@ -32,6 +32,7 @@ scripts/           # migration scripts (later)
 | Topic | Path |
 |-------|------|
 | **Session handoff (start here)** | `docs/HANDOFF.md` |
+| **Fundacja migration status** | `docs/migration/fundacja-status.md` |
 | Docs hub | `docs/README.md` |
 | IA | `docs/concept/ia.md` |
 | Art Generacje | `docs/concept/art-generacje.md` |
@@ -58,8 +59,10 @@ scripts/           # migration scripts (later)
 pnpm install
 pnpm extract:fundacja    # optional local JSON from dump
 pnpm migrate:fundacja    # needs SANITY_API_WRITE_TOKEN in apps/studio/.env
+pnpm migrate:art-generacje
 pnpm dev               # http://localhost:3000
 pnpm dev:studio        # http://localhost:3333
+pnpm dev:all           # oba naraz
 ```
 
 At session start: read `docs/HANDOFF.md` and keep it updated.

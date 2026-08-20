@@ -1,6 +1,7 @@
 # Inwentaryzacja Drupal → cel Sanity
 
 Fakty z lokalnych zrzutów w `private/dumps/` (nie commitowanych).  
+**Co już poszło do Sanity:** [fundacja-status.md](fundacja-status.md).  
 Model docelowy: [ADR-003](../decisions/ADR-003-content-model-and-mvp.md).  
 Mapujemy **na** typy Sanity, nie klonujemy `node_type`.
 

@@ -38,8 +38,11 @@ knowledge:
     - path: docs/decisions/
       description: "Architecture Decision Records"
       priority: high
+    - path: docs/migration/fundacja-status.md
+      description: "What is already in Sanity, conversion gaps, next steps before Figma"
+      priority: high
     - path: docs/migration/
-      description: "Drupal inventory and legacy layout on disk"
+      description: "Drupal inventory, fundacja status, legacy layout on disk"
       priority: medium
 
   local_only:

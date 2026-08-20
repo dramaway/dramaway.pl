@@ -27,6 +27,7 @@ Mapa dokumentów projektu. Treść po polsku; nazwy plików ADR i ścieżek kodu
 
 | Plik | Opis |
 |------|------|
+| [migration/fundacja-status.md](migration/fundacja-status.md) | **Co już jest w Sanity, luki, następne kroki** — czytaj przy pytaniach „czy to zmigrowane?” |
 | [migration/drupal-inventory.md](migration/drupal-inventory.md) | Typy treści z dumpów Drupal → cel w Sanity |
 | [migration/legacy-layout.md](migration/legacy-layout.md) | Gdzie na dysku leży legacy (FTP, snapshoty) |
 

@@ -1,87 +1,59 @@
 # Handoff — DramaWay
 
 **Aktualizuj ten plik na bieżąco** na końcu każdej sesji (albo po większym kamieniu milowym).  
-Nowy czat: przeczytaj ten plik + `CLAUDE.md` + `docs/README.md` — nie odtwarzaj historii z pamięci.
+Nowy czat: ten plik + `CLAUDE.md` + `docs/README.md`. **Nie** odtwarzaj historii z dumpów rozmów.
+
+Co już jest w CMS, luki konwersji, mapa vs live: **[migration/fundacja-status.md](migration/fundacja-status.md)** — tam odsyłaj przy „czy to zmigrowane?”.
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-08-20 (~23:05) — sesja zamknięta, serwery lokalne zatrzymane |
-| **Gałąź / HEAD** | `main` @ `fa5f586` |
+| **Ostatnia aktualizacja** | 2026-08-21 (~00:15) — treść fundacji + Art Generacje w Sanity; stop przed Figmą |
+| **Gałąź / HEAD** | `main` @ `0c153d5` + docs (status migracji) |
 | **Remote** | brak (tylko lokalny git) |
 | **Owner Sanity (na razie)** | Jan Mirecki — transfer ownership później OK |
-| **Staging / working tree** | czyste |
 
 ---
 
 ## Co to jest
 
-Redesign **fundacja.dramaway.pl** (Fundacja DramaWay).  
-MVP = **jedna** witryna fundacji. Art Generacje = serce serwisu.  
-Czytelnia / baza wiedzy = **dział** tej strony (źródło: stary portal / baza `drama_teatr`), nie drugi Next.js.  
-`centrum.dramaway.pl` = link zewnętrzny.
+Redesign **fundacja.dramaway.pl**. MVP = jedna witryna fundacji. Art Generacje = serce. Czytelnia = dział tej strony (`drama_teatr`), nie drugi Next. `centrum.dramaway.pl` = link zewnętrzny.
 
-Stack: Next.js 15, Tailwind v4, shadcn/ui, **Sanity Studio v6**, Netlify (nie Vercel).  
-Język: kod/commity/CMS EN · docs `.md` PL.
+Stack: Next.js 15, Tailwind v4, shadcn/ui, Sanity Studio v6, Netlify. Kod/CMS EN · docs PL.
 
 ---
 
 ## Stan na teraz (fakt)
 
-### Lokalne serwery
-
-- **Zatrzymane** na koniec sesji 2026-08-20 (porty 3000 / 3333 wolne).
-- Start: `pnpm dev` (:3000), `pnpm dev:studio` (:3333)
-- CORS już skonfigurowane: `localhost:3000`, `localhost:3333`
-- Sanity project: **Dramaway**, id `tr2qdg9j`, dataset `production`, org `oxdl2whwy`
-- Env (gitignored): `apps/studio/.env`, `apps/web/.env.local` — project id + write token
-
-### Zrobione
-
-- Repo + docs + ADR-y + izolacja lokalnych materiałów w `private/`
-- Scaffold `apps/web` + `apps/studio` (schematy: `project`, `person`, `page`, `publication`, `siteSettings`)
-- Extract dumpa fundacji → JSON (`pnpm extract:fundacja`)
-- Migracja fundacji → Sanity (`pnpm migrate:fundacja`): **7 persons, 23 pages, 2 news-as-pages, ~74 assets**; tokeny Media `[[{fid…}]]` → upload obrazów
-- Upgrade Studio **3.99 → 6.10.1**
-- Living handoff: `docs/HANDOFF.md` + prompt transplantu do nowego czatu
+- Preview czyta **Sanity** (GROQ), nie lokalny JSON. JSON = artefakt `pnpm extract:fundacja`.
+- Dataset `production` (projekt `tr2qdg9j`) publiczny — Next bez tokenu.
+- Write token **tylko** `apps/studio/.env` → `SANITY_API_WRITE_TOKEN`.
+- W CMS: 7 `person`, 23+2 `page`, 4 `project` (Art Generacje = 13 edycji). Szczegóły: [fundacja-status.md](migration/fundacja-status.md).
+- Studio: `blockContent` z obrazkami; Jan potwierdził jakość (obrazki OK).
+- `pnpm dev:all` — Next `:3000` + Studio `:3333`. CORS na localhost już jest.
 
 ### Świadomie nie zrobione
 
-- Next **nie** czyta jeszcze z Sanity (GROQ) — `/preview` = lokalny JSON
-- Figmą / docelowym UI się nie zajmowaliśmy
-- Czytelnia / `drama_teatr` — nie migrowane
-- Typ `project` (Art Generacje + edycje) — schemat jest, treści z Drupala nie zmapowane 1:1 na editions
-- Aktualności jako osobny typ — na razie `page` z prefixem `[Aktualność]` / slug `aktualnosc-…`
-- Remote GitHub + Netlify
-- Newsletter, formularze, EN
-
-### Bezpieczeństwo
-
-- Write token Sanity był wklejony w czat → **należy odwołać i wygenerować nowy**, zaktualizować `.env` (nie commituj tokenów, nie wklejaj do czatu)
-- Dumpy SQL, FTP mirror, PDF, kickoff pack: tylko `private/` (poza gitem)
+- **Figma / docelowy UI** — tu się zatrzymujemy
+- Czytelnia — brak dumpa `drama_teatr` w `private/dumps/`
+- `siteSettings`, news jako osobny typ, GitHub/Netlify, newsletter, formularze, EN
 
 ---
 
-## Ogólny plan (kolejność)
+## Plan (kolejność)
 
-1. **Treść clean (fundacja)** — Studio + Next z Sanity, bez Figmy  
-2. **Art Generacje** — model edycji + dane (nie płaska strona)  
-3. **Czytelnia** — wybiórczy import z `drama_teatr` → `publication`  
-4. **UI z Figmy** — layouty, tokeny, komponenty  
-5. **Launch** — GitHub remote, Netlify, domena, szkolenie redakcji  
-
-Cel pośredni „czysta merytorycznie fundacja bez Figmy”: ~1–2 sesje po podłączeniu GROQ + przeglądzie treści w Studio.
+1. ~~Treść fundacji w Sanity + preview~~  
+2. ~~Art Generacje jako `project.editions`~~  
+3. **Czytelnia** — dump + kuracja → `publication`  
+4. **UI z Figmy**  
+5. Launch (GitHub, Netlify, domena, redakcja)
 
 ---
 
-## Następne kroki (priorytet)
+## Następne kroki
 
-1. **Obróć token API** (Editor/Developer) w manage → nowy w `apps/studio/.env` jako `SANITY_API_WRITE_TOKEN`.
-2. **Podłącz Next → Sanity (GROQ):** `@sanity/client` / `next-sanity`, strony list/detail dla `person` i `page` (można zastąpić lub uzupełnić `/preview`).
-3. **Przegląd jakości w Studio:** media, formatowanie Portable Text, brakujące pliki z tokenów.
-4. **Doprecyzuj model Art Generacje** (`project.editions`) i zasilenie treścią (ręcznie / skrypt).
-5. Dopiero potem: Figma UI; równolegle opcjonalnie kuracja Czytelni.
-
-Nie zaczynaj od Figmy, dopóki treść fundacji nie jest OK w Studio + na froncie z Sanity.
+1. Obejrzeć `/preview/projekty/art-generacje` (jeśli jeszcze nie).
+2. Czytelnia — gdy będzie `drama_teatr` w `private/dumps/`; nie 425 nodów w ciemno.
+3. **Figma** — start UI na treściach z Sanity.
 
 ---
 
@@ -90,40 +62,27 @@ Nie zaczynaj od Figmy, dopóki treść fundacji nie jest OK w Studio + na fronci
 ```bash
 cd /Users/jmirecki-letsreg/Code/waether-the-strm/drama
 pnpm install
-pnpm extract:fundacja          # dump → apps/web/src/data/extracted/ (gitignored)
-pnpm migrate:fundacja          # JSON + legacy files → Sanity (wymaga tokenu)
-pnpm dev                      # :3000
-pnpm dev:studio               # :3333
+pnpm extract:fundacja
+pnpm migrate:fundacja
+pnpm migrate:art-generacje
+pnpm dev          # :3000  /preview
+pnpm dev:studio   # :3333
+pnpm dev:all
 ```
 
-Node **≥ 22.12** (Sanity v6). Preferuj **pnpm**.
+Node ≥ 22.12, pnpm. Next `.env.local`: `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET` — bez tokenu.
 
 ---
 
-## Mapa ścieżek
+## Mapa (skrót)
 
 | Ścieżka | Rola |
 |--------|------|
-| `apps/web` | Next.js 15 |
-| `apps/studio` | Sanity Studio v6 |
-| `scripts/extract_fundacja.py` | SQL → JSON |
-| `scripts/migrate-fundacja.mjs` | JSON → Sanity (+ Media tokens) |
-| `docs/concept/` | IA, Art Generacje |
-| `docs/decisions/` | ADR-001…003 |
-| `docs/migration/` | Inwentarz Drupal |
-| `private/` | Dumpy, legacy FTP, snapshoty — **nigdy do gita** (oprócz `private/README.md`) |
+| `docs/migration/fundacja-status.md` | Co zmigrowane |
+| `docs/HANDOFF.md` | Ten plik — teraz / next |
+| `apps/web/src/lib/sanity/` | GROQ `person` / `page` / `project` |
+| `scripts/migrate-fundacja.mjs` | dump JSON → Sanity |
+| `scripts/migrate-art-generacje.mjs` | page AG → editions |
+| `private/` | Dumpy — poza gitem (oprócz README) |
 
-Kickoff pack leży w `private/dramaway-setup-ustalenia/` — **nie** kopiuj ról/instrukcji pod inną osobę; kanon jest w `docs/`.
-
----
-
-## Reguła aktualizacji handoffu
-
-Po sesji zaktualizuj co najmniej:
-
-- datę / HEAD commit  
-- „Stan na teraz” (co działa / co doszło)  
-- „Następne kroki” (1–5 punktów, aktualne)  
-- otwarte ryzyka (tokeny, brakujące assety, decyzje produktowe)
-
-Jeśli coś jest w ADR lub `docs/concept/`, tu tylko **wskaźnik**, nie duplikuj eseju.
+Kickoff pack w `private/dramaway-setup-ustalenia/` nie jest kanonem — kanon jest w `docs/`.

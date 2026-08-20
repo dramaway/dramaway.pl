@@ -15,7 +15,8 @@ Nie wystarczy płaski `project` z tytułem i body. Potrzebujemy struktury pod:
 - **partnerzy**
 - wyróżnienie na homepage i liście projektów (`featured`)
 
-Szczegóły pól ustalimy przy schemacie Sanity; decyzja zakresowa: [ADR-003](../decisions/ADR-003-content-model-and-mvp.md).
+Szczegóły pól: schemat `project` + `edition` w `apps/studio`.  
+**Stan w CMS (ile edycji, skąd):** [fundacja-status.md](../migration/fundacja-status.md). Decyzja zakresowa: [ADR-003](../decisions/ADR-003-content-model-and-mvp.md).
 
 ## Relacja do innych projektów
 
@@ -26,4 +27,6 @@ Czytelnia to osobny tor treści (`publication`), nie „edycja Art Generacje”.
 
 ## Migracja
 
-Źródłem faktów o treściach jest Drupal (`drama_mfund` + wybiórczo `drama_teatr`), ale **kształt** Art Generacje w CMS wynika z tego dokumentu i Figmy — nie z jednego `node_type`.
+Źródłem faktów o treściach jest Drupal (`drama_mfund` + wybiórczo `drama_teatr`), ale **kształt** Art Generacje w CMS wynika z tego dokumentu — nie z jednego `node_type`.
+
+W datasetcie jest jeden `project` featured z edycjami I–XI (skrypt `pnpm migrate:art-generacje`, źródło: `page` art-generacje). Stara płaska strona Drupal zostaje jako `page`.
