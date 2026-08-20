@@ -7,8 +7,8 @@ Co już jest w CMS, luki konwersji, mapa vs live: **[migration/fundacja-status.m
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-08-21 (~00:15) — treść fundacji + Art Generacje w Sanity; stop przed Figmą |
-| **Gałąź / HEAD** | `main` @ `38400ec` |
+| **Ostatnia aktualizacja** | 2026-08-21 (~00:40) — linki + YouTube + leftover obrazki; stop przed Figmą |
+| **Gałąź / HEAD** | `main` @ `ef26292` + docs |
 | **Remote** | brak (tylko lokalny git) |
 | **Owner Sanity (na razie)** | Jan Mirecki — transfer ownership później OK |
 
@@ -28,7 +28,8 @@ Stack: Next.js 15, Tailwind v4, shadcn/ui, Sanity Studio v6, Netlify. Kod/CMS EN
 - Dataset `production` (projekt `tr2qdg9j`) publiczny — Next bez tokenu.
 - Write token **tylko** `apps/studio/.env` → `SANITY_API_WRITE_TOKEN`.
 - W CMS: 7 `person`, 23+2 `page`, 4 `project` (Art Generacje = 13 edycji). Szczegóły: [fundacja-status.md](migration/fundacja-status.md).
-- Studio: `blockContent` z obrazkami; Jan potwierdził jakość (obrazki OK).
+- Studio: `blockContent` z obrazkami, **linkami** i **YouTube**. Jan: obrazki OK; linki/filmy — naprawa skryptem 2026-08-21 (`pnpm repair:portable-text -- --write`: 177 marek, 20 embedów).
+- Edycje mają puste `outcomes` (tytuł / podtytuł / data / zdjęcie / opis) — nie zasilane automatycznie; Figma uściśli.
 - `pnpm dev:all` — Next `:3000` + Studio `:3333`. CORS na localhost już jest.
 
 ### Świadomie nie zrobione
@@ -51,9 +52,9 @@ Stack: Next.js 15, Tailwind v4, shadcn/ui, Sanity Studio v6, Netlify. Kod/CMS EN
 
 ## Następne kroki
 
-1. Obejrzeć `/preview/projekty/art-generacje` (jeśli jeszcze nie).
+1. Porównać `/preview/projekty/art-generacje` z [live](https://www.fundacja.dramaway.pl/projekty/art-generacje) — kotwice, które skrypt źle uciął, poprawić w Studio.
 2. Czytelnia — gdy będzie `drama_teatr` w `private/dumps/`; nie 425 nodów w ciemno.
-3. **Figma** — start UI na treściach z Sanity.
+3. **Figma** — UI + decyzja, czy `edition.outcomes` zostaje tak ogólne.
 
 ---
 
@@ -65,6 +66,7 @@ pnpm install
 pnpm extract:fundacja
 pnpm migrate:fundacja
 pnpm migrate:art-generacje
+pnpm repair:portable-text   # dry-run; -- --write zapisuje
 pnpm dev          # :3000  /preview
 pnpm dev:studio   # :3333
 pnpm dev:all
@@ -83,6 +85,7 @@ Node ≥ 22.12, pnpm. Next `.env.local`: `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_
 | `apps/web/src/lib/sanity/` | GROQ `person` / `page` / `project` |
 | `scripts/migrate-fundacja.mjs` | dump JSON → Sanity |
 | `scripts/migrate-art-generacje.mjs` | page AG → editions |
+| `scripts/repair-portable-text.mjs` | nawiasowe URL-e + `[video:]` → link / youtube |
 | `private/` | Dumpy — poza gitem (oprócz README) |
 
 Kickoff pack w `private/dramaway-setup-ustalenia/` nie jest kanonem — kanon jest w `docs/`.

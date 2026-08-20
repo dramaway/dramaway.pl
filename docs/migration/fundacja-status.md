@@ -49,15 +49,21 @@ Archiwum bez edycji: Teatr Codzienny, TO MI GRA, BOAL IN PRACTICE.
 
 ## Luki konwersji HTML → Portable Text
 
-To nie jest korekta językowa. Skrypt spłaszcza Drupal HTML:
+To nie jest korekta językowa. Pierwszy skrypt spłaszczał Drupal HTML.
 
-- Linki są tekstem z URL w nawiasie, nie klikalnym markiem.
+**Zrobione 2026-08-21 (obserwacje Jana):**
+
+- Nawiasowe URL-e (`tekst (http://…)`, w tym duplikaty) → marki `link` w Sanity. Skrypt: `pnpm repair:portable-text`. Porównanie z live: np. [art-generacje](https://www.fundacja.dramaway.pl/projekty/art-generacje).
+- Tokeny Drupal `[video:https://youtube…]` → bloki `youtube` (embed w `/preview`).
+- Schemat `edition.outcomes` (`editionOutcome`: tytuł, podtytuł, data, zdjęcie, opis) — **pusty**, do ręcznego zasilenia / Figmy. Nie zgadujemy spektakli z HTML.
+
+**Nadal ręcznie / później:**
+
+- Część kotwic będzie nieidealna (Drupal owijał tylko fragment zdania; albumy FB ucięte w środku słowa). Skrypt znajduje wszystkie URL-e; reszta to Studio.
 - Tabele → jeden akapit.
 - Brak pliku w dumpie → dziura zamiast obrazka.
-- Sporadyczne leftover `[[SANITY_IMAGE_n]]` (np. sponsorzy na Art Generacje).
-- `person.role` (Drupal `field_funkcja`) nie jest zmapowane — na live widać funkcje zarządu, w Sanity bio bez roli.
-
-Studio: `blockContent` dopuszcza `image` w body. Nie klikać „Remove the block” przy starym błędzie walidacji.
+- Sporadyczne leftover `[[SANITY_IMAGE_n]]` — **naprawione 2026-08-21** (kilka obrazków w jednym akapicie; assety już były w datasetcie).
+- `person.role` (Drupal `field_funkcja`) nie jest zmapowane.
 
 ## Czego nie ma (i dlaczego)
 
@@ -75,6 +81,7 @@ Studio: `blockContent` dopuszcza `image` w body. Nie klikać „Remove the block
 pnpm extract:fundacja
 pnpm migrate:fundacja          # write token w apps/studio/.env
 pnpm migrate:art-generacje    # rozbija page Art Generacje → project.editions
+pnpm repair:portable-text     # dry-run; `pnpm repair:portable-text -- --write` zapisuje
 pnpm dev                      # :3000
 pnpm dev:studio               # :3333
 pnpm dev:all
@@ -86,7 +93,7 @@ Write token **tylko** `apps/studio/.env` → `SANITY_API_WRITE_TOKEN`. Nigdy `NE
 
 1. Rzucić okiem na `/preview/projekty/art-generacje` i dokument Project w Studio.
 2. Czytelnia — gdy pojawi się dump `drama_teatr`; kuracja, nie hurt.
-3. Opcjonalnie: klikalne linki w konwerterze, `person.role`, sprzątanie leftover tokenów.
-4. **Figma** — tu start UI; treść fundacji + edycje AG są już w CMS.
+3. Opcjonalnie: ręczna korekta kotwic w Studio, `person.role`.
+4. **Figma** — tu start UI; przy okazji uściślić `edition.outcomes` (spektakle / wydarzenia / rezultaty).
 
 Szczegóły produktu Art Generacje (nie stan migracji): [art-generacje.md](../concept/art-generacje.md).

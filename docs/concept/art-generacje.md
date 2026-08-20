@@ -13,6 +13,7 @@ Nie wystarczy płaski `project` z tytułem i body. Potrzebujemy struktury pod:
 - **wiele edycji** (w kickoffie: 9 edycji z opisami)
 - **galerie** per edycja / projekt
 - **partnerzy**
+- **outcomes** per edycja — 0–n rezultatów (spektakl, wydarzenie, publikacja): tytuł, podtytuł/data, zdjęcie, opis. Ogólne do Figmy; nie wypełniamy z HTML na ślepo.
 - wyróżnienie na homepage i liście projektów (`featured`)
 
 Szczegóły pól: schemat `project` + `edition` w `apps/studio`.  

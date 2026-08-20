@@ -60,6 +60,7 @@ pnpm install
 pnpm extract:fundacja    # optional local JSON from dump
 pnpm migrate:fundacja    # needs SANITY_API_WRITE_TOKEN in apps/studio/.env
 pnpm migrate:art-generacje
+pnpm repair:portable-text  # optional: -- --write
 pnpm dev               # http://localhost:3000
 pnpm dev:studio        # http://localhost:3333
 pnpm dev:all           # oba naraz

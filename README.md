@@ -48,6 +48,7 @@ pnpm install
 pnpm extract:fundacja    # opcjonalnie: JSON z dumpa
 pnpm migrate:fundacja    # fundacja → Sanity (token w apps/studio/.env)
 pnpm migrate:art-generacje  # Art Generacje → project.editions
+pnpm repair:portable-text   # linki / YouTube (dry-run; -- --write)
 pnpm dev               # http://localhost:3000 (tylko Next)
 pnpm dev:studio        # http://localhost:3333 (tylko Studio)
 pnpm dev:all           # oba naraz
