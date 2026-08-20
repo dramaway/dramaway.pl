@@ -6,7 +6,7 @@ Nowy czat: przeczytaj ten plik + `CLAUDE.md` + `docs/README.md` — nie odtwarza
 | | |
 |--|--|
 | **Ostatnia aktualizacja** | 2026-08-20 (~23:05) |
-| **Gałąź / HEAD** | `main` @ `dfe27ab` |
+| **Gałąź / HEAD** | `main` @ `d365749` (aktualizuj przy każdym handoff update) |
 | **Remote** | brak (tylko lokalny git) |
 | **Owner Sanity (na razie)** | Jan Mirecki — transfer ownership później OK |
 
