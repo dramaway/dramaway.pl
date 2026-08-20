@@ -55,11 +55,12 @@ scripts/           # migration scripts (later)
 
 ```bash
 pnpm install
-pnpm dev          # http://localhost:3000
-pnpm dev:studio   # needs SANITY_STUDIO_PROJECT_ID in apps/studio/.env
+pnpm extract:fundacja   # needs private/dumps/drama_mfund_*.sql
+pnpm dev               # http://localhost:3000 — see /preview for extracted content
+pnpm dev:studio        # needs SANITY_STUDIO_PROJECT_ID in apps/studio/.env
 ```
 
-Drupal import / wired content pages are not in the scaffold yet.
+Local materials (dumps, FTP mirror, PDFs) live only under `private/`.
 
 ## Knowledge index
 

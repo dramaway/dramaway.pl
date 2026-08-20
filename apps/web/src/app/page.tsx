@@ -11,20 +11,20 @@ export default function Home() {
       </h1>
       <p className="text-lg text-muted-foreground">
         Scaffold: Next.js 15, Tailwind CSS v4, shadcn/ui. Design from Figma and
-        Sanity content come next — this page is a placeholder.
+        Sanity come next.
       </p>
       <div className="flex flex-wrap gap-3">
+        <Link className={cn(buttonVariants())} href="/preview">
+          Preview extracted content
+        </Link>
         <a
-          className={cn(buttonVariants())}
+          className={cn(buttonVariants({ variant: "outline" }))}
           href="https://www.fundacja.dramaway.pl/"
           target="_blank"
           rel="noreferrer"
         >
           Live legacy site
         </a>
-        <Link className={cn(buttonVariants({ variant: "outline" }))} href="/">
-          Home (this app)
-        </Link>
       </div>
     </main>
   );

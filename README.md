@@ -45,15 +45,17 @@ Wymaga Node 20+ i [pnpm](https://pnpm.io/).
 
 ```bash
 pnpm install
-pnpm dev          # Next.js → http://localhost:3000
-pnpm dev:studio   # Sanity Studio → http://localhost:3333 (po ustawieniu project id)
+pnpm extract:fundacja   # opcjonalnie: JSON z dumpa → apps/web/src/data/extracted/
+pnpm dev               # Next.js → http://localhost:3000
+pnpm dev:studio        # Sanity Studio → http://localhost:3333 (po project id)
 ```
 
-- Frontend: `apps/web` (Next.js 15 + Tailwind v4 + shadcn/ui)  
-- CMS: `apps/studio` — schematy stub (`project`, `person`, `page`, `publication`, `siteSettings`)  
-- Skopiuj `apps/studio/.env.example` → `.env` i uzupełnij `SANITY_STUDIO_PROJECT_ID` (konto na [sanity.io/manage](https://www.sanity.io/manage)). Bez tego Studio nie połączy się z projektem w chmurze; sam frontend działa od razu.
+- Frontend: `apps/web` — m.in. surowy podgląd `/preview` (zespół, strony z dumpa)  
+- CMS: `apps/studio` — schematy stub  
+- Lokalne materiały (dumpy, FTP, PDF): tylko w `private/` (poza gitem)  
+- Studio: skopiuj `apps/studio/.env.example` → `.env` i uzupełnij `SANITY_STUDIO_PROJECT_ID`
 
-Import z dumpów Drupala i prawdziwe treści na stronach — osobny krok (jeszcze nie w tym scaffoldzie).
+Import do Sanity (chmura) — osobny krok; `/preview` czyta lokalny JSON, nie wymaga konta Sanity.
 
 ## Status repozytorium
 
