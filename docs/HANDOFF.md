@@ -8,7 +8,7 @@ Co już jest w CMS, luki konwersji, mapa vs live: **[migration/fundacja-status.m
 | | |
 |--|--|
 | **Ostatnia aktualizacja** | 2026-08-21 (~00:40) — linki + YouTube + leftover obrazki; stop przed Figmą |
-| **Gałąź / HEAD** | `main` @ `ef26292` + docs |
+| **Gałąź / HEAD** | `main` @ `fed5632` |
 | **Remote** | brak (tylko lokalny git) |
 | **Owner Sanity (na razie)** | Jan Mirecki — transfer ownership później OK |
 
