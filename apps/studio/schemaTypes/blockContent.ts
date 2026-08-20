@@ -1,12 +1,53 @@
-import { defineArrayMember, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
+import { YoutubePreview } from "./youtubePreview";
 
-/** Shared Portable Text: blocks + inline images (migration stores images in body/bio). */
+export const youtube = defineType({
+  name: "youtube",
+  title: "YouTube",
+  type: "object",
+  fields: [
+    defineField({
+      name: "url",
+      title: "URL",
+      type: "url",
+      validation: (r) => r.required(),
+    }),
+  ],
+  preview: {
+    select: { url: "url", title: "url" },
+  },
+  components: { preview: YoutubePreview },
+});
+
 export const blockContent = defineType({
   name: "blockContent",
   title: "Block content",
   type: "array",
   of: [
-    defineArrayMember({ type: "block" }),
+    defineArrayMember({
+      type: "block",
+      marks: {
+        annotations: [
+          {
+            name: "link",
+            type: "object",
+            title: "Link",
+            fields: [
+              {
+                name: "href",
+                type: "url",
+                title: "URL",
+                validation: (rule) =>
+                  rule.uri({
+                    allowRelative: true,
+                    scheme: ["http", "https", "mailto", "tel"],
+                  }),
+              },
+            ],
+          },
+        ],
+      },
+    }),
     defineArrayMember({
       type: "image",
       options: { hotspot: true },
@@ -18,5 +59,6 @@ export const blockContent = defineType({
         },
       ],
     }),
+    defineArrayMember({ type: "youtube", title: "YouTube film" }),
   ],
 });

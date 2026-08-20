@@ -61,7 +61,8 @@ const editionProjection = `{
   summary,
   body,
   gallery,
-  partners
+  partners,
+  outcomes
 }`;
 
 export const projectsListQuery = `*[_type == "project"] | order(featured desc, title asc) {

@@ -71,6 +71,23 @@ export default async function ProjectPreviewPage({ params }: Props) {
             <p className="mt-1 text-sm text-muted-foreground">{edition.years}</p>
           ) : null}
           <PortableBody value={edition.body} />
+          {edition.outcomes && edition.outcomes.length > 0 ? (
+            <ul className="mt-6 space-y-4">
+              {edition.outcomes.map((outcome) => (
+                <li key={outcome.title} className="rounded-md border p-4">
+                  <p className="font-medium">{outcome.title}</p>
+                  {outcome.subtitle || outcome.date ? (
+                    <p className="text-sm text-muted-foreground">
+                      {[outcome.subtitle, outcome.date].filter(Boolean).join(" · ")}
+                    </p>
+                  ) : null}
+                  {outcome.description ? (
+                    <p className="mt-2 text-sm">{outcome.description}</p>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          ) : null}
         </section>
       ))}
 

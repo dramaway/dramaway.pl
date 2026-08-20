@@ -11,6 +11,13 @@ import { readFileSync, existsSync } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { randomBytes } from "crypto";
+import {
+  cleanVideoFilterUrl,
+  isYoutubeUrl,
+  newKey as repairKey,
+  normalizeUrl,
+  repairBlocks,
+} from "./lib/portable-text-repair.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -126,6 +133,7 @@ async function resolveMediaTokens(html) {
 
 function inlineSpans(el) {
   const spans = [];
+  const markDefs = [];
   const walk = (node, marks = []) => {
     if (node.nodeType === 3) {
       const text = node.textContent || "";
@@ -138,14 +146,13 @@ function inlineSpans(el) {
     if (tag === "strong" || tag === "b") nextMarks = [...marks, "strong"];
     if (tag === "em" || tag === "i") nextMarks = [...marks, "em"];
     if (tag === "a") {
-      const href = node.getAttribute("href") || "";
-      const markKey = key();
-      // annotations handled at block level — keep simple: plain text + href in text
-      for (const child of node.childNodes) walk(child, nextMarks);
-      if (href && spans.length) {
-        const last = spans[spans.length - 1];
-        last.text = `${last.text} (${href})`;
+      const href = normalizeUrl(node.getAttribute("href") || "");
+      if (href) {
+        const markKey = key();
+        markDefs.push({ _type: "link", _key: markKey, href });
+        nextMarks = [...nextMarks, markKey];
       }
+      for (const child of node.childNodes) walk(child, nextMarks);
       return;
     }
     if (tag === "br") {
@@ -156,7 +163,7 @@ function inlineSpans(el) {
   };
   for (const child of el.childNodes) walk(child);
   if (!spans.length) spans.push({ _type: "span", _key: key(), text: "", marks: [] });
-  return spans;
+  return { spans, markDefs };
 }
 
 function htmlToPortableText(html, images) {
@@ -165,20 +172,44 @@ function htmlToPortableText(html, images) {
   const blocks = [];
 
   const pushBlock = (style, el, listItem) => {
-    const children = inlineSpans(el);
+    const { spans: children, markDefs } = inlineSpans(el);
     const text = children.map((c) => c.text).join("");
-    const imgMatch = text.match(/^\[\[SANITY_IMAGE_(\d+)\]\]$/);
-    if (imgMatch) {
-      const img = images[Number(imgMatch[1])];
-      if (img) blocks.push({ ...img, _key: key() });
+    const imgParts = text.split(/(\[\[SANITY_IMAGE_\d+\]\])/);
+    if (imgParts.some((p) => /^\[\[SANITY_IMAGE_\d+\]\]$/.test(p))) {
+      for (const part of imgParts) {
+        const m = part.match(/^\[\[SANITY_IMAGE_(\d+)\]\]$/);
+        if (m) {
+          const img = images[Number(m[1])];
+          if (img) blocks.push({ ...img, _key: key() });
+          continue;
+        }
+        if (part.trim()) {
+          blocks.push({
+            _type: "block",
+            _key: key(),
+            style,
+            markDefs,
+            children: [{ _type: "span", _key: key(), text: part, marks: [] }],
+            ...(listItem ? { listItem, level: 1 } : {}),
+          });
+        }
+      }
       return;
+    }
+    const videoOnly = text.trim().match(/^\[video:\s*(https?:\/\/[^\]\s]+)[^\]]*\]$/i);
+    if (videoOnly) {
+      const url = cleanVideoFilterUrl(videoOnly[1]);
+      if (isYoutubeUrl(url)) {
+        blocks.push({ _type: "youtube", _key: repairKey(), url });
+        return;
+      }
     }
     if (!text.trim() && style === "normal" && !listItem) return;
     blocks.push({
       _type: "block",
       _key: key(),
       style,
-      markDefs: [],
+      markDefs,
       children,
       ...(listItem ? { listItem, level: 1 } : {}),
     });
@@ -216,7 +247,7 @@ function htmlToPortableText(html, images) {
     }
   }
 
-  return blocks.length
+  const converted = blocks.length
     ? blocks
     : [
         {
@@ -227,6 +258,7 @@ function htmlToPortableText(html, images) {
           children: [{ _type: "span", _key: key(), text: "", marks: [] }],
         },
       ];
+  return repairBlocks(converted).blocks;
 }
 
 function docId(prefix, nid) {

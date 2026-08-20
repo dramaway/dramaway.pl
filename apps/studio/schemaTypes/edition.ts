@@ -38,6 +38,14 @@ export const edition = defineType({
     defineField({ name: "summary", title: "Summary", type: "text" }),
     defineField({ name: "body", title: "Body", type: "blockContent" }),
     defineField({
+      name: "outcomes",
+      title: "Outcomes",
+      description:
+        "Spectacles, events, or other results of this edition (0–n). Generic until Figma.",
+      type: "array",
+      of: [{ type: "editionOutcome" }],
+    }),
+    defineField({
       name: "gallery",
       title: "Gallery",
       type: "array",

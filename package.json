@@ -12,7 +12,8 @@
     "lint": "pnpm --filter web lint",
     "extract:fundacja": "python3 scripts/extract_fundacja.py",
     "migrate:fundacja": "node --env-file=apps/studio/.env scripts/migrate-fundacja.mjs",
-    "migrate:art-generacje": "node --env-file=apps/studio/.env scripts/migrate-art-generacje.mjs"
+    "migrate:art-generacje": "node --env-file=apps/studio/.env scripts/migrate-art-generacje.mjs",
+    "repair:portable-text": "node --env-file=apps/studio/.env scripts/repair-portable-text.mjs"
   },
   "engines": {
     "node": ">=22.12"

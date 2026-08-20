@@ -1,16 +1,20 @@
 import {
   PortableText,
   type PortableTextComponents,
+  type PortableTextMarkComponentProps,
   type PortableTextTypeComponentProps,
 } from "@portabletext/react";
 import type { PortableContent } from "@/lib/sanity/types";
 import { urlFor } from "@/lib/sanity/image";
+import { youtubeEmbedSrc } from "@/lib/sanity/youtube";
 
 type ImageValue = {
   _type?: string;
   alt?: string;
   asset?: { _ref?: string; _id?: string };
 };
+
+type YoutubeValue = { _type?: string; url?: string };
 
 function PortableImage({ value }: PortableTextTypeComponentProps<ImageValue>) {
   if (!value?.asset) return null;
@@ -21,6 +25,42 @@ function PortableImage({ value }: PortableTextTypeComponentProps<ImageValue>) {
       alt={value.alt || ""}
       className="my-6 h-auto w-full"
     />
+  );
+}
+
+function PortableYoutube({
+  value,
+}: PortableTextTypeComponentProps<YoutubeValue>) {
+  const src = value?.url ? youtubeEmbedSrc(value.url) : null;
+  if (!src) return null;
+  return (
+    <div className="my-6 aspect-video w-full overflow-hidden rounded-md border">
+      <iframe
+        src={src}
+        title="YouTube"
+        className="h-full w-full"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      />
+    </div>
+  );
+}
+
+function PortableLink({
+  children,
+  value,
+}: PortableTextMarkComponentProps<{ _type: string; href?: string }>) {
+  const href = value?.href;
+  if (!href) return <>{children}</>;
+  return (
+    <a
+      href={href}
+      className="underline underline-offset-2"
+      target="_blank"
+      rel="noreferrer"
+    >
+      {children}
+    </a>
   );
 }
 
@@ -49,8 +89,12 @@ const components: PortableTextComponents = {
       <ol className="list-decimal space-y-1 pl-6">{children}</ol>
     ),
   },
+  marks: {
+    link: PortableLink,
+  },
   types: {
     image: PortableImage,
+    youtube: PortableYoutube,
   },
 };
 

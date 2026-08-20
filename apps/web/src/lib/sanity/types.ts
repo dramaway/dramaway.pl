@@ -55,6 +55,14 @@ export type ProjectListItem = {
   editionCount: number;
 };
 
+export type EditionOutcome = {
+  title: string;
+  subtitle: string | null;
+  date: string | null;
+  image: SanityImage | null;
+  description: string | null;
+};
+
 export type ProjectEdition = {
   title: string;
   slug: string;
@@ -65,6 +73,7 @@ export type ProjectEdition = {
   body: PortableContent;
   gallery: SanityImage[] | null;
   partners: string[] | null;
+  outcomes: EditionOutcome[] | null;
 };
 
 export type ProjectDetail = {
