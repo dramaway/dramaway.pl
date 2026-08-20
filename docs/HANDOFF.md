@@ -5,10 +5,11 @@ Nowy czat: przeczytaj ten plik + `CLAUDE.md` + `docs/README.md` — nie odtwarza
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-08-20 (~23:05) |
-| **Gałąź / HEAD** | `main` @ `d365749` (aktualizuj przy każdym handoff update) |
+| **Ostatnia aktualizacja** | 2026-08-20 (~23:05) — sesja zamknięta, serwery lokalne zatrzymane |
+| **Gałąź / HEAD** | `main` @ `2e27977` |
 | **Remote** | brak (tylko lokalny git) |
 | **Owner Sanity (na razie)** | Jan Mirecki — transfer ownership później OK |
+| **Staging / working tree** | czyste |
 
 ---
 
@@ -26,11 +27,11 @@ Język: kod/commity/CMS EN · docs `.md` PL.
 
 ## Stan na teraz (fakt)
 
-### Działa lokalnie
+### Lokalne serwery
 
-- `pnpm dev` → http://localhost:3000 (placeholder + `/preview` z JSON z dumpa)
-- `pnpm dev:studio` → http://localhost:3333 (Sanity Studio)
-- CORS: `localhost:3000`, `localhost:3333`
+- **Zatrzymane** na koniec sesji 2026-08-20 (porty 3000 / 3333 wolne).
+- Start: `pnpm dev` (:3000), `pnpm dev:studio` (:3333)
+- CORS już skonfigurowane: `localhost:3000`, `localhost:3333`
 - Sanity project: **Dramaway**, id `tr2qdg9j`, dataset `production`, org `oxdl2whwy`
 - Env (gitignored): `apps/studio/.env`, `apps/web/.env.local` — project id + write token
 
@@ -41,6 +42,7 @@ Język: kod/commity/CMS EN · docs `.md` PL.
 - Extract dumpa fundacji → JSON (`pnpm extract:fundacja`)
 - Migracja fundacji → Sanity (`pnpm migrate:fundacja`): **7 persons, 23 pages, 2 news-as-pages, ~74 assets**; tokeny Media `[[{fid…}]]` → upload obrazów
 - Upgrade Studio **3.99 → 6.10.1**
+- Living handoff: `docs/HANDOFF.md` + prompt transplantu do nowego czatu
 
 ### Świadomie nie zrobione
 
