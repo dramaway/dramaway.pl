@@ -6,7 +6,7 @@ Nowy czat: przeczytaj ten plik + `CLAUDE.md` + `docs/README.md` — nie odtwarza
 | | |
 |--|--|
 | **Ostatnia aktualizacja** | 2026-08-20 (~23:05) — sesja zamknięta, serwery lokalne zatrzymane |
-| **Gałąź / HEAD** | `main` @ `2e27977` |
+| **Gałąź / HEAD** | `main` @ `fa5f586` |
 | **Remote** | brak (tylko lokalny git) |
 | **Owner Sanity (na razie)** | Jan Mirecki — transfer ownership później OK |
 | **Staging / working tree** | czyste |
