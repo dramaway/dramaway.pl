@@ -31,7 +31,7 @@ out/
 .sanity/
 *.log
 coverage/
-.cache/
+*.tsbuildinfo
 
 # Generated extract from Drupal dumps (local smoke data)
 apps/web/src/data/extracted/

@@ -22,7 +22,7 @@ export const publication = defineType({
       initialValue: "article",
     }),
     defineField({ name: "summary", title: "Summary", type: "text" }),
-    defineField({ name: "body", title: "Body", type: "array", of: [{ type: "block" }] }),
+    defineField({ name: "body", title: "Body", type: "blockContent" }),
     defineField({ name: "file", title: "File (PDF)", type: "file" }),
   ],
   preview: {

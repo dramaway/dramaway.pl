@@ -9,7 +9,7 @@ export const person = defineType({
     defineField({ name: "slug", title: "Slug", type: "slug", options: { source: "name" }, validation: (r) => r.required() }),
     defineField({ name: "role", title: "Role", type: "string" }),
     defineField({ name: "photo", title: "Photo", type: "image", options: { hotspot: true } }),
-    defineField({ name: "bio", title: "Bio", type: "array", of: [{ type: "block" }] }),
+    defineField({ name: "bio", title: "Bio", type: "blockContent" }),
     defineField({ name: "email", title: "Email", type: "string" }),
   ],
   preview: {

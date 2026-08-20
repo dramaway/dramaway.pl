@@ -7,7 +7,7 @@ export const page = defineType({
   fields: [
     defineField({ name: "title", title: "Title", type: "string", validation: (r) => r.required() }),
     defineField({ name: "slug", title: "Slug", type: "slug", options: { source: "title" }, validation: (r) => r.required() }),
-    defineField({ name: "body", title: "Body", type: "array", of: [{ type: "block" }] }),
+    defineField({ name: "body", title: "Body", type: "blockContent" }),
   ],
   preview: {
     select: { title: "title" },

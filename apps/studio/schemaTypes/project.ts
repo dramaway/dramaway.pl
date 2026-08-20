@@ -1,12 +1,23 @@
-import { defineType, defineField } from "sanity";
+import { defineField, defineType } from "sanity";
 
 export const project = defineType({
   name: "project",
   title: "Project",
   type: "document",
   fields: [
-    defineField({ name: "title", title: "Title", type: "string", validation: (r) => r.required() }),
-    defineField({ name: "slug", title: "Slug", type: "slug", options: { source: "title" }, validation: (r) => r.required() }),
+    defineField({
+      name: "title",
+      title: "Title",
+      type: "string",
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      options: { source: "title" },
+      validation: (r) => r.required(),
+    }),
     defineField({
       name: "status",
       title: "Status",
@@ -20,40 +31,50 @@ export const project = defineType({
       },
       initialValue: "active",
     }),
-    defineField({ name: "featured", title: "Featured (e.g. Art Generacje)", type: "boolean", initialValue: false }),
+    defineField({
+      name: "featured",
+      title: "Featured (e.g. Art Generacje)",
+      type: "boolean",
+      initialValue: false,
+    }),
     defineField({ name: "summary", title: "Summary", type: "text" }),
-    defineField({ name: "body", title: "Body", type: "array", of: [{ type: "block" }] }),
+    defineField({ name: "body", title: "Body", type: "blockContent" }),
     defineField({
       name: "editions",
       title: "Editions",
       type: "array",
-      of: [
-        {
-          type: "object",
-          name: "edition",
-          fields: [
-            defineField({ name: "title", title: "Edition title", type: "string" }),
-            defineField({ name: "year", title: "Year", type: "number" }),
-            defineField({ name: "summary", title: "Summary", type: "text" }),
-            defineField({
-              name: "gallery",
-              title: "Gallery",
-              type: "array",
-              of: [{ type: "image", options: { hotspot: true } }],
-            }),
-            defineField({
-              name: "partners",
-              title: "Partners",
-              type: "array",
-              of: [{ type: "string" }],
-            }),
-          ],
-          preview: { select: { title: "title", subtitle: "year" } },
-        },
-      ],
+      of: [{ type: "edition" }],
+    }),
+    defineField({
+      name: "afterword",
+      title: "Credits / afterword",
+      type: "blockContent",
+      description: "Authors, articles, thanks — after the edition list",
+    }),
+    defineField({
+      name: "partners",
+      title: "Partners",
+      type: "array",
+      of: [{ type: "string" }],
+    }),
+    defineField({
+      name: "sponsors",
+      title: "Sponsors",
+      type: "array",
+      of: [{ type: "string" }],
     }),
   ],
   preview: {
     select: { title: "title", subtitle: "status" },
   },
+  orderings: [
+    {
+      title: "Featured first",
+      name: "featuredFirst",
+      by: [
+        { field: "featured", direction: "desc" },
+        { field: "title", direction: "asc" },
+      ],
+    },
+  ],
 });
