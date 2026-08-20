@@ -1,28 +1,31 @@
 # Private (lokalnie, poza gitem)
 
-Ten katalog jest w `.gitignore`, poza tym plikiem.
+Ten katalog jest **w całości poza repozytorium**, poza tym plikiem.
+Tu trzymamy wszystko, czego nie ma w czystym projekcie deweloperskim:
+zrzuty baz, mirror FTP, PDF-y, paczki kickoffu, snapshoty HTML.
 
-## Co tu trzymać
+Root repozytorium (`apps/`, `docs/`, `scripts/`) zostaje czysty.
+
+## Zawartość
 
 | Ścieżka | Zawartość |
 |---------|-----------|
-| `dumps/` | Zrzuty MySQL ze starego hostingu (Drupal) |
-| (opcjonalnie) | Notatki z hasłami — lepiej menedżer haseł, nie pliki w projekcie |
+| `dumps/` | Zrzuty MySQL (`drama_mfund`, `drama_teatr`) |
+| `legacy/` | Mirror FTP (motywy, files) — bez `settings.php` |
+| `live-snapshots/` | Zrzuty HTML homepage |
+| `dramaway-setup-ustalenia/` | Paczka kickoffu (archiwum; kanon w `docs/concept/`) |
+| `strona.pdf` | Materiały robocze spoza kodu |
 
-## Oczekiwane zrzuty
+## Dumpy SQL
 
 | Plik | Baza | Rola |
 |------|------|------|
-| `drama_mfund_*.sql` (lub `.sql.gz`) | `drama_mfund` | Treści fundacja.dramaway.pl |
-| `drama_teatr_*.sql.gz` | `drama_teatr` | Stary portal wiedzy — **źródło** do Czytelni, nie osobny serwis w MVP |
+| `drama_mfund_*.sql` (lub `.sql.gz`) | `drama_mfund` | Fundacja |
+| `drama_teatr_*.sql.gz` | `drama_teatr` | Źródło do Czytelni (nie osobny serwis w MVP) |
 
-## Jak zrobić zrzut
+Eksport w DirectAdmin: **jedna** baza → `.sql.gz`. Nie commituj dumpów.
 
-W DirectAdmin: eksport **jednej** bazy → format `.sql.gz`.  
-Nie eksportuj całego konta. Nie commituj dumpów (ani Git LFS).
+## Extract do frontendu
 
-## Czego tu nie ma
-
-- Motywy i pliki z FTP → katalog `legacy/` w rootcie projektu (też gitignored)
-- Snapshoty HTML → `live-snapshots/` (gitignored)
-- Paczka kickoffu z ustalenia współpracy → `dramaway-setup-ustalenia/` (gitignored; kanon koncepcji jest w `docs/concept/`)
+Skrypt `pnpm extract:fundacja` czyta `dumps/` i zapisuje JSON do
+`apps/web/src/data/extracted/` (też gitignored) — do surowych templatek bez Sanity.

@@ -9,17 +9,17 @@ Redesign of **fundacja.dramaway.pl** (DramaWay Foundation). MVP is one site; Art
 
 ## Do not commit
 
-- `private/dumps/` (MySQL dumps: `drama_mfund`, `drama_teatr`)  
-- `legacy/` (FTP mirror of Drupal themes/files)  
-- `live-snapshots/`, `dramaway-setup-ustalenia/`, secrets, `.env*`  
+- `private/**` except `private/README.md` (dumps, FTP mirror, PDF, kickoff archive, snapshots)  
+- secrets, `.env*` (keep `.env.example`)  
+- `apps/web/src/data/extracted/` (generated from dumps)
 
 See `private/README.md` and `.gitignore`.
 
 ## Structure
 
 ```
-apps/web/          # Next.js 15 (later)
-apps/studio/       # Sanity Studio (later)
+apps/web/          # Next.js 15 + Tailwind v4 + shadcn/ui
+apps/studio/       # Sanity Studio v3 (schema stubs)
 docs/concept/      # IA and product assumptions (PL)
 docs/decisions/    # ADRs (PL body)
 docs/migration/    # Drupal → Sanity mapping (PL)
@@ -51,13 +51,15 @@ scripts/           # migration scripts (later)
 - Kickoff July 2025 dates are historical; do not treat them as the current schedule.  
 - Never put FTP/panel passwords or `settings.php` contents in docs.
 
-## Quick start (repo)
+## Quick start
 
 ```bash
-# Local git only for now — no remote required
-git status
-# App scaffold and Sanity come in a later phase
+pnpm install
+pnpm dev          # http://localhost:3000
+pnpm dev:studio   # needs SANITY_STUDIO_PROJECT_ID in apps/studio/.env
 ```
+
+Drupal import / wired content pages are not in the scaffold yet.
 
 ## Knowledge index
 

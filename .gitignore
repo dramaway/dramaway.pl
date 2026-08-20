@@ -7,14 +7,9 @@ Thumbs.db
 .env.*
 !.env.example
 
-# Local-only materials (never commit dumps, FTP mirror, kickoff pack for collaborators)
-private/dumps/
+# Everything under private/ is local-only except README.md
 private/**
 !private/README.md
-legacy/
-live-snapshots/
-dramaway-setup-ustalenia/
-strona.pdf
 
 # SQL / archives that might land in the wrong place
 *.sql
@@ -37,3 +32,6 @@ out/
 *.log
 coverage/
 .cache/
+
+# Generated extract from Drupal dumps (local smoke data)
+apps/web/src/data/extracted/

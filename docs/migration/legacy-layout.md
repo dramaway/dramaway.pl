@@ -1,37 +1,26 @@
 # Legacy na dysku
 
-Materiały ze starego hostingu — **poza gitem** (`.gitignore`). Ten plik mówi tylko, gdzie leżą lokalnie.
+Materiały ze starego hostingu i inne pliki lokalne — **poza gitem**, w [`private/`](../../private/README.md).
 
-## Mirror FTP — `legacy/`
-
-Pobrane motywami / custom / files (bez rdzenia Drupala i bez `settings.php`).
+## Mirror FTP — `private/legacy/`
 
 | Ścieżka | Zawartość |
 |---------|-----------|
-| `legacy/domains/multisite.dramaway.pl/public_html/sites/fundacja/` | Site fundacji: motyw `themes/fundacja`, `files/`, lokalne moduły |
-| `legacy/domains/multisite.dramaway.pl/public_html/sites/spinacz/` | Stary dramaway.pl |
-| `legacy/domains/multisite.dramaway.pl/public_html/sites/szkolenia/` | Centrum |
-| `legacy/domains/multisite.dramaway.pl/public_html/sites/biz/` | Biz |
-| `legacy/domains/multisite.dramaway.pl/public_html/sites/all/themes/bootstrap/` | Bootstrap base theme (multisite) |
-| `legacy/domains/teatrzaangazowany.dramaway.pl/public_html/sites/default/themes/teatr/` | Motyw portalu wiedzy |
-| `legacy/domains/teatrzaangazowany.dramaway.pl/public_html/sites/default/files/` | Pliki portalu (dużo mediów) |
+| `private/legacy/domains/multisite.dramaway.pl/public_html/sites/fundacja/` | Site fundacji: motyw, files |
+| `private/legacy/domains/multisite.dramaway.pl/public_html/sites/spinacz/` | Stary dramaway.pl |
+| `private/legacy/domains/multisite.dramaway.pl/public_html/sites/szkolenia/` | Centrum |
+| `private/legacy/domains/multisite.dramaway.pl/public_html/sites/biz/` | Biz |
+| `private/legacy/domains/teatrzaangazowany.dramaway.pl/.../themes/teatr/` | Motyw portalu wiedzy |
+| `private/legacy/domains/teatrzaangazowany.dramaway.pl/.../files/` | Media portalu |
 
-Routing multisite (historycznie): `sites.php` mapował m.in. `fundacja.dramaway.pl` → katalog `fundacja`.
+## Snapshoty HTML — `private/live-snapshots/`
 
-## Snapshoty HTML — `live-snapshots/`
-
-Zrzuty homepage (podgląd bez Drupala), m.in.:
-
-- `fundacja.dramaway.pl.html`
-- `dramaway.pl.html`
-- `centrum.dramaway.pl.html`
-- `teatrzaangazowany-http.html`
+m.in. `fundacja.dramaway.pl.html`, `dramaway.pl.html`, `centrum.dramaway.pl.html`
 
 ## Dumpy SQL — `private/dumps/`
 
-Opis: [../../private/README.md](../../private/README.md).
+Opis: [private/README.md](../../private/README.md).
 
-## Kickoff pack — `dramaway-setup-ustalenia/`
+## Kickoff pack — `private/dramaway-setup-ustalenia/`
 
-Lokalna paczka startowa (w tym materiały pod inną rolę). **Nie** jest źródłem prawdy w repo.  
-Kanon koncepcji: `docs/concept/`, decyzje: `docs/decisions/`.
+Archiwum lokalne. Kanon koncepcji: `docs/concept/`, decyzje: `docs/decisions/`.
