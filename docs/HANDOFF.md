@@ -6,7 +6,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | | |
 |--|--|
 | **Ostatnia aktualizacja** | 2026-08-21 noc — sesja zamknięta; ciąg dalszy w sobotę |
-| **Gałąź / HEAD** | `main` @ `PENDING` |
+| **Gałąź / HEAD** | `main` @ `adda562` |
 | **Remote** | brak (tylko lokalny git) |
 | **Working tree** | czyste |
 | **Owner Sanity (na razie)** | Jan Mirecki |
