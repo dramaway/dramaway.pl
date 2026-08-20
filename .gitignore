@@ -1,0 +1,39 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets and local env
+.env
+.env.*
+!.env.example
+
+# Local-only materials (never commit dumps, FTP mirror, kickoff pack for collaborators)
+private/dumps/
+private/**
+!private/README.md
+legacy/
+live-snapshots/
+dramaway-setup-ustalenia/
+strona.pdf
+
+# SQL / archives that might land in the wrong place
+*.sql
+*.sql.gz
+*.gz
+!package-lock.json
+
+# Dependencies and build
+node_modules/
+.pnpm-store/
+.next/
+dist/
+out/
+.turbo/
+.vercel/
+.netlify/
+
+# Sanity / tooling
+.sanity/
+*.log
+coverage/
+.cache/

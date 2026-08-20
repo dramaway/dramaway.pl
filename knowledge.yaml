@@ -1,0 +1,40 @@
+# knowledge.yaml — Knowledge Context Protocol manifest
+# Spec: https://cantara.github.io/knowledge-context-protocol/
+
+schema_version: "1.0"
+project:
+  name: "DramaWay foundation site"
+  description: "Redesign of fundacja.dramaway.pl — Next.js 15 + Sanity v3 + Netlify"
+  type: "web-app"
+
+knowledge:
+  primary_context:
+    - path: CLAUDE.md
+      description: "Agent hub: stack, MVP scope, what not to commit"
+      priority: critical
+    - path: AGENTS.md
+      description: "Pointer to CLAUDE.md"
+      priority: high
+    - path: README.md
+      description: "Human-facing project overview (Polish)"
+      priority: high
+
+  documentation:
+    - path: docs/README.md
+      description: "Documentation map"
+      priority: high
+    - path: docs/concept/
+      description: "IA and Art Generacje product assumptions"
+      priority: high
+    - path: docs/decisions/
+      description: "Architecture Decision Records"
+      priority: high
+    - path: docs/migration/
+      description: "Drupal inventory and legacy layout on disk"
+      priority: medium
+
+  local_only:
+    - path: private/README.md
+      description: "Where SQL dumps live (dumps themselves are gitignored)"
+      priority: medium
+      optional: true

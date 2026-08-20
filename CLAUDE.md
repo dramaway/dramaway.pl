@@ -1,0 +1,64 @@
+# DramaWay — agent context
+
+Redesign of **fundacja.dramaway.pl** (DramaWay Foundation). MVP is one site; Art Generacje is the flagship. Reading room / knowledge base is a section of that site, not a second Next.js app. Stack: Next.js 15 App Router, Tailwind CSS v4 + shadcn/ui, Sanity v3, Netlify (not Vercel).
+
+## Language
+
+- **Code, directories, commits, CMS type names:** English  
+- **Human-facing `.md` docs:** Polish  
+
+## Do not commit
+
+- `private/dumps/` (MySQL dumps: `drama_mfund`, `drama_teatr`)  
+- `legacy/` (FTP mirror of Drupal themes/files)  
+- `live-snapshots/`, `dramaway-setup-ustalenia/`, secrets, `.env*`  
+
+See `private/README.md` and `.gitignore`.
+
+## Structure
+
+```
+apps/web/          # Next.js 15 (later)
+apps/studio/       # Sanity Studio (later)
+docs/concept/      # IA and product assumptions (PL)
+docs/decisions/    # ADRs (PL body)
+docs/migration/    # Drupal → Sanity mapping (PL)
+private/           # local-only; only README.md is tracked
+scripts/           # migration scripts (later)
+```
+
+## Key docs
+
+| Topic | Path |
+|-------|------|
+| Docs hub | `docs/README.md` |
+| IA | `docs/concept/ia.md` |
+| Art Generacje | `docs/concept/art-generacje.md` |
+| Stack ADR | `docs/decisions/ADR-001-stack.md` |
+| Repo / language ADR | `docs/decisions/ADR-002-repo-and-language.md` |
+| Content model / MVP | `docs/decisions/ADR-003-content-model-and-mvp.md` |
+| Drupal inventory | `docs/migration/drupal-inventory.md` |
+
+## Content model (target Sanity)
+
+`project`, `person`, `page`, `publication`, `siteSettings` — map Drupal into these; do not clone Drupal `node_type` 1:1.  
+`drama_teatr` dump is a **source** for publications / reading room, not a second production site in MVP.
+
+## Critical gotchas
+
+- **MVP domain:** only fundacja; centrum stays an external link.  
+- **Art Generacje** needs project + editions (galleries, partners), not a flat project card.  
+- Kickoff July 2025 dates are historical; do not treat them as the current schedule.  
+- Never put FTP/panel passwords or `settings.php` contents in docs.
+
+## Quick start (repo)
+
+```bash
+# Local git only for now — no remote required
+git status
+# App scaffold and Sanity come in a later phase
+```
+
+## Knowledge index
+
+See `knowledge.yaml`.
