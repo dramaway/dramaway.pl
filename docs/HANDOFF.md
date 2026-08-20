@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | **Ostatnia aktualizacja** | 2026-08-21 wieczór — sesja zamknięta; ciąg dalszy w sobotę |
-| **Gałąź / HEAD** | `main` @ `e55c2da` (po commicie zamknięcia — popraw pointer) |
+| **Gałąź / HEAD** | `main` @ `c170533` |
 | **Remote** | brak (tylko lokalny git) |
 | **Working tree** | czyste |
 | **Owner Sanity (na razie)** | Jan Mirecki |
