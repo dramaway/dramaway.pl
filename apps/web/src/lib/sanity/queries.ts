@@ -39,7 +39,9 @@ export const newsListQuery = `*[_type == "page" && ${newsSlugFilter}] | order(ti
   _id,
   title,
   "slug": slug.current,
-  "isNews": true
+  "isNews": true,
+  "cover": body[_type == "image"][0],
+  "excerpt": pt::text(body)
 }`;
 
 export const pageBySlugQuery = `*[_type == "page" && slug.current == $slug][0] {
@@ -72,7 +74,11 @@ export const projectsListQuery = `*[_type == "project"] | order(featured desc, t
   status,
   featured,
   summary,
-  "editionCount": count(editions)
+  "editionCount": count(editions),
+  "cover": coalesce(
+    (editions[].gallery[])[defined(asset)][0],
+    *[_type == "page" && slug.current == ^.slug.current][0].body[_type == "image"][0]
+  )
 }`;
 
 export const projectBySlugQuery = `*[_type == "project" && slug.current == $slug][0] {
@@ -99,8 +105,14 @@ export const pagesBySlugsQuery = `*[_type == "page" && slug.current in $slugs] {
 }`;
 
 export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
+  _updatedAt,
   title,
   tagline,
   centrumUrl,
-  footerNote
+  footerNote,
+  heroHeading,
+  heroLead,
+  heroCtaLabel,
+  heroCtaHref,
+  heroImage
 }`;

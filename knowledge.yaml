@@ -35,6 +35,12 @@ knowledge:
     - path: docs/concept/
       description: "IA and Art Generacje product assumptions"
       priority: high
+    - path: docs/design/system.md
+      description: "UI canon: design tokens, composition classes, primitives, how to add a section"
+      priority: critical
+    - path: docs/design/figma-baseline.md
+      description: "Measured Figma values: screen node IDs, colours, type scale, circle and image geometry"
+      priority: high
     - path: docs/decisions/
       description: "Architecture Decision Records"
       priority: high

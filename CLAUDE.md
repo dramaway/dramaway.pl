@@ -32,6 +32,8 @@ scripts/           # migration scripts (later)
 | Topic | Path |
 |-------|------|
 | **Session handoff (start here)** | `docs/HANDOFF.md` |
+| **UI canon (read before touching apps/web)** | `docs/design/system.md` |
+| Measured Figma values | `docs/design/figma-baseline.md` |
 | **Fundacja migration status** | `docs/migration/fundacja-status.md` |
 | Docs hub | `docs/README.md` |
 | IA | `docs/concept/ia.md` |
@@ -39,6 +41,7 @@ scripts/           # migration scripts (later)
 | Stack ADR | `docs/decisions/ADR-001-stack.md` |
 | Repo / language ADR | `docs/decisions/ADR-002-repo-and-language.md` |
 | Content model / MVP | `docs/decisions/ADR-003-content-model-and-mvp.md` |
+| Layout architecture | `docs/decisions/ADR-004-layout-architecture.md` |
 | Drupal inventory | `docs/migration/drupal-inventory.md` |
 
 ## Content model (target Sanity)
@@ -48,6 +51,7 @@ scripts/           # migration scripts (later)
 
 ## Critical gotchas
 
+- **Figma is a visual direction, not a spec** — no auto-layout, variables, components or mobile screens. Deviations in code are deliberate and listed in `docs/design/system.md`; do not "fix" them back. 
 - **MVP domain:** only fundacja; centrum stays an external link.  
 - **Art Generacje** needs project + editions (galleries, partners), not a flat project card.  
 - Kickoff July 2025 dates are historical; do not treat them as the current schedule.  

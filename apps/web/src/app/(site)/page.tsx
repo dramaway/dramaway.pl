@@ -1,15 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ListingShell } from "@/components/article-shell";
+import { Section } from "@/components/layout/section";
+import { Hero } from "@/components/sections/hero";
+import { CtaLink } from "@/components/visual/cta-link";
+import { DotBand } from "@/components/visual/dot-band";
+import { Media } from "@/components/visual/media";
+import { PaletteRow } from "@/components/visual/palette-row";
 import { getNewsPages, getProjects } from "@/lib/sanity/fetch";
 import {
-  newsPublicSlug,
   publicPathForPageSlug,
   publicPathForProjectSlug,
 } from "@/lib/routes";
 import { getResolvedSite } from "@/lib/site";
 
 export const revalidate = 60;
+
+function newsTitle(title: string) {
+  return title.replace(/^\[Aktualność\]\s*/i, "").trim();
+}
 
 export async function generateMetadata(): Promise<Metadata> {
   const site = await getResolvedSite();
@@ -20,83 +28,113 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const [site, projects, news] = await Promise.all([
-    getResolvedSite(),
+  const [projects, news] = await Promise.all([
     getProjects(),
     getNewsPages(),
   ]);
   const featured = projects.find((project) => project.featured) ?? projects[0];
+  const site = await getResolvedSite(featured?.cover);
 
   return (
-    <ListingShell>
-      <h1 className="text-4xl font-semibold tracking-tight">{site.title}</h1>
-      {site.tagline ? (
-        <p className="mt-3 text-lg text-muted-foreground">{site.tagline}</p>
-      ) : null}
+    <>
+      <Hero hero={site.hero} />
+
+      <DotBand />
 
       {featured ? (
-        <section className="mt-10 rounded-lg border p-6">
-          <p className="text-sm text-muted-foreground">Projekt wyróżniony</p>
-          <h2 className="mt-1 text-2xl font-semibold tracking-tight">
-            <Link
-              href={publicPathForProjectSlug(featured.slug)}
-              className="hover:underline"
-            >
-              {featured.title}
-            </Link>
-          </h2>
-          {featured.summary ? (
-            <p className="mt-2 text-muted-foreground">{featured.summary}</p>
-          ) : null}
-          {featured.editionCount ? (
-            <p className="mt-2 text-sm text-muted-foreground">
-              {featured.editionCount} edycji
-            </p>
-          ) : null}
-        </section>
+        <Section bleed>
+          <div className="split">
+            <div className="split-text py-section">
+              <p className="font-display text-small font-semibold uppercase text-magenta">
+                Projekt wyróżniony
+              </p>
+              <h2 className="mt-2 font-display text-h2 font-extrabold">
+                <Link href={publicPathForProjectSlug(featured.slug)}>
+                  {featured.title}
+                </Link>
+              </h2>
+              {featured.summary ? (
+                <p className="measure mt-6">{featured.summary}</p>
+              ) : null}
+              {featured.editionCount ? (
+                <p className="mt-3 text-small">{featured.editionCount} edycji</p>
+              ) : null}
+              <CtaLink
+                href={publicPathForProjectSlug(featured.slug)}
+                className="mt-8"
+              >
+                zobacz projekt
+              </CtaLink>
+            </div>
+            <Media
+              image={featured.cover}
+              alt={featured.title}
+              variant="bleed"
+              ratio="landscape"
+              sizes="(min-width: 64rem) 34vw, 100vw"
+              className="split-media"
+            />
+          </div>
+        </Section>
       ) : null}
 
-      <section className="mt-12">
-        <h2 className="text-xl font-semibold">Projekty</h2>
-        <ul className="mt-4 divide-y">
+      {news.length > 0 ? (
+        <Section>
+          <h2 className="font-display text-h2 font-extrabold">Aktualności</h2>
+          <ul className="cols-3 mt-10">
+            {news.map((item) => (
+              <li key={item._id}>
+                <Link href={publicPathForPageSlug(item.slug)} className="group">
+                  <Media
+                    image={item.cover ?? null}
+                    alt={newsTitle(item.title)}
+                    variant="inset"
+                    ratio="landscape"
+                    sizes="(min-width: 64rem) 28vw, (min-width: 48rem) 45vw, 100vw"
+                  />
+                  <h3 className="mt-4 font-display text-h3 font-extrabold group-hover:text-magenta">
+                    {newsTitle(item.title)}
+                  </h3>
+                </Link>
+                {item.excerpt ? (
+                  <p className="mt-3 line-clamp-4 text-small">
+                    {item.excerpt}
+                  </p>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </Section>
+      ) : null}
+
+      <Section>
+        <h2 className="font-display text-h2 font-extrabold">Projekty</h2>
+        <ul className="cols-3 mt-10">
           {projects.map((project) => (
-            <li key={project._id} className="py-3">
+            <li key={project._id}>
               <Link
                 href={publicPathForProjectSlug(project.slug)}
-                className="font-medium hover:underline"
+                className="group"
               >
-                {project.title}
+                <Media
+                  image={project.cover}
+                  alt={project.title}
+                  variant="inset"
+                  ratio="album"
+                  sizes="(min-width: 64rem) 28vw, (min-width: 48rem) 45vw, 100vw"
+                />
+                <h3 className="mt-4 font-display text-h3 font-extrabold group-hover:text-magenta">
+                  {project.title}
+                </h3>
               </Link>
             </li>
           ))}
         </ul>
-        <p className="mt-4">
-          <Link href="/projekty" className="text-sm underline underline-offset-2">
-            Wszystkie projekty
-          </Link>
-        </p>
-      </section>
+      </Section>
 
-      {news.length > 0 ? (
-        <section className="mt-12">
-          <h2 className="text-xl font-semibold">Aktualności</h2>
-          <ul className="mt-4 divide-y">
-            {news.map((item) => (
-              <li key={item._id} className="py-3">
-                <Link
-                  href={publicPathForPageSlug(item.slug)}
-                  className="font-medium hover:underline"
-                >
-                  {item.title.replace(/^\[Aktualność\]\s*/i, "")}
-                </Link>
-                <span className="ml-2 text-xs text-muted-foreground">
-                  /{newsPublicSlug(item.slug)}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
-    </ListingShell>
+      <div className="page pb-section">
+        <PaletteRow className="justify-center" />
+      </div>
+    </>
   );
 }

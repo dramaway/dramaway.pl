@@ -28,6 +28,8 @@ export type PageListItem = {
   title: string;
   slug: string;
   isNews: boolean;
+  cover?: SanityImage | null;
+  excerpt?: string | null;
 };
 
 export type PageDetail = {
@@ -43,6 +45,20 @@ export type SiteSettings = {
   tagline: string | null;
   centrumUrl: string | null;
   footerNote: string | null;
+  heroHeading: string | null;
+  heroLead: string | null;
+  heroCtaLabel: string | null;
+  heroCtaHref: string | null;
+  heroImage: (SanityImage & { alt?: string | null }) | null;
+};
+
+export type HeroContent = {
+  heading: string;
+  lead: string | null;
+  ctaLabel: string | null;
+  ctaHref: string;
+  image: SanityImage | null;
+  imageAlt: string;
 };
 
 export type ContentCounts = {
@@ -60,6 +76,7 @@ export type ProjectListItem = {
   featured: boolean | null;
   summary: string | null;
   editionCount: number;
+  cover: SanityImage | null;
 };
 
 export type EditionOutcome = {

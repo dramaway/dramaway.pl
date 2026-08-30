@@ -15,6 +15,13 @@ Mapa dokumentów projektu. Treść po polsku; nazwy plików ADR i ścieżek kodu
 | [concept/ia.md](concept/ia.md) | Informacyjna architektura fundacji (nawigacja MVP) |
 | [concept/art-generacje.md](concept/art-generacje.md) | Art Generacje jako serce serwisu |
 
+## Design
+
+| Plik | Opis |
+|------|------|
+| [design/system.md](design/system.md) | **Kanon UI** — tokeny, klasy kompozycyjne, prymitywy, jak dołożyć sekcję |
+| [design/figma-baseline.md](design/figma-baseline.md) | Pomiary z Figmy — node ID ekranów, kolory, typografia, geometria kół i zdjęć |
+
 ## Decyzje (ADR)
 
 | Plik | Opis |
@@ -22,6 +29,7 @@ Mapa dokumentów projektu. Treść po polsku; nazwy plików ADR i ścieżek kodu
 | [decisions/ADR-001-stack.md](decisions/ADR-001-stack.md) | Next.js 15, Tailwind v4, shadcn, Sanity, Netlify |
 | [decisions/ADR-002-repo-and-language.md](decisions/ADR-002-repo-and-language.md) | Git lokalny, język EN/PL, dumpów nie ma w repo |
 | [decisions/ADR-003-content-model-and-mvp.md](decisions/ADR-003-content-model-and-mvp.md) | Zakres MVP i typy treści Sanity |
+| [decisions/ADR-004-layout-architecture.md](decisions/ADR-004-layout-architecture.md) | Architektura layoutu: tokeny, klasy kompozycyjne, odrzucone warianty |
 
 ## Migracja
 

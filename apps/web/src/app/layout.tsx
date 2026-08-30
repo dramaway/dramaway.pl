@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Alexandria, MuseoModerno } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const museoModerno = MuseoModerno({
+  variable: "--font-museomoderno",
+  subsets: ["latin-ext"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const alexandria = Alexandria({
+  variable: "--font-alexandria",
+  subsets: ["latin-ext"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -23,12 +25,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pl">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+    <html
+      lang="pl"
+      className={`${museoModerno.variable} ${alexandria.variable}`}
+    >
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

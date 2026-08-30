@@ -1,0 +1,46 @@
+---
+description: DramaWay visual system — tokens, composition classes and primitives for apps/web
+globs: apps/web/src/**
+alwaysApply: false
+---
+
+# DramaWay UI
+
+Read `docs/design/system.md` before building a section, and `docs/design/figma-baseline.md` for any measured value. Do not call the Figma MCP for numbers that are already in those files.
+
+The Figma file is a visual direction, not a spec: no auto-layout, no variables, no components, no mobile screens. Deviations from it are deliberate and listed in `system.md` — do not "fix" them back.
+
+## Hard rules
+
+- **No pixel values in `components/sections/*`.** Use tokens or the composition classes. Missing something? Add a class in `@layer components` in `globals.css` — never an arbitrary value like `mt-[137px]`.
+- **Decorative circles are backgrounds, not elements.** The Figma dot band is 270 identical circles; `DotBand` draws it with `radial-gradient`.
+- **Every section survives empty data.** Sanity fields are optional and galleries vary in length; Figma always shows a fixed count.
+- **Mobile follows the rules in `system.md`** (stack below 1024px, single column below 768px). Do not invent other breakpoint behaviour.
+
+## What exists
+
+Classes: `.page`, `.split` / `.split-text` / `.split-media` / `.split-reverse`, `.cols-3`, `.stack` / `.stack-item`, `.measure`.
+
+Components: `layout/section.tsx`, `visual/dot-band.tsx`, `visual/palette-row.tsx`, `visual/blob.tsx`, `visual/cta-link.tsx`, `visual/media.tsx`.
+
+Tokens: colours `sand` `ink` `green` `green-ink` `magenta` `navy` `brand-1…7`; fonts `font-display` `font-body`; sizes `text-display` `text-h1` `text-h2` `text-h3` `text-lead` `text-body` `text-small`; rhythm `py-section`.
+
+```tsx
+// BAD — hardcoded geometry, raw Figma green, no empty-state
+<div style={{ marginLeft: 156 }}>
+  <a className="text-[#369125]">poznaj nasze projekty</a>
+  <img src={url} width={481} height={823} />
+</div>
+
+// GOOD
+<Section bleed>
+  <div className="split">
+    <div className="split-text py-section">
+      <h2 className="font-display text-h2 font-extrabold">{title}</h2>
+      {summary ? <p className="measure mt-8 text-lead">{summary}</p> : null}
+      {ctaLabel ? <CtaLink href={ctaHref}>{ctaLabel}</CtaLink> : null}
+    </div>
+    <Media image={image} alt={alt} variant="bleed" className="split-media" />
+  </div>
+</Section>
+```

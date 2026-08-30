@@ -48,6 +48,58 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/*
+ * DramaWay design tokens.
+ * Values measured from the Figma file — see docs/design/figma-baseline.md.
+ * Deviations from Figma are listed in docs/design/system.md; do not "fix"
+ * them back to the raw Figma numbers without reading that file first.
+ */
+@theme {
+  --color-sand: #f1efe8;
+  --color-ink: #282828;
+  --color-green: #369125;
+  --color-green-ink: #2f7d20;
+  --color-magenta: #b22869;
+  --color-navy: #031f58;
+
+  --color-brand-1: #b22869;
+  --color-brand-2: #369125;
+  --color-brand-3: #e5b91f;
+  --color-brand-4: #d44688;
+  --color-brand-5: #426a21;
+  --color-brand-6: #34466b;
+  --color-brand-7: #51648a;
+
+  --font-display: var(--font-museomoderno), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-alexandria), ui-sans-serif, system-ui, sans-serif;
+
+  --text-display: clamp(2rem, 1.2rem + 2.6vw, 3rem);
+  --text-display--line-height: 1.4;
+  --text-h1: clamp(1.75rem, 1.35rem + 1.3vw, 2.25rem);
+  --text-h1--line-height: 1.2;
+  --text-h2: clamp(1.5rem, 1.25rem + 0.9vw, 2rem);
+  --text-h2--line-height: 1.35;
+  --text-h3: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+  --text-h3--line-height: 1.35;
+  --text-lead: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  --text-lead--line-height: 1.55;
+  --text-body: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+  --text-body--line-height: 1.72;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.57;
+
+  --spacing-section: clamp(3rem, 8vw, 7.5rem);
+
+  --radius-media: 16px;
+
+  /* Not utility namespaces — consumed by the composition classes below. */
+  --page-max: 1440px;
+  --page-pad: clamp(1.5rem, 6.8vw, 98px);
+  --page-indent: clamp(1.5rem, 10.8vw, 156px);
+  --dot-size: clamp(48px, 5.7vw, 82px);
+  --palette-size: clamp(44px, 7.9vw, 113px);
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -121,10 +173,234 @@
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
   html {
-    @apply font-sans;
+    @apply font-body;
+  }
+  body {
+    @apply bg-background text-body text-ink;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-display text-balance;
+  }
+}
+
+/*
+ * Composition classes. The Figma file has no auto-layout and eleven different
+ * left margins (88–156px); everything is normalised onto --page-pad and these
+ * four layouts. Add a new class here only when a screen needs a geometry that
+ * none of them can express.
+ */
+@layer components {
+  .page {
+    width: 100%;
+    max-width: var(--page-max);
+    margin-inline: auto;
+    padding-inline: var(--page-pad);
+  }
+
+  /* Text column beside media that runs to the container edge (Figma: x≈960 of 1440). */
+  .split {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    max-width: var(--page-max);
+    margin-inline: auto;
+    gap: var(--spacing-section);
+    align-items: center;
+  }
+
+  .split-text {
+    padding-inline: var(--page-pad);
+  }
+
+  @media (width >= 64rem) {
+    .split {
+      grid-template-columns: 2fr 1fr;
+      gap: 0;
+    }
+
+    .split-text {
+      padding-inline-end: var(--spacing-section);
+    }
+
+    /* Media on the left instead (Figma: "Kim jesteśmy?" block). */
+    .split-reverse {
+      grid-template-columns: 1fr 2fr;
+    }
+
+    .split-reverse > .split-media {
+      order: -1;
+    }
+
+    .split-reverse > .split-text {
+      padding-inline-end: var(--page-pad);
+      padding-inline-start: var(--spacing-section);
+    }
+  }
+
+  /* Comfortable reading width — Figma runs body copy at ~754px / 20px. */
+  .measure {
+    max-width: 62ch;
+  }
+
+  .cols-3 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 2.5vw, 36px);
+  }
+
+  @media (width >= 48rem) {
+    .cols-3 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (width >= 64rem) {
+    .cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  /* Vertical list whose items carry a Blob behind the heading. */
+  .stack {
+    display: grid;
+    gap: var(--spacing-section);
+  }
+
+  .stack-item {
+    position: relative;
+    isolation: isolate;
+  }
+
+  /*
+   * Two rows of tangent sand circles that step up halfway across, matching the
+   * band in Figma: nine dots low on the left, nine dots high on the right.
+   * Drawn with gradients — as elements this pattern is 270 nodes per page.
+   */
+  .dot-band {
+    position: relative;
+    width: 100%;
+    height: calc(var(--dot-size) * 2.53);
+    overflow: hidden;
+  }
+
+  .dot-band::before,
+  .dot-band::after {
+    content: "";
+    position: absolute;
+    width: 50%;
+    height: var(--dot-size);
+    background-image: radial-gradient(
+      circle,
+      var(--color-sand) 49.5%,
+      transparent 50%
+    );
+    background-size: var(--dot-size) var(--dot-size);
+    background-repeat: repeat-x;
+  }
+
+  .dot-band::before {
+    inset-inline-start: 0;
+    inset-block-end: 0;
+  }
+
+  .dot-band::after {
+    inset-inline-end: 0;
+    inset-block-start: 0;
+  }
+
+  .palette-row {
+    display: flex;
+  }
+
+  .palette-row > * {
+    width: var(--palette-size);
+    aspect-ratio: 1;
+    border-radius: 50%;
+  }
+
+  .blob {
+    position: absolute;
+    z-index: -1;
+    width: clamp(5.5rem, 9.9vw, 143px);
+    aspect-ratio: 143 / 139;
+    border-radius: 50%;
+    background-color: var(--color-sand);
+    inset-block-start: -1.8rem;
+    inset-inline-start: -3.4rem;
+  }
+
+  /* Aspect ratios taken from the Figma frames: 481×823, 1135×640, 356×444. */
+  .media {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--color-sand);
+  }
+
+  .media-portrait {
+    aspect-ratio: 481 / 823;
+  }
+
+  .media-landscape {
+    aspect-ratio: 16 / 9;
+  }
+
+  .media-album {
+    aspect-ratio: 4 / 5;
+  }
+
+  .media-inset {
+    border-radius: var(--radius-media);
+  }
+
+  /* The single most repeated element in the Figma file — 46 instances. */
+  .cta {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: stretch;
+    /* Figma draws every instance of this link 301px wide. */
+    min-width: min(19rem, 100%);
+    font-family: var(--font-display);
+    font-size: var(--text-body);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-green-ink);
+  }
+
+  .cta-rule {
+    position: relative;
+    display: block;
+    height: 4px;
+    border-radius: 999px;
+    background-color: var(--color-green);
+    transition: transform 200ms ease;
+    transform-origin: left center;
+  }
+
+  .cta-rule::after {
+    content: "";
+    position: absolute;
+    inset-inline-end: -5px;
+    inset-block-start: 50%;
+    translate: 0 -50%;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: var(--color-green);
+  }
+
+  .cta:hover .cta-rule,
+  .cta:focus-visible .cta-rule {
+    transform: scaleX(0.88);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cta-rule {
+      transition: none;
+    }
   }
 }
