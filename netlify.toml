@@ -1,0 +1,16 @@
+# Frontend only. Sanity Studio stays on sanity.io.
+# Do not pin @netlify/plugin-nextjs — Netlify injects the OpenNext adapter.
+
+[build]
+  command = "pnpm --filter web build"
+  publish = "apps/web/.next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  PNPM_FLAGS = "--shamefully-hoist"
+
+# Preview site: keep this until the public launch.
+[[headers]]
+  for = "/*"
+    [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
