@@ -6,7 +6,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | | |
 |--|--|
 | **Ostatnia aktualizacja** | 2026-08-30 — fundament UI + hero na `/`; commit i push na origin |
-| **Gałąź / HEAD** | `main` (śledzi `origin/main`) |
+| **Gałąź / HEAD** | `main` @ `a2375a2` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Working tree** | czyste po tym commicie |
 | **Owner Sanity (na razie)** | Jan Mirecki |
