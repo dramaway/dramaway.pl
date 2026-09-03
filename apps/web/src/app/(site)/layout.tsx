@@ -11,7 +11,7 @@ export default async function SiteLayout({
 
   return (
     <div className="flex min-h-screen flex-col">
-      <SiteHeader title={site.title} centrumUrl={site.centrumUrl} />
+      <SiteHeader title={site.title} />
       <main className="flex-1">{children}</main>
       <SiteFooter title={site.title} note={site.footerNote} />
     </div>

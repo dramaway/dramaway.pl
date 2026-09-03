@@ -47,14 +47,17 @@ export type NavItem = {
   external?: boolean;
 };
 
-export function mainNav(centrumUrl: string): NavItem[] {
+export function czytelniaPath() {
+  return "/czytelnia";
+}
+
+/** Header items from the Figma homepage. Home is filtered out of the visible nav. */
+export function mainNav(): NavItem[] {
   return [
     { href: "/", label: "Strona główna" },
     { href: "/projekty", label: "Projekty" },
+    { href: czytelniaPath(), label: "Baza wiedzy" },
     { href: "/fundacja", label: "O fundacji" },
-    { href: "/metody", label: "Metody" },
-    { href: "/zespol", label: "Zespół" },
-    { href: centrumUrl, label: "Szkolenia i spektakle", external: true },
     { href: "/kontakt", label: "Kontakt" },
   ];
 }

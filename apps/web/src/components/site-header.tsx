@@ -8,12 +8,11 @@ import { cn } from "@/lib/utils";
 
 type Props = {
   title: string;
-  centrumUrl: string;
 };
 
-export function SiteHeader({ title, centrumUrl }: Props) {
+export function SiteHeader({ title }: Props) {
   const pathname = usePathname();
-  const items = mainNav(centrumUrl).filter((item) => item.href !== "/");
+  const items = mainNav().filter((item) => item.href !== "/");
 
   return (
     <header className="page flex flex-col gap-6 py-8 sm:flex-row sm:items-center sm:justify-between">
@@ -31,31 +30,19 @@ export function SiteHeader({ title, centrumUrl }: Props) {
         aria-label="Główna"
         className="flex flex-wrap gap-x-8 gap-y-3 font-display text-small font-semibold uppercase sm:text-lead"
       >
-        {items.map((item) =>
-          item.external ? (
-            <a
-              key={item.href}
-              href={item.href}
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-magenta"
-            >
-              {item.label}
-            </a>
-          ) : (
-            <Link
-              key={item.href}
-              href={item.href}
-              aria-current={pathname === item.href ? "page" : undefined}
-              className={cn(
-                "hover:text-magenta",
-                pathname === item.href && "text-magenta",
-              )}
-            >
-              {item.label}
-            </Link>
-          ),
-        )}
+        {items.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            aria-current={pathname === item.href ? "page" : undefined}
+            className={cn(
+              "hover:text-magenta",
+              pathname === item.href && "text-magenta",
+            )}
+          >
+            {item.label}
+          </Link>
+        ))}
       </nav>
     </header>
   );

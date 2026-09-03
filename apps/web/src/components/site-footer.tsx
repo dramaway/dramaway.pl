@@ -1,16 +1,25 @@
+import Image from "next/image";
+import Link from "next/link";
+
 type Props = {
   title: string;
-  note: string | null;
+  /** Always a string — `getResolvedSite()` already applies the Boal fallback. */
+  note: string;
 };
 
 export function SiteFooter({ title, note }: Props) {
   return (
-    <footer className="mt-auto border-t">
-      <div className="mx-auto max-w-5xl px-6 py-8 text-sm text-muted-foreground">
-        <p>
-          © {new Date().getFullYear()} {title}
-        </p>
-        {note ? <p className="mt-2 max-w-2xl">{note}</p> : null}
+    <footer className="mt-auto">
+      <div className="page flex flex-col gap-8 py-section sm:flex-row sm:items-start sm:justify-between">
+        <Link href="/" aria-label={title}>
+          <Image
+            src="/logo-dramaway.png"
+            alt={title}
+            width={117}
+            height={57}
+          />
+        </Link>
+        <p className="measure font-body text-body">{note}</p>
       </div>
     </footer>
   );
