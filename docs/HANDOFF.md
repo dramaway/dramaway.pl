@@ -6,7 +6,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | | |
 |--|--|
 | **Ostatnia aktualizacja** | 2026-09-03 — polish `/` na `origin/main`; daty i trzeci news w Sanity |
-| **Gałąź / HEAD** | `main` @ `590e49f` (zsynchronizowane z `origin/main`) |
+| **Gałąź / HEAD** | `main` @ `e3111d6` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ |
