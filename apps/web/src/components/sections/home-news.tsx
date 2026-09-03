@@ -42,7 +42,7 @@ export function HomeNews({ items }: { items: HomeNewsItem[] }) {
           const date = item.publishedAt
             ? formatPolishMonthYear(item.publishedAt)
             : null;
-          // Figma alternates the title colour card by card.
+          // Alternate magenta / navy for both date and title, card by card.
           const titleColor = index % 2 === 0 ? "text-magenta" : "text-navy";
 
           return (
@@ -52,7 +52,9 @@ export function HomeNews({ items }: { items: HomeNewsItem[] }) {
             >
               <Blob />
               {date ? (
-                <p className="font-display text-small text-magenta">{date}</p>
+                <p className={cn("font-display text-small", titleColor)}>
+                  {date}
+                </p>
               ) : null}
               {item.title ? (
                 <h3
