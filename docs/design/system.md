@@ -20,29 +20,32 @@ Wszystkie w bloku `@theme` w [apps/web/src/app/globals.css](../../apps/web/src/a
 
 **Typografia:** `font-display` (MuseoModerno) i `font-body` (Alexandria), ładowane przez `next/font` w [layout.tsx](../../apps/web/src/app/layout.tsx). Skala niesie font-size razem z interlinią: `text-display`, `text-h1`, `text-h2`, `text-h3`, `text-lead`, `text-body`, `text-small`. Każdy stopień to `clamp()`, więc typografia skaluje się płynnie i nie potrzebuje breakpointów.
 
-**Layout:** `--page-max` (1440), `--page-pad`, `--page-indent`, `--dot-size`, `--palette-size` oraz `spacing-section` jako rytm pionowy (`py-section`).
+**Layout:** `--page-max` (1440), `--page-pad`, `--page-indent`, `--dot-size` (82 px, skok do 48 px poniżej 768 px — nie `clamp`), `--palette-size`, `--site-header-space`, `--footer-quote-max` oraz `spacing-section` jako rytm pionowy (`py-section`).
 
 ## Klasy kompozycyjne
 
 | Klasa | Do czego |
 |-------|----------|
 | `.page` | kontener wyśrodkowany, `--page-max` z `--page-pad` |
-| `.split` / `.split-text` / `.split-media` | tekst obok zdjęcia dobijającego do krawędzi kontenera (2/3 – 1/3 od `lg`) |
-| `.split-reverse` | to samo, ale zdjęcie po lewej |
+| `.split` / `.split-text` / `.split-media` | pełna szerokość viewportu; tekst w kolumnie ograniczonej do ~2/3 `--page-max` z `--page-pad`; zdjęcie dobija do krawędzi **viewportu** (od `lg`) |
+| `.split-reverse` | to samo, ale zdjęcie po lewej (spad do lewej krawędzi) |
 | `.cols-3` | 1 → 2 → 3 kolumny; aktualności, publikacje |
+| `.news-card` + `.news-card-title` / `-body` / `-cta` | wspólna linia bazowa kart aktualności: tytuł zawsze na dwie linie, treść zbiera luz, rulka CTA na jednym poziomie niezależnie od długości tekstu |
+| `.card-link` + `.cta-over` / `.card-hover` | klikalny kafelek: link tytułu rozciąga swój obszar kliknięcia na całą kartę. `.cta-over` wynosi nad nakładkę CTA prowadzące **gdzie indziej** niż kafelek (Art Generacje: kafelek → projekt, CTA → lista). `.card-hover` na karcie animuje rulkę CTA przy hoverze, gdy CTA tylko powtarza link kafelka |
 | `.stack` / `.stack-item` | lista pionowa; `.stack-item` tworzy kontekst dla `Blob` |
 | `.measure` | komfortowa szerokość czytania (62ch) |
+| `.footer-quote` | cytat w stopce: do prawej, węższy niż `.measure` (`--footer-quote-max`) |
 
 ## Prymitywy
 
 W `apps/web/src/components/`:
 
 - `layout/section.tsx` — `<Section>` daje rytm pionowy i domyślnie owija dzieci w `.page`. Z `bleed` nie owija, gdy coś ma sięgać krawędzi.
-- `visual/dot-band.tsx` — pasmo kropek. Bez propsów; rozmiar steruje `--dot-size`.
+- `visual/dot-band.tsx` — pasmo kropek; rozmiar steruje `--dot-size`. Koła rysuje `radial-gradient(circle closest-side, …)` — bez `closest-side` promień idzie do narożnika kafla i między kropkami zostaje szczelina. Szerokość rzędu to `round(up, 50%, --dot-size)`: każdy rząd dobija do swojej krawędzi strony, a reszta z zaokrąglenia ląduje na środku, gdzie rzędy się zachodzą i schodek ją ukrywa (`round(down, …)` parkuje resztę na krawędziach i widać wcięcie). Prop `mirror` odbija schodek — dla sekcji, która kończy się zdjęciem po **lewej**, żeby rząd od strony zdjęcia był górnym i jechał po jego dolnej krawędzi.
 - `visual/palette-row.tsx` — siedem stykających się kół marki.
-- `visual/blob.tsx` — piaskowe koło za nagłówkiem. Wymaga przodka z `.stack-item` albo `relative isolate`.
-- `visual/cta-link.tsx` — zielony link z rulką i kropką. Najczęstszy element Figmy, 46 instancji.
-- `visual/media.tsx` — `next/image` plus builder Sanity. Warianty `bleed` (promień 0) i `inset` (promień 16), proporcje `portrait` / `landscape` / `album`. Bez obrazu rysuje piaskowy blok.
+- `visual/blob.tsx` — piaskowe koło za nagłówkiem. Wymaga przodka z `.stack-item` albo `relative isolate`. Przesunięcie w lewo jest ograniczone do `--page-pad`, żeby koło nie było ucinane krawędzią viewportu na wąskich ekranach.
+- `visual/cta-link.tsx` — zielony link z rulką i kropką. Najczęstszy element Figmy, 46 instancji. Prop `presentational` renderuje go jako `<span aria-hidden>` — do użycia w klikalnym kafelku, gdzie link kafelka prowadzi już w to samo miejsce i drugi byłby zdublowanym przystankiem dla klawiatury i czytnika.
+- `visual/media.tsx` — `next/image` plus builder Sanity. Warianty `bleed` (promień 0) i `inset` (promień 16), proporcje `portrait` / `landscape` / `album`. Bez obrazu rysuje piaskowy blok, chyba że dostanie `fallbackSrc` (lokalny plik z `public/`, np. `about-photo.jpg` w bloku „Kim jesteśmy?" — do czasu wgrania zdjęcia do Studia).
 
 ## Jak dołożyć sekcję
 
@@ -57,9 +60,9 @@ W `apps/web/src/components/`:
 Autorskie, bo Figma ich nie ma:
 
 - Typografia i odstępy skalują się przez `clamp()`, bez breakpointów.
-- Poniżej **1024 px** układy dzielone przechodzą w pionowe, zdjęcie traci bleed i zajmuje pełną szerokość.
+- Poniżej **1024 px** układy dzielone przechodzą w pionowe, zdjęcie traci bleed i zajmuje pełną szerokość. Kolejność: nagłówek, treść; na stacked `.split` zdjęcie jest pierwsze (nie pod navem).
 - Poniżej **768 px** trzy kolumny stają się jedną (`.cols-3` po drodze przechodzi przez dwie).
-- Koła w paśmie schodzą z 82 do 48 px, koła palety ze 113 do 44 px.
+- Koła w paśmie: **82 px** na desktopie, skok do **48 px** poniżej 768 px (nie ciągły `clamp`). Paleta nadal `clamp` 44–113 px.
 
 ## Świadome odstępstwa od Figmy
 
@@ -70,13 +73,18 @@ Autorskie, bo Figma ich nie ma:
 | zielony `#369125` w tekście | `#2f7d20` (`green-ink`) | oryginał daje 4,0:1 i nie przechodzi WCAG AA; dekoracje zostają na oryginale |
 | czerń tekstu `#000000` | `#282828` (`ink`) | jedna czerń zamiast dwóch |
 | 11 różnych lewych marginesów | `--page-pad` i `--page-indent` | rozrzut ręcznego rysowania, nie intencja |
-| zdjęcie hero od y = 0, za nagłówkiem | zaczyna się pod nagłówkiem | nagłówek jest wspólnym komponentem układu; wciąganie go w hero byłoby kruche |
+| zdjęcie hero od y = 0, za nagłówkiem | fotka od góry **prawej kolumny**; logo i nav w lewej (ten sam span co `.split-text`) | nav nigdy nie nachodzi na zdjęcie. Na `lg+` header wychodzi z pionowego flow przez `:has([data-home])`; poniżej `lg` zostaje nad treścią |
 | paleta na x = 269 | wyśrodkowana | pozycja w Figmie nie wynika z żadnej siatki |
 | trzeci krój Poppins | MuseoModerno | 6 wystąpień wobec dwóch rodzin w reszcie pliku |
 | `Rectangle 2` i biała etykieta „Baza wiedzy" | pominięte | pusty kształt bez wypełnienia i biały tekst na białym tle |
+| pasmo kropek pod „Kim jesteśmy?" schodkuje w górę w prawo | schodek odbity (`DotBand mirror`) | w ramce blok „Metody" kończy się ~120 px wyżej niż u nas, więc górny rząd trafiał na CTA „dowiedz się więcej". Po odbiciu rząd przy zdjęciu jest górny i nadal jedzie po jego dolnej krawędzi, a dolny schodzi w pustą przestrzeń — niezależnie od długości tekstu z CMS-u |
 
 ## Stan na teraz
 
-Gotowe: tokeny, fonty, klasy kompozycyjne, wszystkie sześć prymitywów, nagłówek, hero, oraz na `/` wyróżniony projekt + aktualności (`.cols-3`) + karty projektów ze zdjęciami z CMS.
+Gotowe na `/`: skład z ramki (nie pixel-perfect). Hero w dwóch kolumnach od góry viewportu — nav w lewej, portret od góry prawej i na spad do krawędzi okna. Pasma kół: stała średnica, pełne stykające się koła, rzędy przy krawędziach strony, zachodzą na krawędzie zdjęć (hero od dołu, „Kim jesteśmy?" po odbiciu schodka też od dołu). Aktualności z nagłówkiem AKTUALNOŚCI, naprzemiennymi kolorami tytułów (magenta / navy, jak w ramce) i rulkami CTA na jednej linii. Kim/Metody (`.split-reverse`, zdjęcie z `public/about-photo.jpg` dopóki Studio jest puste), Art Generacje i Czytelnia (blob za H2), paleta wyśrodkowana jako grupa, stopka z cytatem Boala do prawej.
 
-Do zrobienia na stronie głównej: blok „Kim jesteśmy?" i „Metody" (`.split-reverse`), bloki Art Generacje i Czytelnia, stopka z cytatem Boala. Listingi podstron (`/projekty`, `/zespol`, …) są nadal robocze z fazy migracji.
+Klikalne kafelki: karta aktualności → artykuł, Art Generacje → `/projekty/art-generacje` przy CTA prowadzącym na listę `/projekty`, Czytelnia → `/czytelnia`.
+
+Sprawdzone przez CDP na 1440 / 1280 / 1024 / 768 / 375: `scrollWidth == innerWidth` (brak przepełnienia poziomego), żaden element nie wychodzi za krawędzie, rulki CTA aktualności mają identyczne `top` w układzie wielokolumnowym, a test trafień (`elementFromPoint`) potwierdza jeden link na kafelek i osobno klikalne CTA Art Generacji.
+
+Listingi podstron (`/projekty`, `/zespol`, `/fundacja`, …) są nadal robocze z fazy migracji. 375 px ma być czytelne, nie 1:1 z ramką.

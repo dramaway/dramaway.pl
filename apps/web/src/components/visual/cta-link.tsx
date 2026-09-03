@@ -6,6 +6,12 @@ type CtaLinkProps = {
   href: string;
   children: ReactNode;
   external?: boolean;
+  /**
+   * Render the CTA as decoration instead of a link. Used inside clickable
+   * tiles, where the card's own link already covers this target and a second
+   * copy would only add a duplicate stop for keyboard and screen readers.
+   */
+  presentational?: boolean;
   className?: string;
 };
 
@@ -14,6 +20,7 @@ export function CtaLink({
   href,
   children,
   external = false,
+  presentational = false,
   className,
 }: CtaLinkProps) {
   const body = (
@@ -22,6 +29,14 @@ export function CtaLink({
       <span aria-hidden className="cta-rule" />
     </>
   );
+
+  if (presentational) {
+    return (
+      <span aria-hidden className={cn("cta", className)}>
+        {body}
+      </span>
+    );
+  }
 
   if (external) {
     return (

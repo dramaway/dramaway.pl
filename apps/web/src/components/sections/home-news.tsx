@@ -1,7 +1,9 @@
+import Link from "next/link";
 import { Section } from "@/components/layout/section";
 import { Blob } from "@/components/visual/blob";
 import { CtaLink } from "@/components/visual/cta-link";
 import { NEWS_CTA_LABEL } from "@/lib/homepage-copy";
+import { cn } from "@/lib/utils";
 
 export type HomeNewsItem = {
   _id: string;
@@ -28,31 +30,57 @@ export function HomeNews({ items }: { items: HomeNewsItem[] }) {
   const cards = items.slice(0, 3);
 
   return (
-    <Section aria-label="Aktualności">
-      <ul className="cols-3">
-        {cards.map((item) => {
+    <Section aria-labelledby="home-news-heading">
+      <h2
+        id="home-news-heading"
+        className="font-display text-display font-black uppercase"
+      >
+        Aktualności
+      </h2>
+      <ul className="cols-3 mt-8">
+        {cards.map((item, index) => {
           const date = item.publishedAt
             ? formatPolishMonthYear(item.publishedAt)
             : null;
+          // Figma alternates the title colour card by card.
+          const titleColor = index % 2 === 0 ? "text-magenta" : "text-navy";
 
           return (
-            <li key={item._id} className="relative isolate">
+            <li
+              key={item._id}
+              className="news-card card-hover relative isolate"
+            >
               <Blob />
               {date ? (
-                <p className="font-display text-small font-semibold text-magenta">
-                  {date}
-                </p>
+                <p className="font-display text-small text-magenta">{date}</p>
               ) : null}
               {item.title ? (
-                <h3 className="mt-2 font-display text-h3 font-extrabold">
-                  {item.title}
+                <h3
+                  className={cn(
+                    "news-card-title mt-2 line-clamp-2 font-display text-h3 font-extrabold",
+                    titleColor,
+                  )}
+                >
+                  {item.href ? (
+                    <Link href={item.href} className="card-link">
+                      {item.title}
+                    </Link>
+                  ) : (
+                    item.title
+                  )}
                 </h3>
               ) : null}
-              {item.excerpt ? (
-                <p className="mt-3 line-clamp-4 text-body">{item.excerpt}</p>
-              ) : null}
+              <div className="news-card-body">
+                {item.excerpt ? (
+                  <p className="mt-3 line-clamp-4 text-body">{item.excerpt}</p>
+                ) : null}
+              </div>
               {item.href ? (
-                <CtaLink href={item.href} className="mt-8">
+                <CtaLink
+                  href={item.href}
+                  presentational
+                  className="news-card-cta mt-8"
+                >
                   {NEWS_CTA_LABEL}
                 </CtaLink>
               ) : null}

@@ -7,6 +7,9 @@ export const EXCERPT_FALLBACK_MAX = 400;
 
 export const NEWS_CTA_LABEL = "czytaj więcej";
 
+/** Layout draft photo, served from `public/` until `homepage.about.image` is set. */
+export const FALLBACK_ABOUT_IMAGE = "/about-photo.jpg";
+
 export const FALLBACK_HERO = {
   heading: "Drama i teatr jako narzędzia dialogu między pokoleniami",
   lead: "DramaWay tworzy projekty teatralne i edukacyjne oparte na metodzie dramy oraz Teatrze Zaangażowanym Społecznie — łącząc pokolenia, społeczności i tematy, o których trudno mówić wprost.",

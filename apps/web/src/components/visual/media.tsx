@@ -18,6 +18,8 @@ type MediaProps = {
   sizes?: string;
   priority?: boolean;
   className?: string;
+  /** Local asset used until an editor uploads the image to Sanity. */
+  fallbackSrc?: string;
 };
 
 /**
@@ -32,10 +34,11 @@ export function Media({
   sizes = "100vw",
   priority = false,
   className,
+  fallbackSrc,
 }: MediaProps) {
   const src = image
     ? urlFor(image).width(1600).fit("max").auto("format").url()
-    : null;
+    : (fallbackSrc ?? null);
 
   return (
     <div

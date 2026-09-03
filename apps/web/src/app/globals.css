@@ -96,8 +96,13 @@
   --page-max: 1440px;
   --page-pad: clamp(1.5rem, 6.8vw, 98px);
   --page-indent: clamp(1.5rem, 10.8vw, 156px);
-  --dot-size: clamp(48px, 5.7vw, 82px);
+  /* Stepped, not clamped — full tangent circles; count drops on resize. */
+  --dot-size: 82px;
   --palette-size: clamp(44px, 7.9vw, 113px);
+  /* Overlay header on `/` at lg+ (py-8 × 2 plus logo/nav, with wrap room). */
+  --site-header-space: 9rem;
+  /* Figma footer quote ≈ 491px, narrower than .measure 62ch. */
+  --footer-quote-max: 30.6875rem;
 }
 
 :root {
@@ -133,6 +138,12 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+}
+
+@media (width < 48rem) {
+  :root {
+    --dot-size: 48px;
+  }
 }
 
 .dark {
@@ -200,34 +211,64 @@
     padding-inline: var(--page-pad);
   }
 
-  /* Text column beside media that runs to the container edge (Figma: x≈960 of 1440). */
+  /*
+   * Full-viewport split: text capped at ~2/3 of --page-max (aligned with .page
+   * via the left/right gutter past 1440), media filling the rest to the
+   * viewport edge. Stacked below lg — photo first, never under the nav.
+   */
   .split {
     display: grid;
     grid-template-columns: 1fr;
     width: 100%;
-    max-width: var(--page-max);
-    margin-inline: auto;
     gap: var(--spacing-section);
-    align-items: center;
+    align-items: start;
   }
 
   .split-text {
+    min-width: 0;
     padding-inline: var(--page-pad);
+    padding-block: var(--spacing-section);
+  }
+
+  .split-media {
+    min-width: 0;
+    order: -1;
   }
 
   @media (width >= 64rem) {
+    .site-shell,
     .split {
-      grid-template-columns: 2fr 1fr;
+      --split-gutter: max(0px, calc((100% - var(--page-max)) / 2));
+      --split-text-span: min(
+        calc(var(--page-max) * 2 / 3),
+        calc(100% * 2 / 3)
+      );
+    }
+
+    .split {
+      grid-template-columns:
+        minmax(0, calc(var(--split-gutter) + var(--split-text-span)))
+        minmax(0, 1fr);
       gap: 0;
     }
 
     .split-text {
+      width: 100%;
+      max-width: calc(var(--page-max) * 2 / 3);
+      margin-inline-start: auto;
       padding-inline-end: var(--spacing-section);
     }
 
-    /* Media on the left instead (Figma: "Kim jesteśmy?" block). */
+    .split-media {
+      order: 0;
+      align-self: stretch;
+    }
+
+    /* Media on the left instead (Figma: "Kim jesteśmy?" block), bleed to the left edge. */
     .split-reverse {
-      grid-template-columns: 1fr 2fr;
+      grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, calc(var(--split-gutter) + var(--split-text-span)));
     }
 
     .split-reverse > .split-media {
@@ -235,14 +276,49 @@
     }
 
     .split-reverse > .split-text {
+      margin-inline-start: 0;
+      margin-inline-end: auto;
       padding-inline-end: var(--page-pad);
       padding-inline-start: var(--spacing-section);
+    }
+
+    /*
+     * Homepage at lg+: header leaves vertical flow and sits in the left
+     * column (same span as .split-text). Photo occupies the right column
+     * from the top of the page — nav never overlaps it.
+     */
+    .site-shell:has([data-home]) {
+      position: relative;
+    }
+
+    .site-shell:has([data-home]) > header {
+      position: absolute;
+      z-index: 2;
+      inset-block-start: 0;
+      inset-inline-start: var(--split-gutter);
+      width: var(--split-text-span);
+      max-width: none;
+      margin-inline: 0;
+      flex-wrap: wrap;
+    }
+
+    [data-home] > .split:first-child > .split-text {
+      padding-block-start: calc(
+        var(--site-header-space) + var(--spacing-section)
+      );
     }
   }
 
   /* Comfortable reading width — Figma runs body copy at ~754px / 20px. */
   .measure {
     max-width: 62ch;
+  }
+
+  /* Footer quote: right-aligned, narrower than .measure (Figma ≈ 491px). */
+  .footer-quote {
+    max-width: min(var(--footer-quote-max), 100%);
+    margin-inline-start: auto;
+    text-align: end;
   }
 
   .cols-3 {
@@ -263,6 +339,29 @@
     }
   }
 
+  /*
+   * News cards share one baseline: the title always occupies two lines and the
+   * excerpt absorbs the slack, so every CTA rule sits at the same height —
+   * Figma draws all three at y=1372 regardless of copy length.
+   */
+  .news-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .news-card-title {
+    min-height: calc(2 * var(--text-h3--line-height) * 1em);
+  }
+
+  .news-card-body {
+    flex: 1 1 auto;
+  }
+
+  .news-card-cta {
+    margin-block-start: auto;
+  }
+
   /* Vertical list whose items carry a Blob behind the heading. */
   .stack {
     display: grid;
@@ -275,27 +374,43 @@
   }
 
   /*
-   * Two rows of tangent sand circles that step up halfway across, matching the
-   * band in Figma: nine dots low on the left, nine dots high on the right.
-   * Drawn with gradients — as elements this pattern is 270 nodes per page.
+   * Two rows of tangent sand circles that step up halfway across.
+   * Each row is a whole number of diameters so circles stay complete, and each
+   * one is flush with its own page edge; the leftover lands in the middle,
+   * where the step hides the seam. Negative margins let the row on the media's
+   * side ride the photo edge.
    */
   .dot-band {
+    --dot-row-step: calc(var(--dot-size) * 1.53);
+    --dot-overlap: calc(var(--dot-size) * 0.55);
     position: relative;
+    z-index: 1;
     width: 100%;
-    height: calc(var(--dot-size) * 2.53);
-    overflow: hidden;
+    height: calc(var(--dot-size) + var(--dot-row-step));
+    margin-block: calc(var(--dot-overlap) * -1);
+    pointer-events: none;
   }
 
   .dot-band::before,
   .dot-band::after {
     content: "";
     position: absolute;
-    width: 50%;
+    /*
+     * Rounded up, not down: the row then reaches its page edge and the
+     * remainder lands in the middle. Rounding down parks the remainder on the
+     * outer edges and leaves a visible inset there.
+     */
+    width: round(up, 50%, var(--dot-size));
     height: var(--dot-size);
+    /*
+     * `closest-side` keeps the radius at half the tile, so neighbouring
+     * circles touch. The default (`farthest-corner`) reaches the tile corner
+     * and leaves a visible gap between dots.
+     */
     background-image: radial-gradient(
-      circle,
-      var(--color-sand) 49.5%,
-      transparent 50%
+      circle closest-side,
+      var(--color-sand) 99%,
+      transparent 100%
     );
     background-size: var(--dot-size) var(--dot-size);
     background-repeat: repeat-x;
@@ -311,11 +426,33 @@
     inset-block-start: 0;
   }
 
+  /*
+   * Mirrored step, for media on the left above the band ("Kim jesteśmy?").
+   * The row on the photo's side becomes the upper one, so it rides the photo's
+   * bottom edge with the same overlap the hero gets, and the lower row steps
+   * down into empty space instead of crossing the text column. Figma steps this
+   * band up to the right too, but there the "Metody" block ends far higher than
+   * CMS-driven copy can be relied on to end.
+   */
+  .dot-band-mirror::before {
+    inset-block-start: 0;
+    inset-block-end: auto;
+  }
+
+  .dot-band-mirror::after {
+    inset-block-start: auto;
+    inset-block-end: 0;
+  }
+
   .palette-row {
     display: flex;
+    flex-wrap: nowrap;
+    justify-content: safe center;
+    width: 100%;
   }
 
   .palette-row > * {
+    flex-shrink: 0;
     width: var(--palette-size);
     aspect-ratio: 1;
     border-radius: 50%;
@@ -329,7 +466,9 @@
     border-radius: 50%;
     background-color: var(--color-sand);
     inset-block-start: -1.8rem;
-    inset-inline-start: -3.4rem;
+    /* Figma offset on desktop, pulled in on narrow screens so the circle
+     * never gets cut off by the viewport edge. */
+    inset-inline-start: calc(-1 * min(3.4rem, max(0px, var(--page-pad) - 0.5rem)));
   }
 
   /* Aspect ratios taken from the Figma frames: 481×823, 1135×640, 356×444. */
@@ -395,6 +534,35 @@
 
   .cta:hover .cta-rule,
   .cta:focus-visible .cta-rule {
+    transform: scaleX(0.88);
+  }
+
+  /*
+   * Clickable tiles. The card's title carries the real link and stretches its
+   * hit area over the whole card, so the tile has one accessible name instead
+   * of a duplicated "czytaj więcej". Needs a positioned ancestor
+   * (`.stack-item` or `relative isolate`).
+   */
+  .card-link {
+    color: inherit;
+  }
+
+  .card-link::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+  }
+
+  /* A CTA that leads somewhere else than the tile has to stay above the overlay. */
+  .cta-over {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Tile whose CTA only repeats the card link: animate the rule on card hover. */
+  .card-hover:hover .cta-rule,
+  .card-hover:focus-within .cta-rule {
     transform: scaleX(0.88);
   }
 

@@ -19,7 +19,7 @@ export function SiteFooter({ title, note }: Props) {
             height={57}
           />
         </Link>
-        <p className="measure font-body text-body">{note}</p>
+        <p className="footer-quote font-body text-body">{note}</p>
       </div>
     </footer>
   );

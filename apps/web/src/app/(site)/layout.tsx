@@ -10,7 +10,7 @@ export default async function SiteLayout({
   const site = await getResolvedSite();
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="site-shell flex min-h-screen flex-col">
       <SiteHeader title={site.title} />
       <main className="flex-1">{children}</main>
       <SiteFooter title={site.title} note={site.footerNote} />

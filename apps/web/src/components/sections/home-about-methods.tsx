@@ -1,5 +1,6 @@
 import { CtaLink } from "@/components/visual/cta-link";
 import { Media } from "@/components/visual/media";
+import { FALLBACK_ABOUT_IMAGE } from "@/lib/homepage-copy";
 import type { SanityImage } from "@/lib/sanity/types";
 
 export type HomeTextBlock = {
@@ -20,7 +21,7 @@ function TextStack({ block }: { block: HomeTextBlock }) {
   return (
     <div>
       {block.heading ? (
-        <h2 className="font-display text-h2 font-extrabold">{block.heading}</h2>
+        <h2 className="font-display text-display font-black">{block.heading}</h2>
       ) : null}
       {block.lead ? (
         <p className="measure mt-6 text-lead">{block.lead}</p>
@@ -46,7 +47,7 @@ export function HomeAboutMethods({
 }: HomeAboutMethodsProps) {
   return (
     <section className="split split-reverse">
-      <div className="split-text py-section">
+      <div className="split-text">
         <div className="stack">
           <TextStack block={about} />
           <TextStack block={methods} />
@@ -54,6 +55,7 @@ export function HomeAboutMethods({
       </div>
       <Media
         image={image}
+        fallbackSrc={FALLBACK_ABOUT_IMAGE}
         alt={imageAlt}
         variant="bleed"
         ratio="portrait"

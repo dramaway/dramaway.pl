@@ -5,7 +5,10 @@ import { HomeNews } from "@/components/sections/home-news";
 import { Hero } from "@/components/sections/hero";
 import { DotBand } from "@/components/visual/dot-band";
 import { PaletteRow } from "@/components/visual/palette-row";
-import { publicPathForPageSlug } from "@/lib/routes";
+import {
+  publicPathForPageSlug,
+  publicPathForProjectSlug,
+} from "@/lib/routes";
 import { getHomepageNews, getProjects } from "@/lib/sanity/fetch";
 import { getResolvedSite } from "@/lib/site";
 
@@ -41,7 +44,7 @@ export default async function HomePage() {
   }));
 
   return (
-    <>
+    <div data-home="">
       <Hero hero={site.hero} />
 
       <DotBand />
@@ -57,10 +60,10 @@ export default async function HomePage() {
         imageAlt={homepage.about.imageAlt}
       />
 
-      <DotBand />
+      <DotBand mirror />
 
       <div className="page py-section">
-        <PaletteRow className="justify-center" />
+        <PaletteRow />
       </div>
 
       <HomeFeaturedAndReading
@@ -68,6 +71,9 @@ export default async function HomePage() {
           label: homepage.featured.heading,
           heading: featured?.title?.trim() || "Art Generacje",
           lead: homepage.featured.lead,
+          href: featured?.slug
+            ? publicPathForProjectSlug(featured.slug)
+            : homepage.featured.ctaHref,
           ctaLabel: homepage.featured.ctaLabel,
           ctaHref: homepage.featured.ctaHref,
         }}
@@ -75,8 +81,8 @@ export default async function HomePage() {
       />
 
       <div className="page pb-section">
-        <PaletteRow className="justify-center" />
+        <PaletteRow />
       </div>
-    </>
+    </div>
   );
 }

@@ -1,10 +1,14 @@
+import Link from "next/link";
 import { Section } from "@/components/layout/section";
+import { Blob } from "@/components/visual/blob";
 import { CtaLink } from "@/components/visual/cta-link";
 
 export type HomeFeaturedBlock = {
   label: string;
   heading: string;
   lead: string | null;
+  /** The tile leads to this one project; the CTA below leads to the list. */
+  href: string;
   ctaLabel: string | null;
   ctaHref: string;
 };
@@ -32,39 +36,49 @@ export function HomeFeaturedAndReading({
   return (
     <Section>
       <div className="stack">
-        <div>
+        <div className="stack-item">
+          <Blob />
           {featured.label ? (
             <p className="font-display text-small font-semibold uppercase text-magenta">
               {featured.label}
             </p>
           ) : null}
           {featured.heading ? (
-            <h2 className="mt-2 font-display text-h2 font-extrabold">
-              {featured.heading}
+            <h2 className="mt-2 font-display text-display font-black">
+              <Link href={featured.href} className="card-link">
+                {featured.heading}
+              </Link>
             </h2>
           ) : null}
           {featured.lead ? (
             <p className="measure mt-6 text-lead">{featured.lead}</p>
           ) : null}
           {featured.ctaLabel ? (
-            <CtaLink href={featured.ctaHref} className="mt-8">
+            <CtaLink href={featured.ctaHref} className="cta-over mt-8">
               {featured.ctaLabel}
             </CtaLink>
           ) : null}
         </div>
 
-        <div>
+        <div className="stack-item card-hover">
+          <Blob />
           {/* placeholder: czytelnia has no CMS content yet */}
           {czytelnia.heading ? (
-            <h2 className="font-display text-h2 font-extrabold">
-              {czytelnia.heading}
+            <h2 className="font-display text-display font-black">
+              <Link href={czytelnia.ctaHref} className="card-link">
+                {czytelnia.heading}
+              </Link>
             </h2>
           ) : null}
           {czytelnia.lead ? (
             <p className="measure mt-6 text-lead">{czytelnia.lead}</p>
           ) : null}
           {czytelnia.ctaLabel ? (
-            <CtaLink href={czytelnia.ctaHref} className="mt-8">
+            <CtaLink
+              href={czytelnia.ctaHref}
+              presentational
+              className="mt-8"
+            >
               {czytelnia.ctaLabel}
             </CtaLink>
           ) : null}
