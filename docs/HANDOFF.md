@@ -5,8 +5,8 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-03 — polish `/` na `origin/main`; daty i trzeci news w Sanity |
-| **Gałąź / HEAD** | `main` @ `e3111d6` |
+| **Ostatnia aktualizacja** | 2026-09-03 — pass mobilny: sticky nav + overlay, hero w kole, krótsze kadry |
+| **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ |
@@ -25,7 +25,7 @@ Stack: Next.js 15, Tailwind v4, shadcn/ui, Sanity Studio v6, Netlify. Kod/CMS EN
 
 ## Stan teraz
 
-Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona główna ma skład z Figmy plus polish desktopowy** (hero od góry kolumny, pasma pełnych kół przy krawędziach, naprzemienne kolory tytułów, klikalne kafelki). Nie pixel-perfect; 375 tylko czytelne. Geometria sprawdzana przez CDP na 1440/1280/1024/768/375 — bez przepełnienia poziomego.
+Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona główna ma skład z Figmy plus polish desktopowy** (hero od góry kolumny, pasma pełnych kół przy krawędziach, naprzemienne kolory tytułów, klikalne kafelki) **i świadomy pass mobilny poniżej 1024 px** (sticky header + overlay, hero H1 → kadr w kole → lead, stacked split tekst → kadr 4:5). Nie pixel-perfect. Sprawdzone lokalnie: 375 (H1 w pierwszym ekranie, koło 227 px, brak overflow), 768, desktop (overlay header i portret bleed bez regresji).
 
 - Dataset `production` (`tr2qdg9j`) publiczny. Next bez tokenu. Write token **tylko** `apps/studio/.env`.
 - Mapa URL: `apps/web/src/lib/routes.ts` — prefiks IA + `slug.current`. Header: dokładnie 4 pozycje (Projekty, Baza wiedzy, O fundacji, Kontakt). `/metody` i `/zespol` zostają jako URL-e, nie ma ich w navie.
@@ -41,14 +41,14 @@ Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona głów
 
 Pełny kanon migracji: [fundacja-status.md](migration/fundacja-status.md).
 
-### Warstwa wizualna (od 2026-08-30, skład `/` 2026-09-03, polish 2026-09-03)
+### Warstwa wizualna (od 2026-08-30, skład `/` 2026-09-03, polish 2026-09-03, mobile 2026-09-03)
 
 Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design/system.md), liczby źródłowe: [design/figma-baseline.md](design/figma-baseline.md), decyzja: [ADR-004](decisions/ADR-004-layout-architecture.md).
 
 - Tokeny w `@theme` (`globals.css`), fonty MuseoModerno + Alexandria przez `next/font`.
 - Klasy układu: `.page`, `.split` (pełny viewport, spad zdjęcia do krawędzi okna), `.cols-3`, `.stack`, `.footer-quote`.
 - Sześć prymitywów: `Section`, `DotBand`, `PaletteRow`, `Blob`, `CtaLink`, `Media`.
-- **Hero / nav:** na `lg+` wrapper `[data-home]` + `:has()` wyjmuje header z pionowego flow i kotwiczy go w lewej kolumnie (szerokość jak `.split-text`). Portret od góry prawej kolumny, spad do prawej krawędzi viewportu. Nav **nigdy** na zdjęciu. Poniżej `lg`: header w flow, potem zdjęcie, potem tekst.
+- **Hero / nav:** na `lg+` wrapper `[data-home]` + `:has()` wyjmuje header z pionowego flow i kotwiczy go w lewej kolumnie (szerokość jak `.split-text`). Portret od góry prawej kolumny, spad do prawej krawędzi viewportu. Nav **nigdy** na zdjęciu. Poniżej `lg`: sticky pasek (logo + menu), overlay na `sand` z czterema pozycjami; hero to H1, kadr w kole, lead/CTA; stacked `.split` ma tekst, potem kadr inset 4:5 (`--media-split-max`).
 - Pasmo kół: `--dot-size` 82 px (skok 48 px <768), bez `overflow: hidden`, koła z `radial-gradient(circle closest-side)` — bez `closest-side` promień idzie do narożnika kafla i zostaje szczelina. Szerokość rzędu `round(up, 50%, --dot-size)`: rzędy dobijają do krawędzi strony, reszta z zaokrąglenia ląduje na środku pod schodkiem. Ujemny margin nachodzi na krawędzie `Media`; prop `mirror` odbija schodek tam, gdzie zdjęcie jest po lewej.
 - Paleta: 7 stykających się kół, `flex-shrink: 0`, wyśrodkowana jako grupa.
 - `/` kolejność: Hero → DotBand → aktualności (H2 AKTUALNOŚCI, tytuły naprzemiennie magenta / navy, max 3, bez zdjęć) → DotBand → Kim/Metody (`.split-reverse`) → DotBand `mirror` → PaletteRow → Art Generacje + Czytelnia (blob za H2 `text-display`) → PaletteRow → stopka (logo + cytat Boala `.footer-quote`).
@@ -60,7 +60,8 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 
 ### Świadomie nie zrobione
 
-- Pixel-perfect vs ramka i prawdziwy mobile-pass (375 jest czytelne, nie 1:1)
+- Pixel-perfect vs ramka (375 ma wygodny chrome i rytm, nie 1:1)
+- Prawdziwe makiety mobilne od designerki — obecne reguły są autorskie; gdy przyjdą ekrany, rewizja
 - Wypełnienie pól `siteSettings.homepage` w Studio (działa na fallbackach)
 - `page.excerpt` na dwóch migracyjnych newsach nadal puste — karty tną `pt::text(body)` (placeholder Syrena ma excerpt z ramki)
 - Zdjęcie „Kim jesteśmy” w Sanity — leci z `public/about-photo.jpg` jako `fallbackSrc`
@@ -80,7 +81,7 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 2. `pnpm dev:all` jeśli porty wolne.
 3. Publiczne URL-e, nie `/preview`. Preview Netlify złapie polish z `origin/main` po deployu.
 
-**Najpierw:** wgranie zdjęcia „Kim jesteśmy” do Sanity zamiast `public/about-photo.jpg`, i/lub zasilenie grupy `homepage` w Studio. Potem dump Czytelni (`drama_teatr`) albo podstrony na tym samym UI. Preview Netlify złapie polish po deployu z `origin/main`.
+**Najpierw:** wgranie zdjęcia „Kim jesteśmy” do Sanity zamiast `public/about-photo.jpg`, i/lub zasilenie grupy `homepage` w Studio. Potem dump Czytelni (`drama_teatr`) albo podstrony na tym samym UI. Preview Netlify złapie pass mobilny po deployu z gałęzi.
 
 Nie odtwarzać siatki projektów ani wyróżnionego splitu na `/`.
 

@@ -1,38 +1,43 @@
 import { CtaLink } from "@/components/visual/cta-link";
+import { Blob } from "@/components/visual/blob";
 import { Media } from "@/components/visual/media";
 import type { HeroContent } from "@/lib/sanity/types";
 
 /**
- * Opening composition: text in the left column (padded under the overlay nav
- * at lg+), portrait occupying the right column from the top of the page and
- * bleeding to the viewport edge. Nav never sits on the photo — see system.md.
+ * Opening composition. From lg: text in the left column (padded under the
+ * overlay nav), portrait occupying the right column from the top of the page
+ * and bleeding to the viewport edge. Below lg: heading, circular still, then
+ * lead and CTA. Nav never sits on the photo — see system.md.
  */
 export function Hero({ hero }: { hero: HeroContent }) {
   return (
-    <section className="split">
+    <section className="hero split">
       <div className="split-text">
-        <h1 className="font-display text-display font-black">{hero.heading}</h1>
+        <h1 className="hero-title font-display text-display font-black">
+          {hero.heading}
+        </h1>
 
-        {hero.lead ? (
-          <p className="measure mt-8 text-lead">{hero.lead}</p>
-        ) : null}
+        <div className="hero-copy">
+          {hero.lead ? <p className="measure text-lead">{hero.lead}</p> : null}
 
-        {hero.ctaLabel ? (
-          <CtaLink href={hero.ctaHref} className="mt-10">
-            {hero.ctaLabel}
-          </CtaLink>
-        ) : null}
+          {hero.ctaLabel ? (
+            <CtaLink href={hero.ctaHref}>{hero.ctaLabel}</CtaLink>
+          ) : null}
+        </div>
       </div>
 
-      <Media
-        image={hero.image}
-        alt={hero.imageAlt}
-        variant="bleed"
-        ratio="portrait"
-        sizes="(min-width: 64rem) 34vw, 100vw"
-        priority
-        className="split-media"
-      />
+      <div className="hero-media-wrap split-media">
+        <Blob />
+        <Media
+          image={hero.image}
+          alt={hero.imageAlt}
+          variant="bleed"
+          ratio="portrait"
+          sizes="(min-width: 64rem) 34vw, 70vw"
+          priority
+          className="hero-media"
+        />
+      </div>
     </section>
   );
 }

@@ -9,7 +9,7 @@ Trzy warstwy, nic więcej: **tokeny → prymitywy → sekcje**. Nie ma piętra �
 1. **Zero wartości w pikselach w plikach sekcji.** Wszystko idzie z tokenów albo z klas kompozycyjnych. Jeśli czegoś nie da się wyrazić, dołóż klasę w `@layer components`, nie arbitrary value.
 2. **Koła dekoracyjne rysujemy tłem, nie elementami.** Pasmo z Figmy to 270 identycznych kół. Jako DOM to 270 węzłów na stronę; jako `radial-gradient` to zero.
 3. **Każda sekcja musi przeżyć puste dane.** Redaktor zostawi pole puste, galeria będzie miała zero zdjęć. Figma pokazuje stałą liczbę elementów, CMS ma zmienną — układ ma się nie rozsypać.
-4. **Nie wymyślamy mobile poza regułami z tego pliku.** W Figmie nie ma ani jednego ekranu mobilnego.
+4. **Mobile ma własne reguły w tym pliku** — Figma nie ma ekranów mobilnych, więc nie zgadujemy poza tym, co tu zapisane.
 5. **Nie „poprawiamy" tokenów z powrotem do surowych liczb z Figmy.** Odstępstwa są świadome i opisane niżej.
 
 ## Tokeny
@@ -20,15 +20,17 @@ Wszystkie w bloku `@theme` w [apps/web/src/app/globals.css](../../apps/web/src/a
 
 **Typografia:** `font-display` (MuseoModerno) i `font-body` (Alexandria), ładowane przez `next/font` w [layout.tsx](../../apps/web/src/app/layout.tsx). Skala niesie font-size razem z interlinią: `text-display`, `text-h1`, `text-h2`, `text-h3`, `text-lead`, `text-body`, `text-small`. Każdy stopień to `clamp()`, więc typografia skaluje się płynnie i nie potrzebuje breakpointów.
 
-**Layout:** `--page-max` (1440), `--page-pad`, `--page-indent`, `--dot-size` (82 px, skok do 48 px poniżej 768 px — nie `clamp`), `--palette-size`, `--site-header-space`, `--footer-quote-max` oraz `spacing-section` jako rytm pionowy (`py-section`).
+**Layout:** `--page-max` (1440), `--page-pad`, `--page-indent`, `--dot-size` (82 px, skok do 48 px poniżej 768 px — nie `clamp`), `--palette-size`, `--site-header-space` (desktopowy overlay na `/`), `--site-header-bar` (kompaktowy pasek poniżej `lg`), `--touch-target` (44 px), `--hero-media-span` (70%), `--media-split-max` (42vh), `--footer-quote-max` oraz `spacing-section` jako rytm pionowy (`py-section`).
 
 ## Klasy kompozycyjne
 
 | Klasa | Do czego |
 |-------|----------|
 | `.page` | kontener wyśrodkowany, `--page-max` z `--page-pad` |
-| `.split` / `.split-text` / `.split-media` | pełna szerokość viewportu; tekst w kolumnie ograniczonej do ~2/3 `--page-max` z `--page-pad`; zdjęcie dobija do krawędzi **viewportu** (od `lg`) |
+| `.split` / `.split-text` / `.split-media` | pełna szerokość viewportu; tekst w kolumnie ograniczonej do ~2/3 `--page-max` z `--page-pad`; zdjęcie dobija do krawędzi **viewportu** (od `lg`). Poniżej `lg`: tekst pierwszy, kadr inset 4:5 z `--media-split-max` |
 | `.split-reverse` | to samo, ale zdjęcie po lewej (spad do lewej krawędzi) |
+| `.hero` / `.hero-title` / `.hero-copy` / `.hero-media-wrap` / `.hero-media` | hero: od `lg` to `.split`; poniżej `lg` siatka H1 → kadr w kole (`--hero-media-span`) → lead/CTA |
+| `.site-header` / `.site-nav-desktop` / `.site-nav-toggle` / `.site-nav-overlay` | chrome: poniżej `lg` sticky pasek + overlay; od `lg` poziomy rząd |
 | `.cols-3` | 1 → 2 → 3 kolumny; aktualności, publikacje |
 | `.news-card` + `.news-card-title` / `-body` / `-cta` | wspólna linia bazowa kart aktualności: tytuł zawsze na dwie linie, treść zbiera luz, rulka CTA na jednym poziomie niezależnie od długości tekstu |
 | `.card-link` + `.cta-over` / `.card-hover` | klikalny kafelek: link tytułu rozciąga swój obszar kliknięcia na całą kartę. `.cta-over` wynosi nad nakładkę CTA prowadzące **gdzie indziej** niż kafelek (Art Generacje: kafelek → projekt, CTA → lista). `.card-hover` na karcie animuje rulkę CTA przy hoverze, gdy CTA tylko powtarza link kafelka |
@@ -60,7 +62,10 @@ W `apps/web/src/components/`:
 Autorskie, bo Figma ich nie ma:
 
 - Typografia i odstępy skalują się przez `clamp()`, bez breakpointów.
-- Poniżej **1024 px** układy dzielone przechodzą w pionowe, zdjęcie traci bleed i zajmuje pełną szerokość. Kolejność: nagłówek, treść; na stacked `.split` zdjęcie jest pierwsze (nie pod navem).
+- Poniżej **1024 px** (`lg`):
+  - header jest **sticky**: logo + przycisk menu; cztery pozycje w pełnoekranowym overlayu na `sand`. Cele klikalne ≥ `--touch-target`. Od `lg` poziomy rząd; na `/` header nadal wychodzi z pionowego flow i siada w lewej kolumnie.
+  - `.split` układa się pionowo, **tekst pierwszy**. Zdjęcie traci bleed: kadr inset, `aspect-ratio` 4:5, `max-height: var(--media-split-max)` (42vh), w `--page-pad`.
+  - `.hero` nie jest stacked portretem. Kolejność: H1 → kadr w kole (`--hero-media-span`, `Blob` za kołem) → lead i CTA. Pasmo kół pod hero **nie** nachodzi na koło.
 - Poniżej **768 px** trzy kolumny stają się jedną (`.cols-3` po drodze przechodzi przez dwie).
 - Koła w paśmie: **82 px** na desktopie, skok do **48 px** poniżej 768 px (nie ciągły `clamp`). Paleta nadal `clamp` 44–113 px.
 
@@ -73,7 +78,7 @@ Autorskie, bo Figma ich nie ma:
 | zielony `#369125` w tekście | `#2f7d20` (`green-ink`) | oryginał daje 4,0:1 i nie przechodzi WCAG AA; dekoracje zostają na oryginale |
 | czerń tekstu `#000000` | `#282828` (`ink`) | jedna czerń zamiast dwóch |
 | 11 różnych lewych marginesów | `--page-pad` i `--page-indent` | rozrzut ręcznego rysowania, nie intencja |
-| zdjęcie hero od y = 0, za nagłówkiem | fotka od góry **prawej kolumny**; logo i nav w lewej (ten sam span co `.split-text`) | nav nigdy nie nachodzi na zdjęcie. Na `lg+` header wychodzi z pionowego flow przez `:has([data-home])`; poniżej `lg` zostaje nad treścią |
+| zdjęcie hero od y = 0, za nagłówkiem | na `lg+`: fotka od góry **prawej kolumny**; logo i nav w lewej (ten sam span co `.split-text`). Poniżej `lg`: H1, potem kadr w kole, nav w sticky overlayu | nav nigdy nie nachodzi na zdjęcie. Portret 481:823 na pełną szerokość telefonu zjada pierwszy ekran — to nie była intencja, tylko brak makiet mobilnych |
 | paleta na x = 269 | wyśrodkowana | pozycja w Figmie nie wynika z żadnej siatki |
 | trzeci krój Poppins | MuseoModerno | 6 wystąpień wobec dwóch rodzin w reszcie pliku |
 | `Rectangle 2` i biała etykieta „Baza wiedzy" | pominięte | pusty kształt bez wypełnienia i biały tekst na białym tle |
@@ -81,10 +86,10 @@ Autorskie, bo Figma ich nie ma:
 
 ## Stan na teraz
 
-Gotowe na `/`: skład z ramki (nie pixel-perfect). Hero w dwóch kolumnach od góry viewportu — nav w lewej, portret od góry prawej i na spad do krawędzi okna. Pasma kół: stała średnica, pełne stykające się koła, rzędy przy krawędziach strony, zachodzą na krawędzie zdjęć (hero od dołu, „Kim jesteśmy?" po odbiciu schodka też od dołu). Aktualności z nagłówkiem AKTUALNOŚCI, naprzemiennymi kolorami tytułów (magenta / navy, jak w ramce) i rulkami CTA na jednej linii. Kim/Metody (`.split-reverse`, zdjęcie z `public/about-photo.jpg` dopóki Studio jest puste), Art Generacje i Czytelnia (blob za H2), paleta wyśrodkowana jako grupa, stopka z cytatem Boala do prawej.
+Gotowe na `/`: skład z ramki na `lg+` (nie pixel-perfect) oraz świadomy pass mobilny poniżej 1024 px. Hero na desktopie: dwie kolumny od góry viewportu — nav w lewej, portret od góry prawej i na spad do krawędzi okna. Na mobile: sticky header z overlayem, H1 od razu, kadr w kole, potem lead. Pasma kół: stała średnica, pełne stykające się koła, rzędy przy krawędziach strony; na `lg+` zachodzą na krawędzie zdjęć (hero od dołu, „Kim jesteśmy?" po odbiciu schodka też od dołu); poniżej `lg` pasmo pod hero nie nachodzi na koło. Aktualności z nagłówkiem AKTUALNOŚCI, naprzemiennymi kolorami tytułów (magenta / navy, jak w ramce) i rulkami CTA na jednej linii. Kim/Metody (`.split-reverse`; na mobile tekst, potem kadr 4:5; zdjęcie z `public/about-photo.jpg` dopóki Studio jest puste), Art Generacje i Czytelnia (blob za H2), paleta wyśrodkowana jako grupa, stopka z cytatem Boala do prawej.
 
 Klikalne kafelki: karta aktualności → artykuł, Art Generacje → `/projekty/art-generacje` przy CTA prowadzącym na listę `/projekty`, Czytelnia → `/czytelnia`.
 
 Sprawdzone przez CDP na 1440 / 1280 / 1024 / 768 / 375: `scrollWidth == innerWidth` (brak przepełnienia poziomego), żaden element nie wychodzi za krawędzie, rulki CTA aktualności mają identyczne `top` w układzie wielokolumnowym, a test trafień (`elementFromPoint`) potwierdza jeden link na kafelek i osobno klikalne CTA Art Generacji.
 
-Listingi podstron (`/projekty`, `/zespol`, `/fundacja`, …) są nadal robocze z fazy migracji. 375 px ma być czytelne, nie 1:1 z ramką.
+Listingi podstron (`/projekty`, `/zespol`, `/fundacja`, …) są nadal robocze z fazy migracji — dziedziczą nowy chrome, nie nowy skład treści. 375 px ma być wygodne w nawigacji i rytmie, nie 1:1 z ramką.

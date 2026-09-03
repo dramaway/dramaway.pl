@@ -101,6 +101,11 @@
   --palette-size: clamp(44px, 7.9vw, 113px);
   /* Overlay header on `/` at lg+ (py-8 × 2 plus logo/nav, with wrap room). */
   --site-header-space: 9rem;
+  /* Compact sticky bar below lg: logo 57px + padding-block 0.75rem × 2. */
+  --site-header-bar: calc(57px + 1.5rem);
+  --touch-target: 2.75rem;
+  --hero-media-span: 70%;
+  --media-split-max: 42vh;
   /* Figma footer quote ≈ 491px, narrower than .measure 62ch. */
   --footer-quote-max: 30.6875rem;
 }
@@ -212,9 +217,125 @@
   }
 
   /*
+   * Site chrome. Below lg: compact sticky bar + sand overlay. From lg: in-flow
+   * row (and on `/`, absolute in the left column — see the split media query).
+   */
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .site-logo {
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+  }
+
+  .site-nav-desktop {
+    display: none;
+  }
+
+  .site-nav-toggle {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--touch-target);
+    height: var(--touch-target);
+    flex-shrink: 0;
+    margin-inline-end: calc((var(--touch-target) - 1.5rem) / -2);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-ink);
+    cursor: pointer;
+  }
+
+  .site-nav-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .site-nav-overlay {
+    position: fixed;
+    z-index: 1;
+    inset: 0;
+    inset-block-start: var(--site-header-bar);
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    background-color: var(--color-sand);
+  }
+
+  .site-nav-overlay[hidden] {
+    display: none;
+  }
+
+  .site-nav-overlay-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin: 0;
+    padding-block: 1.5rem;
+    list-style: none;
+  }
+
+  .site-nav-overlay-list a {
+    display: flex;
+    align-items: center;
+    min-height: var(--touch-target);
+    font-family: var(--font-display);
+    font-size: var(--text-h2);
+    font-weight: 600;
+    line-height: var(--text-h2--line-height);
+    text-transform: uppercase;
+  }
+
+  @media (width < 64rem) {
+    .site-header {
+      --site-header-bar: calc(
+        57px + 0.75rem + max(0.75rem, env(safe-area-inset-top, 0px))
+      );
+      position: sticky;
+      z-index: 20;
+      inset-block-start: 0;
+      padding-block: 0.75rem;
+      padding-block-start: max(0.75rem, env(safe-area-inset-top, 0px));
+      background-color: var(--background);
+    }
+  }
+
+  @media (width >= 64rem) {
+    .site-header {
+      gap: 1.5rem;
+      padding-block: 2rem;
+    }
+
+    .site-nav-desktop {
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 2rem;
+      row-gap: 0.75rem;
+      font-family: var(--font-display);
+      font-size: var(--text-lead);
+      font-weight: 600;
+      line-height: var(--text-lead--line-height);
+      text-transform: uppercase;
+    }
+
+    .site-nav-toggle,
+    .site-nav-overlay {
+      display: none;
+    }
+  }
+
+  /*
    * Full-viewport split: text capped at ~2/3 of --page-max (aligned with .page
    * via the left/right gutter past 1440), media filling the rest to the
-   * viewport edge. Stacked below lg — photo first, never under the nav.
+   * viewport edge. Stacked below lg — text first, then a shorter inset frame.
    */
   .split {
     display: grid;
@@ -232,7 +353,74 @@
 
   .split-media {
     min-width: 0;
-    order: -1;
+  }
+
+  .hero-copy {
+    margin-block-start: 2rem;
+  }
+
+  .hero-copy .cta {
+    margin-block-start: 2.5rem;
+  }
+
+  .hero-media-wrap {
+    position: relative;
+    isolation: isolate;
+  }
+
+  @media (width < 64rem) {
+    .split:not(.hero) > .split-media {
+      width: calc(100% - 2 * var(--page-pad));
+      max-height: var(--media-split-max);
+      margin-inline: auto;
+      aspect-ratio: 4 / 5;
+      border-radius: var(--radius-media);
+    }
+
+    /*
+     * Hero: title, circular still, then lead/CTA. Photo never eats the
+     * viewport; the following dot band does not overlap the circle.
+     */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        "title"
+        "media"
+        "copy";
+      gap: clamp(1.25rem, 4vw, 2rem);
+      padding-inline: var(--page-pad);
+      padding-block: var(--spacing-section);
+    }
+
+    .hero .split-text {
+      display: contents;
+    }
+
+    .hero-title {
+      grid-area: title;
+    }
+
+    .hero-copy {
+      grid-area: copy;
+      margin-block-start: 0;
+    }
+
+    .hero-media-wrap {
+      grid-area: media;
+      width: var(--hero-media-span);
+      justify-self: start;
+    }
+
+    .hero-media,
+    .hero-media.media-portrait {
+      aspect-ratio: 1;
+      border-radius: 50%;
+    }
+
+    [data-home] > .hero + .dot-band {
+      margin-block-start: 0;
+    }
   }
 
   @media (width >= 64rem) {
@@ -262,6 +450,10 @@
     .split-media {
       order: 0;
       align-self: stretch;
+    }
+
+    .hero-media-wrap > .blob {
+      display: none;
     }
 
     /* Media on the left instead (Figma: "Kim jesteśmy?" block), bleed to the left edge. */

@@ -15,11 +15,11 @@ The Figma file is a visual direction, not a spec: no auto-layout, no variables, 
 - **No pixel values in `components/sections/*`.** Use tokens or the composition classes. Missing something? Add a class in `@layer components` in `globals.css` — never an arbitrary value like `mt-[137px]`.
 - **Decorative circles are backgrounds, not elements.** The Figma dot band is 270 identical circles; `DotBand` draws it with `radial-gradient`.
 - **Every section survives empty data.** Sanity fields are optional and galleries vary in length; Figma always shows a fixed count.
-- **Mobile follows the rules in `system.md`** (stack below 1024px, single column below 768px). Do not invent other breakpoint behaviour.
+- **Mobile follows the rules in `system.md`:** stack below 1024px (text first, inset 4:5 frame; hero is H1 → circle still → lead), sticky header + overlay below 1024px, single column below 768px. Do not invent other breakpoint behaviour.
 
 ## What exists
 
-Classes: `.page`, `.split` / `.split-text` / `.split-media` / `.split-reverse`, `.cols-3`, `.stack` / `.stack-item`, `.measure`.
+Classes: `.page`, `.split` / `.split-text` / `.split-media` / `.split-reverse`, `.hero` / `.hero-title` / `.hero-copy` / `.hero-media`, `.site-header` / `.site-nav-overlay`, `.cols-3`, `.stack` / `.stack-item`, `.measure`.
 
 Components: `layout/section.tsx`, `visual/dot-band.tsx`, `visual/palette-row.tsx`, `visual/blob.tsx`, `visual/cta-link.tsx`, `visual/media.tsx`.
 
