@@ -1,16 +1,12 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Section } from "@/components/layout/section";
+import { HomeAboutMethods } from "@/components/sections/home-about-methods";
+import { HomeFeaturedAndReading } from "@/components/sections/home-featured-and-reading";
+import { HomeNews } from "@/components/sections/home-news";
 import { Hero } from "@/components/sections/hero";
-import { CtaLink } from "@/components/visual/cta-link";
 import { DotBand } from "@/components/visual/dot-band";
-import { Media } from "@/components/visual/media";
 import { PaletteRow } from "@/components/visual/palette-row";
-import { getNewsPages, getProjects } from "@/lib/sanity/fetch";
-import {
-  publicPathForPageSlug,
-  publicPathForProjectSlug,
-} from "@/lib/routes";
+import { publicPathForPageSlug } from "@/lib/routes";
+import { getHomepageNews, getProjects } from "@/lib/sanity/fetch";
 import { getResolvedSite } from "@/lib/site";
 
 export const revalidate = 60;
@@ -30,10 +26,19 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function HomePage() {
   const [projects, news] = await Promise.all([
     getProjects(),
-    getNewsPages(),
+    getHomepageNews(),
   ]);
   const featured = projects.find((project) => project.featured) ?? projects[0];
   const site = await getResolvedSite(featured?.cover);
+  const { homepage } = site;
+
+  const newsItems = news.map((item) => ({
+    _id: item._id,
+    title: newsTitle(item.title),
+    href: publicPathForPageSlug(item.slug),
+    excerpt: item.excerpt?.trim() || null,
+    publishedAt: item.publishedAt?.trim() || null,
+  }));
 
   return (
     <>
@@ -41,96 +46,33 @@ export default async function HomePage() {
 
       <DotBand />
 
-      {featured ? (
-        <Section bleed>
-          <div className="split">
-            <div className="split-text py-section">
-              <p className="font-display text-small font-semibold uppercase text-magenta">
-                Projekt wyróżniony
-              </p>
-              <h2 className="mt-2 font-display text-h2 font-extrabold">
-                <Link href={publicPathForProjectSlug(featured.slug)}>
-                  {featured.title}
-                </Link>
-              </h2>
-              {featured.summary ? (
-                <p className="measure mt-6">{featured.summary}</p>
-              ) : null}
-              {featured.editionCount ? (
-                <p className="mt-3 text-small">{featured.editionCount} edycji</p>
-              ) : null}
-              <CtaLink
-                href={publicPathForProjectSlug(featured.slug)}
-                className="mt-8"
-              >
-                zobacz projekt
-              </CtaLink>
-            </div>
-            <Media
-              image={featured.cover}
-              alt={featured.title}
-              variant="bleed"
-              ratio="landscape"
-              sizes="(min-width: 64rem) 34vw, 100vw"
-              className="split-media"
-            />
-          </div>
-        </Section>
-      ) : null}
+      <HomeNews items={newsItems} />
 
-      {news.length > 0 ? (
-        <Section>
-          <h2 className="font-display text-h2 font-extrabold">Aktualności</h2>
-          <ul className="cols-3 mt-10">
-            {news.map((item) => (
-              <li key={item._id}>
-                <Link href={publicPathForPageSlug(item.slug)} className="group">
-                  <Media
-                    image={item.cover ?? null}
-                    alt={newsTitle(item.title)}
-                    variant="inset"
-                    ratio="landscape"
-                    sizes="(min-width: 64rem) 28vw, (min-width: 48rem) 45vw, 100vw"
-                  />
-                  <h3 className="mt-4 font-display text-h3 font-extrabold group-hover:text-magenta">
-                    {newsTitle(item.title)}
-                  </h3>
-                </Link>
-                {item.excerpt ? (
-                  <p className="mt-3 line-clamp-4 text-small">
-                    {item.excerpt}
-                  </p>
-                ) : null}
-              </li>
-            ))}
-          </ul>
-        </Section>
-      ) : null}
+      <DotBand />
 
-      <Section>
-        <h2 className="font-display text-h2 font-extrabold">Projekty</h2>
-        <ul className="cols-3 mt-10">
-          {projects.map((project) => (
-            <li key={project._id}>
-              <Link
-                href={publicPathForProjectSlug(project.slug)}
-                className="group"
-              >
-                <Media
-                  image={project.cover}
-                  alt={project.title}
-                  variant="inset"
-                  ratio="album"
-                  sizes="(min-width: 64rem) 28vw, (min-width: 48rem) 45vw, 100vw"
-                />
-                <h3 className="mt-4 font-display text-h3 font-extrabold group-hover:text-magenta">
-                  {project.title}
-                </h3>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </Section>
+      <HomeAboutMethods
+        about={homepage.about}
+        methods={homepage.methods}
+        image={homepage.about.image}
+        imageAlt={homepage.about.imageAlt}
+      />
+
+      <DotBand />
+
+      <div className="page py-section">
+        <PaletteRow className="justify-center" />
+      </div>
+
+      <HomeFeaturedAndReading
+        featured={{
+          label: homepage.featured.heading,
+          heading: featured?.title?.trim() || "Art Generacje",
+          lead: homepage.featured.lead,
+          ctaLabel: homepage.featured.ctaLabel,
+          ctaHref: homepage.featured.ctaHref,
+        }}
+        czytelnia={homepage.czytelnia}
+      />
 
       <div className="page pb-section">
         <PaletteRow className="justify-center" />
