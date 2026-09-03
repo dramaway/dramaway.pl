@@ -5,8 +5,8 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-03 — skład homepage z ramki Figmy `59:608`; commity na `main` |
-| **Gałąź / HEAD** | `main` @ `08a290b` |
+| **Ostatnia aktualizacja** | 2026-09-03 — polish wizualny `/` (hero split, pasma kół, naprzemienne kolory tytułów, klikalne kafelki) |
+| **Gałąź / HEAD** | `main` @ `2ed1371` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ |
@@ -25,7 +25,7 @@ Stack: Next.js 15, Tailwind v4, shadcn/ui, Sanity Studio v6, Netlify. Kod/CMS EN
 
 ## Stan teraz
 
-Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona główna i chrome są już w składzie z Figmy** (copy + kolejność bloków, nie pixel-perfect).
+Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona główna ma skład z Figmy plus polish desktopowy** (hero od góry kolumny, pasma pełnych kół przy krawędziach, naprzemienne kolory tytułów, klikalne kafelki). Nie pixel-perfect; 375 tylko czytelne. Geometria sprawdzana przez CDP na 1440/1280/1024/768/375 — bez przepełnienia poziomego.
 
 - Dataset `production` (`tr2qdg9j`) publiczny. Next bez tokenu. Write token **tylko** `apps/studio/.env`.
 - Mapa URL: `apps/web/src/lib/routes.ts` — prefiks IA + `slug.current`. Header: dokładnie 4 pozycje (Projekty, Baza wiedzy, O fundacji, Kontakt). `/metody` i `/zespol` zostają jako URL-e, nie ma ich w navie.
@@ -41,27 +41,30 @@ Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona głów
 
 Pełny kanon migracji: [fundacja-status.md](migration/fundacja-status.md).
 
-### Warstwa wizualna (od 2026-08-30, skład `/` 2026-09-03)
+### Warstwa wizualna (od 2026-08-30, skład `/` 2026-09-03, polish 2026-09-03)
 
 Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design/system.md), liczby źródłowe: [design/figma-baseline.md](design/figma-baseline.md), decyzja: [ADR-004](decisions/ADR-004-layout-architecture.md).
 
 - Tokeny w `@theme` (`globals.css`), fonty MuseoModerno + Alexandria przez `next/font`.
-- Cztery klasy układu (`.page`, `.split`, `.cols-3`, `.stack`) zamiast siatki 12-kolumnowej.
+- Klasy układu: `.page`, `.split` (pełny viewport, spad zdjęcia do krawędzi okna), `.cols-3`, `.stack`, `.footer-quote`.
 - Sześć prymitywów: `Section`, `DotBand`, `PaletteRow`, `Blob`, `CtaLink`, `Media`.
-- Nagłówek: 4 pozycje z ramki. Hero jedzie na `siteSettings`.
-- `/` kolejność: Hero → DotBand → aktualności (max 3, bez zdjęć) → DotBand → Kim/Metody (`.split-reverse`, jedno `Media`) → DotBand → PaletteRow → Art Generacje + Czytelnia → PaletteRow → stopka (logo + cytat Boala).
+- **Hero / nav:** na `lg+` wrapper `[data-home]` + `:has()` wyjmuje header z pionowego flow i kotwiczy go w lewej kolumnie (szerokość jak `.split-text`). Portret od góry prawej kolumny, spad do prawej krawędzi viewportu. Nav **nigdy** na zdjęciu. Poniżej `lg`: header w flow, potem zdjęcie, potem tekst.
+- Pasmo kół: `--dot-size` 82 px (skok 48 px <768), bez `overflow: hidden`, koła z `radial-gradient(circle closest-side)` — bez `closest-side` promień idzie do narożnika kafla i zostaje szczelina. Szerokość rzędu `round(up, 50%, --dot-size)`: rzędy dobijają do krawędzi strony, reszta z zaokrąglenia ląduje na środku pod schodkiem. Ujemny margin nachodzi na krawędzie `Media`; prop `mirror` odbija schodek tam, gdzie zdjęcie jest po lewej.
+- Paleta: 7 stykających się kół, `flex-shrink: 0`, wyśrodkowana jako grupa.
+- `/` kolejność: Hero → DotBand → aktualności (H2 AKTUALNOŚCI, tytuły naprzemiennie magenta / navy, max 3, bez zdjęć) → DotBand → Kim/Metody (`.split-reverse`) → DotBand `mirror` → PaletteRow → Art Generacje + Czytelnia (blob za H2 `text-display`) → PaletteRow → stopka (logo + cytat Boala `.footer-quote`).
 - Sekcje: `home-news.tsx`, `home-about-methods.tsx`, `home-featured-and-reading.tsx`.
-- Zdjęcie „Kim jesteśmy” z `homepage.about.image`; puste = piaskowy placeholder `Media`.
-- CTA „poznaj nasze projekty” przy Art Generacje → `/projekty` (listing zostaje). CTA Czytelni → `/czytelnia` (ślepe; komentarz w kodzie).
+- Karty aktualności: `.news-card` trzyma wspólną linię bazową (tytuł na dwie linie, treść zbiera luz), więc rulki CTA są na jednym poziomie niezależnie od długości copy.
+- Klikalne kafelki: `.card-link` rozciąga link tytułu na całą kartę, `CtaLink presentational` zamienia zdublowane CTA w `<span aria-hidden>`, `.cta-over` wynosi nad nakładkę CTA prowadzące gdzie indziej. Aktualność → artykuł; Art Generacje → `/projekty/art-generacje` przy CTA na listę `/projekty`; Czytelnia → `/czytelnia`.
+- Zdjęcie „Kim jesteśmy” z `homepage.about.image`; puste = `fallbackSrc` na `public/about-photo.jpg` (kadr z draftu layoutu), nie piaskowy placeholder.
 - Reguła `.cursor/rules/web-ui.mdc` kieruje lżejsze modele do obu dokumentów.
-
-`docs/design/system.md` § „Stan na teraz” jest **nieaktualny** (wciąż opisuje siatkę projektów na `/`) — poprawić przy polerowaniu, nie przywracać starego składu.
 
 ### Świadomie nie zrobione
 
-- Dopieszczenie wizualne homepage (piksle, mobile, rytm) — skład i copy są, nie 1:1 z ramką
+- Pixel-perfect vs ramka i prawdziwy mobile-pass (375 jest czytelne, nie 1:1)
 - Wypełnienie pól `siteSettings.homepage` w Studio (działa na fallbackach)
 - `page.excerpt` / `page.publishedAt` w CMS — newsy na `/` tną `pt::text(body)`; dat na kartach nie ma
+- Zdjęcie „Kim jesteśmy” w Sanity — leci z `public/about-photo.jpg` jako `fallbackSrc`
+- Pasmo kół pod „Kim jesteśmy?” ma odbity schodek zamiast figmowego (uzgodnione) — powód w [design/system.md](design/system.md)
 - Podstrony na nowym UI — listingi `/projekty`, `/zespol`, `/fundacja` są nadal robocze z fazy migracji
 - Mapa przekierowań (stare aliasy → nowe)
 - Czytelnia — brak dumpa `drama_teatr`, stub bez treści
@@ -77,7 +80,7 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 2. `pnpm dev:all` jeśli porty wolne.
 3. Publiczne URL-e, nie `/preview`. Preview Netlify jeszcze **nie** ma tego składu, dopóki nie będzie deploya.
 
-**Najpierw:** dopieszczenie wizualne `/` i/lub zasilenie Studio (homepage + excerpt/data newsów). Potem dump Czytelni (`drama_teatr`) albo podstrony na tym samym UI.
+**Najpierw:** zasilenie Studio (grupa `homepage` + `excerpt` / `publishedAt` newsów — bez daty karty aktualności nie mają magentowej etykiety) oraz wgranie zdjęcia „Kim jesteśmy” do Sanity zamiast `public/about-photo.jpg`. Potem dump Czytelni (`drama_teatr`) albo podstrony na tym samym UI. Preview Netlify **nie** ma polishu, dopóki nie będzie deploya.
 
 Nie odtwarzać siatki projektów ani wyróżnionego splitu na `/`.
 
