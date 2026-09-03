@@ -5,8 +5,8 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-03 — polish wizualny `/` (hero split, pasma kół, naprzemienne kolory tytułów, klikalne kafelki) |
-| **Gałąź / HEAD** | `main` @ `2ed1371` |
+| **Ostatnia aktualizacja** | 2026-09-03 — polish `/` na `origin/main`; daty i trzeci news w Sanity |
+| **Gałąź / HEAD** | `main` @ `590e49f` (zsynchronizowane z `origin/main`) |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ |
@@ -34,7 +34,7 @@ Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona głów
 - Stub `/czytelnia` (nav: „Baza wiedzy”) — heading, bez dumpa `drama_teatr`.
 - `siteSettings` **jest w datasetcie** — hero zasilony; grupa `homepage` (about / methods / featured / czytelnia) jest w schemacie, w CMS pusta → fallbacki z `apps/web/src/lib/homepage-copy.ts`.
 - `getResolvedSite()` zwraca `homepage` + `hero` + `footerNote` (zawsze string, cytat Boala jako fallback). Featured **H2** to tytuł `project.featured`; magenta etykieta „Projekty” to `homepage.featured.heading`.
-- Newsy na `/`: `getHomepageNews()` — max 3, bez zdjęć, excerpt ~400 znaków (GROQ: `array::join(string::split(pt::text(body), "")[0...400], "")`, bo `pt::text(body)[0...400]` zwraca `null`). Trzecia kolumna pusta, gdy w CMS są tylko 2 newsy.
+- Newsy na `/`: `getHomepageNews()` — max 3, bez zdjęć, excerpt ~400 znaków (GROQ: `array::join(string::split(pt::text(body), "")[0...400], "")`, bo `pt::text(body)[0...400]` zwraca `null`). Daty kart: `publishedAt` (Figma: lipiec / maj / styczeń 2026). Trzeci news `news-placeholder-syrena` („Nowy projekt z Teatrem Syrena”) jest placeholderem z ramki — można usunąć ze Studia.
 - `/preview` zostaje inwentarzem CMS.
 - Netlify: `netlify.toml` w repo (`pnpm --filter web build`, `X-Robots-Tag: noindex`). Preview: https://dramaway.netlify.app/. Studio: https://dramaway.sanity.studio/.
 - Mapa 301 na premierę = **osobne zadanie**, nie teraz.
@@ -62,7 +62,7 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 
 - Pixel-perfect vs ramka i prawdziwy mobile-pass (375 jest czytelne, nie 1:1)
 - Wypełnienie pól `siteSettings.homepage` w Studio (działa na fallbackach)
-- `page.excerpt` / `page.publishedAt` w CMS — newsy na `/` tną `pt::text(body)`; dat na kartach nie ma
+- `page.excerpt` na dwóch migracyjnych newsach nadal puste — karty tną `pt::text(body)` (placeholder Syrena ma excerpt z ramki)
 - Zdjęcie „Kim jesteśmy” w Sanity — leci z `public/about-photo.jpg` jako `fallbackSrc`
 - Pasmo kół pod „Kim jesteśmy?” ma odbity schodek zamiast figmowego (uzgodnione) — powód w [design/system.md](design/system.md)
 - Podstrony na nowym UI — listingi `/projekty`, `/zespol`, `/fundacja` są nadal robocze z fazy migracji
@@ -78,9 +78,9 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 
 1. Ten plik + [design/system.md](design/system.md).
 2. `pnpm dev:all` jeśli porty wolne.
-3. Publiczne URL-e, nie `/preview`. Preview Netlify jeszcze **nie** ma tego składu, dopóki nie będzie deploya.
+3. Publiczne URL-e, nie `/preview`. Preview Netlify złapie polish z `origin/main` po deployu.
 
-**Najpierw:** zasilenie Studio (grupa `homepage` + `excerpt` / `publishedAt` newsów — bez daty karty aktualności nie mają magentowej etykiety) oraz wgranie zdjęcia „Kim jesteśmy” do Sanity zamiast `public/about-photo.jpg`. Potem dump Czytelni (`drama_teatr`) albo podstrony na tym samym UI. Preview Netlify **nie** ma polishu, dopóki nie będzie deploya.
+**Najpierw:** wgranie zdjęcia „Kim jesteśmy” do Sanity zamiast `public/about-photo.jpg`, i/lub zasilenie grupy `homepage` w Studio. Potem dump Czytelni (`drama_teatr`) albo podstrony na tym samym UI. Preview Netlify złapie polish po deployu z `origin/main`.
 
 Nie odtwarzać siatki projektów ani wyróżnionego splitu na `/`.
 
