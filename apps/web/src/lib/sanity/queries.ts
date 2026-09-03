@@ -1,5 +1,20 @@
+import { EXCERPT_FALLBACK_MAX } from "../homepage-copy";
+
 /** News pages were migrated with slug prefix `aktualnosc-`. */
 const newsSlugFilter = `slug.current match "aktualnosc-*"`;
+
+const newsProjection = `{
+  _id,
+  title,
+  "slug": slug.current,
+  "isNews": true,
+  "cover": body[_type == "image"][0],
+  "excerpt": select(
+    defined(excerpt) && excerpt != "" => excerpt,
+    array::join(string::split(pt::text(body), "")[0...${EXCERPT_FALLBACK_MAX}], "")
+  ),
+  publishedAt
+}`;
 
 export const contentCountsQuery = `{
   "people": count(*[_type == "person"]),
@@ -35,14 +50,9 @@ export const pagesListQuery = `*[_type == "page" && !(${newsSlugFilter})] | orde
   "isNews": false
 }`;
 
-export const newsListQuery = `*[_type == "page" && ${newsSlugFilter}] | order(title asc) {
-  _id,
-  title,
-  "slug": slug.current,
-  "isNews": true,
-  "cover": body[_type == "image"][0],
-  "excerpt": pt::text(body)
-}`;
+export const newsListQuery = `*[_type == "page" && ${newsSlugFilter}] | order(coalesce(publishedAt, _createdAt) desc) ${newsProjection}`;
+
+export const homepageNewsQuery = `*[_type == "page" && ${newsSlugFilter}] | order(coalesce(publishedAt, _createdAt) desc) [0...3] ${newsProjection}`;
 
 export const pageBySlugQuery = `*[_type == "page" && slug.current == $slug][0] {
   _id,
@@ -114,5 +124,32 @@ export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
   heroLead,
   heroCtaLabel,
   heroCtaHref,
-  heroImage
+  heroImage,
+  homepage {
+    about {
+      heading,
+      lead,
+      ctaLabel,
+      ctaHref,
+      image
+    },
+    methods {
+      heading,
+      lead,
+      ctaLabel,
+      ctaHref
+    },
+    featured {
+      label,
+      lead,
+      ctaLabel,
+      ctaHref
+    },
+    czytelnia {
+      heading,
+      lead,
+      ctaLabel,
+      ctaHref
+    }
+  }
 }`;

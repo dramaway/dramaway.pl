@@ -3,6 +3,7 @@ import "server-only";
 import { sanityClient } from "./client";
 import {
   contentCountsQuery,
+  homepageNewsQuery,
   newsListQuery,
   pageBySlugQuery,
   pageSlugsQuery,
@@ -54,6 +55,11 @@ export async function getPages(): Promise<PageListItem[]> {
 
 export async function getNewsPages(): Promise<PageListItem[]> {
   return sanityClient.fetch(newsListQuery, {}, revalidate);
+}
+
+/** Latest news for the homepage: max 3, truncated excerpt, newest first. */
+export async function getHomepageNews(): Promise<PageListItem[]> {
+  return sanityClient.fetch(homepageNewsQuery, {}, revalidate);
 }
 
 export async function getPageBySlug(slug: string): Promise<PageDetail | null> {

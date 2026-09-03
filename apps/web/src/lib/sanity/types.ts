@@ -30,6 +30,7 @@ export type PageListItem = {
   isNews: boolean;
   cover?: SanityImage | null;
   excerpt?: string | null;
+  publishedAt?: string | null;
 };
 
 export type PageDetail = {
@@ -38,6 +39,31 @@ export type PageDetail = {
   slug: string;
   isNews: boolean;
   body: PortableContent;
+};
+
+export type SiteSettingsHomepageBlock = {
+  heading?: string | null;
+  lead?: string | null;
+  ctaLabel?: string | null;
+  ctaHref?: string | null;
+};
+
+export type SiteSettingsHomepageAbout = SiteSettingsHomepageBlock & {
+  image?: (SanityImage & { alt?: string | null }) | null;
+};
+
+export type SiteSettingsHomepageFeatured = {
+  label?: string | null;
+  lead?: string | null;
+  ctaLabel?: string | null;
+  ctaHref?: string | null;
+};
+
+export type SiteSettingsHomepage = {
+  about?: SiteSettingsHomepageAbout | null;
+  methods?: SiteSettingsHomepageBlock | null;
+  featured?: SiteSettingsHomepageFeatured | null;
+  czytelnia?: SiteSettingsHomepageBlock | null;
 };
 
 export type SiteSettings = {
@@ -50,6 +76,7 @@ export type SiteSettings = {
   heroCtaLabel: string | null;
   heroCtaHref: string | null;
   heroImage: (SanityImage & { alt?: string | null }) | null;
+  homepage?: SiteSettingsHomepage | null;
 };
 
 export type HeroContent = {
@@ -59,6 +86,35 @@ export type HeroContent = {
   ctaHref: string;
   image: SanityImage | null;
   imageAlt: string;
+};
+
+export type HomepageBlock = {
+  heading: string;
+  lead: string;
+  ctaLabel: string;
+  ctaHref: string;
+};
+
+export type HomepageAbout = HomepageBlock & {
+  image: SanityImage | null;
+  imageAlt: string;
+};
+
+/** Label/blurb/CTA only — project title comes from `project.featured` on the page. */
+export type HomepageContent = {
+  about: HomepageAbout;
+  methods: HomepageBlock;
+  featured: HomepageBlock;
+  czytelnia: HomepageBlock;
+};
+
+export type ResolvedSite = {
+  title: string;
+  tagline: string | null;
+  centrumUrl: string;
+  footerNote: string;
+  hero: HeroContent;
+  homepage: HomepageContent;
 };
 
 export type ContentCounts = {
