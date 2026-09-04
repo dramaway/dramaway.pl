@@ -6,7 +6,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | | |
 |--|--|
 | **Ostatnia aktualizacja** | 2026-09-04 — pole Favicon (ICO) jako file + podgląd w Studio |
-| **Gałąź / HEAD** | `main` @ `01aa9a5` |
+| **Gałąź / HEAD** | `main` @ `9bd6d81` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ |
