@@ -67,10 +67,10 @@ function PortableLink({
 const components: PortableTextComponents = {
   block: {
     h2: ({ children }) => (
-      <h2 className="mt-8 text-2xl font-semibold tracking-tight">{children}</h2>
+      <h2 className="mt-8 font-display text-h2 font-black">{children}</h2>
     ),
     h3: ({ children }) => (
-      <h3 className="mt-6 text-xl font-semibold">{children}</h3>
+      <h3 className="mt-6 font-display text-h3 font-black">{children}</h3>
     ),
     normal: ({ children }) => (
       <p className="whitespace-pre-wrap">{children}</p>
@@ -103,7 +103,7 @@ export function PortableBody({ value }: { value: PortableContent }) {
   const blocks = Array.isArray(value) ? value : [value];
   if (blocks.length === 0) return null;
   return (
-    <div className="mt-8 max-w-none space-y-4 text-base leading-relaxed">
+    <div className="mt-8 max-w-none space-y-4 text-lead">
       <PortableText value={blocks} components={components} />
     </div>
   );

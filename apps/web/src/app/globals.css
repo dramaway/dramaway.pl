@@ -74,16 +74,20 @@
   --font-body: var(--font-alexandria), ui-sans-serif, system-ui, sans-serif;
 
   /*
-   * Line-heights tighten as size grows, as bold display type needs. Only
-   * --text-body's 1.72 is Figma-backed (excerpt ratio 18/31 — see
-   * figma-baseline.md); the file's usual "43px" line-height is a paste
-   * artifact, so display/h1/h2/h3 use a deliberate tightening curve instead
-   * of that number, and lead/small keep a comfortable reading ratio.
+   * Desktop targets (Figma @ 1440, clamp down on smaller screens):
+   *   display / h1  48  — hero title and page titles
+   *   h2            32  — section headings
+   *   h3            24  — card / list titles
+   *   lead          20  — hero description and written/prose blocks
+   *   body          18  — supporting copy under section blocks
+   *   small         14  — dates, labels
+   * Line-heights: display/h2/h3 tighten for Black; body 1.72 is the
+   * excerpt ratio 18/31; Figma's usual "43px" leading is a paste artifact.
    */
   --text-display: clamp(2rem, 1.2rem + 2.6vw, 3rem);
   --text-display--line-height: 1.1;
-  --text-h1: clamp(1.75rem, 1.35rem + 1.3vw, 2.25rem);
-  --text-h1--line-height: 1.15;
+  --text-h1: var(--text-display);
+  --text-h1--line-height: var(--text-display--line-height);
   --text-h2: clamp(1.5rem, 1.25rem + 0.9vw, 2rem);
   --text-h2--line-height: 1.2;
   --text-h3: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);

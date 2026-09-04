@@ -23,7 +23,7 @@ Classes: `.page`, `.split` / `.split-text` / `.split-media` / `.split-reverse`, 
 
 Components: `layout/section.tsx`, `visual/dot-band.tsx`, `visual/palette-row.tsx`, `visual/blob.tsx`, `visual/cta-link.tsx`, `visual/media.tsx`.
 
-Tokens: colours `sand` `ink` `green` `green-ink` `magenta` `navy` `brand-1…7`; fonts `font-display` `font-body`; sizes `text-display` `text-h1` `text-h2` `text-h3` `text-lead` `text-body` `text-small`; rhythm `py-section`.
+Tokens: colours `sand` `ink` `green` `green-ink` `magenta` `navy` `brand-1…7`; fonts `font-display` `font-body`; sizes `text-display`/`text-h1` 48, `text-h2` 32, `text-h3` 24, `text-lead` 20 (hero + prose), `text-body` 18 (supporting copy), `text-small` 14; rhythm `py-section`.
 
 ```tsx
 // BAD — hardcoded geometry, raw Figma green, no empty-state
@@ -36,8 +36,8 @@ Tokens: colours `sand` `ink` `green` `green-ink` `magenta` `navy` `brand-1…7`;
 <Section bleed>
   <div className="split">
     <div className="split-text py-section">
-      <h2 className="font-display text-h2 font-extrabold">{title}</h2>
-      {summary ? <p className="measure mt-8 text-lead">{summary}</p> : null}
+      <h2 className="font-display text-h2 font-black">{title}</h2>
+      {summary ? <p className="measure mt-8 text-body">{summary}</p> : null}
       {ctaLabel ? <CtaLink href={ctaHref}>{ctaLabel}</CtaLink> : null}
     </div>
     <Media image={image} alt={alt} variant="bleed" className="split-media" />

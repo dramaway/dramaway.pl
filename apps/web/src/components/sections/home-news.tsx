@@ -33,7 +33,7 @@ export function HomeNews({ items }: { items: HomeNewsItem[] }) {
     <Section aria-labelledby="home-news-heading">
       <h2
         id="home-news-heading"
-        className="font-display text-display font-black uppercase"
+        className="font-display text-h2 font-black uppercase"
       >
         Aktualności
       </h2>
