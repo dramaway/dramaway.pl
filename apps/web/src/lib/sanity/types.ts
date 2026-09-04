@@ -66,11 +66,28 @@ export type SiteSettingsHomepage = {
   czytelnia?: SiteSettingsHomepageBlock | null;
 };
 
+export type SanityFile = {
+  asset?: {
+    url?: string | null;
+    mimeType?: string | null;
+  } | null;
+};
+
+export type SiteSettingsBranding = {
+  faviconSvg?: SanityFile | null;
+  faviconLight?: SanityImage | null;
+  faviconDark?: SanityImage | null;
+  appleTouchIcon?: SanityImage | null;
+  appIcon?: SanityImage | null;
+  shareImage?: SanityImage | null;
+};
+
 export type SiteSettings = {
   title: string | null;
   tagline: string | null;
   centrumUrl: string | null;
   footerNote: string | null;
+  branding?: SiteSettingsBranding | null;
   heroHeading: string | null;
   heroLead: string | null;
   heroCtaLabel: string | null;

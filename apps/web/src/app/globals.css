@@ -379,6 +379,11 @@
     margin-block-start: 2rem;
   }
 
+  /* Sentence case — the only heading that skips the base `uppercase`. */
+  .hero-title {
+    text-transform: none;
+  }
+
   .hero-copy .cta {
     margin-block-start: 2.5rem;
   }

@@ -120,6 +120,14 @@ export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
   tagline,
   centrumUrl,
   footerNote,
+  branding {
+    faviconSvg { asset->{ url, mimeType } },
+    faviconLight,
+    faviconDark,
+    appleTouchIcon,
+    appIcon,
+    shareImage
+  },
   heroHeading,
   heroLead,
   heroCtaLabel,

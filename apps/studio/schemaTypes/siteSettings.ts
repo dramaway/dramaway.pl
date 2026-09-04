@@ -68,6 +68,56 @@ export const siteSettings = defineType({
       group: "general",
     }),
     defineField({
+      name: "branding",
+      title: "Icons & share image",
+      type: "object",
+      group: "branding",
+      description:
+        "Leave a field empty to keep the built-in file from public/brand. SVG is the tab icon that follows the browser light/dark chrome.",
+      fields: [
+        defineField({
+          name: "faviconSvg",
+          title: "Favicon (SVG)",
+          type: "file",
+          options: { accept: "image/svg+xml" },
+          description:
+            "Best for tabs. Prefer an SVG whose fill flips with prefers-color-scheme (dark mark on light chrome, light mark on dark).",
+        }),
+        defineField({
+          name: "faviconLight",
+          title: "Favicon PNG — light chrome",
+          type: "image",
+          description:
+            "Optional raster for browsers that ignore SVG. Dark mark, transparent background. Served with prefers-color-scheme: light.",
+        }),
+        defineField({
+          name: "faviconDark",
+          title: "Favicon PNG — dark chrome",
+          type: "image",
+          description:
+            "Optional raster for dark browser chrome. Light mark, transparent background. Served with prefers-color-scheme: dark.",
+        }),
+        defineField({
+          name: "appleTouchIcon",
+          title: "Apple touch icon",
+          type: "image",
+          description: "180×180. iOS home screen; a filled square reads better than a thin transparent mark.",
+        }),
+        defineField({
+          name: "appIcon",
+          title: "App icon (512)",
+          type: "image",
+          description: "512×512 PWA / Android icon.",
+        }),
+        defineField({
+          name: "shareImage",
+          title: "Share image (Open Graph)",
+          type: "image",
+          description: "Link preview. Aim for 1200×630. Empty = no og:image.",
+        }),
+      ],
+    }),
+    defineField({
       name: "heroHeading",
       title: "Hero heading",
       type: "string",
@@ -162,6 +212,7 @@ export const siteSettings = defineType({
   ],
   groups: [
     { name: "general", title: "Ogólne", default: true },
+    { name: "branding", title: "Ikony" },
     { name: "hero", title: "Hero" },
     { name: "homepage", title: "Homepage" },
   ],

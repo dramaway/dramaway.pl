@@ -15,7 +15,7 @@ The Figma file is a visual direction, not a spec: no auto-layout, no variables, 
 - **No pixel values in `components/sections/*`.** Use tokens or the composition classes. Missing something? Add a class in `@layer components` in `globals.css` — never an arbitrary value like `mt-[137px]`.
 - **Decorative circles are backgrounds, not elements.** The Figma dot band is 270 identical circles; `DotBand` draws it with `radial-gradient`.
 - **Every section survives empty data.** Sanity fields are optional and galleries vary in length; Figma always shows a fixed count.
-- **Headings are always uppercase** via `@layer base` on `h1–h4`. Do not add `uppercase` on each heading, and do not store ALL CAPS in CMS copy.
+- **Headings are uppercase** via `@layer base` on `h1–h4`, except `.hero-title` (sentence case). Do not add `uppercase` on each heading, and do not store ALL CAPS in CMS copy.
 
 ## What exists
 

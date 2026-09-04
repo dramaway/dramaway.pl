@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-04 — nagłówki zawsze uppercase; wizualna skala vs outline HTML |
+| **Ostatnia aktualizacja** | 2026-09-04 — H1 hero bez uppercase; favicony + OG w siteSettings |
 | **Gałąź / HEAD** | `main` @ `925fc12` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
@@ -32,7 +32,7 @@ Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona głów
 - Listingi `/projekty`, `/zespol`, `/fundacja` = widoki, nie dokumenty. `/` **nie** listuje już siatki projektów ani splitów „13 edycji”.
 - `/projekty/[slug]` = `project` albo strona z sekcji projektów. `/[slug]` = reszta (w tym newsy pod starym aliasem korzenia).
 - Stub `/czytelnia` (nav: „Baza wiedzy”) — heading, bez dumpa `drama_teatr`.
-- `siteSettings` **jest w datasetcie** — hero zasilony; grupa `homepage` (about / methods / featured / czytelnia) jest w schemacie, w CMS pusta → fallbacki z `apps/web/src/lib/homepage-copy.ts`.
+- `siteSettings` **jest w datasetcie** — hero zasilony; grupa `homepage` (about / methods / featured / czytelnia) jest w schemacie, w CMS pusta → fallbacki z `apps/web/src/lib/homepage-copy.ts`. Grupa **Ikony** (`branding`): SVG / PNG light+dark / Apple / 512 / OG; puste pole = pliki z `apps/web/public/brand/` (SVG z `prefers-color-scheme`).
 - `getResolvedSite()` zwraca `homepage` + `hero` + `footerNote` (zawsze string, cytat Boala jako fallback). Featured **H2** to tytuł `project.featured`; magenta etykieta „Projekty” to `homepage.featured.heading`.
 - Newsy na `/`: `getHomepageNews()` — max 3, bez zdjęć, excerpt ~400 znaków (GROQ: `array::join(string::split(pt::text(body), "")[0...400], "")`, bo `pt::text(body)[0...400]` zwraca `null`). Daty kart: `publishedAt` (Figma: lipiec / maj / styczeń 2026). Trzeci news `news-placeholder-syrena` („Nowy projekt z Teatrem Syrena”) jest placeholderem z ramki — można usunąć ze Studia.
 - `/preview` zostaje inwentarzem CMS.
