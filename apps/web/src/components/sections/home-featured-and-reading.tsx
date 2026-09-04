@@ -27,7 +27,8 @@ type HomeFeaturedAndReadingProps = {
 
 /**
  * Short Art Generacje blurb plus the Czytelnia teaser. Copy-only — the
- * project grid and featured split no longer live on `/`.
+ * project grid and featured split no longer live on `/`. The stack is a
+ * centred column (`.stack-narrow`); text inside stays left-aligned.
  */
 export function HomeFeaturedAndReading({
   featured,
@@ -35,7 +36,7 @@ export function HomeFeaturedAndReading({
 }: HomeFeaturedAndReadingProps) {
   return (
     <Section>
-      <div className="stack">
+      <div className="stack stack-narrow">
         <div className="stack-item">
           <Blob />
           {featured.label ? (
@@ -44,14 +45,14 @@ export function HomeFeaturedAndReading({
             </p>
           ) : null}
           {featured.heading ? (
-            <h2 className="mt-2 font-display text-display font-black">
+            <h2 className="mt-2 font-display text-h2 font-black">
               <Link href={featured.href} className="card-link">
                 {featured.heading}
               </Link>
             </h2>
           ) : null}
           {featured.lead ? (
-            <p className="measure mt-6 text-lead">{featured.lead}</p>
+            <p className="measure mt-5 text-body">{featured.lead}</p>
           ) : null}
           {featured.ctaLabel ? (
             <CtaLink href={featured.ctaHref} className="cta-over mt-8">
@@ -64,14 +65,14 @@ export function HomeFeaturedAndReading({
           <Blob />
           {/* placeholder: czytelnia has no CMS content yet */}
           {czytelnia.heading ? (
-            <h2 className="font-display text-display font-black">
+            <h2 className="font-display text-h2 font-black">
               <Link href={czytelnia.ctaHref} className="card-link">
                 {czytelnia.heading}
               </Link>
             </h2>
           ) : null}
           {czytelnia.lead ? (
-            <p className="measure mt-6 text-lead">{czytelnia.lead}</p>
+            <p className="measure mt-5 text-body">{czytelnia.lead}</p>
           ) : null}
           {czytelnia.ctaLabel ? (
             <CtaLink

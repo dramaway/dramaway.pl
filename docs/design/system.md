@@ -18,9 +18,9 @@ Wszystkie w bloku `@theme` w [apps/web/src/app/globals.css](../../apps/web/src/a
 
 **Kolory:** `sand`, `ink`, `green`, `green-ink`, `magenta`, `navy` oraz `brand-1` … `brand-7`. W Tailwindzie to zwykłe utility: `bg-sand`, `text-magenta`.
 
-**Typografia:** `font-display` (MuseoModerno) i `font-body` (Alexandria), ładowane przez `next/font` w [layout.tsx](../../apps/web/src/app/layout.tsx). Skala niesie font-size razem z interlinią: `text-display`, `text-h1`, `text-h2`, `text-h3`, `text-lead`, `text-body`, `text-small`. Każdy stopień to `clamp()`, więc typografia skaluje się płynnie i nie potrzebuje breakpointów.
+**Typografia:** `font-display` (MuseoModerno 600/800/900) i `font-body` (Alexandria 300/400/600), ładowane przez `next/font` w [layout.tsx](../../apps/web/src/app/layout.tsx). Ciągły tekst jest Light (300) z `body`; nagłówki dostają `font-black`, CTA i nav `font-semibold`. Skala niesie font-size razem z interlinią: `text-display`, `text-h1`, `text-h2`, `text-h3`, `text-lead`, `text-body`, `text-small`. Każdy stopień to `clamp()`, więc typografia skaluje się płynnie i nie potrzebuje breakpointów. Hierarchia na `/`: `text-display` tylko na H1 hero, AKTUALNOŚCI i „Kim jesteśmy?”; teaserowe bloki (Art Generacje, Czytelnia, Metody) biorą `text-h2`, karty aktualności `text-h3`.
 
-**Layout:** `--page-max` (1440), `--page-pad`, `--page-indent`, `--dot-size` (82 px, skok do 48 px poniżej 768 px — nie `clamp`), `--palette-size`, `--site-header-space` (desktopowy overlay na `/`), `--site-header-bar` (kompaktowy pasek poniżej `lg`), `--touch-target` (44 px), `--hero-media-span` (70%), `--media-split-max` (42vh), `--footer-quote-max` oraz `spacing-section` jako rytm pionowy (`py-section`).
+**Layout:** `--page-max` (1440), `--page-pad`, `--page-indent`, `--dot-size` (82 px, skok do 48 px poniżej 768 px — nie `clamp`), `--palette-size`, `--site-header-space` (desktopowy overlay na `/`), `--site-header-bar` (kompaktowy pasek poniżej `lg`), `--touch-target` (44 px), `--hero-media-span` (70%), `--media-split-max` (42vh), `--footer-quote-max`, `--content-narrow` (kolumna teaserów Art Generacje / Czytelnia) oraz `spacing-section` jako rytm pionowy (`py-section`).
 
 ## Klasy kompozycyjne
 
@@ -31,10 +31,11 @@ Wszystkie w bloku `@theme` w [apps/web/src/app/globals.css](../../apps/web/src/a
 | `.split-reverse` | to samo, ale zdjęcie po lewej (spad do lewej krawędzi) |
 | `.hero` / `.hero-title` / `.hero-copy` / `.hero-media-wrap` / `.hero-media` | hero: od `lg` to `.split`; poniżej `lg` siatka H1 → kadr w kole (`--hero-media-span`) → lead/CTA |
 | `.site-header` / `.site-nav-desktop` / `.site-nav-toggle` / `.site-nav-overlay` | chrome: poniżej `lg` sticky pasek + overlay; od `lg` poziomy rząd |
-| `.cols-3` | 1 → 2 → 3 kolumny; aktualności, publikacje |
+| `.cols-3` | 1 → 2 → 3 kolumny; aktualności, publikacje. Rynna szersza niż 36 px z ramki — świadomie więcej światła |
 | `.news-card` + `.news-card-title` / `-body` / `-cta` | wspólna linia bazowa kart aktualności: tytuł zawsze na dwie linie, treść zbiera luz, rulka CTA na jednym poziomie niezależnie od długości tekstu |
 | `.card-link` + `.cta-over` / `.card-hover` | klikalny kafelek: link tytułu rozciąga swój obszar kliknięcia na całą kartę. `.cta-over` wynosi nad nakładkę CTA prowadzące **gdzie indziej** niż kafelek (Art Generacje: kafelek → projekt, CTA → lista). `.card-hover` na karcie animuje rulkę CTA przy hoverze, gdy CTA tylko powtarza link kafelka |
 | `.stack` / `.stack-item` | lista pionowa; `.stack-item` tworzy kontekst dla `Blob` |
+| `.stack-narrow` | wyśrodkowuje blok jako kolumnę (`--content-narrow`); tekst w środku zostaje do lewej |
 | `.measure` | komfortowa szerokość czytania (62ch) |
 | `.footer-quote` | cytat w stopce: do prawej, węższy niż `.measure` (`--footer-quote-max`) |
 
@@ -74,7 +75,8 @@ Autorskie, bo Figma ich nie ma:
 | Figma | Kod | Dlaczego |
 |-------|-----|----------|
 | interlinia 43 px przy 18 px tekstu | 1,72 (czyli 31 px) | 2,39 to przeklejenie; zajawki w tym samym pliku mają 18/31 |
-| interlinia 67 px przy 24 px | 1,35 | ta sama pomyłka, przeklejone z nagłówka 48 px |
+| interlinia 67 px przy 24 px | 1,25 | ta sama pomyłka, przeklejone z nagłówka 48 px; ciasna interlinia Black |
+| interlinia 67 px przy 48 px | 1,1 | 1,4 z pierwszej fazy było za luźne na display Black |
 | zielony `#369125` w tekście | `#2f7d20` (`green-ink`) | oryginał daje 4,0:1 i nie przechodzi WCAG AA; dekoracje zostają na oryginale |
 | czerń tekstu `#000000` | `#282828` (`ink`) | jedna czerń zamiast dwóch |
 | 11 różnych lewych marginesów | `--page-pad` i `--page-indent` | rozrzut ręcznego rysowania, nie intencja |
@@ -86,7 +88,7 @@ Autorskie, bo Figma ich nie ma:
 
 ## Stan na teraz
 
-Gotowe na `/`: skład z ramki na `lg+` (nie pixel-perfect) oraz świadomy pass mobilny poniżej 1024 px. Hero na desktopie: dwie kolumny od góry viewportu — nav w lewej, portret od góry prawej i na spad do krawędzi okna. Na mobile: sticky header z overlayem, H1 od razu, kadr w kole, potem lead. Pasma kół: stała średnica, pełne stykające się koła, rzędy przy krawędziach strony; na `lg+` zachodzą na krawędzie zdjęć (hero od dołu, „Kim jesteśmy?" po odbiciu schodka też od dołu); poniżej `lg` pasmo pod hero nie nachodzi na koło. Aktualności z nagłówkiem AKTUALNOŚCI, naprzemiennymi kolorami tytułu i daty (magenta / navy) i rulkami CTA na jednej linii. Kim/Metody (`.split-reverse`; na mobile tekst, potem kadr 4:5; zdjęcie z `public/about-photo.jpg` dopóki Studio jest puste), Art Generacje i Czytelnia (blob za H2), paleta wyśrodkowana jako grupa, stopka z cytatem Boala do prawej.
+Gotowe na `/`: skład z ramki na `lg+` (nie pixel-perfect) oraz świadomy pass mobilny poniżej 1024 px. Hero na desktopie: dwie kolumny od góry viewportu — nav w lewej, portret od góry prawej i na spad do krawędzi okna. Na mobile: sticky header z overlayem, H1 od razu, kadr w kole, potem lead. Pasma kół: stała średnica, pełne stykające się koła, rzędy przy krawędziach strony; na `lg+` zachodzą na krawędzie zdjęć (hero od dołu, „Kim jesteśmy?" po odbiciu schodka też od dołu); poniżej `lg` pasmo pod hero nie nachodzi na koło. Aktualności z nagłówkiem AKTUALNOŚCI, naprzemiennymi kolorami tytułu i daty (magenta / navy) i rulkami CTA na jednej linii; siatka ma szerszą rynnę niż 36 px z ramki. Kim/Metody (`.split-reverse`; Metody na `text-h2`; na mobile tekst, potem kadr 4:5; zdjęcie z `public/about-photo.jpg` dopóki Studio jest puste), Art Generacje i Czytelnia (`.stack-narrow`, `text-h2`, blob za H2), paleta wyśrodkowana jako grupa, stopka z cytatem Boala do prawej. Ciągły tekst: Alexandria Light.
 
 Klikalne kafelki: karta aktualności → artykuł, Art Generacje → `/projekty/art-generacje` przy CTA prowadzącym na listę `/projekty`, Czytelnia → `/czytelnia`.
 

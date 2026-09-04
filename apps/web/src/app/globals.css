@@ -204,7 +204,7 @@
     @apply font-body;
   }
   body {
-    @apply bg-background text-body text-ink;
+    @apply bg-background font-light text-body text-ink;
   }
   h1,
   h2,
@@ -527,7 +527,8 @@
   .cols-3 {
     display: grid;
     grid-template-columns: 1fr;
-    gap: clamp(2rem, 2.5vw, 36px);
+    column-gap: clamp(2.5rem, 4.5vw, 4rem);
+    row-gap: clamp(3rem, 6vw, 5rem);
   }
 
   @media (width >= 48rem) {

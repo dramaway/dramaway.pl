@@ -5,8 +5,8 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-03 — pass mobilny: sticky nav + overlay, hero w kole, krótsze kadry |
-| **Gałąź / HEAD** | `main` @ `34a5276` |
+| **Ostatnia aktualizacja** | 2026-09-04 — hierarchia typografii na `/`, wyśrodkowane teasery, światła w aktualnościach |
+| **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ |
@@ -46,12 +46,12 @@ Pełny kanon migracji: [fundacja-status.md](migration/fundacja-status.md).
 Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design/system.md), liczby źródłowe: [design/figma-baseline.md](design/figma-baseline.md), decyzja: [ADR-004](decisions/ADR-004-layout-architecture.md).
 
 - Tokeny w `@theme` (`globals.css`), fonty MuseoModerno + Alexandria przez `next/font`.
-- Klasy układu: `.page`, `.split` (pełny viewport, spad zdjęcia do krawędzi okna), `.cols-3`, `.stack`, `.footer-quote`.
+- Klasy układu: `.page`, `.split` (pełny viewport, spad zdjęcia do krawędzi okna), `.cols-3`, `.stack`, `.stack-narrow`, `.footer-quote`.
 - Sześć prymitywów: `Section`, `DotBand`, `PaletteRow`, `Blob`, `CtaLink`, `Media`.
 - **Hero / nav:** na `lg+` wrapper `[data-home]` + `:has()` wyjmuje header z pionowego flow i kotwiczy go w lewej kolumnie (szerokość jak `.split-text`). Portret od góry prawej kolumny, spad do prawej krawędzi viewportu. Nav **nigdy** na zdjęciu. Poniżej `lg`: sticky pasek (logo + menu), overlay na `sand` z czterema pozycjami; hero to H1, kadr w kole, lead/CTA; stacked `.split` ma tekst, potem kadr inset 4:5 (`--media-split-max`).
 - Pasmo kół: `--dot-size` 82 px (skok 48 px <768), bez `overflow: hidden`, koła z `radial-gradient(circle closest-side)` — bez `closest-side` promień idzie do narożnika kafla i zostaje szczelina. Szerokość rzędu `round(up, 50%, --dot-size)`: rzędy dobijają do krawędzi strony, reszta z zaokrąglenia ląduje na środku pod schodkiem. Ujemny margin nachodzi na krawędzie `Media`; prop `mirror` odbija schodek tam, gdzie zdjęcie jest po lewej.
 - Paleta: 7 stykających się kół, `flex-shrink: 0`, wyśrodkowana jako grupa.
-- `/` kolejność: Hero → DotBand → aktualności (H2 AKTUALNOŚCI, tytuł i data naprzemiennie magenta / navy, max 3, bez zdjęć) → DotBand → Kim/Metody (`.split-reverse`) → DotBand `mirror` → PaletteRow → Art Generacje + Czytelnia (blob za H2 `text-display`) → PaletteRow → stopka (logo + cytat Boala `.footer-quote`).
+- `/` kolejność: Hero → DotBand → aktualności (H2 AKTUALNOŚCI, tytuł i data naprzemiennie magenta / navy, max 3, bez zdjęć, szersza rynna) → DotBand → Kim/Metody (`.split-reverse`; Metody na `text-h2`) → DotBand `mirror` → PaletteRow → Art Generacje + Czytelnia (`.stack-narrow`, `text-h2`) → PaletteRow → stopka (logo + cytat Boala `.footer-quote`).
 - Sekcje: `home-news.tsx`, `home-about-methods.tsx`, `home-featured-and-reading.tsx`.
 - Karty aktualności: `.news-card` trzyma wspólną linię bazową (tytuł na dwie linie, treść zbiera luz), więc rulki CTA są na jednym poziomie niezależnie od długości copy.
 - Klikalne kafelki: `.card-link` rozciąga link tytułu na całą kartę, `CtaLink presentational` zamienia zdublowane CTA w `<span aria-hidden>`, `.cta-over` wynosi nad nakładkę CTA prowadzące gdzie indziej. Aktualność → artykuł; Art Generacje → `/projekty/art-generacje` przy CTA na listę `/projekty`; Czytelnia → `/czytelnia`.

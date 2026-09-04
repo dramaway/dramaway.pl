@@ -37,7 +37,7 @@ export function HomeNews({ items }: { items: HomeNewsItem[] }) {
       >
         Aktualności
       </h2>
-      <ul className="cols-3 mt-8">
+      <ul className="cols-3 mt-12">
         {cards.map((item, index) => {
           const date = item.publishedAt
             ? formatPolishMonthYear(item.publishedAt)
@@ -59,7 +59,7 @@ export function HomeNews({ items }: { items: HomeNewsItem[] }) {
               {item.title ? (
                 <h3
                   className={cn(
-                    "news-card-title mt-2 line-clamp-2 font-display text-h3 font-extrabold",
+                    "news-card-title mt-2 line-clamp-2 font-display text-h3 font-black",
                     titleColor,
                   )}
                 >
@@ -74,7 +74,7 @@ export function HomeNews({ items }: { items: HomeNewsItem[] }) {
               ) : null}
               <div className="news-card-body">
                 {item.excerpt ? (
-                  <p className="mt-3 line-clamp-4 text-body">{item.excerpt}</p>
+                  <p className="mt-5 line-clamp-4 text-body">{item.excerpt}</p>
                 ) : null}
               </div>
               {item.href ? (

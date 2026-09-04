@@ -17,12 +17,21 @@ type HomeAboutMethodsProps = {
   imageAlt: string;
 };
 
-function TextStack({ block }: { block: HomeTextBlock }) {
+function TextStack({
+  block,
+  featured = false,
+}: {
+  block: HomeTextBlock;
+  /** Page-level heading (Kim jesteśmy) vs a secondary block (Metody). */
+  featured?: boolean;
+}) {
+  const headingClass = featured
+    ? "font-display text-display font-black"
+    : "font-display text-h2 font-black";
+
   return (
     <div>
-      {block.heading ? (
-        <h2 className="font-display text-display font-black">{block.heading}</h2>
-      ) : null}
+      {block.heading ? <h2 className={headingClass}>{block.heading}</h2> : null}
       {block.lead ? (
         <p className="measure mt-6 text-lead">{block.lead}</p>
       ) : null}
@@ -49,7 +58,7 @@ export function HomeAboutMethods({
     <section className="split split-reverse">
       <div className="split-text">
         <div className="stack">
-          <TextStack block={about} />
+          <TextStack block={about} featured />
           <TextStack block={methods} />
         </div>
       </div>

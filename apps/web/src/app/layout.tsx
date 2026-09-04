@@ -5,12 +5,14 @@ import "./globals.css";
 const museoModerno = MuseoModerno({
   variable: "--font-museomoderno",
   subsets: ["latin-ext"],
+  weight: ["600", "800", "900"],
   display: "swap",
 });
 
 const alexandria = Alexandria({
   variable: "--font-alexandria",
   subsets: ["latin-ext"],
+  weight: ["300", "400", "600"],
   display: "swap",
 });
 
