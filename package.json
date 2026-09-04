@@ -1,5 +1,6 @@
 {
   "name": "dramaway",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "pnpm --filter web dev",
@@ -10,19 +11,22 @@
     "build:web": "pnpm --filter web build",
     "build:studio": "pnpm --filter studio build",
     "lint": "pnpm --filter web lint",
+    "deps:outdated": "pnpm outdated -r",
+    "deps:update": "pnpm update -r",
     "extract:fundacja": "python3 scripts/extract_fundacja.py",
     "migrate:fundacja": "node --env-file=apps/studio/.env scripts/migrate-fundacja.mjs",
     "migrate:art-generacje": "node --env-file=apps/studio/.env scripts/migrate-art-generacje.mjs",
     "repair:portable-text": "node --env-file=apps/studio/.env scripts/repair-portable-text.mjs"
   },
   "engines": {
-    "node": ">=22.12"
+    "node": ">=22.12",
+    "pnpm": ">=11.9"
   },
   "packageManager": "pnpm@11.9.0",
   "dependencies": {
     "@portabletext/block-tools": "^5.2.0",
-    "@sanity/client": "^7.26.2",
-    "@sanity/schema": "^6.10.1",
+    "@sanity/client": "catalog:",
+    "@sanity/schema": "catalog:",
     "jsdom": "^30.0.1"
   }
 }

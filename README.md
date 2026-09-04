@@ -41,7 +41,7 @@ Hub: [docs/README.md](docs/README.md)
 
 ## Uruchomienie lokalne
 
-Wymaga Node **≥ 22.12** i [pnpm](https://pnpm.io/).
+Wymaga Node **≥ 22.12** i [pnpm](https://pnpm.io/). Wersje Node/pnpm: `.node-version` + `packageManager` w `package.json`. Zależności: [docs/guides/dependencies.md](docs/guides/dependencies.md).
 
 ```bash
 pnpm install

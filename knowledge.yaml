@@ -44,6 +44,9 @@ knowledge:
     - path: docs/decisions/
       description: "Architecture Decision Records"
       priority: high
+    - path: docs/guides/dependencies.md
+      description: "How to update dependencies: pnpm catalog, Dependabot, scripts"
+      priority: medium
     - path: docs/migration/fundacja-status.md
       description: "What is already in Sanity, conversion gaps, next steps before Figma"
       priority: high

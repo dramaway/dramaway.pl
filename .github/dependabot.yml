@@ -1,0 +1,50 @@
+# Dependabot: weekly PRs inside the current majors.
+# Next 16 / TypeScript 6+ / ESLint 10 are ignored until we choose them.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    versioning-strategy: increase
+    groups:
+      sanity:
+        patterns:
+          - "sanity"
+          - "@sanity/*"
+      next:
+        patterns:
+          - "next"
+          - "eslint-config-next"
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+      lint:
+        patterns:
+          - "eslint"
+          - "@eslint/*"
+    ignore:
+      - dependency-name: next
+        update-types: ["version-update:semver-major"]
+      - dependency-name: eslint-config-next
+        update-types: ["version-update:semver-major"]
+      - dependency-name: eslint
+        update-types: ["version-update:semver-major"]
+      - dependency-name: typescript
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@portabletext/block-tools"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@sanity/client"
+        update-types: ["version-update:semver-major"]
+      # 6.12.0 depends on unpublished @portabletext/schema@3
+      - dependency-name: sanity
+        versions: [">=6.12.0"]
+      - dependency-name: "@sanity/schema"
+        versions: [">=6.12.0"]
+      - dependency-name: "@sanity/vision"
+        versions: [">=6.12.0"]

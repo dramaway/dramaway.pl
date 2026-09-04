@@ -41,7 +41,11 @@ Mapa dokumentów projektu. Treść po polsku; nazwy plików ADR i ścieżek kodu
 
 ## Guides
 
-`guides/` — później (uruchomienie lokalne, edycja w Sanity Studio).
+| Plik | Opis |
+|------|------|
+| [guides/dependencies.md](guides/dependencies.md) | Aktualizacja deps: catalog pnpm, Dependabot, skrypty |
+
+`guides/` — później też uruchomienie lokalne i edycja w Sanity Studio.
 
 ## Źródło konceptu
 
