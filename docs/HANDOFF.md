@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-04 — pole Favicon (ICO) jako file + podgląd w Studio |
+| **Ostatnia aktualizacja** | 2026-09-04 — SVG favicon jako image w Media; ICO zostaje file z natywnym pickerem |
 | **Gałąź / HEAD** | `main` @ `9bd6d81` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
@@ -32,11 +32,11 @@ Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona głów
 - Listingi `/projekty`, `/zespol`, `/fundacja` = widoki, nie dokumenty. `/` **nie** listuje już siatki projektów ani splitów „13 edycji”.
 - `/projekty/[slug]` = `project` albo strona z sekcji projektów. `/[slug]` = reszta (w tym newsy pod starym aliasem korzenia).
 - Stub `/czytelnia` (nav: „Baza wiedzy”) — heading, bez dumpa `drama_teatr`.
-- `siteSettings` **jest w datasetcie** — hero zasilony; grupa `homepage` (about / methods / featured / czytelnia) jest w schemacie, w CMS pusta → fallbacki z `apps/web/src/lib/homepage-copy.ts`. Grupa **Ikony** (`branding`): SVG / **ICO (file, z podglądem 32×32)** / PNG light+dark / Apple / 512 / OG; puste pole = pliki z `apps/web/public/brand/` (SVG z `prefers-color-scheme`). ICO nie może być `sanity.imageAsset` (API 422) — wrzucać z pola, nie dropem na siatkę obrazów w Media.
+- `siteSettings` **jest w datasetcie** — hero zasilony; grupa `homepage` (about / methods / featured / czytelnia) jest w schemacie, w CMS pusta → fallbacki z `apps/web/src/lib/homepage-copy.ts`. Grupa **Ikony** (`branding`): **SVG jako `image`** (Select w Media widzi m.in. już wrzucony `icon.svg`; strona serwuje surowy SVG z `asset.url`, nie raster CDN) / **ICO jako `file`** z podglądem 32×32 i natywnym pickerem (Media na polach `file` była pusta: 0 `fileAsset`) / PNG light+dark / Apple / 512 / OG. Puste pole = `public/brand`.
 - `getResolvedSite()` zwraca `homepage` + `hero` + `footerNote` (zawsze string, cytat Boala jako fallback). Featured **H2** to tytuł `project.featured`; magenta etykieta „Projekty” to `homepage.featured.heading`.
 - Newsy na `/`: `getHomepageNews()` — max 3, bez zdjęć, excerpt ~400 znaków (GROQ: `array::join(string::split(pt::text(body), "")[0...400], "")`, bo `pt::text(body)[0...400]` zwraca `null`). Daty kart: `publishedAt` (Figma: lipiec / maj / styczeń 2026). Trzeci news `news-placeholder-syrena` („Nowy projekt z Teatrem Syrena”) jest placeholderem z ramki — można usunąć ze Studia.
 - `/preview` zostaje inwentarzem CMS.
-- Studio: plugin **Media** (`sanity-plugin-media`) — zakładka w menu + jedyne źródło przy polach `image`/`file`. Typy `media.tag` / `media.folder` są ukryte w desk (edycja w narzędziu Media). Istniejące **76** `sanity.imageAsset` z migracji widać od razu; nie trzeba ich przebudowywać ani tagować. Credit line włączony. Deploy: `pnpm --filter studio deploy` → https://dramaway.sanity.studio/.
+- Studio: plugin **Media** (`sanity-plugin-media`) — zakładka w menu + źródło przy polach **`image`**. Pola **`file`** (ICO) zostają na wbudowanym pickerze Sanity: Media w trybie plików pokazuje tylko `sanity.fileAsset`, a tych jest zero. Typy `media.tag` / `media.folder` ukryte w desk. Credit line włączony. Deploy: `pnpm --filter studio deploy` → https://dramaway.sanity.studio/.
 - Netlify: `netlify.toml` w repo (`pnpm --filter web build`, `X-Robots-Tag: noindex`). Preview: https://dramaway.netlify.app/.
 - Zależności: catalog w `pnpm-workspace.yaml`, lockfile, Dependabot (tydzień), skrypty `pnpm deps:outdated` / `pnpm deps:update`. Kanwa: [guides/dependencies.md](guides/dependencies.md). Next 16 / TS 6+ / ESLint 10 zostają poza automatami.
 - Mapa 301 na premierę = **osobne zadanie**, nie teraz.

@@ -79,10 +79,10 @@ export const siteSettings = defineType({
         defineField({
           name: "faviconSvg",
           title: "Favicon (SVG)",
-          type: "file",
+          type: "image",
           options: { accept: "image/svg+xml" },
           description:
-            "Best for tabs. Prefer an SVG whose fill flips with prefers-color-scheme (dark mark on light chrome, light mark on dark).",
+            "Best for tabs. Prefer an SVG whose fill flips with prefers-color-scheme. Stored as an image so Media can preview it; the site still serves the raw SVG (not a rasterized CDN transform).",
         }),
         defineField({
           name: "faviconIco",
@@ -92,7 +92,7 @@ export const siteSettings = defineType({
             accept: ".ico,image/x-icon,image/vnd.microsoft.icon",
           },
           description:
-            "Legacy tab fallback. Upload here (as a file) — Sanity cannot store ICO as an image, so the Media tool will reject a drop onto the image grid.",
+            "Legacy tab fallback. Sanity cannot store ICO as an image, so this uses the built-in file picker (not Media). Upload here; a 32×32 preview appears once the file is attached.",
           components: { input: IcoFileInput },
         }),
         defineField({

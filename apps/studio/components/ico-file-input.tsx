@@ -51,7 +51,12 @@ export function IcoFileInput(props: Props) {
           />
           <span style={{ fontSize: 12, opacity: 0.7 }}>Preview (32×32)</span>
         </div>
-      ) : null}
+      ) : (
+        <p style={{ marginTop: 8, fontSize: 12, opacity: 0.7 }}>
+          No ICO in the file library yet. Use Upload on this field — Select only
+          lists existing file assets, not images.
+        </p>
+      )}
     </div>
   );
 }

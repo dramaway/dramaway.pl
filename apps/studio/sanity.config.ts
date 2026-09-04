@@ -24,8 +24,11 @@ export default defineConfig({
     image: {
       assetSources: () => [mediaAssetSource],
     },
+    // ICO/SVG-as-file must not open Media in "files" mode: that grid is
+    // sanity.fileAsset only, and Media would also re-upload SVG as an image.
     file: {
-      assetSources: () => [mediaAssetSource],
+      assetSources: (previous) =>
+        previous.filter((source) => source !== mediaAssetSource),
     },
   },
   schema: {
