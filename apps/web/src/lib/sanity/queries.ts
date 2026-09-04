@@ -122,6 +122,7 @@ export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
   footerNote,
   branding {
     faviconSvg { asset->{ url, mimeType } },
+    faviconIco { asset->{ url, mimeType } },
     faviconLight,
     faviconDark,
     appleTouchIcon,

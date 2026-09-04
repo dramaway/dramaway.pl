@@ -75,6 +75,7 @@ export type SanityFile = {
 
 export type SiteSettingsBranding = {
   faviconSvg?: SanityFile | null;
+  faviconIco?: SanityFile | null;
   faviconLight?: SanityImage | null;
   faviconDark?: SanityImage | null;
   appleTouchIcon?: SanityImage | null;

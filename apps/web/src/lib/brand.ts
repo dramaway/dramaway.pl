@@ -44,6 +44,7 @@ type IconLink = {
 export function brandMetadata(settings: SiteSettings | null): Metadata {
   const branding = settings?.branding;
   const svg = fileUrl(branding?.faviconSvg) ?? DEFAULT_BRAND.svg;
+  const ico = fileUrl(branding?.faviconIco) ?? DEFAULT_BRAND.ico;
   const lightPng = imageUrl(branding?.faviconLight, 192);
   const darkPng = imageUrl(branding?.faviconDark, 192);
   const apple = imageUrl(branding?.appleTouchIcon, 180) ?? DEFAULT_BRAND.apple;
@@ -74,7 +75,7 @@ export function brandMetadata(settings: SiteSettings | null): Metadata {
       media: "(prefers-color-scheme: dark)",
     });
   }
-  icon.push({ url: DEFAULT_BRAND.ico, sizes: "32x32" });
+  icon.push({ url: ico, type: "image/x-icon", sizes: "32x32" });
 
   const metadata: Metadata = {
     icons: {

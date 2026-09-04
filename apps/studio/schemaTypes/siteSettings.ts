@@ -1,4 +1,5 @@
 import { defineType, defineField, type FieldDefinition } from "sanity";
+import { IcoFileInput } from "../components/ico-file-input";
 
 function ctaFields(): FieldDefinition[] {
   return [
@@ -82,6 +83,17 @@ export const siteSettings = defineType({
           options: { accept: "image/svg+xml" },
           description:
             "Best for tabs. Prefer an SVG whose fill flips with prefers-color-scheme (dark mark on light chrome, light mark on dark).",
+        }),
+        defineField({
+          name: "faviconIco",
+          title: "Favicon (ICO)",
+          type: "file",
+          options: {
+            accept: ".ico,image/x-icon,image/vnd.microsoft.icon",
+          },
+          description:
+            "Legacy tab fallback. Upload here (as a file) — Sanity cannot store ICO as an image, so the Media tool will reject a drop onto the image grid.",
+          components: { input: IcoFileInput },
         }),
         defineField({
           name: "faviconLight",
