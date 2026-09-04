@@ -6,7 +6,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | | |
 |--|--|
 | **Ostatnia aktualizacja** | 2026-09-04 — nagłówki zawsze uppercase; wizualna skala vs outline HTML |
-| **Gałąź / HEAD** | `main` @ `72e0e0c` |
+| **Gałąź / HEAD** | `main` @ `925fc12` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ |
