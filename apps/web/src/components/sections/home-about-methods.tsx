@@ -21,7 +21,7 @@ function TextStack({ block }: { block: HomeTextBlock }) {
   return (
     <div>
       {block.heading ? (
-        <h2 className="font-display text-h2 font-black">{block.heading}</h2>
+        <h2 className="font-display text-h3 font-black">{block.heading}</h2>
       ) : null}
       {block.lead ? (
         <p className="measure mt-6 text-body">{block.lead}</p>

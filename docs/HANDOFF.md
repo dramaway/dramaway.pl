@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-04 — skala typografii: 48 / 32 / 24 / 20 / 18 / 14 |
+| **Ostatnia aktualizacja** | 2026-09-04 — nagłówki zawsze uppercase; wizualna skala vs outline HTML |
 | **Gałąź / HEAD** | `main` @ `72e0e0c` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
@@ -51,7 +51,7 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 - **Hero / nav:** na `lg+` wrapper `[data-home]` + `:has()` wyjmuje header z pionowego flow i kotwiczy go w lewej kolumnie (szerokość jak `.split-text`). Portret od góry prawej kolumny, spad do prawej krawędzi viewportu. Nav **nigdy** na zdjęciu. Poniżej `lg`: sticky pasek (logo + menu), overlay na `sand` z czterema pozycjami; hero to H1, kadr w kole, lead/CTA; stacked `.split` ma tekst, potem kadr inset 4:5 (`--media-split-max`).
 - Pasmo kół: `--dot-size` 82 px (skok 48 px <768), bez `overflow: hidden`, koła z `radial-gradient(circle closest-side)` — bez `closest-side` promień idzie do narożnika kafla i zostaje szczelina. Szerokość rzędu `round(up, 50%, --dot-size)`: rzędy dobijają do krawędzi strony, reszta z zaokrąglenia ląduje na środku pod schodkiem. Ujemny margin nachodzi na krawędzie `Media`; prop `mirror` odbija schodek tam, gdzie zdjęcie jest po lewej.
 - Paleta: 7 stykających się kół, `flex-shrink: 0`, wyśrodkowana jako grupa.
-- `/` kolejność: Hero → DotBand → aktualności (H2 AKTUALNOŚCI `text-h2`, tytuł kart `text-h3` i data `text-small` naprzemiennie magenta / navy, max 3, bez zdjęć, szersza rynna) → DotBand → Kim/Metody (`.split-reverse`; oba `text-h2` + `text-body`) → DotBand `mirror` → PaletteRow → Art Generacje + Czytelnia (`.stack-narrow`, `text-h2` + `text-body`) → PaletteRow → stopka (logo + cytat Boala `.footer-quote`).
+- `/` kolejność: Hero → DotBand → aktualności (H2 AKTUALNOŚCI `text-h2`, tytuł kart H3 `text-h4` i data `text-small` naprzemiennie magenta / navy, max 3, bez zdjęć, szersza rynna) → DotBand → Kim/Metody (`.split-reverse`; oba H2 na `text-h3` + `text-body`) → DotBand `mirror` → PaletteRow → Art Generacje + Czytelnia (`.stack-narrow`, H2 na `text-h3` + `text-body`) → PaletteRow → stopka (logo + cytat Boala `.footer-quote`).
 - Sekcje: `home-news.tsx`, `home-about-methods.tsx`, `home-featured-and-reading.tsx`.
 - Karty aktualności: `.news-card` trzyma wspólną linię bazową (tytuł na dwie linie, treść zbiera luz), więc rulki CTA są na jednym poziomie niezależnie od długości copy.
 - Klikalne kafelki: `.card-link` rozciąga link tytułu na całą kartę, `CtaLink presentational` zamienia zdublowane CTA w `<span aria-hidden>`, `.cta-over` wynosi nad nakładkę CTA prowadzące gdzie indziej. Aktualność → artykuł; Art Generacje → `/projekty/art-generacje` przy CTA na listę `/projekty`; Czytelnia → `/czytelnia`.

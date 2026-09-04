@@ -33,7 +33,7 @@ export function HomeNews({ items }: { items: HomeNewsItem[] }) {
     <Section aria-labelledby="home-news-heading">
       <h2
         id="home-news-heading"
-        className="font-display text-h2 font-black uppercase"
+        className="font-display text-h2 font-black"
       >
         Aktualności
       </h2>
@@ -59,7 +59,7 @@ export function HomeNews({ items }: { items: HomeNewsItem[] }) {
               {item.title ? (
                 <h3
                   className={cn(
-                    "news-card-title mt-2 line-clamp-2 font-display text-h3 font-black",
+                    "news-card-title mt-2 line-clamp-2 font-display text-h4 font-black",
                     titleColor,
                   )}
                 >

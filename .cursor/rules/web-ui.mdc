@@ -15,7 +15,7 @@ The Figma file is a visual direction, not a spec: no auto-layout, no variables, 
 - **No pixel values in `components/sections/*`.** Use tokens or the composition classes. Missing something? Add a class in `@layer components` in `globals.css` — never an arbitrary value like `mt-[137px]`.
 - **Decorative circles are backgrounds, not elements.** The Figma dot band is 270 identical circles; `DotBand` draws it with `radial-gradient`.
 - **Every section survives empty data.** Sanity fields are optional and galleries vary in length; Figma always shows a fixed count.
-- **Mobile follows the rules in `system.md`:** stack below 1024px (text first, inset 4:5 frame; hero is H1 → circle still → lead), sticky header + overlay below 1024px, single column below 768px. Do not invent other breakpoint behaviour.
+- **Headings are always uppercase** via `@layer base` on `h1–h4`. Do not add `uppercase` on each heading, and do not store ALL CAPS in CMS copy.
 
 ## What exists
 
@@ -23,7 +23,7 @@ Classes: `.page`, `.split` / `.split-text` / `.split-media` / `.split-reverse`, 
 
 Components: `layout/section.tsx`, `visual/dot-band.tsx`, `visual/palette-row.tsx`, `visual/blob.tsx`, `visual/cta-link.tsx`, `visual/media.tsx`.
 
-Tokens: colours `sand` `ink` `green` `green-ink` `magenta` `navy` `brand-1…7`; fonts `font-display` `font-body`; sizes `text-display`/`text-h1` 48, `text-h2` 32, `text-h3` 24, `text-lead` 20 (hero + prose), `text-body` 18 (supporting copy), `text-small` 14; rhythm `py-section`.
+Tokens: colours `sand` `ink` `green` `green-ink` `magenta` `navy` `brand-1…7`; fonts `font-display` `font-body`; sizes `text-display`/`text-h1` 48, `text-h2` 32 (band labels), `text-h3` 24 (section titles), `text-h4` 20 (card titles), `text-lead` 20 (hero + prose), `text-body` 18, `text-small` 14; rhythm `py-section`. Size class ≠ HTML tag: one H1, H2 per section, H3 for news cards.
 
 ```tsx
 // BAD — hardcoded geometry, raw Figma green, no empty-state
@@ -36,7 +36,7 @@ Tokens: colours `sand` `ink` `green` `green-ink` `magenta` `navy` `brand-1…7`;
 <Section bleed>
   <div className="split">
     <div className="split-text py-section">
-      <h2 className="font-display text-h2 font-black">{title}</h2>
+      <h2 className="font-display text-h3 font-black">{title}</h2>
       {summary ? <p className="measure mt-8 text-body">{summary}</p> : null}
       {ctaLabel ? <CtaLink href={ctaHref}>{ctaLabel}</CtaLink> : null}
     </div>

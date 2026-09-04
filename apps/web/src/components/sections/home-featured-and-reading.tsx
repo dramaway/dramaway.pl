@@ -45,7 +45,7 @@ export function HomeFeaturedAndReading({
             </p>
           ) : null}
           {featured.heading ? (
-            <h2 className="mt-2 font-display text-h2 font-black">
+            <h2 className="mt-2 font-display text-h3 font-black">
               <Link href={featured.href} className="card-link">
                 {featured.heading}
               </Link>
@@ -65,7 +65,7 @@ export function HomeFeaturedAndReading({
           <Blob />
           {/* placeholder: czytelnia has no CMS content yet */}
           {czytelnia.heading ? (
-            <h2 className="font-display text-h2 font-black">
+            <h2 className="font-display text-h3 font-black">
               <Link href={czytelnia.ctaHref} className="card-link">
                 {czytelnia.heading}
               </Link>

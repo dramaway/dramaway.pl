@@ -74,14 +74,16 @@
   --font-body: var(--font-alexandria), ui-sans-serif, system-ui, sans-serif;
 
   /*
-   * Desktop targets (Figma @ 1440, clamp down on smaller screens):
+   * Desktop targets (Figma @ 1440, clamp down on smaller screens).
+   * Size tokens are visual, not HTML rank — see system.md.
    *   display / h1  48  — hero title and page titles
-   *   h2            32  — section headings
-   *   h3            24  — card / list titles
+   *   h2            32  — band labels (AKTUALNOŚCI)
+   *   h3            24  — section titles (Kim, Metody, teasers)
+   *   h4            20  — card titles (news)
    *   lead          20  — hero description and written/prose blocks
    *   body          18  — supporting copy under section blocks
    *   small         14  — dates, labels
-   * Line-heights: display/h2/h3 tighten for Black; body 1.72 is the
+   * Line-heights: display/h2/h3/h4 tighten for Black; body 1.72 is the
    * excerpt ratio 18/31; Figma's usual "43px" leading is a paste artifact.
    */
   --text-display: clamp(2rem, 1.2rem + 2.6vw, 3rem);
@@ -92,6 +94,8 @@
   --text-h2--line-height: 1.2;
   --text-h3: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
   --text-h3--line-height: 1.25;
+  --text-h4: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  --text-h4--line-height: 1.25;
   --text-lead: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
   --text-lead--line-height: 1.55;
   --text-body: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
@@ -212,8 +216,9 @@
   }
   h1,
   h2,
-  h3 {
-    @apply font-display text-balance;
+  h3,
+  h4 {
+    @apply font-display text-balance uppercase;
   }
 }
 
@@ -559,7 +564,7 @@
   }
 
   .news-card-title {
-    min-height: calc(2 * var(--text-h3--line-height) * 1em);
+    min-height: calc(2 * var(--text-h4--line-height) * 1em);
   }
 
   .news-card-body {
