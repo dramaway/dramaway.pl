@@ -6,7 +6,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | | |
 |--|--|
 | **Ostatnia aktualizacja** | 2026-09-04 — SVG favicon jako image w Media; ICO zostaje file z natywnym pickerem |
-| **Gałąź / HEAD** | `main` @ `9bd6d81` |
+| **Gałąź / HEAD** | `main` @ `95360a6` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ |
