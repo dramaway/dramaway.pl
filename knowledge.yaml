@@ -11,7 +11,7 @@ apps:
   - path: apps/web
     description: "Next.js 15 frontend (Tailwind v4 + shadcn/ui)"
   - path: apps/studio
-    description: "Sanity Studio v3 with content schema stubs"
+    description: "Sanity Studio v6 — schema, Media library plugin, hosted at dramaway.sanity.studio"
 
 knowledge:
   primary_context:

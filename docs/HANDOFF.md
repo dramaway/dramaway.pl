@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-04 — aktualizacja deps, catalog pnpm, Dependabot |
+| **Ostatnia aktualizacja** | 2026-09-04 — sanity-plugin-media (biblioteka assetów w Studio) |
 | **Gałąź / HEAD** | `main` @ `362b5ae` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
@@ -36,7 +36,8 @@ Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona głów
 - `getResolvedSite()` zwraca `homepage` + `hero` + `footerNote` (zawsze string, cytat Boala jako fallback). Featured **H2** to tytuł `project.featured`; magenta etykieta „Projekty” to `homepage.featured.heading`.
 - Newsy na `/`: `getHomepageNews()` — max 3, bez zdjęć, excerpt ~400 znaków (GROQ: `array::join(string::split(pt::text(body), "")[0...400], "")`, bo `pt::text(body)[0...400]` zwraca `null`). Daty kart: `publishedAt` (Figma: lipiec / maj / styczeń 2026). Trzeci news `news-placeholder-syrena` („Nowy projekt z Teatrem Syrena”) jest placeholderem z ramki — można usunąć ze Studia.
 - `/preview` zostaje inwentarzem CMS.
-- Netlify: `netlify.toml` w repo (`pnpm --filter web build`, `X-Robots-Tag: noindex`). Preview: https://dramaway.netlify.app/. Studio: https://dramaway.sanity.studio/.
+- Studio: plugin **Media** (`sanity-plugin-media`) — zakładka w menu + jedyne źródło przy polach `image`/`file`. Typy `media.tag` / `media.folder` są ukryte w desk (edycja w narzędziu Media). Istniejące **76** `sanity.imageAsset` z migracji widać od razu; nie trzeba ich przebudowywać ani tagować. Credit line włączony. Deploy: `pnpm --filter studio deploy` → https://dramaway.sanity.studio/.
+- Netlify: `netlify.toml` w repo (`pnpm --filter web build`, `X-Robots-Tag: noindex`). Preview: https://dramaway.netlify.app/.
 - Zależności: catalog w `pnpm-workspace.yaml`, lockfile, Dependabot (tydzień), skrypty `pnpm deps:outdated` / `pnpm deps:update`. Kanwa: [guides/dependencies.md](guides/dependencies.md). Next 16 / TS 6+ / ESLint 10 zostają poza automatami.
 - Mapa 301 na premierę = **osobne zadanie**, nie teraz.
 
@@ -106,6 +107,7 @@ cd /Users/jmirecki-letsreg/Code/waether-the-strm/drama
 pnpm dev:all                  # :3000 + :3333
 pnpm deps:outdated            # co odstaje
 pnpm deps:update              # bump w ramach ^/~
+pnpm --filter studio deploy   # https://dramaway.sanity.studio/
 ```
 
 Nie odpalaj ponownie `migrate:fundacja` / `migrate:art-generacje` bez potrzeby — nadpisze ręczną korektę.
@@ -125,4 +127,5 @@ Nie odpalaj ponownie `migrate:fundacja` / `migrate:art-generacje` bez potrzeby �
 | `docs/migration/fundacja-status.md` | Co zmigrowane |
 | `apps/web/src/app/(site)/` | Publiczny App Router |
 | `apps/web/src/lib/sanity/` | GROQ |
+| `apps/studio/` | Sanity Studio (schema + Media) |
 | `private/` | Dumpy — poza gitem |

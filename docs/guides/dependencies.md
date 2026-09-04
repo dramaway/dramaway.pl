@@ -21,6 +21,6 @@ pnpm install         # po zmianie catalog:
 - Node **≥ 22.12** (`.node-version`, `engines` w root `package.json`, Netlify `NODE_VERSION=22`)
 - pnpm **11.9** (`packageManager` — Corepack)
 
-pnpm 11 trzyma **14-dniową karencję** (`minimumReleaseAge`) na nowe wydania z npm. Świeżo wybrane paczki lądują w `minimumReleaseAgeExclude` w `pnpm-workspace.yaml`, żeby `pnpm install` przeszedł od razu.
+pnpm 11 trzyma **14-dniową karencję** (`minimumReleaseAge`) na nowe wydania z npm. Świeżo wybrane paczki lądują w `minimumReleaseAgeExclude` w `pnpm-workspace.yaml`, żeby `pnpm install` przeszedł od razu (teraz m.in. `sanity-plugin-media@6.1.8`).
 
 Wersja produktu: `0.1.0` w root `package.json` (prywatny monorepo, nie publikujemy na npm).

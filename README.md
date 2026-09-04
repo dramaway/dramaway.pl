@@ -56,7 +56,7 @@ pnpm dev:all           # oba naraz
 
 - Frontend: `apps/web` — publiczne trasy z IA (`/projekty`, `/zespol`, `/fundacja`…); `/preview` to inwentarz CMS  
 
-- CMS: `apps/studio` (Sanity **v6**) — treści fundacji + Art Generacje (edycje) w dataset `production`  
+- CMS: `apps/studio` (Sanity **v6**) — treści fundacji + Art Generacje (edycje) w dataset `production`; biblioteka plików: zakładka **Media**  
 - **Co zmigrowane / czego nie:** [docs/migration/fundacja-status.md](docs/migration/fundacja-status.md)  
 - Lokalne materiały: tylko `private/`  
 - **Stan sesji / co dalej:** [docs/HANDOFF.md](docs/HANDOFF.md)

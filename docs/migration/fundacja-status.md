@@ -31,9 +31,11 @@ Publiczne: `http://localhost:3000` (`pnpm dev`). Inwentarz CMS: `/preview`. Stud
 | `person` | 7 | Drupal `czlonek_zespolu` | `/zespol` |
 | `page` | 23 + 2 newsy | Drupal `page` + opublikowane `aktualnosc` | `/fundacja/…`, `/metody`, `/kontakt`, korzeń |
 | `project` | 4 | rozbicie stron Drupal, nie nowy dump | `/projekty` |
-| assety | ~74 | pliki z FTP mirror + tokeny Media `[[{fid…}]]` | w body / zdjęciach osób |
+| assety | 76 obrazów | pliki z FTP mirror + tokeny Media `[[{fid…}]]` | Studio → Media (biblioteka); też w body / zdjęciach osób |
 
 Newsy są **nadal `page`**: tytuł `[Aktualność] …`, slug `aktualnosc-…`. Osobnego typu nie ma.
+
+Biblioteka **Media** w Studio czyta te same `sanity.imageAsset` — bez re-uploadu i bez tagów (tagi/foldery są opcjonalne, od zera).
 
 **Art Generacje** (`project-art-generacje`, featured, status `active`): intro + **13 edycji (I–XI)** + afterword (autorzy, partnerzy). Numeracja „Edycja VI” występuje trzykrotnie (2020, 2021, 2022) — tak jest na live, nie poprawiamy historii. Źródłowa `page` `art-generacje` zostaje.
 

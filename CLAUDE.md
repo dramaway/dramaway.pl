@@ -19,7 +19,7 @@ See `private/README.md` and `.gitignore`.
 
 ```
 apps/web/          # Next.js 15 + Tailwind v4 + shadcn/ui
-apps/studio/       # Sanity Studio v3 (schema stubs)
+apps/studio/       # Sanity Studio v6 (schema + Media library)
 docs/concept/      # IA and product assumptions (PL)
 docs/decisions/    # ADRs (PL body)
 docs/migration/    # Drupal → Sanity mapping (PL)

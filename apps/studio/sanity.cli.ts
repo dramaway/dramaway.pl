@@ -8,4 +8,8 @@ export default defineCliConfig({
     projectId,
     dataset,
   },
+  studioHost: "dramaway",
+  deployment: {
+    appId: "y6nvb6dtm2srjz49hvvyv99n",
+  },
 });
