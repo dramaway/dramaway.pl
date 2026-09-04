@@ -6,7 +6,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | | |
 |--|--|
 | **Ostatnia aktualizacja** | 2026-09-04 — aktualizacja deps, catalog pnpm, Dependabot |
-| **Gałąź / HEAD** | `main` @ `8da4f5e` |
+| **Gałąź / HEAD** | `main` @ `362b5ae` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ |
