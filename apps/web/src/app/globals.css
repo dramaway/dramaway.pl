@@ -603,6 +603,18 @@
     margin-inline: auto;
   }
 
+  /* Blob-row archive density: same items, two columns from lg. */
+  .blob-row-compact {
+    display: grid;
+    gap: var(--spacing-section);
+  }
+
+  @media (width >= 64rem) {
+    .blob-row-compact {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
   /*
    * Two rows of tangent sand circles that step up halfway across.
    * Each row is a whole number of diameters so circles stay complete, and each
