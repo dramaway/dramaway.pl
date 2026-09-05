@@ -6,7 +6,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | | |
 |--|--|
 | **Ostatnia aktualizacja** | 2026-09-05 — ustalenia IA/podstron zamknięte; handoff do Czytelni: [concept/ustalenia-2026-09-05.md](concept/ustalenia-2026-09-05.md) |
-| **Gałąź / HEAD** | `main` @ `95360a6` |
+| **Gałąź / HEAD** | `main` @ `07314e1` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ |
