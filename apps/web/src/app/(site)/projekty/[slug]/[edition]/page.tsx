@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { LeadGallery } from "@/components/sections/lead-gallery";
 import { PageHero } from "@/components/sections/page-hero";
 import { Section } from "@/components/layout/section";
 import { PortableBody } from "@/components/portable-body";
 import { Media } from "@/components/visual/media";
+import { editionHeading } from "@/lib/edition-label";
 import { editionPath, projectPath } from "@/lib/routes";
 import {
   getProjectBySlug,
@@ -28,9 +30,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug, edition: editionSlug } = await params;
   const project = await getProjectBySlug(slug);
   const edition = project?.editions?.find((item) => item.slug === editionSlug);
-  if (!edition) return { title: "Edycja" };
+  if (!project || !edition) return { title: "Edycja" };
   return {
-    title: `${edition.title} — ${project.title}`,
+    title: `${editionHeading(edition)} — ${project.title}`,
     alternates: { canonical: editionPath(slug, editionSlug) },
   };
 }
@@ -43,36 +45,22 @@ export default async function EditionPage({ params }: Props) {
 
   const gallery = (edition.gallery ?? []).filter(Boolean);
   const outcomes = edition.outcomes ?? [];
+  const heading = editionHeading(edition);
   const lead = edition.summary?.trim() || edition.years || edition.theme || null;
 
   return (
     <>
       <PageHero
-        title={edition.title}
+        title={heading}
         lead={lead}
         image={gallery[0] ?? null}
         parent={{ href: projectPath(project.slug), label: project.title }}
       />
+      <LeadGallery images={gallery} alt={heading} />
       {edition.body ? (
         <Section>
           <div className="measure">
             <PortableBody value={edition.body} />
-          </div>
-        </Section>
-      ) : null}
-      {gallery.length > 0 ? (
-        <Section>
-          <div className="cols-3">
-            {gallery.map((image, index) => (
-              <Media
-                key={index}
-                image={image}
-                alt={`${edition.title} — ${index + 1}`}
-                variant="inset"
-                ratio="album"
-                sizes="(min-width: 64rem) 30vw, 100vw"
-              />
-            ))}
           </div>
         </Section>
       ) : null}

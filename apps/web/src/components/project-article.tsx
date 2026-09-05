@@ -3,37 +3,57 @@ import { PageHero } from "@/components/sections/page-hero";
 import { Section } from "@/components/layout/section";
 import { PortableBody } from "@/components/portable-body";
 import { DotBand } from "@/components/visual/dot-band";
+import { editionHeading } from "@/lib/edition-label";
+import { splitIntroAndVideo } from "@/lib/portable-split";
 import { editionPath } from "@/lib/routes";
 import type { ProjectDetail } from "@/lib/sanity/types";
+import { SUBPAGE } from "@/lib/subpage-copy";
 
 export function ProjectArticle({ project }: { project: ProjectDetail }) {
   const editions = (project.editions ?? []).filter((edition) => edition.slug);
   const rows = editions.map((edition) => ({
-    title: edition.title,
+    title: editionHeading(edition),
     lead: edition.summary?.trim() || edition.years || null,
     href: editionPath(project.slug, edition.slug),
+    ctaLabel: SUBPAGE.artGeneracje.editionCta,
   }));
+  const { intro, youtube, rest } = splitIntroAndVideo(project.body);
+  const copy = SUBPAGE.artGeneracje;
 
   return (
     <>
       <PageHero
         title={project.title}
-        lead={project.summary}
+        lead={copy.lead}
+        ctaLabel={editions.length > 0 ? copy.ctaLabel : null}
+        ctaHref={editions.length > 0 ? copy.ctaHref : null}
         image={project.cover}
         parent={{ href: "/projekty", label: "Projekty" }}
       />
-      {project.body ? (
+      {intro ? (
         <Section>
           <div className="measure">
-            <PortableBody value={project.body} />
+            <PortableBody value={intro} />
           </div>
+        </Section>
+      ) : null}
+      {youtube ? (
+        <Section>
+          <PortableBody value={youtube} />
         </Section>
       ) : null}
       {editions.length > 0 ? (
         <>
           <DotBand />
-          <BlobRow heading="Edycje" items={rows} />
+          <BlobRow heading="Edycje" headingId="edycje" items={rows} />
         </>
+      ) : null}
+      {rest ? (
+        <Section>
+          <div className="measure">
+            <PortableBody value={rest} />
+          </div>
+        </Section>
       ) : null}
       {project.partners && project.partners.length > 0 ? (
         <Section>
