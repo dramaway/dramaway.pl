@@ -6,7 +6,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | | |
 |--|--|
 | **Ostatnia aktualizacja** | 2026-09-05 — Czytelnia w Sanity (82/47 listed) + GROQ spisu filtruje `listed` |
-| **Gałąź / HEAD** | `main` |
+| **Gałąź / HEAD** | `main` @ `48485f3` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ |
