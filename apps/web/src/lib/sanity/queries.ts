@@ -28,6 +28,8 @@ export const peopleListQuery = `*[_type == "person"] | order(name asc) {
   name,
   "slug": slug.current,
   role,
+  email,
+  photo,
   "excerpt": pt::text(bio)
 }`;
 
@@ -173,11 +175,17 @@ export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
   }
 }`;
 
+const publicationFileProjection = `file { asset->{ url, originalFilename, mimeType } }`;
+const publicationMethodsProjection = `methods[]->{ title, "slug": slug.current }`;
+
 export const publicationsListQuery = `*[_type == "publication" && listed == true && defined(slug.current)] | order(title asc) {
   _id,
   title,
   "slug": slug.current,
-  summary
+  summary,
+  authors,
+  ${publicationMethodsProjection},
+  ${publicationFileProjection}
 }`;
 
 export const publicationBySlugQuery = `*[_type == "publication" && slug.current == $slug][0] {
@@ -185,6 +193,9 @@ export const publicationBySlugQuery = `*[_type == "publication" && slug.current 
   title,
   "slug": slug.current,
   summary,
+  authors,
+  ${publicationMethodsProjection},
+  ${publicationFileProjection},
   "cover": body[_type == "image"][0],
   body
 }`;

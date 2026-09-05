@@ -10,6 +10,8 @@ export type PersonListItem = {
   name: string;
   slug: string;
   role: string | null;
+  email: string | null;
+  photo: SanityImage | null;
   excerpt: string | null;
 };
 
@@ -71,7 +73,13 @@ export type SanityFile = {
   asset?: {
     url?: string | null;
     mimeType?: string | null;
+    originalFilename?: string | null;
   } | null;
+};
+
+export type ReadingMethodRef = {
+  title: string;
+  slug: string | null;
 };
 
 export type SiteSettingsBranding = {
@@ -195,13 +203,12 @@ export type PublicationListItem = {
   title: string;
   slug: string;
   summary: string | null;
+  authors: string[] | null;
+  methods: ReadingMethodRef[] | null;
+  file: SanityFile | null;
 };
 
-export type PublicationDetail = {
-  _id: string;
-  title: string;
-  slug: string;
-  summary: string | null;
+export type PublicationDetail = PublicationListItem & {
   cover?: SanityImage | null;
   body: PortableContent;
 };
