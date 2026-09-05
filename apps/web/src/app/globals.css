@@ -785,6 +785,35 @@
     border-radius: var(--radius-media);
   }
 
+  .gallery-lead {
+    display: grid;
+    gap: var(--spacing-section);
+  }
+
+  .gallery-lead-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-section);
+  }
+
+  @media (width >= 64rem) {
+    .gallery-lead-row {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .team-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 10rem), 1fr));
+    gap: var(--spacing-section);
+  }
+
+  .team-photo,
+  .team-photo.media-portrait {
+    aspect-ratio: 1;
+    border-radius: 50%;
+  }
+
   /* The single most repeated element in the Figma file — 46 instances. */
   .cta {
     display: inline-flex;

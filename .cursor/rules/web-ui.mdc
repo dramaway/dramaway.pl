@@ -19,9 +19,9 @@ The Figma file is a visual direction, not a spec: no auto-layout, no variables, 
 
 ## What exists
 
-Classes: `.page`, `.split` / `.split-text` / `.split-media` / `.split-reverse`, `.hero` / `.hero-title` / `.hero-heading` / `.hero-copy` / `.hero-media`, `.site-header` / `.site-nav-overlay`, `.cols-3`, `.stack` / `.stack-item` / `.stack-narrow`, `.measure`.
+Classes: `.page`, `.split` / `.split-text` / `.split-media` / `.split-reverse`, `.hero` / `.hero-title` / `.hero-heading` / `.hero-copy` / `.hero-media`, `.site-header` / `.site-nav-overlay`, `.cols-3`, `.stack` / `.stack-item` / `.stack-narrow`, `.measure`, `.gallery-lead` / `.gallery-lead-row`, `.team-row` / `.team-photo`.
 
-Components: `layout/section.tsx`, `visual/dot-band.tsx`, `visual/palette-row.tsx`, `visual/blob.tsx`, `visual/cta-link.tsx`, `visual/media.tsx`. Inner pages: `PageHero` (same split + circle as `/`, no overlay nav) and `BlobRow`.
+Components: `layout/section.tsx`, `visual/dot-band.tsx`, `visual/palette-row.tsx`, `visual/blob.tsx`, `visual/cta-link.tsx`, `visual/media.tsx`. Inner pages: `PageHero` (same split + circle as `/`, no overlay nav), `BlobRow`, `LeadGallery` (1 landscape + 3 portrait), `TeamRow` (circle portraits). Copy for inner heroes: `lib/subpage-copy.ts`.
 
 Tokens: colours `sand` `ink` `green` `green-ink` `magenta` `navy` `brand-1…7`; fonts `font-display` `font-body`; sizes `text-display`/`text-h1` 48, `text-h2` 32 (band labels), `text-h3` 24 (section titles), `text-h4` 20 (card titles), `text-lead` 20 (hero + prose), `text-body` 18, `text-small` 14; rhythm `py-section`. Size class ≠ HTML tag: one H1, H2 per section, H3 for news cards.
 
