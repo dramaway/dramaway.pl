@@ -1,0 +1,332 @@
+{
+  "source": "czytelnia-baza-wiedzy.docx",
+  "note": "Only source of listed=true and method tags. Word PDF row joker_system_maria_kwiatek_4.pdf is not listed (file lives on unlisted article odkrywamy-karty-joker-system-augusto-boala-maria-kwiatek). Duplicate Projekt decyzJA is one slug. Warsztaty maps to teatr-forum. Jak dziala Teatr Forum with only the portal prefix maps to teatr-forum.",
+  "methods": [
+    {
+      "title": "Drama",
+      "slug": "drama",
+      "order": 1
+    },
+    {
+      "title": "Teatr Forum",
+      "slug": "teatr-forum",
+      "order": 2
+    },
+    {
+      "title": "Teatr w edukacji",
+      "slug": "teatr-w-edukacji",
+      "order": 3
+    },
+    {
+      "title": "Teatr ze społecznością",
+      "slug": "teatr-ze-spolecznoscia",
+      "order": 4
+    },
+    {
+      "title": "Teatr zaangażowany społecznie",
+      "slug": "teatr-zaangazowany-spolecznie",
+      "order": 5
+    },
+    {
+      "title": "Metody twórcze",
+      "slug": "metody-tworcze",
+      "order": 6
+    }
+  ],
+  "listed": [
+    {
+      "slug": "be-your-best-friend",
+      "methods": [
+        "metody-tworcze"
+      ]
+    },
+    {
+      "slug": "dusza-i-jej-basn",
+      "methods": [
+        "metody-tworcze"
+      ]
+    },
+    {
+      "slug": "teatr-zaangazowany-spolecznie-w-polsce-teoria-i-praktyka-pod-redakcja-aldony",
+      "methods": [
+        "teatr-zaangazowany-spolecznie"
+      ]
+    },
+    {
+      "slug": "boal-practice-facilitators-perspective",
+      "methods": [
+        "teatr-forum",
+        "metody-tworcze"
+      ]
+    },
+    {
+      "slug": "najwazniejsze-jest-budowanie-relacji-rozmowa-o-wykorzystaniu-teatru-ze",
+      "methods": [
+        "teatr-ze-spolecznoscia"
+      ]
+    },
+    {
+      "slug": "na-dwoje-pamiec-wrozyla-o-pracy-teatralnej-wokol-postaci-dwa-studia-przypadku",
+      "methods": [
+        "teatr-ze-spolecznoscia"
+      ]
+    },
+    {
+      "slug": "wykorzystanie-metody-dramy-edukacyjnej-w-dydaktyce-polonistycznej-joanna",
+      "methods": [
+        "drama"
+      ]
+    },
+    {
+      "slug": "redefinicja-siebie-w-procesie-dramowym-poprzez-uruchomienie-i-kontakt-z-cialem",
+      "methods": [
+        "drama"
+      ]
+    },
+    {
+      "slug": "drama-jako-zenzen",
+      "methods": [
+        "drama"
+      ]
+    },
+    {
+      "slug": "wykorzystanie-teatru-w-edukacji-etycznej-marcin-kostyra-0",
+      "methods": [
+        "drama"
+      ]
+    },
+    {
+      "slug": "drama-way-opowiada-o-dramie",
+      "methods": [
+        "drama"
+      ]
+    },
+    {
+      "slug": "refleksje-nad-madroscia-trenera-dramy-antonina-muzdzak",
+      "methods": [
+        "drama"
+      ]
+    },
+    {
+      "slug": "narracja-w-dramie-aldona-zejmo-kudelska",
+      "methods": [
+        "drama"
+      ]
+    },
+    {
+      "slug": "praca-z-bajka-aleksandra-gajda",
+      "methods": [
+        "drama"
+      ]
+    },
+    {
+      "slug": "drama-przeciw-przemocy-alicja-jaskulska",
+      "methods": [
+        "drama"
+      ]
+    },
+    {
+      "slug": "wywiad-kamili-witerskiej-z-aldona-zejmo-kudelska-prezes-fundacji-drama-way",
+      "methods": [
+        "drama"
+      ]
+    },
+    {
+      "slug": "wywiad-kamili-witerskiej-z-maria-depta-wiceprezesem-fundacji-drama-way",
+      "methods": [
+        "drama"
+      ]
+    },
+    {
+      "slug": "drama-w-edukacji-i-wychowaniu-iwona-borowska",
+      "methods": [
+        "drama"
+      ]
+    },
+    {
+      "slug": "boal-na-sluzewcu-magdalena-hasiuk",
+      "methods": [
+        "teatr-forum"
+      ]
+    },
+    {
+      "slug": "augusto-boal-zycie-i-dzielo-cz-ii-15-lat-pracy-w-teatrze-arena-maria-depta",
+      "methods": [
+        "teatr-forum"
+      ]
+    },
+    {
+      "slug": "augusto-boal-zycie-i-dzielo-cykl-artykulow-wstep-do-cyklu-cz-i-dziecinstwo-i",
+      "methods": [
+        "teatr-forum"
+      ]
+    },
+    {
+      "slug": "w-kalejdoskopie-ewaluatora-refleksyjnosc-jako-sposob-ewaluacji-projektow",
+      "methods": [
+        "drama"
+      ]
+    },
+    {
+      "slug": "teatr-w-edukacji-nowe-spojrzenie-na-profilaktyke-uzaleznien-aldona-zejmo",
+      "methods": [
+        "teatr-w-edukacji"
+      ]
+    },
+    {
+      "slug": "teatr-w-edukacji-teoria-i-polska-praktyka-alicja-jaskulska-aldona-zejmo",
+      "methods": [
+        "teatr-w-edukacji"
+      ]
+    },
+    {
+      "slug": "tie-jako-narzedzie-edukacji-na-rzecz-praw-czlowieka-maria-depta",
+      "methods": [
+        "teatr-w-edukacji"
+      ]
+    },
+    {
+      "slug": "tie-jako-forma-interaktywnego-teatru-maria-depta",
+      "methods": [
+        "teatr-w-edukacji"
+      ]
+    },
+    {
+      "slug": "publikacja-mi-gra",
+      "methods": [
+        "teatr-forum"
+      ]
+    },
+    {
+      "slug": "drama-jako-narzedzie-profilaktyki-pozytywnej-adresowanej-do-dzieci-i-mlodziezy",
+      "methods": [
+        "drama"
+      ]
+    },
+    {
+      "slug": "teatr-ze-spolecznoscia-jako-teatr-zmiany-publikacja-drama-way-2016",
+      "methods": [
+        "teatr-ze-spolecznoscia"
+      ]
+    },
+    {
+      "slug": "art-generacje-2015-16-miedzypokoleniowy-projekt-edukacji-kulturalnej-jako",
+      "methods": [
+        "teatr-ze-spolecznoscia"
+      ]
+    },
+    {
+      "slug": "teatr-zaangazowany-spolecznie-prowadzacy-aktor-widz-maria-depta-aldona-zejmo",
+      "methods": [
+        "teatr-forum",
+        "teatr-ze-spolecznoscia",
+        "teatr-w-edukacji",
+        "teatr-zaangazowany-spolecznie"
+      ]
+    },
+    {
+      "slug": "teatr-zaangazowany-spolecznie-proba-charakterystyki-czii-maria-depta-aldona",
+      "methods": [
+        "teatr-forum",
+        "teatr-ze-spolecznoscia",
+        "teatr-w-edukacji",
+        "teatr-zaangazowany-spolecznie"
+      ]
+    },
+    {
+      "slug": "teatr-zaangazowany-spolecznie-proba-charakterystyki-czi-maria-depta-aldona",
+      "methods": [
+        "teatr-forum",
+        "teatr-ze-spolecznoscia",
+        "teatr-w-edukacji",
+        "teatr-zaangazowany-spolecznie"
+      ]
+    },
+    {
+      "slug": "publikacja-badan-teatr-ze-spolecznoscia-i-teatr-forum-w-oczach-publicznosci",
+      "methods": [
+        "teatr-ze-spolecznoscia",
+        "teatr-forum",
+        "teatr-zaangazowany-spolecznie"
+      ]
+    },
+    {
+      "slug": "jak-dziala-drama-maria-maruszczyk",
+      "methods": [
+        "drama"
+      ]
+    },
+    {
+      "slug": "drama-nie-dramat-maria-maruszczyk",
+      "methods": [
+        "drama"
+      ]
+    },
+    {
+      "slug": "publikacja-scena-dla-twardziela",
+      "methods": [
+        "teatr-forum"
+      ]
+    },
+    {
+      "slug": "projekt-decyzja-czyli-sztuka-dla-zycia-wojciech-duda",
+      "methods": [
+        "teatr-forum"
+      ]
+    },
+    {
+      "slug": "moje-miejsce-na-ziemi-refleksje-po-kursie-teatru-ze-spolecznoscia-fundacji",
+      "methods": [
+        "teatr-ze-spolecznoscia"
+      ]
+    },
+    {
+      "slug": "zacheta-do-dzialania-magdalena-hasiuk",
+      "methods": [
+        "teatr-forum"
+      ]
+    },
+    {
+      "slug": "teatr-forum-w-szkole-co-na-uczniowie-badanie-oddzialywania-metody-teatru-forum",
+      "methods": [
+        "teatr-forum"
+      ]
+    },
+    {
+      "slug": "ucisnieni-za-milosc-teatr-forum-w-pracy-z-osobami-lgbtq-oraz-przeciwdzialaniu",
+      "methods": [
+        "teatr-forum"
+      ]
+    },
+    {
+      "slug": "teatr-forum-tu-widz-sie-wtraca-agnieszka-kulka",
+      "methods": [
+        "teatr-forum"
+      ]
+    },
+    {
+      "slug": "jak-dziala-teatr-forum-przyklady-adaptacji-metod-augusto-boala-na-swiecie-marta",
+      "methods": [
+        "teatr-forum"
+      ]
+    },
+    {
+      "slug": "teatr-forum-w-pracy-pedagoga-refleksje-nie-tylko-na-temat-jarek-rebelinski",
+      "methods": [
+        "teatr-forum"
+      ]
+    },
+    {
+      "slug": "twardziel-xxi-wieku-teatr-forum-w-dekonstrukcji-pojecia-meskosc-marta-jankowska",
+      "methods": [
+        "teatr-forum"
+      ]
+    },
+    {
+      "slug": "publikacja-teatr-forum-2015",
+      "methods": [
+        "teatr-forum"
+      ]
+    }
+  ]
+}

@@ -5,12 +5,12 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-05 — skład podstron (hero + blob-row, hub Bazy, URL edycji) |
+| **Ostatnia aktualizacja** | 2026-09-05 — migracja Czytelni: 82× `publication` + 6× `readingMethod` w Sanity |
 | **Gałąź / HEAD** | `main` @ `022c8e7` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ |
-| **Working tree** | skład podstron na `main`; sesja Czytelni może mieć brudne `apps/studio` / `scripts/` |
+| **Working tree** | czyste |
 | **Owner Sanity (na razie)** | Jan Mirecki |
 
 ---
@@ -31,7 +31,7 @@ Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona głów
 - Mapa URL: `apps/web/src/lib/routes.ts` — prefiks IA + `slug.current`. Header: Projekty, **Baza wiedzy** (`/baza-wiedzy`) z drugim poziomem Metody / Czytelnia (desktop disclosure, mobile overlay), O fundacji, Kontakt. `/zespol` poza pierwszym poziomem.
 - Listingi `/projekty`, `/fundacja`, `/czytelnia` = widoki z `PageHero` + `BlobRow`. `/projekty` listuje tylko `project` (aktywne + archiwum). `/` **nie** listuje siatki projektów ani splitów „13 edycji”.
 - `/projekty/[slug]` = `project` albo strona z sekcji projektów. Edycje: `/projekty/[slug]/[edition]` (AG ma 13 unikalnych slugów, w tym trzy `edycja-vi-20xx`). `/[slug]` = reszta (newsy).
-- `/czytelnia` listuje `publication` (dziś 0 — pusty stan). Dump **jest**: `private/dumps/drama_teatr_1787254349.sql.gz`. Import w sesji „Migracja Czytelni”. Hub: `/baza-wiedzy`.
+- `/czytelnia` — listing UI z sesji składu (wiersz z plamą). W Sanity **82× `publication`** (47 `listed` z Worda, 35 tylko pod slugiem). Dump **jest**: `private/dumps/drama_teatr_1787254349.sql.gz`. Hub Bazy: `/baza-wiedzy` (rodzic w nav; Czytelnia to dziecko, nie cała Baza). Schema `readingMethod` + przebudowane `publication` — hosted Studio po `pnpm --filter studio deploy`.
 - `siteSettings` **jest w datasetcie** — hero zasilony; grupa `homepage` (about / methods / featured / czytelnia) jest w schemacie, w CMS pusta → fallbacki z `apps/web/src/lib/homepage-copy.ts`. Grupa **Ikony** (`branding`): **SVG jako `image`** (Select w Media widzi m.in. już wrzucony `icon.svg`; strona serwuje surowy SVG z `asset.url`, nie raster CDN) / **ICO jako `file`** z podglądem 32×32 i natywnym pickerem (Media na polach `file` była pusta: 0 `fileAsset`) / PNG light+dark / Apple / 512 / OG. Puste pole = `public/brand`.
 - `getResolvedSite()` zwraca `homepage` + `hero` + `footerNote` (zawsze string, cytat Boala jako fallback). Featured **H2** to tytuł `project.featured`; magenta etykieta „Projekty” to `homepage.featured.heading`.
 - Newsy na `/`: `getHomepageNews()` — max 3, bez zdjęć, excerpt ~400 znaków. Daty kart: `publishedAt`. Trzeci news `news-placeholder-syrena` jest wypełniaczem z ramki — **do draftu** z adnotacją PL (wykaz: [fundacja-status.md](migration/fundacja-status.md) „Luki vs ramka”).
@@ -69,8 +69,9 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 - Zdjęcie „Kim jesteśmy” w Sanity — leci z `public/about-photo.jpg` jako `fallbackSrc`
 - Pasmo kół pod „Kim jesteśmy?” ma odbity schodek zamiast figmowego (uzgodnione) — powód w [design/system.md](design/system.md)
 - `/zespol` nadal roboczy z fazy migracji
-- Mapa przekierowań (stare aliasy → nowe)
-- Import Czytelni (`publication`) — równoległa sesja; UI pustej listy już jest
+- Mapa przekierowań (stare aliasy `teatrzaangazowany…` → `/czytelnia/[slug]`)
+- Śmieciowy nód Drupal `metody-tzs` (tytuł „aaa”) jest w datasetcie jako nielistowany — do ukrycia / usunięcia w Studio
+- Hosted Studio: schema Czytelni po `pnpm --filter studio deploy`
 - News jako osobny typ, newsletter, **formularz kontaktu (osobne zamówienie, jeśli będą chcieli)**, EN
 - `person.role` (Drupal `field_funkcja`)
 - Ręczna korekta części kotwic
@@ -81,9 +82,9 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 
 Skład podstron z [ustalenia-2026-09-05.md](concept/ustalenia-2026-09-05.md) jest na `main`. Nie wołać Figmy bez potrzeby.
 
-1. **Migracja Czytelni** — sesja obok: schema/import `publication`; listing `/czytelnia` już przeżywa 0 dokumentów i przyjmie GROQ, gdy pojawią się rekordy (ew. filtr „na spisie”).
+1. Deploy Studio (`pnpm --filter studio deploy`), żeby hosted CMS widział `readingMethod` i nowe pola `publication`. Listing `/czytelnia` z sesji składu powinien teraz dostać 47 wierszy (`listed`); reszta 35 jest w datasetcie.
 2. `/zespol` nadal roboczy. Draft `news-placeholder-syrena` w Studio — jeszcze nie.
-3. Preview Netlify złapie skład po deployu z `main`.
+3. Nie odpalaj ponownie `migrate:czytelnia` bez potrzeby — nadpisze ręczną korektę (to samo co fundacja).
 
 `pnpm dev:all` jeśli porty wolne. Publiczne URL-e, nie `/preview`.
 
@@ -122,10 +123,12 @@ cd /Users/jmirecki-letsreg/Code/waether-the-strm/drama
 pnpm dev:all                  # :3000 + :3333
 pnpm deps:outdated            # co odstaje
 pnpm deps:update              # bump w ramach ^/~
+pnpm extract:czytelnia        # dump → gitignored JSON
+pnpm migrate:czytelnia        # 6 metod + 82 publikacje; write token w apps/studio/.env
 pnpm --filter studio deploy   # https://dramaway.sanity.studio/
 ```
 
-Nie odpalaj ponownie `migrate:fundacja` / `migrate:art-generacje` bez potrzeby — nadpisze ręczną korektę.
+Nie odpalaj ponownie `migrate:fundacja` / `migrate:art-generacje` / `migrate:czytelnia` bez potrzeby — nadpisze ręczną korektę.
 
 ---
 

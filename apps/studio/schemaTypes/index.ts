@@ -5,6 +5,7 @@ import { page } from "./page";
 import { person } from "./person";
 import { project } from "./project";
 import { publication } from "./publication";
+import { readingMethod } from "./readingMethod";
 import { siteSettings } from "./siteSettings";
 
 export const schemaTypes = [
@@ -15,6 +16,7 @@ export const schemaTypes = [
   project,
   person,
   page,
+  readingMethod,
   publication,
   siteSettings,
 ];

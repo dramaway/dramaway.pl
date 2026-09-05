@@ -1,31 +1,70 @@
-import { defineType, defineField } from "sanity";
+import { defineField, defineType } from "sanity";
 
 export const publication = defineType({
   name: "publication",
   title: "Publication",
   type: "document",
   fields: [
-    defineField({ name: "title", title: "Title", type: "string", validation: (r) => r.required() }),
-    defineField({ name: "slug", title: "Slug", type: "slug", options: { source: "title" }, validation: (r) => r.required() }),
     defineField({
-      name: "kind",
-      title: "Kind",
+      name: "title",
+      title: "Title",
       type: "string",
-      options: {
-        list: [
-          { title: "Reading room article", value: "article" },
-          { title: "Book / publisher item", value: "book" },
-          { title: "Report / PDF", value: "report" },
-          { title: "Other", value: "other" },
-        ],
-      },
-      initialValue: "article",
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      options: { source: "title" },
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: "methods",
+      title: "Methods",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "readingMethod" }] }],
+      description:
+        "Tags for the reading room. Not the /metody essays and not a second listing.",
+    }),
+    defineField({
+      name: "listed",
+      title: "Listed in Czytelnia",
+      type: "boolean",
+      initialValue: false,
+      description:
+        "True = Word curation; shown on /czytelnia when that listing exists. False = URL only.",
+    }),
+    defineField({
+      name: "authors",
+      title: "Authors",
+      type: "array",
+      of: [{ type: "string" }],
+      description: "Portal persona names as strings — not person documents.",
     }),
     defineField({ name: "summary", title: "Summary", type: "text" }),
     defineField({ name: "body", title: "Body", type: "blockContent" }),
     defineField({ name: "file", title: "File (PDF)", type: "file" }),
+    defineField({
+      name: "legacyDrupal",
+      title: "Legacy Drupal",
+      type: "object",
+      hidden: true,
+      fields: [
+        defineField({ name: "nid", title: "nid", type: "number" }),
+        defineField({ name: "alias", title: "Old alias", type: "string" }),
+        defineField({
+          name: "format",
+          title: "Old Drupal format drawer",
+          type: "string",
+        }),
+      ],
+    }),
   ],
   preview: {
-    select: { title: "title", subtitle: "kind" },
+    select: { title: "title", listed: "listed" },
+    prepare: ({ title, listed }) => ({
+      title,
+      subtitle: listed ? "Listed" : "Unlisted",
+    }),
   },
 });
