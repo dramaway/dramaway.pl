@@ -15,7 +15,7 @@ Ustalenia 2026-09-05 (hub Bazy, Czytelnia ≠ `project`, URL edycji, listing = C
   - Wydawnictwo `/projekty/wydawnictwo`
   - Czytelnia **może** pojawić się na tej stronie jako pozycja listy (warstwa prezentacji). W danych **nie jest** `project` — zostaje `publication`.
 - **Baza wiedzy** — nadzbiór w nawigacji (ustalenie 2026-09-05, makiety)
-  - Hub (prosta strona wprowadzająca w dwa kanały). Adres huba do potwierdzenia przy implementacji; kandydat `/baza-wiedzy`. Dziś w kodzie etykieta „Baza wiedzy” prowadzi na `/czytelnia` — to się zmieni.
+  - Hub (prosta strona wprowadzająca w dwa kanały): **`/baza-wiedzy`**. Etykieta nav „Baza wiedzy” prowadzi na hub, nie na `/czytelnia`.
   - **Metody** `/metody` — drugi poziom menu (TZS, TiE, Teatr Forum, Teatr ze Społecznością)
   - **Czytelnia** `/czytelnia` — drugi poziom menu; treść m.in. ze starego portalu (`drama_teatr`), typ Sanity `publication`
   - Hub da się wyłączyć (zostają same podpozycje), jeśli klientowi nie podejdzie.

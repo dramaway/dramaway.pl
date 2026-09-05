@@ -38,6 +38,8 @@ Wszystkie w bloku `@theme` w [apps/web/src/app/globals.css](../../apps/web/src/a
 | `.stack-narrow` | wyśrodkowuje blok jako kolumnę (`--content-narrow`); tekst w środku zostaje do lewej |
 | `.measure` | komfortowa szerokość czytania (62ch) |
 | `.footer-quote` | cytat w stopce: do prawej, węższy niż `.measure` (`--footer-quote-max`) |
+| `.gallery-lead` / `.gallery-lead-row` | galeria edycji: 1 kadr landscape + do 3 pionowych od `lg` |
+| `.team-row` / `.team-photo` | siatka okrągłych portretów zespołu |
 
 ## Prymitywy
 
@@ -95,4 +97,4 @@ Klikalne kafelki: karta aktualności → artykuł, Art Generacje → `/projekty/
 
 Sprawdzone przez CDP na 1440 / 1280 / 1024 / 768 / 375: `scrollWidth == innerWidth` (brak przepełnienia poziomego), żaden element nie wychodzi za krawędzie, rulki CTA aktualności mają identyczne `top` w układzie wielokolumnowym, a test trafień (`elementFromPoint`) potwierdza jeden link na kafelek i osobno klikalne CTA Art Generacji.
 
-Podstrony (2026-09-05, chrome 2026-09-05): `PageHero` na każdej publicznej podstronie to split z portretem (CMS albo `public/about-photo.jpg`) i pasmem kół pod spodem — ten sam rytm mobile co `/` (H1 → kadr w kole → lead), bez overlayu nawigacji. Paleta siedmiu kół stoi przed stopką (ukryta na `/`). Listingi dalej: `BlobRow` na `/projekty` (tylko `project`), liście edycji AG, `/czytelnia`, `/fundacja`. Hub `/baza-wiedzy`; edycje pod `/projekty/[slug]/[edition]`; `/kontakt` bez formularza. Nav L2 Bazy: disclosure na `lg+`, dzieci w overlayu poniżej. `/zespol` nadal roboczy. 375 px ma być wygodne w nawigacji i rytmie, nie 1:1 z ramką. Strona po stronie vs ramki Figmy — po wspólnym chrome.
+Podstrony (2026-09-05, ramki): `PageHero` split + kadr w kole + pasmo; paleta przed stopką. `/projekty` = „Co robimy?” + AG + wiersz Czytelni + archiwum. AG: krótkie intro, lista edycji (`theme`/rok gdy są), reszta dumpa pod spodem. Edycja: galeria 1+3. Hub `/baza-wiedzy` + `/metody`. `/fundacja` = metody + zespół w kołach + dokumenty. `/zespol` ten sam rząd kół. `/kontakt` bez formularza (maile tylko z `person.email`). Listing `/czytelnia` = sesja Czytelni faza 2. 375 px: H1 w pierwszym ekranie, koło 227 px, bez overflow.
