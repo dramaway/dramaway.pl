@@ -5,7 +5,7 @@ Stan sesji i „co robić jutro”: [HANDOFF.md](../HANDOFF.md).
 Inwentarz dumpów (ile nodów jakiego typu): [drupal-inventory.md](drupal-inventory.md).  
 Model docelowy: [ADR-003](../decisions/ADR-003-content-model-and-mvp.md).
 
-Ostatnia weryfikacja treści: **2026-08-21** (sesja zamknięta; ciąg dalszy w sobotę).
+Ostatnia weryfikacja treści: **2026-09-05** (Czytelnia: extract + migrate).
 
 ## Pipeline
 
@@ -20,7 +20,11 @@ Sanity project + editions (Art Generacje, archiwum)
         ↓  GROQ
 Next — trasy publiczne z IA (`/projekty/…`, `/zespol/…`, `/fundacja/…`)
 
-private/dumps/drama_teatr_1787254349.sql.gz  — jest lokalnie; extract/migrate publication jeszcze nie
+private/dumps/drama_teatr_1787254349.sql.gz  — **jest** lokalnie
+        ↓  pnpm extract:czytelnia
+apps/web/src/data/extracted/czytelnia.json   (gitignored)
+        ↓  pnpm migrate:czytelnia
+Sanity: 6× readingMethod + 82× publication (47 listed)
 ```
 
 Live CMS: projekt Sanity **Dramaway**, id `tr2qdg9j`, dataset `production`.  
@@ -31,9 +35,11 @@ Publiczne: `http://localhost:3000` (`pnpm dev`). Inwentarz CMS: `/preview`. Stud
 | Typ | Ile | Skąd | Preview |
 |-----|-----|------|---------|
 | `person` | 7 | Drupal `czlonek_zespolu` | `/zespol` |
-| `page` | 23 + 2 newsy | Drupal `page` + opublikowane `aktualnosc` | `/fundacja/…`, `/metody`, `/kontakt`, korzeń |
+| `page` | 23 + 2 newsy + placeholder | Drupal `page` + opublikowane `aktualnosc` | `/fundacja/…`, `/metody`, `/kontakt`, korzeń |
 | `project` | 4 | rozbicie stron Drupal, nie nowy dump | `/projekty` |
-| assety | 76 obrazów | pliki z FTP mirror + tokeny Media `[[{fid…}]]` | Studio → Media (biblioteka); też w body / zdjęciach osób |
+| `readingMethod` | 6 | seed z `scripts/czytelnia-curated.json` (nie enum, nie `/metody`) | Studio |
+| `publication` | **82** (47 `listed`) | Drupal `article` status=1 z `drama_teatr` | `/czytelnia`, `/czytelnia/[slug]` |
+| assety | 76 obrazów fundacji + 144 Czytelnia (okładki + PDF) | FTP fundacji + `teatrzaangazowany…/files/` | Studio → Media |
 
 Newsy są **nadal `page`**: tytuł `[Aktualność] …`, slug `aktualnosc-…`. Osobnego typu nie ma.
 
@@ -43,6 +49,8 @@ Biblioteka **Media** w Studio czyta te same `sanity.imageAsset` — bez re-uploa
 
 Archiwum bez edycji: Teatr Codzienny, TO MI GRA, BOAL IN PRACTICE.
 
+**Czytelnia** (2026-09-05): dump `private/dumps/drama_teatr_1787254349.sql.gz`. 82 opublikowane `article` → `publication`. 47 `listed` + tagi metod wyłącznie z `scripts/czytelnia-curated.json` (lista Word). Szuflady Drupala (Publikacje / Scenariusze / Książki / Multimedia) siedzą w ukrytym `legacyDrupal.format`, nie w IA. `publication` nigdy nie jest `project`; edycje AG nie są publikacjami. Persony portalu (89) nie są dokumentami `person` — tylko stringi `authors`. PDF-y z `field_dokument` (64/64 na dysku). Śmieć `metody-tzs` (tytuł „aaa”) jest nielistowany.
+
 ## Luki vs ramka Figmy (listingi)
 
 Zasada (2026-09-05): **czego nie ma w CMS, tego nie ma na stronie.** Nie zmyślamy pozycji z rysunku. Braki trzymamy tu; dodać później ręcznie w Studio albo skryptem. Placeholdery wrzucone „żeby ramka się zgadzała” → **draft** z adnotacją po polsku (pole description / notatka na dokumencie), nie publikować.
@@ -50,11 +58,11 @@ Zasada (2026-09-05): **czego nie ma w CMS, tego nie ma na stronie.** Nie zmyśla
 | W ramce | W CMS (production, 2026-09-05) | Co z tym |
 |---------|--------------------------------|----------|
 | Art Generacje | `project` art-generacje, featured, 13 edycji | jest |
-| Czytelnia na `/projekty` | nie jest `project` | prezentacja OK, dane = `publication` (jeszcze 0 dokumentów) |
+| Czytelnia na `/projekty` | nie jest `project` | prezentacja OK, dane = `publication` (82 dokumenty) |
 | Projekt z Syrenką (aktywny) | **brak** `project` | nie listować. Jest placeholder newsa `news-placeholder-syrena` — do draftu z adnotacją |
 | to mi gra, Teatr Codzienny, BOAL IN PRACTICE | 3× `project` archive | są |
 | Wielogłos (archiwum) | **brak** `project` | nie listować, dopóki ktoś nie doda dokumentu |
-| Publikacje w Bazie wiedzy | 0× `publication` | pusta Czytelnia jest stanem prawdziwym |
+| Publikacje w Czytelni | 82× `publication` (47 `listed` z Worda) | spis `/czytelnia` = `listed`; artykuł = wszystkie 82. GROQ listingu z sesji składu może jeszcze nie filtrować `listed` |
 | `edition.outcomes` | schemat jest, rekordy puste | nie zgadywać z HTML |
 
 Placeholder newsa Syrena (`[Aktualność] Nowy projekt z Teatrem Syrena`, slug `aktualnosc-nowy-projekt-z-teatrem-syrena`): wstawiony 2026-09-03 pod ramkę homepage. Nie jest treścią fundacji. Draft + adnotacja: *„Wypełniacz z makiety Figmy, nie treść z Drupala. Nie publikować, dopóki nie będzie prawdziwego newsa albo projektu.”*
@@ -89,8 +97,10 @@ To nie jest korekta językowa. Pierwszy skrypt spłaszczał Drupal HTML.
 
 | Brak | Powód |
 |------|--------|
-| Czytelnia / `publication` | Dump **jest**: `private/dumps/drama_teatr_1787254349.sql.gz`. W Sanity 0 dokumentów. Kuracja, nie 425 nodów. IA: Czytelnia ⊂ Baza wiedzy, nie cała Baza. [ustalenia-2026-09-05.md](../concept/ustalenia-2026-09-05.md) |
-| UI z Figmy | Homepage złożony; podstrony nadal robocze. |
+| 343 nody portalu poza `article` | Świadomie: wydarzenia, persony, projekty, organizacje, page. Persony tylko jako stringi `authors`. |
+| 2 nieopublikowane `article` | Pominięte (`publikacja-teatr-forum`, duplikat Kostyry bez `-0`). |
+| Edycje Art Generacje jako `publication` | Śmieć z ramki Figmy — skrypt ich nie tworzy. |
+| UI z Figmy | Homepage złożony; podstrony: skład z 2026-09-05, nie pixel-perfect. |
 | `siteSettings` (nawigacja, footer) | Dokument jest; grupa `homepage` pusta → fallbacki. |
 | Newsletter, formularz kontaktu, EN | Poza MVP treściowym. Formularz = osobne zamówienie. |
 
@@ -100,6 +110,8 @@ To nie jest korekta językowa. Pierwszy skrypt spłaszczał Drupal HTML.
 pnpm extract:fundacja
 pnpm migrate:fundacja          # write token w apps/studio/.env
 pnpm migrate:art-generacje    # rozbija page Art Generacje → project.editions
+pnpm extract:czytelnia        # dump drama_teatr → gitignored JSON
+pnpm migrate:czytelnia        # 6× readingMethod + 82× publication; nie rusza person/page/project
 pnpm repair:portable-text     # dry-run; `pnpm repair:portable-text -- --write` zapisuje
 pnpm dev                      # :3000
 pnpm dev:studio               # :3333
@@ -113,6 +125,6 @@ Write token **tylko** `apps/studio/.env` → `SANITY_API_WRITE_TOKEN`. Nigdy `NE
 1. Figma na istniejących URL-ach; uściślić `edition.outcomes`.
 2. Mapa 301 przed premierą (osobne zadanie — nie w `lib/routes.ts`).
 3. Porównać `/projekty/art-generacje` z live; kotwice w Studio.
-4. Czytelnia — dump jest; extract/migrate w sesji migracji; kuracja, nie hurt. Listing może być pusty.
+4. Czytelnia w CMS jest; hosted Studio po deployu schematu. Filtr `listed` na listingu, jeśli GROQ jeszcze bierze wszystkie 82. Śmieć `metody-tzs` / „aaa” — ukryć w Studio. `pnpm repair:portable-text` jeśli kotwice w body jak przy fundacji.
 
 Szczegóły produktu Art Generacje (nie stan migracji): [art-generacje.md](../concept/art-generacje.md).
