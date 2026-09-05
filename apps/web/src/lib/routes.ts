@@ -66,6 +66,10 @@ export function projectPath(slug: string) {
   return `/projekty/${slug}`;
 }
 
+export function editionPath(projectSlug: string, editionSlug: string) {
+  return `/projekty/${projectSlug}/${editionSlug}`;
+}
+
 export function personPath(slug: string) {
   return `/zespol/${slug}`;
 }

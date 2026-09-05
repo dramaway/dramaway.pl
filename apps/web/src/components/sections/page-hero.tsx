@@ -2,6 +2,7 @@ import { Section } from "@/components/layout/section";
 import { CtaLink } from "@/components/visual/cta-link";
 import { Media } from "@/components/visual/media";
 import type { SanityImage } from "@/lib/sanity/types";
+import Link from "next/link";
 
 export type PageHeroContent = {
   title: string;
@@ -10,6 +11,7 @@ export type PageHeroContent = {
   ctaHref?: string | null;
   image?: SanityImage | null;
   imageAlt?: string | null;
+  parent?: { href: string; label: string } | null;
 };
 
 /**
@@ -23,9 +25,17 @@ export function PageHero({
   ctaHref,
   image,
   imageAlt,
+  parent,
 }: PageHeroContent) {
   const copy = (
     <>
+      {parent ? (
+        <p className="mb-4 text-small">
+          <Link href={parent.href} className="hover:text-magenta">
+            {parent.label}
+          </Link>
+        </p>
+      ) : null}
       <h1 className="font-display text-h1 font-black">{title}</h1>
       {lead ? <p className="measure mt-8 text-lead">{lead}</p> : null}
       {ctaLabel && ctaHref ? (

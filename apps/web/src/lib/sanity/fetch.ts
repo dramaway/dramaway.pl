@@ -14,6 +14,7 @@ import {
   personSlugsQuery,
   projectBySlugQuery,
   projectSlugsQuery,
+  projectEditionParamsQuery,
   projectsListQuery,
   siteSettingsQuery,
 } from "./queries";
@@ -109,4 +110,10 @@ export async function getProjectBySlug(
 
 export async function getProjectSlugs(): Promise<string[]> {
   return sanityClient.fetch(projectSlugsQuery, {}, revalidate);
+}
+
+export async function getProjectEditionParams(): Promise<
+  { slug: string; editionSlugs: string[] | null }[]
+> {
+  return sanityClient.fetch(projectEditionParamsQuery, {}, revalidate);
 }

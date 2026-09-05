@@ -107,6 +107,11 @@ export const projectBySlugQuery = `*[_type == "project" && slug.current == $slug
 
 export const projectSlugsQuery = `*[_type == "project" && defined(slug.current)].slug.current`;
 
+export const projectEditionParamsQuery = `*[_type == "project" && defined(slug.current)]{
+  "slug": slug.current,
+  "editionSlugs": editions[defined(slug.current)].slug.current
+}`;
+
 export const pagesBySlugsQuery = `*[_type == "page" && slug.current in $slugs] {
   _id,
   title,

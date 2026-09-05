@@ -1,93 +1,56 @@
-import Link from "next/link";
+import { BlobRow } from "@/components/sections/blob-row";
+import { PageHero } from "@/components/sections/page-hero";
+import { Section } from "@/components/layout/section";
 import { PortableBody } from "@/components/portable-body";
-import { ArticleShell } from "@/components/article-shell";
+import { DotBand } from "@/components/visual/dot-band";
+import { editionPath } from "@/lib/routes";
 import type { ProjectDetail } from "@/lib/sanity/types";
 
 export function ProjectArticle({ project }: { project: ProjectDetail }) {
-  const editions = project.editions ?? [];
+  const editions = (project.editions ?? []).filter((edition) => edition.slug);
+  const rows = editions.map((edition) => ({
+    title: edition.title,
+    lead: edition.summary?.trim() || edition.years || null,
+    href: editionPath(project.slug, edition.slug),
+  }));
 
   return (
-    <ArticleShell>
-      <p className="text-sm text-muted-foreground">
-        <Link href="/projekty" className="hover:underline">
-          Projekty
-        </Link>
-        {" / "}
-        {project.title}
-      </p>
-      <h1 className="mt-2 text-3xl font-semibold tracking-tight">
-        {project.title}
-      </h1>
-      {project.summary ? (
-        <p className="mt-3 text-lg text-muted-foreground">{project.summary}</p>
+    <>
+      <PageHero
+        title={project.title}
+        lead={project.summary}
+        parent={{ href: "/projekty", label: "Projekty" }}
+      />
+      {project.body ? (
+        <Section>
+          <div className="measure">
+            <PortableBody value={project.body} />
+          </div>
+        </Section>
       ) : null}
-      <PortableBody value={project.body} />
-
       {editions.length > 0 ? (
-        <nav className="mt-10 rounded-lg border p-4 text-sm">
-          <p className="font-medium">Edycje</p>
-          <ol className="mt-2 list-decimal space-y-1 pl-5">
-            {editions.map((edition, index) => (
-              <li key={`${edition.slug}-${edition.years ?? index}`}>
-                <a href={`#${edition.slug}`} className="hover:underline">
-                  {edition.title}
-                </a>
-                {edition.years ? (
-                  <span className="text-muted-foreground"> ({edition.years})</span>
-                ) : null}
-              </li>
-            ))}
-          </ol>
-        </nav>
+        <>
+          <DotBand />
+          <BlobRow heading="Edycje" items={rows} />
+        </>
       ) : null}
-
-      {editions.map((edition, index) => (
-        <section
-          key={`${edition.slug}-${edition.years ?? index}`}
-          id={edition.slug}
-          className="mt-12 border-t pt-8"
-        >
-          <h2 className="text-2xl font-semibold tracking-tight">
-            {edition.title}
-          </h2>
-          {edition.years ? (
-            <p className="mt-1 text-sm text-muted-foreground">{edition.years}</p>
-          ) : null}
-          <PortableBody value={edition.body} />
-          {edition.outcomes && edition.outcomes.length > 0 ? (
-            <ul className="mt-6 space-y-4">
-              {edition.outcomes.map((outcome) => (
-                <li key={outcome.title} className="rounded-md border p-4">
-                  <p className="font-medium">{outcome.title}</p>
-                  {outcome.subtitle || outcome.date ? (
-                    <p className="text-sm text-muted-foreground">
-                      {[outcome.subtitle, outcome.date]
-                        .filter(Boolean)
-                        .join(" · ")}
-                    </p>
-                  ) : null}
-                  {outcome.description ? (
-                    <p className="mt-2 text-sm">{outcome.description}</p>
-                  ) : null}
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </section>
-      ))}
-
       {project.partners && project.partners.length > 0 ? (
-        <section className="mt-12 border-t pt-8">
-          <h2 className="text-xl font-semibold">Partnerzy</h2>
-          <ul className="mt-3 list-disc space-y-1 pl-5 text-sm">
+        <Section>
+          <h2 className="font-display text-h3 font-black">Partnerzy</h2>
+          <ul className="mt-8 list-disc space-y-1 pl-6 text-body">
             {project.partners.map((name) => (
               <li key={name}>{name}</li>
             ))}
           </ul>
-        </section>
+        </Section>
       ) : null}
-
-      <PortableBody value={project.afterword} />
-    </ArticleShell>
+      {project.afterword ? (
+        <Section>
+          <div className="measure">
+            <PortableBody value={project.afterword} />
+          </div>
+        </Section>
+      ) : null}
+    </>
   );
 }
