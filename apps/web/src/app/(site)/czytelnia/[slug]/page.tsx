@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { PageHero } from "@/components/sections/page-hero";
-import { Section } from "@/components/layout/section";
-import { PortableBody } from "@/components/portable-body";
-import { czytelniaPath } from "@/lib/routes";
+import { PublicationArticle } from "@/components/publication-article";
 import {
   getPublicationBySlug,
   getPublicationSlugs,
@@ -29,21 +26,5 @@ export default async function PublicationPage({ params }: Props) {
   const publication = await getPublicationBySlug(slug);
   if (!publication) notFound();
 
-  return (
-    <>
-      <PageHero
-        title={publication.title}
-        lead={publication.summary}
-        image={publication.cover}
-        parent={{ href: czytelniaPath(), label: "Czytelnia" }}
-      />
-      {publication.body ? (
-        <Section>
-          <div className="measure">
-            <PortableBody value={publication.body} />
-          </div>
-        </Section>
-      ) : null}
-    </>
-  );
+  return <PublicationArticle publication={publication} />;
 }
