@@ -5,6 +5,7 @@ import { Section } from "@/components/layout/section";
 import { Blob } from "@/components/visual/blob";
 import { CtaLink } from "@/components/visual/cta-link";
 import { czytelniaPath, methodsPath } from "@/lib/routes";
+import { SUBPAGE } from "@/lib/subpage-copy";
 
 export const metadata: Metadata = { title: "Baza wiedzy" };
 
@@ -24,10 +25,7 @@ const CHANNELS = [
 export default function KnowledgeHubPage() {
   return (
     <>
-      <PageHero
-        title="Baza wiedzy"
-        lead="Dwa wejścia: metody pracy i czytelnia publikacji."
-      />
+      <PageHero title={SUBPAGE.knowledge.title} lead={SUBPAGE.knowledge.lead} />
       <Section>
         <div className="stack stack-narrow">
           {CHANNELS.map((channel) => (
