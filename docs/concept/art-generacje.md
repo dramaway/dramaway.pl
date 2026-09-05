@@ -16,15 +16,19 @@ Nie wystarczy płaski `project` z tytułem i body. Potrzebujemy struktury pod:
 - **outcomes** per edycja — 0–n rezultatów (spektakl, wydarzenie, publikacja): tytuł, podtytuł/data, zdjęcie, opis. Ogólne do Figmy; nie wypełniamy z HTML na ślepo.
 - wyróżnienie na homepage i liście projektów (`featured`)
 
+**Adresy (2026-09-05):** strona projektu `/projekty/art-generacje` listuje edycje (wiersz z plamą). Klik otwiera **osobną stronę edycji** `/projekty/art-generacje/[slug]`. `slug` już jest na obiekcie `edition` w Studio. Trzy historyczne „Edycja VI” muszą mieć **różne** slugi, inaczej URL się zderzy — nie poprawiamy numeracji, tylko identyfikatory.
+
+Nie robimy z edycji osobnego typu Sanity: nadal lista na projekcie, tylko Next dostaje zagnieżdżoną trasę.
+
 Szczegóły pól: schemat `project` + `edition` w `apps/studio`.  
 **Stan w CMS (ile edycji, skąd):** [fundacja-status.md](../migration/fundacja-status.md). Decyzja zakresowa: [ADR-003](../decisions/ADR-003-content-model-and-mvp.md).
 
 ## Relacja do innych projektów
 
-- **Aktywne (orientacyjnie z kickoffu):** Art Generacje, Czytelnia / baza wiedzy  
-- **Archiwum:** m.in. Teatr Codzienny, TO MI GRA, BOAL IN PRACTICE, Wielogłos i inne — zostają w serwisie jako archiwum, nie znikają
+- **Aktywne:** Art Generacje. Czytelnia nie jest `project` (osobny tor `publication`).
+- **Archiwum w CMS:** Teatr Codzienny, TO MI GRA, BOAL IN PRACTICE. Wielogłos jest w ramce Figmy i w kickoffie, nie ma dokumentu `project` — do rozstrzygnięcia przy makietach.
 
-Czytelnia to osobny tor treści (`publication`), nie „edycja Art Generacje”.
+Czytelnia to osobny tor treści (`publication`), nie „edycja Art Generacje” i nie `project`.
 
 ## Migracja
 

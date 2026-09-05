@@ -99,7 +99,7 @@ Inne powtarzalne wymiary:
 
 ## Niespójności do rozstrzygnięcia z designerką
 
-1. Brak widoków mobilnych.
+1. Brak widoków mobilnych — **zamknięte 2026-09-05:** nie będzie rysunku telefonu. Kanon: spójnie i wystarczająco dobrze ([system.md](system.md)).
 2. Logo jako raster zamiast wektora.
 3. Sześć wystąpień Poppins wśród dwóch pozostałych rodzin.
 4. Nawigacja ma cztery pozycje wobec siedmiu z IA, w tym „Bazę wiedzy", której jeszcze nie ma.

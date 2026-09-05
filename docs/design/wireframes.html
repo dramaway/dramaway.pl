@@ -1,0 +1,1394 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DramaWay — wireframes podstron</title>
+<style>/* ===================================================================
+   wireframe.css — szary język makietowania
+   Wyciąg z mockups/wireframes.html (tag wireframe-baseline-1).
+
+   Dwie warstwy w jednym pliku:
+     1. prymitywy wireframe'u  — alfabet, którym rysuje się ekran
+     2. obudowa dokumentu      — pasek, nawigacja, ramki, overlay
+
+   Zasada nadrzędna: w samym rysunku nie ma koloru. Kolor występuje
+   wyłącznie w warstwie oznaczeń i mówi, czym rzecz JEST, nigdy jak
+   ma wyglądać.
+
+   WSZYSTKIE zmienne stoją na :root, także --wf-line. Overlay klonuje
+   innerHTML poza wrapper, więc zmienna zdefiniowana na .wf przestaje
+   się rozwiązywać i ramki znikają — widoczne dopiero w powiększeniu.
+   =================================================================== */
+
+:root{
+  /* papier i tusz */
+  --page:#e8e8eb; --paper:#ffffff; --ink:#26262a; --ink2:#5a5a62; --ink3:#8c8c95;
+  --line:#c2c2c9; --line2:#dedee3; --fill:#efeff2; --fill2:#e4e4e9; --fill3:#d6d6dc;
+  --chrome:#2b3037; --chrome2:#4b525b; --note-bg:#f6f6f8;
+
+  /* obrys prymitywów — MUSI stać tutaj, patrz nagłówek */
+  --wf-line:#b9b9c1;
+
+  /* warstwa oznaczeń — kolor nigdy nie wchodzi do samego wireframe'u.
+     Nazwy są rodzajami, nie kolorami: podmieniasz znaczenie, nie odcień. */
+  --c-always:#1d4e7c;  --c-always-bg:#e0ecf7;
+  --c-derived:#5b3fa0; --c-derived-bg:#ebe4f8;
+  --c-content:#1a7048; --c-content-bg:#dcefe4;
+  --c-custom:#9c5b0c;  --c-custom-bg:#fbeedb;
+  --c-form:#a12a45;    --c-form-bg:#fbe2e8;
+  --c-anno:#4c5a68;    --c-open:#8a5510;
+
+  --r:3px;
+  /* wysokość przyklejonej belki dokumentu — punkt zaczepienia dla
+     wszystkiego, co ma się przyklejać pod nią */
+  --wf-stick:96px;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --sans:ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+/* tło ustawiane jawnie: nigdy nie zakładaj jasnego motywu u widza */
+body{margin:0;background:var(--page);color:var(--ink);font:15px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{margin:0;font-weight:600;letter-spacing:-.01em}
+p{margin:0 0 .7em}
+a{color:inherit}
+code,kbd{font-family:var(--mono);font-size:.86em;background:var(--fill2);padding:1px 4px;border-radius:2px}
+
+/* ===================================================================
+   WARSTWA 2a — pasek sterowania
+   Jedna przyklejona linia. Kontrolki są sterowane atrybutami danych
+   (data-ctl / data-chk / data-sel), więc ten sam HTML działa w pasku
+   i po sklonowaniu do overlaya.
+   =================================================================== */
+.top{position:sticky;top:0;z-index:60}
+.bar{background:var(--chrome);color:#e9eaec}
+.bar-in{max-width:1400px;margin:0 auto;padding:0 18px;height:44px;display:flex;gap:12px;align-items:center;overflow-x:auto;scrollbar-width:none}
+.bar-in::-webkit-scrollbar{display:none}
+.bar h1{font:700 10.5px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:#fff;white-space:nowrap;opacity:.85}
+.sepv{width:1px;height:18px;background:#4d555f;flex:0 0 auto}
+.ctl{display:flex;gap:5px;align-items:center;flex:0 0 auto}
+.ctl>label{font:600 9.5px/1 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:#8d96a0;white-space:nowrap}
+.seg{display:flex;border:1px solid #545c66;border-radius:var(--r);overflow:hidden;flex:0 0 auto}
+.seg button{appearance:none;border:0;background:transparent;color:#bcc3cb;font:600 11px/1 var(--sans);padding:5px 9px;cursor:pointer;white-space:nowrap}
+.seg button+button{border-left:1px solid #545c66}
+.seg button[aria-pressed="true"]{background:#eceef0;color:#21252a}
+.bar select,.ovl-bar select{appearance:none;background:#1f242a;color:#dfe3e7;border:1px solid #545c66;border-radius:var(--r);padding:5px 24px 5px 8px;font:11px var(--sans);cursor:pointer;max-width:230px;
+  background-image:linear-gradient(45deg,transparent 50%,#8d96a0 50%),linear-gradient(135deg,#8d96a0 50%,transparent 50%);
+  background-position:calc(100% - 13px) 11px,calc(100% - 8px) 11px;background-size:5px 5px;background-repeat:no-repeat}
+/* kontrolka wygaszona, bo w bieżącym trybie nie ma czym sterować.
+   Wygaszamy, nie ukrywamy — zależność ma być widoczna, nie domyślna. */
+.ctl.off,.seg.off{opacity:.42}
+.seg button:disabled,.bar select:disabled{cursor:not-allowed}
+.chk{display:inline-flex;align-items:center;gap:5px;font:11px var(--sans);color:#aeb6bf;cursor:pointer;user-select:none;
+  border:1px solid #545c66;border-radius:99px;padding:4px 10px 4px 8px;white-space:nowrap;flex:0 0 auto}
+.chk input{appearance:none;width:9px;height:9px;border-radius:99px;border:1px solid #79828c;margin:0;flex:0 0 auto}
+.chk[data-on="true"]{background:#eceef0;border-color:#eceef0;color:#21252a}
+.chk[data-on="true"] input{background:#21252a;border-color:#21252a}
+
+/* nawigacja sekcji — podświetlenie robi spy() */
+.nav{background:#f4f4f6;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav-in{max-width:1400px;margin:0 auto;padding:0 18px;display:flex;gap:1px}
+.nav a{padding:8px 11px;font-size:11.5px;color:var(--ink3);text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;transition:color .12s}
+.nav a:hover{color:var(--ink)}
+.nav a.on{color:var(--c-always);border-bottom-color:var(--c-always);background:#fff;font-weight:600}
+
+/* ===================================================================
+   WARSTWA 2b — układ dokumentu i ramki
+   =================================================================== */
+main{max-width:1400px;margin:0 auto;padding:28px 20px 120px}
+section{margin:0 0 56px}
+.sec-head{display:flex;align-items:baseline;gap:12px;margin:0 0 6px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.sec-head h2{font-size:19px}
+.sec-head .n{font:600 12px var(--mono);color:var(--c-always)}
+.lede{max-width:74ch;color:var(--ink2);font-size:14px;margin:10px 0 22px}
+.lede strong{color:var(--ink)}
+
+/* .frame = głowa / ciało / nota. Ramka bez noty jest niedokończona. */
+.frame{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);margin:0 0 18px}
+.frame-head{display:flex;gap:10px;align-items:baseline;padding:10px 14px;border-bottom:1px solid var(--line2);background:#fbfbfc;flex-wrap:wrap}
+.frame-head h3{font-size:14px}
+.frame-head .meta{font:11px var(--mono);color:var(--ink3);margin-left:auto}
+.frame-body{padding:16px}
+.frame-note{padding:10px 14px;border-top:1px solid var(--line2);background:var(--note-bg);font-size:12.5px;color:var(--ink2);line-height:1.5}
+.frame-note b{color:var(--ink);font-weight:600}
+.frame-note > b:first-child{color:var(--c-form)}
+
+/* jedno kliknięcie zdejmuje całą warstwę komentarza — tryb do dzielenia ekranu */
+body.no-anno .frame-note,body.no-anno .anno,body.no-anno .kind,body.no-anno .blk-tag{display:none}
+
+/* etykieta rodzaju w prozie */
+.kind{display:inline-block;font:600 9.5px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border-radius:2px;border:1px solid var(--line);color:var(--ink2);background:var(--fill)}
+.kind.always{border-color:var(--c-always);background:var(--c-always-bg);color:var(--c-always)}
+.kind.toggle{border-style:dashed;border-color:var(--c-always);background:var(--c-always-bg);color:var(--c-always)}
+.kind.derived{border-color:var(--c-derived);background:var(--c-derived-bg);color:var(--c-derived)}
+.kind.content{border-color:var(--c-content);background:var(--c-content-bg);color:var(--c-content)}
+.kind.system{border-color:var(--c-content);border-style:dashed;background:var(--c-content-bg);color:var(--c-content)}
+.kind.custom{border-color:var(--c-custom);background:var(--c-custom-bg);color:var(--c-custom)}
+.kind.form{border-color:var(--c-form);background:var(--c-form-bg);color:var(--c-form)}
+
+/* etykiety bloków w samych rysunkach — klasę k-* dokleja paintTags() */
+.blk.k-always>.blk-tag{color:var(--c-always);border-color:var(--c-always);background:var(--c-always-bg)}
+.blk.k-toggle>.blk-tag{color:var(--c-always);border-color:var(--c-always);border-style:dashed;background:var(--c-always-bg)}
+.blk.k-derived>.blk-tag{color:var(--c-derived);border-color:var(--c-derived);background:var(--c-derived-bg)}
+.blk.k-content>.blk-tag{color:var(--c-content);border-color:var(--c-content);background:var(--c-content-bg)}
+.blk.k-system>.blk-tag{color:var(--c-content);border-color:var(--c-content);border-style:dashed;background:var(--c-content-bg)}
+.blk.k-custom>.blk-tag{color:var(--c-custom);border-color:var(--c-custom);background:var(--c-custom-bg)}
+.blk.k-form>.blk-tag{color:var(--c-form);border-color:var(--c-form);background:var(--c-form-bg)}
+.blk.k-form{border-color:var(--c-form)}
+/* z wyłączoną warstwą oznaczeń znika też ostatni kolor w rysunku —
+   inaczej obrys przeżywa swoją etykietę i zaczyna wyglądać jak decyzja */
+body.no-anno .blk.k-form{border-color:var(--wf-line)}
+
+/* ===================================================================
+   WARSTWA 1 — prymitywy wireframe'u
+   =================================================================== */
+/* overflow:clip, NIE hidden. `hidden` robi z tego kontener przewijania
+   i zabija `position:sticky` w środku makiety — stąd brała się tekstowa
+   proteza „sticky while scrolling". `clip` przycina tak samo,
+   ale nie tworzy scrollportu, więc przyklejanie działa naprawdę. */
+.wf-page{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);overflow:clip;margin:0 auto;transition:max-width .18s ease}
+
+/* Trzy viewporty zamiast wide/narrow. Viewport rysuje STRONĘ; układ
+   narzędzia dookoła niej reaguje na prawdziwe okno, nie na ten atrybut. */
+.wf-page{--bezel:8px;max-width:var(--dev-w,none)}
+.wf-page[data-vp="mobile"]{--dev-w:390px}
+.wf-page[data-vp="tablet"]{--dev-w:834px}
+.wf-page[data-vp="desktop"]{--dev-w:1280px}
+
+/* ---- ramka urządzenia — `data-dev` ----
+   Sam `data-vp` zmienia szerokość strony i na dużym ekranie nie widać
+   po niej, GDZIE ten widok się kończy. `data-dev` mówi „to jest
+   symulowane urządzenie": rysuje obudowę, a wszystko, co użytkownik
+   tego urządzenia widzi — także panele narzędzia — należy do jej środka.
+   Desktop obudowy nie dostaje: to nie symulacja, to okno, w którym
+   makieta właśnie stoi.
+
+   Ramkę rysuje BORDER, nie padding: `overflow:clip` przycina wtedy treść
+   do promienia EKRANU, a nie obudowy. Do `max-width` trzeba obudowę
+   dołożyć, bo `box-sizing:border-box` liczy ją w szerokość — a urządzenie
+   ma mieć 390 px EKRANU, nie 390 px razem z ramką. */
+.wf-page[data-dev]{max-width:calc(var(--dev-w) + 2 * var(--bezel));
+  border:var(--bezel) solid var(--fill3);border-radius:20px;
+  box-shadow:0 0 0 1px var(--line),0 14px 34px rgba(0,0,0,.13)}
+/* Podpis pod ramką. Okno węższe niż urządzenie zwęża rysunek, a makieta
+   nie skaluje i nie przewija w poprzek — jedno psuje pozycjonowanie
+   nakładek, drugie przyklejanie. Zostaje powiedzieć wprost, ile widać. */
+.wf-devlabel{text-align:center;font:600 9.5px var(--mono);letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ink3);margin:9px 0 0}
+
+/* blok — podstawowa jednostka rysunku */
+.blk{position:relative;border:1px solid var(--wf-line);border-radius:var(--r);background:var(--fill);padding:12px 14px;margin:0 0 10px}
+.blk.dash{border-style:dashed}
+.blk.plain{background:var(--paper)}
+.blk-tag{position:absolute;top:-8px;left:10px;font:600 9px/1.6 var(--mono);letter-spacing:.07em;text-transform:uppercase;background:var(--paper);border:1px solid var(--line);color:var(--ink2);padding:0 5px;border-radius:2px}
+.blk h4{font-size:13px;margin:0 0 8px}
+
+/* znacznik poziomu nagłówka — struktura dokumentu to wymóg SEO, nie ozdoba */
+.h2mark{font:600 9px var(--mono);color:var(--c-derived);margin-right:5px;vertical-align:2px}
+
+/* tekst jako paski o szerokości bliskiej prawdziwej długości linii */
+.ln{height:8px;background:var(--fill3);border-radius:2px;margin:0 0 6px}
+.ln.s{width:35%}.ln.m{width:62%}.ln.l{width:88%}.ln.f{width:100%}
+.ln.hi{background:#c9c9d1}
+
+/* obraz w prawdziwych proporcjach; .x = przekreślony */
+.img{background:var(--fill2);border:1px solid var(--wf-line);border-radius:var(--r);position:relative;overflow:hidden}
+.img i{position:absolute;inset:0;display:grid;place-items:center;font:600 9px var(--mono);color:var(--ink3);font-style:normal;letter-spacing:.08em;background:var(--fill2);z-index:1;padding:0 4px;margin:auto;width:max-content;height:max-content}
+.img.x{background-image:linear-gradient(to top right,transparent calc(50% - .5px),var(--wf-line) 50%,transparent calc(50% + .5px)),linear-gradient(to bottom right,transparent calc(50% - .5px),var(--wf-line) 50%,transparent calc(50% + .5px))}
+
+.btn{display:inline-block;background:var(--chrome2);color:#fff;border-radius:var(--r);padding:8px 14px;font:600 12px var(--sans);text-align:center}
+.btn.full{display:block}
+.btn.ghost{background:transparent;color:var(--ink2);border:1px solid var(--wf-line)}
+.chip{display:inline-block;border:1px solid var(--wf-line);border-radius:99px;padding:2px 9px;font:11px var(--mono);color:var(--ink2);background:var(--paper);margin:0 5px 5px 0}
+.meter{height:7px;background:var(--fill2);border:1px solid var(--wf-line);border-radius:99px;overflow:hidden;margin:6px 0 4px}
+.meter span{display:block;height:100%;background:var(--fill3)}
+.tiny{font:11px var(--mono);color:var(--ink3)}
+
+/* przypis inline — warstwa, nie treść */
+.anno{display:block;font:11px/1.45 var(--mono);color:var(--c-anno);margin:5px 0 0}
+.anno::before{content:"↳ "}
+
+/* --- warstwa tekstu: noty. Pelna doktryna w skillu `wireframe-copy` ---
+   Przeniesione z `mockups/editor.html` 2026-09-01, po tym jak przeszlo tam
+   pelny cykl. `.note` niesie WYLACZNIE zachowanie; wyglad zostaje przy klasie
+   hosta (`.anno`, `.frame-note`), bo inaczej otagowanie siedemdziesieciu
+   wystapien jest siedemdziesieciona regresjami wizualnymi. */
+/* ====================================================================
+   NOTY — szesc rodzajow, trzy fizyki.
+
+   Rodzaj mowi, KOMU tekst sluzy i czy trafia do produktu. Fizyka mowi,
+   ile miejsca dostaje. To sa dwie niezalezne rzeczy i dlatego siedza na
+   dwoch atrybutach: `data-note` i `data-fold`.
+
+   RODZAJE
+     copy   tekst produktu        → uzytkownik koncowy
+     legend jak czytac rysunek    → kazdy, raz
+     why    uzasadnienie          → projektant, produkt
+     mech   mechanika interakcji  → developer
+     evi    liczba z produkcji    → produkt, developer
+     open   pytanie bez odpowiedzi→ ten, kto zamyka
+
+   FIZYKI
+     stala        copy, evi, open — nigdy sie nie zwijaja
+     nakladka     mech — znacznik „i", NIE RUSZA UKLADU
+     wypchniecie  legend/why z `data-fold` — rozwija sie w miejscu
+
+   Dlaczego dwie rozne fizyki, a nie jedna: tresc ujawniana HOVEREM musi
+   sie nakladac, nigdy wypychac — tekst skaczacy pod kursorem jest nie do
+   uzycia. To ogranicza `mech` do krotkiego. Tresc ujawniana KLIKIEM moze
+   wypychac i dzieki temu moze byc dluga, bo czytelnik swiadomie zrobil
+   jej miejsce.
+   ==================================================================== */
+/* `.note` niesie WYLACZNIE zachowanie — zero typografii, zero koloru.
+   Wyglad zostaje przy klasach, ktore go dzis nios a: `.anno` (mono ze
+   strzalka) i `.frame-note` (pasek pod ramka). Nota doklejona do
+   istniejacego elementu nie moze zmieniac jego typografii, bo wtedy
+   otagowanie 72 wystapien byloby 72 regresjami wizualnymi.
+
+   Nota bez zadnego hosta dostaje wyglad adnotacji, zeby dala sie uzyc
+   samodzielnie. */
+/* PULAPKA SPECYFICZNOSCI: ta regula ma cztery klasy (trzy `:not` liczą się
+   jak klasy), a regula gaszaca przy `off` miala trzy — wiec `display:block`
+   bilo `display:none` i komentarz w liscie `spec` NIE ZNIKAL w trybie
+   screen-share. Zlapala to asercja, nie oko. Wyglad obowiazuje wiec tylko
+   wtedy, gdy warstwa jest w ogole pokazywana. */
+body:not([data-notes="off"]) .note-inline:not(:has(>.note-i)){display:block;
+  font:11px/1.45 var(--mono);color:var(--c-anno);margin:5px 0 0}
+body:not([data-notes="off"]) .note-inline:not(:has(>.note-i))::before{content:"↳ "}
+
+/* copy NIE jest komentarzem — to interfejs produktu. Zostaje przy `off`,
+   nie ma znacznika i czyta sie jak tekst, nie jak adnotacja. */
+.note[data-note="copy"]{display:inline;font:inherit;color:inherit;margin:0}
+
+/* akcent rodzaju NA WIERZCHU wygladu hosta, nie zamiast niego */
+.note[data-note="evi"]>b:first-of-type{color:var(--c-content)}
+.note[data-note="open"]>b:first-of-type{color:var(--c-open)}
+.note[data-note="open"]>b:first-of-type::before{content:"? ";font-weight:400}
+body[data-notes="off"] .note:not([data-note="copy"]){display:none}
+
+/* ---- wypchniecie: legend/why z `data-fold` ---- */
+.note-body{display:block;margin-top:3px}
+.note[data-fold]>.note-body{display:none}
+.note[data-fold]>b{cursor:pointer;border-bottom:1px dotted var(--c-anno)}
+.note[data-fold][data-open]>.note-body{display:block}
+.note[data-fold][data-open]>b{border-bottom-color:transparent}
+body[data-notes="all"] .note[data-fold]>.note-body{display:block}
+body[data-notes="all"] .note[data-fold]>b{border-bottom-color:transparent}
+
+/* ---- nakladka: mech ---- */
+.note:has(>.note-i){display:inline;margin:0}
+.note:has(>.note-i)>b{display:none}
+.note-i{display:inline-grid;place-items:center;width:24px;height:24px;vertical-align:middle;
+  border:0;background:none;padding:0;cursor:help;color:var(--c-anno)}
+.note-i>span{display:grid;place-items:center;width:15px;height:15px;border-radius:99px;
+  border:1px solid currentColor;font:600 10px/1 var(--sans);font-style:italic}
+.note-i:hover,.note-i:focus-visible{color:var(--c-always)}
+.note-i:focus-visible{outline:2px solid var(--c-always);outline-offset:-2px;border-radius:4px}
+/* Nakladka trzyma sie RODZICA, nie portalu: tryb Preview klonuje
+   `innerHTML`, wiec tresc w portalu zostalaby poza kopia. */
+.note:has(>.note-i){position:relative}
+.note:has(>.note-i)>.note-body{display:none;position:absolute;z-index:60;left:0;top:26px;
+  width:min(300px,68vw);padding:7px 9px;border:1px solid var(--c-anno);border-radius:4px;
+  background:var(--paper);box-shadow:0 6px 18px rgba(0,0,0,.14);
+  font:11px/1.5 var(--mono);color:var(--c-anno);white-space:normal;text-align:left}
+.note:has(>.note-i):hover>.note-body,
+.note:has(>.note-i):focus-within>.note-body,
+.note:has(>.note-i)[data-open]>.note-body{display:block}
+/* `all` renderuje mechanike W PRZEPLYWIE, nie jako nakladke — zrzut
+   ekranu nie ma kursora, wiec nakladka na zrzucie nie istnieje. */
+body[data-notes="all"] .note:has(>.note-i){display:block;position:static}
+body[data-notes="all"] .note:has(>.note-i)>b{display:inline}
+body[data-notes="all"] .note:has(>.note-i)>.note-body{display:block;position:static;
+  width:auto;padding:0;border:0;background:none;box-shadow:none;margin-top:3px}
+body[data-notes="all"] .note-i{display:none}
+
+/* --- prymitywy formularza --- */
+.fld{margin:0 0 9px}
+.fld label{display:block;font:11px var(--mono);color:var(--ink2);margin:0 0 3px}
+.fld .box{height:26px;border:1px solid var(--wf-line);border-radius:var(--r);background:var(--paper)}
+.fld .box.sel{background:var(--paper) linear-gradient(45deg,transparent 50%,var(--wf-line) 50%) no-repeat calc(100% - 13px) 12px/5px 5px,
+  linear-gradient(135deg,var(--wf-line) 50%,transparent 50%) no-repeat calc(100% - 8px) 12px/5px 5px}
+.fld .box.area{height:56px}
+/* warunek MA kształt: wcięcie plus przerywana kreska plus prefiks */
+.fld.cond{margin-left:16px;padding-left:11px;border-left:2px dashed var(--c-form)}
+.fld.cond label::before{content:"if ▸ ";color:var(--c-form);font-weight:600}
+/* pasek złożenia — „N more fields", zamiast rysowania dziewięćdziesięciu */
+.fold{border:1px dashed var(--wf-line);border-radius:var(--r);background:repeating-linear-gradient(180deg,var(--fill) 0 5px,var(--paper) 5px 10px);
+  padding:9px 12px;font:11px var(--mono);color:var(--ink2);text-align:center}
+.grp{border:1px solid var(--line2);border-radius:var(--r);padding:11px 12px 4px;margin:0 0 10px}
+.grp>.gh{font:600 10px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);margin:0 0 8px}
+
+/* --- układ wewnątrz makiety ---
+   Odpowiednik wide/narrow na poziomie treści: kolumna główna plus szyna
+   boczna, albo jedna kolumna. Bez tego makieta umie pokazać tylko listę. */
+.wf-cols{display:grid;gap:16px;padding:0 14px 14px}
+.wf-cols.two{grid-template-columns:1fr 292px}
+.wf-cols.one{grid-template-columns:1fr}
+/* szyna przykleja się NAPRAWDĘ — patrz overflow:clip wyżej.
+   `align-self:start` jest OBOWIĄZKOWE: element siatki jest domyślnie
+   rozciągnięty na całą wysokość wiersza, a rozciągnięty element nie ma
+   się dokąd przykleić. Bez tej linii `sticky` po prostu nic nie robi.
+   `.wf-rail-note` zostaje na wypadek miejsc, w których przyklejenia
+   nie da się pokazać, ale nie jest już domyślną protezą. */
+.wf-rail{position:sticky;top:var(--wf-stick);align-self:start}
+.wf-rail-note{font:10px var(--mono);color:var(--ink3);text-align:center;border:1px dashed var(--line);border-radius:var(--r);padding:3px;margin:0 0 10px}
+.wf-actionbar{border-top:1px solid var(--wf-line);background:var(--fill);padding:9px 12px;display:flex;gap:10px;align-items:center}
+.wf-actionbar .tiny{flex:1}
+
+/* --- minimum dostępności dla uchwytów rysowanych przez makietę ---
+   WCAG 2.2, kryterium 2.5.8: cel klikalny nie mniejszy niż 24 x 24 px.
+   Dotyczy wszystkiego, co w makiecie da się nacisnąć palcem. */
+.wf-hit{min-width:24px;min-height:24px;display:inline-grid;place-items:center}
+.wf-hit:focus-visible,.preview-btn:focus-visible,.ovl-close:focus-visible{
+  outline:2px solid var(--c-always);outline-offset:2px}
+
+/* ===================================================================
+   WARSTWA 2c — proza wokół rysunków
+   =================================================================== */
+.cat{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:18px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+/* Układ WEWNĄTRZ rysowanej strony zależy od jej własnego viewportu,
+   nie od okna przeglądarki — inaczej makieta desktopowa rozsypuje się
+   na wąskim laptopie i w podglądzie, choć rysuje stronę o szerokości
+   1280 px. To ta sama zasada, co „viewport rysuje stronę, okno układa
+   narzędzie", tylko o piętro niżej.
+   `.split` zostaje przy oknie, bo to obudowa dokumentu, nie rysunek. */
+.wf-page[data-vp="mobile"] .wf-cols.two{grid-template-columns:1fr}
+@media(max-width:900px){.split{grid-template-columns:1fr}}
+
+/* lista „klucz → wyjaśnienie"; .open oznacza pozycję bez odpowiedzi */
+.spec{list-style:none;margin:0;padding:0;font-size:12.5px}
+.spec li{padding:5px 0;border-bottom:1px dotted var(--line2);display:flex;gap:8px}
+.spec li:last-child{border-bottom:0}
+.spec b{flex:0 0 108px;font:600 10px var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);padding-top:2px}
+.spec span{color:var(--ink2)}
+.spec .open{color:var(--c-open)}
+
+table{border-collapse:collapse;width:100%;font-size:12.5px;background:var(--paper)}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line2);vertical-align:top}
+th{font:600 10px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);background:#fbfbfc}
+td.num{font-family:var(--mono);white-space:nowrap}
+
+.callout{border-left:3px solid var(--c-always);background:var(--paper);padding:12px 16px;margin:0 0 18px;font-size:13.5px;color:var(--ink2);border-radius:0 var(--r) var(--r) 0}
+.callout b{color:var(--ink)}
+.status{display:inline-block;font:600 10px var(--mono);letter-spacing:.06em;border:1px solid var(--c-open);padding:2px 6px;border-radius:2px;color:var(--c-open);background:#fbf2e2}
+footer{max-width:1400px;margin:0 auto;padding:0 20px 60px;font-size:12.5px;color:var(--ink3)}
+
+/* ===================================================================
+   WARSTWA 2d — PODGLĄD pojedynczej ramki w czystym kontekście
+   To jest podgląd, nie lupa. Nie skalujemy zawartości transformacją:
+   skalowanie produkuje nieścisłości („czy ta ramka naprawdę jest taka
+   szeroka?"), a kto chce powiększyć, ma zoom przeglądarki.
+   Pasek MUSI stać poza kontenerem ze scrollem: sticky wewnątrz
+   overflow:hidden przykleja się do panelu, nie do okna.
+   =================================================================== */
+.previewable{cursor:zoom-in}
+.preview-btn{appearance:none;border:1px solid var(--line);background:var(--paper);color:var(--ink2);
+  font:600 10px var(--mono);letter-spacing:.06em;padding:4px 9px;border-radius:2px;cursor:pointer;white-space:nowrap;
+  min-height:24px}
+.preview-btn:hover{border-color:var(--c-always);color:var(--c-always);background:var(--c-always-bg)}
+.frame-head .preview-btn{margin-left:10px}
+
+/* Podgląd zaczyna się POD główną belką, nie zasłania jej. Belka ma być
+   jedna i cały czas dostępna — chodziło o to, żeby jej nie DUPLIKOWAĆ. */
+.ovl{position:fixed;top:var(--wf-stick);left:0;right:0;bottom:0;z-index:200;
+  background:rgba(24,26,30,.9);display:none;flex-direction:column}
+.ovl.on{display:flex}
+.ovl-scroll{flex:1;overflow:auto;padding:22px}
+/* overflow:clip, nie hidden — inaczej panel staje się kontenerem
+   przewijania i `sticky` w środku podglądu przestaje działać.
+   Przewija SIĘ .ovl-scroll i to on jest scrollportem dla przyklejania,
+   dlatego wewnątrz podglądu punkt zaczepienia jest inny niż na stronie. */
+.ovl-panel{margin:0 auto;background:var(--paper);border-radius:5px;box-shadow:0 24px 70px rgba(0,0,0,.45);overflow:clip}
+.ovl-bar{flex:0 0 auto;z-index:2;display:flex;gap:12px;align-items:center;padding:0 16px;height:46px;
+  background:var(--chrome);color:#e9eaec;overflow-x:auto;scrollbar-width:none;box-shadow:0 2px 10px rgba(0,0,0,.35)}
+.ovl-bar::-webkit-scrollbar{display:none}
+.ovl-bar h3{font:700 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#fff;white-space:nowrap;opacity:.85}
+.ovl-close{margin-left:auto;appearance:none;border:1px solid #545c66;background:transparent;color:#c8ced5;
+  font:600 11px var(--sans);padding:5px 11px;border-radius:var(--r);cursor:pointer;white-space:nowrap;flex:0 0 auto}
+.ovl-close:hover{background:#eceef0;color:#21252a;border-color:#eceef0}
+.ovl-body{padding:26px 30px 34px;background:var(--paper);--wf-stick:14px}
+.ovl-body .frame{border:0;margin:0}
+.ovl-body .frame-head{background:transparent;border-bottom:1px solid var(--line2);padding:0 0 12px;margin-bottom:18px}
+.ovl-body .frame-head h3{font-size:17px}
+.ovl-body .frame-body{padding:0}
+.ovl-body .frame-note{margin-top:20px;border:1px solid var(--line2);border-radius:var(--r)}
+.ovl-body .preview-btn{display:none}
+body.ovl-open{overflow:hidden}
+
+.wf-page .sitebar{display:flex;gap:12px;align-items:center;padding:10px 14px}
+.wf-page .logo{width:72px;height:28px;flex:0 0 auto}
+.wf-page .navrow{display:flex;gap:14px;flex-wrap:wrap;font:11px var(--mono);color:var(--ink2);letter-spacing:.04em;text-transform:uppercase}
+.wf-page[data-vp="mobile"] .navrow,.wf-page[data-vp="tablet"] .navrow{display:none}
+.wf-page[data-vp="desktop"] .menu{display:none}
+.wf-page .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;padding:14px 14px 0;align-items:start}
+.wf-page[data-vp="mobile"] .hero-grid,.wf-page[data-vp="tablet"] .hero-grid{grid-template-columns:1fr}
+.wf-page .portrait{width:100%;aspect-ratio:0.58}
+.wf-page .circle-shot{width:min(227px,70%);aspect-ratio:1;border-radius:99px;margin:8px auto}
+.wf-page .news3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.wf-page[data-vp="mobile"] .news3{grid-template-columns:1fr}
+.wf-page[data-vp="tablet"] .news3{grid-template-columns:1fr 1fr}
+.wf-page .split2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.wf-page[data-vp="mobile"] .split2,.wf-page[data-vp="tablet"] .split2{grid-template-columns:1fr}
+.wf-page .pad{padding:0 14px 14px}
+.wf-page .pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.wf-page[data-vp="mobile"] .pair{grid-template-columns:1fr}
+.hard-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media(max-width:900px){.hard-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="bar"><div class="bar-in">
+    <h1>DramaWay · podstrony</h1>
+    <span class="sepv"></span>
+    <div class="ctl"><label>Ekran</label>
+      <div class="seg" data-ctl="screen">
+        <button data-v="home">Home</button><button data-v="projects">Projekty</button><button data-v="ag">AG</button><button data-v="edition">Edycja</button><button data-v="knowledge">Baza</button><button data-v="about">Fundacja</button><button data-v="contact">Kontakt</button>
+      </div></div>
+    <div class="ctl"><label>Treść gdzie</label>
+      <div class="seg" data-ctl="approach">
+        <button data-v="figma">Huby z ramki</button><button data-v="ia">Strony z IA</button>
+      </div></div>
+    <div class="ctl"><label>Viewport</label>
+      <div class="seg" data-ctl="vp">
+        <button data-v="mobile">Mobile</button><button data-v="tablet">Tablet</button><button data-v="desktop">Desktop</button>
+      </div></div>
+    <div class="ctl"><label>Wierność</label>
+      <div class="seg" data-ctl="fidelity">
+        <button data-v="skeleton">Skeleton</button><button data-v="content">Content</button>
+      </div></div>
+    <div class="ctl"><label>Przykład</label><select data-sel="example"></select></div>
+    <span class="sepv"></span>
+    <label class="chk" data-chk="anno"><input type="checkbox"> Adnotacje</label>
+  </div></div>
+
+  <nav class="nav"><div class="nav-in">
+    <a href="#read">1 · Jak czytać</a>
+    <a href="#evidence">2 · Dowody</a>
+    <a href="#approaches">3 · Dwa podejścia</a>
+    <a href="#assembled">4 · Złożone</a>
+    <a href="#catalogue">5 · Katalog części</a>
+    <a href="#hardest">6 · Najtrudniejszy kawałek</a>
+    <a href="#states">7 · Stany brzegowe</a>
+    <a href="#decide">8 · Co rozstrzygnąć</a>
+  </div></nav>
+</header>
+
+<main>
+
+<section id="read">
+  <div class="sec-head"><span class="n">01</span><h2>Jak czytać ten dokument</h2></div>
+  <p class="lede">Szarość jest decyzją. Typografia, paleta i zdjęcia są już w <code>docs/design/system.md</code> —
+  ta makieta ich nie przesądza drugi raz. Tu rozstrzygamy <strong>co stoi na ekranie, w jakiej kolejności,
+  z jakiego typu Sanity</strong> i które przepisy z homepage da się powtórzyć.</p>
+  <p class="lede"><strong>Każda kontrolka odpowiada na jedno pytanie.</strong>
+  <b>Ekran</b> — która z siedmiu ramek. <b>Treść gdzie</b> — czy składamy jak Figma (huby), czy jak IA (osobne strony).
+  <b>Viewport</b> — szerokość strony; mobile i tablet nie istnieją w Figmie, rysują autorskie reguły z kanonu.
+  <b>Wierność</b> — Skeleton pokazuje rolę bloku, Content prawdziwy rekord.
+  <b>Przykład</b> żyje tylko w Content: pusty CMS, dataset teraz, ramka jak narysowana.</p>
+  <p class="lede"><strong>To nie jest nowe piętro komponentów React.</strong>
+  ADR-004 zostaje: tokeny → prymitywy → sekcje. Słownik niżej to <em>przepisy układu</em>
+  (kolejność prymitywów i klas), nie biblioteka kart. Sekcja na podstronie i tak jest plikiem w
+  <code>components/sections/</code>.</p>
+
+  <div class="split">
+    <div class="frame">
+      <div class="frame-head"><h3>Rodzaje ramek</h3><span class="meta">kolor mówi czym rzecz jest</span></div>
+      <div class="frame-body">
+        <p><span class="kind always">always</span> Chrome — header i stopka na każdej stronie.</p>
+        <p><span class="kind system">system</span> Dekoracja z kanonu: pasmo kół, paleta. Nikt tego nie redaguje w CMS.</p>
+        <p><span class="kind content">content</span> Redagowane: hero, wiersz, news, osoba, publikacja.</p>
+        <p><span class="kind derived">derived</span> Lista albo pustka z zapytania. Nikt tego nie układa ręcznie.</p>
+        <p><span class="kind form">form</span> Formularz kontaktu — jedyny input w całym pliku Figmy, i to szkic.</p>
+      </div>
+      <div class="frame-note"><b>Kolor jest etykietą.</b> Jeśli ramka wygląda nudno, to jest cel. Jeśli wygląda źle — to problem struktury, nie braku Magenty.</div>
+    </div>
+    <div class="frame">
+      <div class="frame-head"><h3>Konwencje rysowania</h3><span class="meta">prymitywy szare</span></div>
+      <div class="frame-body">
+        <div class="ln f"></div><div class="ln l"></div><div class="ln m"></div>
+        <span class="anno">paski = copy, szerokość ≈ prawdziwa linia</span>
+        <div class="img x portrait" style="height:72px;margin:12px 0 0;aspect-ratio:auto"></div>
+        <span class="anno">przekreślone pudełko = obraz w prawdziwej proporcji (portret ≈ 0,58)</span>
+        <div style="margin-top:12px"><span class="btn ghost">CTA</span>
+        <span class="anno">jedyny powtarzalny element Figmy: zielony link, 46 instancji — u nas CtaLink</span></div>
+        <div class="blk" style="margin-top:14px"><span class="blk-tag">wiersz z plamą · content</span>
+          <span class="h2mark">h3</span><b style="font-size:13px">Tytuł pozycji</b>
+          <span class="anno">znaczniki h1–h3 to outline, nie ozdoba</span>
+        </div>
+      </div>
+      <div class="frame-note"><b>Czego szarość nie pokaże:</b> rytmu kół, spadów zdjęć, kontrastu CTA.
+      Klik w ramkę otwiera Preview bez komentarza dokumentu. <kbd>Esc</kbd> zamyka.</div>
+    </div>
+  </div>
+</section>
+
+<section id="evidence">
+  <div class="sec-head"><span class="n">02</span><h2>Co mówią dane</h2>
+    <span class="meta status" style="margin-left:auto">PROPOZYCJA</span></div>
+  <p class="lede">Trzy przykłady to nie ozdoba. <strong>Pusty</strong> jest stanem startowym każdej nowej sekcji.
+  <strong>Dataset teraz</strong> to to, co Next naprawdę dostaje.
+  <strong>Jak w ramce</strong> to liczba, którą Figma udaje stałą — CMS jej nie gwarantuje.</p>
+
+  <div class="frame">
+    <div class="frame-head"><h3>Rozrzut, który układ musi przeżyć</h3>
+      <span class="meta">Sanity production · weryfikacja 2026-08-21; homepage 2026-09-04; Figma odczyt 2026-09-05, bez kolejnych zapytań</span></div>
+    <div class="frame-body" style="padding:0">
+      <table>
+        <thead><tr><th>Przykład</th><th>Newsy</th><th>Projekty aktywne</th><th>Archiwum</th><th>Edycje AG</th><th>Publikacje</th><th>Zespół</th><th>Reality check</th></tr></thead>
+        <tbody>
+          <tr><td>Pusty CMS</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td>Każda sekcja ma ten stan. Figma go nie rysuje.</td></tr>
+          <tr><td>Dataset teraz</td><td class="num">3</td><td class="num">1</td><td class="num">3</td><td class="num">13</td><td class="num">0</td><td class="num">7</td><td>Newsy to nadal <code>page</code>. Trzeci („Syrena”) jest placeholderem z ramki. Publikacji nie ma — brak dumpa <code>drama_teatr</code>. AG ma 13 edycji, trzy z nich nazywają się „Edycja VI”.</td></tr>
+          <tr><td>Jak w ramce</td><td class="num">3</td><td class="num">3</td><td class="num">4</td><td class="num">8</td><td class="num">8+</td><td class="num">?</td><td>Figma stawia Czytelnię i „Projekt z Syrenką” jako projekty. Na canvasie obok „baza wiedzy” leży rozsypany ogon edycji — to nie jest widok, to warstwy poza ramką. Zespół w ramce „o fundacji” nie ma policzonych kart.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="frame-note"><b>Ślepe plamy.</b> Zapytanie nie widzi publikacji (zera są prawdziwe, nie fałszywe).
+    <code>edition.outcomes</code> jest puste. <code>person.role</code> nie jest zmapowane.
+    Figma nie ma mobile — liczby viewportu poniżej 1024 px biorą się z kodu, nie z ramki.
+    FileKey w baseline to <code>yjpLV44NfMXZtU774I1ZRY</code>; link z sesji to <code>Tf7i787tVTBTE4j7LFXXUX</code> — te same ID ramek.</div>
+  </div>
+
+  <div class="frame">
+    <div class="frame-head"><h3>Co homepage już złożył</h3><span class="meta">apps/web/src/app/(site)/page.tsx</span></div>
+    <div class="frame-body" style="padding:0">
+      <table>
+        <thead><tr><th>Kolejność na /</th><th>Przepis</th><th>Prymitywy / klasy</th><th>Stan</th></tr></thead>
+        <tbody>
+          <tr><td>Hero</td><td>page-hero (wariant home: overlay nav w lewej kolumnie)</td><td>Hero, Blob, Media bleed, CtaLink, .split</td><td>jest</td></tr>
+          <tr><td>Pasmo</td><td>dot-band</td><td>DotBand</td><td>jest</td></tr>
+          <tr><td>Aktualności</td><td>news-grid</td><td>.cols-3, .news-card, CtaLink</td><td>jest</td></tr>
+          <tr><td>Kim / Metody</td><td>split-pair</td><td>.split-reverse, Media, CtaLink</td><td>jest</td></tr>
+          <tr><td>Paleta</td><td>palette</td><td>PaletteRow</td><td>jest</td></tr>
+          <tr><td>Art Generacje + Czytelnia</td><td>stack-teaser × 2</td><td>.stack-narrow, Blob, CtaLink</td><td>jest</td></tr>
+          <tr><td>Stopka</td><td>chrome</td><td>SiteFooter, .footer-quote</td><td>jest</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="frame-note"><b>Podstrony dziedziczą chrome, nie skład.</b>
+    <code>/projekty</code>, <code>/fundacja</code>, <code>/zespol</code> to listy z fazy migracji.
+    <code>/czytelnia</code> to H1. <code>ProjectArticle</code> to Portable Text plus spis edycji — nie ramka „Art Generacje” ani „Edycja projektu”.</div>
+  </div>
+</section>
+
+<section id="approaches">
+  <div class="sec-head"><span class="n">03</span><h2>Dwa podejścia</h2>
+    <span class="meta status" style="margin-left:auto">oba PROPOZYCJA</span></div>
+  <p class="lede">Ten sam chrome (cztery pozycje z Figmy — to już jest w kodzie).
+  Różnica jest w tym, <strong>co wolno położyć na hubie, a co dostaje własną stronę</strong>.
+  Przełącznik w belce przebudowuje sekcję 4.</p>
+
+  <div class="split">
+    <div class="frame">
+      <div class="frame-head"><h3>A — Huby z ramki</h3><span class="kind content">bliżej Figmy</span></div>
+      <div class="frame-body">
+        <ul class="spec">
+          <li><b>Zakłada</b><span>Designerka złożyła siedem ekranów jako mapę serwisu. Czytelnia jest projektem. Metody i zespół mieszkają w hubach.</span></li>
+          <li><b>Na /projekty</b><span>Art Generacje, Czytelnia, Projekt z Syrenką, potem archiwum.</span></li>
+          <li><b>Na /czytelnia</b><span>Blok METODY plus lista publikacji (w ramce: tytuły edycji AG).</span></li>
+          <li><b>Na /fundacja</b><span>Metody i wartości, zespół, historia, dokumenty — wszystko na jednej stronie.</span></li>
+          <li><b>Co by to obaliło</b><span class="open">Redakcja nie utrzyma Czytelni jako projektu i jako bazy naraz, albo zespół na jednej stronie nie przeżyje 7 biogramów.</span></li>
+        </ul>
+      </div>
+      <div class="frame-note">Zgodne z ramkami 59:935, 79:50, 130:1316. Koliduje z <code>docs/concept/ia.md</code> (osobne /metody i /zespol) i z modelem: Czytelnia to <code>publication</code>, nie <code>project</code>.</div>
+    </div>
+    <div class="frame">
+      <div class="frame-head"><h3>B — Strony z IA</h3><span class="kind derived">bliżej CMS</span></div>
+      <div class="frame-body">
+        <ul class="spec">
+          <li><b>Zakłada</b><span>Ramka pokazuje rytm, nie mapę. Huby tylko zapraszają. Właściwa treść ma własny URL, który już istnieje.</span></li>
+          <li><b>Na /projekty</b><span>Tylko <code>project</code>: AG aktywny, trzy archiwalne. Czytelnia nie jest kafelkiem projektu. Syrenka nie jest projektem, dopóki nie ma dokumentu.</span></li>
+          <li><b>Na /czytelnia</b><span>Publikacje. Metody to stack-teaser do <code>/metody</code>, nie drugi spis.</span></li>
+          <li><b>Na /fundacja</b><span>Historia i dokumenty. Zespół i metody to teaser + CTA na istniejące URL-e.</span></li>
+          <li><b>Co by to obaliło</b><span class="open">Designerka potwierdzi, że Czytelnia na liście projektów i zespół wklejony w „o fundacji” są intencją, nie wygodą rysunku.</span></li>
+        </ul>
+      </div>
+      <div class="frame-note">Zgodne z ADR-003 i schematem Sanity. Wymaga odstępstw od Figmy — część zdecydujemy tu, część idzie do designerki (sekcja 8).</div>
+    </div>
+  </div>
+</section>
+
+<section id="assembled">
+  <div class="sec-head"><span class="n">04</span><h2>Złożone</h2>
+    <span class="meta" id="page-meta" style="margin-left:auto;font:11px var(--mono);color:var(--ink3)"></span></div>
+  <p class="lede" id="page-lede"></p>
+  <div class="callout" id="bar-note" style="margin-bottom:20px"></div>
+  <div id="page-mount"></div>
+  <div class="frame" style="margin-top:18px">
+    <div class="frame-head"><h3>Dlaczego to tak wygląda teraz</h3></div>
+    <div class="frame-body"><ul class="spec" id="page-why"></ul></div>
+  </div>
+</section>
+
+<section id="catalogue">
+  <div class="sec-head"><span class="n">05</span><h2>Katalog części</h2>
+    <span class="meta status" style="margin-left:auto">PROPOZYCJA</span></div>
+  <p class="lede">Dziewięć przepisów. Nie dwadzieścia kart. Jeśli trzeci ekran z rzędu potrzebuje czegoś poza tą listą, to jest trigger recenzji ADR-004 — nie powód, żeby otwierać piętro komponentów editorialowych.</p>
+
+  <div class="cat">
+    <div class="frame">
+      <div class="frame-head"><h3>chrome</h3><span class="kind always">always</span></div>
+      <div class="frame-body">
+        <div class="blk plain"><span class="blk-tag">header · always</span>
+          <div class="tiny">LOGO · PROJEKTY · BAZA WIEDZY · O FUNDACJI · KONTAKT</div>
+        </div>
+        <div class="blk dash"><span class="blk-tag">stopka · always</span>
+          <div class="ln s"></div><div class="ln m"></div>
+        </div>
+      </div>
+      <div class="frame-note"><b>Kod:</b> SiteHeader, SiteFooter — jest, na wszystkich trasach.
+      <b>Reality check:</b> nav ma 4 pozycje wobec 7 z IA. To już świadome. Mobile: sticky + overlay, nie z Figmy.</div>
+    </div>
+
+    <div class="frame">
+      <div class="frame-head"><h3>page-hero</h3><span class="kind content">content</span></div>
+      <div class="frame-body">
+        <div class="blk"><span class="blk-tag">hero strony · content</span>
+          <span class="h2mark">h1</span><b>Tytuł strony</b>
+          <div class="ln l" style="margin-top:8px"></div>
+          <span class="btn ghost" style="margin-top:8px;padding:4px 9px;font-size:11px">CTA</span>
+        </div>
+      </div>
+      <div class="frame-note"><b>Kod:</b> <code>hero.tsx</code> jest wariantem home (nav w kolumnie, portret od góry).
+      Podstrony potrzebują tego samego przepisu <em>bez</em> overlayu — dziś go nie ma.
+      <b>Skaluje się:</b> tak, jako nowa sekcja, nie kopia Hero 1:1.
+      <b>Reality check:</b> wszystkie 6 podstron w Figmie zaczynają się identycznie (H1 48 + lead + bleed).</div>
+    </div>
+
+    <div class="frame">
+      <div class="frame-head"><h3>dot-band / palette</h3><span class="kind system">system</span></div>
+      <div class="frame-body">
+        <div class="blk dash"><span class="blk-tag">pasmo kół · system</span><div class="ln f"></div></div>
+        <div class="blk dash"><span class="blk-tag">paleta · system</span><div class="ln m"></div></div>
+      </div>
+      <div class="frame-note"><b>Kod:</b> DotBand, PaletteRow — jest. Zero DOM-u na koła.
+      <b>Skaluje się:</b> 1:1, wstawić między sekcje.
+      <b>Reality check:</b> Figma kładzie pasma na każdej podstronie; paletę na home i jako separator. Nie redaguje ich CMS.</div>
+    </div>
+
+    <div class="frame">
+      <div class="frame-head"><h3>news-grid</h3><span class="kind content">content</span></div>
+      <div class="frame-body">
+        <div class="blk"><span class="blk-tag">siatka aktualności · content</span>
+          <span class="h2mark">h2</span><b>AKTUALNOŚCI</b>
+          <div class="ln s"></div><div class="ln m"></div>
+        </div>
+      </div>
+      <div class="frame-note"><b>Kod:</b> HomeNews — jest, tylko na /.
+      <b>Skaluje się:</b> nie potrzeba na podstronach; ramki ich nie powtarzają.
+      <b>Reality check:</b> max 3, bez zdjęć. Dwa newsy tną body, jeden ma excerpt z ramki.</div>
+    </div>
+
+    <div class="frame">
+      <div class="frame-head"><h3>split-pair</h3><span class="kind content">content</span></div>
+      <div class="frame-body">
+        <div class="blk"><span class="blk-tag">split Kim/Metody · content</span>
+          <div class="ln m"></div><div class="img x" style="height:48px;margin-top:8px"></div>
+        </div>
+      </div>
+      <div class="frame-note"><b>Kod:</b> HomeAboutMethods — jest.
+      <b>Skaluje się:</b> ostrożnie. Na „o fundacji” Figma kładzie metody inaczej (wiersze, nie split).
+      Nie kopiować splitu na siłę.
+      <b>Reality check:</b> jeden split na cały serwis w ramkach. Drugiego nie ma.</div>
+    </div>
+
+    <div class="frame">
+      <div class="frame-head"><h3>stack-teaser</h3><span class="kind content">content</span></div>
+      <div class="frame-body">
+        <div class="blk"><span class="blk-tag">teaser z plamą · content</span>
+          <span class="h2mark">h2</span><b>ART GENERACJE</b>
+          <div class="ln l"></div>
+          <span class="btn ghost" style="margin-top:6px;padding:4px 9px;font-size:11px">poznaj nasze projekty</span>
+        </div>
+      </div>
+      <div class="frame-note"><b>Kod:</b> HomeFeaturedAndReading — jest.
+      <b>Skaluje się:</b> tak — zaproszenie z huba na właściwą stronę (podejście B: metody, zespół).
+      <b>Reality check:</b> na home dwa teasery. CTA Czytelni w fallbacku to „poznajmy się” — kopia CTA „Kim jesteśmy”, otwarte z designerki.</div>
+    </div>
+
+    <div class="frame">
+      <div class="frame-head"><h3>blob-row</h3><span class="kind content">content</span></div>
+      <div class="frame-body">
+        <div class="blk"><span class="blk-tag">wiersz z plamą · content</span>
+          <div style="display:flex;gap:10px"><div class="img" style="width:36px;height:36px;border-radius:99px;flex:0 0 auto"></div>
+          <div style="flex:1"><span class="h2mark">h3</span><b>2026: W KOLEJCE DO LASU</b><div class="ln f" style="margin-top:6px"></div></div></div>
+        </div>
+      </div>
+      <div class="frame-note"><b>Kod:</b> nie ma. To jest najczęściej powtarzany motyw Figmy poza CTA:
+      Projekty (aktywne), Art Generacje (edycje), Baza wiedzy (publikacje).
+      <b>Do zbudowania</b> jako sekcja przyjmująca tablicę {tytuł, lead, href}, nie jako uniwersalna karta.
+      <b>Reality check:</b> Figma rysuje stałą liczbę. CMS: 1 albo 13 albo 0. Pusty i sufit są w sekcji 6.</div>
+    </div>
+
+    <div class="frame">
+      <div class="frame-head"><h3>archive-pair</h3><span class="kind content">content</span></div>
+      <div class="frame-body">
+        <div class="blk"><span class="blk-tag">archiwum 2 kolumny · content</span>
+          <div class="ln m"></div><div class="ln m"></div>
+        </div>
+      </div>
+      <div class="frame-note"><b>Kod:</b> nie ma. W ramce Projekty: „Zakończone projekty” w dwóch kolumnach, krótszy lead.
+      To blob-row o innej gęstości, nie nowy gatunek — chyba że designerka powie inaczej.
+      <b>Reality check:</b> 3 prawdziwe projekty archiwalne w CMS, 4 nazwy w ramce (dochodzi Wielogłos, którego nie ma jako <code>project</code>).</div>
+    </div>
+
+    <div class="frame">
+      <div class="frame-head"><h3>edition-body</h3><span class="kind content">content</span></div>
+      <div class="frame-body">
+        <div class="blk"><span class="blk-tag">ciało edycji · content</span>
+          <span class="h2mark">h1</span><b>W kolejce do lasu</b>
+          <div class="img x" style="height:64px;margin-top:8px"></div>
+          <div class="ln f"></div>
+        </div>
+      </div>
+      <div class="frame-note"><b>Kod:</b> ProjectArticle renderuje wszystkie edycje na jednej stronie AG — nie osobny widok „Edycja projektu”.
+      Ramka 127:639 jest jedną edycją z galerią. <code>outcomes</code> w CMS puste.
+      <b>Reality check:</b> nie wiemy, czy edycja ma własny URL, czy kotwicę. IA milczy; Figma rysuje osobną ramkę.</div>
+    </div>
+  </div>
+</section>
+
+<section id="hardest">
+  <div class="sec-head"><span class="n">06</span><h2>Najtrudniejszy kawałek</h2>
+    <span class="meta status" style="margin-left:auto">OTWARTE</span></div>
+  <p class="lede">Ten sam przepis — <strong>blob-row</strong> — w trzech liczebnościach, których Figma nie rysuje.
+  Skok między pierwszą a trzecią ramką <em>jest</em> problemem projektowym: albo lista się składa i nic nie pęka,
+  albo udajemy stałą liczbę z ramki i CMS nas zaskoczy.</p>
+  <div class="hard-row" id="hard-mount"></div>
+  <div class="frame">
+    <div class="frame-note"><b>Co tu widać.</b> Zero wierszy to stan Czytelni dzisiaj. Trzy wiersze to /projekty w podejściu A (albo jeden w B).
+    Trzynaście to Art Generacje w datasecie — Figma pokazuje osiem i resztę wysypuje na canvas.
+    Fold „N więcej” jest konwencją rysunkową, nie decyzją o paginacji.
+    <b>Otwarte:</b> czy edycje na AG to ta sama sekcja co projekty na listingu, tylko z innym polem tytułu (<code>years: title</code> vs <code>title</code>)?</div>
+  </div>
+</section>
+
+<section id="states">
+  <div class="sec-head"><span class="n">07</span><h2>Stany brzegowe</h2>
+    <span class="meta status" style="margin-left:auto">OTWARTE</span></div>
+  <p class="lede">Nie szczęśliwy przypadek. Oznaczone „przepływ”, jeśli zmieniają całą stronę, nie tylko dziurę w siatce.</p>
+  <div class="frame"><div class="frame-body" style="padding:0">
+    <table>
+      <thead><tr><th>Stan</th><th>Gdzie</th><th>Co robi układ</th><th>Przepływ?</th></tr></thead>
+      <tbody>
+        <tr><td>0 newsów</td><td>/</td><td>HomeNews znika albo zostawia H2 bez siatki — dziś sekcja przeżywa tablicę, trzeba potwierdzić pusty H2</td><td>nie</td></tr>
+        <tr><td>0 projektów featured</td><td>/</td><td>teaser AG bierze <code>projects[0]</code> albo fallback tytułu</td><td>nie</td></tr>
+        <tr><td>0 publikacji</td><td>/czytelnia</td><td>to jest stan produkcyjny. Stub z H1. Docelowo pusty blob-row + zdanie, nie lorem</td><td>tak — nie ma czego listować</td></tr>
+        <tr><td>13 edycji, 3× „VI”</td><td>/projekty/art-generacje</td><td>lista musi przyjąć duplikaty numeracji; nie „poprawiamy historii”</td><td>nie</td></tr>
+        <tr><td>Wielogłos nie jest project</td><td>/projekty</td><td>jest w ramce, nie ma w CMS. Albo doklejamy dokument, albo nie rysujemy</td><td>tak — skąd treść?</td></tr>
+        <tr><td>Kontakt w budowie</td><td>/kontakt</td><td>ramka ma tylko H1. Formularz jest zgadywaniem</td><td>tak</td></tr>
+        <tr><td>Mobile 375</td><td>wszystko</td><td>reguły z system.md. Żadnej ramki do porównania</td><td>tak — cały rytm</td></tr>
+        <tr><td>Osoba bez zdjęcia / roli</td><td>/zespol, o fundacji</td><td>Media już umie piaskowy blok; roli nie ma w modelu</td><td>nie</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="frame-note"><b>Najdroższe niedoszacowanie</b> to Czytelnia pusta i Kontakt bez formularza — oba są w navie, oba dziś nie mają treści, oba Figma albo udaje (baza), albo oznacza „w budowie”.</div>
+  </div>
+</section>
+
+<section id="decide">
+  <div class="sec-head"><span class="n">08</span><h2>Co to ma rozstrzygnąć</h2></div>
+  <p class="lede">Osiem pytań z tej tabeli jest zamknięte (2026-09-05). Zapis kanoniczny: <code>docs/concept/ustalenia-2026-09-05.md</code>.
+  Kolumna „kto” rozdziela nas od designerki — żeby nie wysyłać jej pytań, które zamykamy na danych.</p>
+  <div class="frame"><div class="frame-body" style="padding:0">
+    <table>
+      <thead><tr><th>Pytanie</th><th>Ramka</th><th>Kto zamyka</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td><b>Huby czy strony z IA</b> — Baza wiedzy = nadzbiór (hub + Metody + Czytelnia jako drugi poziom menu). Czytelnia nie jest <code>project</code>; na <code>/projekty</code> może być wylistowana prezentacyjnie. Hub da się wyłączyć.</td><td>03, 04</td><td>Jan, 2026-09-05</td><td>USTALONE</td></tr>
+        <tr><td><b>Czy blob-row to jedna sekcja</b> — tak: jedna sekcja, tablica {tytuł, opis, href}. Miejsca: /projekty, edycje AG, Czytelnia.</td><td>05, 06</td><td>Jan, 2026-09-05</td><td>USTALONE</td></tr>
+        <tr><td><b>Edycja: osobny URL czy kotwica</b> — własny URL <code>/projekty/art-generacje/[slug]</code>. CMS bez zmian (obiekt na projekcie). Powód: objętość treści + SEO.</td><td>04 Edycja, 05 edition-body</td><td>Jan, 2026-09-05</td><td>USTALONE</td></tr>
+        <tr><td><b>Wielogłos i Syrenka</b> — nie ma w CMS = nie ma na stronie. Wykaz luk w fundacja-status. Placeholdery → draft z adnotacją PL. Dodać później ręcznie / API.</td><td>02, 07</td><td>Jan, 2026-09-05</td><td>USTALONE</td></tr>
+        <tr><td><b>Nazwa Baza wiedzy vs Czytelnia</b> — Baza = nadzbiór, Czytelnia = jeden kanał. Zostaje tylko CTA „poznajmy się” na home.</td><td>home, nav</td><td>nazwy: Jan 2026-09-05; CTA: designerka</td><td>nazwy USTALONE</td></tr>
+        <tr><td><b>Kontakt</b> — bez formularza. Strona z treścią/adresem. Formularz odnotowany jako propozycja na później (osobne zamówienie).</td><td>04 Kontakt</td><td>Jan, 2026-09-05</td><td>USTALONE</td></tr>
+        <tr><td><b>Mobile podstron</b> — nie będzie rysunku telefonu. Te same reguły co <code>/</code>: czytelność, ograniczenie kadrów, spójnie i wystarczająco dobrze.</td><td>viewport</td><td>Jan, 2026-09-05</td><td>USTALONE</td></tr>
+        <tr><td><b>Kolejność budowy</b> — (1) hero podstrony + wiersz z plamą (2) <code>/projekty</code> (3) AG + URL edycji (4) Baza: hub, nav L2, <code>/metody</code>, <code>/czytelnia</code> (5) <code>/fundacja</code> (6) <code>/kontakt</code>. Migracja publication równolegle, nie bramka.</td><td>04</td><td>Jan, 2026-09-05</td><td>USTALONE</td></tr>
+      </tbody>
+    </table>
+  </div></div>
+</section>
+
+</main>
+
+<div class="ovl" id="ovl" role="dialog" aria-modal="true" aria-label="Pojedyncza ramka">
+  <div class="ovl-bar" id="ovl-bar"></div>
+  <div class="ovl-scroll" id="ovl-scroll">
+    <div class="ovl-panel" id="ovl-panel"><div class="ovl-body" id="ovl-body"></div></div>
+  </div>
+</div>
+
+<footer>
+  <p><b>Status:</b> <span class="status">PROPOZYCJA</span> — 2026-09-05. Baseline dotyczy <b>formy tego dokumentu</b>, nie decyzji w środku.</p>
+  <p>Źródła: <code>docs/design/system.md</code>, <code>figma-baseline.md</code>, <code>docs/concept/ia.md</code>,
+  <code>docs/decisions/ADR-003</code> i <code>ADR-004</code>, <code>docs/migration/fundacja-status.md</code>,
+  <code>apps/web/src/lib/homepage-copy.ts</code>, odczyt Figmy z 2026-09-05 (fileKey <code>Tf7i787tVTBTE4j7LFXXUX</code>, 7 ramek).
+  W tej sesji nie było kolejnych zapytań do MCP Figmy.</p>
+  <p>Szarość z założenia. Język wizualny produktu jest w kanonie, nie tutaj.</p>
+</footer>
+
+<script>
+const EXAMPLES = [
+  { id:'empty', name:'Pusty CMS',
+    news:0, active:0, archive:0, editions:0, pubs:0, people:0,
+    note:'Nic w CMS. Figma tego nie rysuje, a każda sekcja musi ten stan przeżyć.' },
+  { id:'typical', name:'Dataset teraz',
+    news:3, active:1, archive:3, editions:13, pubs:0, people:7,
+    note:'Production: 1 featured project (AG, 13 edycji), 3 archiwalne, 3 newsy (w tym placeholder Syrena), 7 osób, 0 publikacji.' },
+  { id:'ceiling', name:'Jak w ramce',
+    news:3, active:3, archive:4, editions:8, pubs:8, people:7,
+    note:'Figma udaje 3 aktywne projekty (AG, Czytelnia, Syrenka), 4 archiwalne, 8 edycji na widoku AG i ogon publikacji. CMS tego zestawu nie ma.' },
+];
+
+const LEAD = 'DramaWay tworzy projekty teatralne i edukacyjne oparte na metodzie dramy oraz Teatrze Zaangażowanym Społecznie — łącząc pokolenia, społeczności i tematy, o których trudno mówić wprost.';
+
+const NEWS = [
+  { title:'Warsztaty dla nauczycielek i nauczycieli', date:'lipiec 2026' },
+  { title:'Zakończenie kolejnej edycji Art Generacje', date:'maj 2026' },
+  { title:'Nowy projekt z Teatrem Syrena', date:'styczeń 2026' },
+];
+
+const EDITIONS = [
+  '2026: W KOLEJCE DO LASU',
+  '2025: 404: LOST NOT FOUND',
+  '2024: MĄDRE CIAŁO?',
+  '2023: BYWAJĄ OGNIE',
+  '2022: SPLECIONE',
+  '2021: Tańczące z Cieniami I O-L-śnienia',
+  '2020: Harmonia',
+  '2018-2019: MIŁOŚĆ',
+];
+
+const ARCHIVE_CMS = [
+  { title:'Teatr Codzienny', lead:'Projekt szkoleniowy, którego bezpośrednimi adresatami są osoby działające w edukacji kulturalnej.' },
+  { title:'to mi gra', lead:'Aktywizacja obywatelska młodzieży — edukacja i animacja społeczno-kulturalna.' },
+  { title:'BOAL IN PRACTICE', lead:'Międzynarodowy projekt szkoleniowy Erasmus+ o metodach i technikach dramowych.' },
+];
+
+const ARCHIVE_FIGMA = ARCHIVE_CMS.concat([
+  { title:'WIELOGŁOS – program profilaktyki alkoholowej', lead:'Projekt profilaktyczny wzorowany na formule Theatre in Education.' },
+]);
+
+const PUBS_FIGMA = [
+  'Dusza i jej baśń',
+  'Be Your Best Friend',
+  '2024: MĄDRE CIAŁO?',
+  '2023: BYWAJĄ OGNIE',
+  '2022: SPLECIONE',
+  '2021: Tańczące z Cieniami I O-L-śnienia',
+  '2020: Harmonia',
+  '2018-2019: MIŁOŚĆ',
+];
+
+const SCREENS = {
+  home:'Strona główna /',
+  projects:'Projekty /projekty',
+  ag:'Art Generacje /projekty/art-generacje',
+  edition:'Edycja projektu',
+  knowledge:'Baza wiedzy /czytelnia',
+  about:'O fundacji /fundacja',
+  contact:'Kontakt /kontakt',
+};
+
+const state = { screen:'projects', approach:'figma', vp:'desktop', fidelity:'content', example:'typical' };
+const T = (real, label) => state.fidelity === 'content' ? real : label;
+let annoOn = true;
+
+const lines = (spec) => spec.map(w=>`<div class="ln ${w}"></div>`).join('');
+
+function ex(){ return EXAMPLES.find(e=>e.id===state.example); }
+function figmaHub(){ return state.approach === 'figma'; }
+function compact(){ return state.vp !== 'desktop'; }
+
+function chromeHTML(){
+  return `<div class="blk plain" style="margin:0;border:0;border-radius:0;border-bottom:1px solid var(--wf-line)">
+    <span class="blk-tag">header · always</span>
+    <div class="sitebar">
+      <div class="img x logo"></div>
+      <div class="navrow"><span>Projekty</span><span>Baza wiedzy</span><span>O fundacji</span><span>Kontakt</span></div>
+      <span class="btn ghost menu wf-hit" style="margin-left:auto;padding:6px 10px">Menu</span>
+    </div>
+    <span class="anno">Nav z Figmy, już w kodzie. Poniżej lg: sticky overlay. /metody i /zespol zostają URL-ami.</span>
+  </div>`;
+}
+
+function footerHTML(){
+  return `<div class="blk dash" style="margin:14px 14px 14px"><span class="blk-tag">stopka · always</span>
+    <div class="tiny">Fundacja Kultury i Sztuki · ul. Melsztyńska 2/11, 02-537 Warszawa</div>
+    ${state.fidelity==='content'
+      ? `<div style="margin-top:8px;font-size:12px;color:var(--ink2)">Jesteśmy teatrem, nawet jeśli go nie robimy. A. Boal.</div>`
+      : lines(['l'])}
+  </div>`;
+}
+
+function band(){
+  return `<div class="pad"><div class="blk dash" style="padding:8px 12px"><span class="blk-tag">pasmo kół · system</span>
+    <div style="height:8px;background:repeating-linear-gradient(90deg,var(--fill3) 0 10px,transparent 10px 14px)"></div>
+  </div></div>`;
+}
+
+function palette(){
+  return `<div class="pad"><div class="blk dash" style="padding:8px 12px"><span class="blk-tag">paleta · system</span>
+    <div style="display:flex;gap:0;justify-content:center">${Array.from({length:7},()=>`<div class="img" style="width:28px;height:28px;border-radius:99px;margin:0"></div>`).join('')}</div>
+  </div></div>`;
+}
+
+function hero(h1, lead, cta){
+  const media = compact()
+    ? `<div class="img x circle-shot"><i>kadr w kole</i></div>`
+    : `<div class="img x portrait"><i>bleed 0.58</i></div>`;
+  const copy = `<div>
+      <div style="font-size:18px;font-weight:600"><span class="h2mark">h1</span>${T(h1,'Tytuł strony')}</div>
+      ${state.fidelity==='content' ? `<p style="margin:8px 0 0;font-size:12.5px;color:var(--ink2)">${lead}</p>` : `<div style="margin-top:8px">${lines(['f','l'])}</div>`}
+      ${cta ? `<span class="btn ghost" style="margin-top:10px;padding:4px 9px;font-size:11px">${T(cta,'CTA')}</span>` : ''}
+    </div>`;
+  return `<div class="blk" style="margin:0;border:0;border-radius:0"><span class="blk-tag">page-hero · content</span>
+    <div class="hero-grid">${compact() ? copy+media : copy+media}</div>
+    <span class="anno">${compact() ? 'H1 → koło → lead. Nie z Figmy — system.md.' : 'H1 + lead + spad. Na podstronach nav nie siada w kolumnie hero (to tylko /).'}</span>
+  </div>`;
+}
+
+function blobRow(title, lead, cta){
+  return `<div class="blk"><span class="blk-tag">blob-row · content</span>
+    <div style="display:flex;gap:10px;align-items:flex-start">
+      <div class="img" style="width:36px;height:36px;border-radius:99px;flex:0 0 auto"></div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;font-weight:600"><span class="h2mark">h3</span>${T(title,'Tytuł pozycji')}</div>
+        ${state.fidelity==='content' ? `<div style="margin-top:4px;font-size:12px;color:var(--ink2)">${lead}</div>` : `<div style="margin-top:6px">${lines(['f','m'])}</div>`}
+        <span class="btn ghost" style="margin-top:8px;padding:4px 9px;font-size:11px">${T(cta || 'czytaj więcej','CTA')}</span>
+      </div>
+    </div></div>`;
+}
+
+function emptyBlock(reason){
+  return `<div class="blk dash" style="text-align:center;color:var(--ink3)"><span class="blk-tag">pusto · derived</span>
+    <div class="tiny">${reason}</div>
+    <span class="anno">pusty stan jest stanem — nie zgadujemy lorem</span></div>`;
+}
+
+function fold(n, what){
+  if(n<=0) return '';
+  return `<div class="fold">${n} ${what} więcej — konwencja rysunku, nie paginacja</div>`;
+}
+
+function listRows(items, cta){
+  if(!items.length) return emptyBlock('Nic tu jeszcze nie ma');
+  const shown = items.slice(0,4);
+  return shown.map(it => blobRow(it.title, it.lead, cta)).join('') + fold(items.length-shown.length, 'pozycji');
+}
+
+function newsGrid(n){
+  if(n===0) return `<div class="pad">${emptyBlock('Brak aktualności')}</div>`;
+  const items = NEWS.slice(0,n);
+  return `<div class="pad"><div class="blk"><span class="blk-tag">news-grid · content</span>
+    <div style="font-size:13px;font-weight:600;margin-bottom:10px"><span class="h2mark">h2</span>${T('AKTUALNOŚCI','Etykieta pasma')}</div>
+    <div class="news3">${items.map(it=>`<div>
+      <div style="font-size:12px;font-weight:600"><span class="h2mark">h3</span>${T(it.title,'Tytuł newsa')}</div>
+      <div class="tiny" style="margin:4px 0">${T(it.date,'data')}</div>
+      ${state.fidelity==='content'?'':lines(['m','s'])}
+      <span class="btn ghost" style="padding:4px 9px;font-size:11px">${T('czytaj więcej','CTA')}</span>
+    </div>`).join('')}</div>
+  </div></div>`;
+}
+
+function teaser(h2, lead, cta){
+  return `<div class="blk"><span class="blk-tag">stack-teaser · content</span>
+    <div style="font-size:13px;font-weight:600"><span class="h2mark">h2</span>${T(h2,'Tytuł teasera')}</div>
+    ${state.fidelity==='content' ? `<div style="margin-top:6px;font-size:12px;color:var(--ink2)">${lead}</div>` : `<div style="margin-top:6px">${lines(['f','m'])}</div>`}
+    <span class="btn ghost" style="margin-top:8px;padding:4px 9px;font-size:11px">${T(cta,'CTA')}</span>
+  </div>`;
+}
+
+function wrap(inner){
+  const dev = compact();
+  const label = state.vp==='mobile'
+    ? '390 · Figma nie ma tego ekranu — rytm z system.md'
+    : state.vp==='tablet'
+      ? '834 · poniżej lg w kanonie: sticky header, split w kolumnę'
+      : '';
+  return `<div class="wf-page" data-vp="${state.vp}"${dev?' data-dev':''}>
+    ${chromeHTML()}${inner}${footerHTML()}
+  </div>${dev?`<div class="wf-devlabel">${label}</div>`:''}`;
+}
+
+function activeProjects(){
+  const e = ex();
+  const ag = { title:'Art Generacje', lead:'Międzypokoleniowy projekt teatralny. Od 2013 kilkanaście edycji.', cta:'zobacz projekt' };
+  const czyt = { title:'Czytelnia', lead:LEAD, cta:'przejdź do bazy' };
+  const syr = { title:'Projekt z Syrenką', lead:LEAD, cta:'czytaj więcej' };
+  if(e.active===0) return [];
+  if(figmaHub()){
+    if(e.id==='typical') return [ag];
+    return [ag, czyt, syr].slice(0, e.active);
+  }
+  return [ag];
+}
+
+function archiveItems(){
+  const e = ex();
+  if(e.archive===0) return [];
+  const src = (figmaHub() && e.id==='ceiling') ? ARCHIVE_FIGMA : ARCHIVE_CMS;
+  return src.slice(0, e.archive);
+}
+
+function drawHome(){
+  const e = ex();
+  return wrap(`
+    ${hero('Drama i teatr jako narzędzia dialogu między pokoleniami', LEAD, 'poznaj nasze projekty')}
+    ${band()}
+    ${newsGrid(e.news)}
+    ${band()}
+    <div class="pad"><div class="blk"><span class="blk-tag">split-pair · content</span>
+      <div class="split2">
+        <div class="img x" style="min-height:120px"><i>Kim — bleed / 4:5</i></div>
+        <div>
+          <div style="font-size:13px;font-weight:600"><span class="h2mark">h2</span>${T('Kim jesteśmy?','Tytuł')}</div>
+          <div class="tiny" style="margin:6px 0 10px">${T('poznajmy się → /fundacja','CTA')}</div>
+          <div style="font-size:13px;font-weight:600"><span class="h2mark">h2</span>${T('Metody','Tytuł')}</div>
+          <div class="tiny" style="margin-top:6px">${T('dowiedz się więcej → /metody','CTA')}</div>
+        </div>
+      </div>
+      <span class="anno">Jeden split na cały serwis. Na podstronach go nie powtarzamy.</span>
+    </div></div>
+    ${palette()}
+    <div class="pad">${teaser('Art Generacje', 'Międzypokoleniowy projekt teatralny łączący pokolenia.', 'poznaj nasze projekty')}
+      ${teaser('Czytelnia', 'Przestrzeń do dialogu poprzez teatr i dramę.', figmaHub()?'poznajmy się':'wejdź do bazy')}</div>
+    ${palette()}`);
+}
+
+function drawProjects(){
+  const active = activeProjects();
+  const arch = archiveItems();
+  const note = figmaHub()
+    ? 'Podejście A: Czytelnia i Syrenka jako projekty, jeśli przykład to dopuszcza.'
+    : 'Podejście B: tylko dokumenty project. Czytelnia nie stoi na tej liście.';
+  return wrap(`
+    ${hero('Co robimy?', LEAD, '')}
+    ${band()}
+    <div class="pad">
+      ${active.length ? listRows(active, 'zobacz projekt') : emptyBlock('Brak projektów aktywnych')}
+      <span class="anno">${note}</span>
+    </div>
+    ${palette()}
+    <div class="pad">
+      <div style="font-size:13px;font-weight:600;margin:0 0 8px"><span class="h2mark">h2</span>${T('Zakończone projekty','Etykieta archiwum')}</div>
+      ${arch.length
+        ? `<div class="pair">${arch.map(a=>blobRow(a.title, a.lead, 'czytaj więcej')).join('')}</div>`
+        : emptyBlock('Archiwum puste')}
+      ${figmaHub() && ex().id==='ceiling' ? `<span class="anno">Wielogłos jest w ramce, nie ma go jako project w Sanity.</span>` : ''}
+    </div>`);
+}
+
+function drawAG(){
+  const n = ex().editions;
+  const items = EDITIONS.slice(0, n).map(t => ({ title:t, lead:LEAD }));
+  return wrap(`
+    ${hero('Art Generacje', LEAD, '')}
+    <div class="pad"><div class="blk"><span class="blk-tag">ciało projektu · content</span>
+      ${state.fidelity==='content' ? `<p style="font-size:12.5px;color:var(--ink2);margin:0">${LEAD}</p>` : lines(['f','f','l'])}
+      <div class="img x" style="height:90px;margin-top:10px"><i>galeria / kadr 16:9</i></div>
+    </div></div>
+    ${band()}
+    <div class="pad">
+      ${n===0 ? emptyBlock('Brak edycji') : listRows(items, 'zobacz edycję')}
+      <span class="anno">Dataset ma 13 edycji, ramka pokazuje 8. Fold chowa resztę na rysunku — w produkcie lista jest cała, albo kotwice na tej samej stronie.</span>
+    </div>`);
+}
+
+function drawEdition(){
+  return wrap(`
+    ${hero('W kolejce do lasu', LEAD, '')}
+    <div class="pad"><div class="blk"><span class="blk-tag">edition-body · content</span>
+      <div class="img x" style="height:110px"><i>galeria edycji</i></div>
+      ${state.fidelity==='content' ? `<p style="margin-top:10px;font-size:12.5px;color:var(--ink2)">${LEAD}</p>` : `<div style="margin-top:10px">${lines(['f','f','l','m'])}</div>`}
+      <div class="tiny" style="margin-top:10px">outcomes: ${T('0 w CMS — nie zgadujemy spektakli z HTML','lista rezultatów')}</div>
+    </div>
+    ${blobRow('W KOLEJCE DO LASU', 'Powtórzony tytuł w ramce pod ciałem — wygląda na resztkę, nie na drugi blok.', 'czytaj więcej')}
+    <span class="anno">Otwarte: osobny URL czy #kotwica na stronie AG. ProjectArticle dziś renderuje wszystkie edycje pod sobą.</span>
+    </div>`);
+}
+
+function drawKnowledge(){
+  const n = ex().pubs;
+  const pubs = PUBS_FIGMA.slice(0, n).map(t => ({ title:t, lead:LEAD }));
+  const methods = figmaHub()
+    ? `<div class="blk"><span class="blk-tag">metody na hubie · content</span>
+        <div style="font-size:13px;font-weight:600"><span class="h2mark">h2</span>${T('METODY','Etykieta')}</div>
+        ${blobRow('Teatr Forum', LEAD, 'czytaj więcej')}
+        ${blobRow('Teatr w Edukacji', LEAD, 'czytaj więcej')}
+        <span class="anno">Podejście A wkleja metody w bazę. /metody zostaje głębokim URL-em.</span>
+      </div>`
+    : teaser('Metody', 'Drama, Teatr Forum, TiE, Teatr ze Społecznością.', 'przejdź do /metody');
+  return wrap(`
+    ${hero('Baza wiedzy', LEAD, '')}
+    ${band()}
+    <div class="pad">${methods}</div>
+    ${palette()}
+    <div class="pad">
+      <div style="font-size:13px;font-weight:600;margin:0 0 8px"><span class="h2mark">h2</span>${T('czytelnia','Etykieta')}</div>
+      ${n===0 ? emptyBlock('Brak publikacji — dump drama_teatr jeszcze nie wszedł. To stan produkcyjny.') : listRows(pubs, 'czytaj')}
+      ${n>0 ? `<span class="anno">Część tytułów w ramce to edycje AG, nie publikacje. Kuracja, nie hurt.</span>` : ''}
+    </div>`);
+}
+
+function drawAbout(){
+  const people = ex().people;
+  const teamBlock = figmaHub()
+    ? `<div class="blk"><span class="blk-tag">zespół na hubie · content</span>
+        <div style="font-size:13px;font-weight:600;margin-bottom:8px"><span class="h2mark">h2</span>${T('Zespół','Etykieta')}</div>
+        ${people===0 ? emptyBlock('Brak osób') : `<div class="news3">${Array.from({length:Math.min(people,6)},(_,i)=>`<div>
+          <div class="img x" style="height:64px"></div>
+          <div class="tiny" style="margin-top:6px">${T('osoba '+(i+1),'Imię i nazwisko')}</div>
+        </div>`).join('')}</div>${people>6?fold(people-6,'osób'):''}`}
+        <span class="anno">7 osób w CMS. Ramka nie pokazuje, czy to siatka, czy lista. Rola (field_funkcja) nie jest zmapowana.</span>
+      </div>`
+    : teaser('Zespół', 'Siedem osób z bio i kontaktem.', 'przejdź do /zespol');
+  const methods = figmaHub()
+    ? blobRow('metody i wartości', LEAD, 'czytaj więcej')
+    : teaser('Metody i wartości', 'TZS, TiE, Teatr Forum, Teatr ze Społecznością.', 'przejdź do /metody');
+  return wrap(`
+    ${hero('O Fundacji', LEAD, '')}
+    ${band()}
+    <div class="pad">${methods}${teamBlock}
+      <div class="blk"><span class="blk-tag">historia · content</span>
+        <div style="font-size:13px;font-weight:600"><span class="h2mark">h2</span>${T('historia fundacji','Etykieta')}</div>
+        ${state.fidelity==='content' ? `<p style="margin:8px 0 0;font-size:12.5px;color:var(--ink2)">Timeline od 2011 — treść jest w page, nie w osobnym typie.</p>` : lines(['f','l'])}
+      </div>
+      <div class="blk"><span class="blk-tag">dokumenty · content</span>
+        <div style="font-size:13px;font-weight:600"><span class="h2mark">h2</span>${T('Dokumenty i sprawozdania','Etykieta')}</div>
+        <div class="tiny" style="margin-top:6px">${T('Statut · Sprawozdania · Jak nas wesprzeć — istniejące /fundacja/[slug]','lista PDF')}</div>
+      </div>
+    </div>`);
+}
+
+function drawContact(){
+  return wrap(`
+    ${hero('Napisz do nas', LEAD, '')}
+    <div class="pad">
+      <div class="blk dash"><span class="blk-tag">formularz · form</span>
+        <div class="fld"><label>Imię</label><div class="box"></div></div>
+        <div class="fld"><label>E-mail</label><div class="box"></div></div>
+        <div class="fld"><label>Wiadomość</label><div class="box area"></div></div>
+        <span class="btn">Wyślij</span>
+        <span class="anno">Zgadujemy. Ramka jest pusta („w budowie”). ADR-003 odkłada formularze poza MVP treściowy — to pytanie do zamknięcia, nie do zakodowania w ciemno.</span>
+      </div>
+      <div class="blk plain"><span class="blk-tag">adres · content</span>
+        <div class="tiny">${T('Fundacja Kultury i Sztuki, ul. Melsztyńska 2/11, 02-537 Warszawa','Adres')}</div>
+      </div>
+    </div>`);
+}
+
+const DRAW = { home:drawHome, projects:drawProjects, ag:drawAG, edition:drawEdition, knowledge:drawKnowledge, about:drawAbout, contact:drawContact };
+
+function drawHard(){
+  const variants = [
+    { title:'0 wierszy', items:[] },
+    { title:'3 wiersze — listing', items: activeProjects().concat(archiveItems()).slice(0,3) },
+    { title:'13 edycji — sufit CMS', items: EDITIONS.concat(Array.from({length:5},(_,i)=>({title:'Edycja VI (duplikat '+(i+1)+')',lead:LEAD}))).slice(0,13).map((t,i)=> typeof t==='string'?{title:t,lead:LEAD}:t) },
+  ];
+  if(variants[1].items.length===0){
+    variants[1].items = [
+      { title:'Art Generacje', lead:LEAD },
+      { title:'Teatr Codzienny', lead:LEAD },
+      { title:'BOAL IN PRACTICE', lead:LEAD },
+    ];
+  }
+  document.getElementById('hard-mount').innerHTML = variants.map(v => `<div class="frame">
+    <div class="frame-head"><h3>${v.title}</h3><span class="meta">${v.items.length}</span></div>
+    <div class="frame-body">${v.items.length? listRows(v.items,'czytaj') : emptyBlock('Lista pusta')}</div>
+  </div>`).join('');
+}
+
+let render = function(){
+  const e = ex();
+  document.getElementById('page-mount').innerHTML = DRAW[state.screen]();
+  document.getElementById('page-meta').textContent =
+    `${SCREENS[state.screen]} · ${figmaHub()?'huby z ramki':'strony z IA'} · ${state.vp} · ${state.fidelity} · ${e.name}`;
+  document.getElementById('page-lede').innerHTML = figmaHub()
+    ? `<strong>Huby z ramki.</strong> Skład jak siedem ekranów Figmy: Czytelnia może być projektem, metody i zespół wchodzą do hubów.`
+    : `<strong>Strony z IA.</strong> Hub zaprasza, treść mieszka na URL-u który już mamy. Ramka zostaje rytmem, nie mapą.`;
+  document.getElementById('bar-note').textContent = e.note;
+
+  const why = [];
+  why.push(['Wierność', state.fidelity==='content'
+    ? 'Content — prawdziwe tytuły z ramki i z CMS. Wybór przykładu jest żywy.'
+    : 'Skeleton — role bloków, bez rekordu. Wybór przykładu jest wygaszony.']);
+  why.push(['Przykład', `${e.name} — newsy ${e.news}, aktywne ${e.active}, archiwum ${e.archive}, edycje ${e.editions}, publikacje ${e.pubs}.`]);
+  why.push(['Ekran', SCREENS[state.screen] + (state.screen==='home' ? ' — jedyny skład, który kod już ma.' : ' — chrome jest, skład treści jest roboczy.')]);
+  why.push(['Podejście', figmaHub()
+    ? 'A — huby. /projekty może dostać Czytelnię i Syrenkę; /czytelnia niesie metody; /fundacja niesie zespół.'
+    : 'B — IA. /projekty tylko project; metody i zespół to teaser; Czytelnia pusta jest uczciwa.']);
+  why.push(['Viewport', compact()
+    ? `${state.vp} — rysujemy kanon (sticky, H1, koło albo stacked split). Figma milczy.`
+    : 'desktop 1280 — najbliżej ramki 1440, bez udawania pixel-perfect.']);
+  if(state.screen==='knowledge' && e.pubs===0)
+    why.push(['Uwaga','Pusta Czytelnia i pusta ramka z lorem to dwa różne stany. Tu jest pierwszy.']);
+  if(state.screen==='contact')
+    why.push(['Uwaga','Formularz jest narysowany jako pytanie, nie jako specyfikacja.']);
+  document.getElementById('page-why').innerHTML = why.map(([k,v])=>`<li><b>${k}</b><span>${v}</span></li>`).join('');
+  drawHard();
+};
+
+const TAG_RULES = [
+  ['form',    ['form','formularz','pole']],
+  ['toggle',  ['toggle','menu']],
+  ['derived', ['derived','pusto','empty']],
+  ['system',  ['system','pasmo','paleta']],
+  ['content', ['content','hero','wiersz','blob-row','teaser','newsy','split','edycja','zespół','historia','dokumenty','adres']],
+  ['custom',  ['custom']],
+  ['always',  ['always','header','stopka','chrome']],
+];
+function paintTags(root){
+  (root||document).querySelectorAll('.blk > .blk-tag').forEach(t=>{
+    const blk = t.parentElement;
+    if(/\bk-/.test(blk.className)) return;
+    const txt = t.textContent.toLowerCase();
+    const rule = TAG_RULES.find(([,keys])=>keys.some(k=>txt.includes(k)));
+    if(rule) blk.classList.add('k-'+rule[0]);
+  });
+}
+
+function syncControls(){
+  document.querySelectorAll('[data-ctl]').forEach(g=>{
+    const key = g.dataset.ctl;
+    g.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed', String(state[key]===b.dataset.v)));
+  });
+  document.querySelectorAll('[data-chk]').forEach(c=>{
+    const inp = c.querySelector('input');
+    if(inp) inp.checked = annoOn;
+    c.dataset.on = String(annoOn);
+  });
+  document.querySelectorAll('[data-sel="example"]').forEach(sel=>{
+    if(!sel.options.length) sel.innerHTML = EXAMPLES.map(e=>`<option value="${e.id}">${e.name}</option>`).join('');
+    sel.value = state.example;
+  });
+  const pickOff = state.fidelity !== 'content';
+  document.querySelectorAll('[data-sel="example"]').forEach(sel => {
+    sel.disabled = pickOff;
+    const c = sel.closest('.ctl'); if(c) c.classList.toggle('off', pickOff);
+  });
+  document.body.classList.toggle('no-anno', !annoOn);
+  document.body.dataset.fidelity = state.fidelity;
+}
+
+document.addEventListener('click', e=>{
+  const b = e.target.closest('[data-ctl] button');
+  if(!b) return;
+  state[b.closest('[data-ctl]').dataset.ctl] = b.dataset.v;
+  syncControls(); render();
+});
+document.addEventListener('change', e=>{
+  const chk = e.target.closest('[data-chk]');
+  if(chk){
+    annoOn = chk.querySelector('input').checked;
+    syncControls();
+    return;
+  }
+  const sel = e.target.closest('[data-sel="example"]');
+  if(sel){ state.example = sel.value; syncControls(); render(); }
+});
+
+const navLinks = [...document.querySelectorAll('.nav a')];
+const sections = navLinks.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+function spy(){
+  const line = document.querySelector('.top').getBoundingClientRect().height + 12;
+  let idx = 0;
+  sections.forEach((sec,i)=>{ if(sec.getBoundingClientRect().top <= line) idx = i; });
+  navLinks.forEach((a,i)=>a.classList.toggle('on', i===idx));
+}
+addEventListener('scroll', spy, {passive:true});
+addEventListener('resize', spy);
+
+const ovl = document.getElementById('ovl');
+const ovlBar = document.getElementById('ovl-bar');
+const ovlBody = document.getElementById('ovl-body');
+let ovlSource = null;
+const OVL_PAD = 60;
+
+function openOverlay(src){
+  ovlSource = src;
+  const isPage = src.id === 'page-mount';
+  const title = isPage ? 'Złożone' : (src.querySelector('.frame-head h3')?.textContent || 'Wireframe');
+  ovlBar.innerHTML = `<h3>${title}</h3><button class="ovl-close" type="button" data-close>Zamknij · Esc</button>`;
+  ovlBody.innerHTML = src.innerHTML;
+  paintTags(ovlBody);
+  ovl.classList.add('on');
+  document.body.classList.add('ovl-open');
+  document.getElementById('ovl-scroll').scrollTop = 0;
+  fitOverlay();
+}
+function fitOverlay(){
+  const panel = document.getElementById('ovl-panel');
+  const scroller = document.getElementById('ovl-scroll');
+  if(!panel || !scroller) return;
+  const maxW = Math.max(320, Math.min(1560, scroller.clientWidth - 44));
+  panel.style.width = maxW + 'px';
+  const page = ovlBody.querySelector('.wf-page');
+  if(page){
+    const w = Math.round(page.getBoundingClientRect().width);
+    if(w) panel.style.width = Math.min(maxW, w + OVL_PAD) + 'px';
+  }
+}
+addEventListener('resize', ()=>{ if(ovl.classList.contains('on')) fitOverlay(); });
+function closeOverlay(){
+  ovl.classList.remove('on');
+  document.body.classList.remove('ovl-open');
+  ovlSource = null;
+  ovlBody.innerHTML = '';
+  ovlBar.innerHTML = '';
+}
+document.addEventListener('click', e=>{
+  if(e.target.closest('[data-close]') || e.target === ovl || e.target.id === 'ovl-scroll'){ closeOverlay(); return; }
+  if(e.target.closest('.ovl')) return;
+  if(e.target.closest('button, select, input, a')) return;
+  const z = e.target.closest('.previewable');
+  if(z) openOverlay(z);
+});
+addEventListener('keydown', e=>{ if(e.key === 'Escape' && ovl.classList.contains('on')) closeOverlay(); });
+
+function markPreviewable(){
+  document.querySelectorAll('main .frame').forEach(f=>{
+    if(f.classList.contains('previewable')) return;
+    f.classList.add('previewable');
+    const head = f.querySelector('.frame-head');
+    if(head && !head.querySelector('.preview-btn')){
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'preview-btn'; b.textContent = 'Preview';
+      b.addEventListener('click', ()=>openOverlay(f));
+      head.appendChild(b);
+    }
+  });
+  document.getElementById('page-mount').classList.add('previewable');
+}
+
+const baseRender = render;
+render = function(){
+  baseRender();
+  paintTags(document.getElementById('page-mount'));
+  paintTags(document.getElementById('hard-mount'));
+  if(ovlSource && ovlSource.id === 'page-mount'){
+    ovlBody.innerHTML = ovlSource.innerHTML;
+    paintTags(ovlBody);
+    fitOverlay();
+  }
+};
+
+syncControls();
+render();
+paintTags();
+markPreviewable();
+(function(){
+  const head = document.querySelector('#assembled .sec-head');
+  const b = document.createElement('button');
+  b.type='button'; b.className='preview-btn'; b.style.marginLeft='12px';
+  b.textContent='Preview';
+  b.addEventListener('click', ()=>openOverlay(document.getElementById('page-mount')));
+  head.appendChild(b);
+})();
+spy();
+</script>
+</body>
+</html>

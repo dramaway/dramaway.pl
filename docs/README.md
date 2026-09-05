@@ -13,6 +13,7 @@ Mapa dokumentów projektu. Treść po polsku; nazwy plików ADR i ścieżek kodu
 | Plik | Opis |
 |------|------|
 | [concept/ia.md](concept/ia.md) | Informacyjna architektura fundacji (nawigacja MVP) |
+| [concept/ustalenia-2026-09-05.md](concept/ustalenia-2026-09-05.md) | Zamknięte decyzje IA/podstron + most do planu migracji Czytelni |
 | [concept/art-generacje.md](concept/art-generacje.md) | Art Generacje jako serce serwisu |
 
 ## Design
@@ -21,6 +22,7 @@ Mapa dokumentów projektu. Treść po polsku; nazwy plików ADR i ścieżek kodu
 |------|------|
 | [design/system.md](design/system.md) | **Kanon UI** — tokeny, klasy kompozycyjne, prymitywy, jak dołożyć sekcję |
 | [design/figma-baseline.md](design/figma-baseline.md) | Pomiary z Figmy — node ID ekranów, kolory, typografia, geometria kół i zdjęć |
+| [design/wireframes.html](design/wireframes.html) | Szare makiety podstron — przepisy układu, huby vs IA, co jest / co się skaluje / co zbudować |
 
 ## Decyzje (ADR)
 

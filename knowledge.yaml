@@ -32,6 +32,9 @@ knowledge:
     - path: docs/README.md
       description: "Documentation map"
       priority: high
+    - path: docs/concept/ustalenia-2026-09-05.md
+      description: "Closed 2026-09-05 IA/subpage decisions; delta for Czytelnia migration plan; paste-ready prompts"
+      priority: critical
     - path: docs/concept/
       description: "IA and Art Generacje product assumptions"
       priority: high
@@ -40,6 +43,9 @@ knowledge:
       priority: critical
     - path: docs/design/figma-baseline.md
       description: "Measured Figma values: screen node IDs, colours, type scale, circle and image geometry"
+      priority: high
+    - path: docs/design/wireframes.html
+      description: "Grey subpage wireframes — layout recipes, Figma hubs vs IA, what exists / scales / needs building"
       priority: high
     - path: docs/decisions/
       description: "Architecture Decision Records"

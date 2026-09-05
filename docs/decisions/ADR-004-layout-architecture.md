@@ -38,10 +38,10 @@ Trzy warstwy: **tokeny → prymitywy → sekcje**. Bez osobnego piętra komponen
 
 **Positive:** Mała powierzchnia do nauczenia — sześć prymitywów i cztery klasy. Dekoracje nie kosztują DOM-u. Sekcje przyjmują dane z Sanity o zmiennej liczności, więc pusta galeria nie rozwala układu. Skala typograficzna nie wymaga breakpointów.
 
-**Negative:** Odstępstwa od Figmy trzeba świadomie utrzymywać i tłumaczyć designerce. Reguły mobilne są nasze, więc przy ewentualnych makietach mobilnych mogą wymagać rewizji.
+**Negative:** Odstępstwa od Figmy trzeba świadomie utrzymywać. Reguły mobilne są nasze i takie zostaną — ramek telefonu nie będzie (ustalenie 2026-09-05: „spójnie i wystarczająco dobrze”, czytelność, ograniczenie kadrów).
 
-**Risks:** Jeśli designerka dostarczy ekrany mobilne z inną art direction niż nasze reguły, część układów trzeba będzie przepisać. Ryzyko świadomie przyjęte — alternatywą było wstrzymanie prac.
+**Risks:** Świadomy brak makiet mobilnych. Rewizja tylko jeśli na prawdziwym telefonie coś jest nieczytelne albo psuje się rytm, nie dlatego że ramka „się pojawi”.
 
 ## Review trigger
 
-Gdy pojawią się makiety mobilne, gdy plik Figmy dostanie prawdziwy design system (zmienne i komponenty), albo gdy trzeci ekran z rzędu będzie wymagał układu, którego nie da się wyrazić czterema klasami.
+Gdy plik Figmy dostanie prawdziwy design system (zmienne i komponenty), albo gdy trzeci ekran z rzędu będzie wymagał układu, którego nie da się wyrazić czterema klasami. Makiety mobilne **nie** są triggerem — ich nie będzie.

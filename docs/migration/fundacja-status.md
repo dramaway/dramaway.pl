@@ -19,6 +19,8 @@ Sanity dataset production (person, page + assety)
 Sanity project + editions (Art Generacje, archiwum)
         ↓  GROQ
 Next — trasy publiczne z IA (`/projekty/…`, `/zespol/…`, `/fundacja/…`)
+
+private/dumps/drama_teatr_1787254349.sql.gz  — jest lokalnie; extract/migrate publication jeszcze nie
 ```
 
 Live CMS: projekt Sanity **Dramaway**, id `tr2qdg9j`, dataset `production`.  
@@ -40,6 +42,22 @@ Biblioteka **Media** w Studio czyta te same `sanity.imageAsset` — bez re-uploa
 **Art Generacje** (`project-art-generacje`, featured, status `active`): intro + **13 edycji (I–XI)** + afterword (autorzy, partnerzy). Numeracja „Edycja VI” występuje trzykrotnie (2020, 2021, 2022) — tak jest na live, nie poprawiamy historii. Źródłowa `page` `art-generacje` zostaje.
 
 Archiwum bez edycji: Teatr Codzienny, TO MI GRA, BOAL IN PRACTICE.
+
+## Luki vs ramka Figmy (listingi)
+
+Zasada (2026-09-05): **czego nie ma w CMS, tego nie ma na stronie.** Nie zmyślamy pozycji z rysunku. Braki trzymamy tu; dodać później ręcznie w Studio albo skryptem. Placeholdery wrzucone „żeby ramka się zgadzała” → **draft** z adnotacją po polsku (pole description / notatka na dokumencie), nie publikować.
+
+| W ramce | W CMS (production, 2026-09-05) | Co z tym |
+|---------|--------------------------------|----------|
+| Art Generacje | `project` art-generacje, featured, 13 edycji | jest |
+| Czytelnia na `/projekty` | nie jest `project` | prezentacja OK, dane = `publication` (jeszcze 0 dokumentów) |
+| Projekt z Syrenką (aktywny) | **brak** `project` | nie listować. Jest placeholder newsa `news-placeholder-syrena` — do draftu z adnotacją |
+| to mi gra, Teatr Codzienny, BOAL IN PRACTICE | 3× `project` archive | są |
+| Wielogłos (archiwum) | **brak** `project` | nie listować, dopóki ktoś nie doda dokumentu |
+| Publikacje w Bazie wiedzy | 0× `publication` | pusta Czytelnia jest stanem prawdziwym |
+| `edition.outcomes` | schemat jest, rekordy puste | nie zgadywać z HTML |
+
+Placeholder newsa Syrena (`[Aktualność] Nowy projekt z Teatrem Syrena`, slug `aktualnosc-nowy-projekt-z-teatrem-syrena`): wstawiony 2026-09-03 pod ramkę homepage. Nie jest treścią fundacji. Draft + adnotacja: *„Wypełniacz z makiety Figmy, nie treść z Drupala. Nie publikować, dopóki nie będzie prawdziwego newsa albo projektu.”*
 
 ## Mapa vs live (`fundacja.dramaway.pl`)
 
@@ -71,11 +89,10 @@ To nie jest korekta językowa. Pierwszy skrypt spłaszczał Drupal HTML.
 
 | Brak | Powód |
 |------|--------|
-| Czytelnia / `publication` | W `private/dumps/` jest tylko `drama_mfund_*`. Dump `drama_teatr` trzeba dołożyć; nie importować 425 nodów w ciemno. |
-| UI z Figmy | Świadomy stop — najpierw treść w Sanity. |
-| `siteSettings` (nawigacja, footer) | Nie zasilone. |
-| GitHub remote, Netlify | Później. |
-| Newsletter, formularze, EN | Poza MVP treściowym. |
+| Czytelnia / `publication` | Dump **jest**: `private/dumps/drama_teatr_1787254349.sql.gz`. W Sanity 0 dokumentów. Kuracja, nie 425 nodów. IA: Czytelnia ⊂ Baza wiedzy, nie cała Baza. [ustalenia-2026-09-05.md](../concept/ustalenia-2026-09-05.md) |
+| UI z Figmy | Homepage złożony; podstrony nadal robocze. |
+| `siteSettings` (nawigacja, footer) | Dokument jest; grupa `homepage` pusta → fallbacki. |
+| Newsletter, formularz kontaktu, EN | Poza MVP treściowym. Formularz = osobne zamówienie. |
 
 ## Komendy
 
@@ -96,6 +113,6 @@ Write token **tylko** `apps/studio/.env` → `SANITY_API_WRITE_TOKEN`. Nigdy `NE
 1. Figma na istniejących URL-ach; uściślić `edition.outcomes`.
 2. Mapa 301 przed premierą (osobne zadanie — nie w `lib/routes.ts`).
 3. Porównać `/projekty/art-generacje` z live; kotwice w Studio.
-4. Czytelnia — gdy pojawi się dump `drama_teatr`; kuracja, nie hurt.
+4. Czytelnia — dump jest; extract/migrate w sesji migracji; kuracja, nie hurt. Listing może być pusty.
 
 Szczegóły produktu Art Generacje (nie stan migracji): [art-generacje.md](../concept/art-generacje.md).

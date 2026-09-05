@@ -9,7 +9,7 @@ Trzy warstwy, nic więcej: **tokeny → prymitywy → sekcje**. Nie ma piętra �
 1. **Zero wartości w pikselach w plikach sekcji.** Wszystko idzie z tokenów albo z klas kompozycyjnych. Jeśli czegoś nie da się wyrazić, dołóż klasę w `@layer components`, nie arbitrary value.
 2. **Koła dekoracyjne rysujemy tłem, nie elementami.** Pasmo z Figmy to 270 identycznych kół. Jako DOM to 270 węzłów na stronę; jako `radial-gradient` to zero.
 3. **Każda sekcja musi przeżyć puste dane.** Redaktor zostawi pole puste, galeria będzie miała zero zdjęć. Figma pokazuje stałą liczbę elementów, CMS ma zmienną — układ ma się nie rozsypać.
-4. **Mobile ma własne reguły w tym pliku** — Figma nie ma ekranów mobilnych, więc nie zgadujemy poza tym, co tu zapisane.
+4. **Mobile: spójnie i wystarczająco dobrze.** Ramek telefonu w Figmie nie będzie. Podstrony biorą te same reguły co `/` (poniżej). Priorytet: czytelność, ograniczona wielkość obrazków, brak poziomego przepełnienia — nie pixel-perfect względem desktopowej ramki.
 5. **Nie „poprawiamy" tokenów z powrotem do surowych liczb z Figmy.** Odstępstwa są świadome i opisane niżej.
 
 ## Tokeny

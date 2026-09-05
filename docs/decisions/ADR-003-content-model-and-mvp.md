@@ -25,7 +25,7 @@ Stary portal (`teatrzaangazowany`, baza `drama_teatr`) — **źródło** artyku�
 
 Drupal mapujemy **na te typy** (zob. `docs/migration/drupal-inventory.md`), nie odwrotnie.
 
-**Świadomie poza migracją 1:1 / do decyzji później:** newsfeed, formularz wsparcia, social w nawigacji, wersja EN (Erasmus) — koncept je zna, MVP ich nie blokuje.
+**Świadomie poza migracją 1:1 / do decyzji później:** newsfeed, formularz wsparcia, social w nawigacji, wersja EN (Erasmus), **formularz kontaktu** (ustalenie 2026-09-05: `/kontakt` bez formularza w tym składzie; jeśli fundacja będzie chciała — osobne zamówienie). Koncept je zna, MVP ich nie blokuje.
 
 ## Alternatives considered
 

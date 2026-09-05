@@ -32,6 +32,7 @@ scripts/           # migration scripts (later)
 | Topic | Path |
 |-------|------|
 | **Session handoff (start here)** | `docs/HANDOFF.md` |
+| **IA/subpage decisions 2026-09-05 (Czytelnia delta)** | `docs/concept/ustalenia-2026-09-05.md` |
 | **UI canon (read before touching apps/web)** | `docs/design/system.md` |
 | Measured Figma values | `docs/design/figma-baseline.md` |
 | **Fundacja migration status** | `docs/migration/fundacja-status.md` |
