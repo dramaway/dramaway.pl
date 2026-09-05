@@ -1,14 +1,30 @@
 import type { Metadata } from "next";
+import { BlobRow } from "@/components/sections/blob-row";
+import { PageHero } from "@/components/sections/page-hero";
+import { knowledgeHubPath, publicationPath } from "@/lib/routes";
+import { getPublications } from "@/lib/sanity/fetch";
 
-export const metadata: Metadata = { title: "Czytelnia / Baza wiedzy" };
+export const metadata: Metadata = { title: "Czytelnia" };
+export const revalidate = 60;
 
-export default function CzytelniaPage() {
+export default async function CzytelniaPage() {
+  const publications = await getPublications();
+
   return (
-    <div className="page py-section">
-      {/* Placeholder for the Figma "baza wiedzy" frame until drama_teatr lands. */}
-      <h1 className="font-display text-h1 font-black">
-        Czytelnia / Baza wiedzy
-      </h1>
-    </div>
+    <>
+      <PageHero
+        title="Czytelnia"
+        lead="Publikacje z portalu wiedzy. Lista pokazuje to, co jest w CMS."
+        parent={{ href: knowledgeHubPath(), label: "Baza wiedzy" }}
+      />
+      <BlobRow
+        items={publications.map((item) => ({
+          title: item.title,
+          lead: item.summary,
+          href: publicationPath(item.slug),
+        }))}
+        emptyMessage="Czytelnia jest pusta — w CMS nie ma jeszcze publikacji."
+      />
+    </>
   );
 }

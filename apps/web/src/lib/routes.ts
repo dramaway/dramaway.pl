@@ -45,10 +45,23 @@ export type NavItem = {
   href: string;
   label: string;
   external?: boolean;
+  children?: NavItem[];
 };
 
 export function czytelniaPath() {
   return "/czytelnia";
+}
+
+export function knowledgeHubPath() {
+  return "/baza-wiedzy";
+}
+
+export function publicationPath(slug: string) {
+  return `/czytelnia/${slug}`;
+}
+
+export function methodsPath() {
+  return "/metody";
 }
 
 /** Header items from the Figma homepage. Home is filtered out of the visible nav. */
@@ -56,7 +69,14 @@ export function mainNav(): NavItem[] {
   return [
     { href: "/", label: "Strona główna" },
     { href: "/projekty", label: "Projekty" },
-    { href: czytelniaPath(), label: "Baza wiedzy" },
+    {
+      href: knowledgeHubPath(),
+      label: "Baza wiedzy",
+      children: [
+        { href: methodsPath(), label: "Metody" },
+        { href: czytelniaPath(), label: "Czytelnia" },
+      ],
+    },
     { href: "/fundacja", label: "O fundacji" },
     { href: "/kontakt", label: "Kontakt" },
   ];

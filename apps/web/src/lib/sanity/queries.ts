@@ -167,3 +167,22 @@ export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
     }
   }
 }`;
+
+export const publicationsListQuery = `*[_type == "publication" && defined(slug.current)] | order(title asc) {
+  _id,
+  title,
+  "slug": slug.current,
+  kind,
+  summary
+}`;
+
+export const publicationBySlugQuery = `*[_type == "publication" && slug.current == $slug][0] {
+  _id,
+  title,
+  "slug": slug.current,
+  kind,
+  summary,
+  body
+}`;
+
+export const publicationSlugsQuery = `*[_type == "publication" && defined(slug.current)].slug.current`;

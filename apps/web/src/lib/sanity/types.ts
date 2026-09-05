@@ -187,3 +187,20 @@ export type ProjectDetail = {
   partners: string[] | null;
   sponsors: string[] | null;
 };
+
+export type PublicationListItem = {
+  _id: string;
+  title: string;
+  slug: string;
+  kind: string | null;
+  summary: string | null;
+};
+
+export type PublicationDetail = {
+  _id: string;
+  title: string;
+  slug: string;
+  kind: string | null;
+  summary: string | null;
+  body: PortableContent;
+};

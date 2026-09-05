@@ -16,6 +16,9 @@ import {
   projectSlugsQuery,
   projectEditionParamsQuery,
   projectsListQuery,
+  publicationBySlugQuery,
+  publicationSlugsQuery,
+  publicationsListQuery,
   siteSettingsQuery,
 } from "./queries";
 import type {
@@ -26,6 +29,8 @@ import type {
   PersonListItem,
   ProjectDetail,
   ProjectListItem,
+  PublicationDetail,
+  PublicationListItem,
   SiteSettings,
 } from "./types";
 import { NEWS_SLUG_PREFIX } from "@/lib/routes";
@@ -116,4 +121,18 @@ export async function getProjectEditionParams(): Promise<
   { slug: string; editionSlugs: string[] | null }[]
 > {
   return sanityClient.fetch(projectEditionParamsQuery, {}, revalidate);
+}
+
+export async function getPublications(): Promise<PublicationListItem[]> {
+  return sanityClient.fetch(publicationsListQuery, {}, revalidate);
+}
+
+export async function getPublicationBySlug(
+  slug: string,
+): Promise<PublicationDetail | null> {
+  return sanityClient.fetch(publicationBySlugQuery, { slug }, revalidate);
+}
+
+export async function getPublicationSlugs(): Promise<string[]> {
+  return sanityClient.fetch(publicationSlugsQuery, {}, revalidate);
 }

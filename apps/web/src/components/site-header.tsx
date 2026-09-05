@@ -4,12 +4,26 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
-import { mainNav } from "@/lib/routes";
+import { mainNav, type NavItem } from "@/lib/routes";
 import { cn } from "@/lib/utils";
 
 type Props = {
   title: string;
 };
+
+function itemIsCurrent(item: NavItem, pathname: string): boolean {
+  if (pathname === item.href) return true;
+  if (item.href !== "/" && pathname.startsWith(`${item.href}/`)) return true;
+  return Boolean(
+    item.children?.some((child) => itemIsCurrent(child, pathname)),
+  );
+}
+
+function isCurrentPage(item: NavItem, pathname: string): boolean {
+  if (pathname === item.href) return true;
+  if (item.children?.length) return false;
+  return item.href !== "/" && pathname.startsWith(`${item.href}/`);
+}
 
 export function SiteHeader({ title }: Props) {
   const pathname = usePathname();
@@ -72,9 +86,7 @@ export function SiteHeader({ title }: Props) {
 
       <nav aria-label="Główna" className="site-nav-desktop">
         {items.map((item) => (
-          <NavLink key={item.href} href={item.href} pathname={pathname}>
-            {item.label}
-          </NavLink>
+          <NavItemViews key={item.href} item={item} pathname={pathname} />
         ))}
       </nav>
 
@@ -99,9 +111,20 @@ export function SiteHeader({ title }: Props) {
         <ul className="page site-nav-overlay-list">
           {items.map((item) => (
             <li key={item.href}>
-              <NavLink href={item.href} pathname={pathname}>
+              <NavLink item={item} pathname={pathname}>
                 {item.label}
               </NavLink>
+              {item.children?.length ? (
+                <ul className="site-nav-overlay-sub">
+                  {item.children.map((child) => (
+                    <li key={child.href}>
+                      <NavLink item={child} pathname={pathname}>
+                        {child.label}
+                      </NavLink>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
             </li>
           ))}
         </ul>
@@ -110,22 +133,57 @@ export function SiteHeader({ title }: Props) {
   );
 }
 
+function NavItemViews({
+  item,
+  pathname,
+}: {
+  item: NavItem;
+  pathname: string;
+}) {
+  if (!item.children?.length) {
+    return (
+      <NavLink item={item} pathname={pathname}>
+        {item.label}
+      </NavLink>
+    );
+  }
+
+  return (
+    <div className="site-nav-item">
+      <NavLink item={item} pathname={pathname}>
+        {item.label}
+      </NavLink>
+      <ul className="site-nav-sub">
+        {item.children.map((child) => (
+          <li key={child.href}>
+            <NavLink item={child} pathname={pathname}>
+              {child.label}
+            </NavLink>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 function NavLink({
-  href,
+  item,
   pathname,
   children,
 }: {
-  href: string;
+  item: NavItem;
   pathname: string;
   children: string;
 }) {
+  const currentPage = isCurrentPage(item, pathname);
+  const currentBranch = itemIsCurrent(item, pathname);
   return (
     <Link
-      href={href}
-      aria-current={pathname === href ? "page" : undefined}
+      href={item.href}
+      aria-current={currentPage ? "page" : undefined}
       className={cn(
         "hover:text-magenta",
-        pathname === href && "text-magenta",
+        currentBranch && "text-magenta",
       )}
     >
       {children}
