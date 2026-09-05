@@ -19,6 +19,7 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
       <PageHero
         title={project.title}
         lead={project.summary}
+        image={project.cover}
         parent={{ href: "/projekty", label: "Projekty" }}
       />
       {project.body ? (

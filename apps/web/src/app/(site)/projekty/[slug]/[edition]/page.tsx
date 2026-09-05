@@ -50,6 +50,7 @@ export default async function EditionPage({ params }: Props) {
       <PageHero
         title={edition.title}
         lead={lead}
+        image={gallery[0] ?? null}
         parent={{ href: projectPath(project.slug), label: project.title }}
       />
       {edition.body ? (

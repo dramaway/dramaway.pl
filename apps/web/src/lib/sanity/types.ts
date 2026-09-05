@@ -38,6 +38,7 @@ export type PageDetail = {
   title: string;
   slug: string;
   isNews: boolean;
+  cover?: SanityImage | null;
   body: PortableContent;
 };
 
@@ -181,6 +182,7 @@ export type ProjectDetail = {
   status: string | null;
   featured: boolean | null;
   summary: string | null;
+  cover: SanityImage | null;
   body: PortableContent;
   editions: ProjectEdition[] | null;
   afterword: PortableContent;
@@ -200,5 +202,6 @@ export type PublicationDetail = {
   title: string;
   slug: string;
   summary: string | null;
+  cover?: SanityImage | null;
   body: PortableContent;
 };

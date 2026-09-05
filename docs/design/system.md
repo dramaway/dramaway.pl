@@ -29,7 +29,7 @@ Wszystkie w bloku `@theme` w [apps/web/src/app/globals.css](../../apps/web/src/a
 | `.page` | kontener wyśrodkowany, `--page-max` z `--page-pad` |
 | `.split` / `.split-text` / `.split-media` | pełna szerokość viewportu; tekst w kolumnie ograniczonej do ~2/3 `--page-max` z `--page-pad`; zdjęcie dobija do krawędzi **viewportu** (od `lg`). Poniżej `lg`: tekst pierwszy, kadr inset 4:5 z `--media-split-max` |
 | `.split-reverse` | to samo, ale zdjęcie po lewej (spad do lewej krawędzi) |
-| `.hero` / `.hero-title` / `.hero-copy` / `.hero-media-wrap` / `.hero-media` | hero: od `lg` to `.split`; poniżej `lg` siatka H1 → kadr w kole (`--hero-media-span`) → lead/CTA |
+| `.hero` / `.hero-title` / `.hero-heading` / `.hero-copy` / `.hero-media-wrap` / `.hero-media` | hero: od `lg` to `.split`; poniżej `lg` siatka H1 → kadr w kole (`--hero-media-span`) → lead/CTA. `.hero-heading` owija okruch + H1 na podstronach; `.hero-title` zostawia H1 homepage w kapitalizacji zdaniowej |
 | `.site-header` / `.site-nav-desktop` / `.site-nav-toggle` / `.site-nav-overlay` | chrome: poniżej `lg` sticky pasek + overlay; od `lg` poziomy rząd |
 | `.cols-3` | 1 → 2 → 3 kolumny; aktualności, publikacje. Rynna szersza niż 36 px z ramki — świadomie więcej światła |
 | `.news-card` + `.news-card-title` / `-body` / `-cta` | wspólna linia bazowa kart aktualności: tytuł zawsze na dwie linie, treść zbiera luz, rulka CTA na jednym poziomie niezależnie od długości tekstu |
@@ -95,4 +95,4 @@ Klikalne kafelki: karta aktualności → artykuł, Art Generacje → `/projekty/
 
 Sprawdzone przez CDP na 1440 / 1280 / 1024 / 768 / 375: `scrollWidth == innerWidth` (brak przepełnienia poziomego), żaden element nie wychodzi za krawędzie, rulki CTA aktualności mają identyczne `top` w układzie wielokolumnowym, a test trafień (`elementFromPoint`) potwierdza jeden link na kafelek i osobno klikalne CTA Art Generacji.
 
-Podstrony (2026-09-05): `PageHero` + `BlobRow` na `/projekty` (tylko `project`), liście edycji AG, `/czytelnia` (pusta lista OK), `/fundacja`; hub `/baza-wiedzy`; edycje pod `/projekty/[slug]/[edition]`; `/kontakt` bez formularza. Nav L2 Bazy: disclosure na `lg+`, dzieci w overlayu poniżej. `/zespol` nadal roboczy. 375 px ma być wygodne w nawigacji i rytmie, nie 1:1 z ramką.
+Podstrony (2026-09-05, chrome 2026-09-05): `PageHero` na każdej publicznej podstronie to split z portretem (CMS albo `public/about-photo.jpg`) i pasmem kół pod spodem — ten sam rytm mobile co `/` (H1 → kadr w kole → lead), bez overlayu nawigacji. Paleta siedmiu kół stoi przed stopką (ukryta na `/`). Listingi dalej: `BlobRow` na `/projekty` (tylko `project`), liście edycji AG, `/czytelnia`, `/fundacja`. Hub `/baza-wiedzy`; edycje pod `/projekty/[slug]/[edition]`; `/kontakt` bez formularza. Nav L2 Bazy: disclosure na `lg+`, dzieci w overlayu poniżej. `/zespol` nadal roboczy. 375 px ma być wygodne w nawigacji i rytmie, nie 1:1 z ramką. Strona po stronie vs ramki Figmy — po wspólnym chrome.

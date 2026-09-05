@@ -1,5 +1,6 @@
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { PaletteRow } from "@/components/visual/palette-row";
 import { getResolvedSite } from "@/lib/site";
 
 export default async function SiteLayout({
@@ -13,6 +14,9 @@ export default async function SiteLayout({
     <div className="site-shell flex min-h-screen flex-col">
       <SiteHeader title={site.title} />
       <main className="flex-1">{children}</main>
+      <div className="subpage-palette page py-section" aria-hidden>
+        <PaletteRow />
+      </div>
       <SiteFooter title={site.title} note={site.footerNote} />
     </div>
   );

@@ -5,12 +5,12 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-05 — Czytelnia w Sanity (82/47 listed) + GROQ spisu filtruje `listed` |
-| **Gałąź / HEAD** | `main` @ `48485f3` |
+| **Ostatnia aktualizacja** | 2026-09-05 — wspólny chrome podstron (PageHero split + paleta) |
+| **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ |
-| **Working tree** | czyste |
+| **Working tree** | czyste po chrome; dalej ramki Figmy |
 | **Owner Sanity (na razie)** | Jan Mirecki |
 
 ---
@@ -49,7 +49,7 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 
 - Tokeny w `@theme` (`globals.css`), fonty MuseoModerno + Alexandria przez `next/font`.
 - Klasy układu: `.page`, `.split` (pełny viewport, spad zdjęcia do krawędzi okna), `.cols-3`, `.stack`, `.stack-narrow`, `.footer-quote`.
-- Sześć prymitywów: `Section`, `DotBand`, `PaletteRow`, `Blob`, `CtaLink`, `Media`. Sekcje podstron: `PageHero`, `BlobRow`.
+- Sześć prymitywów: `Section`, `DotBand`, `PaletteRow`, `Blob`, `CtaLink`, `Media`. Sekcje podstron: `PageHero`, `BlobRow`. `PageHero` to ten sam split i kadr w kole co `/`, bez overlayu nawigacji; puste zdjęcie = `public/about-photo.jpg`. Paleta przed stopką leży w layoucie witryny i chowa się na `/`.
 - **Hero / nav:** na `lg+` wrapper `[data-home]` + `:has()` wyjmuje header z pionowego flow i kotwiczy go w lewej kolumnie (szerokość jak `.split-text`). Portret od góry prawej kolumny, spad do prawej krawędzi viewportu. Nav **nigdy** na zdjęciu. Poniżej `lg`: sticky pasek (logo + menu), overlay na `sand` z L1 plus Metody/Czytelnia; hero to H1, kadr w kole, lead/CTA; stacked `.split` ma tekst, potem kadr inset 4:5 (`--media-split-max`). Od `lg` disclosure pod „Baza wiedzy”.
 - Pasmo kół: `--dot-size` 82 px (skok 48 px <768), bez `overflow: hidden`, koła z `radial-gradient(circle closest-side)` — bez `closest-side` promień idzie do narożnika kafla i zostaje szczelina. Szerokość rzędu `round(up, 50%, --dot-size)`: rzędy dobijają do krawędzi strony, reszta z zaokrąglenia ląduje na środku pod schodkiem. Ujemny margin nachodzi na krawędzie `Media`; prop `mirror` odbija schodek tam, gdzie zdjęcie jest po lewej.
 - Paleta: 7 stykających się kół, `flex-shrink: 0`, wyśrodkowana jako grupa.
@@ -83,6 +83,8 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 Ten plik + [fundacja-status.md](migration/fundacja-status.md) + [ustalenia-2026-09-05.md](concept/ustalenia-2026-09-05.md). Nie odtwarzać dumpów rozmów. Nie wołać Figmy bez potrzeby.
 
 Weryfikacja Czytelni: `/czytelnia` (47 wierszy), jeden unlisted slug, Studio lokalne `:3333` (hosted po deployu schematu). **Baza wiedzy ≠ Czytelnia.**
+
+Wspólny chrome podstron jest w kodzie (hero split + pasmo + paleta przed stopką). **Dalej: strona po stronie vs ramki Figmy**, kolejność: `/projekty` → AG → edycja → Baza → `/fundacja` → `/kontakt`. Nie składać zespołu, timeline’u ani wideo, zanim ramka tej strony nie przejdzie przeglądu.
 
 1. Deploy Studio (`pnpm --filter studio deploy`), żeby hosted CMS widział `readingMethod` i nowe pola `publication`.
 2. `/zespol` nadal roboczy. Draft `news-placeholder-syrena` w Studio — jeszcze nie.

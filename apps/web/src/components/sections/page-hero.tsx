@@ -1,6 +1,8 @@
-import { Section } from "@/components/layout/section";
+import { Blob } from "@/components/visual/blob";
 import { CtaLink } from "@/components/visual/cta-link";
+import { DotBand } from "@/components/visual/dot-band";
 import { Media } from "@/components/visual/media";
+import { FALLBACK_ABOUT_IMAGE } from "@/lib/homepage-copy";
 import type { SanityImage } from "@/lib/sanity/types";
 import Link from "next/link";
 
@@ -15,8 +17,9 @@ export type PageHeroContent = {
 };
 
 /**
- * Opening block for inner pages. Same type scale as the home hero title, but
- * no overlay nav and no circular still — those belong only to `/`.
+ * Opening block for inner pages. Same split, circular still, and following
+ * dot band as `/` — but no overlay nav (`data-home` stays on the homepage).
+ * Missing CMS photos use the about fallback until a cover is uploaded.
  */
 export function PageHero({
   title,
@@ -27,42 +30,48 @@ export function PageHero({
   imageAlt,
   parent,
 }: PageHeroContent) {
-  const copy = (
-    <>
-      {parent ? (
-        <p className="mb-4 text-small">
-          <Link href={parent.href} className="hover:text-magenta">
-            {parent.label}
-          </Link>
-        </p>
-      ) : null}
-      <h1 className="font-display text-h1 font-black">{title}</h1>
-      {lead ? <p className="measure mt-8 text-lead">{lead}</p> : null}
-      {ctaLabel && ctaHref ? (
-        <CtaLink href={ctaHref} className="mt-8">
-          {ctaLabel}
-        </CtaLink>
-      ) : null}
-    </>
-  );
-
-  if (!image) {
-    return <Section>{copy}</Section>;
-  }
+  const hasCopy = Boolean(lead) || Boolean(ctaLabel && ctaHref);
 
   return (
-    <Section bleed>
-      <div className="split">
-        <div className="split-text">{copy}</div>
-        <Media
-          image={image}
-          alt={imageAlt?.trim() || title}
-          variant="bleed"
-          ratio="landscape"
-          sizes="(min-width: 64rem) 40vw, 100vw"
-          className="split-media"
-        />
-      </div>
-    </Section>
+    <>
+      <section className="hero split">
+        <div className="split-text">
+          <div className="hero-heading">
+            {parent ? (
+              <p className="mb-4 text-small">
+                <Link href={parent.href} className="hover:text-magenta">
+                  {parent.label}
+                </Link>
+              </p>
+            ) : null}
+            <h1 className="font-display text-display font-black">{title}</h1>
+          </div>
+
+          {hasCopy ? (
+            <div className="hero-copy">
+              {lead ? <p className="measure text-lead">{lead}</p> : null}
+              {ctaLabel && ctaHref ? (
+                <CtaLink href={ctaHref}>{ctaLabel}</CtaLink>
+              ) : null}
+            </div>
+          ) : null}
+        </div>
+
+        <div className="hero-media-wrap split-media">
+          <Blob />
+          <Media
+            image={image ?? null}
+            alt={imageAlt?.trim() || title}
+            variant="bleed"
+            ratio="portrait"
+            sizes="(min-width: 64rem) 34vw, 70vw"
+            priority
+            fallbackSrc={FALLBACK_ABOUT_IMAGE}
+            className="hero-media"
+          />
+        </div>
+      </section>
+      <DotBand />
+    </>
   );
 }

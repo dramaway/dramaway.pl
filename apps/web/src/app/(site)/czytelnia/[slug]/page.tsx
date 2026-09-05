@@ -34,6 +34,7 @@ export default async function PublicationPage({ params }: Props) {
       <PageHero
         title={publication.title}
         lead={publication.summary}
+        image={publication.cover}
         parent={{ href: czytelniaPath(), label: "Czytelnia" }}
       />
       {publication.body ? (

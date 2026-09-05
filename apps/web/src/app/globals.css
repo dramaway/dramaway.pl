@@ -463,7 +463,8 @@
       display: contents;
     }
 
-    .hero-title {
+    .hero-title,
+    .hero-heading {
       grid-area: title;
     }
 
@@ -484,7 +485,8 @@
       border-radius: 50%;
     }
 
-    [data-home] > .hero + .dot-band {
+    /* Circle still: the band sits below, it does not ride the photo. */
+    .hero + .dot-band {
       margin-block-start: 0;
     }
   }
@@ -725,6 +727,11 @@
   .dot-band-mirror::after {
     inset-block-start: auto;
     inset-block-end: 0;
+  }
+
+  /* Inner pages get a palette before the footer; `/` already paints its own. */
+  .site-shell:has([data-home]) .subpage-palette {
+    display: none;
   }
 
   .palette-row {

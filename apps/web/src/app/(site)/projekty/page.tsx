@@ -26,10 +26,11 @@ export default async function ProjectsPage() {
   const active = projects.filter(isActive);
   const archive = projects.filter((project) => !isActive(project));
 
+  const heroImage = active[0]?.cover ?? archive[0]?.cover ?? null;
+
   return (
     <>
-      <PageHero title="Projekty" />
-      <DotBand />
+      <PageHero title="Projekty" image={heroImage} />
       <BlobRow
         items={active.map(projectToRow)}
         emptyMessage="Brak aktywnych projektów w CMS."

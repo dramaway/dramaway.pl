@@ -59,6 +59,7 @@ export const pageBySlugQuery = `*[_type == "page" && slug.current == $slug][0] {
   title,
   "slug": slug.current,
   "isNews": ${newsSlugFilter},
+  "cover": body[_type == "image"][0],
   body
 }`;
 
@@ -98,6 +99,10 @@ export const projectBySlugQuery = `*[_type == "project" && slug.current == $slug
   status,
   featured,
   summary,
+  "cover": coalesce(
+    (editions[].gallery[])[defined(asset)][0],
+    body[_type == "image"][0]
+  ),
   body,
   editions[] ${editionProjection},
   afterword,
@@ -180,6 +185,7 @@ export const publicationBySlugQuery = `*[_type == "publication" && slug.current 
   title,
   "slug": slug.current,
   summary,
+  "cover": body[_type == "image"][0],
   body
 }`;
 
