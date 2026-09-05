@@ -29,7 +29,8 @@ export async function generateStaticParams() {
         !isFundacjaPageSlug(slug) &&
         !isProjectSectionPageSlug(slug) &&
         !isProjectDocumentSlug(slug) &&
-        slug !== "metody",
+        slug !== "metody" &&
+        slug !== "kontakt",
     )
     .map((slug) =>
       slug.startsWith(NEWS_SLUG_PREFIX)
