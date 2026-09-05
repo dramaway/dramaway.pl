@@ -95,4 +95,4 @@ Klikalne kafelki: karta aktualności → artykuł, Art Generacje → `/projekty/
 
 Sprawdzone przez CDP na 1440 / 1280 / 1024 / 768 / 375: `scrollWidth == innerWidth` (brak przepełnienia poziomego), żaden element nie wychodzi za krawędzie, rulki CTA aktualności mają identyczne `top` w układzie wielokolumnowym, a test trafień (`elementFromPoint`) potwierdza jeden link na kafelek i osobno klikalne CTA Art Generacji.
 
-Listingi podstron (`/projekty`, `/zespol`, `/fundacja`, …) są nadal robocze z fazy migracji — dziedziczą nowy chrome, nie nowy skład treści. 375 px ma być wygodne w nawigacji i rytmie, nie 1:1 z ramką.
+Podstrony (2026-09-05): `PageHero` + `BlobRow` na `/projekty` (tylko `project`), liście edycji AG, `/czytelnia` (pusta lista OK), `/fundacja`; hub `/baza-wiedzy`; edycje pod `/projekty/[slug]/[edition]`; `/kontakt` bez formularza. Nav L2 Bazy: disclosure na `lg+`, dzieci w overlayu poniżej. `/zespol` nadal roboczy. 375 px ma być wygodne w nawigacji i rytmie, nie 1:1 z ramką.

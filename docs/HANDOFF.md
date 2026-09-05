@@ -5,12 +5,12 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-05 — ustalenia IA/podstron zamknięte; handoff do Czytelni: [concept/ustalenia-2026-09-05.md](concept/ustalenia-2026-09-05.md) |
-| **Gałąź / HEAD** | `main` @ `07314e1` |
+| **Ostatnia aktualizacja** | 2026-09-05 — skład podstron (hero + blob-row, hub Bazy, URL edycji) |
+| **Gałąź / HEAD** | `main` @ `022c8e7` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ |
-| **Working tree** | czyste |
+| **Working tree** | skład podstron na `main`; sesja Czytelni może mieć brudne `apps/studio` / `scripts/` |
 | **Owner Sanity (na razie)** | Jan Mirecki |
 
 ---
@@ -28,10 +28,10 @@ Stack: Next.js 15, Tailwind v4, shadcn/ui, Sanity Studio v6, Netlify. Kod/CMS EN
 Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona główna ma skład z Figmy plus polish desktopowy** (hero od góry kolumny, pasma pełnych kół przy krawędziach, naprzemienne kolory tytułów, klikalne kafelki) **i świadomy pass mobilny poniżej 1024 px** (sticky header + overlay, hero H1 → kadr w kole → lead, stacked split tekst → kadr 4:5). Nie pixel-perfect. Sprawdzone lokalnie: 375 (H1 w pierwszym ekranie, koło 227 px, brak overflow), 768, desktop (overlay header i portret bleed bez regresji).
 
 - Dataset `production` (`tr2qdg9j`) publiczny. Next bez tokenu. Write token **tylko** `apps/studio/.env`.
-- Mapa URL: `apps/web/src/lib/routes.ts` — prefiks IA + `slug.current`. Header **pierwszy poziom** nadal cztery etykiety z Figmy (Projekty, Baza wiedzy, O fundacji, Kontakt). **Baza wiedzy** to nadzbiór: hub + drugi poziom **Metody** (`/metody`) i **Czytelnia** (`/czytelnia`). Hub ma być prosty i da się go wyłączyć. W kodzie etykieta „Baza wiedzy” na razie prowadzi na stub `/czytelnia` — do zmiany. `/zespol` zostaje URL-em poza pierwszym poziomem menu.
-- Listingi `/projekty`, `/zespol`, `/fundacja` = widoki, nie dokumenty. `/` **nie** listuje już siatki projektów ani splitów „13 edycji”.
-- `/projekty/[slug]` = `project` albo strona z sekcji projektów. `/[slug]` = reszta (w tym newsy pod starym aliasem korzenia).
-- Stub `/czytelnia` — heading, **0× `publication` w Sanity**. Dump **jest** lokalnie: `private/dumps/drama_teatr_1787254349.sql.gz`. To dziecko Bazy wiedzy, nie cała „Baza wiedzy”. Plan importu jest w osobnym chacie Cursor („Knowledge base data migration” / plan „Migracja Czytelni”) — zaktualizować o [ustalenia-2026-09-05.md](concept/ustalenia-2026-09-05.md).
+- Mapa URL: `apps/web/src/lib/routes.ts` — prefiks IA + `slug.current`. Header: Projekty, **Baza wiedzy** (`/baza-wiedzy`) z drugim poziomem Metody / Czytelnia (desktop disclosure, mobile overlay), O fundacji, Kontakt. `/zespol` poza pierwszym poziomem.
+- Listingi `/projekty`, `/fundacja`, `/czytelnia` = widoki z `PageHero` + `BlobRow`. `/projekty` listuje tylko `project` (aktywne + archiwum). `/` **nie** listuje siatki projektów ani splitów „13 edycji”.
+- `/projekty/[slug]` = `project` albo strona z sekcji projektów. Edycje: `/projekty/[slug]/[edition]` (AG ma 13 unikalnych slugów, w tym trzy `edycja-vi-20xx`). `/[slug]` = reszta (newsy).
+- `/czytelnia` listuje `publication` (dziś 0 — pusty stan). Dump **jest**: `private/dumps/drama_teatr_1787254349.sql.gz`. Import w sesji „Migracja Czytelni”. Hub: `/baza-wiedzy`.
 - `siteSettings` **jest w datasetcie** — hero zasilony; grupa `homepage` (about / methods / featured / czytelnia) jest w schemacie, w CMS pusta → fallbacki z `apps/web/src/lib/homepage-copy.ts`. Grupa **Ikony** (`branding`): **SVG jako `image`** (Select w Media widzi m.in. już wrzucony `icon.svg`; strona serwuje surowy SVG z `asset.url`, nie raster CDN) / **ICO jako `file`** z podglądem 32×32 i natywnym pickerem (Media na polach `file` była pusta: 0 `fileAsset`) / PNG light+dark / Apple / 512 / OG. Puste pole = `public/brand`.
 - `getResolvedSite()` zwraca `homepage` + `hero` + `footerNote` (zawsze string, cytat Boala jako fallback). Featured **H2** to tytuł `project.featured`; magenta etykieta „Projekty” to `homepage.featured.heading`.
 - Newsy na `/`: `getHomepageNews()` — max 3, bez zdjęć, excerpt ~400 znaków. Daty kart: `publishedAt`. Trzeci news `news-placeholder-syrena` jest wypełniaczem z ramki — **do draftu** z adnotacją PL (wykaz: [fundacja-status.md](migration/fundacja-status.md) „Luki vs ramka”).
@@ -49,8 +49,8 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 
 - Tokeny w `@theme` (`globals.css`), fonty MuseoModerno + Alexandria przez `next/font`.
 - Klasy układu: `.page`, `.split` (pełny viewport, spad zdjęcia do krawędzi okna), `.cols-3`, `.stack`, `.stack-narrow`, `.footer-quote`.
-- Sześć prymitywów: `Section`, `DotBand`, `PaletteRow`, `Blob`, `CtaLink`, `Media`.
-- **Hero / nav:** na `lg+` wrapper `[data-home]` + `:has()` wyjmuje header z pionowego flow i kotwiczy go w lewej kolumnie (szerokość jak `.split-text`). Portret od góry prawej kolumny, spad do prawej krawędzi viewportu. Nav **nigdy** na zdjęciu. Poniżej `lg`: sticky pasek (logo + menu), overlay na `sand` z czterema pozycjami; hero to H1, kadr w kole, lead/CTA; stacked `.split` ma tekst, potem kadr inset 4:5 (`--media-split-max`).
+- Sześć prymitywów: `Section`, `DotBand`, `PaletteRow`, `Blob`, `CtaLink`, `Media`. Sekcje podstron: `PageHero`, `BlobRow`.
+- **Hero / nav:** na `lg+` wrapper `[data-home]` + `:has()` wyjmuje header z pionowego flow i kotwiczy go w lewej kolumnie (szerokość jak `.split-text`). Portret od góry prawej kolumny, spad do prawej krawędzi viewportu. Nav **nigdy** na zdjęciu. Poniżej `lg`: sticky pasek (logo + menu), overlay na `sand` z L1 plus Metody/Czytelnia; hero to H1, kadr w kole, lead/CTA; stacked `.split` ma tekst, potem kadr inset 4:5 (`--media-split-max`). Od `lg` disclosure pod „Baza wiedzy”.
 - Pasmo kół: `--dot-size` 82 px (skok 48 px <768), bez `overflow: hidden`, koła z `radial-gradient(circle closest-side)` — bez `closest-side` promień idzie do narożnika kafla i zostaje szczelina. Szerokość rzędu `round(up, 50%, --dot-size)`: rzędy dobijają do krawędzi strony, reszta z zaokrąglenia ląduje na środku pod schodkiem. Ujemny margin nachodzi na krawędzie `Media`; prop `mirror` odbija schodek tam, gdzie zdjęcie jest po lewej.
 - Paleta: 7 stykających się kół, `flex-shrink: 0`, wyśrodkowana jako grupa.
 - `/` kolejność: Hero → DotBand → aktualności (H2 AKTUALNOŚCI `text-h2`, tytuł kart H3 `text-h4` i data `text-small` naprzemiennie magenta / navy, max 3, bez zdjęć, szersza rynna) → DotBand → Kim/Metody (`.split-reverse`; oba H2 na `text-h3` + `text-body`) → DotBand `mirror` → PaletteRow → Art Generacje + Czytelnia (`.stack-narrow`, H2 na `text-h3` + `text-body`) → PaletteRow → stopka (logo + cytat Boala `.footer-quote`).
@@ -68,9 +68,9 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 - `page.excerpt` na dwóch migracyjnych newsach nadal puste — karty tną `pt::text(body)` (placeholder Syrena ma excerpt z ramki)
 - Zdjęcie „Kim jesteśmy” w Sanity — leci z `public/about-photo.jpg` jako `fallbackSrc`
 - Pasmo kół pod „Kim jesteśmy?” ma odbity schodek zamiast figmowego (uzgodnione) — powód w [design/system.md](design/system.md)
-- Podstrony na nowym UI — listingi `/projekty`, `/zespol`, `/fundacja` są nadal robocze z fazy migracji
+- `/zespol` nadal roboczy z fazy migracji
 - Mapa przekierowań (stare aliasy → nowe)
-- Czytelnia — dump jest, importu nie ma; stub bez treści
+- Import Czytelni (`publication`) — równoległa sesja; UI pustej listy już jest
 - News jako osobny typ, newsletter, **formularz kontaktu (osobne zamówienie, jeśli będą chcieli)**, EN
 - `person.role` (Drupal `field_funkcja`)
 - Ręczna korekta części kotwic
@@ -79,10 +79,11 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 
 ## Następna sesja — start
 
-**Nie kontynuować chatu makiet** (kontekst zużyty). Dwie osobne sesje:
+Skład podstron z [ustalenia-2026-09-05.md](concept/ustalenia-2026-09-05.md) jest na `main`. Nie wołać Figmy bez potrzeby.
 
-1. **Skład podstron** — **nowy** chat, od razu tryb Plan. Prompt w [ustalenia-2026-09-05.md](concept/ustalenia-2026-09-05.md). Czytać ten plik + [design/system.md](design/system.md) + [concept/ia.md](concept/ia.md). Nie wołać Figmy bez potrzeby.
-2. **Migracja Czytelni** — istniejący chat Cursor z planem „Migracja Czytelni”. Wkleić prompt z ustaleń; zaktualizować plan (Baza wiedzy ≠ `/czytelnia`).
+1. **Migracja Czytelni** — sesja obok: schema/import `publication`; listing `/czytelnia` już przeżywa 0 dokumentów i przyjmie GROQ, gdy pojawią się rekordy (ew. filtr „na spisie”).
+2. `/zespol` nadal roboczy. Draft `news-placeholder-syrena` w Studio — jeszcze nie.
+3. Preview Netlify złapie skład po deployu z `main`.
 
 `pnpm dev:all` jeśli porty wolne. Publiczne URL-e, nie `/preview`.
 
