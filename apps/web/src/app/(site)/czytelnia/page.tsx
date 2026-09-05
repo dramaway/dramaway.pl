@@ -14,7 +14,7 @@ export default async function CzytelniaPage() {
     <>
       <PageHero
         title="Czytelnia"
-        lead="Publikacje z portalu wiedzy. Lista pokazuje to, co jest w CMS."
+        lead="Publikacje z portalu wiedzy. Lista pokazuje pozycje oznaczone w CMS do spisu."
         parent={{ href: knowledgeHubPath(), label: "Baza wiedzy" }}
       />
       <BlobRow

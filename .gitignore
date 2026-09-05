@@ -35,3 +35,5 @@ coverage/
 
 # Generated extract from Drupal dumps (local smoke data)
 apps/web/src/data/extracted/
+__pycache__/
+*.py[cod]

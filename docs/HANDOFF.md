@@ -5,8 +5,8 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-05 — migracja Czytelni: 82× `publication` + 6× `readingMethod` w Sanity |
-| **Gałąź / HEAD** | `main` @ `022c8e7` |
+| **Ostatnia aktualizacja** | 2026-09-05 — Czytelnia w Sanity (82/47 listed) + GROQ spisu filtruje `listed` |
+| **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ |
@@ -31,7 +31,7 @@ Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona głów
 - Mapa URL: `apps/web/src/lib/routes.ts` — prefiks IA + `slug.current`. Header: Projekty, **Baza wiedzy** (`/baza-wiedzy`) z drugim poziomem Metody / Czytelnia (desktop disclosure, mobile overlay), O fundacji, Kontakt. `/zespol` poza pierwszym poziomem.
 - Listingi `/projekty`, `/fundacja`, `/czytelnia` = widoki z `PageHero` + `BlobRow`. `/projekty` listuje tylko `project` (aktywne + archiwum). `/` **nie** listuje siatki projektów ani splitów „13 edycji”.
 - `/projekty/[slug]` = `project` albo strona z sekcji projektów. Edycje: `/projekty/[slug]/[edition]` (AG ma 13 unikalnych slugów, w tym trzy `edycja-vi-20xx`). `/[slug]` = reszta (newsy).
-- `/czytelnia` — listing UI z sesji składu (wiersz z plamą). W Sanity **82× `publication`** (47 `listed` z Worda, 35 tylko pod slugiem). Dump **jest**: `private/dumps/drama_teatr_1787254349.sql.gz`. Hub Bazy: `/baza-wiedzy` (rodzic w nav; Czytelnia to dziecko, nie cała Baza). Schema `readingMethod` + przebudowane `publication` — hosted Studio po `pnpm --filter studio deploy`.
+- `/czytelnia` — wiersz z plamą; GROQ **`listed == true`** (47). Pozostałe 35 opublikowane pod `/czytelnia/[slug]`, nie w spisie. W Sanity **82× `publication`** + **6× `readingMethod`**. Dump **jest**: `private/dumps/drama_teatr_1787254349.sql.gz`. Hub Bazy: `/baza-wiedzy` (rodzic; Czytelnia to dziecko). Hosted Studio: nowy schemat po `pnpm --filter studio deploy`.
 - `siteSettings` **jest w datasetcie** — hero zasilony; grupa `homepage` (about / methods / featured / czytelnia) jest w schemacie, w CMS pusta → fallbacki z `apps/web/src/lib/homepage-copy.ts`. Grupa **Ikony** (`branding`): **SVG jako `image`** (Select w Media widzi m.in. już wrzucony `icon.svg`; strona serwuje surowy SVG z `asset.url`, nie raster CDN) / **ICO jako `file`** z podglądem 32×32 i natywnym pickerem (Media na polach `file` była pusta: 0 `fileAsset`) / PNG light+dark / Apple / 512 / OG. Puste pole = `public/brand`.
 - `getResolvedSite()` zwraca `homepage` + `hero` + `footerNote` (zawsze string, cytat Boala jako fallback). Featured **H2** to tytuł `project.featured`; magenta etykieta „Projekty” to `homepage.featured.heading`.
 - Newsy na `/`: `getHomepageNews()` — max 3, bez zdjęć, excerpt ~400 znaków. Daty kart: `publishedAt`. Trzeci news `news-placeholder-syrena` jest wypełniaczem z ramki — **do draftu** z adnotacją PL (wykaz: [fundacja-status.md](migration/fundacja-status.md) „Luki vs ramka”).
@@ -80,11 +80,13 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 
 ## Następna sesja — start
 
-Skład podstron z [ustalenia-2026-09-05.md](concept/ustalenia-2026-09-05.md) jest na `main`. Nie wołać Figmy bez potrzeby.
+Ten plik + [fundacja-status.md](migration/fundacja-status.md) + [ustalenia-2026-09-05.md](concept/ustalenia-2026-09-05.md). Nie odtwarzać dumpów rozmów. Nie wołać Figmy bez potrzeby.
 
-1. Deploy Studio (`pnpm --filter studio deploy`), żeby hosted CMS widział `readingMethod` i nowe pola `publication`. Listing `/czytelnia` z sesji składu powinien teraz dostać 47 wierszy (`listed`); reszta 35 jest w datasetcie.
+Weryfikacja Czytelni: `/czytelnia` (47 wierszy), jeden unlisted slug, Studio lokalne `:3333` (hosted po deployu schematu). **Baza wiedzy ≠ Czytelnia.**
+
+1. Deploy Studio (`pnpm --filter studio deploy`), żeby hosted CMS widział `readingMethod` i nowe pola `publication`.
 2. `/zespol` nadal roboczy. Draft `news-placeholder-syrena` w Studio — jeszcze nie.
-3. Nie odpalaj ponownie `migrate:czytelnia` bez potrzeby — nadpisze ręczną korektę (to samo co fundacja).
+3. Nie odpalaj ponownie `migrate:czytelnia` / `migrate:fundacja` bez potrzeby — nadpisze ręczną korektę.
 
 `pnpm dev:all` jeśli porty wolne. Publiczne URL-e, nie `/preview`.
 

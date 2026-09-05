@@ -47,7 +47,7 @@ scripts/           # migration scripts (later)
 
 ## Content model (target Sanity)
 
-`project`, `person`, `page`, `publication`, `siteSettings` — map Drupal into these; do not clone Drupal `node_type` 1:1.  
+`project`, `person`, `page`, `publication`, `readingMethod`, `siteSettings` — map Drupal into these; do not clone Drupal `node_type` 1:1.  
 `drama_teatr` dump is a **source** for publications / reading room, not a second production site in MVP.
 
 ## Critical gotchas
@@ -63,7 +63,9 @@ scripts/           # migration scripts (later)
 ```bash
 pnpm install
 pnpm extract:fundacja    # optional local JSON from dump
+pnpm extract:czytelnia    # drama_teatr → gitignored JSON (82 articles)
 pnpm migrate:fundacja    # needs SANITY_API_WRITE_TOKEN in apps/studio/.env
+pnpm migrate:czytelnia    # 6 readingMethod + 82 publication
 pnpm migrate:art-generacje
 pnpm repair:portable-text  # optional: -- --write
 pnpm dev               # http://localhost:3000

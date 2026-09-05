@@ -62,7 +62,7 @@ Zasada (2026-09-05): **czego nie ma w CMS, tego nie ma na stronie.** Nie zmyśla
 | Projekt z Syrenką (aktywny) | **brak** `project` | nie listować. Jest placeholder newsa `news-placeholder-syrena` — do draftu z adnotacją |
 | to mi gra, Teatr Codzienny, BOAL IN PRACTICE | 3× `project` archive | są |
 | Wielogłos (archiwum) | **brak** `project` | nie listować, dopóki ktoś nie doda dokumentu |
-| Publikacje w Czytelni | 82× `publication` (47 `listed` z Worda) | spis `/czytelnia` = `listed`; artykuł = wszystkie 82. GROQ listingu z sesji składu może jeszcze nie filtrować `listed` |
+| Publikacje w Czytelni | 82× `publication` (47 `listed` z Worda) | spis `/czytelnia` = `listed`; artykuł `/czytelnia/[slug]` = wszystkie 82 |
 | `edition.outcomes` | schemat jest, rekordy puste | nie zgadywać z HTML |
 
 Placeholder newsa Syrena (`[Aktualność] Nowy projekt z Teatrem Syrena`, slug `aktualnosc-nowy-projekt-z-teatrem-syrena`): wstawiony 2026-09-03 pod ramkę homepage. Nie jest treścią fundacji. Draft + adnotacja: *„Wypełniacz z makiety Figmy, nie treść z Drupala. Nie publikować, dopóki nie będzie prawdziwego newsa albo projektu.”*
@@ -125,6 +125,6 @@ Write token **tylko** `apps/studio/.env` → `SANITY_API_WRITE_TOKEN`. Nigdy `NE
 1. Figma na istniejących URL-ach; uściślić `edition.outcomes`.
 2. Mapa 301 przed premierą (osobne zadanie — nie w `lib/routes.ts`).
 3. Porównać `/projekty/art-generacje` z live; kotwice w Studio.
-4. Czytelnia w CMS jest; hosted Studio po deployu schematu. Filtr `listed` na listingu, jeśli GROQ jeszcze bierze wszystkie 82. Śmieć `metody-tzs` / „aaa” — ukryć w Studio. `pnpm repair:portable-text` jeśli kotwice w body jak przy fundacji.
+4. Hosted Studio po `pnpm --filter studio deploy`. Śmieć `metody-tzs` / „aaa” jest nielistowany — ukryć / usunąć w Studio. `pnpm repair:portable-text` nie obejmuje `publication`.
 
 Szczegóły produktu Art Generacje (nie stan migracji): [art-generacje.md](../concept/art-generacje.md).
