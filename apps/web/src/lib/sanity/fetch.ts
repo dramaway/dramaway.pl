@@ -3,6 +3,7 @@ import "server-only";
 import { sanityClient } from "./client";
 import {
   aboutPageQuery,
+  landingPageByIdQuery,
   contentCountsQuery,
   homepageNewsQuery,
   newsListQuery,
@@ -25,6 +26,7 @@ import {
 } from "./queries";
 import type {
   AboutPage,
+  LandingPage,
   ContentCounts,
   PageDetail,
   PageListItem,
@@ -105,6 +107,10 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
 
 export async function getAboutPage(): Promise<AboutPage | null> {
   return sanityClient.fetch(aboutPageQuery, {}, revalidate);
+}
+
+export async function getLandingPage(id: string): Promise<LandingPage | null> {
+  return sanityClient.fetch(landingPageByIdQuery, { id }, revalidate);
 }
 
 export async function getPageSlugs(): Promise<string[]> {

@@ -1,19 +1,24 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/sections/page-hero";
 import { TeamRow } from "@/components/sections/team-row";
+import { getTeamLanding } from "@/lib/landing-page";
 import { getPeople } from "@/lib/sanity/fetch";
 
 export const metadata: Metadata = { title: "Zespół" };
 export const revalidate = 60;
 
 export default async function TeamPage() {
-  const people = await getPeople();
+  const [people, landing] = await Promise.all([getPeople(), getTeamLanding()]);
 
   return (
     <>
       <PageHero
-        title="Zespół"
-        lead="Osoby, które prowadzą projekty, warsztaty i pracę ze społecznościami."
+        title={landing.title}
+        lead={landing.lead}
+        ctaLabel={landing.ctaLabel}
+        ctaHref={landing.ctaHref}
+        image={landing.image}
+        imageAlt={landing.imageAlt}
         parent={{ href: "/fundacja", label: "O fundacji" }}
       />
       <TeamRow people={people} />

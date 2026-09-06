@@ -61,7 +61,10 @@ export const pageBySlugQuery = `*[_type == "page" && slug.current == $slug][0] {
   title,
   "slug": slug.current,
   "isNews": ${newsSlugFilter},
-  "cover": body[_type == "image"][0],
+  heroLead,
+  heroCtaLabel,
+  heroCtaHref,
+  "cover": coalesce(heroImage, body[_type == "image"][0]),
   body
 }`;
 
@@ -124,6 +127,15 @@ export const pagesBySlugsQuery = `*[_type == "page" && slug.current in $slugs] {
   title,
   "slug": slug.current,
   "isNews": false
+}`;
+
+export const landingPageByIdQuery = `*[_type == "landingPage" && _id == $id][0] {
+  title,
+  lead,
+  ctaLabel,
+  ctaHref,
+  image,
+  czytelniaTeaser { title, lead, ctaLabel }
 }`;
 
 export const aboutPageQuery = `*[_type == "aboutPage"][0] {

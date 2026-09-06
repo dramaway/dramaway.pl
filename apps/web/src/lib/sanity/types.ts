@@ -40,6 +40,9 @@ export type PageDetail = {
   title: string;
   slug: string;
   isNews: boolean;
+  heroLead?: string | null;
+  heroCtaLabel?: string | null;
+  heroCtaHref?: string | null;
   cover?: SanityImage | null;
   body: PortableContent;
 };
@@ -238,6 +241,19 @@ export type PublicationListItem = {
 export type PublicationDetail = PublicationListItem & {
   cover?: SanityImage | null;
   body: PortableContent;
+};
+
+export type LandingPage = {
+  title: string | null;
+  lead: string | null;
+  ctaLabel: string | null;
+  ctaHref: string | null;
+  image: (SanityImage & { alt?: string | null }) | null;
+  czytelniaTeaser: {
+    title: string | null;
+    lead: string | null;
+    ctaLabel: string | null;
+  } | null;
 };
 
 export type AboutValue = {

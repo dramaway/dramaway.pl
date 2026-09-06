@@ -27,8 +27,10 @@ export default async function ContactPage() {
     <div data-no-palette="">
       <PageHero
         title={page.title.trim() || SUBPAGE.contact.title}
-        lead={body ? null : SUBPAGE.contact.lead}
+        lead={body ? null : page.heroLead?.trim() || SUBPAGE.contact.lead}
         body={body}
+        ctaLabel={page.heroCtaLabel}
+        ctaHref={page.heroCtaHref}
         image={page.cover}
         imageAlt={page.title}
       />

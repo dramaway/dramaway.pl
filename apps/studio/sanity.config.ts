@@ -3,6 +3,7 @@ import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { media, mediaAssetSource } from "sanity-plugin-media";
 import { schemaTypes } from "./schemaTypes";
+import { SINGLETON_SCHEMA_TYPES } from "./singletons";
 import { structure } from "./structure";
 
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || "your-project-id";
@@ -34,6 +35,8 @@ export default defineConfig({
   schema: {
     types: schemaTypes,
     templates: (templates) =>
-      templates.filter((template) => template.schemaType !== "aboutPage"),
+      templates.filter(
+        (template) => !SINGLETON_SCHEMA_TYPES.has(template.schemaType),
+      ),
   },
 });

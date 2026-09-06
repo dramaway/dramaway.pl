@@ -101,7 +101,7 @@ Autorskie, bo Figma ich nie ma:
 
 ## Copy chrome vs Figma
 
-Etykiety UI (nie body z Drupala) biorą się z ramek. Kanon w `apps/web/src/lib/homepage-copy.ts` i `subpage-copy.ts`. **Nie wypełniać** `siteSettings.homepage` w Studio — puste pole = fallback z ramki; wypełnione nadpisuje kanon po cichu. Hero w CMS już istnieje: heading i CTA zgadzają się z `59:608`; lead był innym akapitem (Drupal) i wraca do tekstu z ramki.
+Etykiety UI (nie body z Drupala) biorą się z ramek. Kanon w `apps/web/src/lib/homepage-copy.ts` i `subpage-copy.ts`. **Nie wypełniać** `siteSettings.homepage` w Studio — puste pole = fallback z ramki; wypełnione nadpisuje kanon po cichu. To samo dla singletonów `landingPage` (listingi): puste = `subpage-copy`. Hero homepage w CMS już istnieje: heading i CTA zgadzają się z `59:608`; lead był innym akapitem (Drupal) i wraca do tekstu z ramki.
 
 | Ramka | Kod | Status |
 |-------|-----|--------|

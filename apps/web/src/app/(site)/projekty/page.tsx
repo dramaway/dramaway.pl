@@ -3,10 +3,10 @@ import { BlobRow } from "@/components/sections/blob-row";
 import { PageHero } from "@/components/sections/page-hero";
 import { DotBand } from "@/components/visual/dot-band";
 import { PaletteRow } from "@/components/visual/palette-row";
-import { czytelniaPath, publicPathForProjectSlug } from "@/lib/routes";
+import { publicPathForProjectSlug } from "@/lib/routes";
 import { getProjects } from "@/lib/sanity/fetch";
 import type { ProjectListItem } from "@/lib/sanity/types";
-import { SUBPAGE } from "@/lib/subpage-copy";
+import { getProjectsLanding } from "@/lib/landing-page";
 
 export const metadata: Metadata = { title: "Projekty" };
 export const revalidate = 60;
@@ -24,20 +24,24 @@ function projectToRow(project: ProjectListItem) {
 }
 
 export default async function ProjectsPage() {
-  const projects = await getProjects();
+  const [projects, landing] = await Promise.all([
+    getProjects(),
+    getProjectsLanding(),
+  ]);
   const active = projects.filter(isActive);
   const archive = projects.filter((project) => !isActive(project));
-  const heroImage = active[0]?.cover ?? archive[0]?.cover ?? null;
-  const { projects: copy } = SUBPAGE;
+  const heroImage = landing.image ?? active[0]?.cover ?? archive[0]?.cover ?? null;
+  const { czytelnia } = landing;
 
   return (
     <>
       <PageHero
-        title={copy.title}
-        lead={copy.lead}
-        ctaLabel={copy.ctaLabel}
-        ctaHref={copy.ctaHref}
+        title={landing.title}
+        lead={landing.lead}
+        ctaLabel={landing.ctaLabel}
+        ctaHref={landing.ctaHref}
         image={heroImage}
+        imageAlt={landing.imageAlt}
       />
       <div className="page py-section">
         <PaletteRow />
@@ -47,10 +51,10 @@ export default async function ProjectsPage() {
         items={[
           ...active.map(projectToRow),
           {
-            title: copy.czytelnia.title,
-            lead: copy.czytelnia.lead,
-            href: czytelniaPath(),
-            ctaLabel: copy.czytelnia.ctaLabel,
+            title: czytelnia.title,
+            lead: czytelnia.lead,
+            href: czytelnia.href,
+            ctaLabel: czytelnia.ctaLabel,
           },
         ]}
         emptyMessage="Brak aktywnych projektów w CMS."

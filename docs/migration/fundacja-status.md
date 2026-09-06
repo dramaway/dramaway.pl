@@ -36,6 +36,7 @@ Publiczne: `http://localhost:3000` (`pnpm dev`). Inwentarz CMS: `/preview`. Stud
 |-----|-----|------|---------|
 | `person` | 7 | Drupal `czlonek_zespolu` | `/zespol` |
 | `aboutPage` | 1 singleton | ręcznie / `pnpm seed:about-page` | `/fundacja` |
+| `landingPage` | 4 singletony | `pnpm seed:landing-pages` (puste pola) | `/projekty`, `/baza-wiedzy`, `/czytelnia`, `/zespol` |
 | `page` | 23 + 2 newsy + placeholder | Drupal `page` + opublikowane `aktualnosc` | `/fundacja/…`, `/metody`, `/kontakt`, korzeń |
 | `project` | 4 | rozbicie stron Drupal, nie nowy dump | `/projekty` |
 | `readingMethod` | 6 | seed z `scripts/czytelnia-curated.json` (nie enum, nie `/metody`) | Studio |
@@ -72,7 +73,7 @@ Placeholder newsa Syrena (`[Aktualność] Nowy projekt z Teatrem Syrena`, slug `
 
 **1:1 (nody):** zespół (7), kontakt, metody, szkolenia i spektakle, projekty-karty, fundacja (statut, sprawozdania, zarząd, jak wesprzeć), aktualności z homepage.
 
-**Świadomie nie jako dokumenty `page`:** `/`, `/projekty`, `/zespol` — w Drupalu listingi taksonomii, nie nody. W Next są to widoki. `/fundacja` jest widokiem z singletonem `aboutPage` (Studio: **O fundacji**).
+**Świadomie nie jako dokumenty `page`:** `/`, `/projekty`, `/zespol` — w Drupalu listingi taksonomii, nie nody. W Next są to widoki. `/projekty`, `/baza-wiedzy`, `/czytelnia`, `/zespol` mają singletony `landingPage` tylko pod chrome (hero); puste = fallback z `subpage-copy.ts`. `/fundacja` jest widokiem z singletonem `aboutPage` (Studio: **O fundacji**). `/metody` i `/kontakt` zostają `page`, przypięte na górze desk.
 
 **Nie przenosiliśmy:** 2 nieopublikowane newsy, 2 `simplenews`. Sitemap XML na live jest popsuty (tylko homepage) — weryfikacja była menu + listing projektów + HTTP na ścieżkach z dumpa.
 

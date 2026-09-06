@@ -2,6 +2,7 @@ import { aboutPage } from "./aboutPage";
 import { blockContent, youtube } from "./blockContent";
 import { edition } from "./edition";
 import { editionOutcome } from "./editionOutcome";
+import { landingPage } from "./landingPage";
 import { page } from "./page";
 import { person } from "./person";
 import { project } from "./project";
@@ -17,6 +18,7 @@ export const schemaTypes = [
   project,
   person,
   page,
+  landingPage,
   readingMethod,
   publication,
   aboutPage,

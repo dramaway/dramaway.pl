@@ -110,4 +110,8 @@ export const SUBPAGE = {
     lead: "Adres, dane rejestrowe i osoby, do których możesz napisać — bez formularza.",
     directHeading: "Napisz bezpośrednio",
   },
+  team: {
+    title: "Zespół",
+    lead: "Osoby, które prowadzą projekty, warsztaty i pracę ze społecznościami.",
+  },
 } as const;

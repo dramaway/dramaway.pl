@@ -15,7 +15,14 @@ export function PageArticle({
 }) {
   return (
     <>
-      <PageHero title={page.title} image={page.cover} parent={parent} />
+      <PageHero
+        title={page.title}
+        lead={page.heroLead}
+        ctaLabel={page.heroCtaLabel}
+        ctaHref={page.heroCtaHref}
+        image={page.cover}
+        parent={parent}
+      />
       <Section>
         <div className="measure">
           <PortableBody value={page.body} />
