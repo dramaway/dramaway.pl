@@ -77,9 +77,19 @@ export type SanityFile = {
   } | null;
 };
 
+export type PublicationFormat =
+  | "articles"
+  | "books"
+  | "scripts"
+  | "multimedia";
+
 export type ReadingMethodRef = {
   title: string;
   slug: string | null;
+};
+
+export type ReadingMethodListItem = ReadingMethodRef & {
+  order: number;
 };
 
 export type SiteSettingsBranding = {
@@ -204,6 +214,7 @@ export type PublicationListItem = {
   slug: string;
   summary: string | null;
   authors: string[] | null;
+  format: PublicationFormat | null;
   methods: ReadingMethodRef[] | null;
   file: SanityFile | null;
 };

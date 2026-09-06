@@ -7,6 +7,10 @@
 
 Kanony, które ten plik uzupełnia, nie zastępuje: [ia.md](ia.md), [art-generacje.md](art-generacje.md), [system.md](../design/system.md), [ADR-003](../decisions/ADR-003-content-model-and-mvp.md), [ADR-004](../decisions/ADR-004-layout-architecture.md), [fundacja-status.md](../migration/fundacja-status.md).
 
+## Delta 2026-09-06 — dwie osie Czytelni
+
+Szuflady Drupala (`field_kategoria_czytelnii`: Publikacje / Scenariusze / Książki / Multimedia) znowu są osią **rodzaju** — publiczne `publication.format`. Tagi z listy Word zostają **kategoriami** (typ `_type: "readingMethod"` bez zmiany nazwy w datasecie; w Studio: Category; pole publikacji: Categories). Zdanie niżej, że kategorie idą „wokół metod, nie szuflad Drupala”, jest historyczne: tak zrobiono import. UI i model publiczny mają **obie** osie. **Nie** odpalamy `migrate:czytelnia`.
+
 ---
 
 ## Jednym zdaniem

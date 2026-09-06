@@ -8,22 +8,39 @@ import type { PortableContent } from "@/lib/sanity/types";
 import { urlFor } from "@/lib/sanity/image";
 import { youtubeEmbedSrc } from "@/lib/sanity/youtube";
 
+type BodyImageSize = "small" | "medium" | "wide";
+
+const BODY_IMAGE_CDN_WIDTH: Record<BodyImageSize, number> = {
+  small: 800,
+  medium: 1200,
+  wide: 1600,
+};
+
 type ImageValue = {
   _type?: string;
   alt?: string;
+  size?: string;
   asset?: { _ref?: string; _id?: string };
 };
 
 type YoutubeValue = { _type?: string; url?: string };
 
+function bodyImageSize(value: string | undefined): BodyImageSize {
+  if (value === "small" || value === "medium" || value === "wide") {
+    return value;
+  }
+  return "medium";
+}
+
 function PortableImage({ value }: PortableTextTypeComponentProps<ImageValue>) {
   if (!value?.asset) return null;
+  const size = bodyImageSize(value.size);
   return (
     // eslint-disable-next-line @next/next/no-img-element -- body images have unknown aspect ratio
     <img
-      src={urlFor(value).width(1200).url()}
+      src={urlFor(value).width(BODY_IMAGE_CDN_WIDTH[size]).url()}
       alt={value.alt || ""}
-      className="my-6 h-auto w-full"
+      className={`body-image body-image-${size}`}
     />
   );
 }
@@ -103,7 +120,7 @@ export function PortableBody({ value }: { value: PortableContent }) {
   const blocks = Array.isArray(value) ? value : [value];
   if (blocks.length === 0) return null;
   return (
-    <div className="mt-8 max-w-none space-y-4 text-lead">
+    <div className="portable-body mt-8 max-w-none space-y-4 text-lead">
       <PortableText value={blocks} components={components} />
     </div>
   );

@@ -135,6 +135,11 @@
    * size → remainder below the photo = 1.98× size).
    */
   --hero-media-max: calc(100vh - var(--dot-size) * 1.98);
+  /*
+   * Portable Text portraits: cap height so a tall frame does not eat
+   * the viewport. Independent of --hero-media-max / split-hero.
+   */
+  --body-image-max: min(36rem, 70vh);
 }
 
 :root {
@@ -999,5 +1004,171 @@
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
+  }
+
+  /*
+   * Body images — do not edit filter-row/fold blocks
+   * Size: small → --content-narrow, medium → .measure (62ch, default),
+   * wide → --content-wide. Always capped at 100% of the parent.
+   */
+  .portable-body,
+  .portable-body a {
+    overflow-wrap: anywhere;
+  }
+
+  .body-image {
+    display: block;
+    margin-block: 1.5rem;
+    margin-inline: auto;
+    width: auto;
+    height: auto;
+    max-width: min(62ch, 100%);
+    max-height: var(--body-image-max);
+    object-fit: contain;
+    border-radius: var(--radius-media);
+  }
+
+  .body-image-small {
+    max-width: min(var(--content-narrow), 100%);
+  }
+
+  .body-image-medium {
+    max-width: min(62ch, 100%);
+  }
+
+  .body-image-wide {
+    max-width: min(var(--content-wide), 100%);
+  }
+
+  /*
+   * FoldList — do not edit filter-row/body-image blocks
+   * Native details/summary, several panels independently open.
+   * Rule geometry matches .cta-rule; the trigger is a heading, not a CTA.
+   */
+  .fold {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1.5rem;
+  }
+
+  .portable-body + .fold {
+    margin-block-start: 1.5rem;
+  }
+
+  .fold-item {
+    width: 100%;
+  }
+
+  .fold-panel {
+    min-width: 0;
+  }
+
+  .fold-summary {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+    width: 100%;
+    min-height: var(--touch-target);
+    cursor: pointer;
+    list-style: none;
+    text-transform: uppercase;
+    color: var(--color-ink);
+  }
+
+  .fold-summary::-webkit-details-marker,
+  .fold-summary::marker {
+    display: none;
+    content: none;
+  }
+
+  .fold-summary:focus {
+    outline: none;
+  }
+
+  .fold-summary:focus-visible {
+    outline: 2px solid var(--color-green-ink);
+    outline-offset: 4px;
+  }
+
+  .fold-rule {
+    position: relative;
+    display: block;
+    height: 4px;
+    border-radius: 999px;
+    background-color: var(--color-green);
+    transition: transform 200ms ease;
+    transform-origin: left center;
+  }
+
+  .fold-rule::after {
+    content: "";
+    position: absolute;
+    inset-inline-end: -5px;
+    inset-block-start: 50%;
+    translate: 0 -50%;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: var(--color-green);
+  }
+
+  .fold-item[open] > .fold-summary .fold-rule,
+  .fold-summary:hover .fold-rule,
+  .fold-summary:focus-visible .fold-rule {
+    transform: scaleX(0.88);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fold-rule {
+      transition: none;
+    }
+  }
+
+  /*
+   * Czytelnia filters — do not edit fold/body-image blocks
+   */
+  .filter-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .filter-row + .filter-row {
+    margin-block-start: 1.5rem;
+  }
+
+  .filter-row ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .filter-row a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch-target);
+    padding-inline: 0.85rem;
+    border-radius: 999px;
+    background-color: var(--color-sand);
+    font-family: var(--font-display);
+    font-size: var(--text-small);
+    font-weight: 600;
+    line-height: var(--text-small--line-height);
+    color: var(--color-ink);
+  }
+
+  .filter-row a:hover,
+  .filter-row a:focus-visible {
+    color: var(--color-magenta);
+  }
+
+  .filter-row a[aria-current="true"] {
+    color: var(--color-magenta);
   }
 }

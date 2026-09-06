@@ -19,12 +19,27 @@ export const publication = defineType({
       validation: (r) => r.required(),
     }),
     defineField({
+      name: "format",
+      title: "Format",
+      type: "string",
+      options: {
+        list: [
+          { title: "Articles", value: "articles" },
+          { title: "Books", value: "books" },
+          { title: "Scripts", value: "scripts" },
+          { title: "Multimedia", value: "multimedia" },
+        ],
+      },
+      description:
+        "Czytelnia drawer (Drupal field_kategoria_czytelnii). Front copy is Polish in the site, not here.",
+    }),
+    defineField({
       name: "methods",
-      title: "Methods",
+      title: "Categories",
       type: "array",
       of: [{ type: "reference", to: [{ type: "readingMethod" }] }],
       description:
-        "Tags for the reading room. Not the /metody essays and not a second listing.",
+        "Czytelnia tags from the Word list. Not the /metody essays and not a second listing.",
     }),
     defineField({
       name: "listed",

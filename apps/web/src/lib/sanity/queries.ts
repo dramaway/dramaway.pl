@@ -177,6 +177,19 @@ export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
 
 const publicationFileProjection = `file { asset->{ url, originalFilename, mimeType } }`;
 const publicationMethodsProjection = `methods[]->{ title, "slug": slug.current }`;
+/** Public enum, with Drupal-string fallback until `pnpm patch:publication-format`. Keep in sync with scripts/patch-publication-format.mjs. */
+const publicationFormatProjection = `"format": select(
+  format in ["articles", "books", "scripts", "multimedia"] => format,
+  lower(coalesce(legacyDrupal.format, "")) == "publikacje" => "articles",
+  lower(coalesce(legacyDrupal.format, "")) == "publikacja" => "articles",
+  lower(coalesce(legacyDrupal.format, "")) == "artykuły i publikacje" => "articles",
+  lower(coalesce(legacyDrupal.format, "")) == "książki" => "books",
+  lower(coalesce(legacyDrupal.format, "")) == "książka" => "books",
+  lower(coalesce(legacyDrupal.format, "")) == "ksiazki" => "books",
+  lower(coalesce(legacyDrupal.format, "")) == "scenariusze" => "scripts",
+  lower(coalesce(legacyDrupal.format, "")) == "scenariusz" => "scripts",
+  lower(coalesce(legacyDrupal.format, "")) == "multimedia" => "multimedia"
+)`;
 
 export const publicationsListQuery = `*[_type == "publication" && listed == true && defined(slug.current)] | order(title asc) {
   _id,
@@ -184,6 +197,7 @@ export const publicationsListQuery = `*[_type == "publication" && listed == true
   "slug": slug.current,
   summary,
   authors,
+  ${publicationFormatProjection},
   ${publicationMethodsProjection},
   ${publicationFileProjection}
 }`;
@@ -194,10 +208,17 @@ export const publicationBySlugQuery = `*[_type == "publication" && slug.current 
   "slug": slug.current,
   summary,
   authors,
+  ${publicationFormatProjection},
   ${publicationMethodsProjection},
   ${publicationFileProjection},
   "cover": body[_type == "image"][0],
   body
+}`;
+
+export const readingMethodsQuery = `*[_type == "readingMethod"] | order(order asc) {
+  title,
+  "slug": slug.current,
+  order
 }`;
 
 export const publicationSlugsQuery = `*[_type == "publication" && defined(slug.current)].slug.current`;

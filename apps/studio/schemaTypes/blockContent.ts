@@ -57,6 +57,22 @@ export const blockContent = defineType({
           type: "string",
           title: "Alt text",
         },
+        defineField({
+          name: "size",
+          title: "Size",
+          type: "string",
+          options: {
+            list: [
+              { title: "Small", value: "small" },
+              { title: "Medium", value: "medium" },
+              { title: "Wide", value: "wide" },
+            ],
+            layout: "radio",
+          },
+          initialValue: "medium",
+          description:
+            "Display width in the article. Existing images without a value render as medium.",
+        }),
       ],
     }),
     defineArrayMember({ type: "youtube", title: "YouTube film" }),

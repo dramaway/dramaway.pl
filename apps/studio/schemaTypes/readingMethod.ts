@@ -2,7 +2,7 @@ import { defineField, defineType } from "sanity";
 
 export const readingMethod = defineType({
   name: "readingMethod",
-  title: "Reading method",
+  title: "Category",
   type: "document",
   fields: [
     defineField({

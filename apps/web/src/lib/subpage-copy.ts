@@ -53,6 +53,19 @@ export const SUBPAGE = {
   },
   czytelnia: {
     pdfCta: "pobierz PDF",
+    empty: "Czytelnia jest pusta — w CMS nie ma jeszcze publikacji.",
+    emptyFiltered: "Żadna publikacja nie pasuje do wybranych filtrów.",
+    filters: {
+      all: "wszystkie",
+      formatLabel: "Rodzaj",
+      categoryLabel: "Kategoria",
+      formats: {
+        articles: "artykuły i publikacje",
+        books: "książki",
+        scripts: "scenariusze",
+        multimedia: "multimedia",
+      },
+    },
   },
   fundacja: {
     title: "O fundacji",

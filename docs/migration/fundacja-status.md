@@ -49,7 +49,7 @@ Biblioteka **Media** w Studio czyta te same `sanity.imageAsset` — bez re-uploa
 
 Archiwum bez edycji: Teatr Codzienny, TO MI GRA, BOAL IN PRACTICE.
 
-**Czytelnia** (2026-09-05): dump `private/dumps/drama_teatr_1787254349.sql.gz`. 82 opublikowane `article` → `publication`; śmieć `metody-tzs` (tytuł „aaa”) **usunięty** → **81** w datasetcie (47 `listed` + 34 URL-only). Tagi metod wyłącznie z `scripts/czytelnia-curated.json` (lista Word). Szuflady Drupala (Publikacje / Scenariusze / Książki / Multimedia) siedzą w ukrytym `legacyDrupal.format`, nie w IA. `publication` nigdy nie jest `project`; edycje AG nie są publikacjami. Persony portalu (89) nie są dokumentami `person` — tylko stringi `authors`. PDF-y z `field_dokument` (64/64 na dysku). Front artykułu ciągnie `authors`, `methods`, `file`. Hosted Studio: schemat wdrożony.
+**Czytelnia** (2026-09-05, osie przywrócone 2026-09-06): dump `private/dumps/drama_teatr_1787254349.sql.gz`. 82 opublikowane `article` → `publication`; śmieć `metody-tzs` (tytuł „aaa”) **usunięty** → **81** w datasetcie (47 `listed` + 34 URL-only). Tagi z `scripts/czytelnia-curated.json` (lista Word) zostają **kategoriami** (`readingMethod` / pole `methods`; w Studio: Category / Categories) — to nie strona `/metody`. Szuflady Drupala (Publikacje / Scenariusze / Książki / Multimedia) znowu są publicznym **rodzajem** `publication.format` (`articles` \| `books` \| `scripts` \| `multimedia`); `legacyDrupal.format` zostaje ukrytym śladem dumpa. Patch: `pnpm patch:publication-format`, **nie** `migrate:czytelnia`. `publication` nigdy nie jest `project`; edycje AG nie są publikacjami. Persony portalu (89) nie są dokumentami `person` — tylko stringi `authors`. PDF-y z `field_dokument` (64/64 na dysku). Front artykułu ciągnie `authors`, `methods`, `file`. Hosted Studio: po zmianie schematu `pnpm --filter studio run deploy`.
 
 ## Luki vs ramka Figmy (listingi)
 
@@ -125,7 +125,8 @@ pnpm extract:fundacja
 pnpm migrate:fundacja          # write token w apps/studio/.env
 pnpm migrate:art-generacje    # rozbija page Art Generacje → project.editions
 pnpm extract:czytelnia        # dump drama_teatr → gitignored JSON
-pnpm migrate:czytelnia        # 6× readingMethod + 82× publication (dataset 81 po usunięciu śmiecia); nie rusza person/page/project
+pnpm migrate:czytelnia        # 6× readingMethod + 82× publication (dataset 81 po usunięciu śmiecia); NIE wołać ponownie
+pnpm patch:publication-format # jednorazowo: legacyDrupal.format → publication.format
 pnpm repair:portable-text     # dry-run; `pnpm repair:portable-text -- --write` zapisuje
 pnpm test:repair              # node:test na lib/portable-text-repair
 pnpm dev                      # :3000

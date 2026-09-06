@@ -5,12 +5,12 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-06 — Fala 1: `/projekty`, AG, edycja, `/fundacja` bliżej ramek |
+| **Ostatnia aktualizacja** | 2026-09-06 — Czytelnia: dwie osie + filtry; AG: edycje newest-first, FoldList |
 | **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
-| **Studio** | https://dramaway.sanity.studio/ (schemat `readingMethod` / `publication` wdrożony) |
-| **Working tree** | Fala 0 + 1 na `main`, bez pusha |
+| **Studio** | https://dramaway.sanity.studio/ (`readingMethod` = Category; `publication.methods` = Categories; publiczne `publication.format`) |
+| **Working tree** | Fala 0+1 + ta iteracja na `main`, bez pusha |
 | **Owner Sanity (na razie)** | Jan Mirecki |
 
 ---
@@ -29,9 +29,9 @@ Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona głów
 
 - Dataset `production` (`tr2qdg9j`) publiczny. Next bez tokenu. Write token **tylko** `apps/studio/.env`.
 - Mapa URL: `apps/web/src/lib/routes.ts` — prefiks IA + `slug.current`. Header: Projekty, **Baza wiedzy** (`/baza-wiedzy`) z drugim poziomem Metody / Czytelnia (desktop disclosure, mobile overlay), O fundacji, Kontakt. `/zespol` poza pierwszym poziomem.
-- Listingi: `/projekty` = paleta po hero, aktywne + wiersz Czytelni `BlobRow width="wide"`, druga paleta + pasmo, archiwum `density="compact"`. `/fundacja` = metody/wartości z etykietami, zespół `TeamBios`, dokumenty jako lista CTA (nie blob-karty). `/czytelnia` = `BlobRow` (`listed`). `/` **nie** listuje siatki projektów ani splitów „13 edycji”.
-- `/projekty/[slug]` = `project` albo strona z sekcji projektów. Edycje: `/projekty/[slug]/[edition]` (AG ma 13 unikalnych slugów, w tym trzy `edycja-vi-20xx`). `/[slug]` = reszta (newsy).
-- `/czytelnia` — wiersz z plamą; GROQ **`listed == true`** (47). Pozostałe 34 opublikowane pod `/czytelnia/[slug]`, nie w spisie. Artykuł: autorzy, etykiety `readingMethod`, link PDF (`file`), cover z pierwszego obrazka w `body`. W Sanity **81× `publication`** (import 82 minus śmieć `metody-tzs`) + **6× `readingMethod`**. Dump **jest**: `private/dumps/drama_teatr_1787254349.sql.gz`. Hub Bazy: `/baza-wiedzy` (rodzic; Czytelnia to dziecko). Hosted Studio: schemat wdrożony (`pnpm --filter studio run deploy`).
+- Listingi: `/projekty` = paleta po hero, aktywne + wiersz Czytelni `BlobRow width="wide"`, druga paleta + pasmo, archiwum `density="compact"`. `/fundacja` = metody/wartości z etykietami, zespół `TeamBios`, dokumenty jako lista CTA (nie blob-karty). `/czytelnia` = chipy rodzaju/kategorii + `BlobRow` (`listed`). `/` **nie** listuje siatki projektów ani splitów „13 edycji”.
+- `/projekty/[slug]` = `project` albo strona z sekcji projektów. Edycje: `/projekty/[slug]/[edition]` (AG ma 13 unikalnych slugów, w tym trzy `edycja-vi-20xx`). `/[slug]` = reszta (newsy). **AG:** lista edycji to kopia posortowana malejąco po `year` (CMS bez zmian). Afterword + `partners` / `sponsors` w `FoldList` (`details`, domyślnie zamknięte); niepuste pole wygrywa z H2 Partnerzy/Sponsorzy.
+- `/czytelnia` — dwa rzędy chipów (rodzaj `?rodzaj=` + kategoria `?kategoria=`, AND) nad `BlobRow`. GROQ **`listed == true`** (47). **Wszystkie 47 listed to `format: articles`** (lista Word); książki / scenariusze / multimedia są wśród 34 URL-only — filtr rodzaju na te trzy szuflady jest pusty, dopóki ktoś nie zaznaczy `listed`. Artykuł: autorzy, etykiety `readingMethod`, link PDF (`file`), cover z pierwszego obrazka w `body`. W Sanity **81× `publication`** (import 82 minus śmieć `metody-tzs`) + **6× `readingMethod`** (`_type` bez zmiany; w Studio tytuł **Category**). Dwie osie: Drupalowe szuflady → publiczne `publication.format` (`articles` \| `books` \| `scripts` \| `multimedia`); tagi z Worda → `methods` (Categories). `pnpm patch:publication-format` **odpalony** (81 ustawionych, 1 puste `legacyDrupal.format`). Dump **jest**: `private/dumps/drama_teatr_1787254349.sql.gz`. Hub Bazy: `/baza-wiedzy` (rodzic; Czytelnia to dziecko). Hosted Studio: po zmianie schematu trzeba `pnpm --filter studio run deploy`.
 - `siteSettings` **jest w datasetcie** — hero heading/CTA z ramki `59:608`; **`heroLead` przywrócony do tekstu z ramki** (wcześniej akapit z Drupala). Grupa `homepage` **zostaje pusta** — wypełnienie w Studio cicho nadpisuje fallbacki z `apps/web/src/lib/homepage-copy.ts`. Chrome UI (CTA, leady, etykiety list) tylko w `homepage-copy.ts` / `subpage-copy.ts`; wyjątki: [design/system.md](design/system.md) „Copy chrome vs Figma”. Grupa **Ikony** (`branding`): **SVG jako `image`** (Select w Media widzi m.in. już wrzucony `icon.svg`; strona serwuje surowy SVG z `asset.url`, nie raster CDN) / **ICO jako `file`** z podglądem 32×32 i natywnym pickerem (Media na polach `file` była pusta: 0 `fileAsset`) / PNG light+dark / Apple / 512 / OG. Puste pole = `public/brand`.
 - `getResolvedSite()` zwraca `homepage` + `hero` + `footerNote` (zawsze string, cytat Boala jako fallback). Featured **H2** to tytuł `project.featured`; magenta etykieta „Projekty” to `homepage.featured.heading`.
 - Newsy na `/`: `getHomepageNews()` — max 3, bez zdjęć, excerpt ~400 znaków. Daty kart: `publishedAt`. Trzeci news `news-placeholder-syrena` jest wypełniaczem z ramki — **do draftu** z adnotacją PL (wykaz: [fundacja-status.md](migration/fundacja-status.md) „Luki vs ramka”).
@@ -81,12 +81,12 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 
 Ten plik + [fundacja-status.md](migration/fundacja-status.md) + [ustalenia-2026-09-05.md](concept/ustalenia-2026-09-05.md). Nie odtwarzać dumpów rozmów. Nie wołać Figmy bez potrzeby.
 
-**Baza wiedzy ≠ Czytelnia.** Hub `/baza-wiedzy` + Metody `/metody` + Czytelnia `/czytelnia`. Faza 2 kanału Czytelni **zrobiona** (GROQ `authors` / `methods` / `file`, artykuł, hosted Studio, śmieć `metody-tzs` usunięty). Listing 47; unlisted np. `perykles-wygnanie-i-utrata-adrian-jackson`.
+**Baza wiedzy ≠ Czytelnia.** Hub `/baza-wiedzy` + Metody `/metody` + Czytelnia `/czytelnia`. Faza 2 kanału Czytelni **zrobiona**. Listing 47 z filtrami dwóch osi; unlisted np. `perykles-wygnanie-i-utrata-adrian-jackson`.
 
-Ramki Figmy podstron są na `main` (chrome + `/projekty`, AG, edycja stack + 1+3, hub Bazy, `/fundacja` wartości/bio/dokumenty, `/kontakt` bez formularza). `person.email` w CMS puste → kontakt bez siatki maili. **Fala 0 + 1** lokalnie, bez pusha.
+Ramki Figmy podstron są na `main` (chrome + `/projekty`, AG, edycja stack + 1+3, hub Bazy, `/fundacja` wartości/bio/dokumenty, `/kontakt` bez formularza). `person.email` w CMS puste → kontakt bez siatki maili. **Working tree brudne**, bez commita i bez pusha.
 
 1. Draft `news-placeholder-syrena` w Studio — jeszcze nie. Profile `/zespol/[slug]` nadal robocze.
-2. Nie odpalaj ponownie `migrate:czytelnia` / `migrate:fundacja` bez potrzeby — nadpisze ręczną korektę, **odtworzy** `metody-tzs` i dosłowne `&nbsp;` w `summary`.
+2. **Nie odpalaj** `migrate:czytelnia` / `migrate:fundacja` / `migrate:art-generacje` — nadpisze ręczną korektę, **odtworzy** `metody-tzs` i dosłowne `&nbsp;` w `summary`. Format szuflad: `pnpm patch:publication-format` (jednorazowy, nie pełny migrate).
 3. Pola Studio pod ramki: tabela niżej. **Nie wypełniać** `siteSettings.homepage`. Ucięte bilety Evently w newsie „W kolejce do lasu” — ręcznie w Studio (skrypt tylko raportuje).
 
 ### Studio — podstrony vs Figma
@@ -146,6 +146,7 @@ pnpm deps:update              # bump w ramach ^/~
 pnpm extract:czytelnia        # dump → gitignored JSON
 pnpm repair:portable-text     # dry-run encji/linków; `-- --write` zapisuje
 pnpm test:repair
+pnpm patch:publication-format # legacyDrupal.format → format; nie zastępuje migrate:czytelnia
 pnpm --filter studio run deploy   # https://dramaway.sanity.studio/
 ```
 

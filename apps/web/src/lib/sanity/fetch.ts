@@ -19,6 +19,7 @@ import {
   publicationBySlugQuery,
   publicationSlugsQuery,
   publicationsListQuery,
+  readingMethodsQuery,
   siteSettingsQuery,
 } from "./queries";
 import type {
@@ -31,6 +32,7 @@ import type {
   ProjectListItem,
   PublicationDetail,
   PublicationListItem,
+  ReadingMethodListItem,
   SiteSettings,
 } from "./types";
 import { NEWS_SLUG_PREFIX } from "@/lib/routes";
@@ -125,6 +127,10 @@ export async function getProjectEditionParams(): Promise<
 
 export async function getPublications(): Promise<PublicationListItem[]> {
   return sanityClient.fetch(publicationsListQuery, {}, revalidate);
+}
+
+export async function getReadingMethods(): Promise<ReadingMethodListItem[]> {
+  return sanityClient.fetch(readingMethodsQuery, {}, revalidate);
 }
 
 export async function getPublicationBySlug(

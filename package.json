@@ -18,6 +18,7 @@
     "migrate:fundacja": "node --env-file=apps/studio/.env scripts/migrate-fundacja.mjs",
     "migrate:czytelnia": "node --env-file=apps/studio/.env scripts/migrate-czytelnia.mjs",
     "migrate:art-generacje": "node --env-file=apps/studio/.env scripts/migrate-art-generacje.mjs",
+    "patch:publication-format": "node --env-file=apps/studio/.env scripts/patch-publication-format.mjs",
     "repair:portable-text": "node --env-file=apps/studio/.env scripts/repair-portable-text.mjs",
     "test:repair": "node --test scripts/lib/portable-text-repair.test.mjs"
   },
