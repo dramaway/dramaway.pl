@@ -104,6 +104,7 @@
   --text-small--line-height: 1.57;
 
   --spacing-section: clamp(3rem, 8vw, 7.5rem);
+  --pt-indent: 3rem;
 
   --radius-media: 16px;
 
@@ -1285,9 +1286,55 @@
    * to the figure (and still beats Tailwind preflight). Do not use
    * max-width: min(…, 100%) on Wide — 100% of .measure made all sizes equal.
    */
-  .portable-body,
+  .portable-body {
+    position: relative;
+    isolation: isolate;
+    overflow-wrap: anywhere;
+  }
+
   .portable-body a {
     overflow-wrap: anywhere;
+  }
+
+  /*
+   * Dictionary headword in Portable Text (`term` style). Same sand Blob as
+   * listing rows, but body font and weight — bold is opt-in via Strong.
+   * No isolation here: the circle overflows, and `.portable-body` is the
+   * stacking context so neighbouring paragraphs paint on top of it.
+   * Vertical rhythm lives in `@layer utilities` so it beats `.space-y-4`.
+   */
+  .pt-term {
+    position: relative;
+    font-family: var(--font-body);
+    font-weight: 300;
+    text-transform: none;
+  }
+
+  .pt-term :is(strong, b) {
+    font-weight: 600;
+  }
+
+  /* Nested `.pt-indent` is how list level increases (Tab in Studio). */
+  .pt-indent {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-inline-start: var(--pt-indent);
+  }
+
+  .pt-columns {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  @media (width >= 64rem) {
+    .pt-columns-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .pt-columns-3 {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
   }
 
   .body-figure {
@@ -1530,5 +1577,21 @@
   .pub-cat-list {
     padding-block-start: 6rem;
     padding-block-end: 1.25rem;
+  }
+}
+
+@layer utilities {
+  /*
+   * Termin is often nested (Indent, Columns), so this is a descendant
+   * selector. Blob hangs 1.8rem above the first line; Indent items are
+   * flex children (margins do not collapse), so keep the end small.
+   */
+  .portable-body .pt-term {
+    margin-block-start: 2.5rem;
+    margin-block-end: 0.75rem;
+  }
+
+  .pt-indent:has(.pt-term) {
+    gap: 0;
   }
 }

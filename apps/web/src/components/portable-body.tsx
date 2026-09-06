@@ -6,6 +6,7 @@ import {
 } from "@portabletext/react";
 import type { PortableContent } from "@/lib/sanity/types";
 import { cn } from "@/lib/utils";
+import { Blob } from "@/components/visual/blob";
 import { urlFor } from "@/lib/sanity/image";
 import { youtubeEmbedSrc } from "@/lib/sanity/youtube";
 
@@ -25,6 +26,16 @@ type ImageValue = {
 };
 
 type YoutubeValue = { _type?: string; url?: string };
+
+type ColumnValue = {
+  _key?: string;
+  body?: PortableContent;
+};
+
+type ColumnsValue = {
+  _type?: string;
+  columns?: ColumnValue[];
+};
 
 function bodyImageSize(value: string | undefined): BodyImageSize {
   if (value === "small" || value === "medium" || value === "wide") {
@@ -84,6 +95,30 @@ function PortableLink({
   );
 }
 
+function PortableColumns({
+  value,
+}: PortableTextTypeComponentProps<ColumnsValue>) {
+  const columns = (value.columns ?? []).slice(0, 3);
+  if (columns.length === 0) return null;
+  const layout = columns.length >= 3 ? "3" : columns.length === 2 ? "2" : "1";
+  return (
+    <div className={`pt-columns pt-columns-${layout}`}>
+      {columns.map((column, index) => (
+        <div key={column._key ?? index} className="pt-column">
+          {hasPortableContent(column.body) ? (
+            <PortableText
+              value={
+                Array.isArray(column.body) ? column.body : [column.body]
+              }
+              components={components}
+            />
+          ) : null}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 const components: PortableTextComponents = {
   block: {
     h2: ({ children }) => (
@@ -100,6 +135,12 @@ const components: PortableTextComponents = {
         {children}
       </blockquote>
     ),
+    term: ({ children }) => (
+      <p className="pt-term whitespace-pre-wrap">
+        <Blob />
+        {children}
+      </p>
+    ),
   },
   list: {
     bullet: ({ children }) => (
@@ -108,6 +149,10 @@ const components: PortableTextComponents = {
     number: ({ children }) => (
       <ol className="list-decimal space-y-1 pl-6">{children}</ol>
     ),
+    indent: ({ children }) => <div className="pt-indent">{children}</div>,
+  },
+  listItem: {
+    indent: ({ children }) => <div className="pt-indent-item">{children}</div>,
   },
   marks: {
     link: PortableLink,
@@ -115,6 +160,7 @@ const components: PortableTextComponents = {
   types: {
     image: PortableImage,
     youtube: PortableYoutube,
+    textColumns: PortableColumns,
   },
 };
 

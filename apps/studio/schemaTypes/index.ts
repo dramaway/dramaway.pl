@@ -1,5 +1,5 @@
 import { aboutPage } from "./aboutPage";
-import { blockContent, youtube } from "./blockContent";
+import { blockContent, textColumns, youtube } from "./blockContent";
 import { edition } from "./edition";
 import { editionOutcome } from "./editionOutcome";
 import { landingPage } from "./landingPage";
@@ -13,6 +13,7 @@ import { siteSettings } from "./siteSettings";
 export const schemaTypes = [
   blockContent,
   youtube,
+  textColumns,
   editionOutcome,
   edition,
   project,
