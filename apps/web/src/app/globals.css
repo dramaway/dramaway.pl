@@ -1159,12 +1159,16 @@
 
   /*
    * Czytelnia filters — do not edit fold/body-image blocks
-   * Format: Figma CTA switches (rule + dot), one always on.
-   * Category: quiet text links, not chips.
+   * Format: Figma CTA switches, only drawers that have listed items.
+   * Hidden when fewer than two drawers have anything to show.
    */
+  .filter-row-switches {
+    margin-block-end: var(--spacing-section);
+  }
+
   .filter-row-switches ul {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
     gap: 1.5rem clamp(1rem, 3vw, 2.5rem);
     width: 100%;
     margin: 0;
@@ -1177,46 +1181,87 @@
     width: 100%;
   }
 
-  @media (min-width: 64rem) {
-    .filter-row-switches ul {
-      grid-template-columns: repeat(4, 1fr);
-    }
+  /*
+   * Czytelnia category sections. Preview = 3 rows; collapse hides all;
+   * expand shows every item. The hover action is not a second heading.
+   */
+  .pub-cat + .pub-cat {
+    border-block-start: 1px solid var(--border);
   }
 
-  .filter-row-tags {
-    margin-block-start: var(--spacing-section);
-  }
-
-  .filter-row-tags ul {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.25rem 1.25rem;
+  .pub-cat-head {
     margin: 0;
-    margin-block-start: 0.75rem;
-    padding: 0;
-    list-style: none;
-  }
-
-  .filter-row-tags a {
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--touch-target);
     font-family: var(--font-display);
     font-size: var(--text-small);
     font-weight: 600;
     line-height: var(--text-small--line-height);
+    letter-spacing: 0.04em;
+  }
+
+  .pub-cat-toggle {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    min-height: var(--touch-target);
+    padding-block: 1.25rem;
+    margin: 0;
+    border: 0;
+    background: transparent;
+    text-align: start;
+    cursor: pointer;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+  }
+
+  .pub-cat-toggle:focus {
+    outline: none;
+  }
+
+  .pub-cat-toggle:focus-visible {
+    outline: 2px solid var(--color-green-ink);
+    outline-offset: 4px;
+  }
+
+  .pub-cat-count {
+    font-weight: 400;
     color: var(--color-ink);
+    opacity: 0.55;
   }
 
-  .filter-row-tags a:hover,
-  .filter-row-tags a:focus-visible,
-  .filter-row-tags a[aria-current="true"] {
+  .pub-cat-action {
+    flex-shrink: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-small);
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
     color: var(--color-magenta);
+    opacity: 0;
+    transition: opacity 150ms ease;
   }
 
-  /* Keep footer from jumping when a drawer has no listed publications. */
-  .blob-row-reserve {
-    min-height: 28rem;
+  .pub-cat-toggle:hover .pub-cat-action,
+  .pub-cat-toggle:focus-visible .pub-cat-action {
+    opacity: 1;
+  }
+
+  @media (hover: none) {
+    .pub-cat-action {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pub-cat-action {
+      transition: none;
+    }
+  }
+
+  .pub-cat-list {
+    padding-block-end: 1.25rem;
   }
 }

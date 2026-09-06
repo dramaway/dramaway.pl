@@ -1,16 +1,9 @@
-import Link from "next/link";
 import { Section } from "@/components/layout/section";
-import { Blob } from "@/components/visual/blob";
-import { CtaLink } from "@/components/visual/cta-link";
-import { LIST_CTA_LABEL, LIST_EMPTY_MESSAGE } from "@/lib/subpage-copy";
+import { BlobStack, type BlobRowItem } from "@/components/sections/blob-stack";
+import { LIST_EMPTY_MESSAGE } from "@/lib/subpage-copy";
 import { cn } from "@/lib/utils";
 
-export type BlobRowItem = {
-  title: string;
-  lead?: string | null;
-  href: string;
-  ctaLabel?: string | null;
-};
+export type { BlobRowItem };
 
 export type BlobRowWidth = "page" | "narrow" | "wide";
 
@@ -29,7 +22,6 @@ type BlobRowProps = {
   className?: string;
 };
 
-const DEFAULT_CTA = LIST_CTA_LABEL;
 const DEFAULT_EMPTY = LIST_EMPTY_MESSAGE;
 
 function idFromHeading(heading: string) {
@@ -78,32 +70,9 @@ export function BlobRow({
       {items.length === 0 ? (
         <p className={cn("text-body", heading && "mt-8")}>{emptyMessage}</p>
       ) : (
-        <ul
-          className={cn(
-            density === "compact" ? "blob-row-compact" : "stack",
-            heading && "mt-8",
-          )}
-        >
-          {items.map((item) => (
-            <li
-              key={`${item.href}-${item.title}`}
-              className="stack-item card-hover"
-            >
-              <Blob />
-              <h3 className="font-display text-h3 font-black">
-                <Link href={item.href} className="card-link">
-                  {item.title}
-                </Link>
-              </h3>
-              {item.lead ? (
-                <p className="measure mt-5 text-body">{item.lead}</p>
-              ) : null}
-              <CtaLink href={item.href} presentational className="mt-8">
-                {item.ctaLabel?.trim() || DEFAULT_CTA}
-              </CtaLink>
-            </li>
-          ))}
-        </ul>
+        <div className={cn(heading && "mt-8")}>
+          <BlobStack items={items} density={density} />
+        </div>
       )}
     </>
   );

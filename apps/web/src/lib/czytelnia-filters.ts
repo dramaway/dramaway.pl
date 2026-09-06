@@ -2,6 +2,7 @@ import { czytelniaPath } from "./routes";
 import type {
   PublicationFormat,
   PublicationListItem,
+  ReadingMethodListItem,
 } from "./sanity/types";
 
 export const PUBLICATION_FORMATS = [
@@ -11,8 +12,17 @@ export const PUBLICATION_FORMATS = [
   "multimedia",
 ] as const satisfies readonly PublicationFormat[];
 
-/** Landing `/czytelnia` is this drawer; Figma always has one switch on. */
+/** Landing `/czytelnia` prefers this drawer when it has listed items. */
 export const DEFAULT_PUBLICATION_FORMAT = "articles" satisfies PublicationFormat;
+
+/** First paint per category; collapse hides every row, expand shows all. */
+export const CATEGORY_SECTION_PREVIEW = 3;
+
+export type PublicationCategoryGroup = {
+  slug: string;
+  title: string;
+  items: PublicationListItem[];
+};
 
 export function firstSearchParam(
   value: string | string[] | undefined,
@@ -28,38 +38,85 @@ export function isPublicationFormat(
   return PUBLICATION_FORMATS.some((format) => format === value);
 }
 
+export function formatsWithItems(
+  publications: PublicationListItem[],
+): PublicationFormat[] {
+  return PUBLICATION_FORMATS.filter((format) =>
+    publications.some(
+      (item) => (item.format ?? DEFAULT_PUBLICATION_FORMAT) === format,
+    ),
+  );
+}
+
 export function resolvePublicationFormat(
   rodzaj: string | undefined,
+  available: PublicationFormat[],
 ): PublicationFormat {
-  return isPublicationFormat(rodzaj) ? rodzaj : DEFAULT_PUBLICATION_FORMAT;
-}
-
-export function czytelniaFilterHref(filters: {
-  rodzaj?: string | null;
-  kategoria?: string | null;
-}): string {
-  const params = new URLSearchParams();
-  const format = filters.rodzaj || DEFAULT_PUBLICATION_FORMAT;
-  if (format !== DEFAULT_PUBLICATION_FORMAT) {
-    params.set("rodzaj", format);
+  if (isPublicationFormat(rodzaj) && available.includes(rodzaj)) {
+    return rodzaj;
   }
-  if (filters.kategoria) params.set("kategoria", filters.kategoria);
-  const query = params.toString();
-  return query ? `${czytelniaPath()}?${query}` : czytelniaPath();
+  if (available.includes(DEFAULT_PUBLICATION_FORMAT)) {
+    return DEFAULT_PUBLICATION_FORMAT;
+  }
+  return available[0] ?? DEFAULT_PUBLICATION_FORMAT;
 }
 
-export function filterPublications(
+export function czytelniaFilterHref(rodzaj?: string | null): string {
+  const format = rodzaj || DEFAULT_PUBLICATION_FORMAT;
+  if (format === DEFAULT_PUBLICATION_FORMAT) return czytelniaPath();
+  return `${czytelniaPath()}?rodzaj=${encodeURIComponent(format)}`;
+}
+
+export function filterPublicationsByFormat(
   publications: PublicationListItem[],
-  filters: { rodzaj: PublicationFormat; kategoria?: string },
+  rodzaj: PublicationFormat,
 ): PublicationListItem[] {
-  return publications.filter((item) => {
-    if (item.format !== filters.rodzaj) return false;
-    if (filters.kategoria) {
-      const slugs = (item.methods ?? [])
-        .map((method) => method.slug)
-        .filter(Boolean);
-      if (!slugs.includes(filters.kategoria)) return false;
-    }
-    return true;
-  });
+  return publications.filter(
+    (item) => (item.format ?? DEFAULT_PUBLICATION_FORMAT) === rodzaj,
+  );
+}
+
+function methodSlugs(item: PublicationListItem): string[] {
+  return (item.methods ?? [])
+    .map((method) => method.slug)
+    .filter((slug): slug is string => Boolean(slug));
+}
+
+export function groupPublicationsByCategory(
+  publications: PublicationListItem[],
+  categories: ReadingMethodListItem[],
+  uncategorizedTitle: string,
+): PublicationCategoryGroup[] {
+  const ordered = [...categories]
+    .filter((category): category is ReadingMethodListItem & { slug: string } =>
+      Boolean(category.slug),
+    )
+    .sort((a, b) => a.order - b.order);
+  const known = new Set(ordered.map((category) => category.slug));
+  const groups: PublicationCategoryGroup[] = [];
+
+  for (const category of ordered) {
+    const items = publications.filter((item) =>
+      methodSlugs(item).includes(category.slug),
+    );
+    if (items.length === 0) continue;
+    groups.push({
+      slug: category.slug,
+      title: category.title,
+      items,
+    });
+  }
+
+  const rest = publications.filter(
+    (item) => !methodSlugs(item).some((slug) => known.has(slug)),
+  );
+  if (rest.length > 0) {
+    groups.push({
+      slug: "pozostale",
+      title: uncategorizedTitle,
+      items: rest,
+    });
+  }
+
+  return groups;
 }

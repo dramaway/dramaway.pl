@@ -46,7 +46,8 @@ Wszystkie w bloku `@theme` w [apps/web/src/app/globals.css](../../apps/web/src/a
 | `.team-bios` / `.team-bio` / `.team-bio-blurb` | `/fundacja`: dwa słupy bio (koło + imię + zajawka 4 linie + CTA) |
 | `.body-figure` / `-small` / `-medium` / `-wide` + `.body-image` | obraz w Portable Text. Figure ma jawną szerokość, żeby Wide mogło wyjść poza `.measure` (62ch). Small: `--body-image-small` (24 rem, obie osie). Medium (domyślnie, także brak pola): szerokość kolumny, wysokość `--body-image-max`. Wide: `--body-image-wide`, wysokość `min(90vh, --body-image-wide)`. `--radius-media`. Nie `w-full` strony. |
 | `.portable-body` | wrapper Portable Text (`text-lead`); `overflow-wrap: anywhere` na wrapperze i linkach — długie URL-e z dumpa nie rozpychają kolumny |
-| `.filter-row-switches` / `.filter-row-tags` | `/czytelnia`: rodzaj = rząd CTA (rulka + kropka, jeden zawsze aktywny, magenta); kategoria = ciche linki + „wszystkie”. `scroll={false}`. `/czytelnia` = szuflada `articles`. |
+| `.filter-row-switches` | `/czytelnia`: rodzaj = rząd CTA (rulka + kropka). Tylko szuflady z `listed` pozycjami; rząd znika, gdy zostaje jedna. `scroll={false}`. |
+| `.pub-cat` / `-head` / `-toggle` / `-action` | `/czytelnia`: sekcje kategorii. Tytuł + `(n)`; start 3 wiersze; hover/focus „pokaż wszystkie” / „zwiń”; zwiniecie chowa całość. Delikatna kreska między sekcjami. |
 
 ## Prymitywy
 
@@ -110,7 +111,7 @@ Etykiety UI (nie body z Drupala) biorą się z ramek. Kanon w `apps/web/src/lib/
 | Kontakt / hub Bazy — unikalny lead | krótki opis / reuse leadów z home | ramka kontaktu w budowie; hub bez osobnego akapitu w `79:50` (limit MCP) |
 | `siteSettings.homepage` | puste | zostawić puste |
 | Fundacja hero CTA Group 43 (`130:1331`) | „zobacz nasze publikacje” → `/czytelnia` | quoted ze zrzutu; instancja nie ma href — Czytelnia = publikacje |
-| Filtry Czytelni (`79:50`) | cztery przełączniki CTA (artykuły i publikacje / książki / scenariusze / multimedia); aktywny magenta; kategorie jako cichy rząd + „wszystkie”; empty filtered | ramka ma tylko szuflady; kategorie to druga oś, nie kopia CTA. Wejście `/czytelnia` = artykuły, nie „wszystkie rodzaje” |
+| Filtry Czytelni (`79:50`) | przełączniki CTA tylko dla niepustych rodzajów; kategorie jako sekcje z `(n)`, preview 3, hover pokaż wszystkie/zwiń | ramka ma szuflady; puste rodzaje ukryte. Sekcje kategorii to decyzja poza ramką. Chrome: „pokaż wszystkie”, „zwiń”, „Pozostałe” |
 
 ## Stan na teraz
 
@@ -120,4 +121,4 @@ Klikalne kafelki: karta aktualności → artykuł, Art Generacje → `/projekty/
 
 Sprawdzone przez CDP na 1440 / 1280 / 1024 / 768 / 375: `scrollWidth == innerWidth` (brak przepełnienia poziomego), żaden element nie wychodzi za krawędzie, rulki CTA aktualności mają identyczne `top` w układzie wielokolumnowym, a test trafień (`elementFromPoint`) potwierdza jeden link na kafelek i osobno klikalne CTA Art Generacji.
 
-Podstrony (2026-09-06): `PageHero` split + `data-split-hero` (overlay headera jak `/`, paleta stopki zostaje) + H1 `.hero-title`; `layout="stack"` na edycji. `BlobRow` `width` `page` (domyślnie) / `narrow` / `wide`, `density="compact"` dwukolumnowo na pełnym `.page`. `/projekty` = paleta po hero, aktywne + Czytelnia `wide`, paleta + pasmo, archiwum compact. AG: lead z ramki (bez intro Drupala), paleta, lista edycji `wide` w `#edycje` bez H2, reszta dumpa pod spodem. Edycja: hero stack + galeria 1+3. Hub `/baza-wiedzy` + `/metody`. `/fundacja` = hero CTA „zobacz nasze publikacje”, metody i wartości (koła z etykietami), zespół w dwóch słupach bio, paleta przed dokumentami jako listą CTA. `/zespol` listing zostaje rzędem kół. `/kontakt` bez formularza (maile tylko z `person.email`). `/czytelnia` = cztery przełączniki CTA (rodzaj, radio, default artykuły) + cichy rząd kategorii, AND, `searchParams`, `scroll={false}`, hero w `(listing)/layout`. 375 px: H1 w pierwszym ekranie, koło 227 px, bez overflow.
+Podstrony (2026-09-06): `PageHero` split + `data-split-hero` (overlay headera jak `/`, paleta stopki zostaje) + H1 `.hero-title`; `layout="stack"` na edycji. `BlobRow` `width` `page` (domyślnie) / `narrow` / `wide`, `density="compact"` dwukolumnowo na pełnym `.page`. `/projekty` = paleta po hero, aktywne + Czytelnia `wide`, paleta + pasmo, archiwum compact. AG: lead z ramki (bez intro Drupala), paleta, lista edycji `wide` w `#edycje` bez H2, reszta dumpa pod spodem. Edycja: hero stack + galeria 1+3. Hub `/baza-wiedzy` + `/metody`. `/fundacja` = hero CTA „zobacz nasze publikacje”, metody i wartości (koła z etykietami), zespół w dwóch słupach bio, paleta przed dokumentami jako listą CTA. `/zespol` listing zostaje rzędem kół. `/kontakt` bez formularza (maile tylko z `person.email`). `/czytelnia` = CTA rodzaju tylko gdy ≥2 niepuste szuflady; kategorie jako sekcje (3 wiersze, hover expand/collapse). 375 px: H1 w pierwszym ekranie, koło 227 px, bez overflow.
