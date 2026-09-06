@@ -16,6 +16,7 @@ The Figma file is a visual direction, not a spec: no auto-layout, no variables, 
 - **Decorative circles are backgrounds, not elements.** The Figma dot band is 270 identical circles; `DotBand` draws it with `radial-gradient`.
 - **Every section survives empty data.** Sanity fields are optional and galleries vary in length; Figma always shows a fixed count.
 - **Headings are uppercase** via `@layer base` on `h1–h4`, except `.hero-title` (sentence case). Do not add `uppercase` on each heading, and do not store ALL CAPS in CMS copy.
+- **Chrome copy (CTA, hero/section leads, list headings) lives in `lib/homepage-copy.ts` and `lib/subpage-copy.ts`.** Do not hardcode new Polish UI strings in JSX. A new string is a quote from the Figma frame, or a row in the copy-exceptions table in `docs/design/system.md`. Do not invent synonyms (e.g. „relacje” for „edycje”). Drupal body/summary is not Figma copy — do not rewrite articles to match the file.
 
 ## What exists
 

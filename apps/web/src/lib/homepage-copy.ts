@@ -1,6 +1,7 @@
 /**
- * Figma homepage copy — used until the matching Studio fields are filled.
- * One module owns all public fallbacks so hero, sections, and footer stay in sync.
+ * Figma homepage chrome (`59:608`) — used until matching Studio fields are filled.
+ * New strings: quote the frame, or list an exception in `docs/design/system.md`.
+ * Do not invent synonyms. Do not fill `siteSettings.homepage` until this module is the canon.
  */
 
 export const EXCERPT_FALLBACK_MAX = 400;

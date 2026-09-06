@@ -1,9 +1,18 @@
 import { FALLBACK_HERO, FALLBACK_HOMEPAGE } from "./homepage-copy";
 import { czytelniaPath, methodsPath } from "./routes";
 
+/** Default BlobRow / hub channel CTA — Figma Group 43 instances use a full phrase; this is the short fallback when a row has no own label. */
+export const LIST_CTA_LABEL = "więcej";
+
+export const LIST_EMPTY_MESSAGE = "Nie ma jeszcze pozycji w CMS.";
+
+/** Art Generacje intro — Figma frame `79:183` text `79:191`, not the homepage teaser. */
+const ART_GENERACJE_LEAD =
+  "Międzypokoleniowy projekt teatru zaangażowanego społecznie, skierowany do ludzi wszystkich pokoleń: Młodzieży (od 13 lat), Dorosłych i Starszych. Z naszych doświadczeń i obserwacji wynika, że te grupy mają głęboką potrzebę poczucia wspólnoty spowodowanej działaniami artystycznymi. Zarówno młodzi, jak i trochę starsi chcą rozwijać swoje umiejętności i talent; chcą by ich artystyczny głos został dostrzeżony i szanowany.";
+
 /**
- * Figma inner-page copy until matching Studio fields exist.
- * Nav labels stay on the IA; these strings are headings, leads, and CTAs.
+ * Inner-page chrome copy. New strings: quote Figma, or add a row to the copy
+ * exceptions table in `docs/design/system.md`. Do not invent synonyms.
  */
 export const SUBPAGE = {
   projects: {
@@ -19,14 +28,28 @@ export const SUBPAGE = {
     },
   },
   artGeneracje: {
-    lead: FALLBACK_HOMEPAGE.featured.lead,
-    ctaLabel: "zobacz wszystkie relacje",
+    lead: ART_GENERACJE_LEAD,
+    ctaLabel: "zobacz wszystkie edycje",
     ctaHref: "#edycje",
+    editionsHeading: "Edycje",
     editionCta: "zobacz jak graliśmy",
   },
   knowledge: {
     title: "Baza wiedzy",
     lead: FALLBACK_HERO.lead,
+    channelCta: LIST_CTA_LABEL,
+    channels: [
+      {
+        href: methodsPath(),
+        title: "Metody",
+        lead: FALLBACK_HOMEPAGE.methods.lead,
+      },
+      {
+        href: czytelniaPath(),
+        title: "Czytelnia",
+        lead: FALLBACK_HOMEPAGE.czytelnia.lead,
+      },
+    ],
   },
   czytelnia: {
     pdfCta: "pobierz PDF",
@@ -40,7 +63,7 @@ export const SUBPAGE = {
       href: methodsPath(),
       ctaLabel: FALLBACK_HOMEPAGE.methods.ctaLabel,
     },
-    teamCta: "więcej",
+    teamCta: LIST_CTA_LABEL,
   },
   contact: {
     title: "Napisz do nas",

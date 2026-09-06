@@ -5,7 +5,7 @@ Stan sesji i „co robić jutro”: [HANDOFF.md](../HANDOFF.md).
 Inwentarz dumpów (ile nodów jakiego typu): [drupal-inventory.md](drupal-inventory.md).  
 Model docelowy: [ADR-003](../decisions/ADR-003-content-model-and-mvp.md).
 
-Ostatnia weryfikacja treści: **2026-09-05** (Czytelnia: extract + migrate; faza 2: Studio + usunięcie `metody-tzs`).
+Ostatnia weryfikacja treści: **2026-09-06** (encje w `summary`/`excerpt` + lead hero z ramki; Czytelnia bez dosłownego `&nbsp;`).
 
 ## Pipeline
 
@@ -85,6 +85,20 @@ To nie jest korekta językowa. Pierwszy skrypt spłaszczał Drupal HTML.
 - Tokeny Drupal `[video:https://youtube…]` → bloki `youtube` (embed w `/preview`).
 - Schemat `edition.outcomes` (`editionOutcome`: tytuł, podtytuł, data, zdjęcie, opis) — **pusty**, do ręcznego zasilenia / Figmy. Nie zgadujemy spektakli z HTML.
 
+**Zrobione 2026-09-06 (linki ślepe po spłaszczeniu `<a>`):**
+
+- Względne ścieżki w nawiasach (`Nazwisko (/zespol/…)`, `2018 rok (/sites/fundacja/files/….pdf)`) → marka `link` na kotwicy, ścieżka znika z tekstu. PDF-y idą na stary origin `fundacja.dramaway.pl` (plików nie ma jeszcze w Sanity).
+- `(mailto:…)` i gołe e-maile / `http(s)` / `www.` bez marki → klikalne. Adresy `fundacja.dramaway.pl/…` (poza `/sites/…/files`) → ścieżka wewnętrzna.
+- `publication` wchodzi w `pnpm repair:portable-text` (wcześniej tylko page/person/project).
+- Ucięte URL-e z `...` (bilety Evently w newsie „W kolejce do lasu”) **nie** zgadujemy — zostają tekstem; `repair:portable-text` wypisuje je w raporcie.
+
+**Zrobione 2026-09-06 (encje po Drupalu, bez LLM):**
+
+- Dosłowne `&nbsp;` / `&amp;nbsp;` / ucięte `&nbsp` w polach string (`summary`, `excerpt`, tytuły, zajawki edycji) → zwykła spacja. Listing `/czytelnia` nie pokazuje sześciu znaków `&nbsp;`.
+- W Portable Text: dekodowanie encji, wycięcie znaków kontrolnych; pojedyncze U+00A0 zostaje (polski skład); serie nbsp się zwijają.
+- `readingMethod` i `siteSettings` wchodzą w skan. `siteSettings.heroLead` wrócił do copy z ramki `59:608` (Drupalowy lead nie był Figmą).
+- Ponowny `migrate:*` odtworzyłby encje — nie wołać.
+
 **Nadal ręcznie / później:**
 
 - Część kotwic będzie nieidealna (Drupal owijał tylko fragment zdania; albumy FB ucięte w środku słowa). Skrypt znajduje wszystkie URL-e; reszta to Studio.
@@ -113,6 +127,7 @@ pnpm migrate:art-generacje    # rozbija page Art Generacje → project.editions
 pnpm extract:czytelnia        # dump drama_teatr → gitignored JSON
 pnpm migrate:czytelnia        # 6× readingMethod + 82× publication (dataset 81 po usunięciu śmiecia); nie rusza person/page/project
 pnpm repair:portable-text     # dry-run; `pnpm repair:portable-text -- --write` zapisuje
+pnpm test:repair              # node:test na lib/portable-text-repair
 pnpm dev                      # :3000
 pnpm dev:studio               # :3333
 pnpm dev:all
@@ -125,6 +140,6 @@ Write token **tylko** `apps/studio/.env` → `SANITY_API_WRITE_TOKEN`. Nigdy `NE
 1. Figma na istniejących URL-ach; uściślić `edition.outcomes`.
 2. Mapa 301 przed premierą (osobne zadanie — nie w `lib/routes.ts`).
 3. Porównać `/projekty/art-generacje` z live; kotwice w Studio.
-4. `pnpm repair:portable-text` nie obejmuje `publication`. Ponowny `migrate:czytelnia` odtworzyłby śmieć `metody-tzs`.
+4. `pnpm repair:portable-text` obejmuje `page` / `person` / `project` / `publication` / `readingMethod` / `siteSettings` (linki + encje). Ponowny `migrate:czytelnia` odtworzyłby śmieć `metody-tzs` i `&nbsp;` w `summary`.
 
 Szczegóły produktu Art Generacje (nie stan migracji): [art-generacje.md](../concept/art-generacje.md).

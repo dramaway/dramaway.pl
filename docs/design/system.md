@@ -89,6 +89,20 @@ Autorskie, bo Figma ich nie ma:
 | `Rectangle 2` i biała etykieta „Baza wiedzy" | pominięte | pusty kształt bez wypełnienia i biały tekst na białym tle |
 | pasmo kropek pod „Kim jesteśmy?" schodkuje w górę w prawo | schodek odbity (`DotBand mirror`) | w ramce blok „Metody" kończy się ~120 px wyżej niż u nas, więc górny rząd trafiał na CTA „dowiedz się więcej". Po odbiciu rząd przy zdjęciu jest górny i nadal jedzie po jego dolnej krawędzi, a dolny schodzi w pustą przestrzeń — niezależnie od długości tekstu z CMS-u |
 
+## Copy chrome vs Figma
+
+Etykiety UI (nie body z Drupala) biorą się z ramek. Kanon w `apps/web/src/lib/homepage-copy.ts` i `subpage-copy.ts`. **Nie wypełniać** `siteSettings.homepage` w Studio — puste pole = fallback z ramki; wypełnione nadpisuje kanon po cichu. Hero w CMS już istnieje: heading i CTA zgadzają się z `59:608`; lead był innym akapitem (Drupal) i wraca do tekstu z ramki.
+
+| Ramka | Kod | Status |
+|-------|-----|--------|
+| CTA Czytelni na `/`: „poznajmy się” (`59:724`) | to samo | **otwarte z designerki** — kopia CTA „Kim jesteśmy?” |
+| Featured: kafelek → AG, CTA „poznaj nasze projekty” → `/projekty` | to samo | zamierzone (kafelki wyżej) |
+| AG hero CTA (`79:200`) | było „zobacz wszystkie relacje”; jest „zobacz wszystkie edycje” | dryf modelu, przywrócone (kotwica `#edycje`) |
+| AG lead (`79:191`) | było zajawką z home; jest tekst z ramki AG | dryf, przywrócone |
+| H2 „Edycje” na AG | ramka nie ma tego nagłówka (lista od razu od roku) | brak w ramce — kotwica listy |
+| Kontakt / hub Bazy — unikalny lead | krótki opis / reuse leadów z home | ramka kontaktu w budowie; hub bez osobnego akapitu w `79:50` (limit MCP) |
+| `siteSettings.homepage` | puste | zostawić puste |
+
 ## Stan na teraz
 
 Gotowe na `/`: skład z ramki na `lg+` (nie pixel-perfect) oraz świadomy pass mobilny poniżej 1024 px. Hero na desktopie: dwie kolumny od góry viewportu — nav w lewej, portret od góry prawej i na spad do krawędzi okna. Na mobile: sticky header z overlayem, H1 od razu, kadr w kole, potem lead. Pasma kół: stała średnica, pełne stykające się koła, rzędy przy krawędziach strony; na `lg+` zachodzą na krawędzie zdjęć (hero od dołu, „Kim jesteśmy?" po odbiciu schodka też od dołu); poniżej `lg` pasmo pod hero nie nachodzi na koło. Aktualności z nagłówkiem AKTUALNOŚCI (`text-h2` na H2), tytułami kart `text-h4` na H3, naprzemiennymi kolorami tytułu i daty (magenta / navy) i rulkami CTA na jednej linii; siatka ma szerszą rynnę niż 36 px z ramki. Kim/Metody (`.split-reverse`; oba H2 na `text-h3` + `text-body`; na mobile tekst, potem kadr 4:5; zdjęcie z `public/about-photo.jpg` dopóki Studio jest puste), Art Generacje i Czytelnia (`.stack-narrow`, H2 na `text-h3` + `text-body`, blob za H2), paleta wyśrodkowana jako grupa, stopka z cytatem Boala do prawej. Ciągły tekst UI: Alexandria Light 18; hero i Portable Text: 20 (`text-lead`). Nagłówki zawsze wersalikami.

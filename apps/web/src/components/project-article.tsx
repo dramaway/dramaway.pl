@@ -45,7 +45,11 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
       {editions.length > 0 ? (
         <>
           <DotBand />
-          <BlobRow heading="Edycje" headingId="edycje" items={rows} />
+          <BlobRow
+            heading={copy.editionsHeading}
+            headingId="edycje"
+            items={rows}
+          />
         </>
       ) : null}
       {rest ? (

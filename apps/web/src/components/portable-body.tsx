@@ -52,12 +52,12 @@ function PortableLink({
 }: PortableTextMarkComponentProps<{ _type: string; href?: string }>) {
   const href = value?.href;
   if (!href) return <>{children}</>;
+  const internal = href.startsWith("/") || href.startsWith("mailto:");
   return (
     <a
       href={href}
       className="underline underline-offset-2"
-      target="_blank"
-      rel="noreferrer"
+      {...(internal ? {} : { target: "_blank", rel: "noreferrer" })}
     >
       {children}
     </a>

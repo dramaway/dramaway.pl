@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Section } from "@/components/layout/section";
 import { Blob } from "@/components/visual/blob";
 import { CtaLink } from "@/components/visual/cta-link";
+import { LIST_CTA_LABEL, LIST_EMPTY_MESSAGE } from "@/lib/subpage-copy";
 import { cn } from "@/lib/utils";
 
 export type BlobRowItem = {
@@ -20,8 +21,8 @@ type BlobRowProps = {
   emptyMessage?: string;
 };
 
-const DEFAULT_CTA = "więcej";
-const DEFAULT_EMPTY = "Nie ma jeszcze pozycji w CMS.";
+const DEFAULT_CTA = LIST_CTA_LABEL;
+const DEFAULT_EMPTY = LIST_EMPTY_MESSAGE;
 
 function idFromHeading(heading: string) {
   return heading

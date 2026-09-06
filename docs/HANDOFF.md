@@ -5,12 +5,12 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-05 — ramki Figmy + Czytelnia faza 2 na `main` |
+| **Ostatnia aktualizacja** | 2026-09-06 — copy chrome vs Figma + dekodowanie encji w CMS |
 | **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ (schemat `readingMethod` / `publication` wdrożony) |
-| **Working tree** | czyste |
+| **Working tree** | zmiany lokalne: kanon copy (`homepage-copy` / `subpage-copy`) + `repair:portable-text` (linki + encje) |
 | **Owner Sanity (na razie)** | Jan Mirecki |
 
 ---
@@ -32,7 +32,7 @@ Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona głów
 - Listingi: `/projekty` = `project` (aktywne + wiersz Czytelni → `/czytelnia` + archiwum). `/fundacja` = strona (metody, zespół w kołach, dokumenty), nie sam spis linków. `/czytelnia` = `BlobRow` (`listed`). `/` **nie** listuje siatki projektów ani splitów „13 edycji”.
 - `/projekty/[slug]` = `project` albo strona z sekcji projektów. Edycje: `/projekty/[slug]/[edition]` (AG ma 13 unikalnych slugów, w tym trzy `edycja-vi-20xx`). `/[slug]` = reszta (newsy).
 - `/czytelnia` — wiersz z plamą; GROQ **`listed == true`** (47). Pozostałe 34 opublikowane pod `/czytelnia/[slug]`, nie w spisie. Artykuł: autorzy, etykiety `readingMethod`, link PDF (`file`), cover z pierwszego obrazka w `body`. W Sanity **81× `publication`** (import 82 minus śmieć `metody-tzs`) + **6× `readingMethod`**. Dump **jest**: `private/dumps/drama_teatr_1787254349.sql.gz`. Hub Bazy: `/baza-wiedzy` (rodzic; Czytelnia to dziecko). Hosted Studio: schemat wdrożony (`pnpm --filter studio run deploy`).
-- `siteSettings` **jest w datasetcie** — hero zasilony; grupa `homepage` (about / methods / featured / czytelnia) jest w schemacie, w CMS pusta → fallbacki z `apps/web/src/lib/homepage-copy.ts`. Grupa **Ikony** (`branding`): **SVG jako `image`** (Select w Media widzi m.in. już wrzucony `icon.svg`; strona serwuje surowy SVG z `asset.url`, nie raster CDN) / **ICO jako `file`** z podglądem 32×32 i natywnym pickerem (Media na polach `file` była pusta: 0 `fileAsset`) / PNG light+dark / Apple / 512 / OG. Puste pole = `public/brand`.
+- `siteSettings` **jest w datasetcie** — hero heading/CTA z ramki `59:608`; **`heroLead` przywrócony do tekstu z ramki** (wcześniej akapit z Drupala). Grupa `homepage` **zostaje pusta** — wypełnienie w Studio cicho nadpisuje fallbacki z `apps/web/src/lib/homepage-copy.ts`. Chrome UI (CTA, leady, etykiety list) tylko w `homepage-copy.ts` / `subpage-copy.ts`; wyjątki: [design/system.md](design/system.md) „Copy chrome vs Figma”. Grupa **Ikony** (`branding`): **SVG jako `image`** (Select w Media widzi m.in. już wrzucony `icon.svg`; strona serwuje surowy SVG z `asset.url`, nie raster CDN) / **ICO jako `file`** z podglądem 32×32 i natywnym pickerem (Media na polach `file` była pusta: 0 `fileAsset`) / PNG light+dark / Apple / 512 / OG. Puste pole = `public/brand`.
 - `getResolvedSite()` zwraca `homepage` + `hero` + `footerNote` (zawsze string, cytat Boala jako fallback). Featured **H2** to tytuł `project.featured`; magenta etykieta „Projekty” to `homepage.featured.heading`.
 - Newsy na `/`: `getHomepageNews()` — max 3, bez zdjęć, excerpt ~400 znaków. Daty kart: `publishedAt`. Trzeci news `news-placeholder-syrena` jest wypełniaczem z ramki — **do draftu** z adnotacją PL (wykaz: [fundacja-status.md](migration/fundacja-status.md) „Luki vs ramka”).
 - `/preview` zostaje inwentarzem CMS.
@@ -64,7 +64,7 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 
 - Pixel-perfect vs ramka (375 ma wygodny chrome i rytm, nie 1:1)
 - Prawdziwe makiety mobilne od designerki — **nie będzie**; kanon z `/` na podstrony
-- Wypełnienie pól `siteSettings.homepage` w Studio (działa na fallbackach)
+- Wypełnienie pól `siteSettings.homepage` w Studio (działa na fallbackach) — **nie wypełniać**, dopóki kanon jest w `homepage-copy.ts`
 - `page.excerpt` na dwóch migracyjnych newsach nadal puste — karty tną `pt::text(body)` (placeholder Syrena ma excerpt z ramki)
 - Zdjęcie „Kim jesteśmy” w Sanity — leci z `public/about-photo.jpg` jako `fallbackSrc`
 - Pasmo kół pod „Kim jesteśmy?” ma odbity schodek zamiast figmowego (uzgodnione) — powód w [design/system.md](design/system.md)
@@ -72,7 +72,7 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 - Mapa przekierowań (stare aliasy `teatrzaangazowany…` → `/czytelnia/[slug]`)
 - News jako osobny typ, newsletter, **formularz kontaktu (osobne zamówienie, jeśli będą chcieli)**, EN
 - `person.role` (Drupal `field_funkcja`)
-- Ręczna korekta części kotwic
+- Ręczna korekta części kotwic (albumy FB ucięte w środku słowa; ucięte bilety Evently)
 
 ---
 
@@ -85,7 +85,8 @@ Ten plik + [fundacja-status.md](migration/fundacja-status.md) + [ustalenia-2026-
 Ramki Figmy podstron są na `main` (chrome + `/projekty` z Czytelnią jako wierszem, AG intro/lista, edycja 1+3, hub Bazy, `/fundacja` ze zespołem, `/kontakt` bez formularza). `person.email` w CMS puste → kontakt bez siatki maili. `edition.theme` puste → H1 edycji zostaje tytułem z dumpa.
 
 1. Draft `news-placeholder-syrena` w Studio — jeszcze nie. Profile `/zespol/[slug]` nadal robocze.
-2. Nie odpalaj ponownie `migrate:czytelnia` / `migrate:fundacja` bez potrzeby — nadpisze ręczną korektę i **odtworzy** `metody-tzs`.
+2. Nie odpalaj ponownie `migrate:czytelnia` / `migrate:fundacja` bez potrzeby — nadpisze ręczną korektę, **odtworzy** `metody-tzs` i dosłowne `&nbsp;` w `summary`.
+3. Nie wypełniać `siteSettings.homepage` w Studio. Ucięte bilety Evently w newsie „W kolejce do lasu” — ręcznie w Studio (skrypt tylko raportuje).
 
 `pnpm dev:all` jeśli porty wolne. Publiczne URL-e, nie `/preview`.
 
@@ -125,7 +126,8 @@ pnpm dev:all                  # :3000 + :3333
 pnpm deps:outdated            # co odstaje
 pnpm deps:update              # bump w ramach ^/~
 pnpm extract:czytelnia        # dump → gitignored JSON
-pnpm migrate:czytelnia        # 6 metod + publikacje; write token w apps/studio/.env
+pnpm repair:portable-text     # dry-run encji/linków; `-- --write` zapisuje
+pnpm test:repair
 pnpm --filter studio run deploy   # https://dramaway.sanity.studio/
 ```
 
@@ -144,7 +146,8 @@ Nie odpalaj ponownie `migrate:fundacja` / `migrate:art-generacje` / `migrate:czy
 | `docs/design/wireframes.html` | Makiety podstron — otwórz dwuklikiem |
 | `docs/concept/ia.md` | IA / URL-e |
 | `apps/web/src/lib/routes.ts` | Kanon publicznych ścieżek |
-| `apps/web/src/lib/homepage-copy.ts` | Fallbacki copy homepage / hero / stopki |
+| `apps/web/src/lib/homepage-copy.ts` | Fallbacki copy homepage / hero / stopki — nie wypełniać `homepage` w Studio |
+| `apps/web/src/lib/subpage-copy.ts` | Chrome podstron (CTA, leady, kanały Bazy) |
 | `docs/migration/fundacja-status.md` | Co zmigrowane |
 | `apps/web/src/app/(site)/` | Publiczny App Router |
 | `apps/web/src/lib/sanity/` | GROQ |
