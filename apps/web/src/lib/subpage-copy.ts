@@ -52,6 +52,8 @@ export const SUBPAGE = {
     ],
   },
   czytelnia: {
+    title: "Czytelnia",
+    lead: "Publikacje z portalu wiedzy. Lista pokazuje pozycje oznaczone w CMS do spisu.",
     pdfCta: "pobierz PDF",
     empty: "Czytelnia jest pusta — w CMS nie ma jeszcze publikacji.",
     emptyFiltered: "Żadna publikacja nie pasuje do wybranych filtrów.",

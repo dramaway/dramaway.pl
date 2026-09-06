@@ -26,6 +26,7 @@ type BlobRowProps = {
   /** Archive listings sit two-up from `lg`; default is a single column. */
   density?: "default" | "compact";
   emptyMessage?: string;
+  className?: string;
 };
 
 const DEFAULT_CTA = LIST_CTA_LABEL;
@@ -51,6 +52,7 @@ export function BlobRow({
   width = "page",
   density = "default",
   emptyMessage = DEFAULT_EMPTY,
+  className,
 }: BlobRowProps) {
   const labelId = heading
     ? (headingId ?? idFromHeading(heading))
@@ -107,7 +109,7 @@ export function BlobRow({
   );
 
   return (
-    <Section aria-labelledby={labelId}>
+    <Section aria-labelledby={labelId} className={className}>
       {columnClass ? <div className={columnClass}>{inner}</div> : inner}
     </Section>
   );

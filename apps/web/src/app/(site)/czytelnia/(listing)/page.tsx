@@ -2,14 +2,15 @@ import type { Metadata } from "next";
 import { Section } from "@/components/layout/section";
 import { BlobRow } from "@/components/sections/blob-row";
 import { FilterRow } from "@/components/sections/filter-row";
-import { PageHero } from "@/components/sections/page-hero";
 import {
+  DEFAULT_PUBLICATION_FORMAT,
   PUBLICATION_FORMATS,
   czytelniaFilterHref,
   filterPublications,
   firstSearchParam,
+  resolvePublicationFormat,
 } from "@/lib/czytelnia-filters";
-import { knowledgeHubPath, publicationPath } from "@/lib/routes";
+import { publicationPath } from "@/lib/routes";
 import { getPublications, getReadingMethods } from "@/lib/sanity/fetch";
 import { SUBPAGE } from "@/lib/subpage-copy";
 
@@ -27,40 +28,31 @@ export default async function CzytelniaPage({
   searchParams: SearchParams;
 }) {
   const params = await searchParams;
-  const rodzaj = firstSearchParam(params.rodzaj);
+  const rodzaj = resolvePublicationFormat(firstSearchParam(params.rodzaj));
   const kategoria = firstSearchParam(params.kategoria);
   const [publications, categories] = await Promise.all([
     getPublications(),
     getReadingMethods(),
   ]);
   const filtered = filterPublications(publications, { rodzaj, kategoria });
-  const filtersOn = Boolean(rodzaj || kategoria);
+  const filtersOn =
+    Boolean(kategoria) || rodzaj !== DEFAULT_PUBLICATION_FORMAT;
   const copy = SUBPAGE.czytelnia;
 
   return (
     <>
-      <PageHero
-        title="Czytelnia"
-        lead="Publikacje z portalu wiedzy. Lista pokazuje pozycje oznaczone w CMS do spisu."
-        parent={{ href: knowledgeHubPath(), label: "Baza wiedzy" }}
-      />
       <Section>
         <FilterRow
+          variant="switches"
           label={copy.filters.formatLabel}
-          chips={[
-            {
-              href: czytelniaFilterHref({ kategoria }),
-              label: copy.filters.all,
-              current: !rodzaj,
-            },
-            ...PUBLICATION_FORMATS.map((format) => ({
-              href: czytelniaFilterHref({ rodzaj: format, kategoria }),
-              label: copy.filters.formats[format],
-              current: rodzaj === format,
-            })),
-          ]}
+          chips={PUBLICATION_FORMATS.map((format) => ({
+            href: czytelniaFilterHref({ rodzaj: format, kategoria }),
+            label: copy.filters.formats[format],
+            current: rodzaj === format,
+          }))}
         />
         <FilterRow
+          variant="tags"
           label={copy.filters.categoryLabel}
           chips={[
             {
@@ -86,6 +78,7 @@ export default async function CzytelniaPage({
         />
       </Section>
       <BlobRow
+        className="blob-row-reserve"
         items={filtered.map((item) => ({
           title: item.title,
           lead: item.summary,

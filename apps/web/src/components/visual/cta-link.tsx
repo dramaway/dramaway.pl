@@ -12,6 +12,10 @@ type CtaLinkProps = {
    * copy would only add a duplicate stop for keyboard and screen readers.
    */
   presentational?: boolean;
+  /** Internal Link only. False keeps scroll (Czytelnia format switches). */
+  scroll?: boolean;
+  /** Marks the active item in a radio-style row (`aria-current`). */
+  current?: boolean;
   className?: string;
 };
 
@@ -21,6 +25,8 @@ export function CtaLink({
   children,
   external = false,
   presentational = false,
+  scroll = true,
+  current = false,
   className,
 }: CtaLinkProps) {
   const body = (
@@ -52,7 +58,12 @@ export function CtaLink({
   }
 
   return (
-    <Link href={href} className={cn("cta", className)}>
+    <Link
+      href={href}
+      scroll={scroll}
+      aria-current={current ? "true" : undefined}
+      className={cn("cta", className)}
+    >
       {body}
     </Link>
   );

@@ -920,6 +920,15 @@
     transform: scaleX(0.88);
   }
 
+  .cta[aria-current="true"] {
+    color: var(--color-magenta);
+  }
+
+  .cta[aria-current="true"] .cta-rule,
+  .cta[aria-current="true"] .cta-rule::after {
+    background-color: var(--color-magenta);
+  }
+
   /*
    * Clickable tiles. The card's title carries the real link and stretches its
    * hit area over the whole card, so the tile has one accessible name instead
@@ -1150,34 +1159,49 @@
 
   /*
    * Czytelnia filters — do not edit fold/body-image blocks
+   * Format: Figma CTA switches (rule + dot), one always on.
+   * Category: quiet text links, not chips.
    */
-  .filter-row {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .filter-row + .filter-row {
-    margin-block-start: 1.5rem;
-  }
-
-  .filter-row ul {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5rem 0.75rem;
+  .filter-row-switches ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem clamp(1rem, 3vw, 2.5rem);
+    width: 100%;
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .filter-row a {
+  .filter-row-switches .cta {
+    min-width: 0;
+    width: 100%;
+  }
+
+  @media (min-width: 64rem) {
+    .filter-row-switches ul {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .filter-row-tags {
+    margin-block-start: var(--spacing-section);
+  }
+
+  .filter-row-tags ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem 1.25rem;
+    margin: 0;
+    margin-block-start: 0.75rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .filter-row-tags a {
     display: inline-flex;
     align-items: center;
     min-height: var(--touch-target);
-    padding-inline: 0.85rem;
-    border-radius: 999px;
-    background-color: var(--color-sand);
     font-family: var(--font-display);
     font-size: var(--text-small);
     font-weight: 600;
@@ -1185,12 +1209,14 @@
     color: var(--color-ink);
   }
 
-  .filter-row a:hover,
-  .filter-row a:focus-visible {
+  .filter-row-tags a:hover,
+  .filter-row-tags a:focus-visible,
+  .filter-row-tags a[aria-current="true"] {
     color: var(--color-magenta);
   }
 
-  .filter-row a[aria-current="true"] {
-    color: var(--color-magenta);
+  /* Keep footer from jumping when a drawer has no listed publications. */
+  .blob-row-reserve {
+    min-height: 28rem;
   }
 }
