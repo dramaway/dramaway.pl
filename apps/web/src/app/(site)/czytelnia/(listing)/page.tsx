@@ -68,7 +68,9 @@ export default async function CzytelniaPage({
       {filtered.length === 0 ? (
         <p className="text-body">{copy.empty}</p>
       ) : listing.kind === "flat" ? (
-        <BlobStack items={toRowItems(listing.items)} />
+        <div className="measure">
+          <BlobStack items={toRowItems(listing.items)} />
+        </div>
       ) : (
         <PublicationCategoryList
           groups={listing.groups.map((group) => ({

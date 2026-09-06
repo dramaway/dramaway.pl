@@ -52,7 +52,7 @@ export function HomeFeaturedAndReading({
             </h2>
           ) : null}
           {featured.lead ? (
-            <p className="measure mt-5 text-body">{featured.lead}</p>
+            <p className="mt-5 text-body">{featured.lead}</p>
           ) : null}
           {featured.ctaLabel ? (
             <CtaLink href={featured.ctaHref} className="cta-over mt-8">
@@ -72,7 +72,7 @@ export function HomeFeaturedAndReading({
             </h2>
           ) : null}
           {czytelnia.lead ? (
-            <p className="measure mt-5 text-body">{czytelnia.lead}</p>
+            <p className="mt-5 text-body">{czytelnia.lead}</p>
           ) : null}
           {czytelnia.ctaLabel ? (
             <CtaLink

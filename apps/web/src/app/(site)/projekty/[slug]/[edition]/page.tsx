@@ -66,34 +66,38 @@ export default async function EditionPage({ params }: Props) {
       ) : null}
       {outcomes.length > 0 ? (
         <Section>
-          <h2 className="font-display text-h3 font-black">Rezultaty</h2>
-          <ul className="mt-8 stack">
-            {outcomes.map((outcome) => (
-              <li key={outcome.title} className="stack-item">
-                <h3 className="font-display text-h4 font-black">
-                  {outcome.title}
-                </h3>
-                {outcome.subtitle || outcome.date ? (
-                  <p className="mt-2 text-small">
-                    {[outcome.subtitle, outcome.date].filter(Boolean).join(" · ")}
-                  </p>
-                ) : null}
-                {outcome.description ? (
-                  <p className="measure mt-4 text-body">{outcome.description}</p>
-                ) : null}
-                {outcome.image ? (
-                  <Media
-                    image={outcome.image}
-                    alt={outcome.title}
-                    variant="inset"
-                    ratio="landscape"
-                    className="mt-6"
-                    sizes="(min-width: 64rem) 40vw, 100vw"
-                  />
-                ) : null}
-              </li>
-            ))}
-          </ul>
+          <div className="measure">
+            <h2 className="font-display text-h3 font-black">Rezultaty</h2>
+            <ul className="mt-8 stack">
+              {outcomes.map((outcome) => (
+                <li key={outcome.title} className="stack-item">
+                  <h3 className="font-display text-h4 font-black">
+                    {outcome.title}
+                  </h3>
+                  {outcome.subtitle || outcome.date ? (
+                    <p className="mt-2 text-small">
+                      {[outcome.subtitle, outcome.date]
+                        .filter(Boolean)
+                        .join(" · ")}
+                    </p>
+                  ) : null}
+                  {outcome.description ? (
+                    <p className="mt-4 text-body">{outcome.description}</p>
+                  ) : null}
+                  {outcome.image ? (
+                    <Media
+                      image={outcome.image}
+                      alt={outcome.title}
+                      variant="inset"
+                      ratio="landscape"
+                      className="mt-6"
+                      sizes="(min-width: 64rem) 40vw, 100vw"
+                    />
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          </div>
         </Section>
       ) : null}
     </>

@@ -464,8 +464,9 @@
   }
 
   /*
-   * Text-only inner hero (edition pages). H1 + lead on the wide measure.
-   * Do not set data-split-hero — header stays in flow; no photo column.
+   * Text-only inner hero (edition pages). H1 + lead in the centred
+   * reading column. Do not set data-split-hero — header stays in flow;
+   * no photo column.
    */
   .hero-stack {
     width: 100%;
@@ -477,7 +478,9 @@
 
   .hero-stack .hero-heading,
   .hero-stack .hero-copy {
-    max-width: var(--content-wide);
+    max-width: 62ch;
+    width: 100%;
+    margin-inline: auto;
   }
 
   .hero-media-wrap {
@@ -646,9 +649,21 @@
     }
   }
 
-  /* Comfortable reading width — Figma runs body copy at ~754px / 20px. */
+  /*
+   * Comfortable reading column — Figma body is ~754px / 20px (62ch).
+   * Centres the whole block (headings + copy) so leftover space is equal
+   * on both sides. Text inside stays left-aligned.
+   */
   .measure {
     max-width: 62ch;
+    width: 100%;
+    margin-inline: auto;
+  }
+
+  /* Split columns are already the left half of the page; don't float the
+   * reading block inside them or the H1 and lead fall out of alignment. */
+  .split-text .measure {
+    margin-inline: 0;
   }
 
   /* Footer: logo + address on the left, quote on the right (Figma). */
@@ -687,6 +702,12 @@
 
   .footer-attribution {
     margin-block-start: 0.75rem;
+    font-family: var(--font-display);
+    font-size: var(--text-h4);
+    font-weight: 800;
+    line-height: var(--text-h4--line-height);
+    letter-spacing: 0;
+    text-transform: none;
   }
 
   @media (width >= 40rem) {
@@ -697,6 +718,7 @@
     }
 
     .footer-quote {
+      margin-block-start: -2.5rem;
       margin-inline-start: auto;
     }
   }
@@ -743,15 +765,17 @@
     margin-block-start: auto;
   }
 
-  /* Vertical list whose items carry a Blob behind the heading. */
+  /* Vertical list whose items carry a Blob behind the heading.
+   * Isolate here, not on `.stack-item`, so overflowing circles stay
+   * behind neighbouring rows' text instead of covering it. */
   .stack {
     display: grid;
     gap: var(--spacing-section);
+    isolation: isolate;
   }
 
   .stack-item {
     position: relative;
-    isolation: isolate;
   }
 
   /*
@@ -775,6 +799,7 @@
   .blob-row-compact {
     display: grid;
     gap: var(--spacing-section);
+    isolation: isolate;
   }
 
   @media (width >= 64rem) {

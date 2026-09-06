@@ -36,7 +36,7 @@ export function BlobStack({
             </Link>
           </h3>
           {item.lead ? (
-            <p className="measure mt-5 text-body">{item.lead}</p>
+            <p className="mt-5 text-body">{item.lead}</p>
           ) : null}
           <CtaLink href={item.href} presentational className="mt-8">
             {item.ctaLabel?.trim() || DEFAULT_CTA}

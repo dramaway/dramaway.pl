@@ -24,7 +24,7 @@ export default async function KnowledgeHubPage() {
         imageAlt={landing.imageAlt}
       />
       <Section>
-        <div className="stack stack-narrow">
+        <div className="stack measure">
           {copy.channels.map((channel) => (
             <div key={channel.href} className="stack-item card-hover">
               <Blob />
@@ -33,7 +33,7 @@ export default async function KnowledgeHubPage() {
                   {channel.title}
                 </Link>
               </h2>
-              <p className="measure mt-5 text-body">{channel.lead}</p>
+              <p className="mt-5 text-body">{channel.lead}</p>
               <CtaLink href={channel.href} presentational className="mt-8">
                 {copy.channelCta}
               </CtaLink>

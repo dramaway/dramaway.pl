@@ -12,8 +12,9 @@ type BlobRowProps = {
   heading?: string | null;
   headingId?: string;
   /**
-   * Column width for heading + rows. Default `page` keeps today's full
-   * `.page` measure. `compact` density always stays two-up on `.page`.
+   * Column width for heading + rows. `wide` / `narrow` are centred
+   * reading columns; default `page` is the full `.page` container.
+   * `compact` density always stays two-up on `.page`.
    */
   width?: BlobRowWidth;
   /** Archive listings sit two-up from `lg`; default is a single column. */
@@ -56,7 +57,7 @@ export function BlobRow({
       : width === "narrow"
         ? "stack-narrow"
         : width === "wide"
-          ? "stack-wide"
+          ? "measure"
           : undefined;
 
   const inner = (

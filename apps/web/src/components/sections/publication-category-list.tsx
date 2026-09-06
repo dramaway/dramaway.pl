@@ -42,7 +42,9 @@ function CategorySection({
       </h2>
       {open ? (
         <div className="pub-cat-list">
-          <BlobStack items={group.items} />
+          <div className="measure">
+            <BlobStack items={group.items} />
+          </div>
         </div>
       ) : null}
     </section>

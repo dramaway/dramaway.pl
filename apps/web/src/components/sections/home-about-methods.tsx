@@ -24,7 +24,7 @@ function TextStack({ block }: { block: HomeTextBlock }) {
         <h2 className="font-display text-h3 font-black">{block.heading}</h2>
       ) : null}
       {block.lead ? (
-        <p className="measure mt-6 text-body">{block.lead}</p>
+        <p className="mt-6 text-body">{block.lead}</p>
       ) : null}
       {block.ctaLabel ? (
         <CtaLink href={block.ctaHref} className="mt-8">
