@@ -15,14 +15,15 @@ export const PUBLICATION_FORMATS = [
 /** Landing `/czytelnia` prefers this drawer when it has listed items. */
 export const DEFAULT_PUBLICATION_FORMAT = "articles" satisfies PublicationFormat;
 
-/** First paint per category; collapse hides every row, expand shows all. */
-export const CATEGORY_SECTION_PREVIEW = 3;
-
 export type PublicationCategoryGroup = {
   slug: string;
   title: string;
   items: PublicationListItem[];
 };
+
+export type CategoryListing =
+  | { kind: "flat"; items: PublicationListItem[] }
+  | { kind: "grouped"; groups: PublicationCategoryGroup[] };
 
 export function firstSearchParam(
   value: string | string[] | undefined,
@@ -86,7 +87,7 @@ export function groupPublicationsByCategory(
   publications: PublicationListItem[],
   categories: ReadingMethodListItem[],
   uncategorizedTitle: string,
-): PublicationCategoryGroup[] {
+): CategoryListing {
   const ordered = [...categories]
     .filter((category): category is ReadingMethodListItem & { slug: string } =>
       Boolean(category.slug),
@@ -107,6 +108,10 @@ export function groupPublicationsByCategory(
     });
   }
 
+  if (groups.length === 0) {
+    return { kind: "flat", items: publications };
+  }
+
   const rest = publications.filter(
     (item) => !methodSlugs(item).some((slug) => known.has(slug)),
   );
@@ -118,5 +123,5 @@ export function groupPublicationsByCategory(
     });
   }
 
-  return groups;
+  return { kind: "grouped", groups };
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Section } from "@/components/layout/section";
+import { BlobStack } from "@/components/sections/blob-stack";
 import { FilterRow } from "@/components/sections/filter-row";
 import { PublicationCategoryList } from "@/components/sections/publication-category-list";
 import {
@@ -21,6 +22,16 @@ type SearchParams = Promise<{
   rodzaj?: string | string[];
 }>;
 
+function toRowItems(
+  items: { title: string; summary: string | null; slug: string }[],
+) {
+  return items.map((item) => ({
+    title: item.title,
+    lead: item.summary,
+    href: publicationPath(item.slug),
+  }));
+}
+
 export default async function CzytelniaPage({
   searchParams,
 }: {
@@ -38,19 +49,11 @@ export default async function CzytelniaPage({
   );
   const filtered = filterPublicationsByFormat(publications, rodzaj);
   const copy = SUBPAGE.czytelnia;
-  const groups = groupPublicationsByCategory(
+  const listing = groupPublicationsByCategory(
     filtered,
     categories,
     copy.sections.uncategorized,
-  ).map((group) => ({
-    slug: group.slug,
-    title: group.title,
-    items: group.items.map((item) => ({
-      title: item.title,
-      lead: item.summary,
-      href: publicationPath(item.slug),
-    })),
-  }));
+  );
 
   return (
     <Section>
@@ -62,10 +65,19 @@ export default async function CzytelniaPage({
           current: rodzaj === format,
         }))}
       />
-      {groups.length === 0 ? (
+      {filtered.length === 0 ? (
         <p className="text-body">{copy.empty}</p>
+      ) : listing.kind === "flat" ? (
+        <BlobStack items={toRowItems(listing.items)} />
       ) : (
-        <PublicationCategoryList groups={groups} copy={copy.sections} />
+        <PublicationCategoryList
+          groups={listing.groups.map((group) => ({
+            slug: group.slug,
+            title: group.title,
+            items: toRowItems(group.items),
+          }))}
+          copy={copy.sections}
+        />
       )}
     </Section>
   );

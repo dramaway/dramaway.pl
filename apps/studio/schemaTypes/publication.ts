@@ -47,7 +47,7 @@ export const publication = defineType({
       type: "boolean",
       initialValue: false,
       description:
-        "True = Word curation; shown on /czytelnia when that listing exists. False = URL only.",
+        "Shown on /czytelnia. Uncheck to keep the URL but hide from the listing.",
     }),
     defineField({
       name: "authors",

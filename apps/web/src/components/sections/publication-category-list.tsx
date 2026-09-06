@@ -5,32 +5,12 @@ import {
   BlobStack,
   type BlobRowItem,
 } from "@/components/sections/blob-stack";
-import { CATEGORY_SECTION_PREVIEW } from "@/lib/czytelnia-filters";
 
 export type PublicationCategorySection = {
   slug: string;
   title: string;
   items: BlobRowItem[];
 };
-
-type Mode = "preview" | "open" | "closed";
-
-function visibleItems(items: BlobRowItem[], mode: Mode): BlobRowItem[] {
-  if (mode === "closed") return [];
-  if (mode === "open") return items;
-  return items.slice(0, CATEGORY_SECTION_PREVIEW);
-}
-
-function actionLabel(
-  mode: Mode,
-  count: number,
-  copy: { expand: string; collapse: string },
-): string {
-  const needsExpand =
-    mode === "closed" ||
-    (mode === "preview" && count > CATEGORY_SECTION_PREVIEW);
-  return needsExpand ? copy.expand : copy.collapse;
-}
 
 function CategorySection({
   group,
@@ -39,19 +19,8 @@ function CategorySection({
   group: PublicationCategorySection;
   copy: { expand: string; collapse: string };
 }) {
-  const [mode, setMode] = useState<Mode>("preview");
-  const shown = visibleItems(group.items, mode);
-  const expanded = mode !== "closed";
-  const label = actionLabel(mode, group.items.length, copy);
+  const [open, setOpen] = useState(true);
   const headingId = `czytelnia-${group.slug}`;
-
-  function toggle() {
-    setMode((current) => {
-      if (current === "closed") return "open";
-      if (current === "open") return "closed";
-      return group.items.length > CATEGORY_SECTION_PREVIEW ? "open" : "closed";
-    });
-  }
 
   return (
     <section className="pub-cat" aria-labelledby={headingId}>
@@ -59,19 +28,21 @@ function CategorySection({
         <button
           type="button"
           className="pub-cat-toggle"
-          aria-expanded={expanded}
-          onClick={toggle}
+          aria-expanded={open}
+          onClick={() => setOpen((current) => !current)}
         >
           <span className="pub-cat-title">
             {group.title}{" "}
             <span className="pub-cat-count">({group.items.length})</span>
           </span>
-          <span className="pub-cat-action">{label}</span>
+          <span className="pub-cat-action">
+            {open ? copy.collapse : copy.expand}
+          </span>
         </button>
       </h2>
-      {shown.length > 0 ? (
+      {open ? (
         <div className="pub-cat-list">
-          <BlobStack items={shown} />
+          <BlobStack items={group.items} />
         </div>
       ) : null}
     </section>
