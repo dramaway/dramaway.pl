@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { BlobRow } from "@/components/sections/blob-row";
 import { PageHero } from "@/components/sections/page-hero";
+import { DotBand } from "@/components/visual/dot-band";
 import { PaletteRow } from "@/components/visual/palette-row";
 import { czytelniaPath, publicPathForProjectSlug } from "@/lib/routes";
 import { getProjects } from "@/lib/sanity/fetch";
@@ -38,7 +39,11 @@ export default async function ProjectsPage() {
         ctaHref={copy.ctaHref}
         image={heroImage}
       />
+      <div className="page py-section">
+        <PaletteRow />
+      </div>
       <BlobRow
+        width="wide"
         items={[
           ...active.map(projectToRow),
           {
@@ -53,6 +58,7 @@ export default async function ProjectsPage() {
       <div className="page py-section">
         <PaletteRow />
       </div>
+      <DotBand />
       <BlobRow
         heading="Zakończone projekty"
         items={archive.map(projectToRow)}

@@ -29,7 +29,7 @@ Wszystkie w bloku `@theme` w [apps/web/src/app/globals.css](../../apps/web/src/a
 | `.page` | kontener wyśrodkowany, `--page-max` z `--page-pad` |
 | `.split` / `.split-text` / `.split-media` | pełna szerokość viewportu; tekst w kolumnie ograniczonej do ~2/3 `--page-max` z `--page-pad`; zdjęcie dobija do krawędzi **viewportu** (od `lg`). Poniżej `lg`: tekst pierwszy, kadr inset 4:5 z `--media-split-max` |
 | `.split-reverse` | to samo, ale zdjęcie po lewej (spad do lewej krawędzi) |
-| `.hero` / `.hero-title` / `.hero-heading` / `.hero-copy` / `.hero-media-wrap` / `.hero-media` | hero: od `lg` to `.split`; poniżej `lg` siatka H1 → kadr w kole (`--hero-media-span`) → lead/CTA. `.hero-heading` owija okruch + H1 na podstronach; `.hero-title` zostawia **każdy** H1 hero (homepage i podstrony) w kapitalizacji zdaniowej |
+| `.hero` / `.hero-title` / `.hero-heading` / `.hero-copy` / `.hero-media-wrap` / `.hero-media` / `.hero-stack` | hero: od `lg` to `.split`; poniżej `lg` siatka H1 → kadr w kole (`--hero-media-span`) → lead/CTA. `.hero-heading` owija okruch + H1 na podstronach; `.hero-title` zostawia **każdy** H1 hero (homepage i podstrony) w kapitalizacji zdaniowej. `.hero-stack` = tekstowy hero edycji (bez `data-split-hero`) |
 | `[data-home]` / `[data-split-hero]` | od `lg` overlay headera w lewej kolumnie. Tylko `data-home` (`/`) chowa `.subpage-palette`. `data-split-hero` ogranicza kadr do `--hero-media-max` |
 | `.site-header` / `.site-nav-desktop` / `.site-nav-toggle` / `.site-nav-overlay` | chrome: poniżej `lg` sticky pasek + overlay; od `lg` poziomy rząd |
 | `.cols-3` | 1 → 2 → 3 kolumny; aktualności, publikacje. Rynna szersza niż 36 px z ramki — świadomie więcej światła |
@@ -42,6 +42,8 @@ Wszystkie w bloku `@theme` w [apps/web/src/app/globals.css](../../apps/web/src/a
 | `.footer-quote` | cytat w stopce: do prawej, węższy niż `.measure` (`--footer-quote-max`) |
 | `.gallery-lead` / `.gallery-lead-row` | galeria edycji: 1 kadr landscape + do 3 pionowych od `lg` |
 | `.team-row` / `.team-photo` | siatka okrągłych portretów zespołu |
+| `.values-row` / `.values-item` | `/fundacja`: rząd etykietowanych kół wartości (chrome, `brand-1`…; 8. owija paletę) |
+| `.team-bios` / `.team-bio` / `.team-bio-blurb` | `/fundacja`: dwa słupy bio (koło + imię + zajawka 4 linie + CTA) |
 
 ## Prymitywy
 
@@ -104,6 +106,7 @@ Etykiety UI (nie body z Drupala) biorą się z ramek. Kanon w `apps/web/src/lib/
 | H2 „Edycje” na AG | ramka nie ma tego nagłówka (lista od razu od roku) | brak w ramce — kotwica listy |
 | Kontakt / hub Bazy — unikalny lead | krótki opis / reuse leadów z home | ramka kontaktu w budowie; hub bez osobnego akapitu w `79:50` (limit MCP) |
 | `siteSettings.homepage` | puste | zostawić puste |
+| Fundacja hero CTA Group 43 (`130:1331`) | „zobacz nasze publikacje” → `/czytelnia` | quoted ze zrzutu; instancja nie ma href — Czytelnia = publikacje |
 
 ## Stan na teraz
 
@@ -113,4 +116,4 @@ Klikalne kafelki: karta aktualności → artykuł, Art Generacje → `/projekty/
 
 Sprawdzone przez CDP na 1440 / 1280 / 1024 / 768 / 375: `scrollWidth == innerWidth` (brak przepełnienia poziomego), żaden element nie wychodzi za krawędzie, rulki CTA aktualności mają identyczne `top` w układzie wielokolumnowym, a test trafień (`elementFromPoint`) potwierdza jeden link na kafelek i osobno klikalne CTA Art Generacji.
 
-Podstrony (2026-09-06, cegły): `PageHero` split + `data-split-hero` (overlay headera jak `/`, paleta stopki zostaje) + H1 `.hero-title`; `BlobRow` `width` `page` (domyślnie) / `narrow` / `wide`, `density="compact"` dwukolumnowo na pełnym `.page`. Skład stron vs ramki: `/projekty` = „Co robimy?” + AG + wiersz Czytelni + archiwum. AG: krótkie intro, lista edycji (`theme`/rok gdy są), reszta dumpa pod spodem. Edycja: galeria 1+3 (hero stack bez `data-split-hero` — jeszcze nie). Hub `/baza-wiedzy` + `/metody`. `/fundacja` = metody + zespół w kołach + dokumenty. `/zespol` ten sam rząd kół. `/kontakt` bez formularza (maile tylko z `person.email`). Listing `/czytelnia` = sesja Czytelni faza 2. 375 px: H1 w pierwszym ekranie, koło 227 px, bez overflow.
+Podstrony (2026-09-06): `PageHero` split + `data-split-hero` (overlay headera jak `/`, paleta stopki zostaje) + H1 `.hero-title`; `layout="stack"` na edycji. `BlobRow` `width` `page` (domyślnie) / `narrow` / `wide`, `density="compact"` dwukolumnowo na pełnym `.page`. `/projekty` = paleta po hero, aktywne + Czytelnia `wide`, paleta + pasmo, archiwum compact. AG: lead z ramki (bez intro Drupala), paleta, lista edycji `wide` w `#edycje` bez H2, reszta dumpa pod spodem. Edycja: hero stack + galeria 1+3. Hub `/baza-wiedzy` + `/metody`. `/fundacja` = hero CTA „zobacz nasze publikacje”, metody i wartości (koła z etykietami), zespół w dwóch słupach bio, paleta przed dokumentami jako listą CTA. `/zespol` listing zostaje rzędem kół. `/kontakt` bez formularza (maile tylko z `person.email`). Listing `/czytelnia` = sesja Czytelni faza 2. 375 px: H1 w pierwszym ekranie, koło 227 px, bez overflow.

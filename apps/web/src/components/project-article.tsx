@@ -2,7 +2,7 @@ import { BlobRow } from "@/components/sections/blob-row";
 import { PageHero } from "@/components/sections/page-hero";
 import { Section } from "@/components/layout/section";
 import { PortableBody } from "@/components/portable-body";
-import { DotBand } from "@/components/visual/dot-band";
+import { PaletteRow } from "@/components/visual/palette-row";
 import { editionHeading } from "@/lib/edition-label";
 import { splitIntroAndVideo } from "@/lib/portable-split";
 import { editionPath } from "@/lib/routes";
@@ -19,6 +19,7 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
   }));
   const { intro, youtube, rest } = splitIntroAndVideo(project.body);
   const copy = SUBPAGE.artGeneracje;
+  const isArtGeneracje = project.slug === "art-generacje";
 
   return (
     <>
@@ -30,7 +31,7 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
         image={project.cover}
         parent={{ href: "/projekty", label: "Projekty" }}
       />
-      {intro ? (
+      {!isArtGeneracje && intro ? (
         <Section>
           <div className="measure">
             <PortableBody value={intro} />
@@ -39,18 +40,20 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
       ) : null}
       {youtube ? (
         <Section>
-          <PortableBody value={youtube} />
+          <div className="stack-wide">
+            <PortableBody value={youtube} />
+          </div>
         </Section>
       ) : null}
+      {isArtGeneracje ? (
+        <div className="page py-section">
+          <PaletteRow />
+        </div>
+      ) : null}
       {editions.length > 0 ? (
-        <>
-          <DotBand />
-          <BlobRow
-            heading={copy.editionsHeading}
-            headingId="edycje"
-            items={rows}
-          />
-        </>
+        <section id="edycje" aria-label={copy.editionsHeading}>
+          <BlobRow width="wide" items={rows} />
+        </section>
       ) : null}
       {rest ? (
         <Section>

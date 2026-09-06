@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
-import { BlobRow } from "@/components/sections/blob-row";
+import { FundacjaDocuments } from "@/components/sections/fundacja-documents";
+import { FundacjaValues } from "@/components/sections/fundacja-values";
 import { PageHero } from "@/components/sections/page-hero";
-import { TeamRow } from "@/components/sections/team-row";
+import { TeamBios } from "@/components/sections/team-bios";
+import { DotBand } from "@/components/visual/dot-band";
+import { PaletteRow } from "@/components/visual/palette-row";
 import { publicPathForPageSlug } from "@/lib/routes";
 import { getPagesBySlugs, getPeople } from "@/lib/sanity/fetch";
 import { SUBPAGE } from "@/lib/subpage-copy";
@@ -20,31 +23,36 @@ export default async function FundacjaIndexPage() {
 
   return (
     <>
-      <PageHero title={copy.title} lead={copy.lead} />
-      <BlobRow
-        heading="Metody i wartości"
-        items={[
-          {
-            title: "Metody",
-            lead: copy.methods.lead,
-            href: copy.methods.href,
-            ctaLabel: copy.methods.ctaLabel,
-          },
-        ]}
+      <PageHero
+        title={copy.title}
+        lead={copy.lead}
+        ctaLabel={copy.ctaLabel}
+        ctaHref={copy.ctaHref}
       />
-      <TeamRow
-        heading="Zespół"
+      <FundacjaValues
+        heading={copy.methods.title}
+        lead={copy.methods.lead}
+        ctaLabel={copy.methods.ctaLabel}
+        ctaHref={copy.methods.href}
+        values={copy.values}
+      />
+      <TeamBios
+        heading={copy.teamHeading}
         people={people}
-        href="/zespol"
         ctaLabel={copy.teamCta}
+        emptyMessage={copy.teamEmpty}
       />
-      <BlobRow
-        heading="Dokumenty i sprawozdania"
+      <DotBand />
+      <div className="page py-section">
+        <PaletteRow />
+      </div>
+      <FundacjaDocuments
+        heading={copy.documents.heading}
         items={pages.map((page) => ({
           title: page.title,
           href: publicPathForPageSlug(page.slug),
         }))}
-        emptyMessage="Brak dokumentów fundacji w CMS."
+        emptyMessage={copy.documents.empty}
       />
     </>
   );

@@ -6,6 +6,8 @@ import { FALLBACK_ABOUT_IMAGE } from "@/lib/homepage-copy";
 import type { SanityImage } from "@/lib/sanity/types";
 import Link from "next/link";
 
+export type PageHeroLayout = "split" | "stack";
+
 export type PageHeroContent = {
   title: string;
   lead?: string | null;
@@ -16,12 +18,20 @@ export type PageHeroContent = {
   parent?: { href: string; label: string } | null;
 };
 
+type PageHeroProps = PageHeroContent & {
+  /**
+   * Default `split` keeps overlay heroes (`data-split-hero` + photo + DotBand).
+   * `stack` is text-only: H1 + lead, no photo column, no overlay, no band.
+   */
+  layout?: PageHeroLayout;
+};
+
 /**
- * Opening block for inner pages. Same split, circular still, and following
- * dot band as `/`. `data-split-hero` overlays the header in the left column
- * at lg+ (do not reuse `data-home` — that hides `.subpage-palette`). Default
- * is the split; a stack layout without this attribute is a later variant.
- * Missing CMS photos use the about fallback until a cover is uploaded.
+ * Opening block for inner pages. Default is the same split, circular still,
+ * and following dot band as `/`. `data-split-hero` overlays the header in the
+ * left column at lg+ (do not reuse `data-home` — that hides `.subpage-palette`).
+ * Pass `layout="stack"` for edition pages. Missing CMS photos on the split
+ * use the about fallback until a cover is uploaded.
  */
 export function PageHero({
   title,
@@ -31,34 +41,51 @@ export function PageHero({
   image,
   imageAlt,
   parent,
-}: PageHeroContent) {
+  layout = "split",
+}: PageHeroProps) {
   const hasCopy = Boolean(lead) || Boolean(ctaLabel && ctaHref);
+  const heading = (
+    <div className="hero-heading">
+      {parent ? (
+        <p className="mb-4 text-small">
+          <Link href={parent.href} className="hover:text-magenta">
+            {parent.label}
+          </Link>
+        </p>
+      ) : null}
+      <h1 className="hero-title font-display text-display font-black">
+        {title}
+      </h1>
+    </div>
+  );
+  const copy = hasCopy ? (
+    <div className="hero-copy">
+      {lead ? (
+        <p className={layout === "stack" ? "text-lead" : "measure text-lead"}>
+          {lead}
+        </p>
+      ) : null}
+      {ctaLabel && ctaHref ? (
+        <CtaLink href={ctaHref}>{ctaLabel}</CtaLink>
+      ) : null}
+    </div>
+  ) : null;
+
+  if (layout === "stack") {
+    return (
+      <section className="hero hero-stack">
+        {heading}
+        {copy}
+      </section>
+    );
+  }
 
   return (
     <div data-split-hero="">
       <section className="hero split">
         <div className="split-text">
-          <div className="hero-heading">
-            {parent ? (
-              <p className="mb-4 text-small">
-                <Link href={parent.href} className="hover:text-magenta">
-                  {parent.label}
-                </Link>
-              </p>
-            ) : null}
-            <h1 className="hero-title font-display text-display font-black">
-              {title}
-            </h1>
-          </div>
-
-          {hasCopy ? (
-            <div className="hero-copy">
-              {lead ? <p className="measure text-lead">{lead}</p> : null}
-              {ctaLabel && ctaHref ? (
-                <CtaLink href={ctaHref}>{ctaLabel}</CtaLink>
-              ) : null}
-            </div>
-          ) : null}
+          {heading}
+          {copy}
         </div>
 
         <div className="hero-media-wrap split-media">

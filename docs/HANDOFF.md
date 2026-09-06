@@ -5,12 +5,12 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-06 — fala 0: kanon Figma `Tf7i787tVTBTE4j7LFXXUX`, PageHero overlay + sentence case, BlobRow `width` |
+| **Ostatnia aktualizacja** | 2026-09-06 — Fala 1: `/projekty`, AG, edycja, `/fundacja` bliżej ramek |
 | **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ (schemat `readingMethod` / `publication` wdrożony) |
-| **Working tree** | czyste po commicie fali 0 (cegły hero/list; cztery tory stron jeszcze nie) |
+| **Working tree** | Fala 0 + 1 na `main`, bez pusha |
 | **Owner Sanity (na razie)** | Jan Mirecki |
 
 ---
@@ -29,7 +29,7 @@ Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona głów
 
 - Dataset `production` (`tr2qdg9j`) publiczny. Next bez tokenu. Write token **tylko** `apps/studio/.env`.
 - Mapa URL: `apps/web/src/lib/routes.ts` — prefiks IA + `slug.current`. Header: Projekty, **Baza wiedzy** (`/baza-wiedzy`) z drugim poziomem Metody / Czytelnia (desktop disclosure, mobile overlay), O fundacji, Kontakt. `/zespol` poza pierwszym poziomem.
-- Listingi: `/projekty` = `project` (aktywne + wiersz Czytelni → `/czytelnia` + archiwum). `/fundacja` = strona (metody, zespół w kołach, dokumenty), nie sam spis linków. `/czytelnia` = `BlobRow` (`listed`). `/` **nie** listuje siatki projektów ani splitów „13 edycji”.
+- Listingi: `/projekty` = paleta po hero, aktywne + wiersz Czytelni `BlobRow width="wide"`, druga paleta + pasmo, archiwum `density="compact"`. `/fundacja` = metody/wartości z etykietami, zespół `TeamBios`, dokumenty jako lista CTA (nie blob-karty). `/czytelnia` = `BlobRow` (`listed`). `/` **nie** listuje siatki projektów ani splitów „13 edycji”.
 - `/projekty/[slug]` = `project` albo strona z sekcji projektów. Edycje: `/projekty/[slug]/[edition]` (AG ma 13 unikalnych slugów, w tym trzy `edycja-vi-20xx`). `/[slug]` = reszta (newsy).
 - `/czytelnia` — wiersz z plamą; GROQ **`listed == true`** (47). Pozostałe 34 opublikowane pod `/czytelnia/[slug]`, nie w spisie. Artykuł: autorzy, etykiety `readingMethod`, link PDF (`file`), cover z pierwszego obrazka w `body`. W Sanity **81× `publication`** (import 82 minus śmieć `metody-tzs`) + **6× `readingMethod`**. Dump **jest**: `private/dumps/drama_teatr_1787254349.sql.gz`. Hub Bazy: `/baza-wiedzy` (rodzic; Czytelnia to dziecko). Hosted Studio: schemat wdrożony (`pnpm --filter studio run deploy`).
 - `siteSettings` **jest w datasetcie** — hero heading/CTA z ramki `59:608`; **`heroLead` przywrócony do tekstu z ramki** (wcześniej akapit z Drupala). Grupa `homepage` **zostaje pusta** — wypełnienie w Studio cicho nadpisuje fallbacki z `apps/web/src/lib/homepage-copy.ts`. Chrome UI (CTA, leady, etykiety list) tylko w `homepage-copy.ts` / `subpage-copy.ts`; wyjątki: [design/system.md](design/system.md) „Copy chrome vs Figma”. Grupa **Ikony** (`branding`): **SVG jako `image`** (Select w Media widzi m.in. już wrzucony `icon.svg`; strona serwuje surowy SVG z `asset.url`, nie raster CDN) / **ICO jako `file`** z podglądem 32×32 i natywnym pickerem (Media na polach `file` była pusta: 0 `fileAsset`) / PNG light+dark / Apple / 512 / OG. Puste pole = `public/brand`.
@@ -49,7 +49,7 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 
 - Tokeny w `@theme` (`globals.css`), fonty MuseoModerno + Alexandria przez `next/font`.
 - Klasy układu: `.page`, `.split` (pełny viewport, spad zdjęcia do krawędzi okna), `.cols-3`, `.stack`, `.stack-narrow`, `.stack-wide`, `.footer-quote`.
-- Sześć prymitywów: `Section`, `DotBand`, `PaletteRow`, `Blob`, `CtaLink`, `Media`. Sekcje podstron: `PageHero`, `BlobRow`, `LeadGallery`, `TeamRow`. Copy ramek: `apps/web/src/lib/subpage-copy.ts`. `PageHero` to ten sam split i kadr w kole co `/`, z overlayem nawigacji od `lg` przez `data-split-hero` (nie `data-home` — to chowa paletę stopki). H1 ma `.hero-title` (sentence case). Puste zdjęcie = `public/about-photo.jpg`. Paleta przed stopką leży w layoucie witryny i chowa się na `/`. `BlobRow` ma `width`: `page` (domyślnie, pełne `.page`), `narrow` (`.stack-narrow`), `wide` (`.stack-wide` / `--content-wide`); `density="compact"` zostaje dwukolumnowe na pełnym `.page`.
+- Sześć prymitywów: `Section`, `DotBand`, `PaletteRow`, `Blob`, `CtaLink`, `Media`. Sekcje podstron: `PageHero`, `BlobRow`, `LeadGallery`, `TeamRow`; `/fundacja`: `FundacjaValues`, `TeamBios`, `FundacjaDocuments`. Copy ramek: `apps/web/src/lib/subpage-copy.ts`. `PageHero` to ten sam split i kadr w kole co `/`, z overlayem nawigacji od `lg` przez `data-split-hero` (nie `data-home` — to chowa paletę stopki). H1 ma `.hero-title` (sentence case). Edycja: `layout="stack"` (bez foto, overlayu i pasma). Puste zdjęcie = `public/about-photo.jpg`. Paleta przed stopką leży w layoucie witryny i chowa się na `/`. `BlobRow` ma `width`: `page` (domyślnie, pełne `.page`), `narrow` (`.stack-narrow`), `wide` (`.stack-wide` / `--content-wide`); `density="compact"` zostaje dwukolumnowe na pełnym `.page`.
 - **Hero / nav:** na `lg+` wrapper `[data-home]` albo `[data-split-hero]` + `:has()` wyjmuje header z pionowego flow i kotwiczy go w lewej kolumnie (szerokość jak `.split-text`). Portret od góry prawej kolumny, spad do prawej krawędzi viewportu; na podstronach kadr jest ograniczony `--hero-media-max`, żeby dół zdjęcia + nachodzące pasmo mieściły się w `100vh`. Nav **nigdy** na zdjęciu. Poniżej `lg`: sticky pasek (logo + menu), overlay na `sand` z L1 plus Metody/Czytelnia; hero to H1, kadr w kole, lead/CTA; stacked `.split` ma tekst, potem kadr inset 4:5 (`--media-split-max`). Od `lg` disclosure pod „Baza wiedzy”.
 - Pasmo kół: `--dot-size` 82 px (skok 48 px <768), bez `overflow: hidden`, koła z `radial-gradient(circle closest-side)` — bez `closest-side` promień idzie do narożnika kafla i zostaje szczelina. Szerokość rzędu `round(up, 50%, --dot-size)`: rzędy dobijają do krawędzi strony, reszta z zaokrąglenia ląduje na środku pod schodkiem. Ujemny margin nachodzi na krawędzie `Media`; prop `mirror` odbija schodek tam, gdzie zdjęcie jest po lewej.
 - Paleta: 7 stykających się kół, `flex-shrink: 0`, wyśrodkowana jako grupa.
@@ -68,7 +68,8 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 - `page.excerpt` na dwóch migracyjnych newsach nadal puste — karty tną `pt::text(body)` (placeholder Syrena ma excerpt z ramki)
 - Zdjęcie „Kim jesteśmy” w Sanity — leci z `public/about-photo.jpg` jako `fallbackSrc`
 - Pasmo kół pod „Kim jesteśmy?” ma odbity schodek zamiast figmowego (uzgodnione) — powód w [design/system.md](design/system.md)
-- `/zespol` listing = `PageHero` + `TeamRow` (te same koła co na `/fundacja`). Profil osoby `/zespol/[slug]` nadal z fazy migracji (`ArticleShell`)
+- `/zespol` listing = `PageHero` + `TeamRow` (małe koła). `/fundacja` pokazuje zespół jako `TeamBios` (dwa słupy). Profil osoby `/zespol/[slug]` nadal z fazy migracji (`ArticleShell`)
+- Timeline „historia fundacji” z ramki (`‘11` / `‘12` / `‘13`) — wklejony lorem z bio Aldony; **nie budować**, dopóki nie ma prawdziwych dat
 - Mapa przekierowań (stare aliasy `teatrzaangazowany…` → `/czytelnia/[slug]`)
 - News jako osobny typ, newsletter, **formularz kontaktu (osobne zamówienie, jeśli będą chcieli)**, EN
 - `person.role` (Drupal `field_funkcja`)
@@ -82,11 +83,28 @@ Ten plik + [fundacja-status.md](migration/fundacja-status.md) + [ustalenia-2026-
 
 **Baza wiedzy ≠ Czytelnia.** Hub `/baza-wiedzy` + Metody `/metody` + Czytelnia `/czytelnia`. Faza 2 kanału Czytelni **zrobiona** (GROQ `authors` / `methods` / `file`, artykuł, hosted Studio, śmieć `metody-tzs` usunięty). Listing 47; unlisted np. `perykles-wygnanie-i-utrata-adrian-jackson`.
 
-Ramki Figmy podstron są na `main` (chrome + `/projekty` z Czytelnią jako wierszem, AG intro/lista, edycja 1+3, hub Bazy, `/fundacja` ze zespołem, `/kontakt` bez formularza). `person.email` w CMS puste → kontakt bez siatki maili. `edition.theme` puste → H1 edycji zostaje tytułem z dumpa. **Fala 0** (fileKey, PageHero `.hero-title` + `data-split-hero`, BlobRow `width`) jest na `main`. Cztery tory składu vs ramki jeszcze nie — nie dopisywać tabeli Studio w tym pliku, dopóki tory nie wrócą.
+Ramki Figmy podstron są na `main` (chrome + `/projekty`, AG, edycja stack + 1+3, hub Bazy, `/fundacja` wartości/bio/dokumenty, `/kontakt` bez formularza). `person.email` w CMS puste → kontakt bez siatki maili. **Fala 0 + 1** lokalnie, bez pusha.
 
 1. Draft `news-placeholder-syrena` w Studio — jeszcze nie. Profile `/zespol/[slug]` nadal robocze.
 2. Nie odpalaj ponownie `migrate:czytelnia` / `migrate:fundacja` bez potrzeby — nadpisze ręczną korektę, **odtworzy** `metody-tzs` i dosłowne `&nbsp;` w `summary`.
-3. Nie wypełniać `siteSettings.homepage` w Studio. Ucięte bilety Evently w newsie „W kolejce do lasu” — ręcznie w Studio (skrypt tylko raportuje).
+3. Pola Studio pod ramki: tabela niżej. **Nie wypełniać** `siteSettings.homepage`. Ucięte bilety Evently w newsie „W kolejce do lasu” — ręcznie w Studio (skrypt tylko raportuje).
+
+### Studio — podstrony vs Figma
+
+Ręcznie, nie w kodzie i nie przez `migrate:*`. Grupa `homepage` **zostaje pusta**.
+
+| Pole | Stan | Co zrobić |
+|------|------|-----------|
+| `edition.theme` | puste na 13 edycjach | Wypełnić, żeby H1/wiersze były jak `2026: W kolejce do lasu`, nie dumpowe `Edycja XI - 2026` |
+| `edition.summary` | krótsze niż lead z ramki | Dłuższy lead na stronie edycji |
+| `edition.gallery` | XI ma 2 kadry | 1 landscape + 3 portrety; pierwsze = landscape |
+| `edition.outcomes` | puste | Zostawić — kredyty są w `body` |
+| AG `body` YouTube | brak bloku | Wstawić film (slot jest pusty; kadr zostaje w `rest`) |
+| Cover projektu / `/fundacja` | brak kadru pionowego | Wgrać cover; puste = `public/about-photo.jpg` |
+| Syrenka / Wielogłos | tylko lorem w ramce | **Nie tworzyć** projektów z Figmy |
+| Historia fundacji (`‘11`/`‘12`/`‘13`) | lorem z bio Aldony | **Nie budować**, dopóki nie ma prawdziwych dat |
+| Wartości na `/fundacja` | chrome w kodzie | Nie przenosić do CMS |
+| `siteSettings.homepage` | puste | **Nie wypełniać** |
 
 `pnpm dev:all` jeśli porty wolne. Publiczne URL-e, nie `/preview`.
 

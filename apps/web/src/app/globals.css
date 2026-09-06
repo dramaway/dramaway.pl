@@ -437,6 +437,23 @@
     margin-block-start: 2.5rem;
   }
 
+  /*
+   * Text-only inner hero (edition pages). H1 + lead on the wide measure.
+   * Do not set data-split-hero — header stays in flow; no photo column.
+   */
+  .hero-stack {
+    width: 100%;
+    max-width: var(--page-max);
+    margin-inline: auto;
+    padding-inline: var(--page-pad);
+    padding-block: var(--spacing-section);
+  }
+
+  .hero-stack .hero-heading,
+  .hero-stack .hero-copy {
+    max-width: var(--content-wide);
+  }
+
   .hero-media-wrap {
     position: relative;
     isolation: isolate;
@@ -496,6 +513,16 @@
     /* Circle still: the band sits below, it does not ride the photo. */
     .hero + .dot-band {
       margin-block-start: 0;
+    }
+
+    /*
+     * Stack hero has no still: drop the empty media row so title and lead
+     * sit with a single gap (the default template reserves "media").
+     */
+    .hero.hero-stack {
+      grid-template-areas:
+        "title"
+        "copy";
     }
   }
 
@@ -918,5 +945,59 @@
     .cta-rule {
       transition: none;
     }
+  }
+
+  /*
+   * /fundacja — labeled value circles (chrome) and two-column team bios.
+   * Appended after Wave 0; do not fold into --hero-media-max / split-hero.
+   */
+  .values-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: safe center;
+    gap: clamp(1rem, 2.5vw, 2.5rem) clamp(0.75rem, 2vw, 2.5rem);
+  }
+
+  .values-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    /* Wider than the swatch so labels like „Otwartość” fit below 768. */
+    width: max(var(--palette-size), 7rem);
+    text-align: center;
+  }
+
+  .values-item > span[aria-hidden] {
+    width: var(--palette-size);
+    aspect-ratio: 1;
+    flex-shrink: 0;
+    border-radius: 50%;
+  }
+
+  .team-bios {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-section);
+  }
+
+  @media (width >= 64rem) {
+    .team-bios {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .team-bio {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .team-bio-blurb {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
   }
 }

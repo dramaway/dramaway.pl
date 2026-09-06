@@ -57,13 +57,33 @@ export const SUBPAGE = {
   fundacja: {
     title: "O fundacji",
     lead: FALLBACK_HOMEPAGE.about.lead,
+    /** Figma Group 43 instance `130:1331` — quoted, not a synonym of „poznajmy się”. */
+    ctaLabel: "zobacz nasze publikacje",
+    ctaHref: czytelniaPath(),
     methods: {
       title: "Metody i wartości",
       lead: FALLBACK_HOMEPAGE.methods.lead,
       href: methodsPath(),
       ctaLabel: FALLBACK_HOMEPAGE.methods.ctaLabel,
     },
-    teamCta: LIST_CTA_LABEL,
+    /** Chrome labels from frame `130:1316` (7+1 circles). Not CMS. */
+    values: [
+      "Zaufanie",
+      "Energia",
+      "Dialog",
+      "Otwartość",
+      "Wolność",
+      "Szacunek",
+      "Przestrzeń",
+      "Ambicja",
+    ],
+    teamHeading: "Zespół",
+    teamCta: "zobacz pełne bio",
+    teamEmpty: "Brak osób w CMS.",
+    documents: {
+      heading: "Dokumenty i sprawozdania",
+      empty: "Brak dokumentów fundacji w CMS.",
+    },
   },
   contact: {
     title: "Napisz do nas",
