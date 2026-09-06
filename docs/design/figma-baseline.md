@@ -6,7 +6,8 @@ Pomiar: 2026-08-30, cały canvas (1267 węzłów).
 
 ## Plik
 
-- fileKey: `yjpLV44NfMXZtU774I1ZRY`
+- fileKey: `Tf7i787tVTBTE4j7LFXXUX`
+- Stary klucz `yjpLV44NfMXZtU774I1ZRY` to udostępniony plik Untitled (Starter, 20 wywołań MCP / mies.).
 - Jedna strona: `0:1` („Page 1")
 
 | Ekran | node ID | Rozmiar |

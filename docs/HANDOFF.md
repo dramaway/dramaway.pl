@@ -5,12 +5,12 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-06 — copy chrome vs Figma + dekodowanie encji w CMS |
+| **Ostatnia aktualizacja** | 2026-09-06 — fala 0: kanon Figma `Tf7i787tVTBTE4j7LFXXUX`, PageHero overlay + sentence case, BlobRow `width` |
 | **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ (schemat `readingMethod` / `publication` wdrożony) |
-| **Working tree** | zmiany lokalne: kanon copy (`homepage-copy` / `subpage-copy`) + `repair:portable-text` (linki + encje) |
+| **Working tree** | czyste po commicie fali 0 (cegły hero/list; cztery tory stron jeszcze nie) |
 | **Owner Sanity (na razie)** | Jan Mirecki |
 
 ---
@@ -45,12 +45,12 @@ Pełny kanon migracji: [fundacja-status.md](migration/fundacja-status.md).
 
 ### Warstwa wizualna (od 2026-08-30, skład `/` 2026-09-03, polish 2026-09-03, mobile 2026-09-03)
 
-Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design/system.md), liczby źródłowe: [design/figma-baseline.md](design/figma-baseline.md), decyzja: [ADR-004](decisions/ADR-004-layout-architecture.md).
+Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design/system.md), liczby źródłowe: [design/figma-baseline.md](design/figma-baseline.md), decyzja: [ADR-004](decisions/ADR-004-layout-architecture.md). **FileKey:** `Tf7i787tVTBTE4j7LFXXUX` (kopia Pro). Stary `yjpLV44NfMXZtU774I1ZRY` to Untitled na Starterze (20 MCP / mies.) — nie wołać.
 
 - Tokeny w `@theme` (`globals.css`), fonty MuseoModerno + Alexandria przez `next/font`.
-- Klasy układu: `.page`, `.split` (pełny viewport, spad zdjęcia do krawędzi okna), `.cols-3`, `.stack`, `.stack-narrow`, `.footer-quote`.
-- Sześć prymitywów: `Section`, `DotBand`, `PaletteRow`, `Blob`, `CtaLink`, `Media`. Sekcje podstron: `PageHero`, `BlobRow`, `LeadGallery`, `TeamRow`. Copy ramek: `apps/web/src/lib/subpage-copy.ts`. `PageHero` to ten sam split i kadr w kole co `/`, bez overlayu nawigacji; puste zdjęcie = `public/about-photo.jpg`. Paleta przed stopką leży w layoucie witryny i chowa się na `/`.
-- **Hero / nav:** na `lg+` wrapper `[data-home]` + `:has()` wyjmuje header z pionowego flow i kotwiczy go w lewej kolumnie (szerokość jak `.split-text`). Portret od góry prawej kolumny, spad do prawej krawędzi viewportu. Nav **nigdy** na zdjęciu. Poniżej `lg`: sticky pasek (logo + menu), overlay na `sand` z L1 plus Metody/Czytelnia; hero to H1, kadr w kole, lead/CTA; stacked `.split` ma tekst, potem kadr inset 4:5 (`--media-split-max`). Od `lg` disclosure pod „Baza wiedzy”.
+- Klasy układu: `.page`, `.split` (pełny viewport, spad zdjęcia do krawędzi okna), `.cols-3`, `.stack`, `.stack-narrow`, `.stack-wide`, `.footer-quote`.
+- Sześć prymitywów: `Section`, `DotBand`, `PaletteRow`, `Blob`, `CtaLink`, `Media`. Sekcje podstron: `PageHero`, `BlobRow`, `LeadGallery`, `TeamRow`. Copy ramek: `apps/web/src/lib/subpage-copy.ts`. `PageHero` to ten sam split i kadr w kole co `/`, z overlayem nawigacji od `lg` przez `data-split-hero` (nie `data-home` — to chowa paletę stopki). H1 ma `.hero-title` (sentence case). Puste zdjęcie = `public/about-photo.jpg`. Paleta przed stopką leży w layoucie witryny i chowa się na `/`. `BlobRow` ma `width`: `page` (domyślnie, pełne `.page`), `narrow` (`.stack-narrow`), `wide` (`.stack-wide` / `--content-wide`); `density="compact"` zostaje dwukolumnowe na pełnym `.page`.
+- **Hero / nav:** na `lg+` wrapper `[data-home]` albo `[data-split-hero]` + `:has()` wyjmuje header z pionowego flow i kotwiczy go w lewej kolumnie (szerokość jak `.split-text`). Portret od góry prawej kolumny, spad do prawej krawędzi viewportu; na podstronach kadr jest ograniczony `--hero-media-max`, żeby dół zdjęcia + nachodzące pasmo mieściły się w `100vh`. Nav **nigdy** na zdjęciu. Poniżej `lg`: sticky pasek (logo + menu), overlay na `sand` z L1 plus Metody/Czytelnia; hero to H1, kadr w kole, lead/CTA; stacked `.split` ma tekst, potem kadr inset 4:5 (`--media-split-max`). Od `lg` disclosure pod „Baza wiedzy”.
 - Pasmo kół: `--dot-size` 82 px (skok 48 px <768), bez `overflow: hidden`, koła z `radial-gradient(circle closest-side)` — bez `closest-side` promień idzie do narożnika kafla i zostaje szczelina. Szerokość rzędu `round(up, 50%, --dot-size)`: rzędy dobijają do krawędzi strony, reszta z zaokrąglenia ląduje na środku pod schodkiem. Ujemny margin nachodzi na krawędzie `Media`; prop `mirror` odbija schodek tam, gdzie zdjęcie jest po lewej.
 - Paleta: 7 stykających się kół, `flex-shrink: 0`, wyśrodkowana jako grupa.
 - `/` kolejność: Hero → DotBand → aktualności (H2 AKTUALNOŚCI `text-h2`, tytuł kart H3 `text-h4` i data `text-small` naprzemiennie magenta / navy, max 3, bez zdjęć, szersza rynna) → DotBand → Kim/Metody (`.split-reverse`; oba H2 na `text-h3` + `text-body`) → DotBand `mirror` → PaletteRow → Art Generacje + Czytelnia (`.stack-narrow`, H2 na `text-h3` + `text-body`) → PaletteRow → stopka (logo + cytat Boala `.footer-quote`).
@@ -82,7 +82,7 @@ Ten plik + [fundacja-status.md](migration/fundacja-status.md) + [ustalenia-2026-
 
 **Baza wiedzy ≠ Czytelnia.** Hub `/baza-wiedzy` + Metody `/metody` + Czytelnia `/czytelnia`. Faza 2 kanału Czytelni **zrobiona** (GROQ `authors` / `methods` / `file`, artykuł, hosted Studio, śmieć `metody-tzs` usunięty). Listing 47; unlisted np. `perykles-wygnanie-i-utrata-adrian-jackson`.
 
-Ramki Figmy podstron są na `main` (chrome + `/projekty` z Czytelnią jako wierszem, AG intro/lista, edycja 1+3, hub Bazy, `/fundacja` ze zespołem, `/kontakt` bez formularza). `person.email` w CMS puste → kontakt bez siatki maili. `edition.theme` puste → H1 edycji zostaje tytułem z dumpa.
+Ramki Figmy podstron są na `main` (chrome + `/projekty` z Czytelnią jako wierszem, AG intro/lista, edycja 1+3, hub Bazy, `/fundacja` ze zespołem, `/kontakt` bez formularza). `person.email` w CMS puste → kontakt bez siatki maili. `edition.theme` puste → H1 edycji zostaje tytułem z dumpa. **Fala 0** (fileKey, PageHero `.hero-title` + `data-split-hero`, BlobRow `width`) jest na `main`. Cztery tory składu vs ramki jeszcze nie — nie dopisywać tabeli Studio w tym pliku, dopóki tory nie wrócą.
 
 1. Draft `news-placeholder-syrena` w Studio — jeszcze nie. Profile `/zespol/[slug]` nadal robocze.
 2. Nie odpalaj ponownie `migrate:czytelnia` / `migrate:fundacja` bez potrzeby — nadpisze ręczną korektę, **odtworzy** `metody-tzs` i dosłowne `&nbsp;` w `summary`.

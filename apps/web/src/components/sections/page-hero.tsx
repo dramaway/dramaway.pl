@@ -18,7 +18,9 @@ export type PageHeroContent = {
 
 /**
  * Opening block for inner pages. Same split, circular still, and following
- * dot band as `/` — but no overlay nav (`data-home` stays on the homepage).
+ * dot band as `/`. `data-split-hero` overlays the header in the left column
+ * at lg+ (do not reuse `data-home` — that hides `.subpage-palette`). Default
+ * is the split; a stack layout without this attribute is a later variant.
  * Missing CMS photos use the about fallback until a cover is uploaded.
  */
 export function PageHero({
@@ -33,7 +35,7 @@ export function PageHero({
   const hasCopy = Boolean(lead) || Boolean(ctaLabel && ctaHref);
 
   return (
-    <>
+    <div data-split-hero="">
       <section className="hero split">
         <div className="split-text">
           <div className="hero-heading">
@@ -44,7 +46,9 @@ export function PageHero({
                 </Link>
               </p>
             ) : null}
-            <h1 className="font-display text-display font-black">{title}</h1>
+            <h1 className="hero-title font-display text-display font-black">
+              {title}
+            </h1>
           </div>
 
           {hasCopy ? (
@@ -72,6 +76,6 @@ export function PageHero({
         </div>
       </section>
       <DotBand />
-    </>
+    </div>
   );
 }

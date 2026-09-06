@@ -127,6 +127,14 @@
    * blocks that have no photo to anchor against instead of letting them
    * hug the page edge — see .stack-narrow. */
   --content-narrow: 48.3125rem;
+  /* AG / Projekty lead column in the Figma frames (~1181px). */
+  --content-wide: 73.8125rem;
+  /*
+   * Split-hero portrait cap at lg+: photo bottom + overlapping DotBand
+   * fit in 100vh. Matches .dot-band (height = 2.53× size, overlap = 0.55×
+   * size → remainder below the photo = 1.98× size).
+   */
+  --hero-media-max: calc(100vh - var(--dot-size) * 1.98);
 }
 
 :root {
@@ -543,15 +551,16 @@
     }
 
     /*
-     * Homepage at lg+: header leaves vertical flow and sits in the left
+     * Split heroes at lg+: header leaves vertical flow and sits in the left
      * column (same span as .split-text). Photo occupies the right column
-     * from the top of the page — nav never overlaps it.
+     * from the top of the page — nav never overlaps it. `data-home` is `/`
+     * only (also hides .subpage-palette). Inner pages use `data-split-hero`.
      */
-    .site-shell:has([data-home]) {
+    .site-shell:has([data-home], [data-split-hero]) {
       position: relative;
     }
 
-    .site-shell:has([data-home]) > header {
+    .site-shell:has([data-home], [data-split-hero]) > header {
       position: absolute;
       z-index: 2;
       inset-block-start: 0;
@@ -562,10 +571,25 @@
       flex-wrap: wrap;
     }
 
-    [data-home] > .split:first-child > .split-text {
+    [data-home] > .split:first-child > .split-text,
+    [data-split-hero] > .split:first-child > .split-text {
       padding-block-start: calc(
         var(--site-header-space) + var(--spacing-section)
       );
+    }
+
+    /*
+     * Inner split: cap the media column so the portrait plus the overlapping
+     * DotBand stay in the first viewport. Do not stretch a short photo.
+     */
+    [data-split-hero] .hero-media-wrap {
+      max-height: var(--hero-media-max);
+      align-self: start;
+    }
+
+    [data-split-hero] .hero-media,
+    [data-split-hero] .hero-media.media-portrait {
+      max-height: var(--hero-media-max);
     }
   }
 
@@ -643,6 +667,11 @@
    */
   .stack-narrow {
     max-width: var(--content-narrow);
+    margin-inline: auto;
+  }
+
+  .stack-wide {
+    max-width: var(--content-wide);
     margin-inline: auto;
   }
 

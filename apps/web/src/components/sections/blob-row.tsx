@@ -12,10 +12,17 @@ export type BlobRowItem = {
   ctaLabel?: string | null;
 };
 
+export type BlobRowWidth = "page" | "narrow" | "wide";
+
 type BlobRowProps = {
   items: BlobRowItem[];
   heading?: string | null;
   headingId?: string;
+  /**
+   * Column width for heading + rows. Default `page` keeps today's full
+   * `.page` measure. `compact` density always stays two-up on `.page`.
+   */
+  width?: BlobRowWidth;
   /** Archive listings sit two-up from `lg`; default is a single column. */
   density?: "default" | "compact";
   emptyMessage?: string;
@@ -41,6 +48,7 @@ export function BlobRow({
   items,
   heading,
   headingId,
+  width = "page",
   density = "default",
   emptyMessage = DEFAULT_EMPTY,
 }: BlobRowProps) {
@@ -48,13 +56,19 @@ export function BlobRow({
     ? (headingId ?? idFromHeading(heading))
     : undefined;
 
-  return (
-    <Section aria-labelledby={labelId}>
+  const columnClass =
+    density === "compact"
+      ? undefined
+      : width === "narrow"
+        ? "stack-narrow"
+        : width === "wide"
+          ? "stack-wide"
+          : undefined;
+
+  const inner = (
+    <>
       {heading ? (
-        <h2
-          id={labelId}
-          className="font-display text-h3 font-black"
-        >
+        <h2 id={labelId} className="font-display text-h3 font-black">
           {heading}
         </h2>
       ) : null}
@@ -69,7 +83,10 @@ export function BlobRow({
           )}
         >
           {items.map((item) => (
-            <li key={`${item.href}-${item.title}`} className="stack-item card-hover">
+            <li
+              key={`${item.href}-${item.title}`}
+              className="stack-item card-hover"
+            >
               <Blob />
               <h3 className="font-display text-h3 font-black">
                 <Link href={item.href} className="card-link">
@@ -86,6 +103,12 @@ export function BlobRow({
           ))}
         </ul>
       )}
+    </>
+  );
+
+  return (
+    <Section aria-labelledby={labelId}>
+      {columnClass ? <div className={columnClass}>{inner}</div> : inner}
     </Section>
   );
 }

@@ -15,16 +15,16 @@ The Figma file is a visual direction, not a spec: no auto-layout, no variables, 
 - **No pixel values in `components/sections/*`.** Use tokens or the composition classes. Missing something? Add a class in `@layer components` in `globals.css` — never an arbitrary value like `mt-[137px]`.
 - **Decorative circles are backgrounds, not elements.** The Figma dot band is 270 identical circles; `DotBand` draws it with `radial-gradient`.
 - **Every section survives empty data.** Sanity fields are optional and galleries vary in length; Figma always shows a fixed count.
-- **Headings are uppercase** via `@layer base` on `h1–h4`, except `.hero-title` (sentence case). Do not add `uppercase` on each heading, and do not store ALL CAPS in CMS copy.
+- **Headings are uppercase** via `@layer base` on `h1–h4`, except `.hero-title` (sentence case on **every** inner-page H1 hero and the homepage — not homepage-only). Do not add `uppercase` on each heading, and do not store ALL CAPS in CMS copy.
 - **Chrome copy (CTA, hero/section leads, list headings) lives in `lib/homepage-copy.ts` and `lib/subpage-copy.ts`.** Do not hardcode new Polish UI strings in JSX. A new string is a quote from the Figma frame, or a row in the copy-exceptions table in `docs/design/system.md`. Do not invent synonyms (e.g. „relacje” for „edycje”). Drupal body/summary is not Figma copy — do not rewrite articles to match the file.
 
 ## What exists
 
-Classes: `.page`, `.split` / `.split-text` / `.split-media` / `.split-reverse`, `.hero` / `.hero-title` / `.hero-heading` / `.hero-copy` / `.hero-media`, `.site-header` / `.site-nav-overlay`, `.cols-3`, `.stack` / `.stack-item` / `.stack-narrow`, `.measure`, `.gallery-lead` / `.gallery-lead-row`, `.team-row` / `.team-photo`.
+Classes: `.page`, `.split` / `.split-text` / `.split-media` / `.split-reverse`, `.hero` / `.hero-title` / `.hero-heading` / `.hero-copy` / `.hero-media`, `.site-header` / `.site-nav-overlay`, `.cols-3`, `.stack` / `.stack-item` / `.stack-narrow` / `.stack-wide`, `.measure`, `.gallery-lead` / `.gallery-lead-row`, `.team-row` / `.team-photo`.
 
-Components: `layout/section.tsx`, `visual/dot-band.tsx`, `visual/palette-row.tsx`, `visual/blob.tsx`, `visual/cta-link.tsx`, `visual/media.tsx`. Inner pages: `PageHero` (same split + circle as `/`, no overlay nav), `BlobRow`, `LeadGallery` (1 landscape + 3 portrait), `TeamRow` (circle portraits). Copy for inner heroes: `lib/subpage-copy.ts`.
+Components: `layout/section.tsx`, `visual/dot-band.tsx`, `visual/palette-row.tsx`, `visual/blob.tsx`, `visual/cta-link.tsx`, `visual/media.tsx`. Inner pages: `PageHero` (same split + circle as `/`; `data-split-hero` overlays the header in the left column at `lg+` without hiding `.subpage-palette`), `BlobRow` (`width`: `page` default / `narrow` / `wide`; `density="compact"` stays two-up on `.page`), `LeadGallery` (1 landscape + 3 portrait), `TeamRow` (circle portraits). Copy for inner heroes: `lib/subpage-copy.ts`.
 
-Tokens: colours `sand` `ink` `green` `green-ink` `magenta` `navy` `brand-1…7`; fonts `font-display` `font-body`; sizes `text-display`/`text-h1` 48, `text-h2` 32 (band labels), `text-h3` 24 (section titles), `text-h4` 20 (card titles), `text-lead` 20 (hero + prose), `text-body` 18, `text-small` 14; rhythm `py-section`. Size class ≠ HTML tag: one H1, H2 per section, H3 for news cards.
+Tokens: colours `sand` `ink` `green` `green-ink` `magenta` `navy` `brand-1…7`; fonts `font-display` `font-body`; sizes `text-display`/`text-h1` 48, `text-h2` 32 (band labels), `text-h3` 24 (section titles), `text-h4` 20 (card titles), `text-lead` 20 (hero + prose), `text-body` 18, `text-small` 14; rhythm `py-section`; `--content-narrow` / `--content-wide` / `--hero-media-max`. Size class ≠ HTML tag: one H1, H2 per section, H3 for news cards.
 
 ```tsx
 // BAD — hardcoded geometry, raw Figma green, no empty-state

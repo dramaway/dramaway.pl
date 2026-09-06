@@ -20,7 +20,7 @@ Wszystkie w bloku `@theme` w [apps/web/src/app/globals.css](../../apps/web/src/a
 
 **Typografia:** `font-display` (MuseoModerno 600/800/900) i `font-body` (Alexandria 300/400/600), ładowane przez `next/font` w [layout.tsx](../../apps/web/src/app/layout.tsx). Ciągły tekst jest Light (300) z `body`; nagłówki dostają `font-black` i `uppercase` (z `@layer base`, kopia w CMS zostaje w zdaniach — transform jest wizualny). **Wyjątek:** H1 hero (`.hero-title`) zostaje w kapitalizacji zdaniowej — wersaliki na 48 px Black są za ciężkie. Skala na desktopie (clamp w dół na węższych): `text-display` / `text-h1` 48 — tytuł hero i strony; `text-h2` 32 — etykieta pasma (AKTUALNOŚCI); `text-h3` 24 — tytuły sekcji (Kim, Metody, Art Generacje, Czytelnia); `text-h4` 20 — tytuły kart aktualności; `text-lead` 20 — opis hero i bloki pisane; `text-body` 18 — teksty pod blokami na `/`; `text-small` 14 — daty, etykiety. **Klasa rozmiaru ≠ tag HTML.** Outline na `/`: jeden H1 (hero), H2 na każdą sekcję, H3 na karty aktualności — bez przeskoków. Wizualnie AKTUALNOŚCI jest większe niż Kim / teasery (`text-h2` vs `text-h3` na H2); tytuły newsów są H3 w `text-h4`.
 
-**Layout:** `--page-max` (1440), `--page-pad`, `--page-indent`, `--dot-size` (82 px, skok do 48 px poniżej 768 px — nie `clamp`), `--palette-size`, `--site-header-space` (desktopowy overlay na `/`), `--site-header-bar` (kompaktowy pasek poniżej `lg`), `--touch-target` (44 px), `--hero-media-span` (70%), `--media-split-max` (42vh), `--footer-quote-max`, `--content-narrow` (kolumna teaserów Art Generacje / Czytelnia) oraz `spacing-section` jako rytm pionowy (`py-section`).
+**Layout:** `--page-max` (1440), `--page-pad`, `--page-indent`, `--dot-size` (82 px, skok do 48 px poniżej 768 px — nie `clamp`), `--palette-size`, `--site-header-space` (desktopowy overlay na `/` i na podstronach ze `data-split-hero`), `--site-header-bar` (kompaktowy pasek poniżej `lg`), `--touch-target` (44 px), `--hero-media-span` (70%), `--media-split-max` (42vh), `--hero-media-max` (kadr split-hero + nachodzące pasmo w `100vh`), `--footer-quote-max`, `--content-narrow` (773 px, teasery Art Generacje / Czytelnia), `--content-wide` (~1181 px, leady list na podstronach) oraz `spacing-section` jako rytm pionowy (`py-section`).
 
 ## Klasy kompozycyjne
 
@@ -29,13 +29,15 @@ Wszystkie w bloku `@theme` w [apps/web/src/app/globals.css](../../apps/web/src/a
 | `.page` | kontener wyśrodkowany, `--page-max` z `--page-pad` |
 | `.split` / `.split-text` / `.split-media` | pełna szerokość viewportu; tekst w kolumnie ograniczonej do ~2/3 `--page-max` z `--page-pad`; zdjęcie dobija do krawędzi **viewportu** (od `lg`). Poniżej `lg`: tekst pierwszy, kadr inset 4:5 z `--media-split-max` |
 | `.split-reverse` | to samo, ale zdjęcie po lewej (spad do lewej krawędzi) |
-| `.hero` / `.hero-title` / `.hero-heading` / `.hero-copy` / `.hero-media-wrap` / `.hero-media` | hero: od `lg` to `.split`; poniżej `lg` siatka H1 → kadr w kole (`--hero-media-span`) → lead/CTA. `.hero-heading` owija okruch + H1 na podstronach; `.hero-title` zostawia H1 homepage w kapitalizacji zdaniowej |
+| `.hero` / `.hero-title` / `.hero-heading` / `.hero-copy` / `.hero-media-wrap` / `.hero-media` | hero: od `lg` to `.split`; poniżej `lg` siatka H1 → kadr w kole (`--hero-media-span`) → lead/CTA. `.hero-heading` owija okruch + H1 na podstronach; `.hero-title` zostawia **każdy** H1 hero (homepage i podstrony) w kapitalizacji zdaniowej |
+| `[data-home]` / `[data-split-hero]` | od `lg` overlay headera w lewej kolumnie. Tylko `data-home` (`/`) chowa `.subpage-palette`. `data-split-hero` ogranicza kadr do `--hero-media-max` |
 | `.site-header` / `.site-nav-desktop` / `.site-nav-toggle` / `.site-nav-overlay` | chrome: poniżej `lg` sticky pasek + overlay; od `lg` poziomy rząd |
 | `.cols-3` | 1 → 2 → 3 kolumny; aktualności, publikacje. Rynna szersza niż 36 px z ramki — świadomie więcej światła |
 | `.news-card` + `.news-card-title` / `-body` / `-cta` | wspólna linia bazowa kart aktualności: tytuł zawsze na dwie linie, treść zbiera luz, rulka CTA na jednym poziomie niezależnie od długości tekstu |
 | `.card-link` + `.cta-over` / `.card-hover` | klikalny kafelek: link tytułu rozciąga swój obszar kliknięcia na całą kartę. `.cta-over` wynosi nad nakładkę CTA prowadzące **gdzie indziej** niż kafelek (Art Generacje: kafelek → projekt, CTA → lista). `.card-hover` na karcie animuje rulkę CTA przy hoverze, gdy CTA tylko powtarza link kafelka |
 | `.stack` / `.stack-item` | lista pionowa; `.stack-item` tworzy kontekst dla `Blob` |
 | `.stack-narrow` | wyśrodkowuje blok jako kolumnę (`--content-narrow`); tekst w środku zostaje do lewej |
+| `.stack-wide` | to samo dla `--content-wide` (~1181 px) |
 | `.measure` | komfortowa szerokość czytania (62ch) |
 | `.footer-quote` | cytat w stopce: do prawej, węższy niż `.measure` (`--footer-quote-max`) |
 | `.gallery-lead` / `.gallery-lead-row` | galeria edycji: 1 kadr landscape + do 3 pionowych od `lg` |
@@ -66,7 +68,7 @@ Autorskie, bo Figma ich nie ma:
 
 - Typografia i odstępy skalują się przez `clamp()`, bez breakpointów.
 - Poniżej **1024 px** (`lg`):
-  - header jest **sticky**: logo + przycisk menu; cztery pozycje w pełnoekranowym overlayu na `sand`. Cele klikalne ≥ `--touch-target`. Od `lg` poziomy rząd; na `/` header nadal wychodzi z pionowego flow i siada w lewej kolumnie.
+  - header jest **sticky**: logo + przycisk menu; cztery pozycje w pełnoekranowym overlayu na `sand`. Cele klikalne ≥ `--touch-target`. Od `lg` poziomy rząd; na `/` (`data-home`) i na podstronach ze `data-split-hero` header wychodzi z pionowego flow i siada w lewej kolumnie.
   - `.split` układa się pionowo, **tekst pierwszy**. Zdjęcie traci bleed: kadr inset, `aspect-ratio` 4:5, `max-height: var(--media-split-max)` (42vh), w `--page-pad`.
   - `.hero` nie jest stacked portretem. Kolejność: H1 → kadr w kole (`--hero-media-span`, `Blob` za kołem) → lead i CTA. Pasmo kół pod hero **nie** nachodzi na koło.
 - Poniżej **768 px** trzy kolumny stają się jedną (`.cols-3` po drodze przechodzi przez dwie).
@@ -111,4 +113,4 @@ Klikalne kafelki: karta aktualności → artykuł, Art Generacje → `/projekty/
 
 Sprawdzone przez CDP na 1440 / 1280 / 1024 / 768 / 375: `scrollWidth == innerWidth` (brak przepełnienia poziomego), żaden element nie wychodzi za krawędzie, rulki CTA aktualności mają identyczne `top` w układzie wielokolumnowym, a test trafień (`elementFromPoint`) potwierdza jeden link na kafelek i osobno klikalne CTA Art Generacji.
 
-Podstrony (2026-09-05, ramki): `PageHero` split + kadr w kole + pasmo; paleta przed stopką. `/projekty` = „Co robimy?” + AG + wiersz Czytelni + archiwum. AG: krótkie intro, lista edycji (`theme`/rok gdy są), reszta dumpa pod spodem. Edycja: galeria 1+3. Hub `/baza-wiedzy` + `/metody`. `/fundacja` = metody + zespół w kołach + dokumenty. `/zespol` ten sam rząd kół. `/kontakt` bez formularza (maile tylko z `person.email`). Listing `/czytelnia` = sesja Czytelni faza 2. 375 px: H1 w pierwszym ekranie, koło 227 px, bez overflow.
+Podstrony (2026-09-06, cegły): `PageHero` split + `data-split-hero` (overlay headera jak `/`, paleta stopki zostaje) + H1 `.hero-title`; `BlobRow` `width` `page` (domyślnie) / `narrow` / `wide`, `density="compact"` dwukolumnowo na pełnym `.page`. Skład stron vs ramki: `/projekty` = „Co robimy?” + AG + wiersz Czytelni + archiwum. AG: krótkie intro, lista edycji (`theme`/rok gdy są), reszta dumpa pod spodem. Edycja: galeria 1+3 (hero stack bez `data-split-hero` — jeszcze nie). Hub `/baza-wiedzy` + `/metody`. `/fundacja` = metody + zespół w kołach + dokumenty. `/zespol` ten sam rząd kół. `/kontakt` bez formularza (maile tylko z `person.email`). Listing `/czytelnia` = sesja Czytelni faza 2. 375 px: H1 w pierwszym ekranie, koło 227 px, bez overflow.
