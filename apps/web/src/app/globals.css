@@ -136,9 +136,12 @@
    */
   --hero-media-max: calc(100vh - var(--dot-size) * 1.98);
   /*
-   * Portable Text portraits: cap height so a tall frame does not eat
-   * the viewport. Independent of --hero-media-max / split-hero.
+   * Portable Text images. Size is a scale (width + height), not only a
+   * max-width — a shared height cap made Small/Medium/Wide look identical
+   * on portraits. Independent of --hero-media-max / split-hero.
    */
+  --body-image-small: 24rem;
+  --body-image-wide: var(--content-wide);
   --body-image-max: min(36rem, 70vh);
 }
 
@@ -1008,36 +1011,55 @@
 
   /*
    * Body images — do not edit filter-row/fold blocks
-   * Size: small → --content-narrow, medium → .measure (62ch, default),
-   * wide → --content-wide. Always capped at 100% of the parent.
+   * PortableBody sits inside .measure (62ch). The figure has an explicit
+   * width so Wide can outgrow that column; img max-width: 100% then refers
+   * to the figure (and still beats Tailwind preflight). Do not use
+   * max-width: min(…, 100%) on Wide — 100% of .measure made all sizes equal.
    */
   .portable-body,
   .portable-body a {
     overflow-wrap: anywhere;
   }
 
-  .body-image {
+  .body-figure {
     display: block;
     margin-block: 1.5rem;
     margin-inline: auto;
+  }
+
+  .body-figure-small {
+    width: min(var(--body-image-small), 100%);
+  }
+
+  .body-figure-medium {
+    width: 100%;
+  }
+
+  .body-figure-wide {
+    width: min(var(--body-image-wide), calc(100vw - 2 * var(--page-pad)));
+    max-width: none;
+  }
+
+  .body-image {
+    display: block;
     width: auto;
     height: auto;
-    max-width: min(62ch, 100%);
-    max-height: var(--body-image-max);
+    max-width: 100%;
+    margin-inline: auto;
     object-fit: contain;
     border-radius: var(--radius-media);
   }
 
-  .body-image-small {
-    max-width: min(var(--content-narrow), 100%);
+  .body-figure-small .body-image {
+    max-height: var(--body-image-small);
   }
 
-  .body-image-medium {
-    max-width: min(62ch, 100%);
+  .body-figure-medium .body-image {
+    max-height: var(--body-image-max);
   }
 
-  .body-image-wide {
-    max-width: min(var(--content-wide), 100%);
+  .body-figure-wide .body-image {
+    max-height: min(90vh, var(--body-image-wide));
   }
 
   /*

@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-06 — Czytelnia: dwie osie + filtry; AG: edycje newest-first, FoldList |
+| **Ostatnia aktualizacja** | 2026-09-06 — PT image Size: Small/Medium/Wide faktycznie różne (figure poza `.measure`) |
 | **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |

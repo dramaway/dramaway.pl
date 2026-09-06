@@ -71,7 +71,7 @@ export const blockContent = defineType({
           },
           initialValue: "medium",
           description:
-            "Display width in the article. Existing images without a value render as medium.",
+            "How large the image renders on the site. Small = inset (~24rem), Medium = text column (default), Wide = wider than the text. Publish after changing. Existing images without a value render as medium.",
         }),
       ],
     }),

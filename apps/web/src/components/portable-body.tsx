@@ -36,12 +36,14 @@ function PortableImage({ value }: PortableTextTypeComponentProps<ImageValue>) {
   if (!value?.asset) return null;
   const size = bodyImageSize(value.size);
   return (
-    // eslint-disable-next-line @next/next/no-img-element -- body images have unknown aspect ratio
-    <img
-      src={urlFor(value).width(BODY_IMAGE_CDN_WIDTH[size]).url()}
-      alt={value.alt || ""}
-      className={`body-image body-image-${size}`}
-    />
+    <figure className={`body-figure body-figure-${size}`}>
+      {/* eslint-disable-next-line @next/next/no-img-element -- body images have unknown aspect ratio */}
+      <img
+        src={urlFor(value).width(BODY_IMAGE_CDN_WIDTH[size]).url()}
+        alt={value.alt || ""}
+        className="body-image"
+      />
+    </figure>
   );
 }
 
