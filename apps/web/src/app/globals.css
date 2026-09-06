@@ -336,18 +336,31 @@
     text-transform: uppercase;
   }
 
+  .site-nav-overlay-list > li:has(.site-nav-overlay-sub) {
+    position: relative;
+    isolation: isolate;
+    padding: 0.35rem 0.85rem 0.5rem;
+    margin-inline: -0.85rem;
+    margin-block-end: 0.35rem;
+    border-radius: 1.5em 1.8em 1.6em 1.7em / 1.25em 1.5em 1.75em 1.35em;
+    background-color: color-mix(in srgb, white 58%, transparent);
+  }
+
   .site-nav-overlay-sub {
     display: flex;
     flex-direction: column;
-    margin: 0;
-    padding: 0;
-    padding-inline-start: var(--page-indent);
+    gap: 0.2rem;
+    margin: 0.15rem 0 0;
+    padding: 0.15rem 0 0 1.1rem;
     list-style: none;
   }
 
   .site-nav-overlay-sub a {
-    font-size: var(--text-h3);
-    line-height: var(--text-h3--line-height);
+    font-family: var(--font-body);
+    font-size: var(--text-lead);
+    font-weight: 300;
+    line-height: var(--text-lead--line-height);
+    text-transform: none;
   }
 
   @media (width < 64rem) {
@@ -386,27 +399,127 @@
       position: relative;
     }
 
-    .site-nav-sub {
+    .site-nav-sizer {
+      display: block;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .site-nav-flyout {
       position: absolute;
       z-index: 5;
-      display: none;
-      flex-direction: column;
-      gap: 0.35rem;
-      min-width: 12rem;
-      margin: 0;
-      padding: 0.75rem 0 0;
-      list-style: none;
-      background: var(--background);
-    }
-
-    .site-nav-item:hover .site-nav-sub,
-    .site-nav-item:focus-within .site-nav-sub {
+      inset-block-start: 0;
+      inset-inline-start: 0;
       display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      isolation: isolate;
+      width: max-content;
+      min-width: 100%;
+      padding: 0.7em 1.25em 0.65em 1.3em;
+      margin-block-start: -0.7em;
+      margin-inline-start: -1.3em;
     }
 
-    .site-nav-sub a {
+    .site-nav-item[data-open] .site-nav-flyout {
+      z-index: 8;
+      padding-block-end: 0.95em;
+    }
+
+    .site-nav-cloud {
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      pointer-events: none;
+      background-color: var(--color-sand);
+      border-radius: 2.4em 2.9em 2.5em 2.7em / 1.9em 2.3em 2.6em 2.1em;
+      transform: scale(0.78, 0.62);
+      transform-origin: 35% 1.15em;
+      opacity: 0;
+      transition:
+        transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.22s ease,
+        border-radius 0.4s ease;
+    }
+
+    .site-nav-item[data-open] .site-nav-cloud {
+      opacity: 1;
+      transform: none;
+      border-radius: 2.2em 3.1em 2.7em 2.5em / 1.7em 2.1em 3em 2.4em;
+    }
+
+    .site-nav-sub {
+      display: grid;
+      grid-template-rows: 0fr;
+      width: 100%;
+      opacity: 0;
+      transform: translateY(-0.4em);
+      pointer-events: none;
+      transition:
+        grid-template-rows 0.36s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.22s ease,
+        transform 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .site-nav-item[data-open] .site-nav-sub {
+      grid-template-rows: 1fr;
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+    }
+
+    .site-nav-sub-list {
+      overflow: hidden;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin: 0;
+      padding: 0.45rem 0.1rem 0.05rem 0.85rem;
+      list-style: none;
+    }
+
+    .site-nav-sub-list a {
+      font-family: var(--font-body);
       font-size: var(--text-body);
+      font-weight: 300;
       line-height: var(--text-body--line-height);
+      text-transform: none;
+      opacity: 0;
+      transform: translateY(-0.4em);
+      transition:
+        opacity 0.22s ease,
+        transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .site-nav-item[data-open] .site-nav-sub-list a {
+      opacity: 1;
+      transform: none;
+    }
+
+    .site-nav-sub-list li:nth-child(1) a {
+      transition-delay: 0.05s;
+    }
+
+    .site-nav-sub-list li:nth-child(2) a {
+      transition-delay: 0.1s;
+    }
+
+    .site-nav-sub-list li:nth-child(3) a {
+      transition-delay: 0.15s;
+    }
+
+    .site-nav-item:not([data-open]) .site-nav-sub-list a {
+      transition-delay: 0s;
+      transition-duration: 0.12s;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .site-nav-cloud,
+      .site-nav-sub,
+      .site-nav-sub-list a {
+        transition: none;
+      }
     }
 
     .site-nav-toggle,

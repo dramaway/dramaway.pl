@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { mainNav, type NavItem } from "@/lib/routes";
 import { cn } from "@/lib/utils";
 
@@ -148,20 +148,78 @@ function NavItemViews({
     );
   }
 
+  return <NavItemWithChildren item={item} pathname={pathname} />;
+}
+
+function NavItemWithChildren({
+  item,
+  pathname,
+}: {
+  item: NavItem;
+  pathname: string;
+}) {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const [ignoreHover, setIgnoreHover] = useState(false);
+  const children = item.children ?? [];
+
+  useLayoutEffect(() => {
+    setOpen(false);
+    setIgnoreHover(true);
+    const active = document.activeElement;
+    if (active instanceof HTMLElement && rootRef.current?.contains(active)) {
+      active.blur();
+    }
+    const unlock = window.setTimeout(() => {
+      setIgnoreHover(rootRef.current?.matches(":hover") ?? false);
+    }, 0);
+    return () => window.clearTimeout(unlock);
+  }, [pathname]);
+
+  function closeIfLeft(related: EventTarget | null) {
+    if (related instanceof Node && rootRef.current?.contains(related)) return;
+    setOpen(false);
+  }
+
   return (
-    <div className="site-nav-item">
-      <NavLink item={item} pathname={pathname}>
+    <div
+      ref={rootRef}
+      className="site-nav-item"
+      data-open={open ? "" : undefined}
+      onPointerEnter={() => {
+        if (!ignoreHover) setOpen(true);
+      }}
+      onPointerLeave={() => {
+        setIgnoreHover(false);
+        setOpen(false);
+      }}
+      onFocusCapture={() => {
+        if (!ignoreHover) setOpen(true);
+      }}
+      onBlurCapture={(event) => {
+        closeIfLeft(event.relatedTarget);
+      }}
+    >
+      <span className="site-nav-sizer" aria-hidden>
         {item.label}
-      </NavLink>
-      <ul className="site-nav-sub">
-        {item.children.map((child) => (
-          <li key={child.href}>
-            <NavLink item={child} pathname={pathname}>
-              {child.label}
-            </NavLink>
-          </li>
-        ))}
-      </ul>
+      </span>
+      <div className="site-nav-flyout">
+        <span className="site-nav-cloud" aria-hidden />
+        <NavLink item={item} pathname={pathname}>
+          {item.label}
+        </NavLink>
+        <div className="site-nav-sub" inert={open ? undefined : true}>
+          <ul className="site-nav-sub-list">
+            {children.map((child) => (
+              <li key={child.href}>
+                <NavLink item={child} pathname={pathname}>
+                  {child.label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }
