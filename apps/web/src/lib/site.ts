@@ -1,5 +1,5 @@
 import {
-  FALLBACK_FOOTER_NOTE,
+  FALLBACK_FOOTER,
   FALLBACK_HERO,
   FALLBACK_HOMEPAGE,
 } from "./homepage-copy";
@@ -9,8 +9,10 @@ import type {
   HomepageAbout,
   HomepageBlock,
   HomepageContent,
+  ResolvedFooter,
   ResolvedSite,
   SanityImage,
+  SiteSettings,
   SiteSettingsHomepageBlock,
   SiteSettingsHomepageFeatured,
 } from "./sanity/types";
@@ -53,6 +55,31 @@ function resolveFeatured(
   );
 }
 
+function resolveFooter(
+  settings: SiteSettings | null,
+  title: string,
+): ResolvedFooter {
+  const cms = settings?.footer;
+  const cmsQuote = cms?.quote?.trim();
+  const quote = cmsQuote || FALLBACK_FOOTER.quote;
+  const attribution = cms?.attribution?.trim()
+    ? cms.attribution.trim()
+    : cmsQuote
+      ? null
+      : FALLBACK_FOOTER.attribution;
+
+  return {
+    logo: cms?.logo ?? null,
+    logoAlt: cms?.logo?.alt?.trim() || title,
+    address:
+      cms?.address?.trim() ||
+      settings?.footerNote?.trim() ||
+      FALLBACK_FOOTER.address,
+    quote,
+    attribution,
+  };
+}
+
 export async function getResolvedSite(
   fallbackImage?: SanityImage | null,
 ): Promise<ResolvedSite> {
@@ -80,7 +107,7 @@ export async function getResolvedSite(
     title,
     tagline,
     centrumUrl: settings?.centrumUrl?.trim() || DEFAULT_CENTRUM_URL,
-    footerNote: settings?.footerNote?.trim() || FALLBACK_FOOTER_NOTE,
+    footer: resolveFooter(settings, title),
     hero: {
       heading,
       lead: settings?.heroLead?.trim() || FALLBACK_HERO.lead,

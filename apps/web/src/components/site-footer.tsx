@@ -1,25 +1,54 @@
 import Image from "next/image";
 import Link from "next/link";
+import { urlFor } from "@/lib/sanity/image";
+import type { SanityImage } from "@/lib/sanity/types";
 
 type Props = {
   title: string;
-  /** Always a string — `getResolvedSite()` already applies the Boal fallback. */
-  note: string;
+  logo: SanityImage | null;
+  logoAlt: string;
+  address: string;
+  quote: string;
+  attribution: string | null;
 };
 
-export function SiteFooter({ title, note }: Props) {
+const FALLBACK_LOGO = "/logo-dramaway.png";
+
+export function SiteFooter({
+  title,
+  logo,
+  logoAlt,
+  address,
+  quote,
+  attribution,
+}: Props) {
+  const logoSrc = logo ? urlFor(logo).width(234).url() : FALLBACK_LOGO;
+
   return (
     <footer className="mt-auto">
-      <div className="page flex flex-col gap-8 py-section sm:flex-row sm:items-start sm:justify-between">
-        <Link href="/" aria-label={title}>
-          <Image
-            src="/logo-dramaway.png"
-            alt={title}
-            width={117}
-            height={57}
-          />
-        </Link>
-        <p className="footer-quote font-body text-body">{note}</p>
+      <div className="site-footer page py-section">
+        <div className="footer-brand">
+          <Link href="/" aria-label={title}>
+            <Image
+              src={logoSrc}
+              alt={logoAlt}
+              width={117}
+              height={57}
+              className="footer-logo"
+            />
+          </Link>
+          {address ? (
+            <p className="footer-address text-body">{address}</p>
+          ) : null}
+        </div>
+        {quote ? (
+          <div className="footer-quote text-body">
+            <p>{quote}</p>
+            {attribution ? (
+              <p className="footer-attribution">{attribution}</p>
+            ) : null}
+          </div>
+        ) : null}
       </div>
     </footer>
   );

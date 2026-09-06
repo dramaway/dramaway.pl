@@ -46,5 +46,9 @@ export const FALLBACK_HOMEPAGE = {
   },
 } as const;
 
-export const FALLBACK_FOOTER_NOTE =
-  "Bez względu na to, czy mówimy o aktorach zespołów zawodowych, czy amatorskich, ta książka próbuje w każdym rozbudzić ten teatr, który nosi w sobie każdy człowiek. Jesteśmy teatrem, nawet jeśli go nie robimy A. Boal. Gry dla aktorów i nieaktorów.";
+export const FALLBACK_FOOTER = {
+  address: "Fundacja Kultury i Sztuki\nul. Melsztyńska 2/11\n02-537 Warszawa",
+  quote:
+    "Bez względu na to, czy mówimy o aktorach zespołów zawodowych, czy amatorskich, ta książka próbuje w każdym rozbudzić ten teatr, który nosi w sobie każdy człowiek. Jesteśmy teatrem, nawet jeśli go nie robimy",
+  attribution: "A. Boal. Gry dla aktorów i nieaktorów.",
+} as const;

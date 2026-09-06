@@ -64,9 +64,61 @@ export const siteSettings = defineType({
     }),
     defineField({
       name: "footerNote",
-      title: "Footer note",
+      title: "Footer note (legacy)",
       type: "text",
-      group: "general",
+      group: "footer",
+      hidden: true,
+      description: "Replaced by Footer → Address. Still read if Address is empty.",
+    }),
+    defineField({
+      name: "footer",
+      title: "Footer",
+      type: "object",
+      group: "footer",
+      options: { columns: 2 },
+      fieldsets: [
+        { name: "left", title: "Left — logo & address" },
+        { name: "right", title: "Right — quote" },
+      ],
+      fields: [
+        defineField({
+          name: "logo",
+          title: "Logo",
+          type: "image",
+          fieldset: "left",
+          options: { hotspot: true },
+          description:
+            "Empty = the header wordmark (public/logo-dramaway.png).",
+          fields: [
+            defineField({
+              name: "alt",
+              title: "Alt text",
+              type: "string",
+            }),
+          ],
+        }),
+        defineField({
+          name: "address",
+          title: "Address",
+          type: "text",
+          rows: 4,
+          fieldset: "left",
+          description: "Under the logo. Line breaks are kept.",
+        }),
+        defineField({
+          name: "quote",
+          title: "Quote",
+          type: "text",
+          rows: 6,
+          fieldset: "right",
+        }),
+        defineField({
+          name: "attribution",
+          title: "Attribution",
+          type: "string",
+          fieldset: "right",
+        }),
+      ],
     }),
     defineField({
       name: "branding",
@@ -224,6 +276,7 @@ export const siteSettings = defineType({
   ],
   groups: [
     { name: "general", title: "Ogólne", default: true },
+    { name: "footer", title: "Stopka" },
     { name: "branding", title: "Ikony" },
     { name: "hero", title: "Hero" },
     { name: "homepage", title: "Homepage" },

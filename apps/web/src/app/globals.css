@@ -651,11 +651,54 @@
     max-width: 62ch;
   }
 
-  /* Footer quote: right-aligned, narrower than .measure (Figma ≈ 491px). */
+  /* Footer: logo + address on the left, quote on the right (Figma). */
+  .site-footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-section);
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+    max-width: min(24rem, 100%);
+  }
+
+  .footer-logo {
+    width: auto;
+    height: auto;
+    max-inline-size: 7.3125rem;
+  }
+
+  .footer-address {
+    margin: 0;
+    white-space: pre-wrap;
+  }
+
   .footer-quote {
     max-width: min(var(--footer-quote-max), 100%);
-    margin-inline-start: auto;
-    text-align: end;
+  }
+
+  .footer-quote p {
+    margin: 0;
+  }
+
+  .footer-attribution {
+    margin-block-start: 0.75rem;
+  }
+
+  @media (width >= 40rem) {
+    .site-footer {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .footer-quote {
+      margin-inline-start: auto;
+    }
   }
 
   .cols-3 {
@@ -812,7 +855,7 @@
   }
 
   /* Inner pages get a palette before the footer; `/` paints its own;
-   * `/fundacja` uses DotBand under documents instead (`data-no-palette`). */
+   * `/fundacja` and `/kontakt` hide it (`data-no-palette`). */
   .site-shell:has([data-home], [data-no-palette]) .subpage-palette {
     display: none;
   }

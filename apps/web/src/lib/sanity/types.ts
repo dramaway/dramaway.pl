@@ -102,11 +102,19 @@ export type SiteSettingsBranding = {
   shareImage?: SanityImage | null;
 };
 
+export type SiteSettingsFooter = {
+  logo?: (SanityImage & { alt?: string | null }) | null;
+  address?: string | null;
+  quote?: string | null;
+  attribution?: string | null;
+};
+
 export type SiteSettings = {
   title: string | null;
   tagline: string | null;
   centrumUrl: string | null;
   footerNote: string | null;
+  footer?: SiteSettingsFooter | null;
   branding?: SiteSettingsBranding | null;
   heroHeading: string | null;
   heroLead: string | null;
@@ -145,11 +153,19 @@ export type HomepageContent = {
   czytelnia: HomepageBlock;
 };
 
+export type ResolvedFooter = {
+  logo: SanityImage | null;
+  logoAlt: string;
+  address: string;
+  quote: string;
+  attribution: string | null;
+};
+
 export type ResolvedSite = {
   title: string;
   tagline: string | null;
   centrumUrl: string;
-  footerNote: string;
+  footer: ResolvedFooter;
   hero: HeroContent;
   homepage: HomepageContent;
 };

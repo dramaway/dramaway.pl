@@ -24,7 +24,7 @@ export default async function ContactPage() {
   const body = hasPortableContent(page.body) ? page.body : null;
 
   return (
-    <>
+    <div data-no-palette="">
       <PageHero
         title={page.title.trim() || SUBPAGE.contact.title}
         lead={body ? null : SUBPAGE.contact.lead}
@@ -55,6 +55,6 @@ export default async function ContactPage() {
           </ul>
         </Section>
       ) : null}
-    </>
+    </div>
   );
 }

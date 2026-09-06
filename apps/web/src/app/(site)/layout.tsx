@@ -17,7 +17,14 @@ export default async function SiteLayout({
       <div className="subpage-palette page py-section" aria-hidden>
         <PaletteRow />
       </div>
-      <SiteFooter title={site.title} note={site.footerNote} />
+      <SiteFooter
+        title={site.title}
+        logo={site.footer.logo}
+        logoAlt={site.footer.logoAlt}
+        address={site.footer.address}
+        quote={site.footer.quote}
+        attribution={site.footer.attribution}
+      />
     </div>
   );
 }
