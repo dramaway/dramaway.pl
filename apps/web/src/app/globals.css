@@ -442,6 +442,14 @@
     margin-block-start: 2rem;
   }
 
+  .hero-copy .portable-body {
+    margin-block-start: 0;
+  }
+
+  .hero-copy .portable-body > :first-child {
+    margin-block-start: 0;
+  }
+
   /* Sentence case — skip the base `uppercase` on hero H1, Czytelnia
    * categories, and history item titles (Alexandria, not display). */
   .hero-title,

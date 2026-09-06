@@ -5,6 +5,7 @@ import {
   type PortableTextTypeComponentProps,
 } from "@portabletext/react";
 import type { PortableContent } from "@/lib/sanity/types";
+import { cn } from "@/lib/utils";
 import { urlFor } from "@/lib/sanity/image";
 import { youtubeEmbedSrc } from "@/lib/sanity/youtube";
 
@@ -117,12 +118,28 @@ const components: PortableTextComponents = {
   },
 };
 
-export function PortableBody({ value }: { value: PortableContent }) {
-  if (!value) return null;
+export function hasPortableContent(value: PortableContent | null | undefined) {
+  if (!value) return false;
   const blocks = Array.isArray(value) ? value : [value];
-  if (blocks.length === 0) return null;
+  return blocks.length > 0;
+}
+
+export function PortableBody({
+  value,
+  className,
+}: {
+  value: PortableContent;
+  className?: string;
+}) {
+  if (!hasPortableContent(value)) return null;
+  const blocks = Array.isArray(value) ? value : [value];
   return (
-    <div className="portable-body mt-8 max-w-none space-y-4 text-lead">
+    <div
+      className={cn(
+        "portable-body mt-8 max-w-none space-y-4 text-lead",
+        className,
+      )}
+    >
       <PortableText value={blocks} components={components} />
     </div>
   );

@@ -1,9 +1,10 @@
+import { PortableBody, hasPortableContent } from "@/components/portable-body";
 import { Blob } from "@/components/visual/blob";
 import { CtaLink } from "@/components/visual/cta-link";
 import { DotBand } from "@/components/visual/dot-band";
 import { Media } from "@/components/visual/media";
 import { FALLBACK_ABOUT_IMAGE } from "@/lib/homepage-copy";
-import type { SanityImage } from "@/lib/sanity/types";
+import type { PortableContent, SanityImage } from "@/lib/sanity/types";
 import Link from "next/link";
 
 export type PageHeroLayout = "split" | "stack";
@@ -11,6 +12,8 @@ export type PageHeroLayout = "split" | "stack";
 export type PageHeroContent = {
   title: string;
   lead?: string | null;
+  /** Portable Text in the hero copy column (contact page body). */
+  body?: PortableContent | null;
   ctaLabel?: string | null;
   ctaHref?: string | null;
   image?: SanityImage | null;
@@ -36,6 +39,7 @@ type PageHeroProps = PageHeroContent & {
 export function PageHero({
   title,
   lead,
+  body,
   ctaLabel,
   ctaHref,
   image,
@@ -43,7 +47,9 @@ export function PageHero({
   parent,
   layout = "split",
 }: PageHeroProps) {
-  const hasCopy = Boolean(lead) || Boolean(ctaLabel && ctaHref);
+  const hasBody = hasPortableContent(body);
+  const hasCopy =
+    Boolean(lead) || hasBody || Boolean(ctaLabel && ctaHref);
   const heading = (
     <div className="hero-heading">
       {parent ? (
@@ -64,6 +70,11 @@ export function PageHero({
         <p className={layout === "stack" ? "text-lead" : "measure text-lead"}>
           {lead}
         </p>
+      ) : null}
+      {hasBody && body ? (
+        <div className={layout === "stack" ? undefined : "measure"}>
+          <PortableBody value={body} />
+        </div>
       ) : null}
       {ctaLabel && ctaHref ? (
         <CtaLink href={ctaHref}>{ctaLabel}</CtaLink>

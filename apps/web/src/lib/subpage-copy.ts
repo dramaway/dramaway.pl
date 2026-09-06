@@ -106,7 +106,8 @@ export const SUBPAGE = {
     },
   },
   contact: {
-    title: "Napisz do nas",
+    title: "Kontakt",
     lead: "Adres, dane rejestrowe i osoby, do których możesz napisać — bez formularza.",
+    directHeading: "Napisz bezpośrednio",
   },
 } as const;

@@ -2,14 +2,15 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/sections/page-hero";
 import { Section } from "@/components/layout/section";
-import { PortableBody } from "@/components/portable-body";
+import { hasPortableContent } from "@/components/portable-body";
 import { getPageBySlug, getPeople } from "@/lib/sanity/fetch";
 import { SUBPAGE } from "@/lib/subpage-copy";
 
 export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
-  return { title: SUBPAGE.contact.title };
+  const page = await getPageBySlug("kontakt");
+  return { title: page?.title?.trim() || SUBPAGE.contact.title };
 }
 
 export default async function ContactPage() {
@@ -20,18 +21,22 @@ export default async function ContactPage() {
   if (!page) notFound();
 
   const withEmail = people.filter((person) => person.email?.trim());
+  const body = hasPortableContent(page.body) ? page.body : null;
 
   return (
     <>
-      <PageHero title={SUBPAGE.contact.title} lead={SUBPAGE.contact.lead} />
-      <Section>
-        <div className="measure">
-          <PortableBody value={page.body} />
-        </div>
-      </Section>
+      <PageHero
+        title={page.title.trim() || SUBPAGE.contact.title}
+        lead={body ? null : SUBPAGE.contact.lead}
+        body={body}
+        image={page.cover}
+        imageAlt={page.title}
+      />
       {withEmail.length > 0 ? (
         <Section>
-          <h2 className="font-display text-h3 font-black">Napisz bezpośrednio</h2>
+          <h2 className="font-display text-h3 font-black">
+            {SUBPAGE.contact.directHeading}
+          </h2>
           <ul className="team-row mt-8">
             {withEmail.map((person) => (
               <li key={person.slug}>
