@@ -114,6 +114,12 @@
   /* Stepped, not clamped — full tangent circles; count drops on resize. */
   --dot-size: 82px;
   --palette-size: clamp(44px, 7.9vw, 113px);
+  /* /fundacja value circles — Figma ~154 px; wrap on narrow viewports. */
+  --values-size: clamp(4.5rem, 10.7vw, 9.625rem);
+  /* Timeline year marker on /fundacja — Figma ~86 px. */
+  --history-marker: clamp(3.5rem, 6vw, 5.375rem);
+  /* /fundacja team bio portrait — Figma ~178 px. */
+  --team-bio-photo: clamp(7rem, 12vw, 11.125rem);
   /* Overlay header on `/` at lg+ (py-8 × 2 plus logo/nav, with wrap room). */
   --site-header-space: 9rem;
   /* Compact sticky bar below lg: logo 57px + padding-block 0.75rem × 2. */
@@ -436,8 +442,12 @@
     margin-block-start: 2rem;
   }
 
-  /* Sentence case — the only heading that skips the base `uppercase`. */
-  .hero-title {
+  /* Sentence case — skip the base `uppercase` on hero H1, Czytelnia
+   * categories, and history item titles (Alexandria, not display). */
+  .hero-title,
+  .pub-cat-head,
+  .history-title,
+  .team-bio-name {
     text-transform: none;
   }
 
@@ -793,8 +803,9 @@
     inset-block-end: 0;
   }
 
-  /* Inner pages get a palette before the footer; `/` already paints its own. */
-  .site-shell:has([data-home]) .subpage-palette {
+  /* Inner pages get a palette before the footer; `/` paints its own;
+   * `/fundacja` uses DotBand under documents instead (`data-no-palette`). */
+  .site-shell:has([data-home], [data-no-palette]) .subpage-palette {
     display: none;
   }
 
@@ -965,31 +976,72 @@
   }
 
   /*
-   * /fundacja — labeled value circles (chrome) and two-column team bios.
-   * Appended after Wave 0; do not fold into --hero-media-max / split-hero.
+   * /fundacja — tangent value circles (label inside, light type) and
+   * two-column team bios. Appended after Wave 0; do not fold into
+   * --hero-media-max / split-hero.
    */
   .values-row {
     display: flex;
     flex-wrap: wrap;
     justify-content: safe center;
-    gap: clamp(1rem, 2.5vw, 2.5rem) clamp(0.75rem, 2vw, 2.5rem);
   }
 
   .values-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-    /* Wider than the swatch so labels like „Otwartość” fit below 768. */
-    width: max(var(--palette-size), 7rem);
+    display: grid;
+    flex: 0 0 var(--values-size);
+    place-items: center;
+    width: var(--values-size);
+    aspect-ratio: 1;
+    padding: 0.6rem;
+    border-radius: 50%;
     text-align: center;
   }
 
-  .values-item > span[aria-hidden] {
-    width: var(--palette-size);
+  .values-label {
+    /* Figma `130:1462` etc. use sand, not ink — reads as white on the swatches. */
+    color: var(--color-sand);
+    font-family: var(--font-display);
+    font-size: var(--text-small);
+    font-weight: 600;
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+  }
+
+  .history-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-section);
+  }
+
+  .history-item {
+    display: grid;
+    grid-template-columns: var(--history-marker) minmax(0, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .history-marker {
+    display: grid;
+    place-items: center;
+    width: var(--history-marker);
     aspect-ratio: 1;
-    flex-shrink: 0;
     border-radius: 50%;
+    color: var(--color-sand);
+    font-family: var(--font-display);
+    font-size: var(--text-small);
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .history-title {
+    font-family: var(--font-body);
+  }
+
+  /* CTA list — not `.stack` (`--spacing-section` is a whole band, not a row). */
+  .document-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 
   .team-bios {
@@ -1005,10 +1057,18 @@
   }
 
   .team-bio {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 1.5rem;
-    align-items: start;
+  }
+
+  .team-bio .team-photo {
+    width: var(--team-bio-photo);
+  }
+
+  .team-bio-name {
+    font-family: var(--font-body);
   }
 
   .team-bio-blurb {
@@ -1182,20 +1242,26 @@
   }
 
   /*
-   * Czytelnia category sections. Preview = 3 rows; collapse hides all;
-   * expand shows every item. The hover action is not a second heading.
+   * Czytelnia category sections. Default open; collapse hides every row.
+   * Title is Alexandria Light magenta (not display uppercase). Count stays
+   * grey and small. Gap under the title clears the first row's blob — keep
+   * it on the list, not the toggle, so the hit area stays the heading row.
    */
   .pub-cat + .pub-cat {
-    border-block-start: 1px solid var(--border);
+    margin-block-start: 1.75rem;
+    padding-block-start: 1.75rem;
+    border-block-start: 1px solid color-mix(in srgb, var(--color-ink) 12%, transparent);
   }
 
   .pub-cat-head {
     margin: 0;
-    font-family: var(--font-display);
-    font-size: var(--text-small);
-    font-weight: 600;
-    line-height: var(--text-small--line-height);
-    letter-spacing: 0.04em;
+    font-family: var(--font-body);
+    font-size: var(--text-lead);
+    font-weight: 300;
+    line-height: var(--text-lead--line-height);
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--color-magenta);
   }
 
   .pub-cat-toggle {
@@ -1205,7 +1271,7 @@
     gap: 1rem;
     width: 100%;
     min-height: var(--touch-target);
-    padding-block: 1.25rem;
+    padding-block: 0.35rem;
     margin: 0;
     border: 0;
     background: transparent;
@@ -1214,7 +1280,7 @@
     color: inherit;
     font: inherit;
     letter-spacing: inherit;
-    text-transform: inherit;
+    text-transform: none;
   }
 
   .pub-cat-toggle:focus {
@@ -1227,9 +1293,9 @@
   }
 
   .pub-cat-count {
-    font-weight: 400;
-    color: var(--color-ink);
-    opacity: 0.55;
+    font-size: var(--text-small);
+    font-weight: 300;
+    color: var(--muted-foreground);
   }
 
   .pub-cat-action {
@@ -1262,6 +1328,7 @@
   }
 
   .pub-cat-list {
+    padding-block-start: 6rem;
     padding-block-end: 1.25rem;
   }
 }

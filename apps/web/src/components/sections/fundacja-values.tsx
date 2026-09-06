@@ -1,7 +1,12 @@
 import { Section } from "@/components/layout/section";
 import { CtaLink } from "@/components/visual/cta-link";
+import { cn } from "@/lib/utils";
 
-const BRAND_TONES = [
+/**
+ * Eight tones: brand 1–7, then brand-3 (gold) as in Figma frame `130:1316`.
+ * Extra labels wrap this list.
+ */
+const VALUE_TONES = [
   "bg-brand-1",
   "bg-brand-2",
   "bg-brand-3",
@@ -9,6 +14,7 @@ const BRAND_TONES = [
   "bg-brand-5",
   "bg-brand-6",
   "bg-brand-7",
+  "bg-brand-3",
 ] as const;
 
 type FundacjaValuesProps = {
@@ -20,8 +26,8 @@ type FundacjaValuesProps = {
 };
 
 /**
- * Methods lead plus labeled brand circles. Values are chrome, not CMS —
- * the row is omitted when the list is empty.
+ * Methods lead plus tangent brand circles with the label inside (sand/white
+ * type). The row is omitted when the list is empty.
  */
 export function FundacjaValues({
   heading,
@@ -40,20 +46,19 @@ export function FundacjaValues({
             {ctaLabel}
           </CtaLink>
         ) : null}
-        {values.length > 0 ? (
-          <ul className="values-row mt-8">
-            {values.map((label, index) => (
-              <li key={label} className="values-item">
-                <span
-                  aria-hidden
-                  className={BRAND_TONES[index % BRAND_TONES.length]}
-                />
-                <p className="font-display text-small font-black">{label}</p>
-              </li>
-            ))}
-          </ul>
-        ) : null}
       </div>
+      {values.length > 0 ? (
+        <ul className="values-row mt-8">
+          {values.map((label, index) => (
+            <li
+              key={`${label}-${index}`}
+              className={cn("values-item", VALUE_TONES[index % VALUE_TONES.length])}
+            >
+              <span className="values-label">{label}</span>
+            </li>
+          ))}
+        </ul>
+      ) : null}
     </Section>
   );
 }

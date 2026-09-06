@@ -19,7 +19,8 @@ Stary portal (`teatrzaangazowany`, baza `drama_teatr`) — **źródło** artyku�
 |------|------|
 | `project` | Projekty (w tym Art Generacje z edycjami / galeriami / partnerami) |
 | `person` | Zespół, zarząd |
-| `page` | Statyczne podstrony (o fundacji, statut, metody, kontakt…) |
+| `page` | Statyczne podstrony (statut, metody, kontakt, newsy…) |
+| `aboutPage` | Singleton `/fundacja`: hero, wartości, zespół na tej stronie, historia, dokumenty |
 | `publication` | Czytelnia / wydawnictwo / materiały z portalu wiedzy |
 | `siteSettings` | Nawigacja, footer, globalne CTA |
 

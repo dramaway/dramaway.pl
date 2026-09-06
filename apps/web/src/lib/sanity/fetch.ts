@@ -2,6 +2,7 @@ import "server-only";
 
 import { sanityClient } from "./client";
 import {
+  aboutPageQuery,
   contentCountsQuery,
   homepageNewsQuery,
   newsListQuery,
@@ -23,6 +24,7 @@ import {
   siteSettingsQuery,
 } from "./queries";
 import type {
+  AboutPage,
   ContentCounts,
   PageDetail,
   PageListItem,
@@ -99,6 +101,10 @@ export async function getPagesBySlugs(
 
 export async function getSiteSettings(): Promise<SiteSettings | null> {
   return sanityClient.fetch(siteSettingsQuery, {}, revalidate);
+}
+
+export async function getAboutPage(): Promise<AboutPage | null> {
+  return sanityClient.fetch(aboutPageQuery, {}, revalidate);
 }
 
 export async function getPageSlugs(): Promise<string[]> {

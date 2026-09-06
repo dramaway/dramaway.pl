@@ -24,7 +24,7 @@ private/dumps/drama_teatr_1787254349.sql.gz  — **jest** lokalnie
         ↓  pnpm extract:czytelnia
 apps/web/src/data/extracted/czytelnia.json   (gitignored)
         ↓  pnpm migrate:czytelnia
-Sanity: 6× readingMethod + 81× publication (47 listed; śmieć metody-tzs usunięty)
+Sanity: 6× readingMethod + 81× publication (wszystkie `listed`; śmieć metody-tzs usunięty)
 ```
 
 Live CMS: projekt Sanity **Dramaway**, id `tr2qdg9j`, dataset `production`.  
@@ -35,10 +35,11 @@ Publiczne: `http://localhost:3000` (`pnpm dev`). Inwentarz CMS: `/preview`. Stud
 | Typ | Ile | Skąd | Preview |
 |-----|-----|------|---------|
 | `person` | 7 | Drupal `czlonek_zespolu` | `/zespol` |
+| `aboutPage` | 1 singleton | ręcznie / `pnpm seed:about-page` | `/fundacja` |
 | `page` | 23 + 2 newsy + placeholder | Drupal `page` + opublikowane `aktualnosc` | `/fundacja/…`, `/metody`, `/kontakt`, korzeń |
 | `project` | 4 | rozbicie stron Drupal, nie nowy dump | `/projekty` |
 | `readingMethod` | 6 | seed z `scripts/czytelnia-curated.json` (nie enum, nie `/metody`) | Studio |
-| `publication` | **81** (47 `listed`) | Drupal `article` status=1 minus śmieć `metody-tzs` | `/czytelnia`, `/czytelnia/[slug]` |
+| `publication` | **81** (`listed`) | Drupal `article` status=1 minus śmieć `metody-tzs` | `/czytelnia`, `/czytelnia/[slug]` |
 | assety | 76 obrazów fundacji + 144 Czytelnia (okładki + PDF) | FTP fundacji + `teatrzaangazowany…/files/` | Studio → Media |
 
 Newsy są **nadal `page`**: tytuł `[Aktualność] …`, slug `aktualnosc-…`. Osobnego typu nie ma.
@@ -49,7 +50,7 @@ Biblioteka **Media** w Studio czyta te same `sanity.imageAsset` — bez re-uploa
 
 Archiwum bez edycji: Teatr Codzienny, TO MI GRA, BOAL IN PRACTICE.
 
-**Czytelnia** (2026-09-05, osie przywrócone 2026-09-06): dump `private/dumps/drama_teatr_1787254349.sql.gz`. 82 opublikowane `article` → `publication`; śmieć `metody-tzs` (tytuł „aaa”) **usunięty** → **81** w datasetcie (47 `listed` + 34 URL-only). Tagi z `scripts/czytelnia-curated.json` (lista Word) zostają **kategoriami** (`readingMethod` / pole `methods`; w Studio: Category / Categories) — to nie strona `/metody`. Szuflady Drupala (Publikacje / Scenariusze / Książki / Multimedia) znowu są publicznym **rodzajem** `publication.format` (`articles` \| `books` \| `scripts` \| `multimedia`); `legacyDrupal.format` zostaje ukrytym śladem dumpa. Patch: `pnpm patch:publication-format`, **nie** `migrate:czytelnia`. `publication` nigdy nie jest `project`; edycje AG nie są publikacjami. Persony portalu (89) nie są dokumentami `person` — tylko stringi `authors`. PDF-y z `field_dokument` (64/64 na dysku). Front artykułu ciągnie `authors`, `methods`, `file`. Hosted Studio: po zmianie schematu `pnpm --filter studio run deploy`.
+**Czytelnia** (2026-09-05, osie przywrócone 2026-09-06, listing 2026-09-06): dump `private/dumps/drama_teatr_1787254349.sql.gz`. 82 opublikowane `article` → `publication`; śmieć `metody-tzs` (tytuł „aaa”) **usunięty** → **81** w datasetcie, wszystkie `listed` (`pnpm patch:publication-listed`). Tagi z `scripts/czytelnia-curated.json` (lista Word) zostają **kategoriami** (`readingMethod` / pole `methods`; w Studio: Category / Categories) — to nie strona `/metody`. Szuflady Drupala (Publikacje / Scenariusze / Książki / Multimedia) znowu są publicznym **rodzajem** `publication.format` (`articles` \| `books` \| `scripts` \| `multimedia`); `legacyDrupal.format` zostaje ukrytym śladem dumpa. Patch: `pnpm patch:publication-format`, **nie** `migrate:czytelnia`. `publication` nigdy nie jest `project`; edycje AG nie są publikacjami. Persony portalu (89) nie są dokumentami `person` — tylko stringi `authors`. PDF-y z `field_dokument` (64/64 na dysku). Front artykułu ciągnie `authors`, `methods`, `file`. Hosted Studio: po zmianie schematu `pnpm --filter studio run deploy`.
 
 ## Luki vs ramka Figmy (listingi)
 
@@ -71,7 +72,7 @@ Placeholder newsa Syrena (`[Aktualność] Nowy projekt z Teatrem Syrena`, slug `
 
 **1:1 (nody):** zespół (7), kontakt, metody, szkolenia i spektakle, projekty-karty, fundacja (statut, sprawozdania, zarząd, jak wesprzeć), aktualności z homepage.
 
-**Świadomie nie jako dokumenty:** `/`, `/projekty`, `/zespol`, `/fundacja` — w Drupalu listingi taksonomii, nie nody. W Next są to widoki (nawigacja z IA, nie `siteSettings`).
+**Świadomie nie jako dokumenty `page`:** `/`, `/projekty`, `/zespol` — w Drupalu listingi taksonomii, nie nody. W Next są to widoki. `/fundacja` jest widokiem z singletonem `aboutPage` (Studio: **O fundacji**).
 
 **Nie przenosiliśmy:** 2 nieopublikowane newsy, 2 `simplenews`. Sitemap XML na live jest popsuty (tylko homepage) — weryfikacja była menu + listing projektów + HTTP na ścieżkach z dumpa.
 

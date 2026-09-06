@@ -126,6 +126,48 @@ export const pagesBySlugsQuery = `*[_type == "page" && slug.current in $slugs] {
   "isNews": false
 }`;
 
+export const aboutPageQuery = `*[_type == "aboutPage"][0] {
+  title,
+  lead,
+  ctaLabel,
+  ctaHref,
+  image,
+  methods {
+    heading,
+    lead,
+    ctaLabel,
+    ctaHref,
+    values[] { label }
+  },
+  team {
+    heading,
+    ctaLabel,
+    people[]->{
+      _id,
+      name,
+      "slug": slug.current,
+      role,
+      email,
+      photo,
+      "excerpt": pt::text(bio)
+    }
+  },
+  history {
+    heading,
+    lead,
+    items[] { year, title, body }
+  },
+  documents {
+    heading,
+    items[] {
+      title,
+      href,
+      "page": page->{ title, "slug": slug.current },
+      file { asset->{ url, originalFilename, mimeType } }
+    }
+  }
+}`;
+
 export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
   _updatedAt,
   title,

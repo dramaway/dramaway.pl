@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-06 — Czytelnia: puste rodzaje ukryte; kategorie = sekcje 3+expand |
+| **Ostatnia aktualizacja** | 2026-09-06 — `/fundacja`: singleton `aboutPage`; wartości w kołach; historia z CMS |
 | **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
@@ -29,9 +29,9 @@ Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona głów
 
 - Dataset `production` (`tr2qdg9j`) publiczny. Next bez tokenu. Write token **tylko** `apps/studio/.env`.
 - Mapa URL: `apps/web/src/lib/routes.ts` — prefiks IA + `slug.current`. Header: Projekty, **Baza wiedzy** (`/baza-wiedzy`) z drugim poziomem Metody / Czytelnia (desktop disclosure, mobile overlay), O fundacji, Kontakt. `/zespol` poza pierwszym poziomem.
-- Listingi: `/projekty` = paleta po hero, aktywne + wiersz Czytelni `BlobRow width="wide"`, druga paleta + pasmo, archiwum `density="compact"`. `/fundacja` = metody/wartości z etykietami, zespół `TeamBios`, dokumenty jako lista CTA (nie blob-karty). `/czytelnia` = opcjonalne CTA rodzaju + sekcje kategorii (`listed`). `/` **nie** listuje siatki projektów ani splitów „13 edycji”.
+- Listingi: `/projekty` = paleta po hero, aktywne + wiersz Czytelni `BlobRow width="wide"`, druga paleta + pasmo, archiwum `density="compact"`. `/fundacja` = singleton **`aboutPage`**: hero, wartości, zespół (zdjęcie nad opisem, imię bez uppercase), `DotBand` między zespołem a historią i pod dokumentami (`data-no-palette` chowa paletę stopki), paleta między historią a dokumentami, historia `.stack-narrow`, dokumenty `.document-list`. `/czytelnia` = opcjonalne CTA rodzaju + sekcje kategorii (`listed`). `/` **nie** listuje siatki projektów ani splitów „13 edycji”.
 - `/projekty/[slug]` = `project` albo strona z sekcji projektów. Edycje: `/projekty/[slug]/[edition]` (AG ma 13 unikalnych slugów, w tym trzy `edycja-vi-20xx`). `/[slug]` = reszta (newsy). **AG:** lista edycji to kopia posortowana malejąco po `year` (CMS bez zmian). Afterword + `partners` / `sponsors` w `FoldList` (`details`, domyślnie zamknięte); niepuste pole wygrywa z H2 Partnerzy/Sponsorzy.
-- `/czytelnia` — rodzaj: CTA tylko dla szuflad z `listed` (dziś jedna → rząd ukryty). Kategorie: sekcje z tytułem `(n)`, start 3 wiersze, hover „pokaż wszystkie” / „zwiń” (zwinięcie chowa całość). Publikacja z wieloma tagami jest w wielu sekcjach. GROQ **`listed == true`** (47). **Wszystkie 47 listed to `format: articles`**. Artykuł: autorzy, etykiety `readingMethod`, link PDF (`file`), cover z pierwszego obrazka w `body`. W Sanity **81× `publication`** (import 82 minus śmieć `metody-tzs`) + **6× `readingMethod`** (`_type` bez zmiany; w Studio tytuł **Category**). Dwie osie: Drupalowe szuflady → publiczne `publication.format` (`articles` \| `books` \| `scripts` \| `multimedia`); tagi z Worda → `methods` (Categories). `pnpm patch:publication-format` **odpalony** (81 ustawionych, 1 puste `legacyDrupal.format`). Dump **jest**: `private/dumps/drama_teatr_1787254349.sql.gz`. Hub Bazy: `/baza-wiedzy` (rodzic; Czytelnia to dziecko). Hosted Studio: po zmianie schematu trzeba `pnpm --filter studio run deploy`.
+- `/czytelnia` — rodzaj: CTA tylko gdy ≥2 szuflady mają `listed`. Kategorie: sekcje z magenta Light + `(n)` szare, domyślnie otwarte, hover „zwiń” / „pokaż wszystkie”. Jeśli w danym rodzaju nikt nie ma tagu — płaska lista, bez „Pozostałe”. Publikacja z wieloma tagami jest w wielu sekcjach. GROQ **`listed == true`**. `pnpm patch:publication-listed` **odpalony** (wszystkie `publication` w spisie). Artykuł: autorzy, etykiety `readingMethod`, link PDF (`file`), cover z pierwszego obrazka w `body`. W Sanity **81× `publication`** (import 82 minus śmieć `metody-tzs`) + **6× `readingMethod`**. Dwie osie: `publication.format` (`articles` \| `books` \| `scripts` \| `multimedia`); tagi → `methods`. `pnpm patch:publication-format` **odpalony**. Dump **jest**: `private/dumps/drama_teatr_1787254349.sql.gz`. Hub Bazy: `/baza-wiedzy`. Hosted Studio: po zmianie schematu `pnpm --filter studio run deploy`.
 - `siteSettings` **jest w datasetcie** — hero heading/CTA z ramki `59:608`; **`heroLead` przywrócony do tekstu z ramki** (wcześniej akapit z Drupala). Grupa `homepage` **zostaje pusta** — wypełnienie w Studio cicho nadpisuje fallbacki z `apps/web/src/lib/homepage-copy.ts`. Chrome UI (CTA, leady, etykiety list) tylko w `homepage-copy.ts` / `subpage-copy.ts`; wyjątki: [design/system.md](design/system.md) „Copy chrome vs Figma”. Grupa **Ikony** (`branding`): **SVG jako `image`** (Select w Media widzi m.in. już wrzucony `icon.svg`; strona serwuje surowy SVG z `asset.url`, nie raster CDN) / **ICO jako `file`** z podglądem 32×32 i natywnym pickerem (Media na polach `file` była pusta: 0 `fileAsset`) / PNG light+dark / Apple / 512 / OG. Puste pole = `public/brand`.
 - `getResolvedSite()` zwraca `homepage` + `hero` + `footerNote` (zawsze string, cytat Boala jako fallback). Featured **H2** to tytuł `project.featured`; magenta etykieta „Projekty” to `homepage.featured.heading`.
 - Newsy na `/`: `getHomepageNews()` — max 3, bez zdjęć, excerpt ~400 znaków. Daty kart: `publishedAt`. Trzeci news `news-placeholder-syrena` jest wypełniaczem z ramki — **do draftu** z adnotacją PL (wykaz: [fundacja-status.md](migration/fundacja-status.md) „Luki vs ramka”).
@@ -49,7 +49,7 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 
 - Tokeny w `@theme` (`globals.css`), fonty MuseoModerno + Alexandria przez `next/font`.
 - Klasy układu: `.page`, `.split` (pełny viewport, spad zdjęcia do krawędzi okna), `.cols-3`, `.stack`, `.stack-narrow`, `.stack-wide`, `.footer-quote`.
-- Sześć prymitywów: `Section`, `DotBand`, `PaletteRow`, `Blob`, `CtaLink`, `Media`. Sekcje podstron: `PageHero`, `BlobRow`, `LeadGallery`, `TeamRow`; `/fundacja`: `FundacjaValues`, `TeamBios`, `FundacjaDocuments`. Copy ramek: `apps/web/src/lib/subpage-copy.ts`. `PageHero` to ten sam split i kadr w kole co `/`, z overlayem nawigacji od `lg` przez `data-split-hero` (nie `data-home` — to chowa paletę stopki). H1 ma `.hero-title` (sentence case). Edycja: `layout="stack"` (bez foto, overlayu i pasma). Puste zdjęcie = `public/about-photo.jpg`. Paleta przed stopką leży w layoucie witryny i chowa się na `/`. `BlobRow` ma `width`: `page` (domyślnie, pełne `.page`), `narrow` (`.stack-narrow`), `wide` (`.stack-wide` / `--content-wide`); `density="compact"` zostaje dwukolumnowe na pełnym `.page`.
+- Sześć prymitywów: `Section`, `DotBand`, `PaletteRow`, `Blob`, `CtaLink`, `Media`. Sekcje podstron: `PageHero`, `BlobRow`, `LeadGallery`, `TeamRow`; `/fundacja`: `FundacjaValues`, `TeamBios`, `FundacjaHistory`, `FundacjaDocuments`. Copy ramek: `apps/web/src/lib/subpage-copy.ts` (fallback, gdy singleton pusty). `PageHero` to ten sam split i kadr w kole co `/`, z overlayem nawigacji od `lg` przez `data-split-hero` (nie `data-home` — to chowa paletę stopki). H1 ma `.hero-title` (sentence case). Edycja: `layout="stack"` (bez foto, overlayu i pasma). Puste zdjęcie = `public/about-photo.jpg`. Paleta przed stopką leży w layoucie witryny i chowa się na `/`. `BlobRow` ma `width`: `page` (domyślnie, pełne `.page`), `narrow` (`.stack-narrow`), `wide` (`.stack-wide` / `--content-wide`); `density="compact"` zostaje dwukolumnowe na pełnym `.page`.
 - **Hero / nav:** na `lg+` wrapper `[data-home]` albo `[data-split-hero]` + `:has()` wyjmuje header z pionowego flow i kotwiczy go w lewej kolumnie (szerokość jak `.split-text`). Portret od góry prawej kolumny, spad do prawej krawędzi viewportu; na podstronach kadr jest ograniczony `--hero-media-max`, żeby dół zdjęcia + nachodzące pasmo mieściły się w `100vh`. Nav **nigdy** na zdjęciu. Poniżej `lg`: sticky pasek (logo + menu), overlay na `sand` z L1 plus Metody/Czytelnia; hero to H1, kadr w kole, lead/CTA; stacked `.split` ma tekst, potem kadr inset 4:5 (`--media-split-max`). Od `lg` disclosure pod „Baza wiedzy”.
 - Pasmo kół: `--dot-size` 82 px (skok 48 px <768), bez `overflow: hidden`, koła z `radial-gradient(circle closest-side)` — bez `closest-side` promień idzie do narożnika kafla i zostaje szczelina. Szerokość rzędu `round(up, 50%, --dot-size)`: rzędy dobijają do krawędzi strony, reszta z zaokrąglenia ląduje na środku pod schodkiem. Ujemny margin nachodzi na krawędzie `Media`; prop `mirror` odbija schodek tam, gdzie zdjęcie jest po lewej.
 - Paleta: 7 stykających się kół, `flex-shrink: 0`, wyśrodkowana jako grupa.
@@ -68,8 +68,8 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 - `page.excerpt` na dwóch migracyjnych newsach nadal puste — karty tną `pt::text(body)` (placeholder Syrena ma excerpt z ramki)
 - Zdjęcie „Kim jesteśmy” w Sanity — leci z `public/about-photo.jpg` jako `fallbackSrc`
 - Pasmo kół pod „Kim jesteśmy?” ma odbity schodek zamiast figmowego (uzgodnione) — powód w [design/system.md](design/system.md)
-- `/zespol` listing = `PageHero` + `TeamRow` (małe koła). `/fundacja` pokazuje zespół jako `TeamBios` (dwa słupy). Profil osoby `/zespol/[slug]` nadal z fazy migracji (`ArticleShell`)
-- Timeline „historia fundacji” z ramki (`‘11` / `‘12` / `‘13`) — wklejony lorem z bio Aldony; **nie budować**, dopóki nie ma prawdziwych dat
+- `/zespol` listing = `PageHero` + `TeamRow` (małe koła, wszyscy `person`). `/fundacja` pokazuje zespół jako `TeamBios` — skład i kolejność z `aboutPage.team.people`. Profil osoby `/zespol/[slug]` nadal z fazy migracji (`ArticleShell`)
+- Timeline „historia fundacji” — sekcja jest; **pusta lista w Studio = brak bloku na stronie**. Nie wklejać lorem `‘11`/`‘12`/`‘13` z bio Aldony; wpisywać prawdziwe daty w `aboutPage.history`.
 - Mapa przekierowań (stare aliasy `teatrzaangazowany…` → `/czytelnia/[slug]`)
 - News jako osobny typ, newsletter, **formularz kontaktu (osobne zamówienie, jeśli będą chcieli)**, EN
 - `person.role` (Drupal `field_funkcja`)
@@ -81,12 +81,12 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 
 Ten plik + [fundacja-status.md](migration/fundacja-status.md) + [ustalenia-2026-09-05.md](concept/ustalenia-2026-09-05.md). Nie odtwarzać dumpów rozmów. Nie wołać Figmy bez potrzeby.
 
-**Baza wiedzy ≠ Czytelnia.** Hub `/baza-wiedzy` + Metody `/metody` + Czytelnia `/czytelnia`. Faza 2 kanału Czytelni **zrobiona**. Listing 47 z filtrami dwóch osi; unlisted np. `perykles-wygnanie-i-utrata-adrian-jackson`.
+**Baza wiedzy ≠ Czytelnia.** Hub `/baza-wiedzy` + Metody `/metody` + Czytelnia `/czytelnia`. Faza 2 kanału Czytelni **zrobiona**. Listing: wszystkie `publication` mają `listed` (`pnpm patch:publication-listed`).
 
 Ramki Figmy podstron są na `main` (chrome + `/projekty`, AG, edycja stack + 1+3, hub Bazy, `/fundacja` wartości/bio/dokumenty, `/kontakt` bez formularza). `person.email` w CMS puste → kontakt bez siatki maili. **Working tree brudne**, bez commita i bez pusha.
 
 1. Draft `news-placeholder-syrena` w Studio — jeszcze nie. Profile `/zespol/[slug]` nadal robocze.
-2. **Nie odpalaj** `migrate:czytelnia` / `migrate:fundacja` / `migrate:art-generacje` — nadpisze ręczną korektę, **odtworzy** `metody-tzs` i dosłowne `&nbsp;` w `summary`. Format szuflad: `pnpm patch:publication-format` (jednorazowy, nie pełny migrate).
+2. **Nie odpalaj** `migrate:czytelnia` / `migrate:fundacja` / `migrate:art-generacje` — nadpisze ręczną korektę, **odtworzy** `metody-tzs` i dosłowne `&nbsp;` w `summary`. Format: `pnpm patch:publication-format`. Listing: `pnpm patch:publication-listed` (już odpalony).
 3. Pola Studio pod ramki: tabela niżej. **Nie wypełniać** `siteSettings.homepage`. Ucięte bilety Evently w newsie „W kolejce do lasu” — ręcznie w Studio (skrypt tylko raportuje).
 
 ### Studio — podstrony vs Figma
@@ -100,10 +100,12 @@ Ręcznie, nie w kodzie i nie przez `migrate:*`. Grupa `homepage` **zostaje pusta
 | `edition.gallery` | XI ma 2 kadry | 1 landscape + 3 portrety; pierwsze = landscape |
 | `edition.outcomes` | puste | Zostawić — kredyty są w `body` |
 | AG `body` YouTube | brak bloku | Wstawić film (slot jest pusty; kadr zostaje w `rest`) |
-| Cover projektu / `/fundacja` | brak kadru pionowego | Wgrać cover; puste = `public/about-photo.jpg` |
+| Cover projektu / `/fundacja` | brak kadru pionowego | Wgrać w `aboutPage.image`; puste = `public/about-photo.jpg` |
 | Syrenka / Wielogłos | tylko lorem w ramce | **Nie tworzyć** projektów z Figmy |
-| Historia fundacji (`‘11`/`‘12`/`‘13`) | lorem z bio Aldony | **Nie budować**, dopóki nie ma prawdziwych dat |
-| Wartości na `/fundacja` | chrome w kodzie | Nie przenosić do CMS |
+| Historia fundacji | sekcja w `aboutPage.history` | Wpisz prawdziwe daty; pusta lista = brak bloku. Nie kopiować lorem z Figmy |
+| Wartości na `/fundacja` | `aboutPage.methods.values` | Edytować w Studio; pusta lista = fallback z `subpage-copy` |
+| Zespół na `/fundacja` | `aboutPage.team.people` | Kolejność i skład; pusta = wszyscy `person` |
+| Dokumenty | `aboutPage.documents.items` | Strona i/lub PDF i/lub URL. Pusta = statut / sprawozdania / jak nas wesprzeć |
 | `siteSettings.homepage` | puste | **Nie wypełniać** |
 
 `pnpm dev:all` jeśli porty wolne. Publiczne URL-e, nie `/preview`.
@@ -147,6 +149,8 @@ pnpm extract:czytelnia        # dump → gitignored JSON
 pnpm repair:portable-text     # dry-run encji/linków; `-- --write` zapisuje
 pnpm test:repair
 pnpm patch:publication-format # legacyDrupal.format → format; nie zastępuje migrate:czytelnia
+pnpm patch:publication-listed # listed=true na wszystkich publication
+pnpm seed:about-page          # singleton O fundacji, jeśli nie istnieje
 pnpm --filter studio run deploy   # https://dramaway.sanity.studio/
 ```
 

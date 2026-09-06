@@ -83,7 +83,7 @@ export const SUBPAGE = {
       href: methodsPath(),
       ctaLabel: FALLBACK_HOMEPAGE.methods.ctaLabel,
     },
-    /** Chrome labels from frame `130:1316` (7+1 circles). Not CMS. */
+    /** Fallback labels from frame `130:1316` (7+1 circles) when CMS values are empty. */
     values: [
       "Zaufanie",
       "Energia",
@@ -97,6 +97,9 @@ export const SUBPAGE = {
     teamHeading: "Zespół",
     teamCta: "zobacz pełne bio",
     teamEmpty: "Brak osób w CMS.",
+    history: {
+      heading: "Historia fundacji",
+    },
     documents: {
       heading: "Dokumenty i sprawozdania",
       empty: "Brak dokumentów fundacji w CMS.",

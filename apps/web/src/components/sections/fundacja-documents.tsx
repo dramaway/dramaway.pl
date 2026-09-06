@@ -4,6 +4,7 @@ import { CtaLink } from "@/components/visual/cta-link";
 export type FundacjaDocumentLink = {
   title: string;
   href: string;
+  external?: boolean;
 };
 
 type FundacjaDocumentsProps = {
@@ -13,7 +14,7 @@ type FundacjaDocumentsProps = {
 };
 
 /**
- * Foundation documents as a CTA list (statut, reports, support) — not blob cards.
+ * Foundation documents as a CTA list (page, PDF, or URL) — not blob cards.
  */
 export function FundacjaDocuments({
   heading,
@@ -26,10 +27,12 @@ export function FundacjaDocuments({
       {items.length === 0 ? (
         <p className="mt-8 text-body">{emptyMessage}</p>
       ) : (
-        <ul className="stack mt-8">
+        <ul className="document-list mt-8">
           {items.map((item) => (
-            <li key={item.href}>
-              <CtaLink href={item.href}>{item.title}</CtaLink>
+            <li key={`${item.href}-${item.title}`}>
+              <CtaLink href={item.href} external={item.external}>
+                {item.title}
+              </CtaLink>
             </li>
           ))}
         </ul>

@@ -24,7 +24,7 @@ function personBlurb(person: TeamBioPerson) {
 }
 
 /**
- * Two-column team bios: circle photo, name, short blurb, profile CTA.
+ * Two-column team bios: circle photo above name, blurb, profile CTA.
  * Survives zero people and missing photos (Media paints sand).
  */
 export function TeamBios({
@@ -53,11 +53,11 @@ export function TeamBios({
                   alt={person.name}
                   variant="bleed"
                   ratio="portrait"
-                  sizes="(min-width: 64rem) 12vw, 30vw"
+                  sizes="(min-width: 64rem) 12vw, 40vw"
                   className="team-photo"
                 />
                 <div>
-                  <h3 className="font-display text-h4 font-black">
+                  <h3 className="team-bio-name text-h4 font-semibold">
                     {person.name}
                   </h3>
                   {blurb ? (

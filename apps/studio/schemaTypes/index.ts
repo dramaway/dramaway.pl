@@ -1,3 +1,4 @@
+import { aboutPage } from "./aboutPage";
 import { blockContent, youtube } from "./blockContent";
 import { edition } from "./edition";
 import { editionOutcome } from "./editionOutcome";
@@ -18,5 +19,6 @@ export const schemaTypes = [
   page,
   readingMethod,
   publication,
+  aboutPage,
   siteSettings,
 ];

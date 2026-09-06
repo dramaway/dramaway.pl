@@ -29,7 +29,7 @@ Ustalenia 2026-09-05 (hub Bazy, Czytelnia ≠ `project`, URL edycji, listing = C
 - **Szkolenia i spektakle** → odsyła do `centrum.dramaway.pl` (poza MVP migracji)
 - **Kontakt** `/kontakt` — treść z CMS, bez formularza (MVP). Formularz = osobne zamówienie później.
 
-Publiczne trasy w Next (`apps/web/src/lib/routes.ts`) składają ten szkielet: prefiks z tej IA + `slug.current` z Sanity (ostatni segment aliasu Drupal). Listingi `/`, `/projekty`, `/zespol`, `/fundacja` nie mają dokumentu CMS — to widoki. Mapa 301 na premierę (stare `node/N`, osobne landingi edycji, aliasy newsów) jest osobnym zadaniem.
+Publiczne trasy w Next (`apps/web/src/lib/routes.ts`) składają ten szkielet: prefiks z tej IA + `slug.current` z Sanity (ostatni segment aliasu Drupal). Listingi `/`, `/projekty`, `/zespol` nie mają dokumentu CMS — to widoki. `/fundacja` to widok Next z singletonem `aboutPage` (kolejność sekcji w kodzie; treść i listy w Studio). Mapa 301 na premierę (stare `node/N`, osobne landingi edycji, aliasy newsów) jest osobnym zadaniem.
 
 ## Ekosystem domen (kontekst)
 
