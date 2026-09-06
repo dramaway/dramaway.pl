@@ -228,6 +228,8 @@ export const siteSettings = defineType({
       title: "Homepage",
       type: "object",
       group: "homepage",
+      description:
+        "Empty field = that block is omitted on `/`. No frontend defaults.",
       fields: [
         defineField({
           name: "about",

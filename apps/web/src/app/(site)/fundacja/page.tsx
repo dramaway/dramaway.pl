@@ -12,11 +12,18 @@ export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const about = await getResolvedAboutPage();
-  return { title: about.title };
+  return { title: about.title || "O fundacji" };
 }
 
 export default async function FundacjaIndexPage() {
   const about = await getResolvedAboutPage();
+  const methods = about.methods;
+  const showMethods = Boolean(
+    methods.heading ||
+      methods.lead ||
+      (methods.ctaLabel && methods.ctaHref) ||
+      methods.values.length > 0,
+  );
 
   return (
     <div data-no-palette="">
@@ -28,19 +35,22 @@ export default async function FundacjaIndexPage() {
         image={about.image}
         imageAlt={about.imageAlt}
       />
-      <FundacjaValues
-        heading={about.methods.heading}
-        lead={about.methods.lead}
-        ctaLabel={about.methods.ctaLabel}
-        ctaHref={about.methods.ctaHref}
-        values={about.methods.values}
-      />
-      <TeamBios
-        heading={about.team.heading}
-        people={about.team.people}
-        ctaLabel={about.team.ctaLabel}
-        emptyMessage={about.team.emptyMessage}
-      />
+      {showMethods ? (
+        <FundacjaValues
+          heading={methods.heading}
+          lead={methods.lead}
+          ctaLabel={methods.ctaLabel}
+          ctaHref={methods.ctaHref}
+          values={methods.values}
+        />
+      ) : null}
+      {about.team.people.length > 0 ? (
+        <TeamBios
+          heading={about.team.heading}
+          people={about.team.people}
+          ctaLabel={about.team.ctaLabel}
+        />
+      ) : null}
       <DotBand />
       <FundacjaHistory
         heading={about.history.heading}
@@ -52,11 +62,12 @@ export default async function FundacjaIndexPage() {
           <PaletteRow />
         </div>
       ) : null}
-      <FundacjaDocuments
-        heading={about.documents.heading}
-        items={about.documents.items}
-        emptyMessage={about.documents.emptyMessage}
-      />
+      {about.documents.items.length > 0 ? (
+        <FundacjaDocuments
+          heading={about.documents.heading}
+          items={about.documents.items}
+        />
+      ) : null}
       <DotBand />
     </div>
   );

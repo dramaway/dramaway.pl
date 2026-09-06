@@ -10,7 +10,7 @@ import Link from "next/link";
 export type PageHeroLayout = "split" | "stack";
 
 export type PageHeroContent = {
-  title: string;
+  title?: string | null;
   lead?: string | null;
   /** Portable Text in the hero copy column (contact page body). */
   body?: PortableContent | null;
@@ -47,9 +47,11 @@ export function PageHero({
   parent,
   layout = "split",
 }: PageHeroProps) {
+  const hasTitle = Boolean(title?.trim());
   const hasBody = hasPortableContent(body);
   const hasCopy =
     Boolean(lead) || hasBody || Boolean(ctaLabel && ctaHref);
+  if (!hasTitle && !hasCopy && !hasHeroImage(image)) return null;
   const heading = (
     <div className="hero-heading">
       {parent ? (
@@ -59,9 +61,11 @@ export function PageHero({
           </Link>
         </p>
       ) : null}
-      <h1 className="hero-title font-display text-display font-black">
-        {title}
-      </h1>
+      {hasTitle ? (
+        <h1 className="hero-title font-display text-display font-black">
+          {title}
+        </h1>
+      ) : null}
     </div>
   );
   const copy = hasCopy ? (
@@ -105,7 +109,7 @@ export function PageHero({
               <Blob />
               <Media
                 image={image}
-                alt={imageAlt?.trim() || title}
+                alt={imageAlt?.trim() || title?.trim() || ""}
                 variant="bleed"
                 ratio="portrait"
                 sizes="(min-width: 64rem) 34vw, 70vw"

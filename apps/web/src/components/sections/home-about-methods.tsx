@@ -1,13 +1,13 @@
 import { CtaLink } from "@/components/visual/cta-link";
 import { Media } from "@/components/visual/media";
-import { FALLBACK_ABOUT_IMAGE } from "@/lib/homepage-copy";
+import { hasHeroImage } from "@/lib/sanity/image";
 import type { SanityImage } from "@/lib/sanity/types";
 
 export type HomeTextBlock = {
-  heading: string;
+  heading: string | null;
   lead: string | null;
   ctaLabel: string | null;
-  ctaHref: string;
+  ctaHref: string | null;
 };
 
 type HomeAboutMethodsProps = {
@@ -18,6 +18,9 @@ type HomeAboutMethodsProps = {
 };
 
 function TextStack({ block }: { block: HomeTextBlock }) {
+  if (!block.heading && !block.lead && !(block.ctaLabel && block.ctaHref)) {
+    return null;
+  }
   return (
     <div>
       {block.heading ? (
@@ -26,7 +29,7 @@ function TextStack({ block }: { block: HomeTextBlock }) {
       {block.lead ? (
         <p className="mt-6 text-body">{block.lead}</p>
       ) : null}
-      {block.ctaLabel ? (
+      {block.ctaLabel && block.ctaHref ? (
         <CtaLink href={block.ctaHref} className="mt-8">
           {block.ctaLabel}
         </CtaLink>
@@ -53,15 +56,18 @@ export function HomeAboutMethods({
           <TextStack block={methods} />
         </div>
       </div>
-      <Media
-        image={image}
-        fallbackSrc={FALLBACK_ABOUT_IMAGE}
-        alt={imageAlt}
-        variant="bleed"
-        ratio="portrait"
-        sizes="(min-width: 64rem) 34vw, 100vw"
-        className="split-media"
-      />
+      {hasHeroImage(image) ? (
+        <Media
+          image={image}
+          alt={imageAlt}
+          variant="bleed"
+          ratio="portrait"
+          sizes="(min-width: 64rem) 34vw, 100vw"
+          className="split-media"
+        />
+      ) : (
+        <div className="split-media hero-media-empty media-portrait" aria-hidden />
+      )}
     </section>
   );
 }

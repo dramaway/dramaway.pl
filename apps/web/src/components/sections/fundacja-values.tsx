@@ -18,10 +18,10 @@ const VALUE_TONES = [
 ] as const;
 
 type FundacjaValuesProps = {
-  heading: string;
+  heading?: string | null;
   lead?: string | null;
   ctaLabel?: string | null;
-  ctaHref: string;
+  ctaHref?: string | null;
   values: readonly string[];
 };
 
@@ -36,19 +36,26 @@ export function FundacjaValues({
   ctaHref,
   values,
 }: FundacjaValuesProps) {
+  const hasCopy = Boolean(heading || lead || (ctaLabel && ctaHref));
+  if (!hasCopy && values.length === 0) return null;
+
   return (
     <Section>
-      <div className="stack-wide">
-        <h2 className="font-display text-h3 font-black">{heading}</h2>
-        {lead ? <p className="mt-8 text-lead">{lead}</p> : null}
-        {ctaLabel ? (
-          <CtaLink href={ctaHref} className="mt-8">
-            {ctaLabel}
-          </CtaLink>
-        ) : null}
-      </div>
+      {hasCopy ? (
+        <div className="stack-wide">
+          {heading ? (
+            <h2 className="font-display text-h3 font-black">{heading}</h2>
+          ) : null}
+          {lead ? <p className="mt-8 text-lead">{lead}</p> : null}
+          {ctaLabel && ctaHref ? (
+            <CtaLink href={ctaHref} className="mt-8">
+              {ctaLabel}
+            </CtaLink>
+          ) : null}
+        </div>
+      ) : null}
       {values.length > 0 ? (
-        <ul className="values-row mt-8">
+        <ul className={cn("values-row", hasCopy && "mt-8")}>
           {values.map((label, index) => (
             <li
               key={`${label}-${index}`}

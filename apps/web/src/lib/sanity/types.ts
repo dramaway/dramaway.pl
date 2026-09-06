@@ -128,19 +128,19 @@ export type SiteSettings = {
 };
 
 export type HeroContent = {
-  heading: string;
+  heading: string | null;
   lead: string | null;
   ctaLabel: string | null;
-  ctaHref: string;
+  ctaHref: string | null;
   image: SanityImage | null;
   imageAlt: string;
 };
 
 export type HomepageBlock = {
-  heading: string;
-  lead: string;
-  ctaLabel: string;
-  ctaHref: string;
+  heading: string | null;
+  lead: string | null;
+  ctaLabel: string | null;
+  ctaHref: string | null;
 };
 
 export type HomepageAbout = HomepageBlock & {
@@ -159,8 +159,8 @@ export type HomepageContent = {
 export type ResolvedFooter = {
   logo: SanityImage | null;
   logoAlt: string;
-  address: string;
-  quote: string;
+  address: string | null;
+  quote: string | null;
   attribution: string | null;
 };
 
@@ -319,33 +319,31 @@ export type ResolvedAboutHistoryItem = {
 };
 
 export type ResolvedAboutPage = {
-  title: string;
+  title: string | null;
   lead: string | null;
   ctaLabel: string | null;
   ctaHref: string | null;
   image: SanityImage | null;
   imageAlt: string;
   methods: {
-    heading: string;
+    heading: string | null;
     lead: string | null;
     ctaLabel: string | null;
-    ctaHref: string;
+    ctaHref: string | null;
     values: string[];
   };
   team: {
-    heading: string;
-    ctaLabel: string;
+    heading: string | null;
+    ctaLabel: string | null;
     people: PersonListItem[];
-    emptyMessage: string;
   };
   history: {
-    heading: string;
+    heading: string | null;
     lead: string | null;
     items: ResolvedAboutHistoryItem[];
   };
   documents: {
-    heading: string;
+    heading: string | null;
     items: ResolvedAboutDocument[];
-    emptyMessage: string;
   };
 };

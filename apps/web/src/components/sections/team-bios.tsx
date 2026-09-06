@@ -14,9 +14,8 @@ export type TeamBioPerson = {
 
 type TeamBiosProps = {
   people: TeamBioPerson[];
-  heading?: string;
-  ctaLabel: string;
-  emptyMessage?: string;
+  heading?: string | null;
+  ctaLabel?: string | null;
 };
 
 function personBlurb(person: TeamBioPerson) {
@@ -31,50 +30,47 @@ export function TeamBios({
   people,
   heading,
   ctaLabel,
-  emptyMessage = "Brak osób w CMS.",
 }: TeamBiosProps) {
+  if (people.length === 0) return null;
+
   return (
     <Section>
       {heading ? (
         <h2 className="font-display text-h3 font-black">{heading}</h2>
       ) : null}
-      {people.length === 0 ? (
-        <p className={heading ? "mt-8 text-body" : "text-body"}>
-          {emptyMessage}
-        </p>
-      ) : (
-        <ul className={heading ? "team-bios mt-8" : "team-bios"}>
-          {people.map((person) => {
-            const blurb = personBlurb(person);
-            return (
-              <li key={person.slug} className="team-bio">
-                <Media
-                  image={person.photo ?? null}
-                  alt={person.name}
-                  variant="bleed"
-                  ratio="portrait"
-                  sizes="(min-width: 64rem) 12vw, 40vw"
-                  className="team-photo"
-                />
-                <div>
-                  <h3 className="team-bio-name text-h4 font-semibold">
-                    {person.name}
-                  </h3>
-                  {blurb ? (
-                    <p className="team-bio-blurb mt-4 text-body">{blurb}</p>
-                  ) : null}
+      <ul className={heading ? "team-bios mt-8" : "team-bios"}>
+        {people.map((person) => {
+          const blurb = personBlurb(person);
+          return (
+            <li key={person.slug} className="team-bio">
+              <Media
+                image={person.photo ?? null}
+                alt={person.name}
+                variant="bleed"
+                ratio="portrait"
+                sizes="(min-width: 64rem) 12vw, 40vw"
+                className="team-photo"
+              />
+              <div>
+                <h3 className="team-bio-name text-h4 font-semibold">
+                  {person.name}
+                </h3>
+                {blurb ? (
+                  <p className="team-bio-blurb mt-4 text-body">{blurb}</p>
+                ) : null}
+                {ctaLabel ? (
                   <CtaLink
                     href={publicPathForPersonSlug(person.slug)}
                     className="mt-8"
                   >
                     {ctaLabel}
                   </CtaLink>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      )}
+                ) : null}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
     </Section>
   );
 }

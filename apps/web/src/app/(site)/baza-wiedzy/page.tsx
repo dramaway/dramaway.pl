@@ -33,7 +33,6 @@ export default async function KnowledgeHubPage() {
                   {channel.title}
                 </Link>
               </h2>
-              <p className="mt-5 text-body">{channel.lead}</p>
               <CtaLink href={channel.href} presentational className="mt-8">
                 {copy.channelCta}
               </CtaLink>

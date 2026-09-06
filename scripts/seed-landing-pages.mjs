@@ -1,7 +1,7 @@
 /**
  * Create landing-page singletons if they do not exist.
  *
- * Empty title/lead/image keep frontend fallbacks (subpage-copy.ts).
+ * Empty title/lead/image stay empty — the site omits those blocks.
  * Does not overwrite existing documents. Does not run migrate:*.
  *
  * Usage (from repo root):

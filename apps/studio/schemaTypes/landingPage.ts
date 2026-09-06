@@ -39,7 +39,7 @@ export const landingPage = defineType({
       title: "Tytuł",
       type: "string",
       group: "hero",
-      description: "H1. Puste = kanon z frontendu.",
+      description: "H1. Puste = nagłówek nie pojawia się na stronie.",
     }),
     defineField({
       name: "lead",
@@ -84,7 +84,7 @@ export const landingPage = defineType({
       group: "listing",
       hidden: ({ document }) => document?.route !== "projekty",
       description:
-        "Kafelek Czytelni na /projekty. Puste pola = kanon z frontendu. Link zawsze /czytelnia.",
+        "Kafelek Czytelni na /projekty. Puste pola = wiersz nie pojawia się. Link zawsze /czytelnia.",
       fields: [
         defineField({ name: "title", title: "Tytuł", type: "string" }),
         defineField({ name: "lead", title: "Lead", type: "text", rows: 3 }),

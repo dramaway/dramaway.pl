@@ -13,7 +13,7 @@ const MARKER_TONES = [
 ] as const;
 
 type FundacjaHistoryProps = {
-  heading: string;
+  heading?: string | null;
   lead?: string | null;
   items: readonly ResolvedAboutHistoryItem[];
 };
@@ -28,7 +28,9 @@ export function FundacjaHistory({ heading, lead, items }: FundacjaHistoryProps) 
   return (
     <Section>
       <div className="stack-narrow">
-        <h2 className="font-display text-h3 font-black">{heading}</h2>
+        {heading ? (
+          <h2 className="font-display text-h3 font-black">{heading}</h2>
+        ) : null}
         {lead ? <p className="mt-8 text-lead">{lead}</p> : null}
         <ol className="history-list mt-8">
           {items.map((item, index) => (

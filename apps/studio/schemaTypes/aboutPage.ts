@@ -17,7 +17,7 @@ export const aboutPage = defineType({
       title: "Tytuł",
       type: "string",
       group: "hero",
-      description: "H1. Puste = „O fundacji”.",
+      description: "H1. Puste = nagłówek nie pojawia się na stronie.",
     }),
     defineField({
       name: "lead",
@@ -75,7 +75,7 @@ export const aboutPage = defineType({
           title: "Wartości",
           type: "array",
           description:
-            "Etykiety w kołach (kolejność = kolejność na stronie). Pusta lista = kanon z ramki.",
+            "Etykiety w kołach (kolejność = kolejność na stronie). Pusta lista = koła znikają.",
           of: [
             defineArrayMember({
               type: "object",
@@ -107,14 +107,14 @@ export const aboutPage = defineType({
           name: "ctaLabel",
           title: "CTA przy osobie",
           type: "string",
-          description: "Puste = „zobacz pełne bio”.",
+          description: "Puste = brak linku do bio.",
         }),
         defineField({
           name: "people",
           title: "Osoby na tej stronie",
           type: "array",
           description:
-            "Kogo pokazać i w jakiej kolejności. Pusta lista = wszyscy z typu Person (ta sama lista co /zespol). Żeby kogoś zdjąć, wybierz tu tylko te osoby, które mają zostać.",
+            "Kogo pokazać i w jakiej kolejności. Pusta lista = sekcja znika. Nie podstawiamy wszystkich osób z typu Person.",
           of: [
             defineArrayMember({
               type: "reference",
@@ -183,7 +183,7 @@ export const aboutPage = defineType({
           title: "Pozycje",
           type: "array",
           description:
-            "Pusta lista = statut, sprawozdania i jak nas wesprzeć (strony z CMS). Po dodaniu pierwszej pozycji lista jest wyłącznie stąd: strona wewnętrzna, plik (PDF) albo URL.",
+            "Pusta lista = sekcja znika. Po dodaniu pozycji lista jest wyłącznie stąd: strona wewnętrzna, plik (PDF) albo URL.",
           of: [
             defineArrayMember({
               type: "object",

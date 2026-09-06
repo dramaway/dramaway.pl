@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { PageHero } from "@/components/sections/page-hero";
 import { Section } from "@/components/layout/section";
 import { hasPortableContent } from "@/components/portable-body";
+import { cmsText } from "@/lib/cms-text";
 import { getPageBySlug, getPeople } from "@/lib/sanity/fetch";
 import { SUBPAGE } from "@/lib/subpage-copy";
 
@@ -10,7 +11,7 @@ export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getPageBySlug("kontakt");
-  return { title: page?.title?.trim() || SUBPAGE.contact.title };
+  return { title: cmsText(page?.title) || "Kontakt" };
 }
 
 export default async function ContactPage() {
@@ -26,13 +27,13 @@ export default async function ContactPage() {
   return (
     <div data-no-palette="">
       <PageHero
-        title={page.title.trim() || SUBPAGE.contact.title}
-        lead={body ? null : page.heroLead?.trim() || SUBPAGE.contact.lead}
+        title={cmsText(page.title)}
+        lead={body ? null : cmsText(page.heroLead)}
         body={body}
         ctaLabel={page.heroCtaLabel}
         ctaHref={page.heroCtaHref}
         image={page.cover}
-        imageAlt={page.title}
+        imageAlt={cmsText(page.title) || ""}
       />
       {withEmail.length > 0 ? (
         <Section>

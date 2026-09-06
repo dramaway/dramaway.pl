@@ -1,13 +1,12 @@
 import { BlobRow } from "@/components/sections/blob-row";
 import { PageHero } from "@/components/sections/page-hero";
 import { Section } from "@/components/layout/section";
-import { PortableBody } from "@/components/portable-body";
+import { PortableBody, hasPortableContent } from "@/components/portable-body";
 import { FoldList, type FoldListItem } from "@/components/visual/fold-list";
 import { PaletteRow } from "@/components/visual/palette-row";
 import { editionHeading } from "@/lib/edition-label";
 import { sortEditionsNewestFirst } from "@/lib/edition-sort";
 import {
-  splitIntroAndVideo,
   splitPortableByHeading,
   type PortableHeadingSection,
 } from "@/lib/portable-split";
@@ -85,37 +84,29 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
   );
   const rows = editions.map((edition) => ({
     title: editionHeading(edition),
-    lead: edition.summary?.trim() || edition.years || null,
+    lead: edition.summary?.trim() || null,
     href: editionPath(project.slug, edition.slug),
     ctaLabel: SUBPAGE.artGeneracje.editionCta,
   }));
-  const { intro, youtube, rest } = splitIntroAndVideo(project.body);
-  const copy = SUBPAGE.artGeneracje;
   const isArtGeneracje = project.slug === "art-generacje";
   const { preamble, sections } = splitPortableByHeading(project.afterword);
   const foldItems = projectFoldItems(project, sections);
+  const copy = SUBPAGE.artGeneracje;
 
   return (
     <>
       <PageHero
         title={project.title}
-        lead={copy.lead}
+        lead={project.summary?.trim() || null}
         ctaLabel={editions.length > 0 ? copy.ctaLabel : null}
         ctaHref={editions.length > 0 ? copy.ctaHref : null}
         image={project.cover}
         parent={{ href: "/projekty", label: "Projekty" }}
       />
-      {!isArtGeneracje && intro ? (
+      {hasPortableContent(project.body) ? (
         <Section>
           <div className="measure">
-            <PortableBody value={intro} />
-          </div>
-        </Section>
-      ) : null}
-      {youtube ? (
-        <Section>
-          <div className="stack-wide">
-            <PortableBody value={youtube} />
+            <PortableBody value={project.body} />
           </div>
         </Section>
       ) : null}
@@ -128,13 +119,6 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
         <section id="edycje" aria-label={copy.editionsHeading}>
           <BlobRow width="wide" items={rows} />
         </section>
-      ) : null}
-      {rest ? (
-        <Section>
-          <div className="measure">
-            <PortableBody value={rest} />
-          </div>
-        </Section>
       ) : null}
       {preamble || foldItems.length > 0 ? (
         <Section>

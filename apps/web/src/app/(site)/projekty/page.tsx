@@ -31,6 +31,19 @@ export default async function ProjectsPage() {
   const active = projects.filter(isActive);
   const archive = projects.filter((project) => !isActive(project));
   const { czytelnia } = landing;
+  const activeItems = [
+    ...active.map(projectToRow),
+    ...(czytelnia
+      ? [
+          {
+            title: czytelnia.title ?? "",
+            lead: czytelnia.lead,
+            href: czytelnia.href,
+            ctaLabel: czytelnia.ctaLabel,
+          },
+        ]
+      : []),
+  ].filter((item) => item.title);
 
   return (
     <>
@@ -47,15 +60,7 @@ export default async function ProjectsPage() {
       </div>
       <BlobRow
         width="wide"
-        items={[
-          ...active.map(projectToRow),
-          {
-            title: czytelnia.title,
-            lead: czytelnia.lead,
-            href: czytelnia.href,
-            ctaLabel: czytelnia.ctaLabel,
-          },
-        ]}
+        items={activeItems}
         emptyMessage="Brak aktywnych projektów w CMS."
       />
       <div className="page py-section">

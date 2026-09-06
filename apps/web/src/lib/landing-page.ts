@@ -1,7 +1,8 @@
 import { cache } from "react";
+import { cmsCta, cmsText } from "./cms-text";
+import { czytelniaPath } from "./routes";
 import { getLandingPage } from "./sanity/fetch";
 import type { LandingPage, SanityImage } from "./sanity/types";
-import { SUBPAGE } from "./subpage-copy";
 
 export const LANDING_DOCUMENT_IDS = {
   projekty: "landing-projekty",
@@ -11,7 +12,7 @@ export const LANDING_DOCUMENT_IDS = {
 } as const;
 
 export type ResolvedLandingHero = {
-  title: string;
+  title: string | null;
   lead: string | null;
   ctaLabel: string | null;
   ctaHref: string | null;
@@ -19,54 +20,51 @@ export type ResolvedLandingHero = {
   imageAlt: string;
 };
 
-type HeroFallback = {
-  title: string;
-  lead?: string | null;
-  ctaLabel?: string | null;
-  ctaHref?: string | null;
+export type ResolvedCzytelniaTeaser = {
+  title: string | null;
+  lead: string | null;
+  href: string;
+  ctaLabel: string | null;
 };
 
-function resolveHero(
-  cms: LandingPage | null,
-  fallback: HeroFallback,
-): ResolvedLandingHero {
-  const title = cms?.title?.trim() || fallback.title;
+function resolveHero(cms: LandingPage | null): ResolvedLandingHero {
+  const title = cmsText(cms?.title);
+  const cta = cmsCta(cms?.ctaLabel, cms?.ctaHref);
   return {
     title,
-    lead: cms?.lead?.trim() || fallback.lead || null,
-    ctaLabel: cms?.ctaLabel?.trim() || fallback.ctaLabel || null,
-    ctaHref: cms?.ctaHref?.trim() || fallback.ctaHref || null,
+    lead: cmsText(cms?.lead),
+    ctaLabel: cta?.label ?? null,
+    ctaHref: cta?.href ?? null,
     image: cms?.image ?? null,
-    imageAlt: cms?.image?.alt?.trim() || title,
+    imageAlt: cmsText(cms?.image?.alt) || title || "",
+  };
+}
+
+function resolveCzytelniaTeaser(
+  cms: LandingPage | null,
+): ResolvedCzytelniaTeaser | null {
+  const title = cmsText(cms?.czytelniaTeaser?.title);
+  const lead = cmsText(cms?.czytelniaTeaser?.lead);
+  const ctaLabel = cmsText(cms?.czytelniaTeaser?.ctaLabel);
+  if (!title) return null;
+  return {
+    title,
+    lead,
+    href: czytelniaPath(),
+    ctaLabel,
   };
 }
 
 export type ResolvedProjectsLanding = ResolvedLandingHero & {
-  czytelnia: {
-    title: string;
-    lead: string;
-    href: string;
-    ctaLabel: string;
-  };
+  czytelnia: ResolvedCzytelniaTeaser | null;
 };
 
 export const getProjectsLanding = cache(
   async function getProjectsLanding(): Promise<ResolvedProjectsLanding> {
     const cms = await getLandingPage(LANDING_DOCUMENT_IDS.projekty);
-    const copy = SUBPAGE.projects;
     return {
-      ...resolveHero(cms, {
-        title: copy.title,
-        lead: copy.lead,
-        ctaLabel: copy.ctaLabel,
-        ctaHref: copy.ctaHref,
-      }),
-      czytelnia: {
-        title: cms?.czytelniaTeaser?.title?.trim() || copy.czytelnia.title,
-        lead: cms?.czytelniaTeaser?.lead?.trim() || copy.czytelnia.lead,
-        href: copy.czytelnia.href,
-        ctaLabel: cms?.czytelniaTeaser?.ctaLabel?.trim() || copy.czytelnia.ctaLabel,
-      },
+      ...resolveHero(cms),
+      czytelnia: resolveCzytelniaTeaser(cms),
     };
   },
 );
@@ -74,29 +72,20 @@ export const getProjectsLanding = cache(
 export const getKnowledgeLanding = cache(
   async function getKnowledgeLanding(): Promise<ResolvedLandingHero> {
     const cms = await getLandingPage(LANDING_DOCUMENT_IDS.knowledge);
-    return resolveHero(cms, {
-      title: SUBPAGE.knowledge.title,
-      lead: SUBPAGE.knowledge.lead,
-    });
+    return resolveHero(cms);
   },
 );
 
 export const getCzytelniaLanding = cache(
   async function getCzytelniaLanding(): Promise<ResolvedLandingHero> {
     const cms = await getLandingPage(LANDING_DOCUMENT_IDS.czytelnia);
-    return resolveHero(cms, {
-      title: SUBPAGE.czytelnia.title,
-      lead: SUBPAGE.czytelnia.lead,
-    });
+    return resolveHero(cms);
   },
 );
 
 export const getTeamLanding = cache(
   async function getTeamLanding(): Promise<ResolvedLandingHero> {
     const cms = await getLandingPage(LANDING_DOCUMENT_IDS.team);
-    return resolveHero(cms, {
-      title: SUBPAGE.team.title,
-      lead: SUBPAGE.team.lead,
-    });
+    return resolveHero(cms);
   },
 );

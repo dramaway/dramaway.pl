@@ -46,7 +46,7 @@ export default async function EditionPage({ params }: Props) {
   const gallery = (edition.gallery ?? []).filter(Boolean);
   const outcomes = edition.outcomes ?? [];
   const heading = editionHeading(edition);
-  const lead = edition.summary?.trim() || edition.years || edition.theme || null;
+  const lead = edition.summary?.trim() || null;
 
   return (
     <>

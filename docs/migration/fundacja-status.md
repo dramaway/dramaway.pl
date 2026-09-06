@@ -73,7 +73,7 @@ Placeholder newsa Syrena (`[Aktualność] Nowy projekt z Teatrem Syrena`, slug `
 
 **1:1 (nody):** zespół (7), kontakt, metody, szkolenia i spektakle, projekty-karty, fundacja (statut, sprawozdania, zarząd, jak wesprzeć), aktualności z homepage.
 
-**Świadomie nie jako dokumenty `page`:** `/`, `/projekty`, `/zespol` — w Drupalu listingi taksonomii, nie nody. W Next są to widoki. `/projekty`, `/baza-wiedzy`, `/czytelnia`, `/zespol` mają singletony `landingPage` tylko pod chrome (hero); puste = fallback z `subpage-copy.ts`. `/fundacja` jest widokiem z singletonem `aboutPage` (Studio: **O fundacji**). `/metody` i `/kontakt` zostają `page`, przypięte na górze desk.
+**Świadomie nie jako dokumenty `page`:** `/`, `/projekty`, `/zespol` — w Drupalu listingi taksonomii, nie nody. W Next są to widoki. `/projekty`, `/baza-wiedzy`, `/czytelnia`, `/zespol` mają singletony `landingPage` tylko pod chrome (hero); puste pole = brak hero. `/fundacja` jest widokiem z singletonem `aboutPage` (Studio: **O fundacji**). `/metody` i `/kontakt` zostają `page`, przypięte na górze desk.
 
 **Nie przenosiliśmy:** 2 nieopublikowane newsy, 2 `simplenews`. Sitemap XML na live jest popsuty (tylko homepage) — weryfikacja była menu + listing projektów + HTTP na ścieżkach z dumpa.
 
@@ -117,7 +117,7 @@ To nie jest korekta językowa. Pierwszy skrypt spłaszczał Drupal HTML.
 | 2 nieopublikowane `article` | Pominięte (`publikacja-teatr-forum`, duplikat Kostyry bez `-0`). |
 | Edycje Art Generacje jako `publication` | Śmieć z ramki Figmy — skrypt ich nie tworzy. |
 | UI z Figmy | Homepage złożony; podstrony: skład z 2026-09-05, nie pixel-perfect. |
-| `siteSettings` (nawigacja, footer) | Dokument jest; grupa `homepage` pusta → fallbacki. |
+| `siteSettings` (nawigacja, footer) | Dokument jest; grupa `homepage` wypełniona 2026-09-07 |
 | Newsletter, formularz kontaktu, EN | Poza MVP treściowym. Formularz = osobne zamówienie. |
 
 ## Komendy

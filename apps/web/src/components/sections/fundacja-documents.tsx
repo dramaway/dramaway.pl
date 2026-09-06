@@ -8,9 +8,8 @@ export type FundacjaDocumentLink = {
 };
 
 type FundacjaDocumentsProps = {
-  heading: string;
+  heading?: string | null;
   items: FundacjaDocumentLink[];
-  emptyMessage: string;
 };
 
 /**
@@ -19,24 +18,23 @@ type FundacjaDocumentsProps = {
 export function FundacjaDocuments({
   heading,
   items,
-  emptyMessage,
 }: FundacjaDocumentsProps) {
+  if (items.length === 0) return null;
+
   return (
     <Section>
-      <h2 className="font-display text-h3 font-black">{heading}</h2>
-      {items.length === 0 ? (
-        <p className="mt-8 text-body">{emptyMessage}</p>
-      ) : (
-        <ul className="document-list mt-8">
-          {items.map((item) => (
-            <li key={`${item.href}-${item.title}`}>
-              <CtaLink href={item.href} external={item.external}>
-                {item.title}
-              </CtaLink>
-            </li>
-          ))}
-        </ul>
-      )}
+      {heading ? (
+        <h2 className="font-display text-h3 font-black">{heading}</h2>
+      ) : null}
+      <ul className={heading ? "document-list mt-8" : "document-list"}>
+        {items.map((item) => (
+          <li key={`${item.href}-${item.title}`}>
+            <CtaLink href={item.href} external={item.external}>
+              {item.title}
+            </CtaLink>
+          </li>
+        ))}
+      </ul>
     </Section>
   );
 }

@@ -1,5 +1,6 @@
 import { cache } from "react";
-import { getAboutPage, getPagesBySlugs, getPeople } from "./sanity/fetch";
+import { cmsCta, cmsText } from "./cms-text";
+import { getAboutPage } from "./sanity/fetch";
 import type {
   AboutDocumentItem,
   AboutHistoryItem,
@@ -9,14 +10,6 @@ import type {
   ResolvedAboutPage,
 } from "./sanity/types";
 import { publicPathForPageSlug } from "./routes";
-import { SUBPAGE } from "./subpage-copy";
-
-/** Pages listed on /fundacja when the CMS document list is empty. */
-export const FALLBACK_ABOUT_DOCUMENT_SLUGS = [
-  "statut",
-  "sprawozdania",
-  "jak-nas-wesprzec",
-] as const;
 
 function isExternalHref(href: string) {
   return /^(https?:)?\/\//i.test(href);
@@ -27,10 +20,9 @@ function resolveDocument(item: AboutDocumentItem): ResolvedAboutDocument | null 
   const pageSlug = item.page?.slug?.trim();
   const href = item.href?.trim();
   const title =
-    item.title?.trim() ||
-    item.page?.title?.trim() ||
-    item.file?.asset?.originalFilename?.trim() ||
-    "";
+    cmsText(item.title) ||
+    cmsText(item.page?.title) ||
+    cmsText(item.file?.asset?.originalFilename);
 
   if (fileUrl) {
     if (!title) return null;
@@ -56,14 +48,14 @@ function resolveHistoryItems(
 ): ResolvedAboutHistoryItem[] {
   if (!items?.length) return [];
   return items.flatMap((item) => {
-    const year = item.year?.trim();
-    const title = item.title?.trim();
+    const year = cmsText(item.year);
+    const title = cmsText(item.title);
     if (!year || !title) return [];
     return [
       {
         year,
         title,
-        body: item.body?.trim() || null,
+        body: cmsText(item.body),
       },
     ];
   });
@@ -71,9 +63,8 @@ function resolveHistoryItems(
 
 function resolvePeople(
   cmsPeople: PersonListItem[] | null | undefined,
-  allPeople: PersonListItem[],
 ): PersonListItem[] {
-  if (cmsPeople == null) return allPeople;
+  if (!cmsPeople?.length) return [];
   return cmsPeople.filter((person): person is PersonListItem =>
     Boolean(person?.slug),
   );
@@ -81,16 +72,11 @@ function resolvePeople(
 
 export const getResolvedAboutPage = cache(
   async function getResolvedAboutPage(): Promise<ResolvedAboutPage> {
-    const copy = SUBPAGE.fundacja;
-    const [cms, allPeople, fallbackPages] = await Promise.all([
-      getAboutPage(),
-      getPeople(),
-      getPagesBySlugs(FALLBACK_ABOUT_DOCUMENT_SLUGS),
-    ]);
+    const cms = await getAboutPage();
 
     const cmsValues =
       cms?.methods?.values
-        ?.map((value) => value.label?.trim())
+        ?.map((value) => cmsText(value.label))
         .filter((label): label is string => Boolean(label)) ?? [];
 
     const cmsDocuments =
@@ -98,46 +84,38 @@ export const getResolvedAboutPage = cache(
         ?.map(resolveDocument)
         .filter((item): item is ResolvedAboutDocument => Boolean(item)) ?? [];
 
-    const title = cms?.title?.trim() || copy.title;
-    const methodsHeading = cms?.methods?.heading?.trim() || copy.methods.title;
-    const methodsHref = cms?.methods?.ctaHref?.trim() || copy.methods.href;
+    const title = cmsText(cms?.title);
+    const methodsCta = cmsCta(cms?.methods?.ctaLabel, cms?.methods?.ctaHref);
+    const heroCta = cmsCta(cms?.ctaLabel, cms?.ctaHref);
+    const teamPeople = resolvePeople(cms?.team?.people);
 
     return {
       title,
-      lead: cms?.lead?.trim() || copy.lead,
-      ctaLabel: cms?.ctaLabel?.trim() || copy.ctaLabel,
-      ctaHref: cms?.ctaHref?.trim() || copy.ctaHref,
+      lead: cmsText(cms?.lead),
+      ctaLabel: heroCta?.label ?? null,
+      ctaHref: heroCta?.href ?? null,
       image: cms?.image ?? null,
-      imageAlt: cms?.image?.alt?.trim() || title,
+      imageAlt: cmsText(cms?.image?.alt) || title || "",
       methods: {
-        heading: methodsHeading,
-        lead: cms?.methods?.lead?.trim() || copy.methods.lead,
-        ctaLabel: cms?.methods?.ctaLabel?.trim() || copy.methods.ctaLabel,
-        ctaHref: methodsHref,
-        values: cmsValues.length > 0 ? cmsValues : [...copy.values],
+        heading: cmsText(cms?.methods?.heading),
+        lead: cmsText(cms?.methods?.lead),
+        ctaLabel: methodsCta?.label ?? null,
+        ctaHref: methodsCta?.href ?? null,
+        values: cmsValues,
       },
       team: {
-        heading: cms?.team?.heading?.trim() || copy.teamHeading,
-        ctaLabel: cms?.team?.ctaLabel?.trim() || copy.teamCta,
-        people: resolvePeople(cms?.team?.people, allPeople),
-        emptyMessage: copy.teamEmpty,
+        heading: cmsText(cms?.team?.heading),
+        ctaLabel: cmsText(cms?.team?.ctaLabel),
+        people: teamPeople,
       },
       history: {
-        heading: cms?.history?.heading?.trim() || copy.history.heading,
-        lead: cms?.history?.lead?.trim() || null,
+        heading: cmsText(cms?.history?.heading),
+        lead: cmsText(cms?.history?.lead),
         items: resolveHistoryItems(cms?.history?.items),
       },
       documents: {
-        heading: cms?.documents?.heading?.trim() || copy.documents.heading,
-        items:
-          cmsDocuments.length > 0
-            ? cmsDocuments
-            : fallbackPages.map((page) => ({
-                title: page.title,
-                href: publicPathForPageSlug(page.slug),
-                external: false,
-              })),
-        emptyMessage: copy.documents.empty,
+        heading: cmsText(cms?.documents?.heading),
+        items: cmsDocuments,
       },
     };
   },

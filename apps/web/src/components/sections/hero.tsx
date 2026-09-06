@@ -13,17 +13,21 @@ export function Hero({ hero }: { hero: HeroContent }) {
   return (
     <section className="hero split">
       <div className="split-text">
-        <h1 className="hero-title font-display text-display font-black">
-          {hero.heading}
-        </h1>
+        {hero.heading ? (
+          <h1 className="hero-title font-display text-display font-black">
+            {hero.heading}
+          </h1>
+        ) : null}
 
-        <div className="hero-copy">
-          {hero.lead ? <p className="measure text-lead">{hero.lead}</p> : null}
+        {hero.lead || (hero.ctaLabel && hero.ctaHref) ? (
+          <div className="hero-copy">
+            {hero.lead ? <p className="measure text-lead">{hero.lead}</p> : null}
 
-          {hero.ctaLabel ? (
-            <CtaLink href={hero.ctaHref}>{hero.ctaLabel}</CtaLink>
-          ) : null}
-        </div>
+            {hero.ctaLabel && hero.ctaHref ? (
+              <CtaLink href={hero.ctaHref}>{hero.ctaLabel}</CtaLink>
+            ) : null}
+          </div>
+        ) : null}
       </div>
 
       <div className="hero-media-wrap split-media">

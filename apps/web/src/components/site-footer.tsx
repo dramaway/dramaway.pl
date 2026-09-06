@@ -7,8 +7,8 @@ type Props = {
   title: string;
   logo: SanityImage | null;
   logoAlt: string;
-  address: string;
-  quote: string;
+  address: string | null;
+  quote: string | null;
   attribution: string | null;
 };
 

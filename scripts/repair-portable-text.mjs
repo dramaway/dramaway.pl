@@ -21,7 +21,7 @@ import {
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 
-/** Same string as `FALLBACK_HERO.lead` in apps/web/src/lib/homepage-copy.ts */
+/** Figma homepage hero lead — used only when repairing a Drupal leftover. */
 const FIGMA_HERO_LEAD =
   "DramaWay tworzy projekty teatralne i edukacyjne oparte na metodzie dramy oraz Teatrze Zaangażowanym Społecznie — łącząc pokolenia, społeczności i tematy, o których trudno mówić wprost.";
 
