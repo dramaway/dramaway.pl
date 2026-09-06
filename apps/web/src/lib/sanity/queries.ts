@@ -64,7 +64,7 @@ export const pageBySlugQuery = `*[_type == "page" && slug.current == $slug][0] {
   heroLead,
   heroCtaLabel,
   heroCtaHref,
-  "cover": coalesce(heroImage, body[_type == "image"][0]),
+  "cover": heroImage,
   body
 }`;
 
@@ -271,7 +271,6 @@ export const publicationBySlugQuery = `*[_type == "publication" && slug.current 
   ${publicationFormatProjection},
   ${publicationMethodsProjection},
   ${publicationFileProjection},
-  "cover": body[_type == "image"][0],
   body
 }`;
 

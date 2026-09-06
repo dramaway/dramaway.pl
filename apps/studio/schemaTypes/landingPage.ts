@@ -68,7 +68,7 @@ export const landingPage = defineType({
       group: "hero",
       options: { hotspot: true },
       description:
-        "Puste: Projekty biorą okładkę pierwszego projektu; inne strony — about-photo.jpg.",
+        "Puste = brak zdjęcia hero. Układ splitu (szerokość tekstu) zostaje.",
       fields: [
         defineField({
           name: "alt",

@@ -488,6 +488,17 @@
     isolation: isolate;
   }
 
+  /*
+   * Empty still: same box as a portrait so split widths and the overlapping
+   * DotBand do not jump when the next page has no CMS photo.
+   */
+  .hero-media-empty {
+    width: 100%;
+    visibility: hidden;
+    pointer-events: none;
+    background: transparent;
+  }
+
   @media (width < 64rem) {
     .split:not(.hero) > .split-media {
       width: calc(100% - 2 * var(--page-pad));

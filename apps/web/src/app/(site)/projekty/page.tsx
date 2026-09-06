@@ -30,7 +30,6 @@ export default async function ProjectsPage() {
   ]);
   const active = projects.filter(isActive);
   const archive = projects.filter((project) => !isActive(project));
-  const heroImage = landing.image ?? active[0]?.cover ?? archive[0]?.cover ?? null;
   const { czytelnia } = landing;
 
   return (
@@ -40,7 +39,7 @@ export default async function ProjectsPage() {
         lead={landing.lead}
         ctaLabel={landing.ctaLabel}
         ctaHref={landing.ctaHref}
-        image={heroImage}
+        image={landing.image}
         imageAlt={landing.imageAlt}
       />
       <div className="page py-section">

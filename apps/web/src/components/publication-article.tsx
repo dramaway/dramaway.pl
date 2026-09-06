@@ -37,7 +37,6 @@ export function PublicationArticle({
       <PageHero
         title={publication.title}
         lead={publication.summary}
-        image={publication.cover}
         parent={{ href: czytelniaPath(), label: "Czytelnia" }}
       />
       {hasMeta || hasBody ? (

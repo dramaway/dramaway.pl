@@ -24,7 +24,7 @@ export const page = defineType({
       options: { hotspot: true },
       hidden: ({ document }) => isNewsDocument(document),
       description:
-        "Dedicated header photo. Empty = first image in the body (current behaviour).",
+        "Dedicated header photo. Empty = no still; the split layout stays.",
       fields: [
         defineField({
           name: "alt",

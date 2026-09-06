@@ -3,7 +3,7 @@ import { Blob } from "@/components/visual/blob";
 import { CtaLink } from "@/components/visual/cta-link";
 import { DotBand } from "@/components/visual/dot-band";
 import { Media } from "@/components/visual/media";
-import { FALLBACK_ABOUT_IMAGE } from "@/lib/homepage-copy";
+import { hasHeroImage } from "@/lib/sanity/image";
 import type { PortableContent, SanityImage } from "@/lib/sanity/types";
 import Link from "next/link";
 
@@ -33,8 +33,8 @@ type PageHeroProps = PageHeroContent & {
  * Opening block for inner pages. Default is the same split, circular still,
  * and following dot band as `/`. `data-split-hero` overlays the header in the
  * left column at lg+ (do not reuse `data-home` — that hides `.subpage-palette`).
- * Pass `layout="stack"` for edition pages. Missing CMS photos on the split
- * use the about fallback until a cover is uploaded.
+ * Pass `layout="stack"` for edition pages. No CMS photo = no still; the
+ * split column and media slot stay so text width does not jump.
  */
 export function PageHero({
   title,
@@ -100,17 +100,25 @@ export function PageHero({
         </div>
 
         <div className="hero-media-wrap split-media">
-          <Blob />
-          <Media
-            image={image ?? null}
-            alt={imageAlt?.trim() || title}
-            variant="bleed"
-            ratio="portrait"
-            sizes="(min-width: 64rem) 34vw, 70vw"
-            priority
-            fallbackSrc={FALLBACK_ABOUT_IMAGE}
-            className="hero-media"
-          />
+          {hasHeroImage(image) ? (
+            <>
+              <Blob />
+              <Media
+                image={image}
+                alt={imageAlt?.trim() || title}
+                variant="bleed"
+                ratio="portrait"
+                sizes="(min-width: 64rem) 34vw, 70vw"
+                priority
+                className="hero-media"
+              />
+            </>
+          ) : (
+            <div
+              className="hero-media hero-media-empty media-portrait"
+              aria-hidden
+            />
+          )}
         </div>
       </section>
       <DotBand />

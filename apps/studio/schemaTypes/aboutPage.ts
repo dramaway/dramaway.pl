@@ -45,7 +45,8 @@ export const aboutPage = defineType({
       type: "image",
       group: "hero",
       options: { hotspot: true },
-      description: "Puste = about-photo.jpg z frontendu.",
+      description:
+        "Puste = brak zdjęcia hero. Układ splitu (szerokość tekstu) zostaje.",
       fields: [
         defineField({
           name: "alt",

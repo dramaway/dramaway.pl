@@ -239,7 +239,6 @@ export type PublicationListItem = {
 };
 
 export type PublicationDetail = PublicationListItem & {
-  cover?: SanityImage | null;
   body: PortableContent;
 };
 
