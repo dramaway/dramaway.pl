@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-07 — decyzje z audytu: usunięte `/preview`, indeksacja za `NEXT_PUBLIC_SITE_INDEX`, CSP na domeny dramaway/Sanity/Netlify, checklista RODO dla Fundacji |
+| **Ostatnia aktualizacja** | 2026-09-07 — webhook Sanity → `/api/revalidate` (koniec czekania 60 s po publikacji); wcześniej: usunięte `/preview`, indeksacja za `NEXT_PUBLIC_SITE_INDEX` |
 | **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
@@ -37,6 +37,11 @@ Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona głów
 - Newsy na `/`: `getHomepageNews()` — max 3, bez zdjęć, excerpt ~400 znaków. Daty kart: `publishedAt`. Trzeci news `news-placeholder-syrena` jest wypełniaczem z ramki — **do draftu** z adnotacją PL (wykaz: [fundacja-status.md](migration/fundacja-status.md) „Luki vs ramka”).
 - Skip-link (`Przejdź do treści`) i strony 404 / błąd — **są** w kodzie (chrome w `subpage-copy.ts`).
 - Studio: plugin **Media** (`sanity-plugin-media`) — zakładka w menu + źródło przy polach **`image`**. Pola **`file`** (ICO) zostają na wbudowanym pickerze Sanity: Media w trybie plików pokazuje tylko `sanity.fileAsset`, a tych jest zero. Typy `media.tag` / `media.folder` ukryte w desk. Credit line włączony. **Content (góra):** Strona główna (`siteSettings`), Projekty / Baza wiedzy / Czytelnia / Zespół (`landingPage`), Art Generacje (`project`), Metody / Kontakt (`page`), O fundacji (`aboutPage`). Page lista **bez** metody/kontakt. Site settings nadal na dole (ten sam dokument co Strona główna). Portable Text: styl **Termin** (`term`) — blob + krój body, Strong opcjonalnie; lista **Indent** (Tab = głębsze wcięcie); lista **Roles** (`roster`) — wiersze `rola: imiona`, render jako `.pt-roster` (lekka karta); obiekt **Columns** (2 albo 3, stack poniżej `lg`). Quote bez zmian. Nie zgadywać listy ról z dwukropków w prozie — redaktor zaznacza Roles w toolbarze. Deploy: `pnpm --filter studio run deploy` → https://dramaway.sanity.studio/.
+- **Publikacja w Studio:** Next trzyma HTML do 60 s (ISR). Żeby nie czekać: webhook Sanity → `POST /api/revalidate` (`revalidateTag` + `revalidatePath`). Koszt ≈ 0 (webhook Sanity darmowy, kilka wywołań Netlify dziennie). **Do skonfigurowania po deployu** (nie da się z repo):
+  1. Losowy sekret (np. `openssl rand -hex 24`).
+  2. Netlify → env `SANITY_REVALIDATE_SECRET` (server, nie `NEXT_PUBLIC_`). Przebudowa.
+  3. Sanity Manage → API → Webhooks: URL `https://dramaway.netlify.app/api/revalidate`, header `Authorization: Bearer <sekret>`, dataset `production`, trigger create/update/delete na opublikowanych. Po cutoverze ten sam hook na docelową domenę.
+  Fallback 60 s zostaje, gdy hook nie dojdzie.
 - Netlify: `netlify.toml` w repo (`pnpm --filter web build`, `X-Robots-Tag: noindex` na static). Preview: https://dramaway.netlify.app/. Next: `metadata.robots` + `headers()` (CSP, noindex dopóki `NEXT_PUBLIC_SITE_INDEX` nie jest `true`).
 - **Indeksacja (cutover):** w Netlify `NEXT_PUBLIC_SITE_URL=https://fundacja.dramaway.pl` i `NEXT_PUBLIC_SITE_INDEX=true` — wtedy robots/sitemap/canonical żyją. Do tego czasu Google ma nie indeksować roboczego netlify.app.
 - CI: `.github/workflows/ci.yml` — `pnpm install`, lint, `web` build, `test:repair` / `test:archive-projects` / `test:web`.
@@ -56,7 +61,7 @@ Przy przejęciu `fundacja.dramaway.pl`:
 - **Legal / RODO** — [guides/cutover-foundation.md](guides/cutover-foundation.md) (mail + checklista). Treści pisze Fundacja.
 - **Treść** — `news-placeholder-syrena` → draft; puste hero/cover.
 - **Studio** — `pnpm --filter studio run deploy` po ostatniej zmianie schematu.
-- **Netlify env** — tylko `NEXT_PUBLIC_SANITY_*` (ew. read token). **Brak** `SANITY_API_WRITE_TOKEN`. CORS Studio: origin produkcji w Sanity Manage.
+- **Netlify env** — `NEXT_PUBLIC_SANITY_*`, `SANITY_REVALIDATE_SECRET` (webhook, nie write). **Brak** `SANITY_API_WRITE_TOKEN`. CORS Studio: origin produkcji w Sanity Manage.
 - **DNS / TLS** + smoke po wgraniu `_redirects`.
 
 Rollback: poprzedni deploy Netlify + snapshot `private/sanity-snapshots/production-2026-09-07-pre-client.tar.gz`.

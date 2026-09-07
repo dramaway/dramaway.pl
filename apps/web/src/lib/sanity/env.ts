@@ -1,7 +1,8 @@
 /**
  * Public Sanity connection values for the Next.js app.
- * Dataset `production` is publicly readable via CDN — no token required.
- * Never put SANITY_API_WRITE_TOKEN here or in NEXT_PUBLIC_*.
+ * Dataset `production` is publicly readable — no token required.
+ * The web app talks to the API (not the HTTP CDN) so Studio publish
+ * can invalidate HTML immediately. Never put SANITY_API_WRITE_TOKEN here.
  */
 
 export const apiVersion =

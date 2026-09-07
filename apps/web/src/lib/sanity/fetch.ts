@@ -40,8 +40,11 @@ import type {
   SiteSettings,
 } from "./types";
 import { NEWS_SLUG_PREFIX } from "@/lib/routes";
+import { SANITY_CACHE_TAG } from "./cache";
 
-const revalidate = { next: { revalidate: 60 } };
+const revalidate = {
+  next: { revalidate: 60, tags: [SANITY_CACHE_TAG] },
+};
 
 export async function getPeople(): Promise<PersonListItem[]> {
   return sanityClient.fetch(peopleListQuery, {}, revalidate);
