@@ -38,7 +38,7 @@ Publiczne: `http://localhost:3000` (`pnpm dev`). Inwentarz CMS: `/preview`. Stud
 | `aboutPage` | 1 singleton | ręcznie / `pnpm seed:about-page` | `/fundacja` |
 | `landingPage` | 4 singletony | `pnpm seed:landing-pages` (puste pola) | `/projekty`, `/baza-wiedzy`, `/czytelnia`, `/zespol` |
 | `page` | 23 + 2 newsy + placeholder | Drupal `page` + opublikowane `aktualnosc` | `/fundacja/…`, `/metody`, `/kontakt`, korzeń |
-| `project` | 4 | rozbicie stron Drupal, nie nowy dump | `/projekty` |
+| `project` | **5** | rozbicie stron Drupal + Wielogłos z leftover `projekty-zakonczone` | `/projekty` |
 | `readingMethod` | 6 | seed z `scripts/czytelnia-curated.json` (nie enum, nie `/metody`) | Studio |
 | `publication` | **81** (`listed`) | Drupal `article` status=1 minus śmieć `metody-tzs` | `/czytelnia`, `/czytelnia/[slug]` |
 | assety | 76 obrazów fundacji + 144 Czytelnia (okładki + PDF) | FTP fundacji + `teatrzaangazowany…/files/` | Studio → Media |
@@ -49,7 +49,7 @@ Biblioteka **Media** w Studio czyta te same `sanity.imageAsset` — bez re-uploa
 
 **Art Generacje** (`project-art-generacje`, featured, status `active`): intro + **13 edycji (I–XI)** + afterword (autorzy, partnerzy). Numeracja „Edycja VI” występuje trzykrotnie (2020, 2021, 2022) — tak jest na live, nie poprawiamy historii. Źródłowa `page` `art-generacje` zostaje.
 
-Archiwum bez edycji: Teatr Codzienny, TO MI GRA, BOAL IN PRACTICE.
+**Archiwum (2026-09-07, `pnpm patch:archive-projects`):** Teatr Codzienny ma **6 edycji** (`/projekty/teatr-codzienny/edycja-2012` … `2017`) i **20** `edition.outcomes` (spektakle Teatru Forum i Teatru ze Społecznością, z nazw, lat premiery i opisów — nie zgadywane). TO MI GRA i BOAL IN PRACTICE **bez** fałszywych edycji: afterword FoldList (zespół / podziękowania / sponsorzy) oraz dwujęzyczne **Columns**. Wielogłos to `project-wieloglos` ze strony leftover `projekty-zakonczone` (treść Drupal, nie lorem z Figmy). Źródłowe `page` zostają. Ponowny `migrate:art-generacje` **nie** spłaszcza archiwum, jeśli ma już edycje albo afterword.
 
 **Czytelnia** (2026-09-05, osie przywrócone 2026-09-06, listing 2026-09-06): dump `private/dumps/drama_teatr_1787254349.sql.gz`. 82 opublikowane `article` → `publication`; śmieć `metody-tzs` (tytuł „aaa”) **usunięty** → **81** w datasetcie, wszystkie `listed` (`pnpm patch:publication-listed`). Tagi z `scripts/czytelnia-curated.json` (lista Word) zostają **kategoriami** (`readingMethod` / pole `methods`; w Studio: Category / Categories) — to nie strona `/metody`. Szuflady Drupala (Publikacje / Scenariusze / Książki / Multimedia) znowu są publicznym **rodzajem** `publication.format` (`articles` \| `books` \| `scripts` \| `multimedia`); `legacyDrupal.format` zostaje ukrytym śladem dumpa. Patch: `pnpm patch:publication-format`, **nie** `migrate:czytelnia`. `publication` nigdy nie jest `project`; edycje AG nie są publikacjami. Persony portalu (89) nie są dokumentami `person` — tylko stringi `authors`. PDF-y z `field_dokument` (64/64 na dysku). Front artykułu ciągnie `authors`, `methods`, `file`. Hosted Studio: po zmianie schematu `pnpm --filter studio run deploy`.
 
@@ -62,10 +62,10 @@ Zasada (2026-09-05): **czego nie ma w CMS, tego nie ma na stronie.** Nie zmyśla
 | Art Generacje | `project` art-generacje, featured, 13 edycji | jest |
 | Czytelnia na `/projekty` | nie jest `project` | prezentacja OK, dane = `publication` (81 dokumenty) |
 | Projekt z Syrenką (aktywny) | **brak** `project` | nie listować. Jest placeholder newsa `news-placeholder-syrena` — do draftu z adnotacją |
-| to mi gra, Teatr Codzienny, BOAL IN PRACTICE | 3× `project` archive | są |
-| Wielogłos (archiwum) | **brak** `project` | nie listować, dopóki ktoś nie doda dokumentu |
+| to mi gra, Teatr Codzienny, BOAL IN PRACTICE, Wielogłos | 4× `project` archive | są (TC: 6 edycji + 20 rezultatów) |
+| Wielogłos (archiwum) | `project-wieloglos` ze strony `projekty-zakonczone` | jest; leftover `page` pod starym URL-em zostaje |
 | Publikacje w Czytelni | 81× `publication` (47 `listed` z Worda) | spis `/czytelnia` = `listed`; artykuł `/czytelnia/[slug]` = 81 (bez śmiecia `metody-tzs`) |
-| `edition.outcomes` | schemat jest, rekordy puste | nie zgadywać z HTML |
+| `edition.outcomes` | AG prawie puste; **Teatr Codzienny 20** z nazwanych spektakli | AG nadal nie zgadywać z HTML |
 
 Placeholder newsa Syrena (`[Aktualność] Nowy projekt z Teatrem Syrena`, slug `aktualnosc-nowy-projekt-z-teatrem-syrena`): wstawiony 2026-09-03 pod ramkę homepage. Nie jest treścią fundacji. Draft + adnotacja: *„Wypełniacz z makiety Figmy, nie treść z Drupala. Nie publikować, dopóki nie będzie prawdziwego newsa albo projektu.”*
 
@@ -129,6 +129,8 @@ pnpm migrate:art-generacje    # rozbija page Art Generacje → project.editions
 pnpm extract:czytelnia        # dump drama_teatr → gitignored JSON
 pnpm migrate:czytelnia        # 6× readingMethod + 82× publication (dataset 81 po usunięciu śmiecia); NIE wołać ponownie
 pnpm patch:publication-format # jednorazowo: legacyDrupal.format → publication.format
+pnpm patch:archive-projects   # zakończone projekty → edycje/outcomes/FoldList/Columns; `-- --dry-run`
+pnpm test:archive-projects
 pnpm repair:portable-text     # dry-run; `pnpm repair:portable-text -- --write` zapisuje
 pnpm test:repair              # node:test na lib/portable-text-repair
 pnpm dev                      # :3000
@@ -140,7 +142,7 @@ Write token **tylko** `apps/studio/.env` → `SANITY_API_WRITE_TOKEN`. Nigdy `NE
 
 ## Następne kroki
 
-1. Figma na istniejących URL-ach; uściślić `edition.outcomes`.
+1. Figma na istniejących URL-ach. `edition.outcomes` Art Generacje nadal puste (kredyty w `body`); Teatr Codzienny ma 20 rezultatów z nazwanych spektakli.
 2. Mapa 301 przed premierą (osobne zadanie — nie w `lib/routes.ts`).
 3. Porównać `/projekty/art-generacje` z live; kotwice w Studio.
 4. `pnpm repair:portable-text` obejmuje `page` / `person` / `project` / `publication` / `readingMethod` / `siteSettings` (linki + encje). Ponowny `migrate:czytelnia` odtworzyłby śmieć `metody-tzs` i `&nbsp;` w `summary`.

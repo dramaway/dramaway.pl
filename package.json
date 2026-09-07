@@ -20,10 +20,12 @@
     "migrate:art-generacje": "node --env-file=apps/studio/.env scripts/migrate-art-generacje.mjs",
     "patch:publication-format": "node --env-file=apps/studio/.env scripts/patch-publication-format.mjs",
     "patch:publication-listed": "node --env-file=apps/studio/.env scripts/patch-publication-listed.mjs",
+    "patch:archive-projects": "node --env-file=apps/studio/.env scripts/patch-archive-projects.mjs",
     "seed:about-page": "node --env-file=apps/studio/.env scripts/seed-about-page.mjs",
     "seed:landing-pages": "node --env-file=apps/studio/.env scripts/seed-landing-pages.mjs",
     "repair:portable-text": "node --env-file=apps/studio/.env scripts/repair-portable-text.mjs",
-    "test:repair": "node --test scripts/lib/portable-text-repair.test.mjs"
+    "test:repair": "node --test scripts/lib/portable-text-repair.test.mjs",
+    "test:archive-projects": "node --test scripts/lib/archive-project-reshape.test.mjs"
   },
   "engines": {
     "node": ">=22.12",

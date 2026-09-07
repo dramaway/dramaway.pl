@@ -26,7 +26,7 @@ Szczegóły pól: schemat `project` + `edition` w `apps/studio`.
 ## Relacja do innych projektów
 
 - **Aktywne:** Art Generacje. Czytelnia nie jest `project` (osobny tor `publication`).
-- **Archiwum w CMS:** Teatr Codzienny, TO MI GRA, BOAL IN PRACTICE. Wielogłos jest w ramce Figmy i w kickoffie, nie ma dokumentu `project` — do rozstrzygnięcia przy makietach.
+- **Archiwum w CMS:** Teatr Codzienny (6 edycji + rezultaty spektakli), TO MI GRA, BOAL IN PRACTICE, Wielogłos (z leftover `projekty-zakonczone`, nie z lorem Figmy).
 
 Czytelnia to osobny tor treści (`publication`), nie „edycja Art Generacje” i nie `project`.
 

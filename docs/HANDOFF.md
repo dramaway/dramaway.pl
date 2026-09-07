@@ -5,12 +5,12 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-07 — Czytelnia/Metody: teaser dziedziczy lead z własnego dokumentu; `/projekty` tylko włącznik |
+| **Ostatnia aktualizacja** | 2026-09-07 — archiwum projektów: edycje/rezultaty TC, Columns BOAL, FoldList, Wielogłos |
 | **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ (`readingMethod` = Category; `publication.methods` = Categories; publiczne `publication.format`) |
-| **Working tree** | Fala 0+1 + ta iteracja na `main`, bez pusha |
+| **Working tree** | Fala 0+1 + archiwum projektów na `main` |
 | **Owner Sanity (na razie)** | Jan Mirecki |
 
 ---
@@ -29,8 +29,8 @@ Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona głów
 
 - Dataset `production` (`tr2qdg9j`) publiczny. Next bez tokenu. Write token **tylko** `apps/studio/.env`.
 - Mapa URL: `apps/web/src/lib/routes.ts` — prefiks IA + `slug.current`. Header: Projekty, **Baza wiedzy** (`/baza-wiedzy`) z drugim poziomem Metody / Czytelnia (desktop disclosure, mobile overlay), O fundacji, Kontakt. `/zespol` poza pierwszym poziomem.
-- Listingi: `/projekty` = paleta po hero, aktywne + opcjonalny wiersz Czytelni (`showCzytelnia`; copy z `landing-czytelnia`), druga paleta + pasmo, archiwum `density="compact"` (magenta „Zakończone projekty”, wycinek 3 linie, lekki offset prawej kolumny). Hero listingu (tytuł, lead, CTA, zdjęcie) = singleton **`landingPage`**; puste pole = blok znika, bez fallbacku z kodu. `/fundacja` = singleton **`aboutPage`**: hero, wartości, zespół (zdjęcie nad opisem, imię bez uppercase), `DotBand` między zespołem a historią i pod dokumentami (`data-no-palette` chowa paletę stopki), paleta między historią a dokumentami, historia `.stack-narrow`, dokumenty `.document-list`. Pusta lista wartości/zespołu/dokumentów = sekcja znika. `/kontakt` = `PageHero` z `page.title` + `page.body`, **`data-no-palette`** (bez kółek marki przed stopką); maile tylko z `person.email`; opcjonalne `heroImage` / CTA na `page`. `/czytelnia` = opcjonalne CTA rodzaju + sekcje kategorii (`listed`); hero z `landing-czytelnia` (puste = brak hero). `/` **nie** listuje siatki projektów ani splitów „13 edycji”.
-- `/projekty/[slug]` = `project` albo strona z sekcji projektów. Edycje: `/projekty/[slug]/[edition]` (AG ma 13 unikalnych slugów, w tym trzy `edycja-vi-20xx`). `/[slug]` = reszta (newsy). **AG i inne projekty:** hero lead = `project.summary` (puste = brak leadu). Całe `body` w kolejności z CMS (YouTube zostaje w miejscu, nie jest wyciągane na górę). Lista edycji to kopia posortowana malejąco po `year`. Afterword + `partners` / `sponsors` w `FoldList` (`details`, domyślnie zamknięte); niepuste pole wygrywa z H2 Partnerzy/Sponsorzy. **Galerie:** `edition.gallery` i sąsiednie obrazy w Portable Text to mozaika (max. 4 kafelki, `--gallery-gap`, przepisy `one` / `pair` / `hero-pair` / `hero-trio`). Reszta i kadry ze krótszym bokiem < 400 px (z `asset._ref`) tylko w lightboxie (`yet-another-react-lightbox` + Zoom). Brak nowego typu w Studio. Pusta galeria = brak bloku.
+- Listingi: `/projekty` = paleta po hero, aktywne + opcjonalny wiersz Czytelni (`showCzytelnia`; copy z `landing-czytelnia`), druga paleta + pasmo, archiwum `density="compact"` (magenta „Zakończone projekty”, wycinek 3 linie, lekki offset prawej kolumny). **Archiwum w CMS (2026-09-07):** Teatr Codzienny ma 6 edycji + 20 rezultatów spektakli; TO MI GRA i BOAL bez fałszywych edycji (FoldList / Columns); Wielogłos jest `project` ze strony leftover `projekty-zakonczone`. Hero listingu (tytuł, lead, CTA, zdjęcie) = singleton **`landingPage`**; puste pole = blok znika, bez fallbacku z kodu. `/fundacja` = singleton **`aboutPage`**: hero, wartości, zespół (zdjęcie nad opisem, imię bez uppercase), `DotBand` między zespołem a historią i pod dokumentami (`data-no-palette` chowa paletę stopki), paleta między historią a dokumentami, historia `.stack-narrow`, dokumenty `.document-list`. Pusta lista wartości/zespołu/dokumentów = sekcja znika. `/kontakt` = `PageHero` z `page.title` + `page.body`, **`data-no-palette`** (bez kółek marki przed stopką); maile tylko z `person.email`; opcjonalne `heroImage` / CTA na `page`. `/czytelnia` = opcjonalne CTA rodzaju + sekcje kategorii (`listed`); hero z `landing-czytelnia` (puste = brak hero). `/` **nie** listuje siatki projektów ani splitów „13 edycji”.
+- `/projekty/[slug]` = `project` albo strona z sekcji projektów. Edycje: `/projekty/[slug]/[edition]` (AG ma 13 unikalnych slugów, w tym trzy `edycja-vi-20xx`; Teatr Codzienny: `edycja-2012` … `edycja-2017`). `/[slug]` = reszta (newsy). **AG i inne projekty:** hero lead = `project.summary` (puste = brak leadu). Całe `body` w kolejności z CMS (YouTube zostaje w miejscu, nie jest wyciągane na górę). Lista edycji to kopia posortowana malejąco po `year`. Afterword + `partners` / `sponsors` w `FoldList` (`details`, domyślnie zamknięte); niepuste pole wygrywa z H2 Partnerzy/Sponsorzy. **Galerie:** `edition.gallery` i sąsiednie obrazy w Portable Text to mozaika (max. 4 kafelki, `--gallery-gap`, przepisy `one` / `pair` / `hero-pair` / `hero-trio`). Reszta i kadry ze krótszym bokiem < 400 px (z `asset._ref`) tylko w lightboxie (`yet-another-react-lightbox` + Zoom). Brak nowego typu w Studio. Pusta galeria = brak bloku.
 - `/czytelnia` — rodzaj: CTA tylko gdy ≥2 szuflady mają `listed`. Kategorie: sekcje z magenta Light + `(n)` szare, domyślnie otwarte, hover „zwiń” / „pokaż wszystkie”. Jeśli w danym rodzaju nikt nie ma tagu — płaska lista, bez „Pozostałe”. Publikacja z wieloma tagami jest w wielu sekcjach. GROQ **`listed == true`**. `pnpm patch:publication-listed` **odpalony** (wszystkie `publication` w spisie). Artykuł: autorzy, etykiety `readingMethod`, link PDF (`file`), cover z pierwszego obrazka w `body`. W Sanity **81× `publication`** (import 82 minus śmieć `metody-tzs`) + **6× `readingMethod`**. Dwie osie: `publication.format` (`articles` \| `books` \| `scripts` \| `multimedia`); tagi → `methods`. `pnpm patch:publication-format` **odpalony**. Dump **jest**: `private/dumps/drama_teatr_1787254349.sql.gz`. Hub Bazy: `/baza-wiedzy`. Hosted Studio: po zmianie schematu `pnpm --filter studio run deploy`.
 - Chrome UI (etykiety filtrów, „więcej”, puste listy) w `homepage-copy.ts` / `subpage-copy.ts`. Treść editorialna tylko z CMS (`aboutPage`, `landingPage`, `siteSettings.hero` / `homepage`, `project.summary`). **Puste pole = nic na stronie**, bez fallbacku z kodu. Wyjątki chrome: [design/system.md](design/system.md) „Copy chrome vs Figma”. Grupa **Ikony** (`branding`): **SVG jako `image`** (Select w Media widzi m.in. już wrzucony `icon.svg`; strona serwuje surowy SVG z `asset.url`, nie raster CDN) / **ICO jako `file`** z podglądem 32×32 i natywnym pickerem (Media na polach `file` była pusta: 0 `fileAsset`) / PNG light+dark / Apple / 512 / OG. Puste pole = `public/brand`.
 - `getResolvedSite()` zwraca `homepage` + `hero` + `footer` (logo, adres, cytat, atrybucja). Puste pole = brak bloku (adres: `footer.address` albo legacy `footerNote`). Featured **H2** to tytuł `project.featured`; magenta etykieta to `homepage.featured.label` — pusta = brak etykiety. Teaser AG na `/` bierze `project.summary`, gdy `homepage.featured.lead` jest puste.
@@ -86,7 +86,7 @@ Ten plik + [fundacja-status.md](migration/fundacja-status.md) + [ustalenia-2026-
 Ramki Figmy podstron są na `main`. Portable Text: **Termin** / **Indent** / **Columns** — po schemacie `pnpm --filter studio run deploy`. Stopka: Studio → Site settings albo **Strona główna** → Stopka.
 
 1. Draft `news-placeholder-syrena` w Studio — jeszcze nie. Profile `/zespol/[slug]` nadal robocze.
-2. **Nie odpalaj** `migrate:czytelnia` / `migrate:fundacja` / `migrate:art-generacje` — nadpisze ręczną korektę, **odtworzy** `metody-tzs` i dosłowne `&nbsp;` w `summary`. Format: `pnpm patch:publication-format`. Listing: `pnpm patch:publication-listed` (już odpalony).
+2. **Nie odpalaj** `migrate:czytelnia` / `migrate:fundacja` / `migrate:art-generacje` — nadpisze ręczną korektę, **odtworzy** `metody-tzs` i dosłowne `&nbsp;` w `summary`. `migrate:art-generacje` pomija archiwum, które już ma edycje albo afterword. Format: `pnpm patch:publication-format`. Listing: `pnpm patch:publication-listed` (już odpalony). Archiwum projektów: `pnpm patch:archive-projects` (już odpalony; `-- --force` przebudowuje z leftover `page`).
 3. Pola Studio pod ramki: tabela niżej. `landingPage` i `siteSettings.homepage` **wypełnione** 2026-09-07 (kanon z ramek). Ucięte bilety Evently w newsie „W kolejce do lasu” — ręcznie w Studio (skrypt tylko raportuje).
 
 ### Studio — podstrony vs Figma
@@ -151,12 +151,14 @@ pnpm repair:portable-text     # dry-run encji/linków; `-- --write` zapisuje
 pnpm test:repair
 pnpm patch:publication-format # legacyDrupal.format → format; nie zastępuje migrate:czytelnia
 pnpm patch:publication-listed # listed=true na wszystkich publication
+pnpm patch:archive-projects   # zakończone projekty → edycje/outcomes/FoldList/Columns; `-- --dry-run`
+pnpm test:archive-projects
 pnpm seed:about-page          # singleton O fundacji, jeśli nie istnieje
 pnpm seed:landing-pages       # 4× landingPage (projekty, baza, czytelnia, zespół); puste pola
 pnpm --filter studio run deploy   # https://dramaway.sanity.studio/
 ```
 
-Nie odpalaj ponownie `migrate:fundacja` / `migrate:art-generacje` / `migrate:czytelnia` bez potrzeby — nadpisze ręczną korektę.
+Nie odpalaj ponownie `migrate:fundacja` / `migrate:art-generacje` / `migrate:czytelnia` bez potrzeby — nadpisze ręczną korektę. Archiwum z edycjami: `migrate:art-generacje` je pominie; przebudowa to `pnpm patch:archive-projects -- --force`.
 
 ---
 

@@ -2,7 +2,8 @@
  * Build Sanity `project` docs from already-migrated fundacja pages.
  *
  * Art Generacje: split page-drupal-35 Portable Text into intro + editions I–XI + afterword.
- * Archive projects: copy Teatr Codzienny / TO MI GRA / BOAL body onto `project`.
+ * Archive projects: copies leftover pages unless they already have editions
+ * or afterword (`pnpm patch:archive-projects` owns that reshape).
  *
  * Does not delete source `page` documents.
  *
@@ -225,6 +226,16 @@ async function migrateArtGeneracje() {
 }
 
 async function migrateArchiveProject(slug) {
+  const existing = await readClient.fetch(
+    `*[_id == $id][0]{ _id, title, "editionCount": count(editions), "afterwordLen": count(afterword) }`,
+    { id: `project-${slug}` },
+  );
+  if (existing?.editionCount > 0 || existing?.afterwordLen > 0) {
+    console.warn(
+      `  skip archive ${slug} — already reshaped (${existing.editionCount || 0} editions); use pnpm patch:archive-projects`,
+    );
+    return;
+  }
   const page = await readClient.fetch(
     `*[_type == "page" && slug.current == $slug][0]{ _id, title, body }`,
     { slug },

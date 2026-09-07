@@ -8,10 +8,11 @@ Ustalenia 2026-09-05 (hub Bazy, Czytelnia ≠ `project`, URL edycji, listing = C
 - **Strona główna** `/`
 - **Projekty** `/projekty`
   - **Art Generacje** — flagowy (`/projekty/art-generacje`). Każda edycja ma **własny URL** `/projekty/art-generacje/[slug]` (ustalenie 2026-09-05: treść + SEO). W CMS edycja zostaje obiektem na `project`, nie osobnym dokumentem. Szczegóły: [art-generacje.md](art-generacje.md)
-  - Teatr Codzienny — zakończony
+  - Teatr Codzienny — zakończony (6 edycji 2012–2017, spektakle jako `edition.outcomes`)
   - TO MI GRA — zakończony
   - BOAL IN PRACTICE — zakończony (Erasmus+)
-  - Projekty zakończone — zbiorczo
+  - Wielogłos — zakończony (z leftover strony `projekty-zakonczone`, nie z lorem Figmy)
+  - Projekty zakończone — zbiorczo na `/projekty` (wiersz archiwum); leftover `page` `/projekty/projekty-zakonczone` zostaje
   - Wydawnictwo `/projekty/wydawnictwo`
   - Czytelnia **może** pojawić się na tej stronie jako pozycja listy (warstwa prezentacji). W danych **nie jest** `project` — zostaje `publication`.
 - **Baza wiedzy** — nadzbiór w nawigacji (ustalenie 2026-09-05, makiety)
