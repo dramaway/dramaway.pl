@@ -1,0 +1,18 @@
+---
+description: Sanity roles and handover — org billing vs project Admin/Editor/Developer, backup mailbox
+alwaysApply: true
+---
+
+# Sanity — role (DramaWay)
+
+Kanon: [docs/HANDOFF.md](docs/HANDOFF.md) sekcja „Sanity — role i przekazanie”. Billing jest w **organizacji**, nie w roli projektowej.
+
+Ustalenia 2026-09-07:
+
+- **Jan** zostaje **project Administrator** na jakiś czas. Później ewentualnie **Developer**, gdy pojawi się druga osoba od utrzymania (też krzesełko Dev).
+- **Backup pełnego zarządzania projektem po stronie klienta:** konto `admin@dramaway.pl` (świadomy Admin, nie do codziennej edycji).
+- **Osoby od treści:** tylko **Editor** — publikują treść, nie ruszają tokenów / CORS / datasetów.
+- **Contributor / Viewer / Blueprints editor:** nie przypisywać na start. Viewer = podgląd bez edycji (darmowe miejsce). Contributor = szkice bez publikacji. Blueprints editor = infrastruktura CLI, nie redakcja.
+- **Dane billingowe** doda klient przy migracji serwisu (org-admin), nie przy codziennym CMS.
+- Token zapisu migracji (`SANITY_API_WRITE_TOKEN` w `apps/studio/.env`) to robot, nie osoba.
+- Snapshot treści przed edycją klienta: `private/sanity-snapshots/production-2026-09-07-pre-client.tar.gz` (poza gitem). Kopia datasetu w chmurze nie jest na planie.

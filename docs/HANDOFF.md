@@ -5,13 +5,13 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-07 — archiwum projektów: edycje/rezultaty TC, Columns BOAL, FoldList, Wielogłos |
+| **Ostatnia aktualizacja** | 2026-09-07 — role Sanity + lokalny snapshot CMS przed edycją klienta |
 | **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ (`readingMethod` = Category; `publication.methods` = Categories; publiczne `publication.format`) |
 | **Working tree** | Fala 0+1 + archiwum projektów na `main` |
-| **Owner Sanity (na razie)** | Jan Mirecki |
+| **Owner Sanity (na razie)** | Jan = project Admin; backup klienta = `admin@dramaway.pl`; redakcja = Editor |
 
 ---
 
@@ -41,7 +41,18 @@ Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona głów
 - Zależności: catalog w `pnpm-workspace.yaml`, lockfile, Dependabot (tydzień), skrypty `pnpm deps:outdated` / `pnpm deps:update`. Kanwa: [guides/dependencies.md](guides/dependencies.md). Next 16 / TS 6+ / ESLint 10 zostają poza automatami.
 - Mapa 301 na premierę = **osobne zadanie**, nie teraz.
 
-Pełny kanon migracji: [fundacja-status.md](migration/fundacja-status.md).
+Pełny kanon migracji: [fundacja-status.md](migration/fundacja-status.md). Role i przekazanie: [guides/sanity-roles.md](guides/sanity-roles.md).
+
+### Sanity — role i przekazanie (2026-09-07)
+
+Billing jest w **organizacji**, nie w project Admin. Kanon: [guides/sanity-roles.md](guides/sanity-roles.md).
+
+- Jan zostaje **project Administrator**; później ewentualnie **Developer**, gdy ktoś drugi będzie wspierać (też Dev).
+- `admin@dramaway.pl` — świadomy **Admin** po stronie klienta, tylko backup pełnego zarządzania projektem, nie codzienny CMS.
+- Osoby edytujące treści — **Editor** (żeby nie ruszyć tokenów / CORS / datasetu).
+- Contributor / Viewer / Blueprints editor — na start nie. Viewer = podgląd (darmowe miejsce). Contributor = szkice bez publikacji.
+- Dane billingowe doda klient przy **migracji serwisu** (org-admin).
+- Snapshot treści przed startem redakcji: `private/sanity-snapshots/production-2026-09-07-pre-client.tar.gz` (chmurowa kopia datasetu nie jest na planie) + tag `snapshot-2026-09-07-pre-client`.
 
 ### Warstwa wizualna (od 2026-08-30, skład `/` 2026-09-03, polish 2026-09-03, mobile 2026-09-03)
 
@@ -156,6 +167,7 @@ pnpm test:archive-projects
 pnpm seed:about-page          # singleton O fundacji, jeśli nie istnieje
 pnpm seed:landing-pages       # 4× landingPage (projekty, baza, czytelnia, zespół); puste pola
 pnpm --filter studio run deploy   # https://dramaway.sanity.studio/
+# snapshot CMS: apps/studio → sanity datasets export production ../../private/sanity-snapshots/….tar.gz
 ```
 
 Nie odpalaj ponownie `migrate:fundacja` / `migrate:art-generacje` / `migrate:czytelnia` bez potrzeby — nadpisze ręczną korektę. Archiwum z edycjami: `migrate:art-generacje` je pominie; przebudowa to `pnpm patch:archive-projects -- --force`.
@@ -176,6 +188,7 @@ Nie odpalaj ponownie `migrate:fundacja` / `migrate:art-generacje` / `migrate:czy
 | `apps/web/src/lib/homepage-copy.ts` | Chrome UI homepage (CTA aktualności) — nie fallback treści |
 | `apps/web/src/lib/subpage-copy.ts` | Chrome podstron (filtry, „więcej”) — nie fallback treści |
 | `apps/web/src/lib/landing-page.ts` | Resolver singletonów listingów; puste = brak bloku |
+| `docs/guides/sanity-roles.md` | Role Sanity / przekazanie |
 | `docs/migration/fundacja-status.md` | Co zmigrowane |
 | `apps/web/src/app/(site)/` | Publiczny App Router |
 | `apps/web/src/lib/sanity/` | GROQ |

@@ -45,6 +45,7 @@ Mapa dokumentów projektu. Treść po polsku; nazwy plików ADR i ścieżek kodu
 
 | Plik | Opis |
 |------|------|
+| [guides/sanity-roles.md](guides/sanity-roles.md) | Role Sanity przy przekazaniu (org vs projekt, Editor vs Admin) |
 | [guides/dependencies.md](guides/dependencies.md) | Aktualizacja deps: catalog pnpm, Dependabot, skrypty |
 
 `guides/` — później też uruchomienie lokalne i edycja w Sanity Studio.

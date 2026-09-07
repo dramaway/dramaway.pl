@@ -13,6 +13,7 @@ Root repozytorium (`apps/`, `docs/`, `scripts/`) zostaje czysty.
 | `dumps/` | Zrzuty MySQL (`drama_mfund`, `drama_teatr`) |
 | `legacy/` | Mirror FTP (motywy, files) — bez `settings.php` |
 | `live-snapshots/` | Zrzuty HTML homepage |
+| `sanity-snapshots/` | Tarball `sanity datasets export` (przed edycją klienta itd.) |
 | `dramaway-setup-ustalenia/` | Paczka kickoffu (archiwum; kanon w `docs/concept/`) |
 | `strona.pdf` | Materiały robocze spoza kodu |
 
@@ -24,6 +25,23 @@ Root repozytorium (`apps/`, `docs/`, `scripts/`) zostaje czysty.
 | `drama_teatr_*.sql.gz` | `drama_teatr` | Źródło do Czytelni (nie osobny serwis w MVP) |
 
 Eksport w DirectAdmin: **jedna** baza → `.sql.gz`. Nie commituj dumpów.
+
+## Snapshot Sanity (przed edycją klienta)
+
+Plik: `sanity-snapshots/production-2026-09-07-pre-client.tar.gz` (2026-09-07, 133 dokumenty, 219 assetów). Poza gitem.
+
+```bash
+# nowy eksport (token z apps/studio/.env)
+cd apps/studio
+set -a && source .env && set +a
+export SANITY_AUTH_TOKEN="$SANITY_API_WRITE_TOKEN"
+pnpm exec sanity datasets export production ../../private/sanity-snapshots/production-YYYY-MM-DD.tar.gz
+
+# przywrócenie nadpisuje live production — tylko świadomie
+pnpm exec sanity datasets import ../../private/sanity-snapshots/production-2026-09-07-pre-client.tar.gz production --replace
+```
+
+`datasets copy` (drugi dataset w chmurze) nie wchodzi w obecny plan.
 
 ## Extract do frontendu
 

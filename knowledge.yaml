@@ -50,6 +50,9 @@ knowledge:
     - path: docs/decisions/
       description: "Architecture Decision Records"
       priority: high
+    - path: docs/guides/sanity-roles.md
+      description: "Sanity handover: org billing vs project Admin/Editor/Developer, admin@dramaway.pl backup, pre-client snapshot"
+      priority: high
     - path: docs/guides/dependencies.md
       description: "How to update dependencies: pnpm catalog, Dependabot, scripts"
       priority: medium
