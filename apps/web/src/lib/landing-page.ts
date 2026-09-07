@@ -101,9 +101,7 @@ export const getKnowledgeChannels = cache(
 );
 
 function shouldShowCzytelniaOnProjects(cms: LandingPage | null): boolean {
-  if (cms?.showCzytelnia === true) return true;
-  if (cms?.showCzytelnia === false) return false;
-  return Boolean(cmsText(cms?.legacyCzytelniaTeaserTitle));
+  return cms?.showCzytelnia !== false;
 }
 
 export type ResolvedProjectsLanding = ResolvedLandingHero & {

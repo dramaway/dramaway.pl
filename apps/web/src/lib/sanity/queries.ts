@@ -140,8 +140,7 @@ export const landingPageByIdQuery = `*[_type == "landingPage" && _id == $id][0] 
   ctaLabel,
   ctaHref,
   image,
-  showCzytelnia,
-  "legacyCzytelniaTeaserTitle": czytelniaTeaser.title
+  showCzytelnia
 }`;
 
 export const aboutPageQuery = `*[_type == "aboutPage"][0] {

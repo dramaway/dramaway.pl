@@ -250,8 +250,6 @@ export type LandingPage = {
   ctaHref: string | null;
   image: (SanityImage & { alt?: string | null }) | null;
   showCzytelnia?: boolean | null;
-  /** Pre-boolean teaser title; presence still shows the /projekty row. */
-  legacyCzytelniaTeaserTitle?: string | null;
 };
 
 export type AboutValue = {
