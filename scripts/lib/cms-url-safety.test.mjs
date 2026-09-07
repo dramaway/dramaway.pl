@@ -3,10 +3,12 @@ import { test } from "node:test";
 import { safeHref } from "../../apps/web/src/lib/safe-url.ts";
 import { youtubeEmbedSrc } from "../../apps/web/src/lib/sanity/youtube.ts";
 
-test("safeHref allows http(s), mailto, hash, and root-relative paths", () => {
+test("safeHref allows http(s), mailto, tel, hash, and root-relative paths", () => {
   assert.equal(safeHref("https://centrum.dramaway.pl")?.kind, "http");
+  assert.equal(safeHref("https://app.evently.pl/foo")?.kind, "http");
   assert.equal(safeHref("http://example.com/a")?.kind, "http");
   assert.equal(safeHref("mailto:a@b.pl")?.kind, "mailto");
+  assert.equal(safeHref("tel:+48221234567")?.kind, "tel");
   assert.equal(safeHref("/projekty/art-generacje")?.kind, "path");
   assert.equal(safeHref("/czytelnia?rodzaj=books")?.kind, "path");
   assert.equal(safeHref("#edycje")?.kind, "hash");

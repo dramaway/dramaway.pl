@@ -54,7 +54,7 @@ pnpm dev:studio        # http://localhost:3333 (tylko Studio)
 pnpm dev:all           # oba naraz
 ```
 
-- Frontend: `apps/web` — publiczne trasy z IA (`/projekty`, `/zespol`, `/fundacja`…); `/preview` to inwentarz CMS  
+- Frontend: `apps/web` — publiczne trasy z IA (`/projekty`, `/zespol`, `/fundacja`…)  
 
 - CMS: `apps/studio` (Sanity **v6**) — treści fundacji + Art Generacje (edycje) w dataset `production`; biblioteka plików: zakładka **Media**  
 - **Co zmigrowane / czego nie:** [docs/migration/fundacja-status.md](docs/migration/fundacja-status.md)  

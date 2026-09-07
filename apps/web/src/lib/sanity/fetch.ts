@@ -6,7 +6,6 @@ import { sanityClient } from "./client";
 import {
   aboutPageQuery,
   landingPageByIdQuery,
-  contentCountsQuery,
   homepageNewsQuery,
   newsListQuery,
   pageBySlugQuery,
@@ -29,7 +28,6 @@ import {
 import type {
   AboutPage,
   LandingPage,
-  ContentCounts,
   PageDetail,
   PageListItem,
   PersonDetail,
@@ -44,10 +42,6 @@ import type {
 import { NEWS_SLUG_PREFIX } from "@/lib/routes";
 
 const revalidate = { next: { revalidate: 60 } };
-
-export async function getContentCounts(): Promise<ContentCounts> {
-  return sanityClient.fetch(contentCountsQuery, {}, revalidate);
-}
 
 export async function getPeople(): Promise<PersonListItem[]> {
   return sanityClient.fetch(peopleListQuery, {}, revalidate);

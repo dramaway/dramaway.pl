@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Alexandria, MuseoModerno } from "next/font/google";
 import { brandMetadata } from "@/lib/brand";
 import { getSiteSettings } from "@/lib/sanity/fetch";
+import { siteIndexingEnabled, siteOrigin } from "@/lib/site-url";
 import "./globals.css";
 
 const museoModerno = MuseoModerno({
@@ -23,10 +24,15 @@ export async function generateMetadata(): Promise<Metadata> {
   const title = settings?.title?.trim() || "DramaWay — Fundacja";
   const description = settings?.tagline?.trim() || "Fundacja Drama Way";
 
+  const index = siteIndexingEnabled();
+
   return {
-    title,
+    metadataBase: new URL(siteOrigin()),
+    title: { default: title, template: `%s — ${title}` },
     description,
-    robots: { index: false, follow: false, nocache: true },
+    robots: index
+      ? { index: true, follow: true }
+      : { index: false, follow: false, nocache: true },
     ...brandMetadata(settings),
   };
 }

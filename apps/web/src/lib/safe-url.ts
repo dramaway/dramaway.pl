@@ -1,9 +1,11 @@
 /**
  * Allowlist for hrefs that may come from CMS (Portable Text, CTA fields).
- * Permits http(s), mailto, in-page hashes, and root-relative paths without `//`.
+ * Permits http(s) to any host, mailto, tel, in-page hashes, and
+ * root-relative paths without `//`. Editors may link out freely;
+ * only dangerous schemes are dropped.
  */
 
-export type SafeHrefKind = "path" | "hash" | "http" | "mailto";
+export type SafeHrefKind = "path" | "hash" | "http" | "mailto" | "tel";
 
 export type SafeHref = {
   href: string;
@@ -11,6 +13,7 @@ export type SafeHref = {
 };
 
 const MAILTO_RE = /^mailto:[^\s<>]+$/i;
+const TEL_RE = /^tel:[+\d\s().-]+$/i;
 const HASH_RE = /^#[\w.~:/%-]*$/u;
 
 function looksDangerous(href: string): boolean {
@@ -39,6 +42,10 @@ export function safeHref(raw: string | null | undefined): SafeHref | null {
 
   if (MAILTO_RE.test(href)) {
     return { href, kind: "mailto" };
+  }
+
+  if (TEL_RE.test(href)) {
+    return { href, kind: "tel" };
   }
 
   try {

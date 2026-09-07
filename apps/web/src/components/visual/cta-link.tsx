@@ -48,7 +48,7 @@ export function CtaLink({
   const safe = safeHref(href);
   if (!safe) return null;
 
-  if (safe.kind === "mailto") {
+  if (safe.kind === "mailto" || safe.kind === "tel") {
     return (
       <a href={safe.href} className={cn("cta", className)}>
         {body}

@@ -174,13 +174,6 @@ export type ResolvedSite = {
   homepage: HomepageContent;
 };
 
-export type ContentCounts = {
-  people: number;
-  pages: number;
-  news: number;
-  projects: number;
-};
-
 export type ProjectListItem = {
   _id: string;
   title: string;

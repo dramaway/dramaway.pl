@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-07 — hardening preview: noindex w Next, CSP, allowlista URL CMS, lightbox on-demand, CI; plus wcześniejsze: `/fundacja` roster/zespół/historia |
+| **Ostatnia aktualizacja** | 2026-09-07 — decyzje z audytu: usunięte `/preview`, indeksacja za `NEXT_PUBLIC_SITE_INDEX`, CSP na domeny dramaway/Sanity/Netlify, checklista RODO dla Fundacji |
 | **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
@@ -35,12 +35,13 @@ Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona głów
 - Chrome UI (etykiety filtrów, „więcej”, puste listy) w `homepage-copy.ts` / `subpage-copy.ts`. Treść editorialna tylko z CMS (`aboutPage`, `landingPage`, `siteSettings.hero` / `homepage`, `project.summary`). **Puste pole = nic na stronie**, bez fallbacku z kodu. Wyjątki chrome: [design/system.md](design/system.md) „Copy chrome vs Figma”. Grupa **Ikony** (`branding`): **SVG jako `image`** (Select w Media widzi m.in. już wrzucony `icon.svg`; strona serwuje surowy SVG z `asset.url`, nie raster CDN) / **ICO jako `file`** z podglądem 32×32 i natywnym pickerem (Media na polach `file` była pusta: 0 `fileAsset`) / PNG light+dark / Apple / 512 / OG. Puste pole = `public/brand`.
 - `getResolvedSite()` zwraca `homepage` + `hero` + `footer` (logo, adres, cytat, atrybucja). Puste pole = brak bloku (adres: `footer.address` albo legacy `footerNote`). Featured **H2** to tytuł `project.featured`; magenta etykieta to `homepage.featured.label` — pusta = brak etykiety. Teaser AG na `/` bierze `project.summary`, gdy `homepage.featured.lead` jest puste.
 - Newsy na `/`: `getHomepageNews()` — max 3, bez zdjęć, excerpt ~400 znaków. Daty kart: `publishedAt`. Trzeci news `news-placeholder-syrena` jest wypełniaczem z ramki — **do draftu** z adnotacją PL (wykaz: [fundacja-status.md](migration/fundacja-status.md) „Luki vs ramka”).
-- `/preview` zostaje inwentarzem CMS.
+- Skip-link (`Przejdź do treści`) i strony 404 / błąd — **są** w kodzie (chrome w `subpage-copy.ts`).
 - Studio: plugin **Media** (`sanity-plugin-media`) — zakładka w menu + źródło przy polach **`image`**. Pola **`file`** (ICO) zostają na wbudowanym pickerze Sanity: Media w trybie plików pokazuje tylko `sanity.fileAsset`, a tych jest zero. Typy `media.tag` / `media.folder` ukryte w desk. Credit line włączony. **Content (góra):** Strona główna (`siteSettings`), Projekty / Baza wiedzy / Czytelnia / Zespół (`landingPage`), Art Generacje (`project`), Metody / Kontakt (`page`), O fundacji (`aboutPage`). Page lista **bez** metody/kontakt. Site settings nadal na dole (ten sam dokument co Strona główna). Portable Text: styl **Termin** (`term`) — blob + krój body, Strong opcjonalnie; lista **Indent** (Tab = głębsze wcięcie); lista **Roles** (`roster`) — wiersze `rola: imiona`, render jako `.pt-roster` (lekka karta); obiekt **Columns** (2 albo 3, stack poniżej `lg`). Quote bez zmian. Nie zgadywać listy ról z dwukropków w prozie — redaktor zaznacza Roles w toolbarze. Deploy: `pnpm --filter studio run deploy` → https://dramaway.sanity.studio/.
-- Netlify: `netlify.toml` w repo (`pnpm --filter web build`, `X-Robots-Tag: noindex`). Preview: https://dramaway.netlify.app/. Next też ustawia `metadata.robots` + `headers()` (CSP, noindex) — toml zostaje pasem na static.
+- Netlify: `netlify.toml` w repo (`pnpm --filter web build`, `X-Robots-Tag: noindex` na static). Preview: https://dramaway.netlify.app/. Next: `metadata.robots` + `headers()` (CSP, noindex dopóki `NEXT_PUBLIC_SITE_INDEX` nie jest `true`).
+- **Indeksacja (cutover):** w Netlify `NEXT_PUBLIC_SITE_URL=https://fundacja.dramaway.pl` i `NEXT_PUBLIC_SITE_INDEX=true` — wtedy robots/sitemap/canonical żyją. Do tego czasu Google ma nie indeksować roboczego netlify.app.
 - CI: `.github/workflows/ci.yml` — `pnpm install`, lint, `web` build, `test:repair` / `test:archive-projects` / `test:web`.
 - Zależności: catalog w `pnpm-workspace.yaml`, lockfile, Dependabot (tydzień), skrypty `pnpm deps:outdated` / `pnpm deps:update`. Kanwa: [guides/dependencies.md](guides/dependencies.md). Next 16 / TS 6+ / ESLint 10 zostają poza automatami.
-- Mapa 301 na premierę = **osobne zadanie**, nie teraz. Checklista poniżej.
+- Mapa 301 na premierę = **osobne zadanie tuż przed DNS**, nie teraz. Checklista poniżej. Mail/checklista dla Fundacji (RODO + analityka): [guides/cutover-foundation.md](guides/cutover-foundation.md).
 
 Pełny kanon migracji: [fundacja-status.md](migration/fundacja-status.md). Role i przekazanie: [guides/sanity-roles.md](guides/sanity-roles.md).
 
@@ -51,9 +52,9 @@ Preview (`dramaway.netlify.app`) **zostaje noindex** (`metadata.robots`, `X-Robo
 Przy przejęciu `fundacja.dramaway.pl`:
 
 - **301** — stary Drupal (`node/N`, aliasy `teatrzaangazowany…`, landingi edycji) → trasy z `apps/web/src/lib/routes.ts` / [ia.md](concept/ia.md). Mapa = osobne zadanie; nie zgadywać z palca. Sitemap indeksujący = ta sama fala (teraz `robots.ts` celowo nie wskazuje sitemapy).
-- **Zdjąć noindex** — `layout.tsx` `metadata.robots`, `next.config.ts` `X-Robots-Tag`, `robots.ts` (Allow + sitemap), `netlify.toml` `[[headers]]`. Świadomie, nie „przy okazji”.
-- **Legal / RODO** — strona polityki (CDN Sanity, YouTube nocookie, publiczne maile na `/kontakt`). Treści nie wymyślamy w kodzie; bez niej cutover jest niekompletny.
-- **Treść** — `news-placeholder-syrena` → draft; puste hero/cover; `/preview` nie w nawigacji (zostaje na preview, noindex).
+- **Zdjąć noindex** — Netlify env `NEXT_PUBLIC_SITE_INDEX=true` + `NEXT_PUBLIC_SITE_URL=https://fundacja.dramaway.pl` (przebudowa). Potem `robots.ts` wpuszcza crawlera i wskazuje sitemap; `layout.tsx` / `next.config.ts` / `netlify.toml` `[[headers]]`. Świadomie, nie „przy okazji”.
+- **Legal / RODO** — [guides/cutover-foundation.md](guides/cutover-foundation.md) (mail + checklista). Treści pisze Fundacja.
+- **Treść** — `news-placeholder-syrena` → draft; puste hero/cover.
 - **Studio** — `pnpm --filter studio run deploy` po ostatniej zmianie schematu.
 - **Netlify env** — tylko `NEXT_PUBLIC_SANITY_*` (ew. read token). **Brak** `SANITY_API_WRITE_TOKEN`. CORS Studio: origin produkcji w Sanity Manage.
 - **DNS / TLS** + smoke po wgraniu `_redirects`.
@@ -138,7 +139,7 @@ Ręcznie, nie w kodzie i nie przez `migrate:*`. Grupa `homepage` **wypełniona**
 | `landingPage` (4×) | **wypełnione 2026-09-07** | H1/lead z kanonu ramek; `/projekty` ma CTA do AG i włącznik Czytelni (`showCzytelnia`; copy z dokumentu Czytelnia). Hub `/baza-wiedzy` zaciąga skrócone leady z Metod i Czytelni |
 | `siteSettings.homepage` | **wypełnione 2026-09-07** | Kim / Metody / featured / Czytelnia + zdjęcie about |
 
-`pnpm dev:all` jeśli porty wolne. Publiczne URL-e, nie `/preview`.
+`pnpm dev:all` jeśli porty wolne.
 
 ### Decyzje z makiet (2026-09-05) — zamknięte
 

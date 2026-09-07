@@ -53,6 +53,9 @@ knowledge:
     - path: docs/guides/sanity-roles.md
       description: "Sanity handover: org billing vs project Admin/Editor/Developer, admin@dramaway.pl backup, pre-client snapshot"
       priority: high
+    - path: docs/guides/cutover-foundation.md
+      description: "Foundation-facing cutover checklist: privacy policy, analytics decision, paste-ready email"
+      priority: high
     - path: docs/guides/dependencies.md
       description: "How to update dependencies: pnpm catalog, Dependabot, scripts"
       priority: medium

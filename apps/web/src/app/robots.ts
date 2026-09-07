@@ -1,14 +1,15 @@
 import type { MetadataRoute } from "next";
+import { siteIndexingEnabled, siteOrigin } from "@/lib/site-url";
 
-/**
- * Preview / pre-cutover: disallow crawling.
- * At domain cutover, allow indexing and point sitemap here — see HANDOFF.
- */
 export default function robots(): MetadataRoute.Robots {
+  const origin = siteOrigin();
+  if (!siteIndexingEnabled()) {
+    return {
+      rules: { userAgent: "*", disallow: "/" },
+    };
+  }
   return {
-    rules: {
-      userAgent: "*",
-      disallow: "/",
-    },
+    rules: { userAgent: "*", allow: "/" },
+    sitemap: `${origin}/sitemap.xml`,
   };
 }

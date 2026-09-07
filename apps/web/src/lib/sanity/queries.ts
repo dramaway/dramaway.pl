@@ -16,13 +16,6 @@ const newsProjection = `{
   publishedAt
 }`;
 
-export const contentCountsQuery = `{
-  "people": count(*[_type == "person"]),
-  "pages": count(*[_type == "page" && !(${newsSlugFilter})]),
-  "news": count(*[_type == "page" && ${newsSlugFilter}]),
-  "projects": count(*[_type == "project"])
-}`;
-
 export const peopleListQuery = `*[_type == "person"] | order(name asc) {
   _id,
   name,

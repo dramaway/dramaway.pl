@@ -28,7 +28,7 @@ Sanity: 6× readingMethod + 81× publication (wszystkie `listed`; śmieć metody
 ```
 
 Live CMS: projekt Sanity **Dramaway**, id `tr2qdg9j`, dataset `production`.  
-Publiczne: `http://localhost:3000` (`pnpm dev`). Inwentarz CMS: `/preview`. Studio: `:3333`.
+Publiczne: `http://localhost:3000` (`pnpm dev`). Studio: `:3333`.
 
 ## Co leży w Sanity
 
@@ -84,7 +84,7 @@ To nie jest korekta językowa. Pierwszy skrypt spłaszczał Drupal HTML.
 **Zrobione 2026-08-21 (obserwacje Jana):**
 
 - Nawiasowe URL-e (`tekst (http://…)`, w tym duplikaty) → marki `link` w Sanity. Skrypt: `pnpm repair:portable-text`. Porównanie z live: np. [art-generacje](https://www.fundacja.dramaway.pl/projekty/art-generacje).
-- Tokeny Drupal `[video:https://youtube…]` → bloki `youtube` (embed w `/preview`).
+- Tokeny Drupal `[video:https://youtube…]` → bloki `youtube` (embed na stronie projektu).
 - Schemat `edition.outcomes` (`editionOutcome`: tytuł, podtytuł, data, zdjęcie, opis) — **pusty**, do ręcznego zasilenia / Figmy. Nie zgadujemy spektakli z HTML.
 
 **Zrobione 2026-09-06 (linki ślepe po spłaszczeniu `<a>`):**
