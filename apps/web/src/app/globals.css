@@ -192,6 +192,8 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --text-primary: var(--color-ink);
+  --text-secondary: color-mix(in srgb, var(--color-ink) 72%, transparent);
 }
 
 @media (width < 48rem) {
@@ -232,6 +234,8 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  --text-primary: var(--foreground);
+  --text-secondary: color-mix(in srgb, var(--foreground) 72%, transparent);
 }
 
 @layer base {
@@ -1540,27 +1544,30 @@
   }
 
   /*
-   * Roles list (`listItem: roster`). A light card, not a spreadsheet:
-   * soft hairline border + faint sand fill, rows separated by air
-   * (flex gap), not per-row rules. Role italic / names medium.
+   * Roles list (`listItem: roster`) in article flow:
+   * no card, only subtle horizontal rules.
    */
   .pt-roster {
-    display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
-    max-width: 62ch;
+    display: grid;
+    width: 100%;
     margin-block: 0.25rem 0.75rem;
-    padding: 1.15rem clamp(1.15rem, 3vw, 1.6rem);
-    border: 1px solid color-mix(in srgb, var(--color-ink) 8%, transparent);
-    border-radius: var(--radius-media);
-    background-color: color-mix(in srgb, var(--color-sand) 45%, transparent);
+    border-top: 0.5px solid var(--border);
   }
 
   .pt-roster-row {
     display: grid;
-    grid-template-columns: minmax(7rem, 0.42fr) 1fr;
-    column-gap: 1.25rem;
-    align-items: baseline;
+    grid-template-columns: 1fr;
+    row-gap: 0.25rem;
+    column-gap: 1.5rem;
+    align-items: start;
+    padding-block: 1.1rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  @media (width >= 35rem) {
+    .pt-roster-row {
+      grid-template-columns: 12.5rem minmax(0, 1fr);
+    }
   }
 
   .pt-roster-row-plain {
@@ -1575,21 +1582,23 @@
   }
 
   .pt-roster-role {
-    font-size: var(--text-small);
+    font-size: 0.8125rem;
     font-weight: 400;
-    font-style: italic;
-    line-height: var(--text-small--line-height);
-    color: color-mix(in srgb, var(--color-ink) 72%, transparent);
+    line-height: 1.5;
+    color: var(--text-secondary);
   }
 
   .pt-roster-names {
-    font-size: var(--text-body);
+    display: grid;
+    gap: 0.1rem;
+    font-size: 1rem;
     font-weight: 500;
-    line-height: var(--text-body--line-height);
+    line-height: 1.6;
+    color: var(--text-primary);
   }
 
-  .pt-roster-row-plain .pt-roster-names {
-    font-weight: 400;
+  .pt-roster-name {
+    display: block;
   }
 
   .pt-columns {
@@ -1880,9 +1889,12 @@
   }
 
   .team-copy .portable-body h2 {
-    font-size: var(--text-h3);
-    line-height: var(--text-h3--line-height);
-    margin-block-end: 0.85rem;
+    font-family: var(--font-body);
+    text-transform: none;
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin-block-end: 1.5rem;
   }
 
   .team-copy .portable-body > :not([hidden]) ~ :not([hidden]) {
@@ -1892,6 +1904,13 @@
   .team-copy .portable-body > :not([hidden]) ~ .pt-roster {
     margin-top: 0.85rem;
     margin-bottom: 1.5rem;
+  }
+
+  .team-copy .portable-body .pt-roster + p {
+    margin-top: 1.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
   }
 
   /*
