@@ -120,10 +120,11 @@
   /* Stepped, not clamped — full tangent circles; count drops on resize. */
   --dot-size: 82px;
   --palette-size: clamp(44px, 7.9vw, 113px);
-  /* /fundacja value circles — Figma ~154 px; wrap on narrow viewports. */
+  /* /fundacja value circles — Figma ~154 px; below lg they shrink and scroll. */
   --values-size: clamp(4.5rem, 10.7vw, 9.625rem);
-  /* Timeline year marker on /fundacja — Figma ~86 px. */
-  --history-marker: clamp(3.5rem, 6vw, 5.375rem);
+  /* Timeline year marker on /fundacja — Figma ~86 px; tightened for long lists. */
+  --history-marker: clamp(2.75rem, 5vw, 4.25rem);
+  --history-gap: 1.5rem;
   /* /fundacja team bio portrait — Figma ~178 px. */
   --team-bio-photo: clamp(7rem, 12vw, 11.125rem);
   /* Overlay header on `/` at lg+ (py-8 × 2 plus logo/nav, with wrap room). */
@@ -273,6 +274,38 @@
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
+  }
+
+  .skip-link {
+    position: absolute;
+    inset-inline-start: var(--page-pad);
+    top: var(--page-pad);
+    z-index: 30;
+    padding-inline: 0.75rem;
+    padding-block: 0.5rem;
+    background-color: var(--color-sand);
+    color: var(--color-green-ink);
+    font-family: var(--font-body);
+    font-size: var(--text-small);
+    line-height: var(--text-small--line-height);
+    text-decoration: underline;
+    border-radius: var(--radius-media);
+    transform: translateY(-200%);
+  }
+
+  .skip-link:focus,
+  .skip-link:focus-visible {
+    transform: none;
+    outline: 2px solid var(--color-magenta);
+    outline-offset: 2px;
+  }
+
+  #main-content:focus {
+    outline: none;
+  }
+
+  #main-content {
+    scroll-margin-block-start: var(--site-header-bar);
   }
 
   .site-logo {
@@ -1307,6 +1340,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: safe center;
+    min-width: 0;
+    max-width: 100%;
   }
 
   .values-item {
@@ -1330,16 +1365,39 @@
     overflow-wrap: anywhere;
   }
 
+  @media (width < 64rem) {
+    .values-row {
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      padding-block-end: 0.5rem;
+      -webkit-overflow-scrolling: touch;
+      --values-size: 3.75rem;
+    }
+
+    .values-item {
+      padding: 0.4rem;
+    }
+
+    .values-label {
+      font-size: 0.6875rem;
+      line-height: 1.1;
+      white-space: nowrap;
+      overflow-wrap: normal;
+    }
+  }
+
   .history-list {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-section);
+    gap: var(--history-gap);
   }
 
   .history-item {
     display: grid;
     grid-template-columns: var(--history-marker) minmax(0, 1fr);
-    gap: 1.5rem;
+    gap: 1rem;
     align-items: start;
   }
 
@@ -1351,7 +1409,7 @@
     border-radius: 50%;
     color: var(--color-sand);
     font-family: var(--font-display);
-    font-size: var(--text-small);
+    font-size: 0.75rem;
     font-weight: 600;
     line-height: 1;
   }
@@ -1399,6 +1457,22 @@
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
+  }
+
+  /*
+   * Copy under the /fundacja board photos. H2 in this Portable Text
+   * matches the section title (Zarząd), not article-band text-h2.
+   */
+  .team-copy .portable-body {
+    margin-block-start: 0;
+  }
+
+  .team-copy .portable-body > :first-child {
+    margin-block-start: 0;
+  }
+
+  .team-copy .portable-body em {
+    font-style: italic;
   }
 
   /*
@@ -1715,5 +1789,19 @@
 
   .pt-indent:has(.pt-term) {
     gap: 0;
+  }
+
+  /*
+   * H2 inside /fundacja team copy must match the section title (Zarząd),
+   * not article-band text-h2. Utilities so this beats PortableBody's mt-8
+   * / text-h2 classes.
+   */
+  .team-copy .portable-body h2 {
+    font-size: var(--text-h3);
+    line-height: var(--text-h3--line-height);
+  }
+
+  .team-copy .portable-body h2:not(:first-child) {
+    margin-block-start: 2.5rem;
   }
 }

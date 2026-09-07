@@ -159,6 +159,7 @@ export const aboutPageQuery = `*[_type == "aboutPage"][0] {
   team {
     heading,
     ctaLabel,
+    body,
     people[]->{
       _id,
       name,

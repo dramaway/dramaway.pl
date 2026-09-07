@@ -21,6 +21,7 @@
     "patch:publication-format": "node --env-file=apps/studio/.env scripts/patch-publication-format.mjs",
     "patch:publication-listed": "node --env-file=apps/studio/.env scripts/patch-publication-listed.mjs",
     "patch:archive-projects": "node --env-file=apps/studio/.env scripts/patch-archive-projects.mjs",
+    "patch:about-copy": "node --env-file=apps/studio/.env scripts/patch-about-copy.mjs",
     "seed:about-page": "node --env-file=apps/studio/.env scripts/seed-about-page.mjs",
     "seed:landing-pages": "node --env-file=apps/studio/.env scripts/seed-landing-pages.mjs",
     "repair:portable-text": "node --env-file=apps/studio/.env scripts/repair-portable-text.mjs",

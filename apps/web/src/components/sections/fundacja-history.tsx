@@ -1,6 +1,10 @@
 import { Section } from "@/components/layout/section";
+import { PortableBody, hasPortableContent } from "@/components/portable-body";
 import { cn } from "@/lib/utils";
-import type { ResolvedAboutHistoryItem } from "@/lib/sanity/types";
+import type {
+  PortableContent,
+  ResolvedAboutHistoryItem,
+} from "@/lib/sanity/types";
 
 const MARKER_TONES = [
   "bg-brand-1",
@@ -14,7 +18,7 @@ const MARKER_TONES = [
 
 type FundacjaHistoryProps = {
   heading?: string | null;
-  lead?: string | null;
+  lead?: PortableContent | null;
   items: readonly ResolvedAboutHistoryItem[];
 };
 
@@ -24,6 +28,7 @@ type FundacjaHistoryProps = {
  */
 export function FundacjaHistory({ heading, lead, items }: FundacjaHistoryProps) {
   if (items.length === 0) return null;
+  const leadBody = hasPortableContent(lead) ? lead : null;
 
   return (
     <Section>
@@ -31,8 +36,8 @@ export function FundacjaHistory({ heading, lead, items }: FundacjaHistoryProps) 
         {heading ? (
           <h2 className="font-display text-h3 font-black">{heading}</h2>
         ) : null}
-        {lead ? <p className="mt-8 text-lead">{lead}</p> : null}
-        <ol className="history-list mt-8">
+        {leadBody ? <PortableBody value={leadBody} /> : null}
+        <ol className={heading || leadBody ? "history-list mt-8" : "history-list"}>
           {items.map((item, index) => (
             <li key={`${item.year}-${item.title}`} className="history-item">
               <span
@@ -45,11 +50,11 @@ export function FundacjaHistory({ heading, lead, items }: FundacjaHistoryProps) 
                 {item.year}
               </span>
               <div>
-                <h3 className="history-title text-body font-semibold">
+                <h3 className="history-title text-small font-semibold">
                   {item.title}
                 </h3>
                 {item.body ? (
-                  <p className="mt-4 text-body">{item.body}</p>
+                  <p className="mt-2 text-small">{item.body}</p>
                 ) : null}
               </div>
             </li>

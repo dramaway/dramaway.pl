@@ -44,13 +44,12 @@ export default async function FundacjaIndexPage() {
           values={methods.values}
         />
       ) : null}
-      {about.team.people.length > 0 ? (
-        <TeamBios
-          heading={about.team.heading}
-          people={about.team.people}
-          ctaLabel={about.team.ctaLabel}
-        />
-      ) : null}
+      <TeamBios
+        heading={about.team.heading}
+        people={about.team.people}
+        ctaLabel={about.team.ctaLabel}
+        body={about.team.body}
+      />
       <DotBand />
       <FundacjaHistory
         heading={about.history.heading}

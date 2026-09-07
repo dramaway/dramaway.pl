@@ -5,6 +5,7 @@ import type {
   AboutDocumentItem,
   AboutHistoryItem,
   PersonListItem,
+  PortableContent,
   ResolvedAboutDocument,
   ResolvedAboutHistoryItem,
   ResolvedAboutPage,
@@ -70,6 +71,27 @@ function resolvePeople(
   );
 }
 
+/** Portable Text, or a leftover plain string from before the schema change. */
+function resolvePortable(
+  value: PortableContent | string | null | undefined,
+): PortableContent | null {
+  if (Array.isArray(value) && value.length > 0) return value;
+  if (typeof value === "string") {
+    const text = value.trim();
+    if (!text) return null;
+    return [
+      {
+        _type: "block",
+        _key: "legacy-text",
+        style: "normal",
+        markDefs: [],
+        children: [{ _type: "span", _key: "legacy-span", text, marks: [] }],
+      },
+    ];
+  }
+  return null;
+}
+
 export const getResolvedAboutPage = cache(
   async function getResolvedAboutPage(): Promise<ResolvedAboutPage> {
     const cms = await getAboutPage();
@@ -106,11 +128,12 @@ export const getResolvedAboutPage = cache(
       team: {
         heading: cmsText(cms?.team?.heading),
         ctaLabel: cmsText(cms?.team?.ctaLabel),
+        body: resolvePortable(cms?.team?.body),
         people: teamPeople,
       },
       history: {
         heading: cmsText(cms?.history?.heading),
-        lead: cmsText(cms?.history?.lead),
+        lead: resolvePortable(cms?.history?.lead),
         items: resolveHistoryItems(cms?.history?.items),
       },
       documents: {

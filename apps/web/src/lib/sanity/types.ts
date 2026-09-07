@@ -290,11 +290,12 @@ export type AboutPage = {
   team: {
     heading: string | null;
     ctaLabel: string | null;
+    body: PortableContent | null;
     people: PersonListItem[] | null;
   } | null;
   history: {
     heading: string | null;
-    lead: string | null;
+    lead: PortableContent | string | null;
     items: AboutHistoryItem[] | null;
   } | null;
   documents: {
@@ -332,11 +333,12 @@ export type ResolvedAboutPage = {
   team: {
     heading: string | null;
     ctaLabel: string | null;
+    body: PortableContent | null;
     people: PersonListItem[];
   };
   history: {
     heading: string | null;
-    lead: string | null;
+    lead: PortableContent | null;
     items: ResolvedAboutHistoryItem[];
   };
   documents: {

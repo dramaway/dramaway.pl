@@ -114,13 +114,20 @@ export const aboutPage = defineType({
           title: "Osoby na tej stronie",
           type: "array",
           description:
-            "Kogo pokazać i w jakiej kolejności. Pusta lista = sekcja znika. Nie podstawiamy wszystkich osób z typu Person.",
+            "Kogo pokazać i w jakiej kolejności. Pusta lista = brak zdjęć. Sekcja znika tylko gdy puste są i osoby, i tekst poniżej. Nie podstawiamy wszystkich osób z typu Person.",
           of: [
             defineArrayMember({
               type: "reference",
               to: [{ type: "person" }],
             }),
           ],
+        }),
+        defineField({
+          name: "body",
+          title: "Tekst pod zdjęciami",
+          type: "blockContent",
+          description:
+            "Zespół, Społeczność, cytaty. Puste = brak bloku. Nagłówki H2 w tym polu renderują się jak tytuł sekcji.",
         }),
       ],
     }),
@@ -133,7 +140,13 @@ export const aboutPage = defineType({
         "Pusta lista wpisów = sekcja znika ze strony. Nie wklejaj lorem z Figmy.",
       fields: [
         defineField({ name: "heading", title: "Nagłówek", type: "string" }),
-        defineField({ name: "lead", title: "Lead", type: "text", rows: 3 }),
+        defineField({
+          name: "lead",
+          title: "Lead",
+          type: "blockContent",
+          description:
+            "Tekst nad osią czasu. Cytat, pogrubienie, akapity. Puste = brak leadu.",
+        }),
         defineField({
           name: "items",
           title: "Wpis na osi czasu",
