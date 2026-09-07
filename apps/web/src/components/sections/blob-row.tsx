@@ -14,7 +14,8 @@ type BlobRowProps = {
   /**
    * Column width for heading + rows. `wide` / `narrow` are centred
    * reading columns; default `page` is the full `.page` container.
-   * `compact` density always stays two-up on `.page`.
+   * `compact` density is two-up from `lg` on `.page`, with a magenta
+   * sentence-case label and a light right-column stagger.
    */
   width?: BlobRowWidth;
   /** Archive listings sit two-up from `lg`; default is a single column. */
@@ -63,15 +64,24 @@ export function BlobRow({
   const inner = (
     <>
       {heading ? (
-        <h2 id={labelId} className="font-display text-h3 font-black">
+        <h2
+          id={labelId}
+          className={
+            density === "compact"
+              ? "blob-row-label"
+              : "font-display text-h3 font-black"
+          }
+        >
           {heading}
         </h2>
       ) : null}
 
       {items.length === 0 ? (
-        <p className={cn("text-body", heading && "mt-8")}>{emptyMessage}</p>
+        <p className={cn("text-body", heading && density !== "compact" && "mt-8")}>
+          {emptyMessage}
+        </p>
       ) : (
-        <div className={cn(heading && "mt-8")}>
+        <div className={cn(heading && density !== "compact" && "mt-8")}>
           <BlobStack items={items} density={density} />
         </div>
       )}

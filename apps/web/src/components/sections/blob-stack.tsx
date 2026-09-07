@@ -22,23 +22,31 @@ export function BlobStack({
 }) {
   if (items.length === 0) return null;
 
+  const compact = density === "compact";
+
   return (
-    <ul className={density === "compact" ? "blob-row-compact" : "stack"}>
+    <ul className={compact ? "blob-row-compact" : "stack"}>
       {items.map((item) => (
         <li
           key={`${item.href}-${item.title}`}
           className="stack-item card-hover"
         >
-          <Blob />
+          {compact ? null : <Blob />}
           <h3 className="font-display text-h3 font-black">
             <Link href={item.href} className="card-link">
               {item.title}
             </Link>
           </h3>
           {item.lead ? (
-            <p className="mt-5 text-body">{item.lead}</p>
+            <p className={compact ? "blob-row-excerpt text-body" : "mt-5 text-body"}>
+              {item.lead}
+            </p>
           ) : null}
-          <CtaLink href={item.href} presentational className="mt-8">
+          <CtaLink
+            href={item.href}
+            presentational
+            className={compact ? undefined : "mt-8"}
+          >
             {item.ctaLabel?.trim() || DEFAULT_CTA}
           </CtaLink>
         </li>
