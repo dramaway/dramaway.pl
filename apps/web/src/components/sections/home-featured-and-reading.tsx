@@ -68,7 +68,7 @@ function CzytelniaTile({ czytelnia }: { czytelnia: HomeReadingBlock }) {
         <h2 className="font-display text-h3 font-black">{czytelnia.heading}</h2>
       ) : null}
       {czytelnia.lead ? (
-        <p className="mt-5 text-body">{czytelnia.lead}</p>
+        <p className="blob-row-excerpt mt-5 text-body">{czytelnia.lead}</p>
       ) : null}
       {czytelnia.ctaLabel && href ? (
         <CtaLink href={href} presentational className="mt-8">

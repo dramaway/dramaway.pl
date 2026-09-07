@@ -18,6 +18,7 @@ export const SUBPAGE = {
   },
   knowledge: {
     channelCta: LIST_CTA_LABEL,
+    empty: "Brak kanałów w CMS — uzupełnij Metody i Czytelnię.",
     channels: [
       {
         href: methodsPath(),

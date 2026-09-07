@@ -271,7 +271,16 @@ export const siteSettings = defineType({
           name: "czytelnia",
           title: "Czytelnia",
           type: "object",
-          fields: homepageTextFields("heading", "Heading"),
+          description:
+            "Lead comes from the Czytelnia landing page. Empty heading = hide this teaser.",
+          fields: [
+            defineField({
+              name: "heading",
+              title: "Heading",
+              type: "string",
+            }),
+            ...ctaFields(),
+          ],
         }),
       ],
     }),

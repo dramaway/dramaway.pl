@@ -64,6 +64,11 @@ export const pageBySlugQuery = `*[_type == "page" && slug.current == $slug][0] {
   heroLead,
   heroCtaLabel,
   heroCtaHref,
+  "excerpt": select(
+    defined(excerpt) && excerpt != "" => excerpt,
+    defined(heroLead) && heroLead != "" => heroLead,
+    array::join(string::split(pt::text(body), "")[0...${EXCERPT_FALLBACK_MAX}], "")
+  ),
   "cover": heroImage,
   body
 }`;
@@ -135,7 +140,8 @@ export const landingPageByIdQuery = `*[_type == "landingPage" && _id == $id][0] 
   ctaLabel,
   ctaHref,
   image,
-  czytelniaTeaser { title, lead, ctaLabel }
+  showCzytelnia,
+  "legacyCzytelniaTeaserTitle": czytelniaTeaser.title
 }`;
 
 export const aboutPageQuery = `*[_type == "aboutPage"][0] {

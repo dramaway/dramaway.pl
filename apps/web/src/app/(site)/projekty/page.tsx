@@ -36,14 +36,15 @@ export default async function ProjectsPage() {
     ...(czytelnia
       ? [
           {
-            title: czytelnia.title ?? "",
+            title: czytelnia.title,
             lead: czytelnia.lead,
             href: czytelnia.href,
             ctaLabel: czytelnia.ctaLabel,
+            excerpt: true,
           },
         ]
       : []),
-  ].filter((item) => item.title);
+  ];
 
   return (
     <>

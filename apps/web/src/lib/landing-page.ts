@@ -1,7 +1,8 @@
 import { cache } from "react";
 import { cmsCta, cmsText } from "./cms-text";
-import { czytelniaPath } from "./routes";
-import { getLandingPage } from "./sanity/fetch";
+import { EXCERPT_FALLBACK_MAX } from "./homepage-copy";
+import { czytelniaPath, methodsPath } from "./routes";
+import { getLandingPage, getPageBySlug } from "./sanity/fetch";
 import type { LandingPage, SanityImage } from "./sanity/types";
 
 export const LANDING_DOCUMENT_IDS = {
@@ -20,8 +21,8 @@ export type ResolvedLandingHero = {
   imageAlt: string;
 };
 
-export type ResolvedCzytelniaTeaser = {
-  title: string | null;
+export type ResolvedChannelTeaser = {
+  title: string;
   lead: string | null;
   href: string;
   ctaLabel: string | null;
@@ -40,31 +41,84 @@ function resolveHero(cms: LandingPage | null): ResolvedLandingHero {
   };
 }
 
-function resolveCzytelniaTeaser(
-  cms: LandingPage | null,
-): ResolvedCzytelniaTeaser | null {
-  const title = cmsText(cms?.czytelniaTeaser?.title);
-  const lead = cmsText(cms?.czytelniaTeaser?.lead);
-  const ctaLabel = cmsText(cms?.czytelniaTeaser?.ctaLabel);
+function shortenLead(text: string | null): string | null {
+  if (!text) return null;
+  if (text.length <= EXCERPT_FALLBACK_MAX) return text;
+  return text.slice(0, EXCERPT_FALLBACK_MAX).trimEnd();
+}
+
+function teaserFromLanding(
+  landing: ResolvedLandingHero,
+  href: string,
+): ResolvedChannelTeaser | null {
+  const title = landing.title;
   if (!title) return null;
   return {
     title,
-    lead,
-    href: czytelniaPath(),
-    ctaLabel,
+    lead: shortenLead(landing.lead),
+    href,
+    ctaLabel: landing.ctaLabel,
   };
 }
 
+export const getCzytelniaLanding = cache(
+  async function getCzytelniaLanding(): Promise<ResolvedLandingHero> {
+    const cms = await getLandingPage(LANDING_DOCUMENT_IDS.czytelnia);
+    return resolveHero(cms);
+  },
+);
+
+export const getCzytelniaTeaser = cache(
+  async function getCzytelniaTeaser(): Promise<ResolvedChannelTeaser | null> {
+    return teaserFromLanding(await getCzytelniaLanding(), czytelniaPath());
+  },
+);
+
+export const getMethodsTeaser = cache(
+  async function getMethodsTeaser(): Promise<ResolvedChannelTeaser | null> {
+    const page = await getPageBySlug("metody");
+    const title = cmsText(page?.title);
+    if (!title) return null;
+    return {
+      title,
+      lead: shortenLead(cmsText(page?.excerpt) || cmsText(page?.heroLead)),
+      href: methodsPath(),
+      ctaLabel: cmsText(page?.heroCtaLabel),
+    };
+  },
+);
+
+export const getKnowledgeChannels = cache(
+  async function getKnowledgeChannels(): Promise<ResolvedChannelTeaser[]> {
+    const [methods, czytelnia] = await Promise.all([
+      getMethodsTeaser(),
+      getCzytelniaTeaser(),
+    ]);
+    return [methods, czytelnia].filter(
+      (item): item is ResolvedChannelTeaser => item !== null,
+    );
+  },
+);
+
+function shouldShowCzytelniaOnProjects(cms: LandingPage | null): boolean {
+  if (cms?.showCzytelnia === true) return true;
+  if (cms?.showCzytelnia === false) return false;
+  return Boolean(cmsText(cms?.legacyCzytelniaTeaserTitle));
+}
+
 export type ResolvedProjectsLanding = ResolvedLandingHero & {
-  czytelnia: ResolvedCzytelniaTeaser | null;
+  czytelnia: ResolvedChannelTeaser | null;
 };
 
 export const getProjectsLanding = cache(
   async function getProjectsLanding(): Promise<ResolvedProjectsLanding> {
-    const cms = await getLandingPage(LANDING_DOCUMENT_IDS.projekty);
+    const [cms, czytelnia] = await Promise.all([
+      getLandingPage(LANDING_DOCUMENT_IDS.projekty),
+      getCzytelniaTeaser(),
+    ]);
     return {
       ...resolveHero(cms),
-      czytelnia: resolveCzytelniaTeaser(cms),
+      czytelnia: shouldShowCzytelniaOnProjects(cms) ? czytelnia : null,
     };
   },
 );
@@ -72,13 +126,6 @@ export const getProjectsLanding = cache(
 export const getKnowledgeLanding = cache(
   async function getKnowledgeLanding(): Promise<ResolvedLandingHero> {
     const cms = await getLandingPage(LANDING_DOCUMENT_IDS.knowledge);
-    return resolveHero(cms);
-  },
-);
-
-export const getCzytelniaLanding = cache(
-  async function getCzytelniaLanding(): Promise<ResolvedLandingHero> {
-    const cms = await getLandingPage(LANDING_DOCUMENT_IDS.czytelnia);
     return resolveHero(cms);
   },
 );

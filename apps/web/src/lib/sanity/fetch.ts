@@ -1,5 +1,7 @@
 import "server-only";
 
+import { cache } from "react";
+
 import { sanityClient } from "./client";
 import {
   aboutPageQuery,
@@ -74,9 +76,11 @@ export async function getHomepageNews(): Promise<PageListItem[]> {
   return sanityClient.fetch(homepageNewsQuery, {}, revalidate);
 }
 
-export async function getPageBySlug(slug: string): Promise<PageDetail | null> {
+export const getPageBySlug = cache(async function getPageBySlug(
+  slug: string,
+): Promise<PageDetail | null> {
   return sanityClient.fetch(pageBySlugQuery, { slug }, revalidate);
-}
+});
 
 /** Root Drupal aliases: try the slug, then the migrated `aktualnosc-` prefix. */
 export async function getPageByPublicSlug(
@@ -109,9 +113,11 @@ export async function getAboutPage(): Promise<AboutPage | null> {
   return sanityClient.fetch(aboutPageQuery, {}, revalidate);
 }
 
-export async function getLandingPage(id: string): Promise<LandingPage | null> {
+export const getLandingPage = cache(async function getLandingPage(
+  id: string,
+): Promise<LandingPage | null> {
   return sanityClient.fetch(landingPageByIdQuery, { id }, revalidate);
-}
+});
 
 export async function getPageSlugs(): Promise<string[]> {
   return sanityClient.fetch(pageSlugsQuery, {}, revalidate);

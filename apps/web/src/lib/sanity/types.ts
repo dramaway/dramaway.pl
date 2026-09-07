@@ -43,6 +43,7 @@ export type PageDetail = {
   heroLead?: string | null;
   heroCtaLabel?: string | null;
   heroCtaHref?: string | null;
+  excerpt?: string | null;
   cover?: SanityImage | null;
   body: PortableContent;
 };
@@ -248,11 +249,9 @@ export type LandingPage = {
   ctaLabel: string | null;
   ctaHref: string | null;
   image: (SanityImage & { alt?: string | null }) | null;
-  czytelniaTeaser: {
-    title: string | null;
-    lead: string | null;
-    ctaLabel: string | null;
-  } | null;
+  showCzytelnia?: boolean | null;
+  /** Pre-boolean teaser title; presence still shows the /projekty row. */
+  legacyCzytelniaTeaserTitle?: string | null;
 };
 
 export type AboutValue = {

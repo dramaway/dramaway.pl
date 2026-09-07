@@ -78,22 +78,14 @@ export const landingPage = defineType({
       ],
     }),
     defineField({
-      name: "czytelniaTeaser",
-      title: "Wiersz Czytelni",
-      type: "object",
+      name: "showCzytelnia",
+      title: "Pokaż Czytelnię",
+      type: "boolean",
       group: "listing",
       hidden: ({ document }) => document?.route !== "projekty",
       description:
-        "Kafelek Czytelni na /projekty. Puste pola = wiersz nie pojawia się. Link zawsze /czytelnia.",
-      fields: [
-        defineField({ name: "title", title: "Tytuł", type: "string" }),
-        defineField({ name: "lead", title: "Lead", type: "text", rows: 3 }),
-        defineField({
-          name: "ctaLabel",
-          title: "CTA — etykieta",
-          type: "string",
-        }),
-      ],
+        "Wiersz na /projekty. Tytuł, lead i CTA biorą się z dokumentu Czytelnia — tutaj tylko włącznik. Odznacz, żeby schować.",
+      initialValue: true,
     }),
   ],
   preview: {

@@ -2,12 +2,15 @@ import Link from "next/link";
 import { Blob } from "@/components/visual/blob";
 import { CtaLink } from "@/components/visual/cta-link";
 import { LIST_CTA_LABEL } from "@/lib/subpage-copy";
+import { cn } from "@/lib/utils";
 
 export type BlobRowItem = {
   title: string;
   lead?: string | null;
   href: string;
   ctaLabel?: string | null;
+  /** Clamp the lead to ~3 lines (channel teasers, archive). */
+  excerpt?: boolean;
 };
 
 const DEFAULT_CTA = LIST_CTA_LABEL;
@@ -38,7 +41,13 @@ export function BlobStack({
             </Link>
           </h3>
           {item.lead ? (
-            <p className={compact ? "blob-row-excerpt text-body" : "mt-5 text-body"}>
+            <p
+              className={cn(
+                "text-body",
+                compact ? "blob-row-excerpt" : "mt-5",
+                item.excerpt && "blob-row-excerpt",
+              )}
+            >
               {item.lead}
             </p>
           ) : null}

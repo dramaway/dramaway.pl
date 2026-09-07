@@ -12,6 +12,7 @@ import {
 } from "@/lib/routes";
 import { getHomepageNews, getProjects } from "@/lib/sanity/fetch";
 import { hasHeroImage } from "@/lib/sanity/image";
+import { getCzytelniaTeaser } from "@/lib/landing-page";
 import { getResolvedSite, homepageBlockHasContent } from "@/lib/site";
 
 export const revalidate = 60;
@@ -29,10 +30,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const [projects, news, site] = await Promise.all([
+  const [projects, news, site, czytelniaTeaser] = await Promise.all([
     getProjects(),
     getHomepageNews(),
     getResolvedSite(),
+    getCzytelniaTeaser(),
   ]);
   const featured = projects.find((project) => project.featured) ?? projects[0];
   const { homepage } = site;
@@ -103,10 +105,11 @@ export default async function HomePage() {
               : null
           }
           czytelnia={
-            showCzytelnia
+            showCzytelnia && czytelniaTeaser
               ? {
-                  heading: homepage.czytelnia.heading,
-                  lead: homepage.czytelnia.lead,
+                  heading:
+                    homepage.czytelnia.heading || czytelniaTeaser.title,
+                  lead: czytelniaTeaser.lead,
                   ctaLabel: homepage.czytelnia.ctaLabel,
                   ctaHref: homepage.czytelnia.ctaHref,
                 }

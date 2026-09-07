@@ -952,11 +952,14 @@
   }
 
   .blob-row-excerpt {
-    margin-block-start: 2.5rem;
     display: -webkit-box;
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
+  }
+
+  .blob-row-compact .blob-row-excerpt {
+    margin-block-start: 2.5rem;
   }
 
   .blob-row-compact .cta {
