@@ -4,11 +4,17 @@ import {
   type PortableTextMarkComponentProps,
   type PortableTextTypeComponentProps,
 } from "@portabletext/react";
-import type { PortableContent } from "@/lib/sanity/types";
-import { cn } from "@/lib/utils";
+import { ImageGallery } from "@/components/visual/image-gallery";
 import { Blob } from "@/components/visual/blob";
+import {
+  groupPortableImageRuns,
+  type ImageGalleryNode,
+  type PortableNode,
+} from "@/lib/gallery";
+import type { PortableContent, SanityImage } from "@/lib/sanity/types";
 import { urlFor } from "@/lib/sanity/image";
 import { youtubeEmbedSrc } from "@/lib/sanity/youtube";
+import { cn } from "@/lib/utils";
 
 type BodyImageSize = "small" | "medium" | "wide";
 
@@ -57,6 +63,14 @@ function PortableImage({ value }: PortableTextTypeComponentProps<ImageValue>) {
       />
     </figure>
   );
+}
+
+function PortableImageGallery({
+  value,
+}: PortableTextTypeComponentProps<ImageGalleryNode>) {
+  const images = value.images ?? [];
+  if (images.length === 0) return null;
+  return <ImageGallery images={images as SanityImage[]} alt="" />;
 }
 
 function PortableYoutube({
@@ -159,6 +173,7 @@ const components: PortableTextComponents = {
   },
   types: {
     image: PortableImage,
+    imageGallery: PortableImageGallery,
     youtube: PortableYoutube,
     textColumns: PortableColumns,
   },
@@ -178,7 +193,8 @@ export function PortableBody({
   className?: string;
 }) {
   if (!hasPortableContent(value)) return null;
-  const blocks = Array.isArray(value) ? value : [value];
+  const raw = Array.isArray(value) ? value : [value];
+  const blocks = groupPortableImageRuns(raw as PortableNode[]);
   return (
     <div
       className={cn(

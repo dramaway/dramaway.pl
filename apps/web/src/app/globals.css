@@ -104,6 +104,8 @@
   --text-small--line-height: 1.57;
 
   --spacing-section: clamp(3rem, 8vw, 7.5rem);
+  /* Mosaic gutter (~12 px). Not --spacing-section — that is a whole band. */
+  --gallery-gap: 0.75rem;
   --pt-indent: 3rem;
 
   --radius-media: 16px;
@@ -1061,21 +1063,99 @@
     border-radius: var(--radius-media);
   }
 
-  .gallery-lead {
+  .gallery-mosaic {
     display: grid;
-    gap: var(--spacing-section);
+    gap: var(--gallery-gap);
   }
 
-  .gallery-lead-row {
-    display: grid;
+  .gallery-mosaic[data-layout="one"] {
     grid-template-columns: 1fr;
-    gap: var(--spacing-section);
+  }
+
+  .gallery-mosaic[data-layout="pair"] {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .gallery-mosaic[data-layout="hero-pair"],
+  .gallery-mosaic[data-layout="hero-trio"] {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .gallery-mosaic[data-layout="hero-pair"] .gallery-tile:first-child,
+  .gallery-mosaic[data-layout="hero-trio"] .gallery-tile:first-child {
+    grid-column: 1 / -1;
   }
 
   @media (width >= 64rem) {
-    .gallery-lead-row {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    .gallery-mosaic[data-layout="hero-trio"] {
+      grid-template-columns: 1fr 1fr 1fr;
     }
+  }
+
+  @media (width < 64rem) {
+    .gallery-mosaic[data-layout="hero-trio"] .gallery-tile:nth-child(4) {
+      display: none;
+    }
+  }
+
+  .gallery-tile {
+    position: relative;
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: var(--radius-media);
+    min-height: var(--touch-target);
+  }
+
+  .gallery-tile:focus-visible {
+    outline: 2px solid var(--color-green-ink);
+    outline-offset: 2px;
+  }
+
+  .gallery-mosaic-more {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    background-color: color-mix(in srgb, var(--color-ink) 55%, transparent);
+    color: var(--color-sand);
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    line-height: var(--text-h3--line-height);
+    font-weight: 900;
+    pointer-events: none;
+  }
+
+  .gallery-mosaic-more-sm {
+    display: none;
+  }
+
+  @media (width < 64rem) {
+    .gallery-mosaic[data-layout="hero-trio"] .gallery-mosaic-more-lg {
+      display: none;
+    }
+
+    .gallery-mosaic[data-layout="hero-trio"] .gallery-mosaic-more-sm {
+      display: grid;
+    }
+  }
+
+  .portable-body .gallery-mosaic {
+    margin-block: 1.5rem;
+  }
+
+  /* Lightbox portal (yet-another-react-lightbox) — ink curtain, sand chrome. */
+  .yarl__root {
+    --yarl__color_backdrop: color-mix(in srgb, var(--color-ink) 92%, transparent);
+    --yarl__color_button: var(--color-sand);
+    --yarl__color_button_active: var(--color-sand);
+    --yarl__button_filter: none;
   }
 
   .team-row {
