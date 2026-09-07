@@ -120,8 +120,9 @@
   /* Stepped, not clamped — full tangent circles; count drops on resize. */
   --dot-size: 82px;
   --palette-size: clamp(44px, 7.9vw, 113px);
-  /* /fundacja value circles — Figma ~154 px; below lg they shrink and scroll. */
+  /* /fundacja value circles — Figma ~154 px; below lg one centred scroll row. */
   --values-size: clamp(4.5rem, 10.7vw, 9.625rem);
+  --values-size-mobile: 5.75rem;
   /* Timeline year marker on /fundacja — Figma ~86 px; tightened for long lists. */
   --history-marker: clamp(2.75rem, 5vw, 4.25rem);
   --history-gap: 1.5rem;
@@ -276,11 +277,17 @@
     gap: 1rem;
   }
 
+  /*
+   * Hidden until focused. `top: -4rem` (well past its own height) keeps it
+   * fully off-canvas — a translateY(-200%) on a small `top` offset only
+   * moves it a fixed pixel amount, which is not enough to clear the page
+   * and left it floating, visibly, near the top of the viewport.
+   */
   .skip-link {
-    position: absolute;
+    position: fixed;
     inset-inline-start: var(--page-pad);
-    top: var(--page-pad);
-    z-index: 30;
+    top: -4rem;
+    z-index: 50;
     padding-inline: 0.75rem;
     padding-block: 0.5rem;
     background-color: var(--color-sand);
@@ -290,12 +297,12 @@
     line-height: var(--text-small--line-height);
     text-decoration: underline;
     border-radius: var(--radius-media);
-    transform: translateY(-200%);
+    transition: top 0.15s ease;
   }
 
   .skip-link:focus,
   .skip-link:focus-visible {
-    transform: none;
+    top: var(--page-pad);
     outline: 2px solid var(--color-magenta);
     outline-offset: 2px;
   }
@@ -1339,9 +1346,15 @@
   .values-row {
     display: flex;
     flex-wrap: wrap;
-    justify-content: safe center;
-    min-width: 0;
+    justify-content: center;
+    width: max-content;
     max-width: 100%;
+    min-width: 0;
+    margin-inline: auto;
+  }
+
+  .values-row-after-copy {
+    margin-block-start: 2.5rem;
   }
 
   .values-item {
@@ -1368,21 +1381,19 @@
   @media (width < 64rem) {
     .values-row {
       flex-wrap: nowrap;
-      justify-content: flex-start;
+      justify-content: safe center;
       overflow-x: auto;
       overscroll-behavior-x: contain;
       padding-block-end: 0.5rem;
       -webkit-overflow-scrolling: touch;
-      --values-size: 3.75rem;
+      --values-size: var(--values-size-mobile);
     }
 
     .values-item {
-      padding: 0.4rem;
+      padding: 0.45rem;
     }
 
     .values-label {
-      font-size: 0.6875rem;
-      line-height: 1.1;
       white-space: nowrap;
       overflow-wrap: normal;
     }
@@ -1428,7 +1439,7 @@
   .team-bios {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--spacing-section);
+    gap: clamp(2rem, 4vw, 3.25rem);
   }
 
   @media (width >= 64rem) {
@@ -1441,7 +1452,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 1.5rem;
+    gap: 1rem;
   }
 
   .team-bio .team-photo {
@@ -1456,13 +1467,18 @@
     display: -webkit-box;
     overflow: hidden;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 3;
+    max-width: 36ch;
   }
 
   /*
-   * Copy under the /fundacja board photos. H2 in this Portable Text
-   * matches the section title (Zarząd), not article-band text-h2.
+   * Copy under the /fundacja board photos. Same left edge as Zarząd
+   * (not a centred .measure). Prose is capped; headings stay full column.
    */
+  .team-copy-after-bios {
+    margin-block-start: clamp(2.75rem, 5vw, 4.25rem);
+  }
+
   .team-copy .portable-body {
     margin-block-start: 0;
   }
@@ -1471,8 +1487,13 @@
     margin-block-start: 0;
   }
 
+  .team-copy .portable-body p {
+    max-width: 62ch;
+  }
+
   .team-copy .portable-body em {
     font-style: italic;
+    font-weight: 400;
   }
 
   /*
@@ -1516,6 +1537,59 @@
     flex-direction: column;
     gap: 1rem;
     padding-inline-start: var(--pt-indent);
+  }
+
+  /*
+   * Roles list (`listItem: roster`). A light card, not a spreadsheet:
+   * soft hairline border + faint sand fill, rows separated by air
+   * (flex gap), not per-row rules. Role italic / names medium.
+   */
+  .pt-roster {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    max-width: 62ch;
+    margin-block: 0.25rem 0.75rem;
+    padding: 1.15rem clamp(1.15rem, 3vw, 1.6rem);
+    border: 1px solid color-mix(in srgb, var(--color-ink) 8%, transparent);
+    border-radius: var(--radius-media);
+    background-color: color-mix(in srgb, var(--color-sand) 45%, transparent);
+  }
+
+  .pt-roster-row {
+    display: grid;
+    grid-template-columns: minmax(7rem, 0.42fr) 1fr;
+    column-gap: 1.25rem;
+    align-items: baseline;
+  }
+
+  .pt-roster-row-plain {
+    grid-template-columns: 1fr;
+  }
+
+  .pt-roster-role,
+  .pt-roster-names {
+    margin: 0;
+    font-family: var(--font-body);
+    text-transform: none;
+  }
+
+  .pt-roster-role {
+    font-size: var(--text-small);
+    font-weight: 400;
+    font-style: italic;
+    line-height: var(--text-small--line-height);
+    color: color-mix(in srgb, var(--color-ink) 72%, transparent);
+  }
+
+  .pt-roster-names {
+    font-size: var(--text-body);
+    font-weight: 500;
+    line-height: var(--text-body--line-height);
+  }
+
+  .pt-roster-row-plain .pt-roster-names {
+    font-weight: 400;
   }
 
   .pt-columns {
@@ -1792,16 +1866,56 @@
   }
 
   /*
-   * H2 inside /fundacja team copy must match the section title (Zarząd),
-   * not article-band text-h2. Utilities so this beats PortableBody's mt-8
-   * / text-h2 classes.
+   * Values + people on /fundacja sit in consecutive sections. Full
+   * py-section twice made a hole between the circles and Zarząd.
    */
+  .fundacja-flow {
+    padding-block: clamp(2.25rem, 5vw, 4rem);
+  }
+
+  .team-copy .portable-body {
+    margin-block-start: 0;
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+  }
+
   .team-copy .portable-body h2 {
     font-size: var(--text-h3);
     line-height: var(--text-h3--line-height);
+    margin-block-end: 0.85rem;
   }
 
-  .team-copy .portable-body h2:not(:first-child) {
-    margin-block-start: 2.5rem;
+  .team-copy .portable-body > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.55rem;
+  }
+
+  .team-copy .portable-body > :not([hidden]) ~ .pt-roster {
+    margin-top: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /*
+   * Subtle rules between /fundacja sub-sections (Zarząd → Zespół →
+   * Społeczność) — a hairline plus breathing room, not just a margin,
+   * so the block doesn't read as one dense wall of text.
+   */
+  .team-copy-after-bios {
+    padding-block-start: clamp(2rem, 4vw, 3rem);
+    border-block-start: 1px solid color-mix(in srgb, var(--color-ink) 8%, transparent);
+  }
+
+  /*
+   * `:not([hidden])` twice matches the general-sibling override below
+   * (0,4,0) — bump specificity the same way so margin-top actually wins.
+   */
+  .team-copy .portable-body h2:not([hidden]):not(:first-child) {
+    margin-top: clamp(2.5rem, 4.5vw, 3.5rem);
+    padding-top: clamp(1.5rem, 3vw, 2.25rem);
+    border-top: 1px solid color-mix(in srgb, var(--color-ink) 8%, transparent);
+  }
+
+  /* Społeczność — essay rhythm, not the tight staff list. */
+  .team-copy .portable-body h2:not(:first-child) ~ p + p {
+    margin-top: 1.15em;
   }
 }

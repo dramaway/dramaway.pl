@@ -40,55 +40,57 @@ export function TeamBios({
   if (people.length === 0 && !copy) return null;
 
   return (
-    <Section>
-      {heading ? (
-        <h2 className="font-display text-h3 font-black">{heading}</h2>
-      ) : null}
-      {people.length > 0 ? (
-        <ul className={heading ? "team-bios mt-8" : "team-bios"}>
-          {people.map((person) => {
-            const blurb = personBlurb(person);
-            return (
-              <li key={person.slug} className="team-bio">
-                <Media
-                  image={person.photo ?? null}
-                  alt={person.name}
-                  variant="bleed"
-                  ratio="portrait"
-                  sizes="(min-width: 64rem) 12vw, 40vw"
-                  className="team-photo"
-                />
-                <div>
-                  <h3 className="team-bio-name text-h4 font-semibold">
-                    {person.name}
-                  </h3>
-                  {blurb ? (
-                    <p className="team-bio-blurb mt-4 text-body">{blurb}</p>
-                  ) : null}
-                  {ctaLabel ? (
-                    <CtaLink
-                      href={publicPathForPersonSlug(person.slug)}
-                      className="mt-8"
-                    >
-                      {ctaLabel}
-                    </CtaLink>
-                  ) : null}
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      ) : null}
-      {copy ? (
-        <div
-          className={cn(
-            "team-copy measure",
-            (heading || people.length > 0) && "mt-8",
-          )}
-        >
-          <PortableBody value={copy} />
-        </div>
-      ) : null}
+    <Section className="fundacja-flow">
+      <div className="stack-wide">
+        {heading ? (
+          <h2 className="font-display text-h3 font-black">{heading}</h2>
+        ) : null}
+        {people.length > 0 ? (
+          <ul className={heading ? "team-bios mt-8" : "team-bios"}>
+            {people.map((person) => {
+              const blurb = personBlurb(person);
+              return (
+                <li key={person.slug} className="team-bio">
+                  <Media
+                    image={person.photo ?? null}
+                    alt={person.name}
+                    variant="bleed"
+                    ratio="portrait"
+                    sizes="(min-width: 64rem) 12vw, 40vw"
+                    className="team-photo"
+                  />
+                  <div>
+                    <h3 className="team-bio-name text-h4 font-semibold">
+                      {person.name}
+                    </h3>
+                    {blurb ? (
+                      <p className="team-bio-blurb mt-4 text-body">{blurb}</p>
+                    ) : null}
+                    {ctaLabel ? (
+                      <CtaLink
+                        href={publicPathForPersonSlug(person.slug)}
+                        className="mt-4"
+                      >
+                        {ctaLabel}
+                      </CtaLink>
+                    ) : null}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        ) : null}
+        {copy ? (
+          <div
+            className={cn(
+              "team-copy",
+              (heading || people.length > 0) && "team-copy-after-bios",
+            )}
+          >
+            <PortableBody value={copy} className="mt-0" />
+          </div>
+        ) : null}
+      </div>
     </Section>
   );
 }

@@ -60,4 +60,7 @@ export const SUBPAGE = {
     zoomIn: "Powiększ",
     zoomOut: "Pomniejsz",
   },
+  a11y: {
+    skipToContent: "Przejdź do treści",
+  },
 } as const;

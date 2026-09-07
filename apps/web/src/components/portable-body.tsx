@@ -11,6 +11,7 @@ import {
   type ImageGalleryNode,
   type PortableNode,
 } from "@/lib/gallery";
+import { splitRosterLine } from "@/lib/roster-line";
 import type { PortableContent, SanityImage } from "@/lib/sanity/types";
 import { urlFor } from "@/lib/sanity/image";
 import { youtubeEmbedSrc } from "@/lib/sanity/youtube";
@@ -133,6 +134,22 @@ function PortableColumns({
   );
 }
 
+type RosterSpan = { text?: string };
+
+function rosterLineText(value: { children?: RosterSpan[] } | undefined) {
+  return (value?.children ?? []).map((child) => child.text ?? "").join("");
+}
+
+function RosterItem({ value }: { value?: { children?: RosterSpan[] } }) {
+  const { role, names } = splitRosterLine(rosterLineText(value));
+  return (
+    <div className={cn("pt-roster-row", !role && "pt-roster-row-plain")}>
+      {role ? <dt className="pt-roster-role">{role}</dt> : null}
+      <dd className="pt-roster-names">{names}</dd>
+    </div>
+  );
+}
+
 const components: PortableTextComponents = {
   block: {
     h2: ({ children }) => (
@@ -164,9 +181,11 @@ const components: PortableTextComponents = {
       <ol className="list-decimal space-y-1 pl-6">{children}</ol>
     ),
     indent: ({ children }) => <div className="pt-indent">{children}</div>,
+    roster: ({ children }) => <dl className="pt-roster">{children}</dl>,
   },
   listItem: {
     indent: ({ children }) => <div className="pt-indent-item">{children}</div>,
+    roster: ({ value }) => <RosterItem value={value} />,
   },
   marks: {
     link: PortableLink,

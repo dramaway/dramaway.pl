@@ -55,8 +55,16 @@ function block(style, children) {
   };
 }
 
-function roleLine(role, names) {
-  return block("normal", [span(`${role}: `, ["em"]), span(names)]);
+function rosterLine(role, names) {
+  return {
+    _type: "block",
+    _key: newKey(),
+    style: "normal",
+    listItem: "roster",
+    level: 1,
+    markDefs: [],
+    children: [span(`${role}: ${names}`)],
+  };
 }
 
 function stringToPortable(text) {
@@ -65,16 +73,16 @@ function stringToPortable(text) {
 
 const teamBody = [
   block("h2", "Zespół"),
-  roleLine(
+  rosterLine(
     "Kierownictwo programowe i twórcze",
     "Adam Gąsecki, Aldona Żejmo-Kudelska",
   ),
-  roleLine(
+  rosterLine(
     "koordynatorki projektu Art Generacje",
     "Monika Zielińska, Aleksandra Szaro",
   ),
-  roleLine("komunikacja", "Weronika Szmaja"),
-  roleLine("księgowość", "Małgorzata Liwanowska, Ewa Olczak"),
+  rosterLine("komunikacja", "Weronika Szmaja"),
+  rosterLine("księgowość", "Małgorzata Liwanowska, Ewa Olczak"),
   block(
     "normal",
     "Do wybranych działań zapraszamy twórców i twórczynie, którzy wzbogacają nasze działania o swoje metody pracy. Zapraszamy do zapoznania się z osobami współpracującymi przy opisach poszczególnych projektów.",

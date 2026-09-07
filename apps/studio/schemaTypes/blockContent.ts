@@ -1,6 +1,7 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { ColumnsPreview } from "./columnsPreview";
 import { IndentIcon } from "./indentIcon";
+import { RosterIcon } from "./rosterIcon";
 import { TermStyle } from "./termStyle";
 import { YoutubePreview } from "./youtubePreview";
 
@@ -60,6 +61,7 @@ const textBlockMember = defineArrayMember({
     { title: "Bullet", value: "bullet" },
     { title: "Numbered", value: "number" },
     { title: "Indent", value: "indent", icon: IndentIcon },
+    { title: "Roles", value: "roster", icon: RosterIcon },
   ],
   marks: blockMarks,
 });

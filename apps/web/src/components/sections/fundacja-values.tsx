@@ -40,7 +40,7 @@ export function FundacjaValues({
   if (!hasCopy && values.length === 0) return null;
 
   return (
-    <Section>
+    <Section className="fundacja-flow">
       {hasCopy ? (
         <div className="stack-wide">
           {heading ? (
@@ -55,7 +55,7 @@ export function FundacjaValues({
         </div>
       ) : null}
       {values.length > 0 ? (
-        <ul className={cn("values-row", hasCopy && "mt-8")}>
+        <ul className={cn("values-row", hasCopy && "values-row-after-copy")}>
           {values.map((label, index) => (
             <li
               key={`${label}-${index}`}
