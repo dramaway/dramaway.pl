@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/sections/page-hero";
 import { Section } from "@/components/layout/section";
-import { hasPortableContent } from "@/components/portable-body";
+import { PortableBody, hasPortableContent } from "@/components/portable-body";
 import { cmsText } from "@/lib/cms-text";
 import { getPageBySlug, getPeople } from "@/lib/sanity/fetch";
 import { SUBPAGE } from "@/lib/subpage-copy";
@@ -29,12 +29,13 @@ export default async function ContactPage() {
       <PageHero
         title={cmsText(page.title)}
         lead={body ? null : cmsText(page.heroLead)}
-        body={body}
         ctaLabel={page.heroCtaLabel}
         ctaHref={page.heroCtaHref}
         image={page.cover}
         imageAlt={cmsText(page.title) || ""}
-      />
+      >
+        {body ? <PortableBody value={body} /> : null}
+      </PageHero>
       {withEmail.length > 0 ? (
         <Section>
           <h2 className="font-display text-h3 font-black">

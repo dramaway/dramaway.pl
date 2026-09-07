@@ -1,19 +1,17 @@
-import { PortableBody, hasPortableContent } from "@/components/portable-body";
 import { Blob } from "@/components/visual/blob";
 import { CtaLink } from "@/components/visual/cta-link";
 import { DotBand } from "@/components/visual/dot-band";
 import { Media } from "@/components/visual/media";
 import { hasHeroImage } from "@/lib/sanity/image";
-import type { PortableContent, SanityImage } from "@/lib/sanity/types";
+import type { SanityImage } from "@/lib/sanity/types";
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 export type PageHeroLayout = "split" | "stack";
 
 export type PageHeroContent = {
   title?: string | null;
   lead?: string | null;
-  /** Portable Text in the hero copy column (contact page body). */
-  body?: PortableContent | null;
   ctaLabel?: string | null;
   ctaHref?: string | null;
   image?: SanityImage | null;
@@ -27,6 +25,8 @@ type PageHeroProps = PageHeroContent & {
    * `stack` is text-only: H1 + lead, no photo column, no overlay, no band.
    */
   layout?: PageHeroLayout;
+  /** Extra copy in the hero column (e.g. contact Portable Text). Omit when empty. */
+  children?: ReactNode;
 };
 
 /**
@@ -35,22 +35,23 @@ type PageHeroProps = PageHeroContent & {
  * left column at lg+ (do not reuse `data-home` — that hides `.subpage-palette`).
  * Pass `layout="stack"` for edition pages. No CMS photo = no still; the
  * split column and media slot stay so text width does not jump.
+ * Do not import PortableBody from this file — listing pages must stay free
+ * of the gallery/lightbox client graph.
  */
 export function PageHero({
   title,
   lead,
-  body,
   ctaLabel,
   ctaHref,
   image,
   imageAlt,
   parent,
   layout = "split",
+  children,
 }: PageHeroProps) {
   const hasTitle = Boolean(title?.trim());
-  const hasBody = hasPortableContent(body);
   const hasCopy =
-    Boolean(lead) || hasBody || Boolean(ctaLabel && ctaHref);
+    Boolean(lead) || Boolean(children) || Boolean(ctaLabel && ctaHref);
   if (!hasTitle && !hasCopy && !hasHeroImage(image)) return null;
   const heading = (
     <div className="hero-heading">
@@ -75,9 +76,9 @@ export function PageHero({
           {lead}
         </p>
       ) : null}
-      {hasBody && body ? (
+      {children ? (
         <div className={layout === "stack" ? undefined : "measure"}>
-          <PortableBody value={body} />
+          {children}
         </div>
       ) : null}
       {ctaLabel && ctaHref ? (

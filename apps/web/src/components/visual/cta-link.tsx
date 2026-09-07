@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { safeHref } from "@/lib/safe-url";
 import { cn } from "@/lib/utils";
 
 type CtaLinkProps = {
@@ -44,10 +45,21 @@ export function CtaLink({
     );
   }
 
-  if (external) {
+  const safe = safeHref(href);
+  if (!safe) return null;
+
+  if (safe.kind === "mailto") {
+    return (
+      <a href={safe.href} className={cn("cta", className)}>
+        {body}
+      </a>
+    );
+  }
+
+  if (external || safe.kind === "http") {
     return (
       <a
-        href={href}
+        href={safe.href}
         target="_blank"
         rel="noreferrer"
         className={cn("cta", className)}
@@ -59,7 +71,7 @@ export function CtaLink({
 
   return (
     <Link
-      href={href}
+      href={safe.href}
       scroll={scroll}
       aria-current={current ? "true" : undefined}
       className={cn("cta", className)}

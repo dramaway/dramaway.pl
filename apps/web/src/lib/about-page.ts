@@ -1,5 +1,6 @@
 import { cache } from "react";
 import { cmsCta, cmsText } from "./cms-text";
+import { safeHref } from "./safe-url";
 import { getAboutPage } from "./sanity/fetch";
 import type {
   AboutDocumentItem,
@@ -12,14 +13,10 @@ import type {
 } from "./sanity/types";
 import { publicPathForPageSlug } from "./routes";
 
-function isExternalHref(href: string) {
-  return /^(https?:)?\/\//i.test(href);
-}
-
 function resolveDocument(item: AboutDocumentItem): ResolvedAboutDocument | null {
-  const fileUrl = item.file?.asset?.url?.trim();
+  const fileUrl = safeHref(item.file?.asset?.url);
   const pageSlug = item.page?.slug?.trim();
-  const href = item.href?.trim();
+  const href = safeHref(item.href);
   const title =
     cmsText(item.title) ||
     cmsText(item.page?.title) ||
@@ -27,7 +24,7 @@ function resolveDocument(item: AboutDocumentItem): ResolvedAboutDocument | null 
 
   if (fileUrl) {
     if (!title) return null;
-    return { title, href: fileUrl, external: true };
+    return { title, href: fileUrl.href, external: fileUrl.kind === "http" };
   }
   if (pageSlug) {
     if (!title) return null;
@@ -39,7 +36,7 @@ function resolveDocument(item: AboutDocumentItem): ResolvedAboutDocument | null 
   }
   if (href) {
     if (!title) return null;
-    return { title, href, external: isExternalHref(href) };
+    return { title, href: href.href, external: href.kind === "http" };
   }
   return null;
 }

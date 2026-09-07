@@ -1,9 +1,7 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
-import Lightbox from "yet-another-react-lightbox";
-import Zoom from "yet-another-react-lightbox/plugins/zoom";
-import "yet-another-react-lightbox/styles.css";
 import { Media } from "@/components/visual/media";
 import {
   formatGalleryMore,
@@ -15,6 +13,12 @@ import {
 import { urlFor } from "@/lib/sanity/image";
 import type { SanityImage } from "@/lib/sanity/types";
 import { SUBPAGE } from "@/lib/subpage-copy";
+
+const GalleryLightbox = dynamic(
+  () =>
+    import("./image-gallery-lightbox").then((mod) => mod.GalleryLightbox),
+  { ssr: false },
+);
 
 type ImageGalleryProps = {
   images: SanityImage[];
@@ -144,23 +148,14 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
           );
         })}
       </div>
-      <Lightbox
-        open={open}
-        close={() => setOpen(false)}
-        index={index}
-        slides={slides}
-        plugins={[Zoom]}
-        zoom={{ maxZoomPixelRatio: 1 }}
-        controller={{ closeOnBackdropClick: true }}
-        on={{ view: ({ index: current }) => setIndex(current) }}
-        labels={{
-          Close: SUBPAGE.gallery.close,
-          Next: SUBPAGE.gallery.next,
-          Previous: SUBPAGE.gallery.previous,
-          "Zoom in": SUBPAGE.gallery.zoomIn,
-          "Zoom out": SUBPAGE.gallery.zoomOut,
-        }}
-      />
+      {open ? (
+        <GalleryLightbox
+          index={index}
+          slides={slides}
+          onClose={() => setOpen(false)}
+          onIndex={setIndex}
+        />
+      ) : null}
     </>
   );
 }

@@ -4,14 +4,18 @@ import {
   type PortableTextMarkComponentProps,
   type PortableTextTypeComponentProps,
 } from "@portabletext/react";
+import Image from "next/image";
 import { ImageGallery } from "@/components/visual/image-gallery";
 import { Blob } from "@/components/visual/blob";
 import {
   groupPortableImageRuns,
+  parseSanityImageDimensions,
+  sanityAssetRef,
   type ImageGalleryNode,
   type PortableNode,
 } from "@/lib/gallery";
 import { splitRosterLine, splitRosterNames } from "@/lib/roster-line";
+import { safeHref } from "@/lib/safe-url";
 import type { PortableContent, SanityImage } from "@/lib/sanity/types";
 import { urlFor } from "@/lib/sanity/image";
 import { youtubeEmbedSrc } from "@/lib/sanity/youtube";
@@ -24,6 +28,14 @@ const BODY_IMAGE_CDN_WIDTH: Record<BodyImageSize, number> = {
   medium: 1200,
   wide: 1600,
 };
+
+const BODY_IMAGE_SIZES: Record<BodyImageSize, string> = {
+  small: "(min-width: 24rem) 24rem, 100vw",
+  medium: "(min-width: 48rem) 40rem, 100vw",
+  wide: "(min-width: 75rem) 74rem, 100vw",
+};
+
+const BODY_IMAGE_SRCSET_WIDTHS = [400, 800, 1200, 1600] as const;
 
 type ImageValue = {
   _type?: string;
@@ -51,17 +63,46 @@ function bodyImageSize(value: string | undefined): BodyImageSize {
   return "medium";
 }
 
+function bodyImageSrcSet(value: ImageValue, size: BodyImageSize): string {
+  const max = BODY_IMAGE_CDN_WIDTH[size];
+  return BODY_IMAGE_SRCSET_WIDTHS.filter(
+    (width) => width <= max || width === BODY_IMAGE_SRCSET_WIDTHS[0],
+  )
+    .map((width) => `${urlFor(value).width(width).auto("format").url()} ${width}w`)
+    .join(", ");
+}
+
 function PortableImage({ value }: PortableTextTypeComponentProps<ImageValue>) {
   if (!value?.asset) return null;
   const size = bodyImageSize(value.size);
+  const cdnWidth = BODY_IMAGE_CDN_WIDTH[size];
+  const dims = parseSanityImageDimensions(sanityAssetRef(value));
+  const alt = value.alt || "";
+
   return (
     <figure className={`body-figure body-figure-${size}`}>
-      {/* eslint-disable-next-line @next/next/no-img-element -- body images have unknown aspect ratio */}
-      <img
-        src={urlFor(value).width(BODY_IMAGE_CDN_WIDTH[size]).url()}
-        alt={value.alt || ""}
-        className="body-image"
-      />
+      {dims ? (
+        <Image
+          src={urlFor(value).width(cdnWidth).auto("format").url()}
+          alt={alt}
+          width={dims.width}
+          height={dims.height}
+          sizes={BODY_IMAGE_SIZES[size]}
+          className="body-image"
+        />
+      ) : (
+        // Unknown aspect: keep intrinsic ratio; srcset still avoids a single huge file.
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={urlFor(value).width(cdnWidth).auto("format").url()}
+          srcSet={bodyImageSrcSet(value, size)}
+          sizes={BODY_IMAGE_SIZES[size]}
+          alt={alt}
+          loading="lazy"
+          decoding="async"
+          className="body-image"
+        />
+      )}
     </figure>
   );
 }
@@ -96,14 +137,14 @@ function PortableLink({
   children,
   value,
 }: PortableTextMarkComponentProps<{ _type: string; href?: string }>) {
-  const href = value?.href;
-  if (!href) return <>{children}</>;
-  const internal = href.startsWith("/") || href.startsWith("mailto:");
+  const safe = safeHref(value?.href);
+  if (!safe) return <>{children}</>;
+  const newTab = safe.kind === "http";
   return (
     <a
-      href={href}
+      href={safe.href}
       className="underline underline-offset-2"
-      {...(internal ? {} : { target: "_blank", rel: "noreferrer" })}
+      {...(newTab ? { target: "_blank", rel: "noreferrer" } : {})}
     >
       {children}
     </a>

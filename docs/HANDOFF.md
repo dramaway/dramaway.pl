@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-07 — `/fundacja`: refactor PT „Zespół” (bez karty, hairline rows, 200px+1fr od 560px, osoby w osobnych liniach), plus wcześniejsze: Zarząd + PT pod biosami, lead historii jako PT, ciaśniejsza oś, wartości ze scrollem na mobile |
+| **Ostatnia aktualizacja** | 2026-09-07 — hardening preview: noindex w Next, CSP, allowlista URL CMS, lightbox on-demand, CI; plus wcześniejsze: `/fundacja` roster/zespół/historia |
 | **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |

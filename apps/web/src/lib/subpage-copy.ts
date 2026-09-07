@@ -63,4 +63,14 @@ export const SUBPAGE = {
   a11y: {
     skipToContent: "Przejdź do treści",
   },
+  notFound: {
+    title: "Nie znaleziono strony",
+    lead: "Ten adres nie istnieje albo treść została przeniesiona.",
+    cta: "wróć na stronę główną",
+  },
+  error: {
+    title: "Coś poszło nie tak",
+    lead: "Spróbuj odświeżyć stronę albo wróć na początek.",
+    cta: "wróć na stronę główną",
+  },
 } as const;

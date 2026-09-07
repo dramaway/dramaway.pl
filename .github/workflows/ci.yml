@@ -1,0 +1,45 @@
+# Lint, production build, and cheap node:test suites.
+# Public Sanity id is not a secret (CDN reads); never put SANITY_API_WRITE_TOKEN here.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEXT_PUBLIC_SANITY_PROJECT_ID: tr2qdg9j
+      NEXT_PUBLIC_SANITY_DATASET: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm --filter web lint
+
+      - name: Build web
+        run: pnpm --filter web build
+
+      - name: Tests
+        run: |
+          pnpm test:repair
+          pnpm test:archive-projects
+          pnpm test:web
