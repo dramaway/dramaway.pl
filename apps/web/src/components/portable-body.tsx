@@ -11,7 +11,7 @@ import {
   type ImageGalleryNode,
   type PortableNode,
 } from "@/lib/gallery";
-import { splitRosterLine } from "@/lib/roster-line";
+import { splitRosterLine, splitRosterNames } from "@/lib/roster-line";
 import type { PortableContent, SanityImage } from "@/lib/sanity/types";
 import { urlFor } from "@/lib/sanity/image";
 import { youtubeEmbedSrc } from "@/lib/sanity/youtube";
@@ -142,10 +142,17 @@ function rosterLineText(value: { children?: RosterSpan[] } | undefined) {
 
 function RosterItem({ value }: { value?: { children?: RosterSpan[] } }) {
   const { role, names } = splitRosterLine(rosterLineText(value));
+  const people = splitRosterNames(names);
   return (
     <div className={cn("pt-roster-row", !role && "pt-roster-row-plain")}>
       {role ? <dt className="pt-roster-role">{role}</dt> : null}
-      <dd className="pt-roster-names">{names}</dd>
+      <dd className="pt-roster-names">
+        {people.map((person, index) => (
+          <span key={`${person}-${index}`} className="pt-roster-name">
+            {person}
+          </span>
+        ))}
+      </dd>
     </div>
   );
 }

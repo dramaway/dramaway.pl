@@ -10,3 +10,12 @@ export function splitRosterLine(text: string): {
   const names = trimmed.slice(cut + 1).trim();
   return { role: role || null, names };
 }
+
+/** Split roster names into separate display lines. */
+export function splitRosterNames(names: string): string[] {
+  const entries = names
+    .split(/,|\n/)
+    .map((entry) => entry.trim())
+    .filter(Boolean);
+  return entries.length > 0 ? entries : [names.trim()].filter(Boolean);
+}
