@@ -1,4 +1,4 @@
-/** Desk pins and schema types that must not appear as generic lists. */
+/** Fixed document ids for the empty-menu desk fallback, and types hidden from the generic lists. */
 
 export const LANDING_PAGES = [
   {
@@ -25,9 +25,6 @@ export const LANDING_PAGES = [
 
 export const ABOUT_PAGE_ID = "aboutPage";
 export const ART_GENERACJE_ID = "project-art-generacje";
-
-/** Existing `page` documents pinned at the top of the desk. */
-export const PINNED_PAGE_SLUGS = ["metody", "kontakt"] as const;
 
 export const SINGLETON_SCHEMA_TYPES = new Set<string>([
   "aboutPage",

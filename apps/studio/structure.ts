@@ -1,21 +1,31 @@
 import type { StructureBuilder, StructureResolver } from "sanity/structure";
 import {
+  deskNavFromSettings,
+  pageDocumentIds,
+  type DeskNavEntry,
+  type DeskNavSource,
+} from "./desk-nav";
+import {
   ABOUT_PAGE_ID,
   ART_GENERACJE_ID,
   LANDING_PAGES,
-  PINNED_PAGE_SLUGS,
   SINGLETON_SCHEMA_TYPES,
 } from "./singletons";
 
 /** Document types the media plugin registers — edit them in the Media tool. */
 const MEDIA_PLUGIN_TYPES = new Set(["media.tag", "media.folder"]);
 
-const PINNED_PAGE_SLUG_LIST = [...PINNED_PAGE_SLUGS];
+type ListItem = ReturnType<StructureBuilder["listItem"]>;
+
+type SettingsRow = {
+  _id: string;
+  navigation: DeskNavSource[] | null;
+};
 
 function singletonItem(
   S: StructureBuilder,
   opts: { id: string; title: string; schemaType: string; documentId: string },
-) {
+): ListItem {
   return S.listItem()
     .title(opts.title)
     .id(opts.id)
@@ -28,32 +38,40 @@ function singletonItem(
     );
 }
 
-export const structure: StructureResolver = async (S, context) => {
-  const client = context.getClient({ apiVersion: "2025-01-01" });
-  const ids: {
-    siteSettings: string | null;
+function navListItem(S: StructureBuilder, entry: DeskNavEntry): ListItem {
+  if (entry.children.length === 0) {
+    return singletonItem(S, entry);
+  }
+
+  return S.listItem()
+    .id(entry.id)
+    .title(entry.title)
+    .schemaType(entry.schemaType)
+    .child(
+      S.list()
+        .title(entry.title)
+        .items([
+          singletonItem(S, {
+            id: `${entry.id}-open`,
+            title: entry.title,
+            schemaType: entry.schemaType,
+            documentId: entry.documentId,
+          }),
+          ...entry.children.map((child) => navListItem(S, child)),
+        ]),
+    );
+}
+
+/** Shortcuts used when `siteSettings.navigation` has no openable documents. */
+function fallbackShortcuts(
+  S: StructureBuilder,
+  ids: {
     artGeneracje: string | null;
     metody: string | null;
     kontakt: string | null;
-  } = await client.fetch(
-    `{
-      "siteSettings": *[_type == "siteSettings"][0]._id,
-      "artGeneracje": *[_type == "project" && (_id == $artId || slug.current == "art-generacje")][0]._id,
-      "metody": *[_type == "page" && slug.current == "metody"][0]._id,
-      "kontakt": *[_type == "page" && slug.current == "kontakt"][0]._id
-    }`,
-    { artId: ART_GENERACJE_ID },
-  );
-
-  const mainPages = [
-    ids.siteSettings
-      ? singletonItem(S, {
-          id: "homePage",
-          title: "Strona główna",
-          schemaType: "siteSettings",
-          documentId: ids.siteSettings,
-        })
-      : null,
+  },
+) {
+  return [
     singletonItem(S, {
       id: LANDING_PAGES[0].id,
       title: LANDING_PAGES[0].title,
@@ -109,6 +127,66 @@ export const structure: StructureResolver = async (S, context) => {
       documentId: LANDING_PAGES[3].id,
     }),
   ].filter((item): item is NonNullable<typeof item> => Boolean(item));
+}
+
+export const structure: StructureResolver = async (S, context) => {
+  const client = context.getClient({ apiVersion: "2025-01-01" });
+  const ids: {
+    siteSettings: SettingsRow | null;
+    artGeneracje: string | null;
+    metody: string | null;
+    kontakt: string | null;
+  } = await client.fetch(
+    `{
+      "siteSettings": *[_type == "siteSettings" && !(_id in path("drafts.**"))][0]{
+        _id,
+        "navigation": coalesce(
+          *[_id == "drafts." + ^._id][0].navigation,
+          navigation
+        )[]{
+          _key,
+          label,
+          target,
+          "pageId": page._ref,
+          "pageType": page->_type,
+          "pageTitle": coalesce(page->title, page->name),
+          children[]{
+            _key,
+            label,
+            target,
+            "pageId": page._ref,
+            "pageType": page->_type,
+            "pageTitle": coalesce(page->title, page->name)
+          }
+        }
+      },
+      "artGeneracje": *[_type == "project" && !(_id in path("drafts.**")) && (_id == $artId || slug.current == "art-generacje")][0]._id,
+      "metody": *[_type == "page" && !(_id in path("drafts.**")) && slug.current == "metody"][0]._id,
+      "kontakt": *[_type == "page" && !(_id in path("drafts.**")) && slug.current == "kontakt"][0]._id
+    }`,
+    { artId: ART_GENERACJE_ID },
+  );
+
+  const settingsId = ids.siteSettings?._id ?? null;
+  const fromMenu = deskNavFromSettings(ids.siteSettings?.navigation, settingsId ? [settingsId] : []);
+  const pinnedPageIds =
+    fromMenu.length > 0
+      ? pageDocumentIds(fromMenu)
+      : [ids.metody, ids.kontakt].filter((id): id is string => Boolean(id));
+
+  const home = settingsId
+    ? singletonItem(S, {
+        id: "homePage",
+        title: "Strona główna",
+        schemaType: "siteSettings",
+        documentId: settingsId,
+      })
+    : null;
+
+  const shortcuts =
+    fromMenu.length > 0
+      ? fromMenu.map((entry) => navListItem(S, entry))
+      : fallbackShortcuts(S, ids);
 
   const typeItems = S.documentTypeListItems().flatMap((item) => {
     const id = item.getId();
@@ -125,27 +203,28 @@ export const structure: StructureResolver = async (S, context) => {
           .child(
             S.documentTypeList("page")
               .title("Page")
-              .filter("_type == \"page\" && !(slug.current in $pinned)")
-              .params({ pinned: PINNED_PAGE_SLUG_LIST }),
+              .filter('_type == "page" && !(_id in $pinned)')
+              .params({ pinned: pinnedPageIds }),
           ),
       ];
     }
     return [item];
   });
 
-  const siteSettingsItem = ids.siteSettings
+  const siteSettingsItem = settingsId
     ? singletonItem(S, {
         id: "siteSettings",
         title: "Site settings",
         schemaType: "siteSettings",
-        documentId: ids.siteSettings,
+        documentId: settingsId,
       })
     : null;
 
   return S.list()
     .title("Content")
     .items([
-      ...mainPages,
+      ...(home ? [home] : []),
+      ...shortcuts,
       S.divider(),
       ...typeItems,
       ...(siteSettingsItem ? [S.divider(), siteSettingsItem] : []),

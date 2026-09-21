@@ -28,7 +28,7 @@
     "repair:portable-text": "node --env-file=apps/studio/.env scripts/repair-portable-text.mjs",
     "test:repair": "node --test scripts/lib/portable-text-repair.test.mjs",
     "test:archive-projects": "node --test scripts/lib/archive-project-reshape.test.mjs",
-    "test:web": "node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/lib/register-ts-extension.mjs --test scripts/lib/cms-url-safety.test.mjs scripts/lib/roster-line.test.mjs scripts/lib/navigation.test.mjs"
+    "test:web": "node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/lib/register-ts-extension.mjs --test scripts/lib/cms-url-safety.test.mjs scripts/lib/roster-line.test.mjs scripts/lib/navigation.test.mjs scripts/lib/desk-nav.test.mjs"
   },
   "engines": {
     "node": ">=22.12",
