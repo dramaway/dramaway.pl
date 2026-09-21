@@ -1,4 +1,5 @@
 import { cmsCta, cmsText } from "./cms-text";
+import { resolveMainNav } from "./navigation";
 import { DEFAULT_CENTRUM_URL } from "./routes";
 import { getSiteSettings } from "./sanity/fetch";
 import type {
@@ -81,6 +82,7 @@ export async function getResolvedSite(): Promise<ResolvedSite> {
     title,
     tagline,
     centrumUrl: cmsText(settings?.centrumUrl) || DEFAULT_CENTRUM_URL,
+    nav: resolveMainNav(settings?.navigation),
     footer: resolveFooter(settings, title),
     hero: {
       heading,

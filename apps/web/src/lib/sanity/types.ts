@@ -1,5 +1,6 @@
 import type { PortableTextProps } from "@portabletext/react";
 import type { SanityImageSource } from "@sanity/image-url";
+import type { NavItem } from "../routes";
 
 export type SanityImage = SanityImageSource;
 
@@ -113,10 +114,30 @@ export type SiteSettingsFooter = {
   attribution?: string | null;
 };
 
+export type SiteSettingsNavPage = {
+  _type: string;
+  title: string | null;
+  name: string | null;
+  slug: string | null;
+  route: string | null;
+};
+
+export type SiteSettingsNavLink = {
+  label?: string | null;
+  target?: "reference" | "path" | string | null;
+  href?: string | null;
+  page?: SiteSettingsNavPage | null;
+};
+
+export type SiteSettingsNavItem = SiteSettingsNavLink & {
+  children?: SiteSettingsNavLink[] | null;
+};
+
 export type SiteSettings = {
   title: string | null;
   tagline: string | null;
   centrumUrl: string | null;
+  navigation?: SiteSettingsNavItem[] | null;
   footerNote: string | null;
   footer?: SiteSettingsFooter | null;
   branding?: SiteSettingsBranding | null;
@@ -169,6 +190,7 @@ export type ResolvedSite = {
   title: string;
   tagline: string | null;
   centrumUrl: string;
+  nav: NavItem[];
   footer: ResolvedFooter;
   hero: HeroContent;
   homepage: HomepageContent;

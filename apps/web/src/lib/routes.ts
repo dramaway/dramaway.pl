@@ -64,7 +64,10 @@ export function methodsPath() {
   return "/metody";
 }
 
-/** Header items from the Figma homepage. Home is filtered out of the visible nav. */
+/**
+ * Built-in header. Used when `siteSettings.navigation` is empty.
+ * Home is filtered out of the visible nav (the logo links to /).
+ */
 export function mainNav(): NavItem[] {
   return [
     { href: "/", label: "Strona główna" },

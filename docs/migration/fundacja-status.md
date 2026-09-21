@@ -117,7 +117,7 @@ To nie jest korekta językowa. Pierwszy skrypt spłaszczał Drupal HTML.
 | 2 nieopublikowane `article` | Pominięte (`publikacja-teatr-forum`, duplikat Kostyry bez `-0`). |
 | Edycje Art Generacje jako `publication` | Śmieć z ramki Figmy — skrypt ich nie tworzy. |
 | UI z Figmy | Homepage złożony; podstrony: skład z 2026-09-05, nie pixel-perfect. |
-| `siteSettings` (nawigacja, footer) | Dokument jest; grupa `homepage` wypełniona 2026-09-07 |
+| `siteSettings` (nawigacja, footer) | Menu: grupa Nawigacja (`navigation`). Pusta lista = menu wbudowane. `homepage` wypełniona 2026-09-07 |
 | Newsletter, formularz kontaktu, EN | Poza MVP treściowym. Formularz = osobne zamówienie. |
 
 ## Komendy
@@ -133,6 +133,7 @@ pnpm patch:archive-projects   # zakończone projekty → edycje/outcomes/FoldLis
 pnpm test:archive-projects
 pnpm repair:portable-text     # dry-run; `pnpm repair:portable-text -- --write` zapisuje
 pnpm test:repair              # node:test na lib/portable-text-repair
+pnpm seed:navigation       # pusta siteSettings.navigation → obecne menu; nie nadpisuje listy
 pnpm dev                      # :3000
 pnpm dev:studio               # :3333
 pnpm dev:all

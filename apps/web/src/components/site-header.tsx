@@ -4,11 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
-import { mainNav, type NavItem } from "@/lib/routes";
+import type { NavItem } from "@/lib/routes";
 import { cn } from "@/lib/utils";
 
 type Props = {
   title: string;
+  items: NavItem[];
 };
 
 function itemIsCurrent(item: NavItem, pathname: string): boolean {
@@ -25,9 +26,9 @@ function isCurrentPage(item: NavItem, pathname: string): boolean {
   return item.href !== "/" && pathname.startsWith(`${item.href}/`);
 }
 
-export function SiteHeader({ title }: Props) {
+export function SiteHeader({ title, items }: Props) {
   const pathname = usePathname();
-  const items = mainNav().filter((item) => item.href !== "/");
+  const visible = items.filter((item) => item.href !== "/");
   const [open, setOpen] = useState(false);
   const navId = useId();
   const toggleRef = useRef<HTMLButtonElement>(null);
@@ -85,8 +86,12 @@ export function SiteHeader({ title }: Props) {
       </Link>
 
       <nav aria-label="Główna" className="site-nav-desktop">
-        {items.map((item) => (
-          <NavItemViews key={item.href} item={item} pathname={pathname} />
+        {visible.map((item, index) => (
+          <NavItemViews
+            key={`${item.href}:${item.label}:${index}`}
+            item={item}
+            pathname={pathname}
+          />
         ))}
       </nav>
 
@@ -109,15 +114,15 @@ export function SiteHeader({ title }: Props) {
         hidden={!open}
       >
         <ul className="page site-nav-overlay-list">
-          {items.map((item) => (
-            <li key={item.href}>
+          {visible.map((item, index) => (
+            <li key={`${item.href}:${item.label}:${index}`}>
               <NavLink item={item} pathname={pathname}>
                 {item.label}
               </NavLink>
               {item.children?.length ? (
                 <ul className="site-nav-overlay-sub">
-                  {item.children.map((child) => (
-                    <li key={child.href}>
+                  {item.children.map((child, childIndex) => (
+                    <li key={`${child.href}:${child.label}:${childIndex}`}>
                       <NavLink item={child} pathname={pathname}>
                         {child.label}
                       </NavLink>
@@ -210,8 +215,8 @@ function NavItemWithChildren({
         </NavLink>
         <div className="site-nav-sub" inert={open ? undefined : true}>
           <ul className="site-nav-sub-list">
-            {children.map((child) => (
-              <li key={child.href}>
+            {children.map((child, index) => (
+              <li key={`${child.href}:${child.label}:${index}`}>
                 <NavLink item={child} pathname={pathname}>
                   {child.label}
                 </NavLink>
@@ -235,14 +240,19 @@ function NavLink({
 }) {
   const currentPage = isCurrentPage(item, pathname);
   const currentBranch = itemIsCurrent(item, pathname);
+  const className = cn("hover:text-magenta", currentBranch && "text-magenta");
+  if (item.external || /^https?:\/\//i.test(item.href)) {
+    return (
+      <a href={item.href} className={className} rel="noopener noreferrer" target="_blank">
+        {children}
+      </a>
+    );
+  }
   return (
     <Link
       href={item.href}
       aria-current={currentPage ? "page" : undefined}
-      className={cn(
-        "hover:text-magenta",
-        currentBranch && "text-magenta",
-      )}
+      className={className}
     >
       {children}
     </Link>

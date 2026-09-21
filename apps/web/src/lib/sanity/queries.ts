@@ -1,4 +1,5 @@
 import { EXCERPT_FALLBACK_MAX } from "../homepage-copy";
+import { navigationProjection } from "./navigation-query";
 
 /** News pages were migrated with slug prefix `aktualnosc-`. */
 const newsSlugFilter = `slug.current match "aktualnosc-*"`;
@@ -184,6 +185,9 @@ export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
   title,
   tagline,
   centrumUrl,
+  navigation[] {
+    ${navigationProjection}
+  },
   footerNote,
   footer {
     logo,

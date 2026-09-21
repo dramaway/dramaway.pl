@@ -16,7 +16,7 @@ export default async function SiteLayout({
       <a href="#main-content" className="skip-link">
         {SUBPAGE.a11y.skipToContent}
       </a>
-      <SiteHeader title={site.title} />
+      <SiteHeader title={site.title} items={site.nav} />
       <main id="main-content" className="flex-1" tabIndex={-1}>
         {children}
       </main>

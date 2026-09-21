@@ -1,4 +1,4 @@
-import { defineType, defineField, type FieldDefinition } from "sanity";
+import { defineArrayMember, defineType, defineField, type FieldDefinition } from "sanity";
 import { IcoFileInput } from "../components/ico-file-input";
 
 function ctaFields(): FieldDefinition[] {
@@ -61,6 +61,62 @@ export const siteSettings = defineType({
       type: "url",
       group: "general",
       description: "Link to centrum.dramaway.pl — not migrated in MVP",
+    }),
+    defineField({
+      name: "navigation",
+      title: "Menu główne",
+      type: "array",
+      group: "navigation",
+      description:
+        "Pusta lista zostawia menu wbudowane: Projekty, Baza wiedzy (Metody, Czytelnia), O fundacji, Kontakt. Logo prowadzi na stronę główną.",
+      of: [defineArrayMember({ type: "navItem" })],
+      validation: (rule) => rule.max(12),
+      initialValue: [
+        {
+          _key: "projekty",
+          _type: "navItem",
+          label: "Projekty",
+          target: "reference",
+          page: { _type: "reference", _ref: "landing-projekty" },
+        },
+        {
+          _key: "baza-wiedzy",
+          _type: "navItem",
+          label: "Baza wiedzy",
+          target: "reference",
+          page: { _type: "reference", _ref: "landing-baza-wiedzy" },
+          children: [
+            {
+              _key: "metody",
+              _type: "navChild",
+              label: "Metody",
+              target: "path",
+              href: "/metody",
+            },
+            {
+              _key: "czytelnia",
+              _type: "navChild",
+              label: "Czytelnia",
+              target: "reference",
+              page: { _type: "reference", _ref: "landing-czytelnia" },
+            },
+          ],
+        },
+        {
+          _key: "fundacja",
+          _type: "navItem",
+          label: "O fundacji",
+          target: "reference",
+          page: { _type: "reference", _ref: "aboutPage" },
+        },
+        {
+          _key: "kontakt",
+          _type: "navItem",
+          label: "Kontakt",
+          target: "path",
+          href: "/kontakt",
+        },
+      ],
     }),
     defineField({
       name: "footerNote",
@@ -287,6 +343,7 @@ export const siteSettings = defineType({
   ],
   groups: [
     { name: "general", title: "Ogólne", default: true },
+    { name: "navigation", title: "Nawigacja" },
     { name: "footer", title: "Stopka" },
     { name: "branding", title: "Ikony" },
     { name: "hero", title: "Hero" },
