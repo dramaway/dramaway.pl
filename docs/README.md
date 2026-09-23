@@ -46,10 +46,23 @@ Mapa dokumentów projektu. Treść po polsku; nazwy plików ADR i ścieżek kodu
 | Plik | Opis |
 |------|------|
 | [guides/sanity-roles.md](guides/sanity-roles.md) | Role Sanity przy przekazaniu (org vs projekt, Editor vs Admin) |
+| [guides/cutover.md](guides/cutover.md) | Przekazanie kont (skrzynka, GitHub, Netlify, Sanity/NGO) i dzień domeny |
 | [guides/cutover-foundation.md](guides/cutover-foundation.md) | Mail i checklista RODO / analityki dla Fundacji przed cutoverem |
 | [guides/dependencies.md](guides/dependencies.md) | Aktualizacja deps: catalog pnpm, Dependabot, skrypty |
 
-`guides/` — później też uruchomienie lokalne i edycja w Sanity Studio.
+## Redakcja
+
+Instrukcja dla osób uzupełniających treść. Część zrzutów jest już w tekście, reszta jest opisana w [redakcja/screeny.md](redakcja/screeny.md).
+
+| Plik | Opis |
+|------|------|
+| [redakcja/README.md](redakcja/README.md) | Start: adres Studia i spis instrukcji |
+| [redakcja/dostep-i-role.md](redakcja/dostep-i-role.md) | Który mail do czego służy i dlaczego redakcja jest Editor |
+| [redakcja/studio-podstawy.md](redakcja/studio-podstawy.md) | Szkic, publikacja, zdjęcia, linki |
+| [redakcja/strony.md](redakcja/strony.md) | Który dokument w panelu jest którą stroną |
+| [redakcja/menu.md](redakcja/menu.md) | Menu witryny i skróty po lewej w Studio |
+| [redakcja/tekst.md](redakcja/tekst.md) | Termin, wcięcie, Roles, kolumny |
+| [redakcja/czytelnia-i-fundacja.md](redakcja/czytelnia-i-fundacja.md) | Spis Czytelni oraz O fundacji i Kontakt |
 
 ## Źródło konceptu
 

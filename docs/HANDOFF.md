@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-21 — skróty desku Studia z `siteSettings.navigation` (pusta lista = dotychczasowe skróty); menu witryny z tej samej listy |
+| **Ostatnia aktualizacja** | 2026-09-23 — manual redakcji z 13 kadrów; zostało 13 (lista w `docs/redakcja/screeny.md`). Cutover kont: `docs/guides/cutover.md` |
 | **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
@@ -46,11 +46,13 @@ Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona głów
 - **Indeksacja (cutover):** w Netlify `NEXT_PUBLIC_SITE_URL=https://fundacja.dramaway.pl` i `NEXT_PUBLIC_SITE_INDEX=true` — wtedy robots/sitemap/canonical żyją. Do tego czasu Google ma nie indeksować roboczego netlify.app.
 - CI: `.github/workflows/ci.yml` — `pnpm install`, lint, `web` build, `test:repair` / `test:archive-projects` / `test:web`.
 - Zależności: catalog w `pnpm-workspace.yaml`, lockfile, Dependabot (tydzień), skrypty `pnpm deps:outdated` / `pnpm deps:update`. Kanwa: [guides/dependencies.md](guides/dependencies.md). Next 16 / TS 6+ / ESLint 10 zostają poza automatami.
-- Mapa 301 na premierę = **osobne zadanie tuż przed DNS**, nie teraz. Checklista poniżej. Mail/checklista dla Fundacji (RODO + analityka): [guides/cutover-foundation.md](guides/cutover-foundation.md).
+- Mapa 301 na premierę = **osobne zadanie tuż przed DNS**, nie teraz. Kolejność przekazania kont i dnia domeny: [guides/cutover.md](guides/cutover.md). Mail/checklista dla Fundacji (RODO + analityka): [guides/cutover-foundation.md](guides/cutover-foundation.md). Manual redakcji: [redakcja/README.md](redakcja/README.md).
 
 Pełny kanon migracji: [fundacja-status.md](migration/fundacja-status.md). Role i przekazanie: [guides/sanity-roles.md](guides/sanity-roles.md).
 
 ### Checklista premiery / cutover
+
+Pełna kolejność (skrzynka, GitHub, Netlify, Sanity/NGO, legal, DNS): [guides/cutover.md](guides/cutover.md).
 
 Preview (`dramaway.netlify.app`) **zostaje noindex** (`metadata.robots`, `X-Robots-Tag`, `robots.ts` Disallow `/`, `netlify.toml`). Indeksacji nie włączamy, dopóki domena nie jest docelowa.
 
@@ -115,6 +117,20 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 ## Następna sesja — start
 
 Ten plik + [fundacja-status.md](migration/fundacja-status.md) + [ustalenia-2026-09-05.md](concept/ustalenia-2026-09-05.md). Nie odtwarzać dumpów rozmów. Nie wołać Figmy bez potrzeby.
+
+### Dokończyć kadry manuala (Jan)
+
+Spis braków: [redakcja/screeny.md](redakcja/screeny.md). Wstawić plik do `docs/redakcja/img/` i obrazek pod znacznikiem `<!-- screen: ... -->` w podanym pliku. Nie naciskać **Publish**.
+
+Gdzie się logować:
+
+- **Reszta kadrów ze Studia** — lokalnie, już zalogowane: [http://localhost:3333](http://localhost:3333) (`pnpm dev:studio`). Ten sam dataset `production` co hosted Studio. Hosted, gdy lokalne nie wstanie: [https://dramaway.sanity.studio/](https://dramaway.sanity.studio/).
+- **`studio-adres` (ekran logowania)** — okno prywatne na [https://dramaway.sanity.studio/](https://dramaway.sanity.studio/) **zanim** wpiszesz hasło. Nie wylogowywać zwykłej sesji. W kadrze ma być pasek adresu Studia, nie strony fundacji.
+- **`role-zaproszenie`** — to nie Studio. [https://www.sanity.io/manage](https://www.sanity.io/manage) → projekt Dramaway (`tr2qdg9j`) → członkowie. W kadrze Editor przy redakcji i Administrator przy `admin@dramaway.pl`.
+
+Zostało: `studio-adres`, `role-zaproszenie`, `studio-publish`, `studio-obraz`, `studio-link`, `strony-skroty`, `strony-listing`, `czytelnia-dokument`, `fundacja-dokumenty`, `tekst-toolbar`, `tekst-termin`, `tekst-indent`, `tekst-columns`.
+
+Cutover kont (skrzynka, GitHub, Netlify, Sanity/NGO, domena) jest opisany, nieodpalony: [guides/cutover.md](guides/cutover.md).
 
 **Baza wiedzy ≠ Czytelnia.** Hub `/baza-wiedzy` + Metody `/metody` + Czytelnia `/czytelnia`. Faza 2 kanału Czytelni **zrobiona**. Listing: wszystkie `publication` mają `listed` (`pnpm patch:publication-listed`).
 
@@ -213,6 +229,8 @@ Nie odpalaj ponownie `migrate:fundacja` / `migrate:art-generacje` / `migrate:czy
 | `apps/web/src/lib/subpage-copy.ts` | Chrome podstron (filtry, „więcej”) — nie fallback treści |
 | `apps/web/src/lib/landing-page.ts` | Resolver singletonów listingów; puste = brak bloku |
 | `docs/guides/sanity-roles.md` | Role Sanity / przekazanie |
+| `docs/guides/cutover.md` | Przekazanie kont i dzień domeny |
+| `docs/redakcja/README.md` | Manual redakcji (osoby nietechniczne) |
 | `docs/migration/fundacja-status.md` | Co zmigrowane |
 | `apps/web/src/app/(site)/` | Publiczny App Router |
 | `apps/web/src/lib/sanity/` | GROQ |
