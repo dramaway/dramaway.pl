@@ -158,11 +158,7 @@ function HomeRhythm({
     const hasImage = section.kind === "module" && Boolean(section.image);
     const nextIsFirstList = isTextList(next) && !paletteBeforeList;
     if (hasImage || !nextIsFirstList) {
-      const imageOnLeft =
-        section.kind === "module" && section.imageOnLeft && hasImage;
-      blocks.push(
-        <DotBand key={`band-${section.key}`} mirror={imageOnLeft} />,
-      );
+      blocks.push(<DotBand key={`band-${section.key}`} />);
     }
   });
 
@@ -186,11 +182,10 @@ function PageRhythm({
   return placed.map((section, index) => {
     const next = placed[index + 1];
     const hasImage = section.kind === "module" && Boolean(section.image);
-    const imageOnLeft = section.kind === "module" && section.imageOnLeft;
     return (
       <Fragment key={section.key}>
         <ModuleView section={section} feed={feed} />
-        {next && hasImage ? <DotBand mirror={imageOnLeft} /> : null}
+        {next && hasImage ? <DotBand /> : null}
       </Fragment>
     );
   });

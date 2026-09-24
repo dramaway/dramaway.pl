@@ -151,8 +151,15 @@
   --hero-media-max: calc(100vh - var(--dot-size) * 1.98);
   /* Content modules: gap from the centre seam, left column drop, photo height. */
   --module-center-inset: calc(1.5 * var(--dot-size));
-  --module-stagger: var(--dot-size);
-  --module-media-min: min(52rem, var(--hero-media-max));
+  /*
+   * Same step and overlap as .dot-band. A content photo's top and bottom
+   * edges sit on the centre of the dot row on its own side, so the circles
+   * mask those edges. Left dots stay lower than right dots.
+   */
+  --dot-row-step: calc(var(--dot-size) * 1.53);
+  --dot-overlap: calc(var(--dot-size) * 0.55);
+  --module-edge-in: calc(var(--dot-overlap) - var(--dot-size) / 2);
+  --module-edge-out: calc(var(--dot-row-step) + var(--dot-size) / 2 - var(--dot-overlap));
   /*
    * Portable Text images. Size is a scale (width + height), not only a
    * max-width — a shared height cap made Small/Medium/Wide look identical
@@ -787,36 +794,60 @@
     }
 
     /*
-     * Content modules: 1.5 dots of air at the centre seam, left column lower
-     * than the right. Photo keeps a viewport-capped height unless the text
-     * column is taller.
+     * Content modules are a half-and-half of the viewport, not the hero's
+     * 2/3 text column. The photo stays on its own half and stops 1.5 dots
+     * short of the centre. The text starts 1.5 dots on its own side of the
+     * centre. Top and bottom edges of the photo sit on the centre of the
+     * dot row on that side.
      */
+    .content-split {
+      position: relative;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
     .content-split > .split-text {
+      position: relative;
+      z-index: 1;
+      max-width: none;
+      width: 100%;
+      margin-inline: 0;
+      padding-inline: var(--page-pad);
+    }
+
+    .content-split:not(.split-reverse) > .split-text {
+      grid-column: 1;
       padding-inline-end: var(--module-center-inset);
     }
 
     .content-split.split-reverse > .split-text {
+      grid-column: 2;
       padding-inline-start: var(--module-center-inset);
-    }
-
-    .content-split:not(.split-reverse) > .split-media {
-      margin-inline-start: var(--module-center-inset);
-    }
-
-    .content-split.split-reverse > .split-media {
-      margin-inline-end: var(--module-center-inset);
-    }
-
-    .content-split:not(.split-reverse) > .split-text,
-    .content-split.split-reverse > .split-media {
-      margin-block-start: var(--module-stagger);
+      padding-inline-end: var(--page-pad);
     }
 
     .content-split > .split-media {
-      align-self: stretch;
-      min-height: var(--module-media-min);
-      height: 100%;
+      position: absolute;
+      z-index: 0;
+      width: calc(50% - var(--module-center-inset));
+      max-width: none;
+      height: auto;
+      min-height: 0;
       aspect-ratio: auto;
+      margin-inline: 0;
+    }
+
+    /* Photo on the right: 1.5 dots of air before the centre, edges on the upper dots. */
+    .content-split:not(.split-reverse) > .split-media {
+      inset-inline: auto 0;
+      inset-block-start: calc(-1 * var(--module-edge-out));
+      inset-block-end: var(--module-edge-in);
+    }
+
+    /* Photo on the left: 1.5 dots of air before the centre, edges on the lower dots. */
+    .content-split.split-reverse > .split-media {
+      inset-inline: 0 auto;
+      inset-block-start: var(--module-edge-in);
+      inset-block-end: calc(-1 * var(--module-edge-out));
     }
 
     .content-split-solo > .split-text {
