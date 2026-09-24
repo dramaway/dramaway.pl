@@ -1,15 +1,10 @@
-import Image from "next/image";
 import Link from "next/link";
 import { PortableBody } from "@/components/portable-body";
 import { ArticleShell } from "@/components/article-shell";
-import { urlFor } from "@/lib/sanity/image";
+import { Media } from "@/components/visual/media";
 import type { PersonDetail } from "@/lib/sanity/types";
 
 export function PersonProfile({ person }: { person: PersonDetail }) {
-  const photoUrl = person.photo
-    ? urlFor(person.photo).width(400).height(500).fit("crop").url()
-    : null;
-
   return (
     <ArticleShell>
       <p className="text-sm text-muted-foreground">
@@ -30,14 +25,16 @@ export function PersonProfile({ person }: { person: PersonDetail }) {
           </a>
         </p>
       ) : null}
-      {photoUrl ? (
-        <Image
-          src={photoUrl}
-          alt={person.name}
-          width={400}
-          height={500}
-          className="mt-6 h-auto w-48 object-cover"
-        />
+      {person.photo ? (
+        <div className="mt-6 w-48">
+          <Media
+            image={person.photo}
+            alt={person.name}
+            ratio="album"
+            variant="inset"
+            sizes="12rem"
+          />
+        </div>
       ) : null}
       <PortableBody value={person.bio} />
     </ArticleShell>
