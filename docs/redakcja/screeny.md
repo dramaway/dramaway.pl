@@ -21,6 +21,7 @@ Jeszcze bez pliku, bo wymagałyby wylogowania, wejścia w Manage albo przełącz
 | `studio-link` | [studio-podstawy.md](studio-podstawy.md) | Otwarte pole URL w tekście | Otwarcie linku łatwo zostawia szkic |
 | `strony-skroty` | [strony.md](strony.md) | Sama góra listy, bez typów niżej | Jest w `studio-po-zalogowaniu`, osobny wycinek się rozjechał |
 | `strony-listing` | [strony.md](strony.md) | Zablokowane pole strony na listingu Projekty | Kadr uciął radia |
+| `strony-sekcje` | [strony.md](strony.md) | Lista Sekcje z wierszem Kafelki i Aktualności | Jeszcze nie zrobiony |
 | `czytelnia-dokument` | [czytelnia-i-fundacja.md](czytelnia-i-fundacja.md) | Format, Categories i Listed na jednym kadrze | Kadr uciął środek formularza |
 | `fundacja-dokumenty` | [czytelnia-i-fundacja.md](czytelnia-i-fundacja.md) | Wiersz dokumentu z podpiętym PDF | Na Statucie jest strona, slot PDF jest pusty; kadr uciął pola |
 | `tekst-toolbar` | [tekst.md](tekst.md) | Sam pasek, z Termin, Indent i Roles | Pasek jest na górze kadru `tekst-roles` |
@@ -58,10 +59,11 @@ Znaczniki `<!-- screen: ... -->` zostają w tekście także przy wstawionych obr
 | Id | Plik | Kadr | Po co |
 |----|------|------|--------|
 | `strony-skroty` | [strony.md](strony.md) | Góra listy Content ze skrótami | Widać, że Strona główna, listingi i O fundacji są osobnymi pozycjami, nie jedną stroną o wszystkim |
-| `strony-glowna-grupy` | [strony.md](strony.md) | Dokument Strona główna z widocznymi zakładkami grup | Widać Nawigacja, Stopka, Hero i Homepage jako osobne karty jednego dokumentu |
+| `strony-glowna-grupy` | [strony.md](strony.md) | Dokument Strona główna z widocznymi zakładkami grup | Widać Nawigacja, Stopkę, Hero i Sekcje jako osobne karty. Kadr do powtórzenia: stary plik może jeszcze podpisywać ostatnią kartę jako Homepage |
 | `strony-aktualnosc` | [strony.md](strony.md) | Lista Page z dokumentem, którego slug zaczyna się od `aktualnosc-` | Widać, że news nie ma własnej półki, tylko przedrostek w adresie |
 | `strony-listing` | [strony.md](strony.md) | Dokument Projekty z zablokowanym polem strony | Widać, że adres jest stały, a pusty tytuł nie wymyśla nagłówka |
 | `strony-typy` | [strony.md](strony.md) | Dolna część listy Content: Project, Person, Page, Category, Publication | Widać, gdzie szukać tekstu, który nie ma własnego skrótu na górze |
+| `strony-sekcje` | [strony.md](strony.md) | Lista Sekcje z wierszem Kafelki i wierszem Aktualności | Widać, że nowy blok dodaje się do listy, a nie jako osobny dokument. Jeszcze bez pliku |
 
 ## Menu
 

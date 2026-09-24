@@ -20,7 +20,7 @@ Strona, którą widzą czytelnicy, na razie stoi pod adresem roboczym <https://d
 |-------|--------|
 | [Dostęp i role](dostep-i-role.md) | Który mail do czego służy i dlaczego redakcja nie dostaje wszystkiego |
 | [Podstawy Studia](studio-podstawy.md) | Logowanie, szkic, publikacja, zdjęcia |
-| [Strony](strony.md) | Który dokument w panelu jest którą stroną na witrynie |
+| [Strony](strony.md) | Który dokument w panelu jest którą stroną na witrynie i jak dodać sekcje |
 | [Menu](menu.md) | Jak ułożyć menu i skróty po lewej |
 | [Tekst](tekst.md) | Akapity, nagłówki i nasze dodatkowe bloki |
 | [Czytelnia i O fundacji](czytelnia-i-fundacja.md) | Spis publikacji oraz wartości, zespół, historia, dokumenty |
