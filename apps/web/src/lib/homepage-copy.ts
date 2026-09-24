@@ -11,4 +11,4 @@ export const NEWS_CTA_LABEL = "czytaj więcej";
 export const NEWS_SECTION_HEADING = "Aktualności";
 
 /** Chrome label for person and project tiles when the editor leaves it empty. */
-export const TILE_CTA_MEET = "poznaj";
+export const TILE_CTA_MEET = "zobacz";

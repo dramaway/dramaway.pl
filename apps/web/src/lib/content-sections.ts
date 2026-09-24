@@ -5,14 +5,53 @@ import {
   TILE_CTA_MEET,
 } from "./homepage-copy";
 import { hrefForDocument } from "./navigation";
+import { personPath, projectPath, publicPathForPageSlug, publicationPath } from "./routes";
 import { safeHref } from "./safe-url";
 import type {
   CmsContentImage,
   CmsContentSection,
   CmsContentTile,
+  ContentFeedPool,
+  FeedSource,
   ResolvedSection,
   ResolvedTile,
 } from "./sanity/types";
+
+/** Upper bound for a news-feed section. Keep in sync with the Studio field. */
+export const FEED_LIMIT_MAX = 12;
+const FEED_LIMIT_DEFAULT = 3;
+const FEED_SOURCES: readonly FeedSource[] = [
+  "news",
+  "page",
+  "person",
+  "project",
+  "publication",
+];
+
+export type FeedCandidate = {
+  id: string;
+  source: FeedSource;
+  title: string;
+  href: string;
+  excerpt: string | null;
+  createdAt: string | null;
+  ctaLabel: string;
+};
+
+function feedLimit(value: number | null | undefined): number {
+  if (typeof value !== "number" || !Number.isInteger(value)) return FEED_LIMIT_DEFAULT;
+  return Math.min(FEED_LIMIT_MAX, Math.max(1, value));
+}
+
+function feedSources(values: string[] | null | undefined): FeedSource[] {
+  const picked: FeedSource[] = [];
+  for (const value of values ?? []) {
+    if (!FEED_SOURCES.includes(value as FeedSource)) continue;
+    const source = value as FeedSource;
+    if (!picked.includes(source)) picked.push(source);
+  }
+  return picked.length > 0 ? picked : ["news"];
+}
 
 function clip(text: string | null): string | null {
   if (!text) return null;
@@ -60,6 +99,8 @@ export function resolveContentSections(
         key: section._key,
         kind: "news",
         heading: cmsText(section.heading),
+        limit: feedLimit(section.limit),
+        sources: feedSources(section.sources),
       });
       continue;
     }
@@ -80,4 +121,56 @@ export function resolveContentSections(
     });
   }
   return resolved;
+}
+
+/** Newest documents first. Missing dates sink. `limit` and `sources` come from the section. */
+export function selectFeedItems(
+  candidates: FeedCandidate[],
+  section: { limit: number; sources: readonly FeedSource[] },
+): FeedCandidate[] {
+  const allowed = new Set(section.sources);
+  return candidates
+    .filter((item) => allowed.has(item.source))
+    .sort((a, b) => {
+      const aTime = a.createdAt ? Date.parse(a.createdAt) : 0;
+      const bTime = b.createdAt ? Date.parse(b.createdAt) : 0;
+      return bTime - aTime;
+    })
+    .slice(0, section.limit);
+}
+
+const FEED_HREF: Record<FeedSource, (slug: string) => string> = {
+  news: publicPathForPageSlug,
+  page: publicPathForPageSlug,
+  person: personPath,
+  project: projectPath,
+  publication: publicationPath,
+};
+
+/** Flatten the per-kind pools into linkable cards. Order is applied later, per section. */
+export function toFeedCandidates(pool: ContentFeedPool | null | undefined): FeedCandidate[] {
+  if (!pool) return [];
+  const candidates: FeedCandidate[] = [];
+  for (const source of FEED_SOURCES) {
+    for (const doc of pool[source] ?? []) {
+      const slug = doc.slug?.trim();
+      const rawTitle = cmsText(doc.title);
+      if (!slug || !rawTitle) continue;
+      const title =
+        source === "news" ? rawTitle.replace(/^\[Aktualność\]\s*/i, "").trim() : rawTitle;
+      if (!title) continue;
+      candidates.push({
+        id: doc._id,
+        source,
+        title,
+        href: FEED_HREF[source](slug),
+        excerpt: clip(cmsText(doc.excerpt)),
+        createdAt: cmsText(doc._createdAt),
+        ctaLabel: defaultCta(
+          source === "person" || source === "project" ? source : "page",
+        ),
+      });
+    }
+  }
+  return candidates;
 }

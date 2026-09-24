@@ -7,7 +7,7 @@ import { sanityClient } from "./client";
 import {
   aboutPageQuery,
   landingPageByIdQuery,
-  homepageNewsQuery,
+  contentFeedQuery,
   newsListQuery,
   pageBySlugQuery,
   pageSlugsQuery,
@@ -29,6 +29,7 @@ import {
 import type {
   AboutPage,
   CmsContentSection,
+  ContentFeedPool,
   LandingPage,
   PageDetail,
   PageListItem,
@@ -70,9 +71,9 @@ export async function getNewsPages(): Promise<PageListItem[]> {
   return sanityClient.fetch(newsListQuery, {}, revalidate);
 }
 
-/** Latest news for the homepage: max 3, truncated excerpt, newest first. */
-export async function getHomepageNews(): Promise<PageListItem[]> {
-  return sanityClient.fetch(homepageNewsQuery, {}, revalidate);
+/** Recent documents for configurable news-feed sections, newest first within each kind. */
+export async function getContentFeed(): Promise<ContentFeedPool> {
+  return sanityClient.fetch(contentFeedQuery, {}, revalidate);
 }
 
 export const getPageBySlug = cache(async function getPageBySlug(

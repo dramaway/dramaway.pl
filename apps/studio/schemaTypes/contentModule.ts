@@ -134,7 +134,7 @@ export const contentTile = defineType({
       name: "ctaLabel",
       title: "Etykieta linku",
       type: "string",
-      description: "Puste = „poznaj” albo „czytaj więcej”. Cały kafelek prowadzi w to samo miejsce.",
+      description: "Puste = „zobacz” albo „czytaj więcej”. Cały kafelek prowadzi w to samo miejsce.",
     }),
   ],
   preview: {
@@ -237,15 +237,46 @@ export const newsFeedModule = defineType({
       name: "heading",
       title: "Nagłówek",
       type: "string",
-      description: "Puste = „Aktualności”. Lista to trzy najnowsze strony aktualnosc-*.",
+      description: "Puste = „Aktualności”.",
+    }),
+    defineField({
+      name: "limit",
+      title: "Ile najnowszych",
+      type: "number",
+      initialValue: 3,
+      description: "Od 1 do 12. Puste = 3.",
+      validation: (rule) => rule.integer().min(1).max(12),
+    }),
+    defineField({
+      name: "sources",
+      title: "Rodzaje treści",
+      type: "array",
+      description:
+        "Można zaznaczyć kilka. Na stronie zostają najnowsze według daty dodania. Puste = same aktualności.",
+      of: [{ type: "string" }],
+      options: {
+        list: [
+          { title: "Aktualności", value: "news" },
+          { title: "Strony", value: "page" },
+          { title: "Osoby", value: "person" },
+          { title: "Projekty", value: "project" },
+          { title: "Publikacje", value: "publication" },
+        ],
+        layout: "grid",
+      },
+      validation: (rule) => rule.unique(),
     }),
   ],
   preview: {
-    select: { heading: "heading" },
-    prepare(selection: { heading?: string }) {
+    select: { heading: "heading", limit: "limit" },
+    prepare(selection: { heading?: string; limit?: number }) {
+      const count =
+        typeof selection.limit === "number" && selection.limit > 0
+          ? selection.limit
+          : 3;
       return {
         title: selection.heading?.trim() || "Aktualności",
-        subtitle: "trzy najnowsze",
+        subtitle: count === 1 ? "1 najnowszy" : `${count} najnowszych`,
       };
     },
   },

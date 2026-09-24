@@ -36,6 +36,18 @@ export type PageListItem = {
   publishedAt?: string | null;
 };
 
+export type FeedSource = "news" | "page" | "person" | "project" | "publication";
+
+export type ContentFeedDoc = {
+  _id: string;
+  _createdAt?: string | null;
+  title?: string | null;
+  slug?: string | null;
+  excerpt?: string | null;
+};
+
+export type ContentFeedPool = Record<FeedSource, ContentFeedDoc[] | null>;
+
 export type CmsContentImage = SanityImage & { alt?: string | null };
 
 export type CmsContentTileTarget = {
@@ -61,6 +73,10 @@ export type CmsContentSection = {
   _key: string;
   _type: string;
   heading?: string | null;
+  /** News-feed cap. Empty = 3. */
+  limit?: number | null;
+  /** News-feed document kinds. Empty = news pages only. */
+  sources?: string[] | null;
   textLayout?: "grid" | "list" | string | null;
   image?: CmsContentImage | null;
   tiles?: CmsContentTile[] | null;
@@ -78,6 +94,10 @@ export type ResolvedNewsSection = {
   key: string;
   kind: "news";
   heading: string | null;
+  /** How many newest documents to show (1–12). */
+  limit: number;
+  /** Document kinds mixed into one list, newest `_createdAt` first. */
+  sources: FeedSource[];
 };
 
 export type ResolvedContentModule = {

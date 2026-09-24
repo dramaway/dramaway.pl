@@ -1,12 +1,12 @@
 import { Fragment, type ReactNode } from "react";
 import { Section } from "@/components/layout/section";
 import { ContentTile } from "@/components/sections/content-tile";
-import { HomeNews, type HomeNewsItem } from "@/components/sections/home-news";
+import { HomeNews } from "@/components/sections/home-news";
 import { DotBand } from "@/components/visual/dot-band";
 import { Media } from "@/components/visual/media";
 import { PaletteRow } from "@/components/visual/palette-row";
-import { publicPathForPageSlug } from "@/lib/routes";
-import { getHomepageNews } from "@/lib/sanity/fetch";
+import { selectFeedItems, toFeedCandidates, type FeedCandidate } from "@/lib/content-sections";
+import { getContentFeed } from "@/lib/sanity/fetch";
 import type { ResolvedSection } from "@/lib/sanity/types";
 import { cn } from "@/lib/utils";
 
@@ -38,15 +38,23 @@ function isTextList(section: PlacedSection): boolean {
 
 function ModuleView({
   section,
-  news,
+  feed,
 }: {
   section: PlacedSection;
-  news: HomeNewsItem[];
+  feed: FeedCandidate[];
 }) {
   if (section.kind === "news") {
+    const items = selectFeedItems(feed, section).map((item) => ({
+      _id: item.id,
+      title: item.title,
+      href: item.href,
+      excerpt: item.excerpt,
+      publishedAt: item.createdAt,
+      ctaLabel: item.ctaLabel,
+    }));
     return (
       <HomeNews
-        items={news}
+        items={items}
         heading={section.heading}
         headingId={`news-${section.key}`}
       />
@@ -124,10 +132,10 @@ function ModuleView({
 
 function HomeRhythm({
   sections,
-  news,
+  feed,
 }: {
   sections: ResolvedSection[];
-  news: HomeNewsItem[];
+  feed: FeedCandidate[];
 }) {
   const placed = place(sections);
   const blocks: ReactNode[] = [<DotBand key="after-hero" />];
@@ -143,7 +151,7 @@ function HomeRhythm({
       paletteBeforeList = true;
     }
 
-    blocks.push(<ModuleView key={section.key} section={section} news={news} />);
+    blocks.push(<ModuleView key={section.key} section={section} feed={feed} />);
 
     const next = placed[index + 1];
     if (!next) return;
@@ -169,10 +177,10 @@ function HomeRhythm({
 
 function PageRhythm({
   sections,
-  news,
+  feed,
 }: {
   sections: ResolvedSection[];
-  news: HomeNewsItem[];
+  feed: FeedCandidate[];
 }) {
   const placed = place(sections);
   return placed.map((section, index) => {
@@ -181,29 +189,17 @@ function PageRhythm({
     const imageOnLeft = section.kind === "module" && section.imageOnLeft;
     return (
       <Fragment key={section.key}>
-        <ModuleView section={section} news={news} />
+        <ModuleView section={section} feed={feed} />
         {next && hasImage ? <DotBand mirror={imageOnLeft} /> : null}
       </Fragment>
     );
   });
 }
 
-function newsItems(
-  pages: Awaited<ReturnType<typeof getHomepageNews>>,
-): HomeNewsItem[] {
-  return pages.map((item) => ({
-    _id: item._id,
-    title: item.title.replace(/^\[Aktualność\]\s*/i, "").trim(),
-    href: publicPathForPageSlug(item.slug),
-    excerpt: item.excerpt?.trim() || null,
-    publishedAt: item.publishedAt?.trim() || null,
-  }));
-}
-
 export async function ContentModules({ sections, variant }: ContentModulesProps) {
   if (variant === "page" && sections.length === 0) return null;
-  const needsNews = sections.some((section) => section.kind === "news");
-  const news = needsNews ? newsItems(await getHomepageNews()) : [];
-  if (variant === "home") return <HomeRhythm sections={sections} news={news} />;
-  return <PageRhythm sections={sections} news={news} />;
+  const needsFeed = sections.some((section) => section.kind === "news");
+  const feed = needsFeed ? toFeedCandidates(await getContentFeed()) : [];
+  if (variant === "home") return <HomeRhythm sections={sections} feed={feed} />;
+  return <PageRhythm sections={sections} feed={feed} />;
 }

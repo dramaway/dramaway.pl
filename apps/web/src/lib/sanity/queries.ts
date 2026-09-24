@@ -1,4 +1,5 @@
 import { EXCERPT_FALLBACK_MAX } from "../homepage-copy";
+import { FEED_LIMIT_MAX } from "../content-sections";
 import { navigationProjection } from "./navigation-query";
 
 /** News pages were migrated with slug prefix `aktualnosc-`. */
@@ -48,13 +49,51 @@ export const pagesListQuery = `*[_type == "page" && !(${newsSlugFilter})] | orde
 
 export const newsListQuery = `*[_type == "page" && ${newsSlugFilter}] | order(coalesce(publishedAt, _createdAt) desc) ${newsProjection}`;
 
-export const homepageNewsQuery = `*[_type == "page" && ${newsSlugFilter}] | order(coalesce(publishedAt, _createdAt) desc) [0...3] ${newsProjection}`;
+const feedDoc = `{
+  _id,
+  _createdAt,
+  title,
+  "slug": slug.current,
+  "excerpt": select(
+    defined(excerpt) && excerpt != "" => excerpt,
+    array::join(string::split(pt::text(body), "")[0...${EXCERPT_FALLBACK_MAX}], "")
+  )
+}`;
+
+/** Newest documents per kind. A section mixes the pools it asked for and keeps the overall newest. */
+export const contentFeedQuery = `{
+  "news": *[_type == "page" && ${newsSlugFilter}] | order(_createdAt desc) [0...${FEED_LIMIT_MAX}] ${feedDoc},
+  "page": *[_type == "page" && !(${newsSlugFilter})] | order(_createdAt desc) [0...${FEED_LIMIT_MAX}] ${feedDoc},
+  "person": *[_type == "person" && defined(slug.current)] | order(_createdAt desc) [0...${FEED_LIMIT_MAX}] {
+    _id,
+    _createdAt,
+    "title": name,
+    "slug": slug.current,
+    "excerpt": pt::text(bio)
+  },
+  "project": *[_type == "project" && defined(slug.current)] | order(_createdAt desc) [0...${FEED_LIMIT_MAX}] {
+    _id,
+    _createdAt,
+    title,
+    "slug": slug.current,
+    "excerpt": summary
+  },
+  "publication": *[_type == "publication" && defined(slug.current) && slug.current != "metody-tzs"] | order(_createdAt desc) [0...${FEED_LIMIT_MAX}] {
+    _id,
+    _createdAt,
+    title,
+    "slug": slug.current,
+    "excerpt": summary
+  }
+}`;
 
 /** Shared by homepage and page documents. */
 export const contentSectionsProjection = `{
   _key,
   _type,
   heading,
+  limit,
+  sources,
   textLayout,
   image,
   tiles[] {

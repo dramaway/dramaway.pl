@@ -11,6 +11,7 @@ export type HomeNewsItem = {
   href: string;
   excerpt: string | null;
   publishedAt: string | null;
+  ctaLabel?: string | null;
 };
 
 function formatPolishMonthYear(iso: string): string | null {
@@ -92,7 +93,7 @@ export function HomeNews({
                   presentational
                   className="news-card-cta mt-8"
                 >
-                  {NEWS_CTA_LABEL}
+                  {item.ctaLabel?.trim() || NEWS_CTA_LABEL}
                 </CtaLink>
               ) : null}
             </li>

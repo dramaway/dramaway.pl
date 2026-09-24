@@ -21,7 +21,7 @@ Grupy:
 
 ![Zakładki dokumentu Strona główna](img/strony-glowna-grupy.png)
 
-Aktualności na stronie głównej nie są osobnym typem. To dokumenty **Page**, których adres wewnętrzny zaczyna się od `aktualnosc-`. Na liście widać je jako zwykłe strony. Na stronie głównej pokazują się najnowsze trzy.
+Aktualności na stronie głównej nie są osobnym typem. To dokumenty **Page**, których adres wewnętrzny zaczyna się od `aktualnosc-`. Na liście widać je jako zwykłe strony. Sekcja „Aktualności” w module strony bierze najnowsze według daty dodania. Domyślnie są to te wpisy, do trzech. W tej samej sekcji można podnieść limit (do 12) i dodać inne rodzaje: zwykłe strony, osoby, projekty, publikacje. Zaznaczenie kilku rodzajów składa jedną listę, od najnowszego.
 
 <!-- screen: strony-aktualnosc | Lista Page z dokumentem, którego slug zaczyna się od aktualnosc- | Widać, że news nie ma własnej półki, tylko przedrostek w adresie -->
 

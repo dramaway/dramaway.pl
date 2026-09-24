@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { resolveContentSections } from "../../apps/web/src/lib/content-sections.ts";
+import { resolveContentSections, selectFeedItems } from "../../apps/web/src/lib/content-sections.ts";
 
 test("drops empty input and unknown section types", () => {
   assert.deepEqual(resolveContentSections(null), []);
@@ -13,14 +13,29 @@ test("drops empty input and unknown section types", () => {
 
 test("keeps a news feed and uses an optional heading", () => {
   assert.deepEqual(resolveContentSections([{ _key: "n", _type: "newsFeedModule" }]), [
-    { key: "n", kind: "news", heading: null },
+    { key: "n", kind: "news", heading: null, limit: 3, sources: ["news"] },
   ]);
   assert.deepEqual(
     resolveContentSections([
       { _key: "n", _type: "newsFeedModule", heading: "  Nowości  " },
     ]),
-    [{ key: "n", kind: "news", heading: "Nowości" }],
+    [{ key: "n", kind: "news", heading: "Nowości", limit: 3, sources: ["news"] }],
   );
+});
+
+test("news feed keeps a limit and several source kinds", () => {
+  const [section] = resolveContentSections([
+    {
+      _key: "n",
+      _type: "newsFeedModule",
+      limit: 99,
+      sources: ["project", "nope", "person", "project"],
+    },
+  ]);
+  assert.equal(section.kind, "news");
+  if (section.kind !== "news") return;
+  assert.equal(section.limit, 12);
+  assert.deepEqual(section.sources, ["project", "person"]);
 });
 
 test("resolves a person reference and a path tile", () => {
@@ -72,7 +87,7 @@ test("resolves a person reference and a path tile", () => {
       ctaLabel: tile.ctaLabel,
     })),
     [
-      { key: "p", title: "Ada", href: "/zespol/ada", ctaLabel: "poznaj" },
+      { key: "p", title: "Ada", href: "/zespol/ada", ctaLabel: "zobacz" },
       { key: "path", title: "Czytelnia", href: "/czytelnia", ctaLabel: "czytaj więcej" },
       { key: "bad", title: "Nie", href: null, ctaLabel: null },
     ],
@@ -106,7 +121,7 @@ test("project reference uses the project path and an excerpt override", () => {
   assert.equal(sections[0].textLayout, "grid");
   assert.equal(sections[0].tiles[0].href, "/projekty/art-generacje");
   assert.equal(sections[0].tiles[0].excerpt, "Z CMS");
-  assert.equal(sections[0].tiles[0].ctaLabel, "poznaj");
+  assert.equal(sections[0].tiles[0].ctaLabel, "zobacz");
 });
 
 test("drops a module whose tiles have no title or excerpt", () => {
@@ -191,5 +206,30 @@ test("keeps an image and ignores text layout when the asset is set", () => {
   assert.deepEqual(
     sections[0].tiles.map((tile) => tile.href),
     ["/fundacja", "/czytelnia", "/kontakt"],
+  );
+});
+
+test("a feed mixes selected kinds by creation date and stops at the limit", () => {
+  const card = (id, source, createdAt) => ({
+    id,
+    source,
+    title: id,
+    href: `/${id}`,
+    excerpt: null,
+    createdAt,
+    ctaLabel: "czytaj więcej",
+  });
+  const picked = selectFeedItems(
+    [
+      card("old-news", "news", "2020-01-01T00:00:00.000Z"),
+      card("new-person", "person", "2026-06-01T00:00:00.000Z"),
+      card("mid-project", "project", "2024-03-01T00:00:00.000Z"),
+      card("page", "page", "2025-01-01T00:00:00.000Z"),
+    ],
+    { limit: 2, sources: ["news", "person", "project"] },
+  );
+  assert.deepEqual(
+    picked.map((item) => item.id),
+    ["new-person", "mid-project"],
   );
 });
