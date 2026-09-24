@@ -7,7 +7,7 @@ import {
   publicationPath,
   type NavItem,
 } from "./routes";
-import type { SiteSettingsNavItem, SiteSettingsNavLink, SiteSettingsNavPage } from "./sanity/types";
+import type { SiteSettingsNavItem, SiteSettingsNavLink } from "./sanity/types";
 import { safeHref } from "./safe-url";
 
 const LANDING_LABELS: Record<string, string> = {
@@ -17,7 +17,11 @@ const LANDING_LABELS: Record<string, string> = {
   zespol: "Zespół",
 };
 
-function hrefForPage(page: SiteSettingsNavPage): string | null {
+export function hrefForDocument(page: {
+  _type: string;
+  slug?: string | null;
+  route?: string | null;
+}): string | null {
   const slug = page.slug?.trim() || null;
   switch (page._type) {
     case "landingPage": {
@@ -54,7 +58,7 @@ function labelFor(item: SiteSettingsNavLink): string | null {
 }
 
 function destination(item: SiteSettingsNavLink): { href: string; external: boolean } | null {
-  const raw = item.target === "path" ? item.href : item.page ? hrefForPage(item.page) : null;
+  const raw = item.target === "path" ? item.href : item.page ? hrefForDocument(item.page) : null;
   const checked = safeHref(raw);
   if (!checked || (checked.kind !== "path" && checked.kind !== "http")) return null;
   return { href: checked.href, external: checked.kind === "http" };

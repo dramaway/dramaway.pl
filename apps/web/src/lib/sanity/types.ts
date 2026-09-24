@@ -36,6 +36,61 @@ export type PageListItem = {
   publishedAt?: string | null;
 };
 
+export type CmsContentImage = SanityImage & { alt?: string | null };
+
+export type CmsContentTileTarget = {
+  _type: string;
+  title: string | null;
+  name: string | null;
+  slug: string | null;
+  route: string | null;
+  docExcerpt: string | null;
+};
+
+export type CmsContentTile = {
+  _key: string;
+  target?: "reference" | "path" | string | null;
+  href?: string | null;
+  title?: string | null;
+  excerpt?: string | null;
+  ctaLabel?: string | null;
+  page?: CmsContentTileTarget | null;
+};
+
+export type CmsContentSection = {
+  _key: string;
+  _type: string;
+  heading?: string | null;
+  textLayout?: "grid" | "list" | string | null;
+  image?: CmsContentImage | null;
+  tiles?: CmsContentTile[] | null;
+};
+
+export type ResolvedTile = {
+  key: string;
+  title: string | null;
+  excerpt: string | null;
+  href: string | null;
+  ctaLabel: string | null;
+};
+
+export type ResolvedNewsSection = {
+  key: string;
+  kind: "news";
+  heading: string | null;
+};
+
+export type ResolvedContentModule = {
+  key: string;
+  kind: "module";
+  image: SanityImage | null;
+  imageAlt: string;
+  textLayout: "grid" | "list";
+  tiles: ResolvedTile[];
+};
+
+export type ResolvedSection = ResolvedNewsSection | ResolvedContentModule;
+
 export type PageDetail = {
   _id: string;
   title: string;
@@ -46,32 +101,8 @@ export type PageDetail = {
   heroCtaHref?: string | null;
   excerpt?: string | null;
   cover?: SanityImage | null;
+  sections: ResolvedSection[];
   body: PortableContent;
-};
-
-export type SiteSettingsHomepageBlock = {
-  heading?: string | null;
-  lead?: string | null;
-  ctaLabel?: string | null;
-  ctaHref?: string | null;
-};
-
-export type SiteSettingsHomepageAbout = SiteSettingsHomepageBlock & {
-  image?: (SanityImage & { alt?: string | null }) | null;
-};
-
-export type SiteSettingsHomepageFeatured = {
-  label?: string | null;
-  lead?: string | null;
-  ctaLabel?: string | null;
-  ctaHref?: string | null;
-};
-
-export type SiteSettingsHomepage = {
-  about?: SiteSettingsHomepageAbout | null;
-  methods?: SiteSettingsHomepageBlock | null;
-  featured?: SiteSettingsHomepageFeatured | null;
-  czytelnia?: SiteSettingsHomepageBlock | null;
 };
 
 export type SanityFile = {
@@ -146,7 +177,7 @@ export type SiteSettings = {
   heroCtaLabel: string | null;
   heroCtaHref: string | null;
   heroImage: (SanityImage & { alt?: string | null }) | null;
-  homepage?: SiteSettingsHomepage | null;
+  homepageSections?: CmsContentSection[] | null;
 };
 
 export type HeroContent = {
@@ -158,24 +189,8 @@ export type HeroContent = {
   imageAlt: string;
 };
 
-export type HomepageBlock = {
-  heading: string | null;
-  lead: string | null;
-  ctaLabel: string | null;
-  ctaHref: string | null;
-};
-
-export type HomepageAbout = HomepageBlock & {
-  image: SanityImage | null;
-  imageAlt: string;
-};
-
-/** Label/blurb/CTA only — project title comes from `project.featured` on the page. */
 export type HomepageContent = {
-  about: HomepageAbout;
-  methods: HomepageBlock;
-  featured: HomepageBlock;
-  czytelnia: HomepageBlock;
+  sections: ResolvedSection[];
 };
 
 export type ResolvedFooter = {

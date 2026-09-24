@@ -1,4 +1,5 @@
-import { defineType, defineField } from "sanity";
+import { defineField, defineType } from "sanity";
+import { contentSectionMembers } from "./contentModule";
 
 const NEWS_SLUG_PREFIX = "aktualnosc-";
 
@@ -66,6 +67,14 @@ export const page = defineType({
       title: "Published at",
       type: "datetime",
       description: "Date on the news card. Empty = no date shown.",
+    }),
+    defineField({
+      name: "sections",
+      title: "Sekcje",
+      type: "array",
+      description: "Moduły nad treścią artykułu. Pusta lista = sam artykuł.",
+      hidden: ({ document }) => isNewsDocument(document),
+      of: contentSectionMembers(),
     }),
     defineField({ name: "body", title: "Body", type: "blockContent" }),
   ],

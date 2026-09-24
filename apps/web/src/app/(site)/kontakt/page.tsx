@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/sections/page-hero";
+import { ContentModules } from "@/components/sections/content-modules";
 import { Section } from "@/components/layout/section";
 import { PortableBody, hasPortableContent } from "@/components/portable-body";
 import { cmsText } from "@/lib/cms-text";
@@ -36,6 +37,7 @@ export default async function ContactPage() {
       >
         {body ? <PortableBody value={body} /> : null}
       </PageHero>
+      <ContentModules sections={page.sections} variant="page" />
       {withEmail.length > 0 ? (
         <Section>
           <h2 className="font-display text-h3 font-black">

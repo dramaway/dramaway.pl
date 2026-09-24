@@ -50,6 +50,42 @@ export const newsListQuery = `*[_type == "page" && ${newsSlugFilter}] | order(co
 
 export const homepageNewsQuery = `*[_type == "page" && ${newsSlugFilter}] | order(coalesce(publishedAt, _createdAt) desc) [0...3] ${newsProjection}`;
 
+/** Shared by homepage and page documents. */
+export const contentSectionsProjection = `{
+  _key,
+  _type,
+  heading,
+  textLayout,
+  image,
+  tiles[] {
+    _key,
+    target,
+    href,
+    title,
+    excerpt,
+    ctaLabel,
+    page->{
+      _type,
+      title,
+      name,
+      "slug": slug.current,
+      route,
+      "docExcerpt": select(
+        _type == "person" => pt::text(bio),
+        _type == "project" => summary,
+        _type == "publication" => summary,
+        _type == "landingPage" => lead,
+        _type == "aboutPage" => lead,
+        _type == "page" => select(
+          defined(excerpt) && excerpt != "" => excerpt,
+          defined(heroLead) && heroLead != "" => heroLead,
+          pt::text(body)
+        )
+      )
+    }
+  }
+}`;
+
 export const pageBySlugQuery = `*[_type == "page" && slug.current == $slug][0] {
   _id,
   title,
@@ -64,6 +100,7 @@ export const pageBySlugQuery = `*[_type == "page" && slug.current == $slug][0] {
     array::join(string::split(pt::text(body), "")[0...${EXCERPT_FALLBACK_MAX}], "")
   ),
   "cover": heroImage,
+  sections[] ${contentSectionsProjection},
   body
 }`;
 
@@ -209,33 +246,7 @@ export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
   heroCtaLabel,
   heroCtaHref,
   heroImage,
-  homepage {
-    about {
-      heading,
-      lead,
-      ctaLabel,
-      ctaHref,
-      image
-    },
-    methods {
-      heading,
-      lead,
-      ctaLabel,
-      ctaHref
-    },
-    featured {
-      label,
-      lead,
-      ctaLabel,
-      ctaHref
-    },
-    czytelnia {
-      heading,
-      lead,
-      ctaLabel,
-      ctaHref
-    }
-  }
+  homepageSections[] ${contentSectionsProjection}
 }`;
 
 const publicationFileProjection = `file { asset->{ url, originalFilename, mimeType } }`;

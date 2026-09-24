@@ -1,42 +1,11 @@
 import { cmsCta, cmsText } from "./cms-text";
+import { resolveContentSections } from "./content-sections";
 import { resolveMainNav } from "./navigation";
 import { DEFAULT_CENTRUM_URL } from "./routes";
 import { getSiteSettings } from "./sanity/fetch";
-import type {
-  HomepageAbout,
-  HomepageBlock,
-  HomepageContent,
-  ResolvedFooter,
-  ResolvedSite,
-  SiteSettings,
-  SiteSettingsHomepageBlock,
-  SiteSettingsHomepageFeatured,
-} from "./sanity/types";
+import type { ResolvedFooter, ResolvedSite, SiteSettings } from "./sanity/types";
 
-export type { HomepageAbout, HomepageBlock, HomepageContent, ResolvedSite };
-
-function resolveBlock(
-  cms: SiteSettingsHomepageBlock | null | undefined,
-): HomepageBlock {
-  const cta = cmsCta(cms?.ctaLabel, cms?.ctaHref);
-  return {
-    heading: cmsText(cms?.heading),
-    lead: cmsText(cms?.lead),
-    ctaLabel: cta?.label ?? null,
-    ctaHref: cta?.href ?? null,
-  };
-}
-
-function resolveFeatured(
-  cms: SiteSettingsHomepageFeatured | null | undefined,
-): HomepageBlock {
-  return resolveBlock({
-    heading: cms?.label,
-    lead: cms?.lead,
-    ctaLabel: cms?.ctaLabel,
-    ctaHref: cms?.ctaHref,
-  });
-}
+export type { HomepageContent, ResolvedSite } from "./sanity/types";
 
 function resolveFooter(
   settings: SiteSettings | null,
@@ -52,31 +21,12 @@ function resolveFooter(
   };
 }
 
-export function homepageBlockHasContent(block: HomepageBlock) {
-  return Boolean(block.heading || block.lead || (block.ctaLabel && block.ctaHref));
-}
-
 export async function getResolvedSite(): Promise<ResolvedSite> {
   const settings = await getSiteSettings();
   const title = cmsText(settings?.title) || "Fundacja Drama Way";
   const tagline = cmsText(settings?.tagline);
   const heading = cmsText(settings?.heroHeading);
-  const cmsHomepage = settings?.homepage;
   const heroCta = cmsCta(settings?.heroCtaLabel, settings?.heroCtaHref);
-
-  const aboutBlock = resolveBlock(cmsHomepage?.about);
-  const about: HomepageAbout = {
-    ...aboutBlock,
-    image: cmsHomepage?.about?.image ?? null,
-    imageAlt: cmsText(cmsHomepage?.about?.image?.alt) || aboutBlock.heading || "",
-  };
-
-  const homepage: HomepageContent = {
-    about,
-    methods: resolveBlock(cmsHomepage?.methods),
-    featured: resolveFeatured(cmsHomepage?.featured),
-    czytelnia: resolveBlock(cmsHomepage?.czytelnia),
-  };
 
   return {
     title,
@@ -92,6 +42,8 @@ export async function getResolvedSite(): Promise<ResolvedSite> {
       image: settings?.heroImage ?? null,
       imageAlt: cmsText(settings?.heroImage?.alt) || heading || title,
     },
-    homepage,
+    homepage: {
+      sections: resolveContentSections(settings?.homepageSections),
+    },
   };
 }

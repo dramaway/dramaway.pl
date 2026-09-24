@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { ContentModules } from "@/components/sections/content-modules";
 import { PageHero } from "@/components/sections/page-hero";
 import { Section } from "@/components/layout/section";
 import { PortableBody } from "@/components/portable-body";
@@ -23,6 +23,7 @@ export function PageArticle({
         image={page.cover}
         parent={parent}
       />
+      <ContentModules sections={page.sections} variant="page" />
       <Section>
         <div className="measure">
           <PortableBody value={page.body} />

@@ -15,7 +15,7 @@ Grupy:
 - **Stopka** — logo, adres, cytat.
 - **Ikony** — ikona karty przeglądarki i obrazek do udostępniania. Zwykle zostaje przy utrzymaniu.
 - **Hero** — duży nagłówek strony startowej, lead, przycisk, zdjęcie.
-- **Homepage** — bloki „Kim jesteśmy”, Metody, wyróżniony projekt, Czytelnia. Pusta grupa pól oznacza, że tego bloku nie ma na `/`.
+- **Homepage** — lista sekcji pod hero: kafelki (same albo ze zdjęciem) i aktualności. Pusta lista = na stronie głównej zostaje samo hero. Te same sekcje można dodać na dokumencie **Page**, nad treścią artykułu.
 
 <!-- screen: strony-glowna-grupy | Dokument Strona główna z widocznymi zakładkami grup | Widać Nawigacja, Stopka, Hero i Homepage jako osobne karty jednego dokumentu -->
 
@@ -52,7 +52,7 @@ Niżej na liście są typy, nie pojedyncze skróty:
 
 - **Project** — jeden projekt, adres `/projekty/…`. Art Generacje ma dodatkowo podstrony edycji.
 - **Person** — osoba, adres `/zespol/…`.
-- **Page** — Kontakt, Metody, strony typu statut, aktualności. Metody i Kontakt, gdy są skrótem na górze, znikają z tej listy, żeby nie wisiały dwa razy.
+- **Page** — Kontakt, Metody, strony typu statut, aktualności. Nad treścią artykułu można dodać te same sekcje co na stronie głównej (kafelki, aktualności). Na aktualnościach (`aktualnosc-*`) tego pola nie ma. Metody i Kontakt, gdy są skrótem na górze, znikają z tej listy, żeby nie wisiały dwa razy.
 - **Publication** — tekst Czytelni, adres `/czytelnia/…`.
 - **Category** — etykieta kategorii w Czytelni, nie osobna strona metody.
 

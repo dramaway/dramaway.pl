@@ -2,6 +2,7 @@ import "server-only";
 
 import { cache } from "react";
 
+import { resolveContentSections } from "../content-sections";
 import { sanityClient } from "./client";
 import {
   aboutPageQuery,
@@ -27,6 +28,7 @@ import {
 } from "./queries";
 import type {
   AboutPage,
+  CmsContentSection,
   LandingPage,
   PageDetail,
   PageListItem,
@@ -76,7 +78,14 @@ export async function getHomepageNews(): Promise<PageListItem[]> {
 export const getPageBySlug = cache(async function getPageBySlug(
   slug: string,
 ): Promise<PageDetail | null> {
-  return sanityClient.fetch(pageBySlugQuery, { slug }, revalidate);
+  const page = await sanityClient.fetch<
+    Omit<PageDetail, "sections"> & { sections?: CmsContentSection[] | null }
+  >(pageBySlugQuery, { slug }, revalidate);
+  if (!page) return null;
+  return {
+    ...page,
+    sections: resolveContentSections(page.sections),
+  };
 });
 
 /** Root Drupal aliases: try the slug, then the migrated `aktualnosc-` prefix. */

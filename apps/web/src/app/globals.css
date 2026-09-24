@@ -149,6 +149,10 @@
    * size → remainder below the photo = 1.98× size).
    */
   --hero-media-max: calc(100vh - var(--dot-size) * 1.98);
+  /* Content modules: gap from the centre seam, left column drop, photo height. */
+  --module-center-inset: calc(1.5 * var(--dot-size));
+  --module-stagger: var(--dot-size);
+  --module-media-min: min(52rem, var(--hero-media-max));
   /*
    * Portable Text images. Size is a scale (width + height), not only a
    * max-width — a shared height cap made Small/Medium/Wide look identical
@@ -783,6 +787,47 @@
     }
 
     /*
+     * Content modules: 1.5 dots of air at the centre seam, left column lower
+     * than the right. Photo keeps a viewport-capped height unless the text
+     * column is taller.
+     */
+    .content-split > .split-text {
+      padding-inline-end: var(--module-center-inset);
+    }
+
+    .content-split.split-reverse > .split-text {
+      padding-inline-start: var(--module-center-inset);
+    }
+
+    .content-split:not(.split-reverse) > .split-media {
+      margin-inline-start: var(--module-center-inset);
+    }
+
+    .content-split.split-reverse > .split-media {
+      margin-inline-end: var(--module-center-inset);
+    }
+
+    .content-split:not(.split-reverse) > .split-text,
+    .content-split.split-reverse > .split-media {
+      margin-block-start: var(--module-stagger);
+    }
+
+    .content-split > .split-media {
+      align-self: stretch;
+      min-height: var(--module-media-min);
+      height: 100%;
+      aspect-ratio: auto;
+    }
+
+    .content-split-solo > .split-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100%;
+      padding-block: calc(var(--spacing-section) * 1.75);
+    }
+
+    /*
      * Split heroes at lg+: header leaves vertical flow and sits in the left
      * column (same span as .split-text). Photo occupies the right column
      * from the top of the page — nav never overlaps it. `data-home` is `/`
@@ -996,6 +1041,13 @@
   }
 
   .blob-row-excerpt {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .content-tile-clamp {
     display: -webkit-box;
     overflow: hidden;
     -webkit-box-orient: vertical;

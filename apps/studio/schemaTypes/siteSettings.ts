@@ -1,41 +1,6 @@
-import { defineArrayMember, defineType, defineField, type FieldDefinition } from "sanity";
+import { defineArrayMember, defineType, defineField } from "sanity";
 import { IcoFileInput } from "../components/ico-file-input";
-
-function ctaFields(): FieldDefinition[] {
-  return [
-    defineField({
-      name: "ctaLabel",
-      title: "CTA label",
-      type: "string",
-    }),
-    defineField({
-      name: "ctaHref",
-      title: "CTA target",
-      type: "string",
-      description: "Internal path, e.g. /fundacja",
-    }),
-  ];
-}
-
-function homepageTextFields(
-  headingName: "heading" | "label",
-  headingTitle: string,
-): FieldDefinition[] {
-  return [
-    defineField({
-      name: headingName,
-      title: headingTitle,
-      type: "string",
-    }),
-    defineField({
-      name: "lead",
-      title: "Lead",
-      type: "text",
-      rows: 4,
-    }),
-    ...ctaFields(),
-  ];
-}
+import { contentSectionMembers } from "./contentModule";
 
 export const siteSettings = defineType({
   name: "siteSettings",
@@ -280,65 +245,12 @@ export const siteSettings = defineType({
       ],
     }),
     defineField({
-      name: "homepage",
-      title: "Homepage",
-      type: "object",
+      name: "homepageSections",
+      title: "Sekcje",
+      type: "array",
       group: "homepage",
-      description:
-        "Empty field = that block is omitted on `/`. No frontend defaults.",
-      fields: [
-        defineField({
-          name: "about",
-          title: "About",
-          type: "object",
-          fields: [
-            ...homepageTextFields("heading", "Heading"),
-            defineField({
-              name: "image",
-              title: "Image",
-              type: "image",
-              options: { hotspot: true },
-              description: "Shared with the Methods column in the split layout.",
-              fields: [
-                defineField({
-                  name: "alt",
-                  title: "Alt text",
-                  type: "string",
-                }),
-              ],
-            }),
-          ],
-        }),
-        defineField({
-          name: "methods",
-          title: "Methods",
-          type: "object",
-          fields: homepageTextFields("heading", "Heading"),
-        }),
-        defineField({
-          name: "featured",
-          title: "Featured project",
-          type: "object",
-          description:
-            "Label and blurb only. The project title comes from the featured project document.",
-          fields: homepageTextFields("label", "Label"),
-        }),
-        defineField({
-          name: "czytelnia",
-          title: "Czytelnia",
-          type: "object",
-          description:
-            "Lead comes from the Czytelnia landing page. Empty heading = hide this teaser.",
-          fields: [
-            defineField({
-              name: "heading",
-              title: "Heading",
-              type: "string",
-            }),
-            ...ctaFields(),
-          ],
-        }),
-      ],
+      description: "Pod hero. Pusta lista = na stronie głównej zostaje samo hero.",
+      of: contentSectionMembers(),
     }),
   ],
   groups: [
@@ -347,7 +259,7 @@ export const siteSettings = defineType({
     { name: "footer", title: "Stopka" },
     { name: "branding", title: "Ikony" },
     { name: "hero", title: "Hero" },
-    { name: "homepage", title: "Homepage" },
+    { name: "homepage", title: "Sekcje" },
   ],
   preview: {
     prepare: () => ({ title: "Site settings" }),

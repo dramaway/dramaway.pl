@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Section } from "@/components/layout/section";
 import { Blob } from "@/components/visual/blob";
 import { CtaLink } from "@/components/visual/cta-link";
-import { NEWS_CTA_LABEL } from "@/lib/homepage-copy";
+import { NEWS_CTA_LABEL, NEWS_SECTION_HEADING } from "@/lib/homepage-copy";
 import { cn } from "@/lib/utils";
 
 export type HomeNewsItem = {
@@ -26,16 +26,25 @@ function formatPolishMonthYear(iso: string): string | null {
  * Homepage news row: up to three text cards, no photos. Empty list is a
  * valid state — the section stays in the page rhythm without crashing.
  */
-export function HomeNews({ items }: { items: HomeNewsItem[] }) {
+export function HomeNews({
+  items,
+  heading,
+  headingId = "home-news-heading",
+}: {
+  items: HomeNewsItem[];
+  heading?: string | null;
+  headingId?: string;
+}) {
   const cards = items.slice(0, 3);
+  const title = heading?.trim() || NEWS_SECTION_HEADING;
 
   return (
-    <Section aria-labelledby="home-news-heading">
+    <Section aria-labelledby={headingId}>
       <h2
-        id="home-news-heading"
+        id={headingId}
         className="font-display text-h2 font-black"
       >
-        Aktualności
+        {title}
       </h2>
       <ul className="cols-3 mt-12">
         {cards.map((item, index) => {

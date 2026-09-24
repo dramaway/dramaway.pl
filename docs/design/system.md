@@ -28,6 +28,8 @@ Wszystkie w bloku `@theme` w [apps/web/src/app/globals.css](../../apps/web/src/a
 |-------|----------|
 | `.page` | kontener wyśrodkowany, `--page-max` z `--page-pad` |
 | `.split` / `.split-text` / `.split-media` | pełna szerokość viewportu; tekst w kolumnie ograniczonej do ~2/3 `--page-max` z `--page-pad`; zdjęcie dobija do krawędzi **viewportu** (od `lg`). Poniżej `lg`: tekst pierwszy, kadr inset 4:5 z `--media-split-max` |
+| `.content-split` | moduł kafelków ze zdjęciem. Od `lg`: odstęp od osi środka `--module-center-inset` (1,5 × `--dot-size`), lewa kolumna niżej o `--module-stagger`. Zdjęcie ma wysokość `--module-media-min` (mieści się w viewportcie razem z pasmem), chyba że kolumna tekstu jest wyższa. `.content-split-solo` wyśrodkowuje jeden kafelek w pionie. |
+| `.content-tile-clamp` | opis kafelka ścięty do 3 linii, gdy w module są co najmniej dwa kafelki |
 | `.split-reverse` | to samo, ale zdjęcie po lewej (spad do lewej krawędzi) |
 | `.hero` / `.hero-title` / `.hero-heading` / `.hero-copy` / `.hero-media-wrap` / `.hero-media` / `.hero-media-empty` / `.hero-stack` | hero: od `lg` to `.split`; poniżej `lg` siatka H1 → kadr w kole (`--hero-media-span`) → lead/CTA. `.hero-heading` owija okruch + H1 na podstronach; `.hero-title` zostawia **każdy** H1 hero (homepage i podstrony) w kapitalizacji zdaniowej. `.hero-stack` = tekstowy hero edycji (bez `data-split-hero`). `.hero-media-empty` = ten sam kadr bez zdjęcia (CMS puste), żeby szerokość tekstu i pasmo nie skakały |
 | `[data-home]` / `[data-split-hero]` | od `lg` overlay headera w lewej kolumnie. `data-home` (`/`) oraz `data-no-palette` (`/fundacja`, `/kontakt`) chowają `.subpage-palette`. `data-split-hero` ogranicza kadr do `--hero-media-max` |
@@ -66,7 +68,7 @@ W `apps/web/src/components/`:
 - `visual/palette-row.tsx` — siedem stykających się kół marki.
 - `visual/blob.tsx` — piaskowe koło za nagłówkiem. Wymaga przodka z `position: relative` (`.stack-item`, `.pt-term`). Stacking context jest na `.stack` / `.portable-body`, żeby koło było **pod** tekstem sąsiednich bloków. Przesunięcie w lewo jest ograniczone do `--page-pad`, żeby koło nie było ucinane krawędzią viewportu na wąskich ekranach.
 - `visual/cta-link.tsx` — zielony link z rulką i kropką. Najczęstszy element Figmy, 46 instancji. Prop `presentational` renderuje go jako `<span aria-hidden>` — do użycia w klikalnym kafelku, gdzie link kafelka prowadzi już w to samo miejsce i drugi byłby zdublowanym przystankiem dla klawiatury i czytnika. Href z CMS idzie przez allowlistę (`lib/safe-url.ts`).
-- `visual/media.tsx` — `next/image` plus builder Sanity. Warianty `bleed` (promień 0) i `inset` (promień 16), proporcje `portrait` / `landscape` / `album`. Bez obrazu rysuje piaskowy blok, chyba że dostanie `fallbackSrc`. Homepage „Kim jesteśmy?” nie podstawia już `about-photo.jpg` — puste `homepage.about.image` = pusty slot.
+- `visual/media.tsx` — `next/image` plus builder Sanity. Warianty `bleed` (promień 0) i `inset` (promień 16), proporcje `portrait` / `landscape` / `album`. Bez obrazu rysuje piaskowy blok, chyba że dostanie `fallbackSrc`. Moduł kafelków bez zdjęcia nie podstawia pliku z `public/`.
 - `visual/image-gallery.tsx` — klient: mozaika; lightbox (`yet-another-react-lightbox` + Zoom) ładuje się dopiero po otwarciu (`next/dynamic`, `ssr: false`). Kafelki przez `Media` (`object-cover`); lightbox `fit("max")` + `srcSet`, kadr `contain`, bez upscalingu (`maxZoomPixelRatio: 1`). `LeadGallery` i `PortableBody` zostają serwerowe. `PageHero` **nie** importuje `PortableBody` (dzieci w kolumnie copy, np. `/kontakt`). Chrome PL: `subpage-copy.ts` (`gallery.*`).
 
 ## Jak dołożyć sekcję
@@ -110,18 +112,19 @@ Autorskie, bo Figma ich nie ma:
 
 Etykiety UI (filtry, „więcej”, puste listy) mogą zostać w `homepage-copy.ts` / `subpage-copy.ts`. **Treść editorialna (tytuły, leady, CTA, summary, body) jest tylko z CMS.** Puste pole = ten blok nie pojawia się. Nie zapisujemy defaultów do datasetu i nie podstawiamy tekstu z ramki.
 
-Hero homepage już jest w `siteSettings` (heading, lead, CTA, zdjęcie). Grupa `homepage` (Kim / Metody / featured / Czytelnia) jest pusta — te bloki na `/` znikają, dopóki ktoś ich nie wypełni. Teaser wyróżnionego projektu bierze tytuł i `summary` z dokumentu `project`.
+Hero homepage jest w `siteSettings` (heading, lead, CTA, zdjęcie). Reszta `/` to `homepageSections`: moduł aktualności i moduły kafelków (te same typy co `page.sections`). Pusta lista = pod hero nie ma sekcji. Kafelek bez własnego tytułu bierze tytuł dokumentu.
 
 | Ramka | Kod | Status |
 |-------|-----|--------|
-| CTA Czytelni na `/`: „poznajmy się” (`59:724`) | tylko gdy `homepage.czytelnia` jest wypełnione | **otwarte z designerki** — kopia CTA „Kim jesteśmy?” |
-| Featured: kafelek → AG, CTA „poznaj nasze projekty” → `/projekty` | kafelek z dokumentu `project`; CTA tylko z `homepage.featured` | zamierzone |
+| CTA Czytelni na `/` | etykieta kafelka, gdy redakcja ją wpisze; pustka = chrome „czytaj więcej” | jeden link na cały kafelek |
+| Featured: osobny CTA na `/projekty` | kafelek prowadzi tylko do wybranego dokumentu | jeden adres; drugi cel = drugi kafelek |
+| `siteSettings.homepageSections` | kolejność sekcji z CMS | seed: `pnpm seed:homepage-sections` |
 | AG hero CTA (`79:200`) | „zobacz wszystkie edycje” (`#edycje`) — chrome listy, nie CMS | dryf modelu, przywrócone |
 | AG lead (`79:191`) | `project.summary` | puste = brak leadu |
 | H2 „Edycje” na AG | ramka nie ma tego nagłówka (lista od razu od roku) | brak w ramce — kotwica listy (`aria-label`) |
 | Kontakt / hub Bazy — unikalny lead | `/kontakt` hero = `page.title` + `page.body`. Hub: karty Metody/Czytelnia bez leadu z kodu | ramka kontaktu w budowie |
 | Stopka — adres vs nazwa prawna | ramka: „Fundacja Kultury i Sztuki”; `/kontakt` ma nazwę prawną | `siteSettings.footer.address`. Nazwa prawna zostaje w body strony Kontakt |
-| `siteSettings.homepage` | wypełnione 2026-09-07 | Kim / Metody / featured / Czytelnia; dalsza korekta w Studio |
+| `siteSettings.homepageSections` | moduły kafelków i aktualności | pusta lista = brak sekcji pod hero |
 | Fundacja hero CTA Group 43 (`130:1331`) | z `aboutPage` | puste = brak CTA |
 | Wartości (`130:1462`…) | etykieta w kole, `sand`, koła stykają się; 8. = `brand-3` | lista z `aboutPage.methods.values`, pusta = brak kół. Poniżej `lg`: jeden przewijany rząd, etykiety bez łamania |
 | Filtry Czytelni (`79:50`) | CTA rodzaju gdy ≥2 szuflady; kategorie jako sekcje (magenta Light, `(n)`, open/closed) | ramka ma szuflady. Brak tagów w rodzaju = płaska lista, bez „Pozostałe”. Chrome: „pokaż wszystkie”, „zwiń”, „Pozostałe” |
@@ -130,9 +133,9 @@ Hero homepage już jest w `siteSettings` (heading, lead, CTA, zdjęcie). Grupa `
 
 ## Stan na teraz
 
-Gotowe na `/`: skład z ramki na `lg+` (nie pixel-perfect) oraz świadomy pass mobilny poniżej 1024 px. Hero na desktopie: dwie kolumny od góry viewportu — nav w lewej, portret od góry prawej i na spad do krawędzi okna. Na mobile: sticky header z overlayem, H1 od razu, kadr w kole, potem lead. Pasma kół: stała średnica, pełne stykające się koła, rzędy przy krawędziach strony; na `lg+` zachodzą na krawędzie zdjęć (hero od dołu; „Kim jesteśmy?" po odbiciu schodka, gdy ten blok jest w CMS); poniżej `lg` pasmo pod hero nie nachodzi na koło. Aktualności z nagłówkiem AKTUALNOŚCI (`text-h2` na H2), tytułami kart `text-h4` na H3, naprzemiennymi kolorami tytułu i daty (magenta / navy) i rulkami CTA na jednej linii; siatka ma szerszą rynnę niż 36 px z ramki. Kim/Metody i Czytelnia na `/` tylko gdy `siteSettings.homepage` jest wypełnione. Teaser AG bierze tytuł i `summary` z `project`. Paleta wyśrodkowana jako grupa, stopka: logo+adres z lewej, cytat Boala z prawej. Ciągły tekst UI: Alexandria Light 18; hero i Portable Text: 20 (`text-lead`). Nagłówki zawsze wersalikami.
+Gotowe na `/`: skład z ramki na `lg+` (nie pixel-perfect) oraz świadomy pass mobilny poniżej 1024 px. Hero na desktopie: dwie kolumny od góry viewportu — nav w lewej, portret od góry prawej i na spad do krawędzi okna. Na mobile: sticky header z overlayem, H1 od razu, kadr w kole, potem lead. Pasma kół: stała średnica, pełne stykające się koła, rzędy przy krawędziach strony; na `lg+` zachodzą na krawędzie zdjęć (hero od dołu; „Kim jesteśmy?" po odbiciu schodka, gdy ten blok jest w CMS); poniżej `lg` pasmo pod hero nie nachodzi na koło. Aktualności (gdy sekcja jest w `homepageSections`) z nagłówkiem AKTUALNOŚCI (`text-h2` na H2), tytułami kart `text-h4` na H3, naprzemiennymi kolorami tytułu i daty (magenta / navy) i rulkami CTA na jednej linii; siatka ma szerszą rynnę niż 36 px z ramki. Dalsze sekcje `/` pochodzą z tej samej listy w CMS. Paleta wyśrodkowana jako grupa, stopka: logo+adres z lewej, cytat Boala z prawej. Ciągły tekst UI: Alexandria Light 18; hero i Portable Text: 20 (`text-lead`). Nagłówki zawsze wersalikami.
 
-Klikalne kafelki: karta aktualności → artykuł, Art Generacje → `/projekty/art-generacje` przy CTA prowadzącym na listę `/projekty`, Czytelnia → `/czytelnia`.
+Klikalne kafelki: cały kafelek prowadzi pod jeden adres (etykieta linku jest dekoracją). Aktualność → artykuł.
 
 Sprawdzone przez CDP na 1440 / 1280 / 1024 / 768 / 375: `scrollWidth == innerWidth` (brak przepełnienia poziomego), żaden element nie wychodzi za krawędzie, rulki CTA aktualności mają identyczne `top` w układzie wielokolumnowym, a test trafień (`elementFromPoint`) potwierdza jeden link na kafelek i osobno klikalne CTA Art Generacji.
 

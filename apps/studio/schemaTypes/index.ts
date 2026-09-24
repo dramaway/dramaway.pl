@@ -1,5 +1,6 @@
 import { aboutPage } from "./aboutPage";
 import { blockContent, textColumns, youtube } from "./blockContent";
+import { contentModule, contentTile, newsFeedModule } from "./contentModule";
 import { edition } from "./edition";
 import { editionOutcome } from "./editionOutcome";
 import { landingPage } from "./landingPage";
@@ -15,6 +16,9 @@ export const schemaTypes = [
   blockContent,
   youtube,
   textColumns,
+  contentTile,
+  contentModule,
+  newsFeedModule,
   editionOutcome,
   edition,
   project,
