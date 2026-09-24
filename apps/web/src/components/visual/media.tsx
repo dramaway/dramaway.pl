@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { urlFor } from "@/lib/sanity/image";
+import { objectPositionFromHotspot } from "@/lib/sanity/hotspot";
 import type { SanityImage } from "@/lib/sanity/types";
 import { cn } from "@/lib/utils";
 
@@ -39,6 +40,7 @@ export function Media({
   const src = image
     ? urlFor(image).width(1600).fit("max").auto("format").url()
     : (fallbackSrc ?? null);
+  const objectPosition = objectPositionFromHotspot(image);
 
   return (
     <div
@@ -57,6 +59,7 @@ export function Media({
           sizes={sizes}
           priority={priority}
           className="object-cover"
+          style={objectPosition ? { objectPosition } : undefined}
         />
       ) : null}
     </div>
