@@ -2371,7 +2371,8 @@
   }
 
   /*
-   * Czytelnia category sections. Open unless `?kategoria=` focuses one.
+   * Czytelnia category sections. Each heading toggles its own list.
+   * `?kategoria=` on arrival opens that section and closes the rest.
    * Title is Alexandria Light magenta (not display uppercase). Count stays
    * grey and small. Gap under the title clears the first row's blob — keep
    * it on the list, not the toggle, so the hit area stays the heading row.

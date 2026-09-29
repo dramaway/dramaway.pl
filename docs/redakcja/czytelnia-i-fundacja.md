@@ -29,7 +29,7 @@ Okładka na spisie to **pierwszy obrazek w tekście** (Body). Osobnego pola okł
 
 Szczegóły układu spisu (przyciski rodzaju, sekcje kategorii) wynikają z Format i Categories. Nie ma osobnego ekranu „ułożenia Czytelni” poza dokumentem listingu **Czytelnia** (hero) i samymi publikacjami.
 
-Żeby z Bazy wiedzy (albo z innego tekstu) otworzyć jedną metodę: w treści wstaw **Button**, cel **Dokument**, listing **Czytelnia**, w **Zaawansowane → Parametry** wpisz `kategoria=…` (na przykład `kategoria=teatr-forum`). Tabela slugów i kotwica: [Tekst](tekst.md#zaawansowane-kotwica-i-parametry). Bez parametru wszystkie sekcje są otwarte. Kliknięcie nagłówka sekcji na spisie też zmienia ten adres.
+Żeby z Bazy wiedzy (albo z innego tekstu) otworzyć jedną metodę: w treści wstaw **Button**, cel **Dokument**, listing **Czytelnia**, w **Zaawansowane → Parametry** wpisz `kategoria=…` (na przykład `kategoria=teatr-forum`). Tabela slugów i kotwica: [Tekst](tekst.md#zaawansowane-kotwica-i-parametry). Bez parametru wszystkie sekcje są otwarte. Na spisie nagłówek zwija i rozwija swoją sekcję; adres dostaje `kategoria`, gdy zostaje otwarta dokładnie jedna.
 
 ## O fundacji
 

@@ -82,7 +82,7 @@ Czego nie wklejać: spacji, `#` w polu Parametry, `?` w polu Kotwica.
 | Teatr zaangażowany społecznie | `kategoria=teatr-zaangazowany-spolecznie` |
 | Metody twórcze | `kategoria=metody-tworcze` |
 
-Szuflada formatu (artykuły, książki, scenariusze, multimedia) to drugi parametr, na przykład `rodzaj=books`. Oba naraz zapisuje się `rodzaj=books&kategoria=…`, ale kategoria musi mieć publikacje w tej szufladzie. Sześć metod z tabeli wisi przy artykułach, więc sam `kategoria=…` wystarcza i pozostałe sekcje się zwijają. Bez parametru `kategoria` wszystkie sekcje na `/czytelnia` są otwarte. Kliknięcie nagłówka sekcji na samym spisie też zmienia ten adres.
+Szuflada formatu (artykuły, książki, scenariusze, multimedia) to drugi parametr, na przykład `rodzaj=books`. Oba naraz zapisuje się `rodzaj=books&kategoria=…`, ale kategoria musi mieć publikacje w tej szufladzie. Sześć metod z tabeli wisi przy artykułach, więc sam `kategoria=…` wystarcza i pozostałe sekcje się zwijają. Bez parametru `kategoria` wszystkie sekcje na `/czytelnia` są otwarte. Na samym spisie nagłówek zwija albo rozwija tylko swoją sekcję.
 
 Więcej o polach publikacji: [Czytelnia i O fundacji](czytelnia-i-fundacja.md).
 
