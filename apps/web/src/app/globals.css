@@ -1754,6 +1754,7 @@
     background: transparent;
     cursor: pointer;
     container-type: inline-size;
+    isolation: isolate;
   }
 
   .pt-embed-poster:focus-visible {
@@ -1767,6 +1768,10 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    /* Soften wild YouTube stills toward sand / body chroma. */
+    filter: saturate(0.62) contrast(0.95);
+    mix-blend-mode: multiply;
+    opacity: 0.92;
   }
 
   .pt-embed-poster::after {
@@ -1774,7 +1779,9 @@
     position: absolute;
     inset: 0;
     z-index: 1;
-    background-color: color-mix(in srgb, var(--color-ink) 18%, transparent);
+    background-color: var(--color-sand);
+    mix-blend-mode: color;
+    opacity: 0.24;
     pointer-events: none;
   }
 
