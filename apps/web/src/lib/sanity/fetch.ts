@@ -10,7 +10,7 @@ import {
   contentFeedQuery,
   newsListQuery,
   pageBySlugQuery,
-  pageSlugsQuery,
+  pageRoutesQuery,
   pagesBySlugsQuery,
   pagesListQuery,
   peopleListQuery,
@@ -33,6 +33,7 @@ import type {
   LandingPage,
   PageDetail,
   PageListItem,
+  PageRoute,
   PersonDetail,
   PersonListItem,
   ProjectDetail,
@@ -126,8 +127,8 @@ export const getLandingPage = cache(async function getLandingPage(
   return sanityClient.fetch(landingPageByIdQuery, { id }, revalidate);
 });
 
-export async function getPageSlugs(): Promise<string[]> {
-  return sanityClient.fetch(pageSlugsQuery, {}, revalidate);
+export async function getPageRoutes(): Promise<PageRoute[]> {
+  return sanityClient.fetch(pageRoutesQuery, {}, revalidate);
 }
 
 export async function getProjects(): Promise<ProjectListItem[]> {

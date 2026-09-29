@@ -6,10 +6,10 @@ import {
   personPath,
   projectPath,
   publicationPath,
-  publicPathForPageSlug,
+  publicPathForPage,
 } from "@/lib/routes";
 import {
-  getPageSlugs,
+  getPageRoutes,
   getPersonSlugs,
   getProjectEditionParams,
   getPublicationSlugs,
@@ -31,9 +31,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   if (!siteIndexingEnabled()) return [];
 
   const origin = siteOrigin();
-  const [pageSlugs, personSlugs, publicationSlugs, projects] =
+  const [pages, personSlugs, publicationSlugs, projects] =
     await Promise.all([
-      getPageSlugs(),
+      getPageRoutes(),
       getPersonSlugs(),
       getPublicationSlugs(),
       getProjectEditionParams(),
@@ -41,8 +41,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const paths = new Set<string>(HUBS);
 
-  for (const slug of pageSlugs) {
-    if (slug) paths.add(publicPathForPageSlug(slug));
+  for (const page of pages) {
+    if (page.slug) paths.add(publicPathForPage(page));
   }
   for (const slug of personSlugs) {
     if (slug) paths.add(personPath(slug));

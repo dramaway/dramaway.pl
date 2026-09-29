@@ -3,11 +3,9 @@ import { defineField, defineType, type FieldDefinition } from "sanity";
 /**
  * Page slugs hidden from the nav picker.
  * News (`aktualnosc-*`) and the publication leftover `metody-tzs` are filtered
- * in GROQ below. Keep the slug list in sync with `apps/web/src/lib/routes.ts`
- * (`PROJECT_SECTION_PAGE_SLUGS`, `PROJECT_DOCUMENT_SLUGS`).
+ * in GROQ below. Leftover Drupal pages and project copies stay out of the picker.
  */
 const HIDDEN_PAGE_SLUGS = [
-  "wydawnictwo",
   "projekty-zakonczone",
   "portal-wiedzy",
   "szkolenia",

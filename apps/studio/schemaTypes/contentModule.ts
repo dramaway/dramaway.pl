@@ -6,7 +6,6 @@ import { defineArrayMember, defineField, defineType } from "sanity";
  * Keep in sync with `HIDDEN_PAGE_SLUGS` in `navItem.ts`.
  */
 const HIDDEN_PAGE_SLUGS = [
-  "wydawnictwo",
   "projekty-zakonczone",
   "portal-wiedzy",
   "szkolenia",

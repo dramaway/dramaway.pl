@@ -5,12 +5,13 @@ import {
   TILE_CTA_MEET,
 } from "./homepage-copy";
 import { hrefForDocument } from "./navigation";
-import { personPath, projectPath, publicPathForPageSlug, publicationPath } from "./routes";
+import { personPath, projectPath, publicPathForPage, publicationPath } from "./routes";
 import { safeHref } from "./safe-url";
 import type {
   CmsContentImage,
   CmsContentSection,
   CmsContentTile,
+  ContentFeedDoc,
   ContentFeedPool,
   FeedSource,
   ResolvedSection,
@@ -139,13 +140,19 @@ export function selectFeedItems(
     .slice(0, section.limit);
 }
 
-const FEED_HREF: Record<FeedSource, (slug: string) => string> = {
-  news: publicPathForPageSlug,
-  page: publicPathForPageSlug,
-  person: personPath,
-  project: projectPath,
-  publication: publicationPath,
-};
+function feedHref(source: FeedSource, doc: ContentFeedDoc): string {
+  const slug = doc.slug?.trim() ?? "";
+  if (source === "news" || source === "page") {
+    return publicPathForPage({
+      slug,
+      section: doc.section,
+      isNews: source === "news",
+    });
+  }
+  if (source === "person") return personPath(slug);
+  if (source === "project") return projectPath(slug);
+  return publicationPath(slug);
+}
 
 /** Flatten the per-kind pools into linkable cards. Order is applied later, per section. */
 export function toFeedCandidates(pool: ContentFeedPool | null | undefined): FeedCandidate[] {
@@ -163,7 +170,7 @@ export function toFeedCandidates(pool: ContentFeedPool | null | undefined): Feed
         id: doc._id,
         source,
         title,
-        href: FEED_HREF[source](slug),
+        href: feedHref(source, doc),
         excerpt: clip(cmsText(doc.excerpt)),
         createdAt: cmsText(doc._createdAt),
         ctaLabel: defaultCta(

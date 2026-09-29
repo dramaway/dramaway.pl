@@ -11,7 +11,7 @@ import type {
   ResolvedAboutHistoryItem,
   ResolvedAboutPage,
 } from "./sanity/types";
-import { publicPathForPageSlug } from "./routes";
+import { publicPathForPage } from "./routes";
 
 function resolveDocument(item: AboutDocumentItem): ResolvedAboutDocument | null {
   const fileUrl = safeHref(item.file?.asset?.url);
@@ -30,7 +30,7 @@ function resolveDocument(item: AboutDocumentItem): ResolvedAboutDocument | null 
     if (!title) return null;
     return {
       title,
-      href: publicPathForPageSlug(pageSlug),
+      href: publicPathForPage({ slug: pageSlug, section: item.page?.section }),
       external: false,
     };
   }

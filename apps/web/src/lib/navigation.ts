@@ -3,7 +3,7 @@ import {
   mainNav,
   personPath,
   projectPath,
-  publicPathForPageSlug,
+  publicPathForPage,
   publicationPath,
   type NavItem,
 } from "./routes";
@@ -20,6 +20,7 @@ const LANDING_LABELS: Record<string, string> = {
 export function hrefForDocument(page: {
   _type: string;
   slug?: string | null;
+  section?: string | null;
   route?: string | null;
 }): string | null {
   const slug = page.slug?.trim() || null;
@@ -37,7 +38,9 @@ export function hrefForDocument(page: {
     case "person":
       return slug ? personPath(slug) : null;
     case "page":
-      return slug ? publicPathForPageSlug(slug) : null;
+      return slug
+        ? publicPathForPage({ slug, section: page.section, isNews: slug.startsWith("aktualnosc-") })
+        : null;
     default:
       return null;
   }

@@ -91,7 +91,7 @@ Niżej na liście są typy, nie pojedyncze skróty:
 
 - **Project** — jeden projekt, adres `/projekty/…`. Art Generacje ma dodatkowo podstrony edycji.
 - **Person** — osoba, adres `/zespol/…`.
-- **Page** — Kontakt, Metody, strony typu statut, aktualności. Pole **Sekcje** nad artykułem: [Sekcje](#sekcje). Na aktualnościach (`aktualnosc-*`) tego pola nie ma. Metody i Kontakt, gdy są skrótem na górze, znikają z tej listy, żeby nie wisiały dwa razy.
+- **Page** — Kontakt, Metody, strony typu statut, aktualności. Pole **Sekcja** ustala adres: korzeń (`/slug`), Projekty (`/projekty/slug`) albo O fundacji (`/fundacja/slug`). Aktualności (`aktualnosc-*`) zawsze zostają w korzeniu, bez przedrostka. Pole **Sekcje** nad artykułem: [Sekcje](#sekcje). Na aktualnościach tego pola nie ma. Metody i Kontakt, gdy są skrótem na górze, znikają z tej listy, żeby nie wisiały dwa razy.
 - **Publication** — tekst Czytelni, adres `/czytelnia/…`.
 - **Category** — etykieta kategorii w Czytelni, nie osobna strona metody.
 

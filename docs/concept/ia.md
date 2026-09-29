@@ -13,7 +13,7 @@ Ustalenia 2026-09-05 (hub Bazy, Czytelnia ≠ `project`, URL edycji, listing = C
   - BOAL IN PRACTICE — zakończony (Erasmus+)
   - Wielogłos — zakończony (z leftover strony `projekty-zakonczone`, nie z lorem Figmy)
   - Projekty zakończone — zbiorczo na `/projekty` (wiersz archiwum); leftover `page` `/projekty/projekty-zakonczone` zostaje
-  - Wydawnictwo `/projekty/wydawnictwo`
+  - Wydawnictwo `/wydawnictwo` (od 2026-09-29; `/projekty/wydawnictwo` przekierowuje tutaj)
   - Czytelnia **może** pojawić się na tej stronie jako pozycja listy (warstwa prezentacji). W danych **nie jest** `project` — zostaje `publication`.
 - **Baza wiedzy** — nadzbiór w nawigacji (ustalenie 2026-09-05, makiety)
   - Hub (prosta strona wprowadzająca w dwa kanały): **`/baza-wiedzy`**. Etykieta nav „Baza wiedzy” prowadzi na hub, nie na `/czytelnia`.

@@ -54,6 +54,7 @@ test("resolves document types to public paths and falls back to the document tit
           title: "Statut fundacji",
           name: null,
           slug: "statut",
+          section: "fundacja",
           route: null,
         },
       },

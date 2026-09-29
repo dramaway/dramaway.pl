@@ -1,42 +1,34 @@
 import type { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { PageArticle } from "@/components/page-article";
 import {
-  fundacjaPath,
-  isFundacjaPageSlug,
-  isProjectDocumentSlug,
-  isProjectSectionPageSlug,
   newsPublicSlug,
   NEWS_SLUG_PREFIX,
   projectPath,
+  publicPathForPage,
 } from "@/lib/routes";
 import {
   getPageByPublicSlug,
-  getPageSlugs,
+  getPageRoutes,
   getProjectBySlug,
 } from "@/lib/sanity/fetch";
 
 type Props = { params: Promise<{ slug: string }> };
 
+const RESERVED = new Set(["metody", "kontakt"]);
+
 export const revalidate = 60;
 
 export async function generateStaticParams() {
-  const slugs = await getPageSlugs();
-  return slugs
-    .filter(Boolean)
-    .filter(
-      (slug) =>
-        !isFundacjaPageSlug(slug) &&
-        !isProjectSectionPageSlug(slug) &&
-        !isProjectDocumentSlug(slug) &&
-        slug !== "metody" &&
-        slug !== "kontakt",
-    )
-    .map((slug) =>
-      slug.startsWith(NEWS_SLUG_PREFIX)
-        ? { slug: newsPublicSlug(slug) }
-        : { slug },
-    );
+  const pages = await getPageRoutes();
+  return pages.flatMap((page) => {
+    if (!page.slug || RESERVED.has(page.slug)) return [];
+    const publicSlug = page.slug.startsWith(NEWS_SLUG_PREFIX)
+      ? newsPublicSlug(page.slug)
+      : page.slug;
+    if (publicPathForPage(page) !== `/${publicSlug}`) return [];
+    return [{ slug: publicSlug }];
+  });
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -48,16 +40,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function RootPage({ params }: Props) {
   const { slug } = await params;
 
-  if (isFundacjaPageSlug(slug)) redirect(fundacjaPath(slug));
-  if (isProjectSectionPageSlug(slug) || isProjectDocumentSlug(slug)) {
-    redirect(projectPath(slug));
-  }
-
   const project = await getProjectBySlug(slug);
-  if (project) redirect(projectPath(slug));
+  if (project) permanentRedirect(projectPath(slug));
 
   const page = await getPageByPublicSlug(slug);
   if (!page) notFound();
+
+  const canonical = publicPathForPage(page);
+  if (canonical !== `/${slug}`) permanentRedirect(canonical);
 
   return <PageArticle page={page} />;
 }

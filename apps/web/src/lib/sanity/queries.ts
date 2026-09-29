@@ -54,6 +54,7 @@ const feedDoc = `{
   _createdAt,
   title,
   "slug": slug.current,
+  section,
   "excerpt": select(
     defined(excerpt) && excerpt != "" => excerpt,
     array::join(string::split(pt::text(body), "")[0...${EXCERPT_FALLBACK_MAX}], "")
@@ -108,6 +109,7 @@ export const contentSectionsProjection = `{
       title,
       name,
       "slug": slug.current,
+      section,
       route,
       "docExcerpt": select(
         _type == "person" => pt::text(bio),
@@ -129,6 +131,7 @@ export const pageBySlugQuery = `*[_type == "page" && slug.current == $slug][0] {
   _id,
   title,
   "slug": slug.current,
+  section,
   "isNews": ${newsSlugFilter},
   heroLead,
   heroCtaLabel,
@@ -143,7 +146,11 @@ export const pageBySlugQuery = `*[_type == "page" && slug.current == $slug][0] {
   body
 }`;
 
-export const pageSlugsQuery = `*[_type == "page" && defined(slug.current)].slug.current`;
+export const pageRoutesQuery = `*[_type == "page" && defined(slug.current)]{
+  "slug": slug.current,
+  section,
+  "isNews": ${newsSlugFilter}
+}`;
 
 const editionProjection = `{
   title,
@@ -250,7 +257,7 @@ export const aboutPageQuery = `*[_type == "aboutPage"][0] {
     items[] {
       title,
       href,
-      "page": page->{ title, "slug": slug.current },
+      "page": page->{ title, "slug": slug.current, section },
       file { asset->{ url, originalFilename, mimeType } }
     }
   }
