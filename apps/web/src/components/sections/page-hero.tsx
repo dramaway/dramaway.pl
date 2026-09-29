@@ -30,11 +30,13 @@ type PageHeroProps = PageHeroContent & {
 };
 
 /**
- * Opening block for inner pages. Default is the same split, circular still,
- * and following dot band as `/`. `data-split-hero` overlays the header in the
- * left column at lg+ (do not reuse `data-home` — that hides `.subpage-palette`).
- * Pass `layout="stack"` for edition pages. No CMS photo = no still; the
- * split column and media slot stay so text width does not jump.
+ * Opening block for inner pages. Default is the same split as `/`: at lg+
+ * the text column sets the height and the still fills it (cover + hotspot);
+ * below lg the still is a circle. `data-split-hero` overlays the header in
+ * the left column at lg+ (do not reuse `data-home` — that hides
+ * `.subpage-palette`). Pass `layout="stack"` for edition pages. No CMS
+ * photo = no still; the split column and media slot stay so text width
+ * does not jump.
  * Do not import PortableBody from this file — listing pages must stay free
  * of the gallery/lightbox client graph.
  */
@@ -112,7 +114,7 @@ export function PageHero({
                 image={image}
                 alt={imageAlt?.trim() || title?.trim() || ""}
                 variant="bleed"
-                ratio="portrait"
+                ratio="none"
                 sizes="(min-width: 64rem) 34vw, 70vw"
                 priority
                 className="hero-media"
@@ -120,7 +122,7 @@ export function PageHero({
             </>
           ) : (
             <div
-              className="hero-media hero-media-empty media-portrait"
+              className="hero-media hero-media-empty"
               aria-hidden
             />
           )}

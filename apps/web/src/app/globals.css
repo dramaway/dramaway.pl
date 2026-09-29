@@ -143,12 +143,6 @@
   --content-narrow: 48.3125rem;
   /* AG / Projekty lead column in the Figma frames (~1181px). */
   --content-wide: 73.8125rem;
-  /*
-   * Split-hero portrait cap at lg+: photo bottom + overlapping DotBand
-   * fit in 100vh. Matches .dot-band (height = 2.53× size, overlap = 0.55×
-   * size → remainder below the photo = 1.98× size).
-   */
-  --hero-media-max: calc(100vh - var(--dot-size) * 1.98);
   /* Content modules: gap from the centre seam, left column drop, photo height. */
   --module-center-inset: calc(1.5 * var(--dot-size));
   /*
@@ -163,7 +157,7 @@
   /*
    * Portable Text images. Size is a scale (width + height), not only a
    * max-width — a shared height cap made Small/Medium/Wide look identical
-   * on portraits. Independent of --hero-media-max / split-hero.
+   * on portraits. Independent of the split-hero still.
    */
   --body-image-small: 24rem;
   --body-image-wide: var(--content-wide);
@@ -665,8 +659,9 @@
   }
 
   /*
-   * Empty still: same box as a portrait so split widths and the overlapping
-   * DotBand do not jump when the next page has no CMS photo.
+   * Empty still: the column stays (text width does not jump) but it does
+   * not impose a height. At lg+ the text column sizes the section; below
+   * lg the circle rule on .hero-media still draws the round slot.
    */
   .hero-media-empty {
     width: 100%;
@@ -863,6 +858,11 @@
      * column (same span as .split-text). Photo occupies the right column
      * from the top of the page — nav never overlaps it. `data-home` is `/`
      * only (also hides .subpage-palette). Inner pages use `data-split-hero`.
+     *
+     * The text column sets the section height. The still is taken out of
+     * flow and stretched over that box (`object-fit: cover` + the Sanity
+     * hotspot). No 481:823 frame and no viewport cap — a short lead must
+     * not push the rest of the page down. Below lg the circle stays.
      */
     .site-shell:has([data-home], [data-split-hero]) {
       position: relative;
@@ -886,18 +886,16 @@
       );
     }
 
-    /*
-     * Inner split: cap the media column so the portrait plus the overlapping
-     * DotBand stay in the first viewport. Do not stretch a short photo.
-     */
-    [data-split-hero] .hero-media-wrap {
-      max-height: var(--hero-media-max);
-      align-self: start;
+    .hero > .hero-media-wrap {
+      align-self: stretch;
     }
 
-    [data-split-hero] .hero-media,
-    [data-split-hero] .hero-media.media-portrait {
-      max-height: var(--hero-media-max);
+    .hero > .hero-media-wrap > .hero-media {
+      position: absolute;
+      inset: 0;
+      width: auto;
+      height: auto;
+      aspect-ratio: auto;
     }
   }
 
@@ -1427,8 +1425,7 @@
 
   /*
    * /fundacja — tangent value circles (label inside, light type) and
-   * two-column team bios. Appended after Wave 0; do not fold into
-   * --hero-media-max / split-hero.
+   * two-column team bios. Appended after Wave 0; not part of the split hero.
    */
   .values-row {
     display: flex;

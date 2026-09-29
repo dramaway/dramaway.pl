@@ -15,7 +15,11 @@ type MediaProps = {
   alt: string;
   /** `bleed` runs to the container edge with square corners, `inset` is rounded. */
   variant?: "bleed" | "inset";
-  ratio?: keyof typeof RATIO_CLASS;
+  /**
+   * Fixed frame. `none` leaves the box to its container — split heroes size
+   * the still from the text column and crop with `object-fit: cover`.
+   */
+  ratio?: keyof typeof RATIO_CLASS | "none";
   sizes?: string;
   priority?: boolean;
   className?: string;
@@ -46,7 +50,7 @@ export function Media({
     <div
       className={cn(
         "media",
-        RATIO_CLASS[ratio],
+        ratio !== "none" && RATIO_CLASS[ratio],
         variant === "inset" && "media-inset",
         className,
       )}

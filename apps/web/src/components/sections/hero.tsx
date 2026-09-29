@@ -4,10 +4,10 @@ import { Media } from "@/components/visual/media";
 import type { HeroContent } from "@/lib/sanity/types";
 
 /**
- * Opening composition. From lg: text in the left column (padded under the
- * overlay nav), portrait occupying the right column from the top of the page
- * and bleeding to the viewport edge. Below lg: heading, circular still, then
- * lead and CTA. Nav never sits on the photo — see system.md.
+ * Opening composition. From lg: the text column sets the section height;
+ * the still fills that box (cover + Sanity hotspot) and bleeds to the
+ * viewport edge. Below lg: heading, circular still, then lead and CTA.
+ * Nav never sits on the photo — see system.md.
  */
 export function Hero({ hero }: { hero: HeroContent }) {
   return (
@@ -36,7 +36,7 @@ export function Hero({ hero }: { hero: HeroContent }) {
           image={hero.image}
           alt={hero.imageAlt}
           variant="bleed"
-          ratio="portrait"
+          ratio="none"
           sizes="(min-width: 64rem) 34vw, 70vw"
           priority
           className="hero-media"
