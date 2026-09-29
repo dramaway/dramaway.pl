@@ -11,6 +11,14 @@ import {
   LANDING_PAGES,
   SINGLETON_SCHEMA_TYPES,
 } from "./singletons";
+import {
+  DRUPAL_PAGE_SLUGS,
+  PAGE_DRUPAL_FILTER,
+  PAGE_MENU_FILTER,
+  PAGE_NEWS_FILTER,
+  PAGE_REST_FILTER,
+  pageDeskIds,
+} from "./page-desk";
 
 /** Document types the media plugin registers — edit them in the Media tool. */
 const MEDIA_PLUGIN_TYPES = new Set(["media.tag", "media.folder"]);
@@ -191,10 +199,56 @@ export const structure: StructureResolver = async (S, context) => {
           .icon(item.getIcon())
           .schemaType("page")
           .child(
-            S.documentTypeList("page")
+            S.list()
               .title("Page")
-              .filter('_type == "page" && !(_id in $pinned)')
-              .params({ pinned: pinnedPageIds }),
+              .items([
+                S.listItem()
+                  .id("page-drupal")
+                  .title("Drupal")
+                  .schemaType("page")
+                  .child(
+                    S.documentTypeList("page")
+                      .title("Drupal")
+                      .filter(PAGE_DRUPAL_FILTER)
+                      .params({ drupal: [...DRUPAL_PAGE_SLUGS] }),
+                  ),
+                S.listItem()
+                  .id("page-news")
+                  .title("Aktualności")
+                  .schemaType("page")
+                  .child(
+                    S.documentTypeList("page")
+                      .title("Aktualności")
+                      .filter(PAGE_NEWS_FILTER)
+                      .params({ drupal: [...DRUPAL_PAGE_SLUGS] }),
+                  ),
+                S.listItem()
+                  .id("page-menu")
+                  .title("W menu")
+                  .schemaType("page")
+                  .child(
+                    S.documentTypeList("page")
+                      .title("W menu")
+                      .filter(PAGE_MENU_FILTER)
+                      .params({
+                        pinned: pageDeskIds(pinnedPageIds),
+                        drupal: [...DRUPAL_PAGE_SLUGS],
+                      }),
+                  ),
+                S.listItem()
+                  .id("page-rest")
+                  .title("Poza menu")
+                  .schemaType("page")
+                  .child(
+                    S.documentTypeList("page")
+                      .title("Poza menu")
+                      .filter(PAGE_REST_FILTER)
+                      .params({
+                        pinned: pageDeskIds(pinnedPageIds),
+                        drupal: [...DRUPAL_PAGE_SLUGS],
+                      }),
+                  ),
+              ]),
           ),
       ];
     }

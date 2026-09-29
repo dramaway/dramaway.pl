@@ -92,7 +92,7 @@ Niżej na liście są typy, nie pojedyncze skróty:
 
 - **Project** — jeden projekt, adres `/projekty/…`. Art Generacje ma dodatkowo podstrony edycji.
 - **Person** — osoba, adres `/zespol/…`.
-- **Page** — Baza wiedzy, Kontakt, strony typu statut, aktualności. Pole **Sekcja** ustala adres: korzeń (`/slug`), Projekty (`/projekty/slug`) albo O fundacji (`/fundacja/slug`). Aktualności (`aktualnosc-*`) zawsze zostają w korzeniu, bez przedrostka. Pole **Sekcje** nad artykułem: [Sekcje](#sekcje). Na aktualnościach tego pola nie ma. Baza wiedzy i Kontakt, gdy są skrótem na górze, znikają z tej listy, żeby nie wisiały dwa razy.
+- **Page** — Baza wiedzy, Kontakt, strony typu statut, aktualności. Adres to `/{slug}`; aktualności (`aktualnosc-*`) bez przedrostka. W Studio lista dzieli się na **Drupal** (stare resztki do wygaszenia), **Aktualności**, **W menu** i **Poza menu**. Pole **Sekcje** nad artykułem: [Sekcje](#sekcje). Na aktualnościach tego pola nie ma.
 - **Publication** — tekst Czytelni, adres `/czytelnia/…`.
 - **Category** — etykieta kategorii w Czytelni, nie opis metod na stronie Baza wiedzy.
 
