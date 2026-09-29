@@ -12,10 +12,11 @@ type BlobRowProps = {
   heading?: string | null;
   headingId?: string;
   /**
-   * Column width for heading + rows. `wide` / `narrow` are centred
-   * reading columns; default `page` is the full `.page` container.
-   * `compact` density is two-up from `lg` on `.page`, with a magenta
-   * sentence-case label and a light right-column stagger.
+   * Column width for heading + rows. `wide` is the 62ch reading column,
+   * `narrow` caps at `--content-narrow`; both sit on the left edge of
+   * `.page`. Default `page` is the full container. `compact` density is
+   * two-up from `lg` on `.page`, with a magenta sentence-case label and
+   * a light right-column stagger.
    */
   width?: BlobRowWidth;
   /** Archive listings sit two-up from `lg`; default is a single column. */

@@ -137,9 +137,8 @@
   --media-split-max: 42vh;
   /* Figma footer quote ≈ 491px, narrower than .measure 62ch. */
   --footer-quote-max: 30.6875rem;
-  /* Hero's text frame (figma-baseline.md), reused to centre shorter text
-   * blocks that have no photo to anchor against instead of letting them
-   * hug the page edge — see .stack-narrow. */
+  /* Cap for list columns with no photo (.stack-narrow). The column
+   * sits on the left edge of .page; leftover width stays on the right. */
   --content-narrow: 48.3125rem;
   /* AG / Projekty lead column in the Figma frames (~1181px). */
   --content-wide: 73.8125rem;
@@ -273,6 +272,9 @@
     max-width: var(--page-max);
     margin-inline: auto;
     padding-inline: var(--page-pad);
+    /* Content-box width for .pt-columns, which may outgrow .measure. */
+    container-type: inline-size;
+    container-name: page;
   }
 
   /*
@@ -634,9 +636,9 @@
   }
 
   /*
-   * Text-only inner hero (edition pages). H1 + lead in the centred
-   * reading column. Do not set data-split-hero — header stays in flow;
-   * no photo column.
+   * Text-only inner hero (edition pages). H1 + lead share the 62ch
+   * reading column and its left edge. Do not set data-split-hero —
+   * header stays in flow; no photo column.
    */
   .hero-stack {
     width: 100%;
@@ -650,7 +652,6 @@
   .hero-stack .hero-copy {
     max-width: 62ch;
     width: 100%;
-    margin-inline: auto;
   }
 
   .hero-media-wrap {
@@ -916,19 +917,13 @@
 
   /*
    * Comfortable reading column — Figma body is ~754px / 20px (62ch).
-   * Centres the whole block (headings + copy) so leftover space is equal
-   * on both sides. Text inside stays left-aligned.
+   * Headings and copy share one block, pinned to the parent's left edge
+   * (.page, or .split-text on a photo split). Leftover width stays on
+   * the right. Text inside stays left-aligned.
    */
   .measure {
     max-width: 62ch;
     width: 100%;
-    margin-inline: auto;
-  }
-
-  /* Split columns are already the left half of the page; don't float the
-   * reading block inside them or the H1 and lead fall out of alignment. */
-  .split-text .measure {
-    margin-inline: 0;
   }
 
   /* Footer: logo + address on the left, quote on the right (Figma). */
@@ -1044,20 +1039,16 @@
   }
 
   /*
-   * Centres a text block as a column instead of letting it hug the page's
-   * left edge on wide screens. Text inside stays left-aligned — only the
-   * block's own position changes. For teaser blocks with no photo to anchor
-   * against (Art Generacje, Czytelnia); a no-op once the viewport is
-   * narrower than --content-narrow plus its own gutters.
+   * Caps a text or list column and pins it to the left edge of .page.
+   * Text inside stays left-aligned; leftover width stays on the right.
+   * A no-op once the viewport is narrower than the cap plus page gutters.
    */
   .stack-narrow {
     max-width: var(--content-narrow);
-    margin-inline: auto;
   }
 
   .stack-wide {
     max-width: var(--content-wide);
-    margin-inline: auto;
   }
 
   /*
@@ -1571,8 +1562,8 @@
   }
 
   /*
-   * Copy under the /fundacja board photos. Same left edge as Zarząd
-   * (not a centred .measure). Prose is capped; headings stay full column.
+   * Copy under the /fundacja board photos. Same left edge as Zarząd.
+   * Prose is capped at 62ch; headings stay the full column.
    */
   .team-copy-after-bios {
     margin-block-start: clamp(2.75rem, 5vw, 4.25rem);
@@ -1701,6 +1692,10 @@
     gap: 1.5rem;
   }
 
+  .pt-column {
+    min-width: 0;
+  }
+
   /* Portable Text Button: own row, green CTA. Default is the left edge.
      -1/-2/-3 follow the Indent list (`--pt-indent` per step). */
   .pt-cta {
@@ -1720,6 +1715,12 @@
     padding-inline-start: calc(3 * var(--pt-indent));
   }
 
+  /*
+   * Two or three łamy aim for a full reading measure each (62ch).
+   * Inside .page they may outgrow .measure, up to the page content box
+   * (100cqi). Below lg they stack and stay inside .measure.
+   * A split column is already half the page — do not widen those.
+   */
   @media (width >= 64rem) {
     .pt-columns-2 {
       grid-template-columns: 1fr 1fr;
@@ -1727,6 +1728,16 @@
 
     .pt-columns-3 {
       grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .page .pt-columns-2 {
+      width: min(100cqi, calc(2 * 62ch + 1.5rem));
+      max-width: none;
+    }
+
+    .page .pt-columns-3 {
+      width: min(100cqi, calc(3 * 62ch + 3rem));
+      max-width: none;
     }
   }
 
