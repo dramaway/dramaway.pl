@@ -24,6 +24,7 @@ import { youtubeEmbedSrc } from "@/lib/sanity/youtube";
 import { cn } from "@/lib/utils";
 
 type BodyImageSize = "small" | "medium" | "wide";
+type BodyImageAlign = "left" | "center" | "right";
 
 const BODY_IMAGE_CDN_WIDTH: Record<BodyImageSize, number> = {
   small: 800,
@@ -43,6 +44,8 @@ type ImageValue = {
   _type?: string;
   alt?: string;
   size?: string;
+  align?: string;
+  layout?: string;
   asset?: { _ref?: string; _id?: string };
 };
 
@@ -65,6 +68,22 @@ function bodyImageSize(value: string | undefined): BodyImageSize {
   return "medium";
 }
 
+function bodyImageAlign(value: string | undefined): BodyImageAlign {
+  if (value === "left" || value === "center" || value === "right") {
+    return value;
+  }
+  return "center";
+}
+
+/** Wrap only beside a left or right picture that is not breaking out of the column. */
+function bodyImageWraps(
+  layout: string | undefined,
+  size: BodyImageSize,
+  align: BodyImageAlign,
+): boolean {
+  return layout === "inline" && size !== "wide" && align !== "center";
+}
+
 function bodyImageSrcSet(value: ImageValue, size: BodyImageSize): string {
   const max = BODY_IMAGE_CDN_WIDTH[size];
   return BODY_IMAGE_SRCSET_WIDTHS.filter(
@@ -77,12 +96,21 @@ function bodyImageSrcSet(value: ImageValue, size: BodyImageSize): string {
 function PortableImage({ value }: PortableTextTypeComponentProps<ImageValue>) {
   if (!value?.asset) return null;
   const size = bodyImageSize(value.size);
+  const align = bodyImageAlign(value.align);
+  const wraps = bodyImageWraps(value.layout, size, align);
   const cdnWidth = BODY_IMAGE_CDN_WIDTH[size];
   const dims = parseSanityImageDimensions(sanityAssetRef(value));
   const alt = value.alt || "";
 
   return (
-    <figure className={`body-figure body-figure-${size}`}>
+    <figure
+      className={cn(
+        "body-figure",
+        `body-figure-${size}`,
+        `body-figure-${align}`,
+        wraps && "body-figure-inline",
+      )}
+    >
       {dims ? (
         <Image
           src={urlFor(value).width(cdnWidth).auto("format").url()}
@@ -123,7 +151,7 @@ function PortableYoutube({
   const src = value?.url ? youtubeEmbedSrc(value.url) : null;
   if (!src) return null;
   return (
-    <div className="my-6 aspect-video w-full overflow-hidden rounded-md border">
+      <div className="pt-embed my-6 aspect-video w-full overflow-hidden rounded-md border">
       <iframe
         src={src}
         title="YouTube"
@@ -175,7 +203,7 @@ function PortableColumns({
   return (
     <div className={`pt-columns pt-columns-${layout}`}>
       {columns.map((column, index) => (
-        <div key={column._key ?? index} className="pt-column">
+        <div key={column._key ?? index} className="pt-column portable-body">
           {hasPortableContent(column.body) ? (
             <PortableText
               value={

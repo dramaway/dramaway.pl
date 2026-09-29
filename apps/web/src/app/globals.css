@@ -161,6 +161,10 @@
   --body-image-small: 24rem;
   --body-image-wide: var(--content-wide);
   --body-image-max: min(36rem, 70vh);
+  /* Wrap-text pictures. Narrow enough that the line beside them still reads. */
+  --body-image-inline: 14rem;
+  --body-image-inline-medium: 18rem;
+  --body-image-inline-max: 20rem;
 }
 
 :root {
@@ -1595,6 +1599,7 @@
    */
   .portable-body {
     position: relative;
+    display: flow-root;
     isolation: isolate;
     overflow-wrap: anywhere;
   }
@@ -1780,6 +1785,83 @@
 
   .body-figure-wide .body-image {
     max-height: min(90vh, var(--body-image-wide));
+  }
+
+  /*
+   * Alignment is the figure's place in the column. Centre is the default
+   * when the CMS field is empty. Wide is already the page content width,
+   * so left / centre / right barely move it.
+   */
+  .body-figure-left {
+    margin-inline: 0 auto;
+  }
+
+  .body-figure-center {
+    margin-inline: auto;
+  }
+
+  .body-figure-right {
+    margin-inline: auto 0;
+  }
+
+  .body-figure-left .body-image {
+    margin-inline: 0;
+  }
+
+  .body-figure-right .body-image {
+    margin-inline: auto 0;
+  }
+
+  /*
+   * Wrap: the following text flows beside the picture. Centre and Wide
+   * stay blocks (the component omits this class). Below 40rem the float
+   * drops and the picture becomes a block again — a phone column is too
+   * narrow to keep a readable line beside it.
+   */
+  .body-figure-inline {
+    width: max-content;
+    max-width: min(var(--body-image-inline), 100%);
+  }
+
+  .body-figure-inline.body-figure-medium {
+    max-width: min(var(--body-image-inline-medium), 100%);
+  }
+
+  .body-figure-inline .body-image {
+    width: auto;
+    max-width: 100%;
+    max-height: var(--body-image-inline-max);
+  }
+
+  @media (width >= 40rem) {
+    .body-figure-inline.body-figure-left {
+      float: inline-start;
+      max-width: min(var(--body-image-inline), 46%);
+    }
+
+    .body-figure-inline.body-figure-right {
+      float: inline-end;
+      max-width: min(var(--body-image-inline), 46%);
+    }
+
+    .body-figure-inline.body-figure-medium.body-figure-left,
+    .body-figure-inline.body-figure-medium.body-figure-right {
+      max-width: min(var(--body-image-inline-medium), 48%);
+    }
+  }
+
+  .portable-body > :is(
+    h2,
+    h3,
+    h4,
+    blockquote,
+    .pt-columns,
+    .pt-cta,
+    .pt-embed,
+    .gallery-mosaic,
+    .body-figure:not(.body-figure-inline)
+  ) {
+    clear: both;
   }
 
   /*
@@ -2000,6 +2082,28 @@
   .portable-body .pt-term {
     margin-block-start: 2.5rem;
     margin-block-end: 0.75rem;
+  }
+
+  /*
+   * Beat `.space-y-4` so a wrapped picture sits on the first line of the
+   * following paragraph, with a gutter on the text side only.
+   */
+  .portable-body > .body-figure-inline:not([hidden]):not([hidden]) {
+    margin-block: 0.2rem 0.85rem;
+  }
+
+  .portable-body > .body-figure-inline + :not([hidden]):not([hidden]) {
+    margin-block-start: 0;
+  }
+
+  @media (width >= 40rem) {
+    .portable-body > .body-figure-inline.body-figure-left:not([hidden]):not([hidden]) {
+      margin-inline: 0 1.25rem;
+    }
+
+    .portable-body > .body-figure-inline.body-figure-right:not([hidden]):not([hidden]) {
+      margin-inline: 1.25rem 0;
+    }
   }
 
   .pt-indent:has(.pt-term) {

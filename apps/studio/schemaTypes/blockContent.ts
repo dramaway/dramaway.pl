@@ -86,10 +86,60 @@ const imageBlockMember = defineArrayMember({
           { title: "Wide", value: "wide" },
         ],
         layout: "radio",
+        direction: "horizontal",
       },
       initialValue: "medium",
       description:
-        "How large the image renders on the site. Small = inset (~24rem), Medium = text column (default), Wide = wider than the text. Publish after changing. Existing images without a value render as medium.",
+        "How large the image renders on the site. Small = inset (~24rem), Medium = text column (default), Wide = wider than the text. Wide always stays its own row. Publish after changing. Existing images without a value render as medium.",
+    }),
+    defineField({
+      name: "align",
+      title: "Alignment",
+      type: "string",
+      options: {
+        list: [
+          { title: "Left", value: "left" },
+          { title: "Centre", value: "center" },
+          { title: "Right", value: "right" },
+        ],
+        layout: "radio",
+        direction: "horizontal",
+      },
+      initialValue: "center",
+      description:
+        "Where the picture sits in the text column. Most visible on Small, or when text wraps. Existing pictures without a value stay centred.",
+    }),
+    defineField({
+      name: "layout",
+      title: "Placement",
+      type: "string",
+      options: {
+        list: [
+          { title: "Block", value: "block" },
+          { title: "Wrap text", value: "inline" },
+        ],
+        layout: "radio",
+        direction: "horizontal",
+      },
+      initialValue: "block",
+      description:
+        "Block: the picture is its own row. Wrap text: the following paragraphs flow beside it. Wrap needs Left or Right, and Small or Medium. Centre and Wide stay a block. On a narrow screen wrap becomes a block. Publish after changing.",
+      validation: (rule) =>
+        rule
+          .custom((value, context) => {
+            if (value !== "inline") return true;
+            const parent = context.parent as
+              | { align?: string; size?: string }
+              | undefined;
+            if (parent?.size === "wide") {
+              return "Wide stays a block. Choose Small or Medium to wrap text.";
+            }
+            if (!parent?.align || parent.align === "center") {
+              return "Centre stays a block. Choose Left or Right to wrap text.";
+            }
+            return true;
+          })
+          .warning(),
     }),
   ],
 });

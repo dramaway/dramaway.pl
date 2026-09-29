@@ -83,6 +83,17 @@ function isImageNode(node: PortableNode): boolean {
   return node._type === "image" && Boolean(sanityAssetRef(node));
 }
 
+/**
+ * Mosaic runs are for plain centred blocks. A left/right align or a wrap
+ * would be dropped by the gallery, so those pictures stay on their own.
+ */
+function joinsImageMosaic(node: PortableNode): boolean {
+  if (!isImageNode(node)) return false;
+  if (node.layout === "inline") return false;
+  if (node.align === "left" || node.align === "right") return false;
+  return true;
+}
+
 function childText(child: unknown): string {
   if (typeof child === "string") return child;
   if (child && typeof child === "object" && "text" in child) {
@@ -114,7 +125,7 @@ export function groupPortableImageRuns(
 
   while (index < blocks.length) {
     const current = blocks[index];
-    if (!isImageNode(current)) {
+    if (!joinsImageMosaic(current)) {
       out.push(current);
       index += 1;
       continue;
@@ -125,7 +136,7 @@ export function groupPortableImageRuns(
 
     while (cursor < blocks.length) {
       const next = blocks[cursor];
-      if (isImageNode(next)) {
+      if (joinsImageMosaic(next)) {
         images.push(next as SanityImage);
         cursor += 1;
         continue;
@@ -133,7 +144,7 @@ export function groupPortableImageRuns(
       if (isEmptyParagraph(next)) {
         let look = cursor + 1;
         while (look < blocks.length && isEmptyParagraph(blocks[look])) look += 1;
-        if (look < blocks.length && isImageNode(blocks[look])) {
+        if (look < blocks.length && joinsImageMosaic(blocks[look])) {
           cursor = look;
           continue;
         }

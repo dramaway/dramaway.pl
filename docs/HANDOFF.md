@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-29 — Columns (2/3) od `lg` wychodzą poza `.measure`: każdy łam celuje w 62ch, całość do szerokości treści `.page`. |
+| **Ostatnia aktualizacja** | 2026-09-29 — Obraz w tekście: wyrównanie lewo/środek/prawo i Block albo Wrap (opływanie; lewo/prawo, Small/Medium, od 40rem). Karta Columns w Studio pokazuje początek kolumn. Hosted Studio po `pnpm --filter studio run deploy`. |
 | **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
