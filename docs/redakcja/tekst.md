@@ -32,7 +32,7 @@ Nie zamieniamy na Roles zwykłego zdania, w którym przypadkiem jest dwukropek. 
 
 ## Kolumny
 
-Obiekt **Columns** to dwie albo trzy kolumny obok siebie. Na wąskim ekranie układają się jedna pod drugą. W kolumnie może być tekst, zdjęcie i przycisk. Nie wkładamy kolumn w kolumny ani filmu.
+Obiekt **Columns** to dwie albo trzy kolumny obok siebie. Na wąskim ekranie układają się jedna pod drugą. W kolumnie może być tekst, zdjęcie i przycisk. Nie wkładamy kolumn w kolumny ani filmu. Na liście bloków widać początek treści każdej kolumny — nie trzeba otwierać modułu, żeby sprawdzić, co w nim jest.
 
 <!-- screen: tekst-columns | Blok Columns ustawiony na dwie kolumny, w każdej krótki akapit | Widać wybór 2 albo 3 i brak trzeciego zagnieżdżenia -->
 
