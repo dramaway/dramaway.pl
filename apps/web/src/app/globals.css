@@ -845,6 +845,21 @@
       inset-block-end: calc(-1 * var(--module-edge-out));
     }
 
+    /*
+     * The closing brand row is one line of circles, not a stepped sand band.
+     * A left-hand photo would otherwise keep reaching for the lower sand row
+     * and cover the palette. Stop the still on the circles' centre; the row
+     * stacks above the photo the same way .dot-band does.
+     */
+    .content-split:has(+ .home-palette) > .split-media {
+      inset-block-end: calc(var(--palette-size) / -2);
+    }
+
+    .home-palette {
+      position: relative;
+      z-index: 1;
+    }
+
     .content-split-solo > .split-text {
       display: flex;
       flex-direction: column;

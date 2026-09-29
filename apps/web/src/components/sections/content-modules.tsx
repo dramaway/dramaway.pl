@@ -164,7 +164,7 @@ function HomeRhythm({
   });
 
   blocks.push(
-    <div key="palette-end" className="page pb-section">
+    <div key="palette-end" className="home-palette page pb-section">
       <PaletteRow />
     </div>,
   );
