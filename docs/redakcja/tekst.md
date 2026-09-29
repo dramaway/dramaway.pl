@@ -44,17 +44,17 @@ Obiekt **Button** to zielony przycisk z rulką i kropką, taki jak „więcej”
 
 1. W treści ustaw kursor w pustym wierszu (albo pod akapitem).
 2. Naciśnij **+** przy bloku i wybierz **Button**. Nie szukaj tego na pasku stylów (Termin, Quote, listy).
-3. Wpisz **Etykietę**. To jedyny tekst na przycisku. Puste pole nie wymyśla słowa „więcej” i Studio nie puści publikacji.
-4. W **Celu** zostaw **Dokument**, albo przełącz na **Plik** albo **Adres**.
+3. Wpisz **Etykietę**. To tekst widoczny na przycisku. Puste pole nie wstawi samo słowa „więcej”. Bez etykiety Studio nie pozwoli opublikować dokumentu.
+4. W polu **Cel** zostaw **Dokument** albo przełącz na **Plik** lub **Adres**.
 5. Uzupełnij pole, które się pokaże:
    - **Dokument** — wybierz istniejącą treść (strona, news, projekt, publikacja, osoba, listing Projekty / Czytelnia / Zespół, O fundacji). Adres złoży się sam.
-   - **Plik** — PDF albo inne medium; otwiera się w nowej karcie.
+   - **Plik** — PDF albo inne medium. Wgrywa się je w tym polu, nie z zakładki Media. Otwiera się w nowej karcie.
    - **Adres** — ścieżka od ukośnika (`/projekty`) albo `https://`. Kotwicy i parametrów tu nie wpisuj.
-6. **Wcięcie** zostaw na „Bez wcięcia”, chyba że przycisk ma stanąć w tej samej kolumnie co lista Indent albo hasło Termin. Skok 1, 2 albo 3 jest ten sam co przy Indent.
+6. **Wcięcie** zostaw na „Bez wcięcia”. Wybierz **1 stopień**, gdy akapit obok jest raz wcięty listą Indent — tak stoją hasła Termin na Bazie wiedzy. **2** i **3** to kolejne poziomy tej samej listy. Sam styl Termin wcięcia nie dodaje.
 7. Jeśli trzeba dotrzeć do konkretnego miejsca na stronie (kotwica) albo otworzyć Czytelnię na jednej metodzie (parametry), rozwiń **Zaawansowane** — niżej.
 8. **Publish**.
 
-Button można też wstawić wewnątrz bloku **Columns**. Nie wkładamy Buttona w Button.
+Button można też wstawić wewnątrz bloku **Columns**. Nie da się włożyć Buttona w Button: to nie jest pole tekstowe.
 
 <!-- screen: tekst-button | Blok Button z etykietą, celem Dokument i zwiniętym Zaawansowane | Widać, że przycisk jest osobnym blokiem, nie zaznaczeniem w zdaniu -->
 
@@ -64,7 +64,7 @@ Grupa **Zaawansowane** jest zwinięta. Otwórz ją tylko wtedy, gdy sam dokument
 
 | Pole | Co wpisać | Przykład | Po co |
 |------|-----------|----------|--------|
-| **Kotwica** | Identyfikator sekcji, z `#` albo bez | `edycje` albo `#edycje` | Na stronie projektu zjedzie do listy edycji |
+| **Kotwica** | Identyfikator sekcji, z `#` albo bez | `edycje` albo `#edycje` | Na stronie projektu przewinie do listy edycji |
 | **Parametry** | Część po `?`, z pytajnikiem albo bez | `kategoria=teatr-forum` | Na listingu Czytelni otworzy jedną kategorię i zwinie pozostałe |
 
 Można wypełnić oba pola naraz. Doklejają się do wybranego dokumentu, pliku albo adresu. **Nie** dopisuj `?…` ani `#…` drugi raz w polu Adres.
@@ -82,7 +82,7 @@ Czego nie wklejać: spacji, `#` w polu Parametry, `?` w polu Kotwica.
 | Teatr zaangażowany społecznie | `kategoria=teatr-zaangazowany-spolecznie` |
 | Metody twórcze | `kategoria=metody-tworcze` |
 
-Szuflada formatu (artykuły, książki, scenariusze, multimedia) to drugi parametr, na przykład `rodzaj=books` albo razem `rodzaj=scripts&kategoria=teatr-w-edukacji`. Bez parametru `kategoria` wszystkie sekcje na `/czytelnia` są otwarte. Kliknięcie nagłówka sekcji na samym spisie też zmienia ten adres.
+Szuflada formatu (artykuły, książki, scenariusze, multimedia) to drugi parametr, na przykład `rodzaj=books`. Oba naraz zapisuje się `rodzaj=books&kategoria=…`, ale kategoria musi mieć publikacje w tej szufladzie. Sześć metod z tabeli wisi przy artykułach, więc sam `kategoria=…` wystarcza i pozostałe sekcje się zwijają. Bez parametru `kategoria` wszystkie sekcje na `/czytelnia` są otwarte. Kliknięcie nagłówka sekcji na samym spisie też zmienia ten adres.
 
 Więcej o polach publikacji: [Czytelnia i O fundacji](czytelnia-i-fundacja.md).
 

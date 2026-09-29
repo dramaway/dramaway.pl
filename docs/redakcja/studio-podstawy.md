@@ -38,7 +38,7 @@ Zdjęcia w tekście mają rozmiar: Small, Medium (domyślny), Wide. Po zmianie r
 
 W zdaniu link zaznacza się w pasku edytora (ikona łańcucha). Taki odnośnik może prowadzić na adres `https://…`, na ścieżkę wewnętrzną zaczynającą się od `/` (na przykład `/czytelnia`), na `mailto:` albo `tel:`.
 
-Zielony przycisk z rulką i kropką to **inny** blok: **Button**. Wstawia się go z plusa w tekście, nie z ikony łańcucha. Tam wybiera się dokument, plik albo adres, a kotwicę i parametry dopisuje się w **Zaawansowane**. Krok po kroku: [Tekst](tekst.md#button).
+Zielony przycisk z rulką i kropką to **inny** blok: **Button**. Wstawia się go z plusa w tekście, nie z ikony łańcucha. Tam wybiera się dokument, plik albo adres, a kotwicę i parametry dopisuje się w grupie **Zaawansowane**. Krok po kroku: [Tekst](tekst.md#button).
 
 Nie wklejamy adresów zaczynających się od `javascript:` ani od `//`.
 
