@@ -203,7 +203,10 @@ function PortableColumns({
   return (
     <div className={`pt-columns pt-columns-${layout}`}>
       {columns.map((column, index) => (
-        <div key={column._key ?? index} className="pt-column portable-body">
+        <div
+          key={column._key ?? index}
+          className="pt-column portable-body space-y-4"
+        >
           {hasPortableContent(column.body) ? (
             <PortableText
               value={

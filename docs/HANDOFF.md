@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-29 — Obraz w tekście: wyrównanie lewo/środek/prawo i Block albo Wrap (opływanie; lewo/prawo, Small/Medium, od 40rem). Karta Columns w Studio pokazuje początek kolumn. Hosted Studio po `pnpm --filter studio run deploy`. |
+| **Ostatnia aktualizacja** | 2026-09-29 — Kolumna Portable Text dostaje ten sam `space-y-4` co pojedynczy łam (akapity, listy, nagłówki). Obraz w tekście: wyrównanie i Block/Wrap. Karta Columns w Studio pokazuje początek kolumn. Hosted Studio po `pnpm --filter studio run deploy`. |
 | **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
