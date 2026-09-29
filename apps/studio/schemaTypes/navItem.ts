@@ -2,8 +2,9 @@ import { defineField, defineType, type FieldDefinition } from "sanity";
 
 /**
  * Page slugs hidden from the nav picker.
- * News (`aktualnosc-*`) and the publication leftover `metody-tzs` are filtered
- * in GROQ below. Leftover Drupal pages and project copies stay out of the picker.
+ * The publication leftover `metody-tzs` is filtered in GROQ below.
+ * Leftover Drupal pages and project copies stay out of the picker.
+ * News is its own document type and stays selectable.
  */
 const HIDDEN_PAGE_SLUGS = [
   "projekty-zakonczone",
@@ -17,10 +18,7 @@ const HIDDEN_PAGE_SLUGS = [
 ];
 
 const PAGE_FILTER = `!(
-  (_type == "page" && (
-    slug.current match "aktualnosc-*" ||
-    slug.current in $hiddenPageSlugs
-  )) ||
+  (_type == "page" && slug.current in $hiddenPageSlugs) ||
   (_type == "publication" && slug.current == "metody-tzs")
 )`;
 
@@ -95,6 +93,7 @@ function navLinkFields(): FieldDefinition[] {
       hidden: ({ parent }) => (parent as NavParent | undefined)?.target === "path",
       to: [
         { type: "page" },
+        { type: "news" },
         { type: "project" },
         { type: "publication" },
         { type: "person" },

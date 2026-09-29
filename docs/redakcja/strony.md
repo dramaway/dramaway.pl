@@ -21,11 +21,11 @@ Grupy:
 
 ![Zakładki dokumentu Strona główna](img/strony-glowna-grupy.png)
 
-Aktualności nie są osobnym typem dokumentu. To zwykłe strony **Page**, których adres wewnętrzny zaczyna się od `aktualnosc-`. Na liście widać je jak inne strony. Na witrynie zbiera je sekcja **Aktualności**, opisana niżej.
+Aktualności to osobny typ **News**, na tej samej liście co Project, Person i Page. Adres to `/{slug}`, bez przedrostka. Na stronie głównej zbiera je sekcja **Aktualności**, opisana niżej.
 
-<!-- screen: strony-aktualnosc | Lista Page z dokumentem, którego slug zaczyna się od aktualnosc- | Widać, że news nie ma własnej półki, tylko przedrostek w adresie -->
+Pola: tytuł, slug, data, zajawka, treść. **CTA target** puste zostawia przycisk „czytaj więcej”, który prowadzi do tej aktualności. Inny adres — ścieżka od ukośnika albo `https://` — wymaga własnej etykiety. Bez etykiety Studio nie pozwoli opublikować, a strona i tak zostawi zwykły przycisk.
 
-![Pole Slug aktualności, z przedrostkiem aktualnosc-](img/strony-aktualnosc.png)
+<!-- screen: strony-aktualnosc | Dokument News z pustym CTA i z wypełnionym adresem, przy którym widać etykietę | Widać, że własny link wymaga własnego tekstu przycisku -->
 
 ## Sekcje
 
@@ -34,7 +34,7 @@ Sekcja to blok pod dużym nagłówkiem: kilka kafelków albo lista najnowszych r
 Są dwa miejsca:
 
 1. **Strona główna** → zakładka **Sekcje** → lista **Sekcje**. Bloki wchodzą pod duży nagłówek.
-2. Dokument **Page** (Baza wiedzy, Kontakt, statut i inne zwykłe strony) → pole **Sekcje**, nad treścią artykułu. Na aktualności (`aktualnosc-`) tego pola nie ma.
+2. Dokument **Page** (Baza wiedzy, Kontakt, statut i inne zwykłe strony) → pole **Sekcje**, nad treścią artykułu. Dokument **News** tego pola nie ma: to sam artykuł.
 
 Na liście: **Add item**, potem **Kafelki** albo **Aktualności**. Wiersz da się przeciągnąć. Na stronę wychodzi dopiero po **Publish**.
 
@@ -64,7 +64,7 @@ Nagłówek pusty zostaje jako „Aktualności”.
 
 **Ile najnowszych** to liczba od 1 do 12. Puste pole oznacza 3.
 
-**Rodzaje treści** można zaznaczyć kilka naraz: aktualności, strony, osoby, projekty, publikacje. Puste zaznaczenie oznacza same aktualności (`aktualnosc-`). Na stronie powstaje jedna lista, od najnowszej daty dodania, bez względu na rodzaj.
+**Rodzaje treści** można zaznaczyć kilka naraz: News, strony, osoby, projekty, publikacje. Puste zaznaczenie oznacza same News. Na stronie powstaje jedna lista, od najnowszej daty, bez względu na rodzaj.
 
 ## Listingi
 
@@ -92,7 +92,8 @@ Niżej na liście są typy, nie pojedyncze skróty:
 
 - **Project** — jeden projekt, adres `/projekty/…`. Art Generacje ma dodatkowo podstrony edycji.
 - **Person** — osoba, adres `/zespol/…`.
-- **Page** — Baza wiedzy, Kontakt, strony typu statut, aktualności. Adres to `/{slug}`; aktualności (`aktualnosc-*`) bez przedrostka. W Studio lista dzieli się na **Drupal** (stare resztki do wygaszenia), **Aktualności**, **W menu** i **Poza menu**. Pole **Sekcje** nad artykułem: [Sekcje](#sekcje). Na aktualnościach tego pola nie ma.
+- **News** — aktualność. Adres `/{slug}`. Krótki formularz: tytuł, data, zajawka, treść i opcjonalny przycisk. Własny adres przycisku wymaga własnej etykiety.
+- **Page** — Baza wiedzy, Kontakt, strony typu statut. Adres to `/{slug}`. W Studio lista dzieli się na **Drupal** (stare resztki do wygaszenia), **W menu** i **Poza menu**. Pole **Sekcje** nad artykułem: [Sekcje](#sekcje).
 - **Publication** — tekst Czytelni, adres `/czytelnia/…`.
 - **Category** — etykieta kategorii w Czytelni, nie opis metod na stronie Baza wiedzy.
 

@@ -2,21 +2,10 @@ import { EXCERPT_FALLBACK_MAX } from "../homepage-copy";
 import { FEED_LIMIT_MAX } from "../content-sections";
 import { navigationProjection } from "./navigation-query";
 
-/** News pages were migrated with slug prefix `aktualnosc-`. */
-const newsSlugFilter = `slug.current match "aktualnosc-*"`;
+/** Pages that have not been converted to `news` yet. */
+const legacyNewsSlugFilter = `slug.current match "aktualnosc-*"`;
 
-const newsProjection = `{
-  _id,
-  title,
-  "slug": slug.current,
-  "isNews": true,
-  "cover": body[_type == "image"][0],
-  "excerpt": select(
-    defined(excerpt) && excerpt != "" => excerpt,
-    array::join(string::split(pt::text(body), "")[0...${EXCERPT_FALLBACK_MAX}], "")
-  ),
-  publishedAt
-}`;
+const excerptFallback = `array::join(string::split(pt::text(body), "")[0...${EXCERPT_FALLBACK_MAX}], "")`;
 
 export const peopleListQuery = `*[_type == "person"] | order(name asc) {
   _id,
@@ -40,20 +29,20 @@ export const personBySlugQuery = `*[_type == "person" && slug.current == $slug][
 
 export const personSlugsQuery = `*[_type == "person" && defined(slug.current)].slug.current`;
 
-export const pagesListQuery = `*[_type == "page" && !(${newsSlugFilter})] | order(title asc) {
+export const pagesListQuery = `*[_type == "page" && !(${legacyNewsSlugFilter})] | order(title asc) {
   _id,
   title,
-  "slug": slug.current,
-  "isNews": false
+  "slug": slug.current
 }`;
-
-export const newsListQuery = `*[_type == "page" && ${newsSlugFilter}] | order(coalesce(publishedAt, _createdAt) desc) ${newsProjection}`;
 
 const feedDoc = `{
   _id,
   _createdAt,
+  publishedAt,
   title,
   "slug": slug.current,
+  ctaHref,
+  ctaLabel,
   "excerpt": select(
     defined(excerpt) && excerpt != "" => excerpt,
     array::join(string::split(pt::text(body), "")[0...${EXCERPT_FALLBACK_MAX}], "")
@@ -62,8 +51,8 @@ const feedDoc = `{
 
 /** Newest documents per kind. A section mixes the pools it asked for and keeps the overall newest. */
 export const contentFeedQuery = `{
-  "news": *[_type == "page" && ${newsSlugFilter}] | order(_createdAt desc) [0...${FEED_LIMIT_MAX}] ${feedDoc},
-  "page": *[_type == "page" && !(${newsSlugFilter})] | order(_createdAt desc) [0...${FEED_LIMIT_MAX}] ${feedDoc},
+  "news": *[_type == "news" || (_type == "page" && ${legacyNewsSlugFilter})] | order(coalesce(publishedAt, _createdAt) desc) [0...${FEED_LIMIT_MAX}] ${feedDoc},
+  "page": *[_type == "page" && !(${legacyNewsSlugFilter})] | order(_createdAt desc) [0...${FEED_LIMIT_MAX}] ${feedDoc},
   "person": *[_type == "person" && defined(slug.current)] | order(_createdAt desc) [0...${FEED_LIMIT_MAX}] {
     _id,
     _createdAt,
@@ -115,6 +104,10 @@ export const contentSectionsProjection = `{
         _type == "publication" => summary,
         _type == "landingPage" => lead,
         _type == "aboutPage" => lead,
+        _type == "news" => select(
+          defined(excerpt) && excerpt != "" => excerpt,
+          pt::text(body)
+        ),
         _type == "page" => select(
           defined(excerpt) && excerpt != "" => excerpt,
           defined(heroLead) && heroLead != "" => heroLead,
@@ -129,7 +122,6 @@ export const pageBySlugQuery = `*[_type == "page" && slug.current == $slug][0] {
   _id,
   title,
   "slug": slug.current,
-  "isNews": ${newsSlugFilter},
   heroLead,
   heroCtaLabel,
   heroCtaHref,
@@ -144,8 +136,25 @@ export const pageBySlugQuery = `*[_type == "page" && slug.current == $slug][0] {
 }`;
 
 export const pageRoutesQuery = `*[_type == "page" && defined(slug.current)]{
+  "slug": slug.current
+}`;
+
+export const newsBySlugQuery = `*[_type == "news" && slug.current == $slug][0] {
+  _id,
+  title,
   "slug": slug.current,
-  "isNews": ${newsSlugFilter}
+  "excerpt": select(
+    defined(excerpt) && excerpt != "" => excerpt,
+    ${excerptFallback}
+  ),
+  publishedAt,
+  ctaHref,
+  ctaLabel,
+  body
+}`;
+
+export const newsRoutesQuery = `*[_type == "news" && defined(slug.current)]{
+  "slug": slug.current
 }`;
 
 const editionProjection = `{
@@ -203,8 +212,7 @@ export const projectEditionParamsQuery = `*[_type == "project" && defined(slug.c
 export const pagesBySlugsQuery = `*[_type == "page" && slug.current in $slugs] {
   _id,
   title,
-  "slug": slug.current,
-  "isNews": false
+  "slug": slug.current
 }`;
 
 export const landingPageByIdQuery = `*[_type == "landingPage" && _id == $id][0] {

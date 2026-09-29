@@ -37,13 +37,14 @@ Publiczne: `http://localhost:3000` (`pnpm dev`). Studio: `:3333`.
 | `person` | 7 | Drupal `czlonek_zespolu` | `/zespol` |
 | `aboutPage` | 1 singleton | ręcznie / `pnpm seed:about-page` | `/fundacja` |
 | `landingPage` | 3 singletony | `pnpm seed:landing-pages` (puste pola) | `/projekty`, `/czytelnia`, `/zespol` |
-| `page` | 23 + 2 newsy + placeholder | Drupal `page` + opublikowane `aktualnosc` | `/fundacja/…`, `/baza-wiedzy`, `/kontakt`, korzeń |
+| `page` | 23 | Drupal `page` | `/{slug}`, `/baza-wiedzy`, `/kontakt` |
+| `news` | 2 + placeholder | Drupal `aktualnosc` (`pnpm migrate:news`) | `/{slug}` |
 | `project` | **5** | rozbicie stron Drupal + Wielogłos z leftover `projekty-zakonczone` | `/projekty` |
 | `readingMethod` | 6 | seed z `scripts/czytelnia-curated.json` (nie enum, nie esej na `/baza-wiedzy`) | Studio |
 | `publication` | **81** (`listed`) | Drupal `article` status=1 minus śmieć `metody-tzs` | `/czytelnia`, `/czytelnia/[slug]` |
 | assety | 76 obrazów fundacji + 144 Czytelnia (okładki + PDF) | FTP fundacji + `teatrzaangazowany…/files/` | Studio → Media |
 
-Newsy są **nadal `page`**: tytuł `[Aktualność] …`, slug `aktualnosc-…`. Osobnego typu nie ma.
+Newsy są typem **`news`** (Studio: News). Adres `/{slug}`. Tytuł bez przedrostka `[Aktualność]`. Stare dokumenty `page` z slugiem `aktualnosc-` przenosi `pnpm migrate:news` (ten sam `_id`).
 
 Biblioteka **Media** w Studio czyta te same `sanity.imageAsset` — bez re-uploadu i bez tagów (tagi/foldery są opcjonalne, od zera).
 
@@ -61,13 +62,13 @@ Zasada (2026-09-05): **czego nie ma w CMS, tego nie ma na stronie.** Nie zmyśla
 |---------|--------------------------------|----------|
 | Art Generacje | `project` art-generacje, featured, 13 edycji | jest |
 | Czytelnia na `/projekty` | nie jest `project` | prezentacja OK, dane = `publication` (81 dokumenty) |
-| Projekt z Syrenką (aktywny) | **brak** `project` | nie listować. Jest placeholder newsa `news-placeholder-syrena` — do draftu z adnotacją |
+| Projekt z Syrenką (aktywny) | **brak** `project` | nie listować. Jest placeholder newsa `news-syrena` — do draftu z adnotacją |
 | to mi gra, Teatr Codzienny, BOAL IN PRACTICE, Wielogłos | 4× `project` archive | są (TC: 6 edycji + 20 rezultatów) |
 | Wielogłos (archiwum) | `project-wieloglos` ze strony `projekty-zakonczone` | jest; leftover `page` pod starym URL-em zostaje |
 | Publikacje w Czytelni | 81× `publication` (47 `listed` z Worda) | spis `/czytelnia` = `listed`; artykuł `/czytelnia/[slug]` = 81 (bez śmiecia `metody-tzs`) |
 | `edition.outcomes` | AG prawie puste; **Teatr Codzienny 20** z nazwanych spektakli | AG nadal nie zgadywać z HTML |
 
-Placeholder newsa Syrena (`[Aktualność] Nowy projekt z Teatrem Syrena`, slug `aktualnosc-nowy-projekt-z-teatrem-syrena`): wstawiony 2026-09-03 pod ramkę homepage. Nie jest treścią fundacji. Draft + adnotacja: *„Wypełniacz z makiety Figmy, nie treść z Drupala. Nie publikować, dopóki nie będzie prawdziwego newsa albo projektu.”*
+Placeholder newsa Syrena (`Nowy projekt z Teatrem Syrena`, slug `nowy-projekt-z-teatrem-syrena`, id `news-syrena`, wcześniej `news-placeholder-syrena`): wstawiony 2026-09-03 pod ramkę homepage. Nie jest treścią fundacji. Draft + adnotacja: *„Wypełniacz z makiety Figmy, nie treść z Drupala. Nie publikować, dopóki nie będzie prawdziwego newsa albo projektu.”*
 
 ## Mapa vs live (`fundacja.dramaway.pl`)
 

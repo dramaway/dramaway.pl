@@ -3,8 +3,8 @@
  *
  * The prefix comes from the document type, not from the menu and not from a
  * field on the page: `project` → `/projekty`, `person` → `/zespol`,
- * `publication` → `/czytelnia`, `page` → `/{slug}`.
- * News slugs (`aktualnosc-`) stay flat: `/{slug without prefix}`.
+ * `publication` → `/czytelnia`, `page` → `/{slug}`, `news` → `/{slug}`.
+ * A leftover `aktualnosc-` prefix is still stripped so old news pages keep their URL.
  *
  * Launch redirects (node/N, leftover edition landings, news aliases) are a
  * separate map — do not grow this file into that list.
@@ -70,7 +70,7 @@ export function newsPublicSlug(sanitySlug: string) {
     : sanitySlug;
 }
 
-/** Public href for a Sanity `page`. News prefix is stripped; nothing else is. */
+/** Public href for a Sanity `page`, or a `news` item when `isNews` is set. */
 export function publicPathForPage(page: {
   slug: string;
   isNews?: boolean | null;

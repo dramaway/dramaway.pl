@@ -28,14 +28,12 @@ export type PersonDetail = {
 
 export type PageRoute = {
   slug: string;
-  isNews?: boolean | null;
 };
 
 export type PageListItem = {
   _id: string;
   title: string;
   slug: string;
-  isNews: boolean;
   cover?: SanityImage | null;
   excerpt?: string | null;
   publishedAt?: string | null;
@@ -46,9 +44,12 @@ export type FeedSource = "news" | "page" | "person" | "project" | "publication";
 export type ContentFeedDoc = {
   _id: string;
   _createdAt?: string | null;
+  publishedAt?: string | null;
   title?: string | null;
   slug?: string | null;
   excerpt?: string | null;
+  ctaHref?: string | null;
+  ctaLabel?: string | null;
 };
 
 export type ContentFeedPool = Record<FeedSource, ContentFeedDoc[] | null>;
@@ -80,7 +81,7 @@ export type CmsContentSection = {
   heading?: string | null;
   /** News-feed cap. Empty = 3. */
   limit?: number | null;
-  /** News-feed document kinds. Empty = news pages only. */
+  /** News-feed document kinds. Empty = News only. */
   sources?: string[] | null;
   textLayout?: "grid" | "list" | string | null;
   image?: CmsContentImage | null;
@@ -120,13 +121,23 @@ export type PageDetail = {
   _id: string;
   title: string;
   slug: string;
-  isNews: boolean;
   heroLead?: string | null;
   heroCtaLabel?: string | null;
   heroCtaHref?: string | null;
   excerpt?: string | null;
   cover?: SanityImage | null;
   sections: ResolvedSection[];
+  body: PortableContent;
+};
+
+export type NewsDetail = {
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt?: string | null;
+  publishedAt?: string | null;
+  ctaHref?: string | null;
+  ctaLabel?: string | null;
   body: PortableContent;
 };
 

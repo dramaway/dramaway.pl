@@ -5,6 +5,7 @@ import { edition } from "./edition";
 import { editionOutcome } from "./editionOutcome";
 import { landingPage } from "./landingPage";
 import { navChild, navItem } from "./navItem";
+import { news } from "./news";
 import { page } from "./page";
 import { person } from "./person";
 import { project } from "./project";
@@ -24,6 +25,7 @@ export const schemaTypes = [
   project,
   person,
   page,
+  news,
   landingPage,
   navChild,
   navItem,

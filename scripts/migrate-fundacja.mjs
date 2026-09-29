@@ -290,11 +290,11 @@ async function migratePage(item, { news = false } = {}) {
   const { html, images } = await resolveMediaTokens(item.bodyHtml || "");
   const doc = {
     _id: docId(news ? "news" : "page", item.nid),
-    _type: "page",
-    title: news ? `[Aktualność] ${item.title}` : item.title,
+    _type: news ? "news" : "page",
+    title: item.title,
     slug: {
       _type: "slug",
-      current: news ? `aktualnosc-${item.slug}` : item.slug,
+      current: item.slug,
     },
     body: htmlToPortableText(html, images),
   };

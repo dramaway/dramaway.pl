@@ -60,7 +60,7 @@ Znaczniki `<!-- screen: ... -->` zostają w tekście także przy wstawionych obr
 |----|------|------|--------|
 | `strony-skroty` | [strony.md](strony.md) | Góra listy Content ze skrótami | Widać, że Strona główna, listingi i O fundacji są osobnymi pozycjami, nie jedną stroną o wszystkim |
 | `strony-glowna-grupy` | [strony.md](strony.md) | Dokument Strona główna z widocznymi zakładkami grup | Widać Nawigacja, Stopkę, Hero i Sekcje jako osobne karty. Kadr do powtórzenia: stary plik może jeszcze podpisywać ostatnią kartę jako Homepage |
-| `strony-aktualnosc` | [strony.md](strony.md) | Lista Page z dokumentem, którego slug zaczyna się od `aktualnosc-` | Widać, że news nie ma własnej półki, tylko przedrostek w adresie |
+| `strony-aktualnosc` | [strony.md](strony.md) | Dokument News z pustym CTA i z wypełnionym adresem, przy którym widać etykietę | Widać, że własny link wymaga własnego tekstu przycisku. Stary kadr (przedrostek w slugu) do wymiany |
 | `strony-listing` | [strony.md](strony.md) | Dokument Projekty z zablokowanym polem strony | Widać, że adres jest stały, a pusty tytuł nie wymyśla nagłówka |
 | `strony-typy` | [strony.md](strony.md) | Dolna część listy Content: Project, Person, Page, Category, Publication | Widać, gdzie szukać tekstu, który nie ma własnego skrótu na górze |
 | `strony-sekcje` | [strony.md](strony.md) | Lista Sekcje z wierszem Kafelki i wierszem Aktualności | Widać, że nowy blok dodaje się do listy, a nie jako osobny dokument. Jeszcze bez pliku |

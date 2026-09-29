@@ -35,10 +35,10 @@ export function hrefForDocument(page: {
       return slug ? publicationPath(slug) : null;
     case "person":
       return slug ? personPath(slug) : null;
+    case "news":
+      return slug ? publicPathForPage({ slug, isNews: true }) : null;
     case "page":
-      return slug
-        ? publicPathForPage({ slug, isNews: slug.startsWith("aktualnosc-") })
-        : null;
+      return slug ? publicPathForPage({ slug }) : null;
     default:
       return null;
   }

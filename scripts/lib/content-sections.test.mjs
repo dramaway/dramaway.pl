@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { resolveContentSections, selectFeedItems } from "../../apps/web/src/lib/content-sections.ts";
+import { resolveContentSections, selectFeedItems, toFeedCandidates } from "../../apps/web/src/lib/content-sections.ts";
 
 test("drops empty input and unknown section types", () => {
   assert.deepEqual(resolveContentSections(null), []);
@@ -232,4 +232,29 @@ test("a feed mixes selected kinds by creation date and stops at the limit", () =
     picked.map((item) => item.id),
     ["new-person", "mid-project"],
   );
+});
+
+test("a news card keeps the article on the title and a labeled custom button", () => {
+  const [item] = toFeedCandidates({
+    news: [
+      {
+        _id: "news-1",
+        title: "[Aktualność] Harmonia",
+        slug: "harmonia-artgeneracje",
+        ctaHref: "https://centrum.dramaway.pl",
+        ctaLabel: "zobacz w Centrum",
+        publishedAt: "2026-01-02T00:00:00.000Z",
+        _createdAt: "2020-01-01T00:00:00.000Z",
+      },
+    ],
+    page: null,
+    person: null,
+    project: null,
+    publication: null,
+  });
+  assert.equal(item.title, "Harmonia");
+  assert.equal(item.href, "/harmonia-artgeneracje");
+  assert.equal(item.ctaHref, "https://centrum.dramaway.pl/");
+  assert.equal(item.ctaLabel, "zobacz w Centrum");
+  assert.equal(item.createdAt, "2026-01-02T00:00:00.000Z");
 });

@@ -1,16 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { contentSectionMembers } from "./contentModule";
 
-const NEWS_SLUG_PREFIX = "aktualnosc-";
-
-function isNewsDocument(document: unknown) {
-  if (!document || typeof document !== "object") return false;
-  const slug = "slug" in document ? document.slug : undefined;
-  if (!slug || typeof slug !== "object") return false;
-  const current = "current" in slug ? slug.current : undefined;
-  return typeof current === "string" && current.startsWith(NEWS_SLUG_PREFIX);
-}
-
 export const page = defineType({
   name: "page",
   title: "Page",
@@ -23,7 +13,6 @@ export const page = defineType({
       title: "Hero image",
       type: "image",
       options: { hotspot: true },
-      hidden: ({ document }) => isNewsDocument(document),
       description:
         "Dedicated header photo. Empty = no still; the split layout stays.",
       fields: [
@@ -39,20 +28,17 @@ export const page = defineType({
       title: "Hero lead",
       type: "text",
       rows: 3,
-      hidden: ({ document }) => isNewsDocument(document),
       description: "Shown under the H1. Empty = no lead (title + body only).",
     }),
     defineField({
       name: "heroCtaLabel",
       title: "Hero CTA label",
       type: "string",
-      hidden: ({ document }) => isNewsDocument(document),
     }),
     defineField({
       name: "heroCtaHref",
       title: "Hero CTA target",
       type: "string",
-      hidden: ({ document }) => isNewsDocument(document),
       description: "Internal path, e.g. /czytelnia",
     }),
     defineField({
@@ -66,14 +52,13 @@ export const page = defineType({
       name: "publishedAt",
       title: "Published at",
       type: "datetime",
-      description: "Date on the news card. Empty = no date shown.",
+      description: "Optional date. Empty = not shown.",
     }),
     defineField({
       name: "sections",
       title: "Sekcje",
       type: "array",
       description: "Moduły nad treścią artykułu. Pusta lista = sam artykuł.",
-      hidden: ({ document }) => isNewsDocument(document),
       of: contentSectionMembers(),
     }),
     defineField({ name: "body", title: "Body", type: "blockContent" }),
@@ -88,6 +73,5 @@ export const page = defineType({
 
 function previewPath(slug: unknown) {
   if (typeof slug !== "string" || !slug) return undefined;
-  if (slug.startsWith(NEWS_SLUG_PREFIX)) return `/${slug.slice(NEWS_SLUG_PREFIX.length)}`;
   return `/${slug}`;
 }

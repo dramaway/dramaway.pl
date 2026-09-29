@@ -88,10 +88,10 @@ test("resolves document types to public paths and falls back to the document tit
         label: "Aktualność",
         target: "reference",
         page: {
-          _type: "page",
+          _type: "news",
           title: "News",
           name: null,
-          slug: "aktualnosc-las",
+          slug: "las",
           route: null,
         },
       },

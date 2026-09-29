@@ -51,6 +51,7 @@ function ModuleView({
       excerpt: item.excerpt,
       publishedAt: item.createdAt,
       ctaLabel: item.ctaLabel,
+      ctaHref: item.ctaHref,
     }));
     return (
       <HomeNews

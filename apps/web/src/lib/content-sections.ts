@@ -5,6 +5,7 @@ import {
   TILE_CTA_MEET,
 } from "./homepage-copy";
 import { hrefForDocument } from "./navigation";
+import { newsCta } from "./news-cta";
 import { personPath, projectPath, publicPathForPage, publicationPath } from "./routes";
 import { safeHref } from "./safe-url";
 import type {
@@ -37,6 +38,8 @@ export type FeedCandidate = {
   excerpt: string | null;
   createdAt: string | null;
   ctaLabel: string;
+  /** Set when the button leaves the card title's article. */
+  ctaHref?: string | null;
 };
 
 function feedLimit(value: number | null | undefined): number {
@@ -142,12 +145,10 @@ export function selectFeedItems(
 
 function feedHref(source: FeedSource, doc: ContentFeedDoc): string {
   const slug = doc.slug?.trim() ?? "";
-  if (source === "news" || source === "page") {
-    return publicPathForPage({
-      slug,
-      isNews: source === "news",
-    });
+  if (source === "news") {
+    return publicPathForPage({ slug, isNews: true });
   }
+  if (source === "page") return publicPathForPage({ slug });
   if (source === "person") return personPath(slug);
   if (source === "project") return projectPath(slug);
   return publicationPath(slug);
@@ -165,16 +166,22 @@ export function toFeedCandidates(pool: ContentFeedPool | null | undefined): Feed
       const title =
         source === "news" ? rawTitle.replace(/^\[Aktualność\]\s*/i, "").trim() : rawTitle;
       if (!title) continue;
+      const href = feedHref(source, doc);
+      const custom = source === "news" ? newsCta({ slug, ctaHref: doc.ctaHref, ctaLabel: doc.ctaLabel }) : null;
       candidates.push({
         id: doc._id,
         source,
         title,
-        href: feedHref(source, doc),
+        href: custom?.articleHref ?? href,
         excerpt: clip(cmsText(doc.excerpt)),
-        createdAt: cmsText(doc._createdAt),
-        ctaLabel: defaultCta(
+        createdAt:
+          source === "news"
+            ? cmsText(doc.publishedAt) || cmsText(doc._createdAt)
+            : cmsText(doc._createdAt),
+        ctaLabel: custom?.label ?? defaultCta(
           source === "person" || source === "project" ? source : "page",
         ),
+        ctaHref: custom?.ctaHref ?? null,
       });
     }
   }

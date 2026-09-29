@@ -12,6 +12,8 @@ export type HomeNewsItem = {
   excerpt: string | null;
   publishedAt: string | null;
   ctaLabel?: string | null;
+  /** When set, the button leaves the article the title still opens. */
+  ctaHref?: string | null;
 };
 
 function formatPolishMonthYear(iso: string): string | null {
@@ -87,7 +89,14 @@ export function HomeNews({
                   <p className="mt-5 line-clamp-4 text-body">{item.excerpt}</p>
                 ) : null}
               </div>
-              {item.href ? (
+              {item.ctaHref ? (
+                <CtaLink
+                  href={item.ctaHref}
+                  className="news-card-cta cta-over mt-8"
+                >
+                  {item.ctaLabel?.trim() || NEWS_CTA_LABEL}
+                </CtaLink>
+              ) : item.href ? (
                 <CtaLink
                   href={item.href}
                   presentational

@@ -72,7 +72,7 @@ Treści prawnych nie piszemy za Fundację. Gotowy mail i checklista: [cutover-fo
 - [ ] Podstrona polityki w Sanity i link w stopce.
 - [ ] Analityka tylko jeśli ją wybiorą, plus dopisek w CSP.
 - [ ] Mapa 301, tuż przed DNS: stare `node/N`, aliasy portalu, landingi edycji. Nie zgadywać z palca.
-- [ ] `news-placeholder-syrena` do szkicu.
+- [ ] `news-syrena` do szkicu.
 
 ## Faza C — dzień domeny
 

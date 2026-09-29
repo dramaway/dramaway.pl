@@ -13,9 +13,8 @@ export const DRUPAL_PAGE_SLUGS = [
 const drupalSlugs = new Set<string>(DRUPAL_PAGE_SLUGS);
 
 export const PAGE_DRUPAL_FILTER = `_type == "page" && slug.current in $drupal`;
-export const PAGE_NEWS_FILTER = `_type == "page" && slug.current match "aktualnosc-*" && !(slug.current in $drupal)`;
-export const PAGE_MENU_FILTER = `_type == "page" && _id in $pinned && !(slug.current in $drupal) && !(slug.current match "aktualnosc-*")`;
-export const PAGE_REST_FILTER = `_type == "page" && !(_id in $pinned) && !(slug.current in $drupal) && !(slug.current match "aktualnosc-*")`;
+export const PAGE_MENU_FILTER = `_type == "page" && _id in $pinned && !(slug.current in $drupal)`;
+export const PAGE_REST_FILTER = `_type == "page" && !(_id in $pinned) && !(slug.current in $drupal)`;
 
 /** Published id and its draft, so a Studio list does not split one document. */
 export function pageDeskIds(ids: readonly string[]): string[] {
@@ -29,11 +28,11 @@ export function pageDeskIds(ids: readonly string[]): string[] {
   return [...all];
 }
 
-export type PageDeskFolder = "drupal" | "news" | "menu" | "rest";
+export type PageDeskFolder = "drupal" | "menu" | "rest";
 
 /**
  * Which Page folder a document belongs in.
- * Drupal wins, then news, then a menu pin, then the rest.
+ * Drupal wins, then a menu pin, then the rest. News is its own document type.
  */
 export function pageDeskFolder(
   page: { id: string; slug?: string | null },
@@ -41,7 +40,6 @@ export function pageDeskFolder(
 ): PageDeskFolder {
   const slug = page.slug ?? "";
   if (drupalSlugs.has(slug)) return "drupal";
-  if (slug.startsWith("aktualnosc-")) return "news";
   const published = page.id.startsWith("drafts.")
     ? page.id.slice("drafts.".length)
     : page.id;

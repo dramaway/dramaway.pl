@@ -4,7 +4,7 @@ import { pageDeskFolder, pageDeskIds } from "../../apps/studio/page-desk.ts";
 
 const pinned = ["page-baza-wiedzy", "page-kontakt"];
 
-test("drupal leftovers win over a menu pin and over news", () => {
+test("drupal leftovers win over a menu pin", () => {
   assert.equal(
     pageDeskFolder({ id: "page-drupal-37", slug: "szkolenia" }, pinned),
     "drupal",
@@ -15,14 +15,7 @@ test("drupal leftovers win over a menu pin and over news", () => {
   );
 });
 
-test("news and menu pins stay out of the leftover folder", () => {
-  assert.equal(
-    pageDeskFolder(
-      { id: "news-drupal-70", slug: "aktualnosc-harmonia-artgeneracje" },
-      pinned,
-    ),
-    "news",
-  );
+test("menu pins stay out of the leftover folder", () => {
   assert.equal(
     pageDeskFolder({ id: "drafts.page-kontakt", slug: "kontakt" }, pinned),
     "menu",

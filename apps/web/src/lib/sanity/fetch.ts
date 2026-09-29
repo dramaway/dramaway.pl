@@ -8,7 +8,8 @@ import {
   aboutPageQuery,
   landingPageByIdQuery,
   contentFeedQuery,
-  newsListQuery,
+  newsBySlugQuery,
+  newsRoutesQuery,
   pageBySlugQuery,
   pageRoutesQuery,
   pagesBySlugsQuery,
@@ -34,6 +35,7 @@ import type {
   PageDetail,
   PageListItem,
   PageRoute,
+  NewsDetail,
   PersonDetail,
   PersonListItem,
   ProjectDetail,
@@ -68,8 +70,14 @@ export async function getPages(): Promise<PageListItem[]> {
   return sanityClient.fetch(pagesListQuery, {}, revalidate);
 }
 
-export async function getNewsPages(): Promise<PageListItem[]> {
-  return sanityClient.fetch(newsListQuery, {}, revalidate);
+export const getNewsBySlug = cache(async function getNewsBySlug(
+  slug: string,
+): Promise<NewsDetail | null> {
+  return sanityClient.fetch<NewsDetail | null>(newsBySlugQuery, { slug }, revalidate);
+});
+
+export async function getNewsRoutes(): Promise<PageRoute[]> {
+  return sanityClient.fetch(newsRoutesQuery, {}, revalidate);
 }
 
 /** Recent documents for configurable news-feed sections, newest first within each kind. */

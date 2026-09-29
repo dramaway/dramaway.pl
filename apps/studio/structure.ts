@@ -15,7 +15,6 @@ import {
   DRUPAL_PAGE_SLUGS,
   PAGE_DRUPAL_FILTER,
   PAGE_MENU_FILTER,
-  PAGE_NEWS_FILTER,
   PAGE_REST_FILTER,
   pageDeskIds,
 } from "./page-desk";
@@ -210,16 +209,6 @@ export const structure: StructureResolver = async (S, context) => {
                     S.documentTypeList("page")
                       .title("Drupal")
                       .filter(PAGE_DRUPAL_FILTER)
-                      .params({ drupal: [...DRUPAL_PAGE_SLUGS] }),
-                  ),
-                S.listItem()
-                  .id("page-news")
-                  .title("Aktualności")
-                  .schemaType("page")
-                  .child(
-                    S.documentTypeList("page")
-                      .title("Aktualności")
-                      .filter(PAGE_NEWS_FILTER)
                       .params({ drupal: [...DRUPAL_PAGE_SLUGS] }),
                   ),
                 S.listItem()

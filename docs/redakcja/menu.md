@@ -18,7 +18,7 @@ Każdy wiersz ma etykietę i cel.
 
 **Cel.**
 
-- **Strona z CMS** — wybór istniejącego dokumentu: zwykła strona (w tym Baza wiedzy), projekt, publikacja, osoba, listing (Projekty, Czytelnia, Zespół) albo O fundacji. Aktualności (`aktualnosc-…`) i stare duplikaty projektów nie pojawiają się na liście wyboru.
+- **Strona z CMS** — wybór istniejącego dokumentu: zwykła strona (w tym Baza wiedzy), News, projekt, publikacja, osoba, listing (Projekty, Czytelnia, Zespół) albo O fundacji. Stare duplikaty projektów nie pojawiają się na liście wyboru.
 - **Adres** — ścieżka od ukośnika (`/projekty`) albo pełny `https://…`. Tak dodaje się link poza stronę, na przykład do Centrum.
 
 <!-- screen: menu-adres | Wiersz przełączony na Adres, z wpisanym https | Widać, że link zewnętrzny nie wymaga dokumentu w Studio -->

@@ -2,7 +2,14 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { publicPathForPage } from "../../apps/web/src/lib/routes.ts";
 
-test("news prefix stays flat", () => {
+test("a news document lives at the site root", () => {
+  assert.equal(
+    publicPathForPage({ slug: "harmonia-artgeneracje", isNews: true }),
+    "/harmonia-artgeneracje",
+  );
+});
+
+test("a leftover news prefix still strips", () => {
   assert.equal(
     publicPathForPage({
       slug: "aktualnosc-harmonia-artgeneracje",

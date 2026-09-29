@@ -2,8 +2,7 @@ import { defineArrayMember, defineField, defineType } from "sanity";
 
 /**
  * Leftover pages that should not be picked as tiles.
- * News (`aktualnosc-*`) stays available — the auto feed is separate.
- * Keep in sync with `HIDDEN_PAGE_SLUGS` in `navItem.ts`.
+ * News is its own document type. Keep in sync with `HIDDEN_PAGE_SLUGS` in `navItem.ts`.
  */
 const HIDDEN_PAGE_SLUGS = [
   "projekty-zakonczone",
@@ -78,10 +77,11 @@ export const contentTile = defineType({
       name: "page",
       title: "Dokument",
       type: "reference",
-      description: "Strona, projekt, publikacja, listing, fundacja albo osoba.",
+      description: "Strona, news, projekt, publikacja, listing, fundacja albo osoba.",
       hidden: ({ parent }) => (parent as TileParent | undefined)?.target === "path",
       to: [
         { type: "page" },
+        { type: "news" },
         { type: "project" },
         { type: "publication" },
         { type: "landingPage" },
@@ -251,11 +251,11 @@ export const newsFeedModule = defineType({
       title: "Rodzaje treści",
       type: "array",
       description:
-        "Można zaznaczyć kilka. Na stronie zostają najnowsze według daty dodania. Puste = same aktualności.",
+        "Można zaznaczyć kilka. Na stronie zostają najnowsze według daty dodania. Puste = same News.",
       of: [{ type: "string" }],
       options: {
         list: [
-          { title: "Aktualności", value: "news" },
+          { title: "News", value: "news" },
           { title: "Strony", value: "page" },
           { title: "Osoby", value: "person" },
           { title: "Projekty", value: "project" },

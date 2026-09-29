@@ -88,7 +88,7 @@ Import 82 artykułów **nie jest** blokowany brakiem huba. Hub **nie jest** blok
 - Czy i kiedy Czytelnia stoi na `/projekty` jako wiersz (dane nadal `publication`).
 - CTA na home „poznajmy się” przy bloku Czytelni — kopia CTA „Kim jesteśmy”; do designerki.
 - Drugi poziom menu: Figmy nie ma; na mobile wejdzie w istniejącą nakładkę.
-- Draft `news-placeholder-syrena` w Studio — jeszcze nie wykonany.
+- Draft `news-syrena` w Studio (wcześniej `news-placeholder-syrena`) — jeszcze nie wykonany.
 - Slugi trzech „Edycja VI”.
 
 ---
