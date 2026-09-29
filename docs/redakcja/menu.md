@@ -18,7 +18,7 @@ Każdy wiersz ma etykietę i cel.
 
 **Cel.**
 
-- **Strona z CMS** — wybór istniejącego dokumentu: zwykła strona, projekt, publikacja, osoba, listing (Projekty, Baza wiedzy, Czytelnia, Zespół) albo O fundacji. Aktualności (`aktualnosc-…`) i stare duplikaty projektów nie pojawiają się na liście wyboru.
+- **Strona z CMS** — wybór istniejącego dokumentu: zwykła strona (w tym Baza wiedzy), projekt, publikacja, osoba, listing (Projekty, Czytelnia, Zespół) albo O fundacji. Aktualności (`aktualnosc-…`) i stare duplikaty projektów nie pojawiają się na liście wyboru.
 - **Adres** — ścieżka od ukośnika (`/projekty`) albo pełny `https://…`. Tak dodaje się link poza stronę, na przykład do Centrum.
 
 <!-- screen: menu-adres | Wiersz przełączony na Adres, z wpisanym https | Widać, że link zewnętrzny nie wymaga dokumentu w Studio -->
@@ -33,15 +33,15 @@ Pod wierszem jest lista **Podpozycje**. To jedyny dodatkowy poziom. Trzeciego ni
 
 Rodzic nadal jest linkiem (na przykład Baza wiedzy prowadzi na `/baza-wiedzy`). Podpozycje są obok niego w menu.
 
-<!-- screen: menu-podpozycje | Rozwinięta Baza wiedzy z dwiema podpozycjami, Metody i Czytelnia | Widać rodzica i dokładnie jeden poziom dzieci -->
+<!-- screen: menu-podpozycje | Rozwinięta Baza wiedzy z podpozycją Czytelnia | Widać rodzica i dokładnie jeden poziom dzieci -->
 
-![Podpozycje Bazy wiedzy: Metody i Czytelnia](img/menu-podpozycje.png)
+![Podpozycja Bazy wiedzy: Czytelnia](img/menu-podpozycje.png)
 
 Pozycja, która jest samym adresem i nie wskazuje dokumentu, **nie dostaje skrótu** w lewym nawigatorze. W menu na stronie nadal działa.
 
 ## Pusta lista
 
-Pusta Nawigacja zostawia menu wbudowane: Projekty, Baza wiedzy (Metody, Czytelnia), O fundacji, Kontakt. Logo i tak prowadzi na stronę główną. Nie dodajemy jej do menu.
+Pusta Nawigacja zostawia menu wbudowane: Projekty, Baza wiedzy (Czytelnia), O fundacji, Kontakt. Logo i tak prowadzi na stronę główną. Nie dodajemy jej do menu.
 
 Gdy lista coś zawiera, na stronie jest **tylko** to, co wpisane. Żeby wrócić do układu domyślnego, czyścimy listę i publikujemy.
 
@@ -53,6 +53,6 @@ Reszta skrótów powtarza Nawigację. Wiersz z podpozycjami otwiera listę: najp
 
 <!-- screen: menu-skroty-desku | Lewa lista Content po uzupełnionym menu, ze Stroną główną na górze i gałęzią Baza wiedzy | Widać, że skróty idą za menu, a Strona główna zostaje -->
 
-![Po otwarciu skrótu Baza wiedzy: sam dokument, Metody i Czytelnia](img/menu-skroty-desku.png)
+![Po otwarciu skrótu Baza wiedzy: sam dokument i Czytelnia](img/menu-skroty-desku.png)
 
 Dopóki Nawigacja jest pusta, skróty są te dotychczasowe, łącznie z Art Generacje. Art Generacje znika z góry, gdy menu jest uzupełnione i tego projektu w nim nie ma. Dokument dalej jest na liście **Project**.

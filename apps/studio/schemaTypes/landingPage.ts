@@ -2,7 +2,6 @@ import { defineField, defineType } from "sanity";
 
 export const LANDING_ROUTES = [
   { title: "Projekty", value: "projekty" },
-  { title: "Baza wiedzy", value: "baza-wiedzy" },
   { title: "Czytelnia", value: "czytelnia" },
   { title: "Zespół", value: "zespol" },
 ] as const;

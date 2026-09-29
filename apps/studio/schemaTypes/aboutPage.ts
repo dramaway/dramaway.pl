@@ -68,7 +68,7 @@ export const aboutPage = defineType({
           name: "ctaHref",
           title: "CTA — cel",
           type: "string",
-          description: "Ścieżka wewnętrzna, np. /metody",
+          description: "Ścieżka wewnętrzna, np. /baza-wiedzy",
         }),
         defineField({
           name: "values",

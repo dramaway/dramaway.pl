@@ -15,6 +15,7 @@ import {
 
 type Props = { params: Promise<{ slug: string }> };
 
+/** Dedicated routes. `/metody` redirects to `/baza-wiedzy`. `/kontakt` is its own view. */
 const RESERVED = new Set(["metody", "kontakt"]);
 
 export const revalidate = 60;

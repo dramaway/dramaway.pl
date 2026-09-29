@@ -34,7 +34,6 @@ const client = createClient({
 
 const LANDINGS = [
   { _id: "landing-projekty", route: "projekty" },
-  { _id: "landing-baza-wiedzy", route: "baza-wiedzy" },
   { _id: "landing-czytelnia", route: "czytelnia" },
   { _id: "landing-zespol", route: "zespol" },
 ];

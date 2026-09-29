@@ -8,7 +8,7 @@ Tekst Czytelni to dokument **Publication**. Adres: `/czytelnia/` i końcówka z 
 
 **Format** decyduje, w której szufladzie spisu wisi tekst: artykuły, książki, scenariusze, multimedia. Na stronie etykiety są po polsku. W panelu lista jest po angielsku (Articles, Books, Scripts, Multimedia).
 
-**Categories** to etykiety z listy **Category** (w danych nazywają się metodami czytania). To nie jest strona `/metody` i nie jest drugi spis.
+**Categories** to etykiety z listy **Category** (w danych nazywają się metodami czytania). To nie jest opis metod na stronie Baza wiedzy i nie jest drugi spis.
 
 **Listed in Czytelnia** włącza tekst do spisu na `/czytelnia`. Odznaczony dokument ma nadal swój adres, ale znika z listy.
 

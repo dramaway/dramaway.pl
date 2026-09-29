@@ -7,6 +7,7 @@
  *
  * Launch redirects (node/N, leftover edition landings, news aliases) are a
  * separate map — do not grow this file into that list.
+ * `/metody` permanently redirects to `/baza-wiedzy`. The methods essay is that page.
  */
 
 export const DEFAULT_CENTRUM_URL = "https://centrum.dramaway.pl";
@@ -34,10 +35,6 @@ export function publicationPath(slug: string) {
   return `/czytelnia/${slug}`;
 }
 
-export function methodsPath() {
-  return "/metody";
-}
-
 /**
  * Built-in header. Used when `siteSettings.navigation` is empty.
  * Home is filtered out of the visible nav (the logo links to /).
@@ -49,10 +46,7 @@ export function mainNav(): NavItem[] {
     {
       href: knowledgeHubPath(),
       label: "Baza wiedzy",
-      children: [
-        { href: methodsPath(), label: "Metody" },
-        { href: czytelniaPath(), label: "Czytelnia" },
-      ],
+      children: [{ href: czytelniaPath(), label: "Czytelnia" }],
     },
     { href: "/fundacja", label: "O fundacji" },
     { href: "/kontakt", label: "Kontakt" },

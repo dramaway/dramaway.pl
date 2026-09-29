@@ -39,7 +39,7 @@ export const publication = defineType({
       type: "array",
       of: [{ type: "reference", to: [{ type: "readingMethod" }] }],
       description:
-        "Czytelnia tags from the Word list. Not the /metody essays and not a second listing.",
+        "Czytelnia tags from the Word list. Not the essays on /baza-wiedzy and not a second listing.",
     }),
     defineField({
       name: "listed",

@@ -47,7 +47,7 @@ scripts/           # migration scripts (later)
 
 ## Content model (target Sanity)
 
-`project`, `person`, `page`, `publication`, `readingMethod`, `siteSettings`, `aboutPage` (singleton `/fundacja`), `landingPage` (singletons for listing heroes: `/projekty`, `/baza-wiedzy`, `/czytelnia`, `/zespol`) — map Drupal into these; do not clone Drupal `node_type` 1:1.  
+`project`, `person`, `page`, `publication`, `readingMethod`, `siteSettings`, `aboutPage` (singleton `/fundacja`), `landingPage` (singletons for listing heroes: `/projekty`, `/czytelnia`, `/zespol`) — map Drupal into these; do not clone Drupal `node_type` 1:1. `/baza-wiedzy` is a normal `page` (the methods essay). `/metody` redirects there.  
 `drama_teatr` dump is a **source** for publications / reading room, not a second production site in MVP.
 
 ## Critical gotchas

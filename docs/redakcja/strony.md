@@ -34,7 +34,7 @@ Sekcja to blok pod dużym nagłówkiem: kilka kafelków albo lista najnowszych r
 Są dwa miejsca:
 
 1. **Strona główna** → zakładka **Sekcje** → lista **Sekcje**. Bloki wchodzą pod duży nagłówek.
-2. Dokument **Page** (Kontakt, Metody, statut i inne zwykłe strony) → pole **Sekcje**, nad treścią artykułu. Na aktualności (`aktualnosc-`) tego pola nie ma.
+2. Dokument **Page** (Baza wiedzy, Kontakt, statut i inne zwykłe strony) → pole **Sekcje**, nad treścią artykułu. Na aktualności (`aktualnosc-`) tego pola nie ma.
 
 Na liście: **Add item**, potem **Kafelki** albo **Aktualności**. Wiersz da się przeciągnąć. Na stronę wychodzi dopiero po **Publish**.
 
@@ -46,7 +46,7 @@ Do trzech kafelków w jednej sekcji. Każdy kafelek to tytuł, krótki opis i et
 
 Cel kafelka:
 
-- **Dokument z CMS** — istniejąca strona, projekt, publikacja, osoba, listing (Projekty, Baza wiedzy, Czytelnia, Zespół) albo O fundacji.
+- **Dokument z CMS** — istniejąca strona, projekt, publikacja, osoba, listing (Projekty, Czytelnia, Zespół) albo O fundacji. Baza wiedzy to zwykła strona, nie listing.
 - **Adres** — ścieżka od ukośnika (`/projekty`) albo adres `https://`.
 
 Pusty **Tytuł** bierze tytuł dokumentu. Pusty **Opis** bierze zajawkę dokumentu. Pusta **Etykieta linku** to „zobacz” przy osobie i projekcie, a „czytaj więcej” przy reszcie.
@@ -68,14 +68,15 @@ Nagłówek pusty zostaje jako „Aktualności”.
 
 ## Listingi
 
-Cztery dokumenty **Landing page**, przypięte jako skróty, gdy menu jest puste albo gdy są w menu:
+Trzy dokumenty **Landing page**, przypięte jako skróty, gdy menu jest puste albo gdy są w menu:
 
 | Skrót | Adres |
 |-------|--------|
 | Projekty | `/projekty` |
-| Baza wiedzy | `/baza-wiedzy` |
 | Czytelnia | `/czytelnia` |
 | Zespół | `/zespol` |
+
+**Baza wiedzy** (`/baza-wiedzy`) nie jest listingiem. To zwykła strona **Page**: nagłówek, lead, sekcje i treść z opisem metod. Stary adres `/metody` przekierowuje tutaj. W menu ma jedno dziecko, Czytelnię.
 
 Pola hero (tytuł, lead, przycisk, zdjęcie) są na tym dokumencie. Puste = tego elementu nie ma. Adresu listingu nie da się zmienić: pole strony jest zablokowane po pierwszym zapisie.
 
@@ -91,9 +92,9 @@ Niżej na liście są typy, nie pojedyncze skróty:
 
 - **Project** — jeden projekt, adres `/projekty/…`. Art Generacje ma dodatkowo podstrony edycji.
 - **Person** — osoba, adres `/zespol/…`.
-- **Page** — Kontakt, Metody, strony typu statut, aktualności. Pole **Sekcja** ustala adres: korzeń (`/slug`), Projekty (`/projekty/slug`) albo O fundacji (`/fundacja/slug`). Aktualności (`aktualnosc-*`) zawsze zostają w korzeniu, bez przedrostka. Pole **Sekcje** nad artykułem: [Sekcje](#sekcje). Na aktualnościach tego pola nie ma. Metody i Kontakt, gdy są skrótem na górze, znikają z tej listy, żeby nie wisiały dwa razy.
+- **Page** — Baza wiedzy, Kontakt, strony typu statut, aktualności. Pole **Sekcja** ustala adres: korzeń (`/slug`), Projekty (`/projekty/slug`) albo O fundacji (`/fundacja/slug`). Aktualności (`aktualnosc-*`) zawsze zostają w korzeniu, bez przedrostka. Pole **Sekcje** nad artykułem: [Sekcje](#sekcje). Na aktualnościach tego pola nie ma. Baza wiedzy i Kontakt, gdy są skrótem na górze, znikają z tej listy, żeby nie wisiały dwa razy.
 - **Publication** — tekst Czytelni, adres `/czytelnia/…`.
-- **Category** — etykieta kategorii w Czytelni, nie osobna strona metody.
+- **Category** — etykieta kategorii w Czytelni, nie opis metod na stronie Baza wiedzy.
 
 <!-- screen: strony-typy | Dolna część listy Content: Project, Person, Page, Category, Publication | Widać, gdzie szukać tekstu, który nie ma własnego skrótu na górze -->
 

@@ -62,22 +62,28 @@ function navListItem(S: StructureBuilder, entry: DeskNavEntry): ListItem {
     );
 }
 
+function landingShortcut(S: StructureBuilder, route: (typeof LANDING_PAGES)[number]["route"]) {
+  const landing = LANDING_PAGES.find((item) => item.route === route);
+  if (!landing) return null;
+  return singletonItem(S, {
+    id: landing.id,
+    title: landing.title,
+    schemaType: "landingPage",
+    documentId: landing.id,
+  });
+}
+
 /** Shortcuts used when `siteSettings.navigation` has no openable documents. */
 function fallbackShortcuts(
   S: StructureBuilder,
   ids: {
     artGeneracje: string | null;
-    metody: string | null;
+    knowledge: string | null;
     kontakt: string | null;
   },
 ) {
   return [
-    singletonItem(S, {
-      id: LANDING_PAGES[0].id,
-      title: LANDING_PAGES[0].title,
-      schemaType: "landingPage",
-      documentId: LANDING_PAGES[0].id,
-    }),
+    landingShortcut(S, "projekty"),
     ids.artGeneracje
       ? singletonItem(S, {
           id: "artGeneracje",
@@ -86,26 +92,15 @@ function fallbackShortcuts(
           documentId: ids.artGeneracje,
         })
       : null,
-    singletonItem(S, {
-      id: LANDING_PAGES[1].id,
-      title: LANDING_PAGES[1].title,
-      schemaType: "landingPage",
-      documentId: LANDING_PAGES[1].id,
-    }),
-    ids.metody
+    ids.knowledge
       ? singletonItem(S, {
-          id: "page-metody",
-          title: "Metody",
+          id: "page-baza-wiedzy",
+          title: "Baza wiedzy",
           schemaType: "page",
-          documentId: ids.metody,
+          documentId: ids.knowledge,
         })
       : null,
-    singletonItem(S, {
-      id: LANDING_PAGES[2].id,
-      title: LANDING_PAGES[2].title,
-      schemaType: "landingPage",
-      documentId: LANDING_PAGES[2].id,
-    }),
+    landingShortcut(S, "czytelnia"),
     singletonItem(S, {
       id: ABOUT_PAGE_ID,
       title: "O fundacji",
@@ -120,12 +115,7 @@ function fallbackShortcuts(
           documentId: ids.kontakt,
         })
       : null,
-    singletonItem(S, {
-      id: LANDING_PAGES[3].id,
-      title: LANDING_PAGES[3].title,
-      schemaType: "landingPage",
-      documentId: LANDING_PAGES[3].id,
-    }),
+    landingShortcut(S, "zespol"),
   ].filter((item): item is NonNullable<typeof item> => Boolean(item));
 }
 
@@ -134,7 +124,7 @@ export const structure: StructureResolver = async (S, context) => {
   const ids: {
     siteSettings: SettingsRow | null;
     artGeneracje: string | null;
-    metody: string | null;
+    knowledge: string | null;
     kontakt: string | null;
   } = await client.fetch(
     `{
@@ -161,7 +151,7 @@ export const structure: StructureResolver = async (S, context) => {
         }
       },
       "artGeneracje": *[_type == "project" && !(_id in path("drafts.**")) && (_id == $artId || slug.current == "art-generacje")][0]._id,
-      "metody": *[_type == "page" && !(_id in path("drafts.**")) && slug.current == "metody"][0]._id,
+      "knowledge": *[_type == "page" && !(_id in path("drafts.**")) && slug.current == "baza-wiedzy"][0]._id,
       "kontakt": *[_type == "page" && !(_id in path("drafts.**")) && slug.current == "kontakt"][0]._id
     }`,
     { artId: ART_GENERACJE_ID },
@@ -172,7 +162,7 @@ export const structure: StructureResolver = async (S, context) => {
   const pinnedPageIds =
     fromMenu.length > 0
       ? pageDocumentIds(fromMenu)
-      : [ids.metody, ids.kontakt].filter((id): id is string => Boolean(id));
+      : [ids.knowledge, ids.kontakt].filter((id): id is string => Boolean(id));
 
   const home = settingsId
     ? singletonItem(S, {

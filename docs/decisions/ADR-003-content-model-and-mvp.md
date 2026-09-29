@@ -19,9 +19,9 @@ Stary portal (`teatrzaangazowany`, baza `drama_teatr`) — **źródło** artyku�
 |------|------|
 | `project` | Projekty (w tym Art Generacje z edycjami / galeriami / partnerami) |
 | `person` | Zespół, zarząd |
-| `page` | Statyczne podstrony (statut, metody, kontakt, newsy…) |
+| `page` | Statyczne podstrony (statut, baza wiedzy, kontakt, newsy…) |
 | `aboutPage` | Singleton `/fundacja`: hero, wartości, zespół na tej stronie, historia, dokumenty |
-| `landingPage` | Singletony listingów (`/projekty`, `/baza-wiedzy`, `/czytelnia`, `/zespol`): hero; puste pole = blok nie pojawia się na stronie |
+| `landingPage` | Singletony listingów (`/projekty`, `/czytelnia`, `/zespol`): hero; puste pole = blok nie pojawia się na stronie. `/baza-wiedzy` jest zwykłym `page` |
 | `publication` | Czytelnia / wydawnictwo / materiały z portalu wiedzy |
 | `siteSettings` | Nawigacja, footer, globalne CTA |
 

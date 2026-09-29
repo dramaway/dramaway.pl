@@ -2,7 +2,6 @@ import type { MetadataRoute } from "next";
 import {
   editionPath,
   knowledgeHubPath,
-  methodsPath,
   personPath,
   projectPath,
   publicationPath,
@@ -20,7 +19,6 @@ const HUBS = [
   "/",
   "/projekty",
   knowledgeHubPath(),
-  methodsPath(),
   "/czytelnia",
   "/fundacja",
   "/kontakt",

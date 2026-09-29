@@ -7,6 +7,10 @@
 
 Kanony, które ten plik uzupełnia, nie zastępuje: [ia.md](ia.md), [art-generacje.md](art-generacje.md), [system.md](../design/system.md), [ADR-003](../decisions/ADR-003-content-model-and-mvp.md), [ADR-004](../decisions/ADR-004-layout-architecture.md), [fundacja-status.md](../migration/fundacja-status.md).
 
+## Delta 2026-09-29 — Baza wiedzy jest stroną
+
+`/metody` nie jest już osobnym adresem. Opis metod (dawny `page` o slugu `metody`) jest treścią **`/baza-wiedzy`**: zwykły dokument `page` (hero, sekcje, body — ten sam skład co inne strony). W menu **Baza wiedzy** ma jedno dziecko: **Czytelnia** `/czytelnia`. `/metody` przekierowuje na `/baza-wiedzy`. Singleton `landing-baza-wiedzy` nie składa tej strony. Zdania niżej o hubie i drugim poziomie „Metody” są historyczne (stan z 2026-09-05). Aktualna mapa: [ia.md](ia.md).
+
 ## Delta 2026-09-06 — dwie osie Czytelni
 
 Szuflady Drupala (`field_kategoria_czytelnii`: Publikacje / Scenariusze / Książki / Multimedia) znowu są osią **rodzaju** — publiczne `publication.format`. Tagi z listy Word zostają **kategoriami** (typ `_type: "readingMethod"` bez zmiany nazwy w datasecie; w Studio: Category; pole publikacji: Categories). Zdanie niżej, że kategorie idą „wokół metod, nie szuflad Drupala”, jest historyczne: tak zrobiono import. UI i model publiczny mają **obie** osie. **Nie** odpalamy `migrate:czytelnia`.

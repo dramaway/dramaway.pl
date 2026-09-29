@@ -37,7 +37,6 @@ const client = createClient({
 
 const SINGLETONS = [
   "landing-projekty",
-  "landing-baza-wiedzy",
   "landing-czytelnia",
   "aboutPage",
 ];
@@ -79,7 +78,7 @@ try {
     `{
       "settings": *[_type == "siteSettings"]{ _id, "items": count(navigation) },
       "singletons": *[_id in $singletons]{ _id },
-      "pages": *[_type == "page" && slug.current in ["metody", "kontakt"]]{
+      "pages": *[_type == "page" && slug.current in ["baza-wiedzy", "kontakt"]]{
         _id,
         "slug": slug.current
       }
@@ -115,7 +114,7 @@ const present = new Set(
     .map((doc) => doc._id)
     .filter((id) => !String(id).startsWith("drafts.")),
 );
-const metodyId = publishedPageId(snapshot.pages ?? [], "metody");
+const knowledgeId = publishedPageId(snapshot.pages ?? [], "baza-wiedzy");
 const kontaktId = publishedPageId(snapshot.pages ?? [], "kontakt");
 
 const navigation = [
@@ -131,11 +130,10 @@ const navigation = [
       "baza-wiedzy",
       "navItem",
       "Baza wiedzy",
-      present.has("landing-baza-wiedzy") ? "landing-baza-wiedzy" : null,
+      knowledgeId,
       "/baza-wiedzy",
     ),
     children: [
-      linkItem("metody", "navChild", "Metody", metodyId, "/metody"),
       linkItem(
         "czytelnia",
         "navChild",
@@ -191,10 +189,7 @@ assert.deepEqual(visible, [
   {
     href: "/baza-wiedzy",
     label: "Baza wiedzy",
-    children: [
-      { href: "/metody", label: "Metody" },
-      { href: "/czytelnia", label: "Czytelnia" },
-    ],
+    children: [{ href: "/czytelnia", label: "Czytelnia" }],
   },
   { href: "/fundacja", label: "O fundacji" },
   { href: "/kontakt", label: "Kontakt" },

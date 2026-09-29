@@ -12,7 +12,6 @@ import { safeHref } from "./safe-url";
 
 const LANDING_LABELS: Record<string, string> = {
   projekty: "Projekty",
-  "baza-wiedzy": "Baza wiedzy",
   czytelnia: "Czytelnia",
   zespol: "Zespół",
 };

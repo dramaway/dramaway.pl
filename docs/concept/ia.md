@@ -15,11 +15,8 @@ Ustalenia 2026-09-05 (hub Bazy, Czytelnia ≠ `project`, URL edycji, listing = C
   - Projekty zakończone — zbiorczo na `/projekty` (wiersz archiwum); leftover `page` `/projekty/projekty-zakonczone` zostaje
   - Wydawnictwo `/wydawnictwo` (od 2026-09-29; `/projekty/wydawnictwo` przekierowuje tutaj)
   - Czytelnia **może** pojawić się na tej stronie jako pozycja listy (warstwa prezentacji). W danych **nie jest** `project` — zostaje `publication`.
-- **Baza wiedzy** — nadzbiór w nawigacji (ustalenie 2026-09-05, makiety)
-  - Hub (prosta strona wprowadzająca w dwa kanały): **`/baza-wiedzy`**. Etykieta nav „Baza wiedzy” prowadzi na hub, nie na `/czytelnia`.
-  - **Metody** `/metody` — drugi poziom menu (TZS, TiE, Teatr Forum, Teatr ze Społecznością)
-  - **Czytelnia** `/czytelnia` — drugi poziom menu; treść m.in. ze starego portalu (`drama_teatr`), typ Sanity `publication`
-  - Hub da się wyłączyć (zostają same podpozycje), jeśli klientowi nie podejdzie.
+- **Baza wiedzy** `/baza-wiedzy` — zwykły dokument `page` (ustalenie 2026-09-29). Treść to opis metod (TZS, TiE, Teatr Forum, Teatr ze Społecznością), wcześniej osobna strona `/metody`. Ten adres przekierowuje tutaj. Hero, sekcje i body edytuje się jak na każdej innej stronie.
+  - **Czytelnia** `/czytelnia` — jedyne dziecko w menu. Treść m.in. ze starego portalu (`drama_teatr`), typ Sanity `publication`. Listing zostaje widokiem Next; chrome hero siedzi na singletonie `landingPage`.
 - **O fundacji** `/fundacja`
   - Historia / timeline od 2011
   - Zarząd i fundatorzy
@@ -30,7 +27,7 @@ Ustalenia 2026-09-05 (hub Bazy, Czytelnia ≠ `project`, URL edycji, listing = C
 - **Szkolenia i spektakle** → odsyła do `centrum.dramaway.pl` (poza MVP migracji)
 - **Kontakt** `/kontakt` — treść z CMS, bez formularza (MVP). Formularz = osobne zamówienie później.
 
-Widoczne menu główne bierze się z `siteSettings.navigation` (etykieta, strona z CMS albo adres, jeden poziom podpozycji). Pusta lista zostawia menu wbudowane w `mainNav()`. Publiczne trasy w Next (`apps/web/src/lib/routes.ts`) składają szkielet adresów: prefiks z tej IA + `slug.current` z Sanity (ostatni segment aliasu Drupal). Listingi `/`, `/projekty`, `/zespol` nie są dokumentami `page` — to widoki Next. Chrome hero (`/projekty`, `/baza-wiedzy`, `/czytelnia`, `/zespol`) siedzi na singletonach `landingPage` (Studio: te same pozycje co **O fundacji** na górze Content). `/` bierze hero z `siteSettings`. `/fundacja` to widok Next z singletonem `aboutPage` (kolejność sekcji w kodzie; treść i listy w Studio). `/metody` i `/kontakt` zostają dokumentami `page`, tylko przypięte na górze desk. Mapa 301 na premierę (stare `node/N`, osobne landingi edycji, aliasy newsów) jest osobnym zadaniem.
+Widoczne menu główne bierze się z `siteSettings.navigation` (etykieta, strona z CMS albo adres, jeden poziom podpozycji). Pusta lista zostawia menu wbudowane w `mainNav()`. Publiczne trasy w Next (`apps/web/src/lib/routes.ts`) składają szkielet adresów: prefiks z tej IA + `slug.current` z Sanity (ostatni segment aliasu Drupal). Listingi `/`, `/projekty`, `/zespol` nie są dokumentami `page` — to widoki Next. Chrome hero (`/projekty`, `/czytelnia`, `/zespol`) siedzi na singletonach `landingPage` (Studio: te same pozycje co **O fundacji** na górze Content, gdy menu jest puste). `/baza-wiedzy` jest dokumentem `page`, nie landingiem. `/` bierze hero z `siteSettings`. `/fundacja` to widok Next z singletonem `aboutPage` (kolejność sekcji w kodzie; treść i listy w Studio). `/kontakt` zostaje dokumentem `page` z własnym widokiem (maile osób). `/metody` to stałe przekierowanie na `/baza-wiedzy`. Mapa 301 na premierę (stare `node/N`, osobne landingi edycji, aliasy newsów) jest osobnym zadaniem.
 
 ## Ekosystem domen (kontekst)
 

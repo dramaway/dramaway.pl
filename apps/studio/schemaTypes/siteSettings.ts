@@ -33,7 +33,7 @@ export const siteSettings = defineType({
       type: "array",
       group: "navigation",
       description:
-        "Pusta lista zostawia menu wbudowane: Projekty, Baza wiedzy (Metody, Czytelnia), O fundacji, Kontakt. Logo prowadzi na stronę główną.",
+        "Pusta lista zostawia menu wbudowane: Projekty, Baza wiedzy (Czytelnia), O fundacji, Kontakt. Logo prowadzi na stronę główną.",
       of: [defineArrayMember({ type: "navItem" })],
       validation: (rule) => rule.max(12),
       initialValue: [
@@ -48,16 +48,9 @@ export const siteSettings = defineType({
           _key: "baza-wiedzy",
           _type: "navItem",
           label: "Baza wiedzy",
-          target: "reference",
-          page: { _type: "reference", _ref: "landing-baza-wiedzy" },
+          target: "path",
+          href: "/baza-wiedzy",
           children: [
-            {
-              _key: "metody",
-              _type: "navChild",
-              label: "Metody",
-              target: "path",
-              href: "/metody",
-            },
             {
               _key: "czytelnia",
               _type: "navChild",

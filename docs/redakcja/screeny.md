@@ -72,7 +72,7 @@ Znaczniki `<!-- screen: ... -->` zostają w tekście także przy wstawionych obr
 | `menu-grupa` | [menu.md](menu.md) | Grupa Nawigacja z kilkoma wierszami | Widać, że menu jest listą w ustawieniach strony głównej, a nie osobnym programem |
 | `menu-pusta-etykieta` | [menu.md](menu.md) | Wiersz z wybraną stroną i pustym polem etykiety | Widać, że puste pole etykiety bierze tytuł dokumentu |
 | `menu-adres` | [menu.md](menu.md) | Wiersz przełączony na Adres, z wpisanym `https://` | Widać, że link zewnętrzny nie wymaga dokumentu w Studio |
-| `menu-podpozycje` | [menu.md](menu.md) | Rozwinięta Baza wiedzy z dwiema podpozycjami, Metody i Czytelnia | Widać rodzica i dokładnie jeden poziom dzieci |
+| `menu-podpozycje` | [menu.md](menu.md) | Rozwinięta Baza wiedzy z podpozycją Czytelnia | Widać rodzica i dokładnie jeden poziom dzieci |
 | `menu-skroty-desku` | [menu.md](menu.md) | Lewa lista Content po uzupełnionym menu, ze Stroną główną na górze i gałęzią Baza wiedzy | Widać, że skróty idą za menu, a Strona główna zostaje |
 
 `menu-skroty-desku` da się zrobić dopiero, gdy lista Nawigacja nie jest pusta. Dziś pusta lista zostawia dotychczasowe skróty, więc najpierw dodaj wiersze i opublikuj, potem zrób kadr i odśwież Studio.

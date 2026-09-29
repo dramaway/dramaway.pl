@@ -1,5 +1,3 @@
-import { czytelniaPath, methodsPath } from "./routes";
-
 /** Default BlobRow CTA when a row has no own label. */
 export const LIST_CTA_LABEL = "więcej";
 
@@ -15,20 +13,6 @@ export const SUBPAGE = {
     ctaHref: "#edycje",
     editionsHeading: "Edycje",
     editionCta: "zobacz jak graliśmy",
-  },
-  knowledge: {
-    channelCta: LIST_CTA_LABEL,
-    empty: "Brak kanałów w CMS — uzupełnij Metody i Czytelnię.",
-    channels: [
-      {
-        href: methodsPath(),
-        title: "Metody",
-      },
-      {
-        href: czytelniaPath(),
-        title: "Czytelnia",
-      },
-    ],
   },
   czytelnia: {
     pdfCta: "pobierz PDF",

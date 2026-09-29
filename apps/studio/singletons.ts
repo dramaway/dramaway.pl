@@ -7,11 +7,6 @@ export const LANDING_PAGES = [
     title: "Projekty",
   },
   {
-    id: "landing-baza-wiedzy",
-    route: "baza-wiedzy",
-    title: "Baza wiedzy",
-  },
-  {
     id: "landing-czytelnia",
     route: "czytelnia",
     title: "Czytelnia",

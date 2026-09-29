@@ -23,6 +23,7 @@
     "patch:archive-projects": "node --env-file=apps/studio/.env scripts/patch-archive-projects.mjs",
     "patch:about-copy": "node --env-file=apps/studio/.env scripts/patch-about-copy.mjs",
     "patch:page-section": "node --env-file=apps/studio/.env scripts/patch-page-section.mjs",
+    "patch:knowledge-page": "node --env-file=apps/studio/.env scripts/patch-knowledge-page.mjs",
     "seed:about-page": "node --env-file=apps/studio/.env scripts/seed-about-page.mjs",
     "seed:landing-pages": "node --env-file=apps/studio/.env scripts/seed-landing-pages.mjs",
     "seed:navigation": "node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --env-file=apps/studio/.env scripts/seed-navigation.mjs",
@@ -30,7 +31,7 @@
     "repair:portable-text": "node --env-file=apps/studio/.env scripts/repair-portable-text.mjs",
     "test:repair": "node --test scripts/lib/portable-text-repair.test.mjs",
     "test:archive-projects": "node --test scripts/lib/archive-project-reshape.test.mjs",
-    "test:web": "node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/lib/register-ts-extension.mjs --test scripts/lib/cms-url-safety.test.mjs scripts/lib/roster-line.test.mjs scripts/lib/navigation.test.mjs scripts/lib/desk-nav.test.mjs scripts/lib/content-sections.test.mjs scripts/lib/hotspot.test.mjs scripts/lib/page-path.test.mjs"
+    "test:web": "node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/lib/register-ts-extension.mjs --test scripts/lib/cms-url-safety.test.mjs scripts/lib/roster-line.test.mjs scripts/lib/navigation.test.mjs scripts/lib/desk-nav.test.mjs scripts/lib/content-sections.test.mjs scripts/lib/hotspot.test.mjs scripts/lib/page-path.test.mjs scripts/lib/knowledge-page.test.mjs"
   },
   "engines": {
     "node": ">=22.12",
