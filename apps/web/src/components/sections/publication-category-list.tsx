@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import {
-  BlobStack,
-  type BlobRowItem,
-} from "@/components/sections/blob-stack";
+  CzytelniaStack,
+  type CzytelniaRowItem,
+} from "@/components/sections/czytelnia-stack";
 import {
   czytelniaCategoryHeadingId,
   czytelniaFilterHref,
@@ -15,7 +15,7 @@ import type { PublicationFormat } from "@/lib/sanity/types";
 export type PublicationCategorySection = {
   slug: string;
   title: string;
-  items: BlobRowItem[];
+  items: CzytelniaRowItem[];
 };
 
 function CategorySection({
@@ -59,7 +59,7 @@ function CategorySection({
       {open ? (
         <div className="pub-cat-list">
           <div className="measure">
-            <BlobStack items={group.items} />
+            <CzytelniaStack items={group.items} />
           </div>
         </div>
       ) : null}

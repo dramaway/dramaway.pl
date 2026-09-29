@@ -94,7 +94,7 @@ Niżej na liście są typy, nie pojedyncze skróty:
 - **Person** — osoba, adres `/zespol/…`.
 - **News** — aktualność. Adres `/{slug}`. Krótki formularz: tytuł, data, zajawka, treść i opcjonalny przycisk. Własny adres przycisku wymaga własnej etykiety.
 - **Page** — Baza wiedzy, Kontakt, strony typu statut. Adres to `/{slug}`. W Studio lista dzieli się na **Drupal** (stare resztki do wygaszenia), **W menu** i **Poza menu**. Pole **Sekcje** nad artykułem: [Sekcje](#sekcje).
-- **Publication** — tekst Czytelni, adres `/czytelnia/…`.
+- **Publication** — tekst Czytelni. Książka, multimedia, film w tekście albo brak pliku: podstrona `/czytelnia/…`. Artykuł albo scenariusz z PDF: spis otwiera plik, a adres `/czytelnia/…` przerzuca na ten PDF. Kiedy które: [Czytelnia i O fundacji](czytelnia-i-fundacja.md).
 - **Category** — etykieta kategorii w Czytelni, nie opis metod na stronie Baza wiedzy.
 
 <!-- screen: strony-typy | Dolna część listy Content: Project, Person, Page, Category, Publication | Widać, gdzie szukać tekstu, który nie ma własnego skrótu na górze -->

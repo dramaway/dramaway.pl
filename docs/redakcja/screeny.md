@@ -22,7 +22,8 @@ Jeszcze bez pliku, bo wymagałyby wylogowania, wejścia w Manage albo przełącz
 | `strony-skroty` | [strony.md](strony.md) | Sama góra listy, bez typów niżej | Jest w `studio-po-zalogowaniu`, osobny wycinek się rozjechał |
 | `strony-listing` | [strony.md](strony.md) | Zablokowane pole strony na listingu Projekty | Kadr uciął radia |
 | `strony-sekcje` | [strony.md](strony.md) | Lista Sekcje z wierszem Kafelki i Aktualności | Jeszcze nie zrobiony |
-| `czytelnia-dokument` | [czytelnia-i-fundacja.md](czytelnia-i-fundacja.md) | Format, Categories i Listed na jednym kadrze | Kadr uciął środek formularza |
+| `czytelnia-dokument` | [czytelnia-i-fundacja.md](czytelnia-i-fundacja.md) | Format i File (PDF) na jednym kadrze | Kadr uciął środek formularza; ma być widać, skąd bierze się cel wiersza |
+| `czytelnia-okladka` | [czytelnia-i-fundacja.md](czytelnia-i-fundacja.md) | Pierwszy blok Body to obrazek, z alt i hotspotem | Jeszcze nie |
 | `fundacja-dokumenty` | [czytelnia-i-fundacja.md](czytelnia-i-fundacja.md) | Wiersz dokumentu z podpiętym PDF | Na Statucie jest strona, slot PDF jest pusty; kadr uciął pola |
 | `tekst-toolbar` | [tekst.md](tekst.md) | Sam pasek, z Termin, Indent i Roles | Pasek jest na górze kadru `tekst-roles` |
 | `tekst-termin` | [tekst.md](tekst.md) | Akapit w stylu Termin | Trzeba zaznaczyć styl, nie chciałem zmieniać tekstu |
@@ -93,9 +94,10 @@ Znaczniki `<!-- screen: ... -->` zostają w tekście także przy wstawionych obr
 
 | Id | Plik | Kadr | Po co |
 |----|------|------|--------|
-| `czytelnia-dokument` | [czytelnia-i-fundacja.md](czytelnia-i-fundacja.md) | Góra dokumentu Publication: tytuł, slug, Format, Categories, Listed | Widać trzy przełączniki, które decydują o spisie, osobno od samego tekstu |
-| `czytelnia-listed` | [czytelnia-i-fundacja.md](czytelnia-i-fundacja.md) | Pole Listed in Czytelnia odznaczone | Widać, że da się zachować adres i schować tekst ze spisu |
+| `czytelnia-dokument` | [czytelnia-i-fundacja.md](czytelnia-i-fundacja.md) | Dokument Publication z widocznym Format i polem File (PDF) | Widać, skąd bierze się cel wiersza: podstrona albo pobranie |
+| `czytelnia-listed` | [czytelnia-i-fundacja.md](czytelnia-i-fundacja.md) | Pole Listed in Czytelnia odznaczone | Widać, że da się schować tekst ze spisu; przełącznik nie wybiera strony ani pliku |
+| `czytelnia-okladka` | [czytelnia-i-fundacja.md](czytelnia-i-fundacja.md) | Początek Body w Publication: obrazek jako pierwszy blok, z uzupełnionym alt i zaznaczonym hotspotem | Widać, że okładka spisu to pierwszy obrazek w tekście, nie osobne pole |
 | `fundacja-grupy` | [czytelnia-i-fundacja.md](czytelnia-i-fundacja.md) | Zakładki dokumentu O fundacji: Hero, Metody i wartości, Zespół, Historia, Dokumenty | Widać, że jedna strona jest podzielona na te pięć grup |
 | `fundacja-dokumenty` | [czytelnia-i-fundacja.md](czytelnia-i-fundacja.md) | Jeden wiersz dokumentów z tytułem i podpiętym PDF | Widać, że dokument może być plikiem, a nie tylko linkiem do strony |
 
-Wstawione: 13. Zostało: 14, lista na górze tego pliku.
+Wstawione: 13. Zostało: 16, lista na górze tego pliku.

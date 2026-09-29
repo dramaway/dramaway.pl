@@ -7,12 +7,14 @@ import {
   publicationPath,
   publicPathForPage,
 } from "@/lib/routes";
+import { publicationDestination } from "@/lib/publication-destination";
+import { safeHrefString } from "@/lib/safe-url";
 import {
   getPageRoutes,
   getNewsRoutes,
   getPersonSlugs,
   getProjectEditionParams,
-  getPublicationSlugs,
+  getPublicationRoutes,
 } from "@/lib/sanity/fetch";
 import { siteIndexingEnabled, siteOrigin } from "@/lib/site-url";
 
@@ -30,12 +32,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   if (!siteIndexingEnabled()) return [];
 
   const origin = siteOrigin();
-  const [pages, news, personSlugs, publicationSlugs, projects] =
+  const [pages, news, personSlugs, publicationRoutes, projects] =
     await Promise.all([
       getPageRoutes(),
       getNewsRoutes(),
       getPersonSlugs(),
-      getPublicationSlugs(),
+      getPublicationRoutes(),
       getProjectEditionParams(),
     ]);
 
@@ -50,8 +52,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   for (const slug of personSlugs) {
     if (slug) paths.add(personPath(slug));
   }
-  for (const slug of publicationSlugs) {
-    if (slug) paths.add(publicationPath(slug));
+  for (const item of publicationRoutes) {
+    if (!item.slug) continue;
+    const fileHref = safeHrefString(item.fileUrl);
+    const destination = publicationDestination({
+      format: item.format,
+      hasFile: Boolean(fileHref),
+      hasVideo: Boolean(item.hasVideo),
+    });
+    if (destination === "page") paths.add(publicationPath(item.slug));
   }
   for (const project of projects) {
     if (!project.slug) continue;

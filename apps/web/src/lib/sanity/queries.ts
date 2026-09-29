@@ -324,6 +324,18 @@ export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
 }`;
 
 const publicationFileProjection = `file { asset->{ url, originalFilename, mimeType } }`;
+/** First picture in the text is the listing mark. YouTube in Columns still counts as a page. */
+const publicationListingSignalsProjection = `
+  "bodyText": pt::text(body),
+  "hasVideo": (count(body[_type == "youtube"]) + count(body[_type == "textColumns"].columns[].body[_type == "youtube"])) > 0,
+  "cover": body[_type == "image"][0]{
+    _type,
+    alt,
+    hotspot,
+    crop,
+    asset
+  }
+`;
 const publicationMethodsProjection = `methods[]->{ title, "slug": slug.current }`;
 /** Public enum, with Drupal-string fallback until `pnpm patch:publication-format`. Keep in sync with scripts/patch-publication-format.mjs. */
 const publicationFormatProjection = `"format": select(
@@ -347,7 +359,8 @@ export const publicationsListQuery = `*[_type == "publication" && listed == true
   authors,
   ${publicationFormatProjection},
   ${publicationMethodsProjection},
-  ${publicationFileProjection}
+  ${publicationFileProjection},
+  ${publicationListingSignalsProjection}
 }`;
 
 export const publicationBySlugQuery = `*[_type == "publication" && slug.current == $slug][0] {
@@ -359,7 +372,16 @@ export const publicationBySlugQuery = `*[_type == "publication" && slug.current 
   ${publicationFormatProjection},
   ${publicationMethodsProjection},
   ${publicationFileProjection},
+  ${publicationListingSignalsProjection},
   body[] ${portableBodyProjection}
+}`;
+
+/** Every publication URL, including unlisted. Sitemap keeps only page destinations. */
+export const publicationRoutesQuery = `*[_type == "publication" && defined(slug.current)]{
+  "slug": slug.current,
+  ${publicationFormatProjection},
+  "fileUrl": file.asset->url,
+  "hasVideo": (count(body[_type == "youtube"]) + count(body[_type == "textColumns"].columns[].body[_type == "youtube"])) > 0
 }`;
 
 export const readingMethodsQuery = `*[_type == "readingMethod"] | order(order asc) {

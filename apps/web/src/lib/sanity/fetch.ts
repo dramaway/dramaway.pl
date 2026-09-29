@@ -22,6 +22,7 @@ import {
   projectEditionParamsQuery,
   projectsListQuery,
   publicationBySlugQuery,
+  publicationRoutesQuery,
   publicationSlugsQuery,
   publicationsListQuery,
   readingMethodsQuery,
@@ -42,6 +43,7 @@ import type {
   ProjectListItem,
   PublicationDetail,
   PublicationListItem,
+  PublicationRoute,
   ReadingMethodListItem,
   SiteSettings,
 } from "./types";
@@ -175,4 +177,8 @@ export async function getPublicationBySlug(
 
 export async function getPublicationSlugs(): Promise<string[]> {
   return sanityClient.fetch(publicationSlugsQuery, {}, revalidate);
+}
+
+export async function getPublicationRoutes(): Promise<PublicationRoute[]> {
+  return sanityClient.fetch(publicationRoutesQuery, {}, revalidate);
 }

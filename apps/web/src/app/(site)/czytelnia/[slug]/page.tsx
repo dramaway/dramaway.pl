@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { PublicationArticle } from "@/components/publication-article";
+import {
+  portableBodyHasVideo,
+  publicationDestination,
+} from "@/lib/publication-destination";
+import { safeHrefString } from "@/lib/safe-url";
 import {
   getPublicationBySlug,
   getPublicationSlugs,
@@ -25,6 +30,15 @@ export default async function PublicationPage({ params }: Props) {
   const { slug } = await params;
   const publication = await getPublicationBySlug(slug);
   if (!publication) notFound();
+
+  const fileHref = safeHrefString(publication.file?.asset?.url);
+  const destination = publicationDestination({
+    format: publication.format,
+    hasFile: Boolean(fileHref),
+    hasVideo: portableBodyHasVideo(publication.body),
+  });
+  // 307, not 308: adding a film or removing the file can restore the page.
+  if (destination === "file" && fileHref) redirect(fileHref);
 
   return <PublicationArticle publication={publication} />;
 }

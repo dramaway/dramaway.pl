@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Section } from "@/components/layout/section";
-import { BlobStack } from "@/components/sections/blob-stack";
+import {
+  CzytelniaStack,
+  type CzytelniaRowItem,
+} from "@/components/sections/czytelnia-stack";
 import { FilterRow } from "@/components/sections/filter-row";
 import { PublicationCategoryList } from "@/components/sections/publication-category-list";
 import {
@@ -13,9 +16,16 @@ import {
   resolvePublicationCategory,
   resolvePublicationFormat,
 } from "@/lib/czytelnia-filters";
+import {
+  publicationDestination,
+  publicationListLead,
+} from "@/lib/publication-destination";
 import { publicationPath } from "@/lib/routes";
+import { safeHrefString } from "@/lib/safe-url";
 import { getPublications, getReadingMethods } from "@/lib/sanity/fetch";
-import { SUBPAGE } from "@/lib/subpage-copy";
+import { hasHeroImage } from "@/lib/sanity/image";
+import type { PublicationListItem } from "@/lib/sanity/types";
+import { LIST_CTA_LABEL, SUBPAGE } from "@/lib/subpage-copy";
 
 export const metadata: Metadata = { title: "Czytelnia" };
 export const revalidate = 60;
@@ -25,14 +35,30 @@ type SearchParams = Promise<{
   kategoria?: string | string[];
 }>;
 
-function toRowItems(
-  items: { title: string; summary: string | null; slug: string }[],
-) {
-  return items.map((item) => ({
-    title: item.title,
-    lead: item.summary,
-    href: publicationPath(item.slug),
-  }));
+function toCzytelniaRows(items: PublicationListItem[]): CzytelniaRowItem[] {
+  return items.map((item) => {
+    const fileHref = safeHrefString(item.file?.asset?.url);
+    const destination = publicationDestination({
+      format: item.format,
+      hasFile: Boolean(fileHref),
+      hasVideo: Boolean(item.hasVideo),
+    });
+    const external = destination === "file" && Boolean(fileHref);
+    return {
+      title: item.title,
+      lead: publicationListLead({
+        destination,
+        summary: item.summary,
+        bodyText: item.bodyText,
+      }),
+      href: external && fileHref ? fileHref : publicationPath(item.slug),
+      ctaLabel: external ? SUBPAGE.czytelnia.pdfCta : LIST_CTA_LABEL,
+      external,
+      format: item.format,
+      cover: hasHeroImage(item.cover) ? item.cover : null,
+      clampLead: external,
+    };
+  });
 }
 
 export default async function CzytelniaPage({
@@ -92,14 +118,14 @@ export default async function CzytelniaPage({
         <p className="text-body">{copy.empty}</p>
       ) : listing.kind === "flat" ? (
         <div className="measure">
-          <BlobStack items={toRowItems(listing.items)} />
+          <CzytelniaStack items={toCzytelniaRows(listing.items)} />
         </div>
       ) : (
         <PublicationCategoryList
           groups={listing.groups.map((group) => ({
             slug: group.slug,
             title: group.title,
-            items: toRowItems(group.items),
+            items: toCzytelniaRows(group.items),
           }))}
           copy={copy.sections}
           rodzaj={rodzaj}

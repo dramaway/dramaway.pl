@@ -294,6 +294,8 @@ export type ProjectDetail = {
   sponsors: string[] | null;
 };
 
+export type PublicationCover = SanityImage & { alt?: string | null };
+
 export type PublicationListItem = {
   _id: string;
   title: string;
@@ -303,6 +305,18 @@ export type PublicationListItem = {
   format: PublicationFormat | null;
   methods: ReadingMethodRef[] | null;
   file: SanityFile | null;
+  /** First image in `body`. Empty when the text has no picture. */
+  cover: PublicationCover | null;
+  /** Plain text of `body`, for the file-row lead. */
+  bodyText: string | null;
+  hasVideo: boolean | null;
+};
+
+export type PublicationRoute = {
+  slug: string | null;
+  format: PublicationFormat | null;
+  fileUrl: string | null;
+  hasVideo: boolean | null;
 };
 
 export type PublicationDetail = PublicationListItem & {

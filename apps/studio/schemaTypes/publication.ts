@@ -47,7 +47,7 @@ export const publication = defineType({
       type: "boolean",
       initialValue: false,
       description:
-        "Shown on /czytelnia. Uncheck to keep the URL but hide from the listing.",
+        "Shown on /czytelnia. Uncheck to hide it from the listing. The public target (a page or the PDF) follows format and file, not this switch.",
     }),
     defineField({
       name: "authors",
