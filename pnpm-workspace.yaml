@@ -4,14 +4,14 @@ packages:
 # Bump shared versions here, then `pnpm install`.
 # Next 16 / TypeScript 6+ / ESLint 10 stay out until we choose them.
 catalog:
-  react: 19.2.8
-  react-dom: 19.2.8
+  react: 19.3.0
+  react-dom: 19.3.0
   typescript: 5.9.3
-  "@types/react": 19.2.18
-  "@sanity/client": 7.27.0
-  sanity: 6.10.1
-  "@sanity/schema": 6.10.1
-  "@sanity/vision": 6.10.1
+  "@types/react": 19.3.0
+  "@sanity/client": 8.9.0
+  sanity: 6.16.0
+  "@sanity/schema": 6.16.0
+  "@sanity/vision": 6.16.0
 
 allowBuilds:
   esbuild: true
@@ -21,6 +21,7 @@ allowBuilds:
 minimumReleaseAgeExclude:
   - '@base-ui/react@1.8.0'
   - '@base-ui/utils@0.4.0'
-  - '@types/react-dom@19.2.7'
+  - '@types/react-dom@19.3.0'
   - shadcn@4.21.0
-  - sanity-plugin-media@6.1.8
+  - sanity-plugin-media@6.3.1
+  - '@sanity/client@8.9.0'

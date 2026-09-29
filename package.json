@@ -37,9 +37,9 @@
   },
   "packageManager": "pnpm@11.9.0",
   "dependencies": {
-    "@portabletext/block-tools": "^5.2.0",
+    "@portabletext/block-tools": "^6.0.2",
     "@sanity/client": "catalog:",
     "@sanity/schema": "catalog:",
-    "jsdom": "^30.0.1"
+    "jsdom": "^30.1.1"
   }
 }
