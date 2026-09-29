@@ -104,13 +104,28 @@ const columnBodyMember = defineArrayMember({
       name: "body",
       title: "Text",
       type: "array",
-      of: [textBlockMember, imageBlockMember],
+      of: [
+        textBlockMember,
+        imageBlockMember,
+        defineArrayMember({ type: "ctaButton" }),
+      ],
     }),
   ],
   preview: {
     select: { body: "body" },
     prepare({ body }) {
       const first = Array.isArray(body) ? body[0] : null;
+      if (
+        first &&
+        typeof first === "object" &&
+        "_type" in first &&
+        first._type === "ctaButton" &&
+        "label" in first &&
+        typeof first.label === "string" &&
+        first.label.trim()
+      ) {
+        return { title: first.label.trim() };
+      }
       const children = first && typeof first === "object" && "children" in first
         ? (first as { children?: { text?: string }[] }).children
         : undefined;
@@ -142,7 +157,8 @@ export const textColumns = defineType({
           .min(2)
           .max(3)
           .error("Use 2 or 3 columns. They stack to one on small screens."),
-      description: "2 or 3 columns. Below 1024 px they become one column.",
+      description:
+        "2 or 3 columns. Below 1024 px they become one column. A column can hold text, an image, and a button.",
     }),
   ],
   preview: {
@@ -160,5 +176,6 @@ export const blockContent = defineType({
     imageBlockMember,
     defineArrayMember({ type: "youtube", title: "YouTube film" }),
     defineArrayMember({ type: "textColumns", title: "Columns" }),
+    defineArrayMember({ type: "ctaButton", title: "Button" }),
   ],
 });

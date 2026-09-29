@@ -1,5 +1,6 @@
 import { aboutPage } from "./aboutPage";
 import { blockContent, textColumns, youtube } from "./blockContent";
+import { ctaButton } from "./ctaButton";
 import { contentModule, contentTile, newsFeedModule } from "./contentModule";
 import { edition } from "./edition";
 import { editionOutcome } from "./editionOutcome";
@@ -15,6 +16,7 @@ import { siteSettings } from "./siteSettings";
 
 export const schemaTypes = [
   blockContent,
+  ctaButton,
   youtube,
   textColumns,
   contentTile,

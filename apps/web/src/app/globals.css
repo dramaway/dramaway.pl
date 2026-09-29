@@ -1689,6 +1689,25 @@
     gap: 1.5rem;
   }
 
+  /* Portable Text Button: own row, green CTA. Default is the left edge.
+     -1/-2/-3 follow the Indent list (`--pt-indent` per step). */
+  .pt-cta {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .pt-cta-1 {
+    padding-inline-start: var(--pt-indent);
+  }
+
+  .pt-cta-2 {
+    padding-inline-start: calc(2 * var(--pt-indent));
+  }
+
+  .pt-cta-3 {
+    padding-inline-start: calc(3 * var(--pt-indent));
+  }
+
   @media (width >= 64rem) {
     .pt-columns-2 {
       grid-template-columns: 1fr 1fr;

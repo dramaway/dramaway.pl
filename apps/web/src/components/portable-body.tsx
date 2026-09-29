@@ -7,6 +7,8 @@ import {
 import Image from "next/image";
 import { ImageGallery } from "@/components/visual/image-gallery";
 import { Blob } from "@/components/visual/blob";
+import { CtaLink } from "@/components/visual/cta-link";
+import { ctaIndentLevel, resolveCtaButton, type CtaButtonInput } from "@/lib/cta-button";
 import {
   groupPortableImageRuns,
   parseSanityImageDimensions,
@@ -151,6 +153,19 @@ function PortableLink({
   );
 }
 
+function PortableCta({
+  value,
+}: PortableTextTypeComponentProps<CtaButtonInput>) {
+  const cta = resolveCtaButton(value);
+  if (!cta) return null;
+  const indent = ctaIndentLevel(value?.indent);
+  return (
+    <div className={cn("pt-cta", indent > 0 && `pt-cta-${indent}`)}>
+      <CtaLink href={cta.href}>{cta.label}</CtaLink>
+    </div>
+  );
+}
+
 function PortableColumns({
   value,
 }: PortableTextTypeComponentProps<ColumnsValue>) {
@@ -243,6 +258,7 @@ const components: PortableTextComponents = {
     imageGallery: PortableImageGallery,
     youtube: PortableYoutube,
     textColumns: PortableColumns,
+    ctaButton: PortableCta,
   },
 };
 

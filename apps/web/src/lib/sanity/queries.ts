@@ -2,6 +2,30 @@ import { EXCERPT_FALLBACK_MAX } from "../homepage-copy";
 import { FEED_LIMIT_MAX } from "../content-sections";
 import { navigationProjection } from "./navigation-query";
 
+const ctaButtonProjection = `_type == "ctaButton" => {
+  page->{
+    _type,
+    "slug": slug.current,
+    route
+  },
+  file { asset->{ url } }
+}`;
+
+/** Resolves Button targets inside Portable Text, including a button nested in Columns. */
+export const portableBodyProjection = `{
+  ...,
+  ${ctaButtonProjection},
+  _type == "textColumns" => {
+    columns[] {
+      ...,
+      body[] {
+        ...,
+        ${ctaButtonProjection}
+      }
+    }
+  }
+}`;
+
 /** Pages that have not been converted to `news` yet. */
 const legacyNewsSlugFilter = `slug.current match "aktualnosc-*"`;
 
@@ -24,7 +48,7 @@ export const personBySlugQuery = `*[_type == "person" && slug.current == $slug][
   role,
   email,
   photo,
-  bio
+  bio[] ${portableBodyProjection}
 }`;
 
 export const personSlugsQuery = `*[_type == "person" && defined(slug.current)].slug.current`;
@@ -132,7 +156,7 @@ export const pageBySlugQuery = `*[_type == "page" && slug.current == $slug][0] {
   ),
   "cover": heroImage,
   sections[] ${contentSectionsProjection},
-  body
+  body[] ${portableBodyProjection}
 }`;
 
 export const pageRoutesQuery = `*[_type == "page" && defined(slug.current)]{
@@ -150,7 +174,7 @@ export const newsBySlugQuery = `*[_type == "news" && slug.current == $slug][0] {
   publishedAt,
   ctaHref,
   ctaLabel,
-  body
+  body[] ${portableBodyProjection}
 }`;
 
 export const newsRoutesQuery = `*[_type == "news" && defined(slug.current)]{
@@ -164,7 +188,7 @@ const editionProjection = `{
   years,
   theme,
   summary,
-  body,
+  body[] ${portableBodyProjection},
   gallery,
   partners,
   outcomes
@@ -195,9 +219,9 @@ export const projectBySlugQuery = `*[_type == "project" && slug.current == $slug
     (editions[].gallery[])[defined(asset)][0],
     body[_type == "image"][0]
   ),
-  body,
+  body[] ${portableBodyProjection},
   editions[] ${editionProjection},
-  afterword,
+  afterword[] ${portableBodyProjection},
   partners,
   sponsors
 }`;
@@ -240,7 +264,7 @@ export const aboutPageQuery = `*[_type == "aboutPage"][0] {
   team {
     heading,
     ctaLabel,
-    body,
+    body[] ${portableBodyProjection},
     people[]->{
       _id,
       name,
@@ -253,7 +277,7 @@ export const aboutPageQuery = `*[_type == "aboutPage"][0] {
   },
   history {
     heading,
-    lead,
+    lead[] ${portableBodyProjection},
     items[] { year, title, body }
   },
   documents {
@@ -335,7 +359,7 @@ export const publicationBySlugQuery = `*[_type == "publication" && slug.current 
   ${publicationFormatProjection},
   ${publicationMethodsProjection},
   ${publicationFileProjection},
-  body
+  body[] ${portableBodyProjection}
 }`;
 
 export const readingMethodsQuery = `*[_type == "readingMethod"] | order(order asc) {
