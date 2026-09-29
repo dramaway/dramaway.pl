@@ -30,7 +30,7 @@ function resolveDocument(item: AboutDocumentItem): ResolvedAboutDocument | null 
     if (!title) return null;
     return {
       title,
-      href: publicPathForPage({ slug: pageSlug, section: item.page?.section }),
+      href: publicPathForPage({ slug: pageSlug }),
       external: false,
     };
   }

@@ -1,9 +1,10 @@
 /**
  * Public URL map for the foundation site.
  *
- * A `page` document picks its prefix with `section` (`root`, `projekty`,
- * `fundacja`). News slugs (`aktualnosc-`) stay flat: `/{slug without prefix}`.
- * `project` documents always live at `/projekty/{slug}`.
+ * The prefix comes from the document type, not from the menu and not from a
+ * field on the page: `project` → `/projekty`, `person` → `/zespol`,
+ * `publication` → `/czytelnia`, `page` → `/{slug}`.
+ * News slugs (`aktualnosc-`) stay flat: `/{slug without prefix}`.
  *
  * Launch redirects (node/N, leftover edition landings, news aliases) are a
  * separate map — do not grow this file into that list.
@@ -13,8 +14,6 @@
 export const DEFAULT_CENTRUM_URL = "https://centrum.dramaway.pl";
 
 export const NEWS_SLUG_PREFIX = "aktualnosc-";
-
-export type PageSection = "root" | "projekty" | "fundacja";
 
 export type NavItem = {
   href: string;
@@ -65,33 +64,20 @@ export function personPath(slug: string) {
   return `/zespol/${slug}`;
 }
 
-export function fundacjaPath(slug: string) {
-  return `/fundacja/${slug}`;
-}
-
 export function newsPublicSlug(sanitySlug: string) {
   return sanitySlug.startsWith(NEWS_SLUG_PREFIX)
     ? sanitySlug.slice(NEWS_SLUG_PREFIX.length)
     : sanitySlug;
 }
 
-export function pageSection(value: string | null | undefined): PageSection {
-  if (value === "projekty" || value === "fundacja") return value;
-  return "root";
-}
-
-/** Public href for a Sanity `page`. News prefix wins over `section`. */
+/** Public href for a Sanity `page`. News prefix is stripped; nothing else is. */
 export function publicPathForPage(page: {
   slug: string;
-  section?: string | null;
   isNews?: boolean | null;
 }) {
   if (page.isNews || page.slug.startsWith(NEWS_SLUG_PREFIX)) {
     return `/${newsPublicSlug(page.slug)}`;
   }
-  const section = pageSection(page.section);
-  if (section === "fundacja") return fundacjaPath(page.slug);
-  if (section === "projekty") return projectPath(page.slug);
   return `/${page.slug}`;
 }
 

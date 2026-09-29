@@ -145,7 +145,6 @@ function feedHref(source: FeedSource, doc: ContentFeedDoc): string {
   if (source === "news" || source === "page") {
     return publicPathForPage({
       slug,
-      section: doc.section,
       isNews: source === "news",
     });
   }

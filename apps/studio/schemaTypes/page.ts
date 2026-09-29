@@ -19,23 +19,6 @@ export const page = defineType({
     defineField({ name: "title", title: "Title", type: "string", validation: (r) => r.required() }),
     defineField({ name: "slug", title: "Slug", type: "slug", options: { source: "title" }, validation: (r) => r.required() }),
     defineField({
-      name: "section",
-      title: "Sekcja",
-      type: "string",
-      initialValue: "root",
-      hidden: ({ document }) => isNewsDocument(document),
-      description:
-        "Gdzie strona wisi w adresie. Aktualności (slug aktualnosc-) zawsze są pod /{slug bez przedrostka} — to pole ich nie przenosi.",
-      options: {
-        list: [
-          { title: "Korzeń witryny — /{slug}", value: "root" },
-          { title: "Projekty — /projekty/{slug}", value: "projekty" },
-          { title: "O fundacji — /fundacja/{slug}", value: "fundacja" },
-        ],
-        layout: "radio",
-      },
-    }),
-    defineField({
       name: "heroImage",
       title: "Hero image",
       type: "image",
@@ -96,17 +79,15 @@ export const page = defineType({
     defineField({ name: "body", title: "Body", type: "blockContent" }),
   ],
   preview: {
-    select: { title: "title", slug: "slug.current", section: "section" },
-    prepare({ title, slug, section }) {
-      return { title, subtitle: previewPath(slug, section) };
+    select: { title: "title", slug: "slug.current" },
+    prepare({ title, slug }) {
+      return { title, subtitle: previewPath(slug) };
     },
   },
 });
 
-function previewPath(slug: unknown, section: unknown) {
+function previewPath(slug: unknown) {
   if (typeof slug !== "string" || !slug) return undefined;
   if (slug.startsWith(NEWS_SLUG_PREFIX)) return `/${slug.slice(NEWS_SLUG_PREFIX.length)}`;
-  if (section === "fundacja") return `/fundacja/${slug}`;
-  if (section === "projekty") return `/projekty/${slug}`;
   return `/${slug}`;
 }

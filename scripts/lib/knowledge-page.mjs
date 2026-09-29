@@ -60,7 +60,6 @@ export function knowledgePagePatch(page, landing, createKey) {
   const previousLead = typeof page.heroLead === "string" ? page.heroLead : "";
   const set = {
     title: "Baza wiedzy",
-    section: "root",
     slug: { _type: "slug", current: "baza-wiedzy" },
   };
   if (landingLead.trim()) {

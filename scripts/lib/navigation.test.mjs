@@ -51,7 +51,6 @@ test("resolves document types to public paths and falls back to the document tit
           title: "Statut fundacji",
           name: null,
           slug: "statut",
-          section: "fundacja",
           route: null,
         },
       },
@@ -100,7 +99,7 @@ test("resolves document types to public paths and falls back to the document tit
     [
       { href: "/zespol", label: "Zespół" },
       { href: "/fundacja", label: "O fundacji" },
-      { href: "/fundacja/statut", label: "Statut" },
+      { href: "/statut", label: "Statut" },
       { href: "/projekty/art-generacje", label: "Art Generacje" },
       { href: "/czytelnia/teatr-forum", label: "Teatr Forum" },
       { href: "/zespol/anna-nowak", label: "Anna Nowak" },

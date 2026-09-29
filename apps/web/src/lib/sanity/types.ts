@@ -28,7 +28,6 @@ export type PersonDetail = {
 
 export type PageRoute = {
   slug: string;
-  section?: string | null;
   isNews?: boolean | null;
 };
 
@@ -49,7 +48,6 @@ export type ContentFeedDoc = {
   _createdAt?: string | null;
   title?: string | null;
   slug?: string | null;
-  section?: string | null;
   excerpt?: string | null;
 };
 
@@ -62,7 +60,6 @@ export type CmsContentTileTarget = {
   title: string | null;
   name: string | null;
   slug: string | null;
-  section?: string | null;
   route: string | null;
   docExcerpt: string | null;
 };
@@ -123,7 +120,6 @@ export type PageDetail = {
   _id: string;
   title: string;
   slug: string;
-  section?: string | null;
   isNews: boolean;
   heroLead?: string | null;
   heroCtaLabel?: string | null;
@@ -179,7 +175,6 @@ export type SiteSettingsNavPage = {
   title: string | null;
   name: string | null;
   slug: string | null;
-  section?: string | null;
   route: string | null;
 };
 
@@ -325,7 +320,6 @@ export type AboutHistoryItem = {
 export type AboutDocumentPage = {
   title: string | null;
   slug: string | null;
-  section?: string | null;
 };
 
 export type AboutDocumentItem = {

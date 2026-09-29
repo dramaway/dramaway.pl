@@ -114,7 +114,6 @@ console.log(
         ? {
             title: pageSet.title,
             slug: pageSet.slug.current,
-            section: pageSet.section,
             heroLead: pageSet.heroLead ?? null,
             prependedBlocks: Array.isArray(pageSet.body)
               ? pageSet.body.length - (page.body?.length ?? 0)

@@ -8,7 +8,6 @@ export const navigationLinkProjection = `
     title,
     name,
     "slug": slug.current,
-    section,
     route
   }
 `;

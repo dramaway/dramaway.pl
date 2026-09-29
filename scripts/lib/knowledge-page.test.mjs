@@ -34,7 +34,6 @@ test("methods page becomes Baza wiedzy and keeps both intros", () => {
   const set = knowledgePagePatch(methodsPage, landing, keys());
   assert.equal(set.title, "Baza wiedzy");
   assert.equal(set.slug.current, "baza-wiedzy");
-  assert.equal(set.section, "root");
   assert.equal(set.heroLead, landing.lead);
   assert.equal(set.body[0].children[0].text, "Projekty realizujemy najczęściej w oparciu o metodę dramy.");
   assert.equal(set.body[1].children[0].text, "Druga linia.");
