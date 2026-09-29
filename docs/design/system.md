@@ -57,7 +57,7 @@ Wszystkie w bloku `@theme` w [apps/web/src/app/globals.css](../../apps/web/src/a
 | `.pt-columns` / `-2` / `-3` | obiekt Portable Text **Columns**: 2 albo 3 kolumny od `lg` (1024 px); poniżej jedna kolumna |
 | `.pt-cta` / `-1` / `-2` / `-3` | obiekt Portable Text **Button** (`ctaButton`): zielone CTA w osobnym wierszu. Domyślnie do lewej; `-1`…`-3` to kolejne stopnie `--pt-indent` (jak lista Indent). Pusta etykieta albo brak celu = brak przycisku |
 | `.filter-row-switches` | `/czytelnia`: rodzaj = rząd CTA (rulka + kropka). Tylko szuflady z `listed` pozycjami; rząd znika, gdy zostaje jedna. `scroll={false}`. |
-| `.pub-cat` / `-head` / `-toggle` / `-action` | `/czytelnia`: sekcje kategorii. Tytuł Alexandria Light magenta, bez uppercase, `(n)` szare; spory odstęp pod nagłówkiem (blob pierwszego wiersza). Domyślnie otwarte; hover „zwiń” / „pokaż wszystkie”. Płaska lista, gdy rodzaj nie ma żadnego tagu. |
+| `.pub-cat` / `-head` / `-toggle` / `-action` | `/czytelnia`: sekcje kategorii. Tytuł Alexandria Light magenta, bez uppercase, `(n)` szare; spory odstęp pod nagłówkiem (blob pierwszego wiersza). Bez `?kategoria=` wszystkie otwarte; z parametrem tylko ta sekcja (slug Category, np. `teatr-forum`). Nagłówek to link (`scroll={false}`), hover „zwiń” / „pokaż wszystkie”. Chip rodzaju zachowuje `kategoria`. Płaska lista, gdy rodzaj nie ma żadnego tagu. |
 | `.blob-row-label` / `.blob-row-compact` / `.blob-row-excerpt` | Archiwum na `/projekty` (`density="compact"`): etykieta magenta zdaniowa; dwie kolumny od `lg` z lekkim offsetem prawej (`--archive-stagger`); wycinek max. 3 linie; bez plamy za tytułem |
 
 ## Prymitywy

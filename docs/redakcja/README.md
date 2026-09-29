@@ -22,7 +22,7 @@ Strona, którą widzą czytelnicy, na razie stoi pod adresem roboczym <https://d
 | [Podstawy Studia](studio-podstawy.md) | Logowanie, szkic, publikacja, zdjęcia |
 | [Strony](strony.md) | Który dokument w panelu jest którą stroną na witrynie i jak dodać sekcje |
 | [Menu](menu.md) | Jak ułożyć menu i skróty po lewej |
-| [Tekst](tekst.md) | Akapity, nagłówki i nasze dodatkowe bloki |
+| [Tekst](tekst.md) | Akapity, nagłówki, przycisk Button i zaawansowane linki (kotwica, parametry Czytelni) |
 | [Czytelnia i O fundacji](czytelnia-i-fundacja.md) | Spis publikacji oraz wartości, zespół, historia, dokumenty |
 | [Zrzuty ekranu](screeny.md) | Które kadry już są, a które jeszcze brakuje |
 

@@ -38,19 +38,53 @@ Obiekt **Columns** to dwie albo trzy kolumny obok siebie. Na wąskim ekranie uk�
 
 ## Button
 
-Obiekt **Button** to zielony przycisk z rulką i kropką, taki jak „więcej” na kartach. Stoi w osobnym wierszu. Domyślnie jest dosunięty do lewej. Pole **Wcięcie** przesuwa go o ten sam skok co lista Indent: 1, 2 albo 3 stopnie. Jeden stopień zrównuje przycisk z akapitem wciętym raz, na przykład pod hasłem Termin. Nie da się go wstawić w środek zdania.
+Obiekt **Button** to zielony przycisk z rulką i kropką, taki jak „więcej” na kartach. Stoi w osobnym wierszu. Nie da się go wstawić w środek zdania — do słów w akapicie służy zwykły link z paska (ikona łańcucha).
 
-W polu **Cel** wybierz:
+### Jak dodać
 
-- **Dokument** — inna treść z panelu (strona, news, projekt, publikacja, osoba, listing, O fundacji),
-- **Plik** — PDF albo inne medium; otwiera się w nowej karcie,
-- **Adres** — ścieżka od `/` albo link `https://`.
+1. W treści ustaw kursor w pustym wierszu (albo pod akapitem).
+2. Naciśnij **+** przy bloku i wybierz **Button**. Nie szukaj tego na pasku stylów (Termin, Quote, listy).
+3. Wpisz **Etykietę**. To jedyny tekst na przycisku. Puste pole nie wymyśla słowa „więcej” i Studio nie puści publikacji.
+4. W **Celu** zostaw **Dokument**, albo przełącz na **Plik** albo **Adres**.
+5. Uzupełnij pole, które się pokaże:
+   - **Dokument** — wybierz istniejącą treść (strona, news, projekt, publikacja, osoba, listing Projekty / Czytelnia / Zespół, O fundacji). Adres złoży się sam.
+   - **Plik** — PDF albo inne medium; otwiera się w nowej karcie.
+   - **Adres** — ścieżka od ukośnika (`/projekty`) albo `https://`. Kotwicy i parametrów tu nie wpisuj.
+6. **Wcięcie** zostaw na „Bez wcięcia”, chyba że przycisk ma stanąć w tej samej kolumnie co lista Indent albo hasło Termin. Skok 1, 2 albo 3 jest ten sam co przy Indent.
+7. Jeśli trzeba dotrzeć do konkretnego miejsca na stronie (kotwica) albo otworzyć Czytelnię na jednej metodzie (parametry), rozwiń **Zaawansowane** — niżej.
+8. **Publish**.
 
-Etykieta jest obowiązkowa. Puste pole nie wymyśla tekstu „więcej”.
-
-Gdy strona ma kotwicę albo adres ma parametry, otwórz zwinięte **Zaawansowane**. Kotwica to `#edycje` (sam `edycje` też działa). Parametry to `?rodzaj=books`. Można podać oba. Doklejają się do dokumentu, pliku albo adresu — nie wpisuj ich drugi raz w polu adresu.
+Button można też wstawić wewnątrz bloku **Columns**. Nie wkładamy Buttona w Button.
 
 <!-- screen: tekst-button | Blok Button z etykietą, celem Dokument i zwiniętym Zaawansowane | Widać, że przycisk jest osobnym blokiem, nie zaznaczeniem w zdaniu -->
+
+### Zaawansowane: kotwica i parametry
+
+Grupa **Zaawansowane** jest zwinięta. Otwórz ją tylko wtedy, gdy sam dokument albo sam adres nie wystarcza.
+
+| Pole | Co wpisać | Przykład | Po co |
+|------|-----------|----------|--------|
+| **Kotwica** | Identyfikator sekcji, z `#` albo bez | `edycje` albo `#edycje` | Na stronie projektu zjedzie do listy edycji |
+| **Parametry** | Część po `?`, z pytajnikiem albo bez | `kategoria=teatr-forum` | Na listingu Czytelni otworzy jedną kategorię i zwinie pozostałe |
+
+Można wypełnić oba pola naraz. Doklejają się do wybranego dokumentu, pliku albo adresu. **Nie** dopisuj `?…` ani `#…` drugi raz w polu Adres.
+
+Czego nie wklejać: spacji, `#` w polu Parametry, `?` w polu Kotwica.
+
+**Czytelnia z Bazą wiedzy.** Cel = **Dokument**, listing **Czytelnia**. W Parametrach jedna kategoria (slug z dokumentów Category):
+
+| Metoda | Parametry |
+|--------|-----------|
+| Drama | `kategoria=drama` |
+| Teatr Forum (TF) | `kategoria=teatr-forum` |
+| Teatr w edukacji (TIE) | `kategoria=teatr-w-edukacji` |
+| Teatr ze społecznością (TzS) | `kategoria=teatr-ze-spolecznoscia` |
+| Teatr zaangażowany społecznie | `kategoria=teatr-zaangazowany-spolecznie` |
+| Metody twórcze | `kategoria=metody-tworcze` |
+
+Szuflada formatu (artykuły, książki, scenariusze, multimedia) to drugi parametr, na przykład `rodzaj=books` albo razem `rodzaj=scripts&kategoria=teatr-w-edukacji`. Bez parametru `kategoria` wszystkie sekcje na `/czytelnia` są otwarte. Kliknięcie nagłówka sekcji na samym spisie też zmienia ten adres.
+
+Więcej o polach publikacji: [Czytelnia i O fundacji](czytelnia-i-fundacja.md).
 
 ## Film
 

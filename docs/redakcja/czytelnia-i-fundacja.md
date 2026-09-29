@@ -20,6 +20,8 @@ Autorzy to wpisane nazwiska, nie link do dokumentu osoby. PDF, jeśli jest, wisi
 
 Szczegóły układu spisu (przyciski rodzaju, sekcje kategorii) wynikają z tych pól. Nie ma osobnego ekranu „ułożenia Czytelni” poza dokumentem listingu **Czytelnia** (hero) i samymi publikacjami.
 
+Żeby z Bazy wiedzy (albo z innego tekstu) otworzyć jedną metodę: w treści wstaw **Button**, cel **Dokument**, listing **Czytelnia**, w **Zaawansowane → Parametry** wpisz `kategoria=…` (na przykład `kategoria=teatr-forum`). Tabela slugów i kotwica: [Tekst](tekst.md#zaawansowane-kotwica-i-parametry). Bez parametru wszystkie sekcje są otwarte. Kliknięcie nagłówka sekcji na spisie też zmienia ten adres.
+
 ## O fundacji
 
 Dokument **O fundacji**, adres `/fundacja`. Pusta lista w danej grupie chowa cały blok.

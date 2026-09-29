@@ -1,0 +1,70 @@
+import assert from "node:assert/strict";
+import { test } from "node:test";
+import {
+  UNCATEGORIZED_CATEGORY_SLUG,
+  czytelniaCategoryHeadingId,
+  czytelniaFilterHref,
+  firstSearchParam,
+  resolvePublicationCategory,
+  resolvePublicationFormat,
+} from "../../apps/web/src/lib/czytelnia-filters.ts";
+
+test("firstSearchParam takes the first trimmed value", () => {
+  assert.equal(firstSearchParam(undefined), undefined);
+  assert.equal(firstSearchParam("  "), undefined);
+  assert.equal(firstSearchParam("teatr-forum"), "teatr-forum");
+  assert.equal(firstSearchParam(["", "teatr-forum"]), undefined);
+  assert.equal(firstSearchParam(["teatr-forum", "drama"]), "teatr-forum");
+});
+
+test("czytelniaFilterHref omits the default format and encodes both axes", () => {
+  assert.equal(czytelniaFilterHref(), "/czytelnia");
+  assert.equal(czytelniaFilterHref({ rodzaj: "articles" }), "/czytelnia");
+  assert.equal(
+    czytelniaFilterHref({ rodzaj: "books" }),
+    "/czytelnia?rodzaj=books",
+  );
+  assert.equal(
+    czytelniaFilterHref({ kategoria: "teatr-forum" }),
+    "/czytelnia?kategoria=teatr-forum",
+  );
+  assert.equal(
+    czytelniaFilterHref({
+      rodzaj: "scripts",
+      kategoria: "teatr-w-edukacji",
+    }),
+    "/czytelnia?rodzaj=scripts&kategoria=teatr-w-edukacji",
+  );
+  assert.equal(
+    czytelniaFilterHref({
+      rodzaj: "articles",
+      kategoria: UNCATEGORIZED_CATEGORY_SLUG,
+    }),
+    "/czytelnia?kategoria=pozostale",
+  );
+});
+
+test("resolvePublicationCategory only accepts slugs from the listing", () => {
+  const slugs = ["drama", "teatr-forum", UNCATEGORIZED_CATEGORY_SLUG];
+  assert.equal(resolvePublicationCategory("teatr-forum", slugs), "teatr-forum");
+  assert.equal(resolvePublicationCategory("nie-ma", slugs), undefined);
+  assert.equal(resolvePublicationCategory(undefined, slugs), undefined);
+});
+
+test("resolvePublicationFormat still prefers articles when present", () => {
+  assert.equal(
+    resolvePublicationFormat("books", ["articles", "books"]),
+    "books",
+  );
+  assert.equal(
+    resolvePublicationFormat("nope", ["articles", "books"]),
+    "articles",
+  );
+});
+
+test("czytelniaCategoryHeadingId is stable for URL hashes", () => {
+  assert.equal(
+    czytelniaCategoryHeadingId("teatr-ze-spolecznoscia"),
+    "czytelnia-teatr-ze-spolecznoscia",
+  );
+});

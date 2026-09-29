@@ -15,6 +15,14 @@ export const PUBLICATION_FORMATS = [
 /** Landing `/czytelnia` prefers this drawer when it has listed items. */
 export const DEFAULT_PUBLICATION_FORMAT = "articles" satisfies PublicationFormat;
 
+/** Listing section for publications that have no known Category tag. */
+export const UNCATEGORIZED_CATEGORY_SLUG = "pozostale";
+
+export type CzytelniaListingFilters = {
+  rodzaj?: string | null;
+  kategoria?: string | null;
+};
+
 export type PublicationCategoryGroup = {
   slug: string;
   title: string;
@@ -62,10 +70,31 @@ export function resolvePublicationFormat(
   return available[0] ?? DEFAULT_PUBLICATION_FORMAT;
 }
 
-export function czytelniaFilterHref(rodzaj?: string | null): string {
-  const format = rodzaj || DEFAULT_PUBLICATION_FORMAT;
-  if (format === DEFAULT_PUBLICATION_FORMAT) return czytelniaPath();
-  return `${czytelniaPath()}?rodzaj=${encodeURIComponent(format)}`;
+export function resolvePublicationCategory(
+  kategoria: string | undefined,
+  available: readonly string[],
+): string | undefined {
+  if (kategoria && available.includes(kategoria)) return kategoria;
+  return undefined;
+}
+
+export function czytelniaCategoryHeadingId(slug: string): string {
+  return `czytelnia-${slug}`;
+}
+
+export function czytelniaFilterHref(
+  filters: CzytelniaListingFilters = {},
+): string {
+  const params = new URLSearchParams();
+  const format = filters.rodzaj || DEFAULT_PUBLICATION_FORMAT;
+  if (format !== DEFAULT_PUBLICATION_FORMAT) {
+    params.set("rodzaj", format);
+  }
+  if (filters.kategoria) {
+    params.set("kategoria", filters.kategoria);
+  }
+  const query = params.toString();
+  return query ? `${czytelniaPath()}?${query}` : czytelniaPath();
 }
 
 export function filterPublicationsByFormat(
@@ -117,7 +146,7 @@ export function groupPublicationsByCategory(
   );
   if (rest.length > 0) {
     groups.push({
-      slug: "pozostale",
+      slug: UNCATEGORIZED_CATEGORY_SLUG,
       title: uncategorizedTitle,
       items: rest,
     });

@@ -4,11 +4,13 @@ import { BlobStack } from "@/components/sections/blob-stack";
 import { FilterRow } from "@/components/sections/filter-row";
 import { PublicationCategoryList } from "@/components/sections/publication-category-list";
 import {
+  UNCATEGORIZED_CATEGORY_SLUG,
   czytelniaFilterHref,
   filterPublicationsByFormat,
   firstSearchParam,
   formatsWithItems,
   groupPublicationsByCategory,
+  resolvePublicationCategory,
   resolvePublicationFormat,
 } from "@/lib/czytelnia-filters";
 import { publicationPath } from "@/lib/routes";
@@ -20,6 +22,7 @@ export const revalidate = 60;
 
 type SearchParams = Promise<{
   rodzaj?: string | string[];
+  kategoria?: string | string[];
 }>;
 
 function toRowItems(
@@ -54,13 +57,33 @@ export default async function CzytelniaPage({
     categories,
     copy.sections.uncategorized,
   );
+  const knownCategorySlugs = [
+    ...categories
+      .map((category) => category.slug)
+      .filter((slug): slug is string => Boolean(slug)),
+    UNCATEGORIZED_CATEGORY_SLUG,
+  ];
+  const kategoriaParam = resolvePublicationCategory(
+    firstSearchParam(params.kategoria),
+    knownCategorySlugs,
+  );
+  const focusedSlug =
+    listing.kind === "grouped"
+      ? resolvePublicationCategory(
+          kategoriaParam,
+          listing.groups.map((group) => group.slug),
+        )
+      : undefined;
 
   return (
     <Section>
       <FilterRow
         label={copy.filters.formatLabel}
         chips={available.map((format) => ({
-          href: czytelniaFilterHref(format),
+          href: czytelniaFilterHref({
+            rodzaj: format,
+            kategoria: kategoriaParam,
+          }),
           label: copy.filters.formats[format],
           current: rodzaj === format,
         }))}
@@ -79,6 +102,8 @@ export default async function CzytelniaPage({
             items: toRowItems(group.items),
           }))}
           copy={copy.sections}
+          rodzaj={rodzaj}
+          focusedSlug={focusedSlug}
         />
       )}
     </Section>

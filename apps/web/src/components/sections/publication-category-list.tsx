@@ -1,10 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
+import { useEffect } from "react";
 import {
   BlobStack,
   type BlobRowItem,
 } from "@/components/sections/blob-stack";
+import {
+  czytelniaCategoryHeadingId,
+  czytelniaFilterHref,
+} from "@/lib/czytelnia-filters";
+import type { PublicationFormat } from "@/lib/sanity/types";
 
 export type PublicationCategorySection = {
   slug: string;
@@ -15,21 +21,31 @@ export type PublicationCategorySection = {
 function CategorySection({
   group,
   copy,
+  rodzaj,
+  focusedSlug,
 }: {
   group: PublicationCategorySection;
   copy: { expand: string; collapse: string };
+  rodzaj: PublicationFormat;
+  focusedSlug: string | undefined;
 }) {
-  const [open, setOpen] = useState(true);
-  const headingId = `czytelnia-${group.slug}`;
+  const headingId = czytelniaCategoryHeadingId(group.slug);
+  const isFocused = focusedSlug === group.slug;
+  const open = !focusedSlug || isFocused;
+  const href = czytelniaFilterHref({
+    rodzaj,
+    kategoria: isFocused ? undefined : group.slug,
+  });
 
   return (
     <section className="pub-cat" aria-labelledby={headingId}>
       <h2 id={headingId} className="pub-cat-head">
-        <button
-          type="button"
+        <Link
+          href={href}
+          scroll={false}
           className="pub-cat-toggle"
           aria-expanded={open}
-          onClick={() => setOpen((current) => !current)}
+          aria-current={isFocused ? "true" : undefined}
         >
           <span className="pub-cat-title">
             {group.title}{" "}
@@ -38,7 +54,7 @@ function CategorySection({
           <span className="pub-cat-action">
             {open ? copy.collapse : copy.expand}
           </span>
-        </button>
+        </Link>
       </h2>
       {open ? (
         <div className="pub-cat-list">
@@ -54,16 +70,34 @@ function CategorySection({
 export function PublicationCategoryList({
   groups,
   copy,
+  rodzaj,
+  focusedSlug,
 }: {
   groups: PublicationCategorySection[];
   copy: { expand: string; collapse: string };
+  rodzaj: PublicationFormat;
+  focusedSlug: string | undefined;
 }) {
+  useEffect(() => {
+    if (!focusedSlug) return;
+    const heading = document.getElementById(
+      czytelniaCategoryHeadingId(focusedSlug),
+    );
+    heading?.scrollIntoView({ block: "start" });
+  }, [focusedSlug]);
+
   if (groups.length === 0) return null;
 
   return (
     <div className="pub-cats">
       {groups.map((group) => (
-        <CategorySection key={group.slug} group={group} copy={copy} />
+        <CategorySection
+          key={group.slug}
+          group={group}
+          copy={copy}
+          rodzaj={rodzaj}
+          focusedSlug={focusedSlug}
+        />
       ))}
     </div>
   );

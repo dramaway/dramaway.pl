@@ -36,10 +36,12 @@ Zdjęcia w tekście mają rozmiar: Small, Medium (domyślny), Wide. Po zmianie r
 
 ## Odnośniki
 
-W tekście link może prowadzić na adres `https://…`, na ścieżkę wewnętrzną zaczynającą się od `/` (na przykład `/czytelnia`), na `mailto:` albo `tel:`.
+W zdaniu link zaznacza się w pasku edytora (ikona łańcucha). Taki odnośnik może prowadzić na adres `https://…`, na ścieżkę wewnętrzną zaczynającą się od `/` (na przykład `/czytelnia`), na `mailto:` albo `tel:`.
+
+Zielony przycisk z rulką i kropką to **inny** blok: **Button**. Wstawia się go z plusa w tekście, nie z ikony łańcucha. Tam wybiera się dokument, plik albo adres, a kotwicę i parametry dopisuje się w **Zaawansowane**. Krok po kroku: [Tekst](tekst.md#button).
 
 Nie wklejamy adresów zaczynających się od `javascript:` ani od `//`.
 
-Przycisk linku jest w pasku edytora. Szerszy opis pracy w tekście: [Content operations cheatsheet](https://www.sanity.io/docs/user-guides/content-operations-cheatsheet).
+Szerszy opis pracy w tekście: [Content operations cheatsheet](https://www.sanity.io/docs/user-guides/content-operations-cheatsheet).
 
 <!-- screen: studio-link | Pasek edytora tekstu z otwartym polem URL linku | Widać, gdzie wpisać ścieżkę wewnętrzną albo adres zewnętrzny -->

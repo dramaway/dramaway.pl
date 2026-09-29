@@ -1870,7 +1870,7 @@
   }
 
   /*
-   * Czytelnia category sections. Default open; collapse hides every row.
+   * Czytelnia category sections. Open unless `?kategoria=` focuses one.
    * Title is Alexandria Light magenta (not display uppercase). Count stays
    * grey and small. Gap under the title clears the first row's blob — keep
    * it on the list, not the toggle, so the hit area stays the heading row.
@@ -1892,6 +1892,12 @@
     color: var(--color-magenta);
   }
 
+  @media (width < 64rem) {
+    .pub-cat-head {
+      scroll-margin-block-start: var(--site-header-bar);
+    }
+  }
+
   .pub-cat-toggle {
     display: flex;
     align-items: baseline;
@@ -1909,6 +1915,7 @@
     font: inherit;
     letter-spacing: inherit;
     text-transform: none;
+    text-decoration: none;
   }
 
   .pub-cat-toggle:focus {
