@@ -49,24 +49,55 @@ function startSeconds(parsed: URL): number {
   return Number.parseInt(raw, 10) || 0;
 }
 
-export function youtubeEmbedSrc(url: string): string | null {
+function parseYoutubeUrl(url: string): URL | null {
   try {
     const parsed = new URL(url);
     if (!ALLOWED_HOSTS.has(parsed.hostname.toLowerCase())) return null;
-
-    const id = youtubeVideoId(parsed);
-    if (id) {
-      const start = startSeconds(parsed);
-      const startQuery = start > 0 ? `?start=${start}` : "";
-      return `https://www.youtube-nocookie.com/embed/${id}${startQuery}`;
-    }
-
-    const list = youtubePlaylistId(parsed);
-    if (list) {
-      return `https://www.youtube-nocookie.com/embed/videoseries?list=${encodeURIComponent(list)}`;
-    }
+    return parsed;
   } catch {
     return null;
   }
+}
+
+export function youtubeVideoIdFromUrl(url: string): string | null {
+  const parsed = parseYoutubeUrl(url);
+  return parsed ? youtubeVideoId(parsed) : null;
+}
+
+/** Cover stills, sharpest first. A missing size often returns a 120×90 placeholder. */
+export function youtubePosterUrls(videoId: string): string[] {
+  return [
+    `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`,
+    `https://i.ytimg.com/vi/${videoId}/sddefault.jpg`,
+    `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+  ];
+}
+
+export function youtubeEmbedSrc(
+  url: string,
+  options: { autoplay?: boolean } = {},
+): string | null {
+  const parsed = parseYoutubeUrl(url);
+  if (!parsed) return null;
+
+  const params = new URLSearchParams();
+  const start = startSeconds(parsed);
+  if (start > 0) params.set("start", String(start));
+  if (options.autoplay) params.set("autoplay", "1");
+  const query = params.toString();
+  const suffix = query ? `?${query}` : "";
+
+  const id = youtubeVideoId(parsed);
+  if (id) {
+    return `https://www.youtube-nocookie.com/embed/${id}${suffix}`;
+  }
+
+  const list = youtubePlaylistId(parsed);
+  if (list) {
+    params.set("list", list);
+    const listQuery = params.toString();
+    return `https://www.youtube-nocookie.com/embed/videoseries?${listQuery}`;
+  }
+
   return null;
 }

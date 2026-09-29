@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-09-29 — Kolumna Portable Text dostaje ten sam `space-y-4` co pojedynczy łam (akapity, listy, nagłówki). Obraz w tekście: wyrównanie i Block/Wrap. Karta Columns w Studio pokazuje początek kolumn. Hosted Studio po `pnpm --filter studio run deploy`. |
+| **Ostatnia aktualizacja** | 2026-09-30 — YouTube: okładka + play (kółka palety), iframe po kliknięciu; film w kolumnie; podgląd „YouTube: tytuł”. |
 | **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |

@@ -1,5 +1,9 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { ColumnsPreview } from "./columnsPreview";
+import {
+  columnBodyPreview,
+  ColumnItemPreview,
+  ColumnsPreview,
+} from "./columnsPreview";
 import { IndentIcon } from "./indentIcon";
 import { RosterIcon } from "./rosterIcon";
 import { TermStyle } from "./termStyle";
@@ -144,7 +148,7 @@ const imageBlockMember = defineArrayMember({
   ],
 });
 
-/** Nested Portable Text for a column — no columns-inside-columns, no YouTube. */
+/** Nested Portable Text for a column — no columns-inside-columns. */
 const columnBodyMember = defineArrayMember({
   type: "object",
   name: "column",
@@ -157,6 +161,7 @@ const columnBodyMember = defineArrayMember({
       of: [
         textBlockMember,
         imageBlockMember,
+        defineArrayMember({ type: "youtube", title: "YouTube film" }),
         defineArrayMember({ type: "ctaButton" }),
       ],
     }),
@@ -164,27 +169,10 @@ const columnBodyMember = defineArrayMember({
   preview: {
     select: { body: "body" },
     prepare({ body }) {
-      const first = Array.isArray(body) ? body[0] : null;
-      if (
-        first &&
-        typeof first === "object" &&
-        "_type" in first &&
-        first._type === "ctaButton" &&
-        "label" in first &&
-        typeof first.label === "string" &&
-        first.label.trim()
-      ) {
-        return { title: first.label.trim() };
-      }
-      const children = first && typeof first === "object" && "children" in first
-        ? (first as { children?: { text?: string }[] }).children
-        : undefined;
-      const snippet = children?.map((child) => child.text ?? "").join("") ?? "";
-      return {
-        title: snippet.trim() || "Empty column",
-      };
+      return columnBodyPreview(body);
     },
   },
+  components: { preview: ColumnItemPreview },
 });
 
 export const textColumns = defineType({
@@ -208,7 +196,7 @@ export const textColumns = defineType({
           .max(3)
           .error("Use 2 or 3 columns. They stack to one on small screens."),
       description:
-        "2 or 3 columns. Below 1024 px they become one column. A column can hold text, an image, and a button.",
+        "2 or 3 columns. Below 1024 px they become one column. A column can hold text, an image, a YouTube film, and a button.",
     }),
   ],
   preview: {

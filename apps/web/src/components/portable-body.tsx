@@ -20,7 +20,7 @@ import { splitRosterLine, splitRosterNames } from "@/lib/roster-line";
 import { safeHref } from "@/lib/safe-url";
 import type { PortableContent, SanityImage } from "@/lib/sanity/types";
 import { urlFor } from "@/lib/sanity/image";
-import { youtubeEmbedSrc } from "@/lib/sanity/youtube";
+import { YoutubeEmbed } from "@/components/visual/youtube-embed";
 import { cn } from "@/lib/utils";
 
 type BodyImageSize = "small" | "medium" | "wide";
@@ -148,19 +148,8 @@ function PortableImageGallery({
 function PortableYoutube({
   value,
 }: PortableTextTypeComponentProps<YoutubeValue>) {
-  const src = value?.url ? youtubeEmbedSrc(value.url) : null;
-  if (!src) return null;
-  return (
-      <div className="pt-embed my-6 aspect-video w-full overflow-hidden rounded-md border">
-      <iframe
-        src={src}
-        title="YouTube"
-        className="h-full w-full"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-      />
-    </div>
-  );
+  if (!value?.url) return null;
+  return <YoutubeEmbed url={value.url} />;
 }
 
 function PortableLink({

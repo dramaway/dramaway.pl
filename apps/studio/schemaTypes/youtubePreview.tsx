@@ -1,4 +1,5 @@
 import type { PreviewProps } from "sanity";
+import { useYoutubeTitle, youtubeLabel } from "./youtubeTitle";
 
 function youtubeId(url?: string): string | null {
   if (!url) return null;
@@ -13,7 +14,7 @@ function youtubeId(url?: string): string | null {
   }
 }
 
-/** Studio card: thumbnail + URL so editors see the film, not a blank object. */
+/** Studio card: thumbnail + film title so editors see the film, not a blank object. */
 export function YoutubePreview(props: PreviewProps) {
   const url =
     typeof (props as { url?: string }).url === "string"
@@ -23,6 +24,7 @@ export function YoutubePreview(props: PreviewProps) {
   const thumb = id
     ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
     : undefined;
+  const filmTitle = useYoutubeTitle(url);
 
   return (
     <div style={{ display: "flex", gap: 12, alignItems: "center", padding: 4 }}>
@@ -36,7 +38,7 @@ export function YoutubePreview(props: PreviewProps) {
         />
       ) : null}
       <div style={{ minWidth: 0 }}>
-        <div style={{ fontWeight: 600 }}>YouTube</div>
+        <div style={{ fontWeight: 600 }}>{youtubeLabel(filmTitle)}</div>
         <div
           style={{
             fontSize: 12,

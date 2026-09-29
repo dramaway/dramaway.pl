@@ -32,7 +32,7 @@ Nie zamieniamy na Roles zwykłego zdania, w którym przypadkiem jest dwukropek. 
 
 ## Kolumny
 
-Obiekt **Columns** to dwie albo trzy kolumny obok siebie. Na wąskim ekranie układają się jedna pod drugą. W kolumnie może być tekst, zdjęcie i przycisk. Nie wkładamy kolumn w kolumny ani filmu. Na liście bloków widać początek treści każdej kolumny — nie trzeba otwierać modułu, żeby sprawdzić, co w nim jest.
+Obiekt **Columns** to dwie albo trzy kolumny obok siebie. Na wąskim ekranie układają się jedna pod drugą. W kolumnie może być tekst, zdjęcie, film YouTube i przycisk. Nie wkładamy kolumn w kolumny. Na liście bloków widać początek treści każdej kolumny — zdjęcie i film nie wyglądają jak pusta kolumna.
 
 <!-- screen: tekst-columns | Blok Columns ustawiony na dwie kolumny, w każdej krótki akapit | Widać wybór 2 albo 3 i brak trzeciego zagnieżdżenia -->
 
@@ -88,4 +88,4 @@ Więcej o polach publikacji: [Czytelnia i O fundacji](czytelnia-i-fundacja.md).
 
 ## Film
 
-Obiekt **YouTube** przyjmuje adres filmu z YouTube. Inne serwisy wideo zostają zwykłym linkiem w tekście, nie odtwarzaczem.
+Obiekt **YouTube** przyjmuje adres filmu z YouTube. Działa w zwykłym tekście i w kolumnie. Na stronie widać klatkę filmu i przycisk play; odtwarzacz włącza się po kliknięciu. Inne serwisy wideo zostają zwykłym linkiem w tekście, nie odtwarzaczem.

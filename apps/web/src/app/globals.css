@@ -1721,6 +1721,217 @@
   }
 
   /*
+   * YouTube in Portable Text: brand cover until play, then nocookie iframe.
+   * Play disc + palette dots (hover / focus). No pixel values in sections.
+   */
+  .pt-embed {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin-block: 1.5rem;
+    overflow: hidden;
+    border-radius: var(--radius-media);
+    background-color: var(--color-sand);
+  }
+
+  .pt-embed-frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .pt-embed-poster {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    container-type: inline-size;
+  }
+
+  .pt-embed-poster:focus-visible {
+    outline: 2px solid var(--color-green-ink);
+    outline-offset: 2px;
+  }
+
+  .pt-embed-still {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .pt-embed-poster::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-color: color-mix(in srgb, var(--color-ink) 18%, transparent);
+    pointer-events: none;
+  }
+
+  .pt-embed-burst {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .pt-embed-dot {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: var(--dot-s);
+    height: var(--dot-s);
+    margin: calc(var(--dot-s) / -2) 0 0 calc(var(--dot-s) / -2);
+    border-radius: 50%;
+    background-color: var(--dot-c);
+    opacity: 0;
+    transform: translate(0, 0) scale(0.3);
+    transition:
+      transform 0.3s cubic-bezier(0.5, 0, 0.9, 0.4) var(--dot-out),
+      opacity 0.2s ease var(--dot-out);
+  }
+
+  .pt-embed-dot:nth-child(1) {
+    --dot-c: var(--color-brand-1);
+    --dot-s: 8cqi;
+    --dot-x: -16cqi;
+    --dot-y: -7cqi;
+    --dot-in: 0ms;
+    --dot-out: 120ms;
+  }
+
+  .pt-embed-dot:nth-child(2) {
+    --dot-c: var(--color-brand-2);
+    --dot-s: 6.5cqi;
+    --dot-x: 14cqi;
+    --dot-y: -10cqi;
+    --dot-in: 50ms;
+    --dot-out: 90ms;
+  }
+
+  .pt-embed-dot:nth-child(3) {
+    --dot-c: var(--color-brand-3);
+    --dot-s: 7.5cqi;
+    --dot-x: 18cqi;
+    --dot-y: 6cqi;
+    --dot-in: 100ms;
+    --dot-out: 60ms;
+  }
+
+  .pt-embed-dot:nth-child(4) {
+    --dot-c: var(--color-brand-4);
+    --dot-s: 6cqi;
+    --dot-x: -18cqi;
+    --dot-y: 8cqi;
+    --dot-in: 150ms;
+    --dot-out: 30ms;
+  }
+
+  .pt-embed-dot:nth-child(5) {
+    --dot-c: var(--color-brand-6);
+    --dot-s: 9cqi;
+    --dot-x: -5cqi;
+    --dot-y: 14cqi;
+    --dot-in: 200ms;
+    --dot-out: 0ms;
+  }
+
+  .pt-embed-dot:nth-child(6) {
+    --dot-c: var(--color-brand-7);
+    --dot-s: 5.5cqi;
+    --dot-x: 8cqi;
+    --dot-y: -15cqi;
+    --dot-in: 250ms;
+    --dot-out: 150ms;
+  }
+
+  .pt-embed-poster[data-burst="in"] .pt-embed-dot {
+    opacity: 0.88;
+    transform: translate(var(--dot-x), var(--dot-y)) scale(1);
+    transition:
+      transform 0.7s cubic-bezier(0.2, 1.3, 0.4, 1) var(--dot-in),
+      opacity 0.3s ease var(--dot-in);
+  }
+
+  .pt-embed-play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    width: clamp(3.25rem, 14cqi, 4.5rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: var(--color-green);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .pt-embed-poster[data-burst="in"] .pt-embed-play {
+    animation: pt-embed-play-in 0.55s ease-out;
+  }
+
+  .pt-embed-poster[data-burst="out"] .pt-embed-play {
+    animation: pt-embed-play-out 0.5s ease-out;
+  }
+
+  @keyframes pt-embed-play-in {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+    40% {
+      transform: translate(-50%, -50%) scale(1.14);
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  @keyframes pt-embed-play-out {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+    35% {
+      transform: translate(-50%, -50%) scale(1.07);
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  .pt-embed-play-mark {
+    width: 44%;
+    height: 44%;
+    overflow: visible;
+    fill: var(--color-sand);
+    stroke: var(--color-sand);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pt-embed-dot {
+      opacity: 0.75;
+      transform: translate(var(--dot-x), var(--dot-y)) scale(1);
+      transition: none;
+    }
+
+    .pt-embed-poster[data-burst="in"] .pt-embed-play,
+    .pt-embed-poster[data-burst="out"] .pt-embed-play {
+      animation: none;
+    }
+  }
+
+  /*
    * Two or three łamy aim for a full reading measure each (62ch).
    * Inside .page they may outgrow .measure, up to the page content box
    * (100cqi). Below lg they stack and stay inside .measure.

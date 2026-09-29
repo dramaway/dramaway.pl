@@ -44,6 +44,9 @@ export const SUBPAGE = {
     zoomIn: "Powiększ",
     zoomOut: "Pomniejsz",
   },
+  video: {
+    play: "Odtwórz film",
+  },
   a11y: {
     skipToContent: "Przejdź do treści",
   },
