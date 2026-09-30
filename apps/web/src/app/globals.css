@@ -82,6 +82,7 @@
    *   h4            20  — card titles (news)
    *   lead          20  — hero description and written/prose blocks
    *   body          18  — supporting copy under section blocks
+   *   nav           15  — desktop main nav (Figma 20 is too large in the column)
    *   small         14  — dates, labels
    * Line-heights: display/h2/h3/h4 tighten for Black; body 1.72 is the
    * excerpt ratio 18/31; Figma's usual "43px" leading is a paste artifact.
@@ -100,6 +101,8 @@
   --text-lead--line-height: 1.55;
   --text-body: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
   --text-body--line-height: 1.72;
+  --text-nav: 0.9375rem;
+  --text-nav--line-height: 1.4;
   --text-small: 0.875rem;
   --text-small--line-height: 1.57;
 
@@ -445,14 +448,84 @@
     }
 
     .site-nav-desktop {
+      position: relative;
       display: flex;
-      flex-wrap: wrap;
-      column-gap: 2rem;
-      row-gap: 0.75rem;
+      flex: 1;
+      min-width: 0;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: center;
+      column-gap: 1.5rem;
       font-family: var(--font-display);
-      font-size: var(--text-lead);
+      font-size: var(--text-nav);
       font-weight: 600;
-      line-height: var(--text-lead--line-height);
+      line-height: var(--text-nav--line-height);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .site-nav-measure {
+      position: absolute;
+      inset: 0 auto auto 0;
+      display: flex;
+      align-items: center;
+      justify-content: inherit;
+      column-gap: inherit;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .site-nav-slot,
+    .site-nav-measure > * {
+      flex-shrink: 0;
+    }
+
+    .site-nav-more {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      font: inherit;
+      text-transform: none;
+    }
+
+    .site-nav-more:hover,
+    .site-nav-more:focus-visible {
+      color: var(--color-magenta);
+    }
+
+    .site-nav-more-icon {
+      width: 1.25em;
+      height: 1.25em;
+    }
+
+    .site-nav-item[data-align="end"] .site-nav-flyout {
+      inset-inline-start: auto;
+      inset-inline-end: 0;
+      align-items: flex-end;
+      margin-inline-start: 0;
+      margin-inline-end: -1.3em;
+    }
+
+    .site-nav-overflow-sub {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin: 0.15rem 0 0;
+      padding: 0 0 0 0.85rem;
+      list-style: none;
+    }
+
+    .site-nav-overflow-list > li > a {
+      font-family: var(--font-display);
+      font-size: var(--text-nav);
+      font-weight: 600;
+      line-height: var(--text-nav--line-height);
       text-transform: uppercase;
     }
 
@@ -897,6 +970,8 @@
       max-width: none;
       margin-inline: 0;
       flex-wrap: wrap;
+      /* Match header gap so the menu sits between logo and still, not in the page pad. */
+      padding-inline-end: 1.5rem;
     }
 
     [data-home] > .split:first-child > .split-text,

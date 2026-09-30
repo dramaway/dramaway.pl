@@ -3,8 +3,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type FocusEvent,
+} from "react";
+import { visibleNavCount } from "@/lib/nav-overflow";
 import type { NavItem } from "@/lib/routes";
+import { SUBPAGE } from "@/lib/subpage-copy";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -32,6 +41,7 @@ export function SiteHeader({ title, items }: Props) {
   const [open, setOpen] = useState(false);
   const navId = useId();
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const { navRef, measureRef, visibleCount } = useDesktopNavOverflow(visible);
 
   useEffect(() => {
     setOpen(false);
@@ -73,6 +83,9 @@ export function SiteHeader({ title, items }: Props) {
     };
   }, [open]);
 
+  const inlineItems = visible.slice(0, Math.min(visibleCount, visible.length));
+  const overflowItems = visible.slice(Math.min(visibleCount, visible.length));
+
   return (
     <header className="site-header page" data-nav-open={open ? "" : undefined}>
       <Link href="/" aria-label={title} className="site-logo">
@@ -85,14 +98,30 @@ export function SiteHeader({ title, items }: Props) {
         />
       </Link>
 
-      <nav aria-label="Główna" className="site-nav-desktop">
-        {visible.map((item, index) => (
-          <NavItemViews
+      <nav ref={navRef} aria-label="Główna" className="site-nav-desktop">
+        <div ref={measureRef} className="site-nav-measure" aria-hidden>
+          {visible.map((item, index) => (
+            <span key={`${item.href}:${item.label}:${index}`}>{item.label}</span>
+          ))}
+          <span>
+            <MoreIcon />
+          </span>
+        </div>
+        {inlineItems.map((item, index) => (
+          <div
             key={`${item.href}:${item.label}:${index}`}
-            item={item}
-            pathname={pathname}
-          />
+            className="site-nav-slot"
+          >
+            <NavItemViews item={item} pathname={pathname} />
+          </div>
         ))}
+        {overflowItems.length ? (
+          <NavOverflow
+            items={overflowItems}
+            pathname={pathname}
+            resetKey={pathname}
+          />
+        ) : null}
       </nav>
 
       <button
@@ -138,6 +167,95 @@ export function SiteHeader({ title, items }: Props) {
   );
 }
 
+function useDesktopNavOverflow(items: NavItem[]) {
+  const navRef = useRef<HTMLElement>(null);
+  const measureRef = useRef<HTMLDivElement>(null);
+  const [visibleCount, setVisibleCount] = useState(items.length);
+  const measureKey = items.map((item) => `${item.href}:${item.label}`).join("|");
+
+  useLayoutEffect(() => {
+    const nav = navRef.current;
+    const measure = measureRef.current;
+    if (!nav || !measure) return;
+
+    const update = () => {
+      const containerWidth = nav.clientWidth;
+      if (containerWidth === 0) return;
+
+      const children = [...measure.children] as HTMLElement[];
+      const overflow = children.at(-1);
+      const slots = children.slice(0, -1);
+      if (!overflow) return;
+
+      const gap = Number.parseFloat(getComputedStyle(nav).columnGap) || 0;
+      setVisibleCount(
+        visibleNavCount({
+          containerWidth,
+          itemWidths: slots.map((slot) => slot.getBoundingClientRect().width),
+          overflowWidth: overflow.getBoundingClientRect().width,
+          gap,
+        }),
+      );
+    };
+
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(nav);
+    document.fonts?.addEventListener("loadingdone", update);
+    void document.fonts?.ready.then(update);
+    return () => {
+      observer.disconnect();
+      document.fonts?.removeEventListener("loadingdone", update);
+    };
+  }, [measureKey]);
+
+  return { navRef, measureRef, visibleCount };
+}
+
+function useNavFlyout(resetKey: string) {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const [ignoreHover, setIgnoreHover] = useState(false);
+
+  useLayoutEffect(() => {
+    setOpen(false);
+    setIgnoreHover(true);
+    const active = document.activeElement;
+    if (active instanceof HTMLElement && rootRef.current?.contains(active)) {
+      active.blur();
+    }
+    const unlock = window.setTimeout(() => {
+      setIgnoreHover(rootRef.current?.matches(":hover") ?? false);
+    }, 0);
+    return () => window.clearTimeout(unlock);
+  }, [resetKey]);
+
+  function closeIfLeft(related: EventTarget | null) {
+    if (related instanceof Node && rootRef.current?.contains(related)) return;
+    setOpen(false);
+  }
+
+  return {
+    rootRef,
+    open,
+    flyoutProps: {
+      onPointerEnter: () => {
+        if (!ignoreHover) setOpen(true);
+      },
+      onPointerLeave: () => {
+        setIgnoreHover(false);
+        setOpen(false);
+      },
+      onFocusCapture: () => {
+        if (!ignoreHover) setOpen(true);
+      },
+      onBlurCapture: (event: FocusEvent<HTMLDivElement>) => {
+        closeIfLeft(event.relatedTarget);
+      },
+    },
+  };
+}
+
 function NavItemViews({
   item,
   pathname,
@@ -163,47 +281,15 @@ function NavItemWithChildren({
   item: NavItem;
   pathname: string;
 }) {
-  const rootRef = useRef<HTMLDivElement>(null);
-  const [open, setOpen] = useState(false);
-  const [ignoreHover, setIgnoreHover] = useState(false);
+  const { rootRef, open, flyoutProps } = useNavFlyout(pathname);
   const children = item.children ?? [];
-
-  useLayoutEffect(() => {
-    setOpen(false);
-    setIgnoreHover(true);
-    const active = document.activeElement;
-    if (active instanceof HTMLElement && rootRef.current?.contains(active)) {
-      active.blur();
-    }
-    const unlock = window.setTimeout(() => {
-      setIgnoreHover(rootRef.current?.matches(":hover") ?? false);
-    }, 0);
-    return () => window.clearTimeout(unlock);
-  }, [pathname]);
-
-  function closeIfLeft(related: EventTarget | null) {
-    if (related instanceof Node && rootRef.current?.contains(related)) return;
-    setOpen(false);
-  }
 
   return (
     <div
       ref={rootRef}
       className="site-nav-item"
       data-open={open ? "" : undefined}
-      onPointerEnter={() => {
-        if (!ignoreHover) setOpen(true);
-      }}
-      onPointerLeave={() => {
-        setIgnoreHover(false);
-        setOpen(false);
-      }}
-      onFocusCapture={() => {
-        if (!ignoreHover) setOpen(true);
-      }}
-      onBlurCapture={(event) => {
-        closeIfLeft(event.relatedTarget);
-      }}
+      {...flyoutProps}
     >
       <span className="site-nav-sizer" aria-hidden>
         {item.label}
@@ -220,6 +306,67 @@ function NavItemWithChildren({
                 <NavLink item={child} pathname={pathname}>
                   {child.label}
                 </NavLink>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function NavOverflow({
+  items,
+  pathname,
+  resetKey,
+}: {
+  items: NavItem[];
+  pathname: string;
+  resetKey: string;
+}) {
+  const { rootRef, open, flyoutProps } = useNavFlyout(resetKey);
+  const current = items.some((item) => itemIsCurrent(item, pathname));
+
+  return (
+    <div
+      ref={rootRef}
+      className="site-nav-item"
+      data-align="end"
+      data-open={open ? "" : undefined}
+      {...flyoutProps}
+    >
+      <span className="site-nav-sizer" aria-hidden>
+        <MoreIcon />
+      </span>
+      <div className="site-nav-flyout">
+        <span className="site-nav-cloud" aria-hidden />
+        <button
+          type="button"
+          className={cn("site-nav-more hover:text-magenta", current && "text-magenta")}
+          aria-expanded={open}
+          aria-haspopup="true"
+          aria-label={SUBPAGE.a11y.moreNav}
+        >
+          <MoreIcon />
+        </button>
+        <div className="site-nav-sub" inert={open ? undefined : true}>
+          <ul className="site-nav-sub-list site-nav-overflow-list">
+            {items.map((item, index) => (
+              <li key={`${item.href}:${item.label}:${index}`}>
+                <NavLink item={item} pathname={pathname}>
+                  {item.label}
+                </NavLink>
+                {item.children?.length ? (
+                  <ul className="site-nav-overflow-sub">
+                    {item.children.map((child, childIndex) => (
+                      <li key={`${child.href}:${child.label}:${childIndex}`}>
+                        <NavLink item={child} pathname={pathname}>
+                          {child.label}
+                        </NavLink>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
               </li>
             ))}
           </ul>
@@ -256,6 +403,21 @@ function NavLink({
     >
       {children}
     </Link>
+  );
+}
+
+function MoreIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden
+      className="site-nav-more-icon"
+      fill="currentColor"
+    >
+      <circle cx="5" cy="12" r="1.75" />
+      <circle cx="12" cy="12" r="1.75" />
+      <circle cx="19" cy="12" r="1.75" />
+    </svg>
   );
 }
 

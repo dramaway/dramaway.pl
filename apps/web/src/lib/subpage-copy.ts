@@ -54,6 +54,7 @@ export const SUBPAGE = {
   },
   a11y: {
     skipToContent: "Przejdź do treści",
+    moreNav: "Więcej w menu",
   },
   notFound: {
     title: "Nie znaleziono strony",
