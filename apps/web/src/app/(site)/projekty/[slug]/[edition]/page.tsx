@@ -56,12 +56,14 @@ export default async function EditionPage({ params }: Props) {
         layout="stack"
         parent={{ href: projectPath(project.slug), label: project.title }}
       />
-      <LeadGallery images={gallery} alt={heading} />
-      {edition.body ? (
-        <Section>
-          <div className="measure">
-            <PortableBody value={edition.body} />
-          </div>
+      {gallery.length > 0 || edition.body ? (
+        <Section className="edition-follow">
+          <LeadGallery images={gallery} alt={heading} />
+          {edition.body ? (
+            <div className="measure">
+              <PortableBody value={edition.body} />
+            </div>
+          ) : null}
         </Section>
       ) : null}
       {outcomes.length > 0 ? (

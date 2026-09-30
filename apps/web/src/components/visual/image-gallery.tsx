@@ -28,6 +28,7 @@ type ImageGalleryProps = {
 const LIGHTBOX_WIDTHS = [640, 960, 1280, 1600, 2400];
 
 function tileRatio(layout: GalleryLayout, index: number) {
+  if (layout === "hero-trio") return "none" as const;
   if (layout === "one") return "landscape" as const;
   if (layout === "pair") return "album" as const;
   if (index === 0) return "landscape" as const;
@@ -37,6 +38,10 @@ function tileRatio(layout: GalleryLayout, index: number) {
 function tileSizes(layout: GalleryLayout, index: number) {
   if (layout === "one") return "(min-width: 64rem) 70vw, 100vw";
   if (layout === "pair") return "(min-width: 64rem) 35vw, 50vw";
+  if (layout === "hero-trio") {
+    if (index === 0) return "(min-width: 64rem) 60vw, 100vw";
+    return "(min-width: 64rem) 30vw, 50vw";
+  }
   if (index === 0) return "(min-width: 64rem) 70vw, 100vw";
   return "(min-width: 64rem) 22vw, 50vw";
 }

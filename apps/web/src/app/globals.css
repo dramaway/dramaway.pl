@@ -1431,26 +1431,64 @@
     grid-template-columns: 1fr 1fr;
   }
 
-  .gallery-mosaic[data-layout="hero-pair"],
-  .gallery-mosaic[data-layout="hero-trio"] {
+  .gallery-mosaic[data-layout="hero-pair"] {
     grid-template-columns: 1fr 1fr;
   }
 
-  .gallery-mosaic[data-layout="hero-pair"] .gallery-tile:first-child,
-  .gallery-mosaic[data-layout="hero-trio"] .gallery-tile:first-child {
+  .gallery-mosaic[data-layout="hero-pair"] .gallery-tile:first-child {
     grid-column: 1 / -1;
   }
 
-  @media (width >= 64rem) {
-    .gallery-mosaic[data-layout="hero-trio"] {
-      grid-template-columns: 1fr 1fr 1fr;
-    }
+  /*
+   * Four-up preview stays inside one viewport. Below lg: one frame over two.
+   * From lg: a 3:2-ish still on the left, three strips on the right.
+   * Width shrinks with max-height so a short window keeps the ratio.
+   */
+  .gallery-mosaic[data-layout="hero-trio"] {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: minmax(0, 1.4fr) minmax(0, 1fr);
+    width: min(100%, calc(70vh * 1.35));
+    max-height: 70vh;
+    aspect-ratio: 1.35 / 1;
+  }
+
+  .gallery-mosaic[data-layout="hero-trio"] .gallery-tile:first-child {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .gallery-mosaic[data-layout="hero-trio"] .gallery-tile {
+    height: 100%;
+    min-height: 0;
+  }
+
+  .gallery-mosaic[data-layout="hero-trio"] .gallery-tile .media {
+    height: 100%;
   }
 
   @media (width < 64rem) {
     .gallery-mosaic[data-layout="hero-trio"] .gallery-tile:nth-child(4) {
       display: none;
     }
+  }
+
+  @media (width >= 64rem) {
+    .gallery-mosaic[data-layout="hero-trio"] {
+      grid-template-columns: 2fr 1fr;
+      grid-template-rows: repeat(3, minmax(0, 1fr));
+      width: min(100%, calc(70vh * 2.25));
+      aspect-ratio: 2.25 / 1;
+    }
+
+    .gallery-mosaic[data-layout="hero-trio"] .gallery-tile:first-child {
+      grid-column: 1;
+      grid-row: 1 / -1;
+    }
+  }
+
+  /* Figure rhythm under a lead mosaic — not a second section band. */
+  .page > .gallery-mosaic + .measure {
+    margin-block-start: 1.5rem;
   }
 
   .gallery-tile {
@@ -2513,6 +2551,14 @@
    */
   .fundacja-flow {
     padding-block: clamp(2.25rem, 5vw, 4rem);
+  }
+
+  /*
+   * Edition copy sits under a stack hero. A second py-section on top
+   * doubled the air between the lead and the gallery.
+   */
+  .edition-follow {
+    padding-block-start: 0;
   }
 
   .team-copy .portable-body {

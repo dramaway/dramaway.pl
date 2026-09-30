@@ -1,4 +1,3 @@
-import { Section } from "@/components/layout/section";
 import { ImageGallery } from "@/components/visual/image-gallery";
 import type { SanityImage } from "@/lib/sanity/types";
 
@@ -7,13 +6,12 @@ type LeadGalleryProps = {
   alt: string;
 };
 
-/** Edition stills: mosaic preview (max 4) plus lightbox. Empty CMS gallery = omit. */
+/**
+ * Edition stills: mosaic preview (max 4) plus lightbox. Empty CMS gallery = omit.
+ * No section of its own — the edition page places it in the same section as the body.
+ */
 export function LeadGallery({ images, alt }: LeadGalleryProps) {
   if (images.length === 0) return null;
 
-  return (
-    <Section>
-      <ImageGallery images={images} alt={alt} />
-    </Section>
-  );
+  return <ImageGallery images={images} alt={alt} />;
 }
