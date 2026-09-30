@@ -9,6 +9,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@sanity/icons": "^5.2.2",
     "@sanity/vision": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",

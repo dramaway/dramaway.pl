@@ -8,6 +8,11 @@ export const LIST_EMPTY_MESSAGE = "Nie ma jeszcze pozycji w CMS.";
  * CMS. Empty CMS field = omit on the page. Do not add fallback body copy here.
  */
 export const SUBPAGE = {
+  /** In-article read-more fold (Portable Text separator). */
+  bodyReadMore: {
+    expand: "Czytaj więcej",
+    collapse: "Zwiń",
+  },
   artGeneracje: {
     ctaLabel: "zobacz wszystkie edycje",
     ctaHref: "#edycje",

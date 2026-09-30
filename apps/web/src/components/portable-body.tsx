@@ -20,7 +20,9 @@ import { splitRosterLine, splitRosterNames } from "@/lib/roster-line";
 import { safeHref } from "@/lib/safe-url";
 import type { PortableContent, SanityImage } from "@/lib/sanity/types";
 import { urlFor } from "@/lib/sanity/image";
+import { BodyReadMore } from "@/components/visual/body-read-more";
 import { YoutubeEmbed } from "@/components/visual/youtube-embed";
+import { splitPortableAtReadMore } from "@/lib/portable-read-more";
 import { cn } from "@/lib/utils";
 
 type BodyImageSize = "small" | "medium" | "wide";
@@ -279,8 +281,14 @@ const components: PortableTextComponents = {
     youtube: PortableYoutube,
     textColumns: PortableColumns,
     ctaButton: PortableCta,
+    readMoreBreak: () => null,
   },
 };
+
+function renderPortableBlocks(blocks: PortableNode[]) {
+  const grouped = groupPortableImageRuns(blocks);
+  return <PortableText value={grouped} components={components} />;
+}
 
 export function hasPortableContent(value: PortableContent | null | undefined) {
   if (!value) return false;
@@ -297,15 +305,25 @@ export function PortableBody({
 }) {
   if (!hasPortableContent(value)) return null;
   const raw = Array.isArray(value) ? value : [value];
-  const blocks = groupPortableImageRuns(raw as PortableNode[]);
+  const split = splitPortableAtReadMore(value);
+  const shell = cn(
+    "portable-body mt-8 max-w-none space-y-4 text-lead",
+    className,
+  );
+
+  if (!split) {
+    return (
+      <div className={shell}>{renderPortableBlocks(raw as PortableNode[])}</div>
+    );
+  }
+
   return (
-    <div
-      className={cn(
-        "portable-body mt-8 max-w-none space-y-4 text-lead",
-        className,
-      )}
-    >
-      <PortableText value={blocks} components={components} />
+    <div className={shell}>
+      <BodyReadMore
+        before={renderPortableBlocks(split.before as PortableNode[])}
+      >
+        {renderPortableBlocks(split.after as PortableNode[])}
+      </BodyReadMore>
     </div>
   );
 }

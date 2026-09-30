@@ -1,10 +1,18 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import {
+  ColumnsIcon,
+  ImageIcon,
+  PlayIcon,
+  ReadMoreIcon,
+} from "./blockInsertIcons";
+import {
   columnBodyPreview,
   ColumnItemPreview,
   ColumnsPreview,
 } from "./columnsPreview";
+import { ButtonIcon } from "./buttonIcon";
 import { IndentIcon } from "./indentIcon";
+import { validateReadMoreBreaks } from "./readMoreValidation";
 import { RosterIcon } from "./rosterIcon";
 import { TermStyle } from "./termStyle";
 import { YoutubePreview } from "./youtubePreview";
@@ -13,6 +21,7 @@ export const youtube = defineType({
   name: "youtube",
   title: "YouTube",
   type: "object",
+  icon: PlayIcon,
   fields: [
     defineField({
       name: "url",
@@ -72,6 +81,8 @@ const textBlockMember = defineArrayMember({
 
 const imageBlockMember = defineArrayMember({
   type: "image",
+  title: "Image",
+  icon: ImageIcon,
   options: { hotspot: true },
   fields: [
     {
@@ -179,6 +190,7 @@ export const textColumns = defineType({
   name: "textColumns",
   title: "Columns",
   type: "object",
+  icon: ColumnsIcon,
   fields: [
     defineField({
       name: "columns",
@@ -212,8 +224,26 @@ export const blockContent = defineType({
   of: [
     textBlockMember,
     imageBlockMember,
-    defineArrayMember({ type: "youtube", title: "YouTube film" }),
-    defineArrayMember({ type: "textColumns", title: "Columns" }),
-    defineArrayMember({ type: "ctaButton", title: "Button" }),
+    defineArrayMember({ type: "youtube", title: "YouTube film", icon: PlayIcon }),
+    defineArrayMember({
+      type: "textColumns",
+      title: "Columns",
+      icon: ColumnsIcon,
+    }),
+    defineArrayMember({
+      type: "ctaButton",
+      title: "Button",
+      icon: ButtonIcon,
+    }),
+    defineArrayMember({
+      type: "readMoreBreak",
+      title: "Czytaj więcej (separator)",
+      icon: ReadMoreIcon,
+    }),
   ],
+  validation: (rule) =>
+    rule.custom((value) => {
+      const result = validateReadMoreBreaks(value);
+      return result === true ? true : result;
+    }),
 });
