@@ -1037,10 +1037,14 @@
       aspect-ratio: auto;
     }
 
+    /*
+     * The dot band overlaps the photo by 0.55 of a dot. Keep the
+     * controls above that row.
+     */
     .hero-slider-controls {
       position: absolute;
       z-index: 2;
-      inset-block-end: 1.25rem;
+      inset-block-end: calc(var(--dot-size) * 0.55 + 0.75rem);
       inset-inline-start: 1.25rem;
     }
   }
