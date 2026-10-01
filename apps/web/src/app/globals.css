@@ -141,9 +141,10 @@
   /* Crossfade between hero stills. Nav fades in on hover at lg+. */
   --hero-slider-fade: 0.7s;
   --hero-slider-nav-fade: 0.35s;
-  /* Dot box. The thumb sits inside it; the duration ring shares that centre. */
+  /* Dot box. Inactive thumbs match the active ring's outer size. */
   --hero-slider-dot: 2rem;
   --hero-slider-thumb: 1.375rem;
+  --hero-slider-ring: 1.875rem;
   --media-split-max: 42vh;
   /* Figma footer quote ≈ 491px, narrower than .measure 62ch. */
   --footer-quote-max: 30.6875rem;
@@ -1035,6 +1036,9 @@
     .hero > .hero-media-wrap > .hero-slider {
       position: absolute;
       inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
     }
 
     .hero-slider-frame {
@@ -1051,15 +1055,16 @@
     }
 
     /*
-     * Top-right of the still, which meets the viewport there. The inset
-     * matches the desktop header's block padding, on both edges.
+     * Sticks 2rem under the viewport top while the still is on screen,
+     * then parks at the bottom of the photo. Same inset on the right.
      */
     .hero-slider-controls {
-      position: absolute;
+      position: sticky;
       z-index: 2;
-      inset-block-start: 2rem;
-      inset-inline-end: 2rem;
-      margin: 0;
+      top: 2rem;
+      margin-block-start: 2rem;
+      margin-block-end: 2rem;
+      margin-inline-end: 2rem;
       max-width: calc(100% - 4rem);
       opacity: 0.65;
       transition: opacity var(--hero-slider-nav-fade) ease;
@@ -1159,10 +1164,15 @@
 
   .hero-slider-thumb {
     display: block;
-    width: var(--hero-slider-thumb);
-    height: var(--hero-slider-thumb);
+    width: var(--hero-slider-ring);
+    height: var(--hero-slider-ring);
     border-radius: 50%;
     object-fit: cover;
+  }
+
+  .hero-slider-dot[aria-current="true"] .hero-slider-thumb {
+    width: var(--hero-slider-thumb);
+    height: var(--hero-slider-thumb);
   }
 
   /*
