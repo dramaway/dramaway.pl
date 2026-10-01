@@ -38,7 +38,7 @@
     "node": ">=22.12",
     "pnpm": ">=11.9"
   },
-  "packageManager": "pnpm@11.9.0",
+  "packageManager": "pnpm@12.8.1",
   "dependencies": {
     "@portabletext/block-tools": "^6.0.2",
     "@sanity/client": "catalog:",
