@@ -25,6 +25,7 @@
     "patch:page-section": "node --env-file=apps/studio/.env scripts/patch-page-section.mjs",
     "migrate:news": "node --env-file=apps/studio/.env scripts/migrate-news.mjs",
     "patch:knowledge-page": "node --env-file=apps/studio/.env scripts/patch-knowledge-page.mjs",
+    "patch:hero-images": "node --env-file-if-exists=apps/studio/.env scripts/patch-hero-images.mjs",
     "seed:about-page": "node --env-file=apps/studio/.env scripts/seed-about-page.mjs",
     "seed:landing-pages": "node --env-file=apps/studio/.env scripts/seed-landing-pages.mjs",
     "seed:navigation": "node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --env-file=apps/studio/.env scripts/seed-navigation.mjs",
