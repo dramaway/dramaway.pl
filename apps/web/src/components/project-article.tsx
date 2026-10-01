@@ -12,11 +12,21 @@ import {
 } from "@/lib/portable-split";
 import { resolveHeroSlides } from "@/lib/hero-slides";
 import { editionPath } from "@/lib/routes";
-import type { ProjectDetail } from "@/lib/sanity/types";
+import type { HeroSlide, ProjectDetail } from "@/lib/sanity/types";
 import { SUBPAGE } from "@/lib/subpage-copy";
 
 const PARTNERS_HEADING = "Partnerzy";
 const SPONSORS_HEADING = "Sponsorzy";
+
+/**
+ * `heroImages` wins. An empty list keeps the existing still: the first
+ * edition-gallery image, otherwise the first image in the body.
+ */
+function projectHeroSlides(project: ProjectDetail): HeroSlide[] {
+  const listed = resolveHeroSlides(project.heroImages, project.title);
+  if (listed.length > 0) return listed;
+  return resolveHeroSlides(project.cover ? [project.cover] : [], project.title);
+}
 
 function headingKey(title: string) {
   return title.replace(/\s+/g, " ").trim().toLowerCase();
@@ -101,11 +111,7 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
         lead={project.summary?.trim() || null}
         ctaLabel={editions.length > 0 ? copy.ctaLabel : null}
         ctaHref={editions.length > 0 ? copy.ctaHref : null}
-        slides={resolveHeroSlides(
-          project.heroImages,
-          project.cover,
-          project.title,
-        )}
+        slides={projectHeroSlides(project)}
         parent={{ href: "/projekty", label: "Projekty" }}
       />
       {hasPortableContent(project.body) ? (

@@ -145,6 +145,7 @@ export const contentSectionsProjection = `{
 const heroSlidesProjection = `heroImages[] {
   _key,
   alt,
+  caption,
   hotspot,
   crop,
   asset
@@ -163,7 +164,6 @@ export const pageBySlugQuery = `*[_type == "page" && slug.current == $slug][0] {
     defined(heroLead) && heroLead != "" => heroLead,
     array::join(string::split(pt::text(body), "")[0...${EXCERPT_FALLBACK_MAX}], "")
   ),
-  "cover": heroImage,
   sections[] ${contentSectionsProjection},
   body[] ${portableBodyProjection}
 }`;
@@ -255,7 +255,6 @@ export const landingPageByIdQuery = `*[_type == "landingPage" && _id == $id][0] 
   ctaLabel,
   ctaHref,
   ${heroSlidesProjection},
-  image,
   showCzytelnia
 }`;
 
@@ -265,7 +264,6 @@ export const aboutPageQuery = `*[_type == "aboutPage"][0] {
   ctaLabel,
   ctaHref,
   ${heroSlidesProjection},
-  image,
   methods {
     heading,
     lead,
@@ -332,7 +330,6 @@ export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
   heroCtaLabel,
   heroCtaHref,
   ${heroSlidesProjection},
-  heroImage,
   heroSlider { interval, autoplay },
   homepageSections[] ${contentSectionsProjection}
 }`;

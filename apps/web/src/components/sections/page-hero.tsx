@@ -1,8 +1,7 @@
 import { CtaLink } from "@/components/visual/cta-link";
 import { DotBand } from "@/components/visual/dot-band";
 import { HeroMedia } from "@/components/visual/hero-media";
-import { resolveHeroSlides } from "@/lib/hero-slides";
-import type { CmsHeroImage, HeroSlide } from "@/lib/sanity/types";
+import type { HeroSlide } from "@/lib/sanity/types";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
@@ -14,12 +13,10 @@ export type PageHeroContent = {
   ctaLabel?: string | null;
   ctaHref?: string | null;
   /**
-   * Resolved stills. When omitted, `image` is the legacy single frame.
-   * One still stays static. Two or more use the shared slider.
+   * Resolved stills. Zero stays an empty slot. One stays static.
+   * Two or more use the shared slider.
    */
   slides?: HeroSlide[] | null;
-  image?: CmsHeroImage | null;
-  imageAlt?: string | null;
   parent?: { href: string; label: string } | null;
 };
 
@@ -51,8 +48,6 @@ export function PageHero({
   ctaLabel,
   ctaHref,
   slides,
-  image,
-  imageAlt,
   parent,
   layout = "split",
   children,
@@ -60,17 +55,7 @@ export function PageHero({
   const hasTitle = Boolean(title?.trim());
   const hasCopy =
     Boolean(lead) || Boolean(children) || Boolean(ctaLabel && ctaHref);
-  const legacy =
-    image && typeof image === "object"
-      ? { ...image, alt: imageAlt ?? image.alt }
-      : null;
-  const stills =
-    slides ??
-    resolveHeroSlides(
-      null,
-      legacy,
-      imageAlt?.trim() || title?.trim() || "",
-    );
+  const stills = slides ?? [];
   if (!hasTitle && !hasCopy && stills.length === 0) return null;
   const heading = (
     <div className="hero-heading">

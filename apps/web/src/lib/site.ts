@@ -45,11 +45,7 @@ export async function getResolvedSite(): Promise<ResolvedSite> {
       lead: cmsText(settings?.heroLead),
       ctaLabel: heroCta?.label ?? null,
       ctaHref: heroCta?.href ?? null,
-      slides: resolveHeroSlides(
-        settings?.heroImages,
-        settings?.heroImage,
-        heading || title,
-      ),
+      slides: resolveHeroSlides(settings?.heroImages, heading || title),
     },
     homepage: {
       sections: resolveContentSections(settings?.homepageSections),

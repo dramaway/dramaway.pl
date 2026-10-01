@@ -225,22 +225,6 @@ export const siteSettings = defineType({
       description: "Ścieżka wewnętrzna, np. /projekty",
     }),
     heroSlidesField({ group: "hero" }),
-    defineField({
-      name: "heroImage",
-      title: "Zdjęcie hero (pojedyncze)",
-      type: "image",
-      group: "hero",
-      options: { hotspot: true },
-      description:
-        "Używane tylko gdy lista „Zdjęcia hero” jest pusta. Zanim dodasz kolejne kadry, przenieś to zdjęcie na listę — lista zastępuje to pole.",
-      fields: [
-        defineField({
-          name: "alt",
-          title: "Alt text",
-          type: "string",
-        }),
-      ],
-    }),
     heroSliderSettingsField(),
     defineField({
       name: "homepageSections",

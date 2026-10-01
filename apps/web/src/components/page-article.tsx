@@ -21,7 +21,7 @@ export function PageArticle({
         lead={page.heroLead}
         ctaLabel={page.heroCtaLabel}
         ctaHref={page.heroCtaHref}
-        slides={resolveHeroSlides(page.heroImages, page.cover, page.title)}
+        slides={resolveHeroSlides(page.heroImages, page.title)}
         parent={parent}
       />
       <ContentModules sections={page.sections} variant="page" />

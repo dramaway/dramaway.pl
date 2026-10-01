@@ -40,9 +40,8 @@ export const project = defineType({
     }),
     defineField({ name: "summary", title: "Summary", type: "text" }),
     heroSlidesField({
-      title: "Hero images",
       description:
-        "Up to 5 stills for this project's hero. One image stays a static frame. Two or more use the shared slider (Site settings → Hero). Empty = the first edition-gallery image, as before.",
+        "Do 5 zdjęć, w kolejności pokazu. Jedno zdjęcie zostaje kadrem bez slidera. Dwa lub więcej uruchamiają slider. Tempo i autoodtwarzanie są wspólne: Site settings → Hero → Slider hero. Pusta lista zostawia kadr z galerii edycji albo z pierwszego obrazu w treści.",
     }),
     defineField({ name: "body", title: "Body", type: "blockContent" }),
     defineField({

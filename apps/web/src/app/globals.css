@@ -137,9 +137,10 @@
   --site-header-bar: calc(57px + 1.5rem);
   --touch-target: 2.75rem;
   --hero-media-span: 70%;
-  /* Crossfade between hero stills. Dots stay small; the hit area is larger. */
+  /* Crossfade between hero stills. Nav fades in on hover at lg+. */
   --hero-slider-fade: 0.7s;
-  --hero-slider-dot: 0.55rem;
+  --hero-slider-nav-fade: 0.35s;
+  --hero-slider-dot: 1.75rem;
   --media-split-max: 42vh;
   /* Figma footer quote ≈ 491px, narrower than .measure 62ch. */
   --footer-quote-max: 30.6875rem;
@@ -823,6 +824,7 @@
       position: relative;
       z-index: 1;
       margin-block-start: 0.75rem;
+      margin-inline-start: auto;
     }
 
     /* Circle still: the band sits below, it does not ride the photo. */
@@ -1046,6 +1048,14 @@
       z-index: 2;
       inset-block-end: calc(var(--dot-size) * 0.55 + 0.75rem);
       inset-inline-start: 1.25rem;
+      margin-inline-start: 0;
+      opacity: 0;
+      transition: opacity var(--hero-slider-nav-fade) ease;
+    }
+
+    .hero-slider:hover > .hero-slider-controls,
+    .hero-slider:focus-within > .hero-slider-controls {
+      opacity: 1;
     }
   }
 
@@ -1089,19 +1099,22 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.1rem;
+    justify-content: flex-end;
+    gap: 0.35rem;
     width: max-content;
     max-width: 100%;
-    padding: 0.15rem;
+    padding: 0.35rem;
     border-radius: 999px;
-    background: color-mix(in srgb, var(--color-sand) 86%, transparent);
+    background: color-mix(in srgb, var(--color-sand) 72%, transparent);
+    backdrop-filter: blur(8px);
   }
 
   .hero-slider-control {
+    position: relative;
     display: grid;
     place-items: center;
-    width: 2.25rem;
-    height: 2.25rem;
+    width: var(--hero-slider-dot);
+    height: var(--hero-slider-dot);
     padding: 0;
     border: 0;
     border-radius: 50%;
@@ -1114,16 +1127,40 @@
     outline-offset: 2px;
   }
 
-  .hero-slider-dot::after {
-    content: "";
-    width: var(--hero-slider-dot);
-    height: var(--hero-slider-dot);
+  .hero-slider-thumb {
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
-    background: color-mix(in srgb, var(--color-ink) 28%, var(--color-sand));
+    object-fit: cover;
   }
 
-  .hero-slider-dot[aria-current="true"]::after {
-    background: var(--color-green);
+  .hero-slider-dot[aria-current="true"] {
+    box-shadow: 0 0 0 2px var(--color-green);
+  }
+
+  .hero-slider-tip {
+    position: absolute;
+    z-index: 3;
+    inset-inline-start: 50%;
+    inset-block-end: calc(100% + 0.4rem);
+    width: max-content;
+    max-width: 14rem;
+    padding: 0.35rem 0.55rem;
+    border-radius: 0.35rem;
+    background: color-mix(in srgb, var(--color-sand) 92%, var(--color-ink));
+    color: var(--color-ink);
+    font-size: var(--text-small);
+    line-height: var(--text-small--line-height);
+    text-align: center;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(-50%);
+  }
+
+  .hero-slider-dot:hover > .hero-slider-tip,
+  .hero-slider-dot:focus > .hero-slider-tip,
+  .hero-slider-dot:focus-visible > .hero-slider-tip {
+    opacity: 1;
   }
 
   .hero-slider-glyph {
@@ -1148,7 +1185,9 @@
 
   @media (prefers-reduced-motion: reduce) {
     .hero-slider-slide,
-    .hero-slider[data-animate="true"] .hero-slider-slide[data-active="true"] {
+    .hero-slider[data-animate="true"] .hero-slider-slide[data-active="true"],
+    .hero-slider-controls,
+    .hero-slider-tip {
       transition: none;
     }
   }

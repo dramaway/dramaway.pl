@@ -23,18 +23,23 @@ function asSlide(image: HeroImageInput | undefined): CmsHeroImage | null {
   return image as CmsHeroImage;
 }
 
+function slideCaption(slide: CmsHeroImage): string | null {
+  if (!("caption" in slide)) return null;
+  return cmsText(slide.caption) || null;
+}
+
 export type HeroSliderInput = {
   interval?: number | null;
   autoplay?: boolean | null;
 } | null;
 
 /**
- * Prefer the slide list. A non-empty list replaces the legacy single image.
- * One remaining asset is a still; the slider starts at two.
+ * Still list for a hero. Zero assets means no frame. One asset stays a
+ * static frame; the slider starts at two. Callers that have a separate
+ * fallback (a project cover) pass that image in their own second call.
  */
 export function resolveHeroSlides(
   slides: readonly HeroImageInput[] | null | undefined,
-  legacy: HeroImageInput | undefined,
   fallbackAlt: string,
 ): HeroSlide[] {
   const listed = (slides ?? [])
@@ -43,16 +48,13 @@ export function resolveHeroSlides(
       return ready ? [ready] : [];
     })
     .slice(0, HERO_SLIDES_MAX);
-  const legacySlide = asSlide(legacy);
-  const chosen = listed.length > 0 ? listed : legacySlide ? [legacySlide] : [];
-  const legacyOnly = listed.length === 0;
 
-  return chosen.map((slide, index) => ({
+  return listed.map((slide, index) => ({
     _key:
-      (typeof slide._key === "string" && slide._key.trim()) ||
-      (legacyOnly ? "legacy" : `slide-${index}`),
+      (typeof slide._key === "string" && slide._key.trim()) || `slide-${index}`,
     image: slide,
     alt: cmsText(slide.alt) || fallbackAlt,
+    caption: slideCaption(slide),
   }));
 }
 

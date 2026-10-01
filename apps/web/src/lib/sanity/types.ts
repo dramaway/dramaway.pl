@@ -4,10 +4,11 @@ import type { NavItem } from "../routes";
 
 export type SanityImage = SanityImageSource;
 
-/** Image field that may carry a slide key and alt (hero lists and the legacy still). */
+/** Image field that may carry a slide key, alt, and an optional visible caption. */
 export type CmsHeroImage = SanityImage & {
   _key?: string | null;
   alt?: string | null;
+  caption?: string | null;
 };
 
 export type CmsHeroSlider = {
@@ -15,11 +16,12 @@ export type CmsHeroSlider = {
   autoplay?: boolean | null;
 } | null;
 
-/** One hero still after legacy single-image fallback. */
+/** One hero still. A caption is shown only as a slider-dot tooltip. */
 export type HeroSlide = {
   _key: string;
   image: SanityImage;
   alt: string;
+  caption: string | null;
 };
 
 export type PortableContent = PortableTextProps["value"];
@@ -144,7 +146,6 @@ export type PageDetail = {
   heroCtaHref?: string | null;
   heroImages?: CmsHeroImage[] | null;
   excerpt?: string | null;
-  cover?: CmsHeroImage | null;
   sections: ResolvedSection[];
   body: PortableContent;
 };
@@ -232,7 +233,6 @@ export type SiteSettings = {
   heroCtaLabel: string | null;
   heroCtaHref: string | null;
   heroImages?: CmsHeroImage[] | null;
-  heroImage: CmsHeroImage | null;
   heroSlider?: CmsHeroSlider;
   homepageSections?: CmsContentSection[] | null;
 };
@@ -351,7 +351,6 @@ export type LandingPage = {
   ctaLabel: string | null;
   ctaHref: string | null;
   heroImages?: CmsHeroImage[] | null;
-  image: CmsHeroImage | null;
   showCzytelnia?: boolean | null;
 };
 
@@ -383,7 +382,6 @@ export type AboutPage = {
   ctaLabel: string | null;
   ctaHref: string | null;
   heroImages?: CmsHeroImage[] | null;
-  image: CmsHeroImage | null;
   methods: {
     heading: string | null;
     lead: string | null;

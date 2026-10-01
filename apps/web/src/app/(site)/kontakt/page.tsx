@@ -33,11 +33,7 @@ export default async function ContactPage() {
         lead={body ? null : cmsText(page.heroLead)}
         ctaLabel={page.heroCtaLabel}
         ctaHref={page.heroCtaHref}
-        slides={resolveHeroSlides(
-          page.heroImages,
-          page.cover,
-          cmsText(page.title) || "",
-        )}
+        slides={resolveHeroSlides(page.heroImages, cmsText(page.title) || "")}
       >
         {body ? <PortableBody value={body} /> : null}
       </PageHero>

@@ -9,26 +9,7 @@ export const page = defineType({
   fields: [
     defineField({ name: "title", title: "Title", type: "string", validation: (r) => r.required() }),
     defineField({ name: "slug", title: "Slug", type: "slug", options: { source: "title" }, validation: (r) => r.required() }),
-    heroSlidesField({
-      title: "Hero images",
-      description:
-        "Up to 5 stills, in show order. One image stays a static frame. Two or more use the shared slider (Site settings → Hero). A non-empty list replaces the single image below. Empty list = that single image, or no still.",
-    }),
-    defineField({
-      name: "heroImage",
-      title: "Hero image (single)",
-      type: "image",
-      options: { hotspot: true },
-      description:
-        "Used only while Hero images is empty. Move this still onto that list before adding more — the list replaces this field.",
-      fields: [
-        defineField({
-          name: "alt",
-          title: "Alt text",
-          type: "string",
-        }),
-      ],
-    }),
+    heroSlidesField(),
     defineField({
       name: "heroLead",
       title: "Hero lead",

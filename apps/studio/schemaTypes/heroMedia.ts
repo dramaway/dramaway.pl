@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField } from "sanity";
+import { HeroSlideInput } from "../components/hero-slide-input";
 
 /** Shared cap for every hero still list (homepage and inner pages). */
 export const HERO_SLIDES_MAX = 5;
@@ -10,7 +11,7 @@ type HeroSlidesFieldOptions = {
 };
 
 const DESCRIPTION_PL =
-  "Do 5 zdjęć, w kolejności pokazu. Jedno zdjęcie zostaje kadrem bez slidera. Dwa lub więcej uruchamiają slider. Tempo i autoodtwarzanie są wspólne: Site settings → Hero → Slider hero. Gdy ta lista ma zdjęcie, pojedyncze pole obok nie jest używane.";
+  "Do 5 zdjęć, w kolejności pokazu. Jedno zdjęcie zostaje kadrem bez slidera. Dwa lub więcej uruchamiają slider. Tempo i autoodtwarzanie są wspólne: Site settings → Hero → Slider hero. Pusta lista = brak kadru.";
 
 /**
  * Up to five hero stills. One asset stays a static frame; more becomes the
@@ -29,11 +30,21 @@ export function heroSlidesField(options: HeroSlidesFieldOptions = {}) {
         name: "heroSlide",
         title: "Slajd",
         options: { hotspot: true },
+        components: { input: HeroSlideInput },
         fields: [
           defineField({
             name: "alt",
-            title: "Alt text",
+            title: "Alt",
             type: "string",
+            description:
+              "Dla czytnika ekranu i gdy obraz się nie załaduje. Krótki opis treści zdjęcia. Może być taki sam jak podpis, gdy kadr jest zwykły, np. „Uczestnicy w kręgu na sali”. Gdy warto rozdzielić: „Cztery osoby na scenie w półmroku”.",
+          }),
+          defineField({
+            name: "caption",
+            title: "Podpis",
+            type: "string",
+            description:
+              "Krótki podpis widoczny na stronie — na razie jako podpowiedź przy kropce slidera. Może być bardziej redakcyjny niż alt, np. „Finał Art Generacje, edycja XI”. Jedno zdjęcie nie ma kropek, więc podpis wtedy nie wychodzi na stronę.",
           }),
         ],
       }),

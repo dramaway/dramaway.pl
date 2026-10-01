@@ -114,7 +114,7 @@ export const getResolvedAboutPage = cache(
       lead: cmsText(cms?.lead),
       ctaLabel: heroCta?.label ?? null,
       ctaHref: heroCta?.href ?? null,
-      slides: resolveHeroSlides(cms?.heroImages, cms?.image, title || ""),
+      slides: resolveHeroSlides(cms?.heroImages, title || ""),
       methods: {
         heading: cmsText(cms?.methods?.heading),
         lead: cmsText(cms?.methods?.lead),

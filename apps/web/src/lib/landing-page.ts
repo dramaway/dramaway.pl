@@ -35,7 +35,7 @@ function resolveHero(cms: LandingPage | null): ResolvedLandingHero {
     lead: cmsText(cms?.lead),
     ctaLabel: cta?.label ?? null,
     ctaHref: cta?.href ?? null,
-    slides: resolveHeroSlides(cms?.heroImages, cms?.image, title || ""),
+    slides: resolveHeroSlides(cms?.heroImages, title || ""),
   };
 }
 

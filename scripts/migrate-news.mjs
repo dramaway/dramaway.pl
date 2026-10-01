@@ -61,6 +61,7 @@ const DROP = new Set([
   "_createdAt",
   "_updatedAt",
   "heroImage",
+  "heroImages",
   "heroLead",
   "heroCtaLabel",
   "heroCtaHref",

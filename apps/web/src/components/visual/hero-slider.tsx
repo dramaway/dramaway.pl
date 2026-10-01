@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { Media } from "@/components/visual/media";
 import type { HeroSlide, HeroSliderSettings } from "@/lib/hero-slides";
+import { objectPositionFromHotspot } from "@/lib/sanity/hotspot";
+import { urlFor } from "@/lib/sanity/image";
 import { SUBPAGE } from "@/lib/subpage-copy";
 
 const copy = SUBPAGE.hero.slider;
@@ -127,15 +129,31 @@ export function HeroSlider({ slides, settings }: HeroSliderProps) {
       <div className="hero-slider-controls">
         {slides.map((slide, slideIndex) => {
           const active = slideIndex === index;
+          const tipId = `hero-tip-${slide._key}`;
+          const objectPosition = objectPositionFromHotspot(slide.image);
           return (
             <button
               key={slide._key}
               type="button"
               className="hero-slider-control hero-slider-dot"
               aria-label={slideLabel(slideIndex, count)}
+              aria-describedby={slide.caption ? tipId : undefined}
               aria-current={active ? "true" : undefined}
               onClick={() => goTo(slideIndex)}
-            />
+            >
+              {/* Swatch inside the control. Hotspot is CSS object-position, same math as Media. */}
+              <img
+                className="hero-slider-thumb"
+                alt=""
+                src={urlFor(slide.image).width(128).fit("max").auto("format").url()}
+                style={objectPosition ? { objectPosition } : undefined}
+              />
+              {slide.caption ? (
+                <span className="hero-slider-tip" role="tooltip" id={tipId}>
+                  {slide.caption}
+                </span>
+              ) : null}
+            </button>
           );
         })}
         {showPause ? (

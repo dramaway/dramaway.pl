@@ -42,22 +42,6 @@ export const aboutPage = defineType({
     }),
     heroSlidesField({ group: "hero" }),
     defineField({
-      name: "image",
-      title: "Zdjęcie hero (pojedyncze)",
-      type: "image",
-      group: "hero",
-      options: { hotspot: true },
-      description:
-        "Używane tylko gdy lista „Zdjęcia hero” jest pusta. Zanim dodasz kolejne kadry, przenieś to zdjęcie na listę. Pusta lista i puste to pole = brak kadru; układ splitu zostaje.",
-      fields: [
-        defineField({
-          name: "alt",
-          title: "Alt text",
-          type: "string",
-        }),
-      ],
-    }),
-    defineField({
       name: "methods",
       title: "Metody i wartości",
       type: "object",

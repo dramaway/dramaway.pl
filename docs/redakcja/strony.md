@@ -14,7 +14,7 @@ Grupy:
 - **Nawigacja** — menu. Osobna instrukcja: [Menu](menu.md).
 - **Stopka** — logo, adres, cytat.
 - **Ikony** — ikona karty przeglądarki i obrazek do udostępniania. Zwykle zostaje przy utrzymaniu.
-- **Hero** — duży nagłówek strony startowej, lead, przycisk i do pięciu zdjęć. Jedno zdjęcie zostaje kadrem. Od dwóch włącza się pokaz slajdów. W tej samej zakładce **Slider hero** ustawia czas klatki i autoodtwarzanie — te ustawienia są wspólne dla każdego takiego hero na stronie (listingi, O fundacji, zwykłe strony, projekty). Puste pole pojedynczego zdjęcia i pusta lista = brak kadru.
+- **Hero** — duży nagłówek strony startowej, lead, przycisk i do pięciu zdjęć. Zero zdjęć = brak kadru. Jedno zdjęcie zostaje kadrem, bez kropek. Od dwóch włącza się pokaz slajdów: miniatury, na szerokim ekranie chowane aż najedziesz albo przejdziesz tabem, na wąskim zawsze przy prawej krawędzi koła. Przy każdym zdjęciu są **Alt** (czytnik i brak obrazu, krótki opis treści) i **Podpis** (podpowiedź przy kropce; może być bardziej redakcyjny). Gdy wypełnione jest dokładnie jedno z tych pól, Studio pokazuje przycisk kopiowania w drugą stronę. Jedno zdjęcie nie ma kropek, więc podpis wtedy nie wychodzi na stronę. W tej samej zakładce **Slider hero** ustawia czas klatki i autoodtwarzanie — te ustawienia są wspólne dla każdego takiego hero na stronie (listingi, O fundacji, zwykłe strony, projekty).
 - **Sekcje** — lista bloków pod dużym nagłówkiem. Jak je dodawać: niżej, rozdział [Sekcje](#sekcje).
 
 <!-- screen: strony-glowna-grupy | Dokument Strona główna z widocznymi zakładkami grup | Widać Nawigacja, Stopkę, Hero i Sekcje jako osobne karty jednego dokumentu -->
@@ -78,7 +78,7 @@ Trzy dokumenty **Landing page**, przypięte jako skróty, gdy menu jest puste al
 
 **Baza wiedzy** (`/baza-wiedzy`) nie jest listingiem. To zwykła strona **Page**: nagłówek, lead, sekcje i treść z opisem metod. Stary adres `/metody` przekierowuje tutaj. W menu ma jedno dziecko, Czytelnię.
 
-Pola hero (tytuł, lead, przycisk, do pięciu zdjęć) są na tym dokumencie. Puste = tego elementu nie ma. Jedno zdjęcie zostaje kadrem. Od dwóch działa slider ze strony głównej (czas klatki i autoodtwarzanie). Stare pojedyncze zdjęcie jest na stronie tylko dopóki lista zdjęć jest pusta — przenieś je na listę, zanim dodasz kolejne. Adresu listingu nie da się zmienić: pole strony jest zablokowane po pierwszym zapisie.
+Pola hero (tytuł, lead, przycisk, do pięciu zdjęć) są na tym dokumencie. Puste = tego elementu nie ma. Jedno zdjęcie zostaje kadrem. Od dwóch działa slider ze strony głównej (czas klatki i autoodtwarzanie, miniatury, podpis jako podpowiedź przy kropce). Adresu listingu nie da się zmienić: pole strony jest zablokowane po pierwszym zapisie.
 
 <!-- screen: strony-listing | Dokument Projekty z zablokowanym polem strony i pustym tytułem | Widać, że adres jest stały, a pusty tytuł nie wymyśla nagłówka -->
 
@@ -90,7 +90,7 @@ Skrót **O fundacji**, adres `/fundacja`. Grupy: Hero, Metody i wartości, Zesp�
 
 Niżej na liście są typy, nie pojedyncze skróty:
 
-- **Project** — jeden projekt, adres `/projekty/…`. Art Generacje ma dodatkowo podstrony edycji. Hero może dostać do pięciu zdjęć (slider jak na stronie głównej). Pusta lista zostawia dotychczasowy kadr z galerii edycji.
+- **Project** — jeden projekt, adres `/projekty/…`. Art Generacje ma dodatkowo podstrony edycji. Hero może dostać do pięciu zdjęć (slider jak na stronie głównej). Pusta lista zostawia dotychczasowy kadr: pierwsza galeria edycji, a gdy jej nie ma — pierwszy obraz w treści.
 - **Person** — osoba, adres `/zespol/…`.
 - **News** — aktualność. Adres `/{slug}`. Krótki formularz: tytuł, data, zajawka, treść i opcjonalny przycisk. Własny adres przycisku wymaga własnej etykiety.
 - **Page** — Baza wiedzy, Kontakt, strony typu statut. Adres to `/{slug}`. W Studio lista dzieli się na **Drupal** (stare resztki do wygaszenia), **W menu** i **Poza menu**. Hero: do pięciu zdjęć, tak jak na stronie głównej. Pole **Sekcje** nad artykułem: [Sekcje](#sekcje).

@@ -7,46 +7,63 @@ import {
 
 const asset = { _ref: "image-abc" };
 
-test("a single legacy image stays one still", () => {
-  const slides = resolveHeroSlides(null, { asset, alt: "Kadr" }, "Fundacja");
-  assert.equal(slides.length, 1);
-  assert.equal(slides[0]._key, "legacy");
-  assert.equal(slides[0].alt, "Kadr");
+test("zero assets means no stills", () => {
+  assert.deepEqual(resolveHeroSlides(null, "Tytuł"), []);
+  assert.deepEqual(resolveHeroSlides([], "Tytuł"), []);
+  assert.deepEqual(resolveHeroSlides([{ _key: "empty", alt: "Nie" }], "Tytuł"), []);
 });
 
-test("an empty list falls back to the legacy still", () => {
-  const slides = resolveHeroSlides([], { asset, alt: "" }, "Tytuł");
+test("one asset is one still and a missing key is filled", () => {
+  const slides = resolveHeroSlides([{ asset, alt: "Kadr" }], "Fundacja");
+  assert.equal(slides.length, 1);
+  assert.equal(slides[0]._key, "slide-0");
+  assert.equal(slides[0].alt, "Kadr");
+  assert.equal(slides[0].caption, null);
+});
+
+test("an empty alt uses the fallback title", () => {
+  const slides = resolveHeroSlides([{ _key: "a", asset, alt: "  " }], "Tytuł");
   assert.equal(slides.length, 1);
   assert.equal(slides[0].alt, "Tytuł");
+  assert.equal(slides[0].caption, null);
 });
 
-test("a non-empty list replaces the legacy still and caps at five", () => {
+test("the list caps at five", () => {
   const many = Array.from({ length: 6 }, (_, index) => ({
     _key: `k${index}`,
     asset,
     alt: index === 0 ? "" : `Alt ${index}`,
   }));
-  const slides = resolveHeroSlides(many, { asset, alt: "Stare" }, "Fallback");
+  const slides = resolveHeroSlides(many, "Fallback");
   assert.equal(slides.length, 5);
   assert.equal(slides[0]._key, "k0");
   assert.equal(slides[0].alt, "Fallback");
   assert.equal(slides[1].alt, "Alt 1");
-  assert.equal(slides.some((slide) => slide.alt === "Stare"), false);
+  assert.equal(slides[4]._key, "k4");
+});
+
+test("a caption passes through when it is present", () => {
+  const slides = resolveHeroSlides(
+    [{ _key: "ok", asset, alt: "Tak", caption: "  Finał  " }],
+    "Fallback",
+  );
+  assert.equal(slides.length, 1);
+  assert.equal(slides[0].alt, "Tak");
+  assert.equal(slides[0].caption, "Finał");
 });
 
 test("slides without an asset are skipped", () => {
   const slides = resolveHeroSlides(
-    [{ _key: "empty", alt: "Nie" }, { _key: "ok", asset, alt: "Tak" }],
-    { asset, alt: "Stare" },
+    [
+      { _key: "empty", alt: "Nie" },
+      { _key: "ok", asset, alt: "Tak", caption: "" },
+    ],
     "Fallback",
   );
   assert.equal(slides.length, 1);
   assert.equal(slides[0]._key, "ok");
   assert.equal(slides[0].alt, "Tak");
-});
-
-test("no assets means no stills", () => {
-  assert.deepEqual(resolveHeroSlides([], null, "Tytuł"), []);
+  assert.equal(slides[0].caption, null);
 });
 
 test("slider settings clamp and default", () => {
