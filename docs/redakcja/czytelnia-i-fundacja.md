@@ -43,7 +43,7 @@ Dokument **O fundacji**, adres `/fundacja`. Pusta lista w danej grupie chowa ca�
 
 **Zespół.** Nagłówek, wybrane osoby (dokumenty Person) i opcjonalny tekst pod zdjęciami. Skład ról w tekście oznaczamy listą Roles, patrz [Tekst](tekst.md). Puste osoby i pusty tekst = brak sekcji. Osobna strona `/zespol` to listing wszystkich osób i nie zastępuje tego bloku.
 
-**Historia.** Lead nad osią jest tekstem sformatowanym. Wpisy mają rok, tytuł i opis. Opis jest zwinięty: przy scrollu same rozwijają się dwa–trzy lata najbliżej środka ekranu, a „więcej” / „zwiń” zostawia jeden wpis otwarty albo zamknięty. Układ osi (Pionowy / Poziomy) jest w tej grupie. Poziomy na dużym ekranie jedzie w bok razem ze scrollem strony. Na telefonie i przy ograniczeniu ruchu oś jest zawsze pionowa, przy lewej krawędzi, bez wychyleń. Puste pole układu = pion. Pusta lista wpisów = brak osi. Nie wklejamy przykładowych lat z makiety.
+**Historia.** Lead nad osią jest tekstem sformatowanym. Wpisy mają rok, tytuł i opis. Opis jest zwinięty: przy scrollu same rozwijają się dwa–trzy lata najbliżej środka ekranu, a ucięty tekst zanika gradientem, dopóki blok nie jest otwarty w całości. Nad osią jest jeden przełącznik „rozwiń całość” / „zwiń całość” — otwiera wszystkie opisy do zwykłego czytania i wyłącza efekt scrolla. Układ osi (Pionowy / Poziomy) jest w tej grupie. Poziomy na dużym ekranie jedzie w bok razem ze scrollem strony. Na telefonie i przy ograniczeniu ruchu oś jest zawsze pionowa, przy lewej krawędzi, bez wychyleń. Puste pole układu = pion. Pusta lista wpisów = brak osi. Nie wklejamy przykładowych lat z makiety.
 
 **Dokumenty.** Każdy wiersz to tytuł plus strona z panelu, plik PDF albo adres. Pusta lista = brak sekcji.
 

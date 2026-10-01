@@ -262,6 +262,12 @@
   --text-secondary: color-mix(in srgb, var(--foreground) 72%, transparent);
 }
 
+@property --open {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -2170,52 +2176,53 @@
     line-height: var(--text-h4--line-height);
   }
 
-  .history-trigger {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.35rem;
-    width: 100%;
-    margin: 0;
+  .history-all {
+    display: inline-flex;
+    margin: 0 0 0.75rem;
     padding: 0;
     border: 0;
     background: transparent;
-    color: inherit;
-    font: inherit;
-    text-align: start;
-    cursor: pointer;
-  }
-
-  .history-trigger:focus-visible {
-    outline: 2px solid var(--color-magenta);
-    outline-offset: 3px;
-  }
-
-  .history-more {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
+    color: color-mix(in srgb, var(--color-ink) 48%, transparent);
     font-family: var(--font-display);
     font-size: var(--text-small);
     font-weight: 500;
     line-height: 1;
-    color: color-mix(in srgb, var(--color-ink) 48%, transparent);
+    cursor: pointer;
   }
 
-  .history-trigger:hover .history-more,
-  .history-trigger:focus-visible .history-more {
+  .history-all:hover,
+  .history-all:focus-visible {
     color: var(--color-ink);
   }
 
-  .history-chevron {
-    width: 1rem;
-    height: 1rem;
-    transform: rotate(calc(var(--open, 0) * 180deg));
+  .history-all:focus-visible {
+    outline: 2px solid var(--color-magenta);
+    outline-offset: 3px;
+  }
+
+  .history-title:focus-visible {
+    outline: 2px solid var(--color-magenta);
+    outline-offset: 3px;
   }
 
   .history-panel {
     height: calc(var(--open, 0) * var(--panel, 0) * 1px);
     overflow: hidden;
+    /* Veil stays until --open hits 1, then the fade length is zero.
+       Cap it so a short partial block still shows its first lines. */
+    --history-veil: clamp(0, (1 - var(--open, 0)) * 24, 1);
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      #000 0,
+      #000 calc(100% - min(3.25rem, 100%) * var(--history-veil)),
+      transparent
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      #000 0,
+      #000 calc(100% - min(3.25rem, 100%) * var(--history-veil)),
+      transparent
+    );
   }
 
   .history-panel-inner {

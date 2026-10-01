@@ -138,7 +138,7 @@ Hero homepage jest w `siteSettings` (heading, lead, CTA, lista `heroImages`). Re
 | Skip link / 404 / błąd | `subpage-copy.a11y.skipToContent`, `.notFound`, `.error` | chrome; 404 i error bez copy z CMS |
 | Overflow menu (trzy kropki) | `subpage-copy.a11y.moreNav` | tylko `aria-label`; ikona bez widocznego „więcej” |
 | Slider hero (kropki, zatrzymaj / wznów) | `subpage-copy.hero.slider` | chrome; jedno zdjęcie nie pokazuje sterowania |
-| Historia — więcej / zwiń | `subpage-copy.history` | chrome; scroll sam rozwija 2–3 lata przy środku ekranu, przycisk przypina jeden wpis |
+| Historia — rozwiń / zwiń całość | `subpage-copy.history` | chrome nad osią; scroll sam rozwija 2–3 lata przy środku, przycisk otwiera wszystkie i wyłącza ten efekt |
 
 ## Stan na teraz
 

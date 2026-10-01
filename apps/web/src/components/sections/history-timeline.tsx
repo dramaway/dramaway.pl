@@ -3,7 +3,6 @@
 import {
   useCallback,
   useEffect,
-  useId,
   useLayoutEffect,
   useRef,
   useState,
@@ -13,7 +12,6 @@ import {
 import { SUBPAGE } from "@/lib/subpage-copy";
 import {
   historyDampOpenness,
-  historyMergeOpenness,
   historyOpenness,
   historyPinProgress,
   historyPinSpan,
@@ -55,7 +53,8 @@ type MotionCss = CSSProperties & {
  * /fundacja history. Vertical list with a desktop sine, or a sticky
  * horizontal track whose vertical scroll drives translateX. Phones and
  * reduced motion always get the vertical list. Scroll opens the two or
- * three markers nearest the focal point; "więcej" / "zwiń" pins one year.
+ * three markers nearest the focal point. "rozwiń całość" opens every
+ * year for plain reading and turns the scroll effect off.
  */
 export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimelineProps) {
   const [wide, setWide] = useState(false);
@@ -77,31 +76,28 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
     };
   }, []);
 
-  const horizontal = layout === "horizontal" && wide && !reduced;
-  const reveal = !reduced;
+  const [reading, setReading] = useState(false);
+  const horizontal = layout === "horizontal" && wide && !reduced && !reading;
   const itemKey = items.map((item) => `${item.year}\0${item.title}`).join("\n");
 
   const [openness, setOpenness] = useState<number[]>(() => items.map(() => 0));
-  const [forced, setForced] = useState<(number | null)[]>(() => items.map(() => null));
   const [seen, setSeen] = useState<boolean[]>(() => items.map(() => false));
 
   const opennessRef = useRef(openness);
-  const forcedRef = useRef(forced);
   const itemsRef = useRef(items);
+  const readingRef = useRef(reading);
   const kickRef = useRef<() => void>(() => {});
   opennessRef.current = openness;
-  forcedRef.current = forced;
   itemsRef.current = items;
+  readingRef.current = reading;
 
   const [generation, setGeneration] = useState(itemKey);
   if (generation !== itemKey) {
     const blank = items.map(() => 0);
-    const locks = items.map((): number | null => null);
     opennessRef.current = blank;
-    forcedRef.current = locks;
     setGeneration(itemKey);
     setOpenness(blank);
-    setForced(locks);
+    setReading(false);
     setSeen(items.map(() => false));
   }
 
@@ -144,8 +140,8 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
 
   useEffect(() => {
     const count = itemsRef.current.length;
-    if (!reveal) {
-      const locked = Array.from({ length: count }, (_, index) => forcedRef.current[index] ?? 0);
+    if (reduced) {
+      const locked = Array.from({ length: count }, () => (readingRef.current ? 1 : 0));
       opennessRef.current = locked;
       setOpenness(locked);
       return;
@@ -193,8 +189,10 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
 
     const tick = (framesLeft: number) => {
       if (stopped) return;
-      syncPin();
-      const target = historyMergeOpenness(measure(), forcedRef.current);
+      if (!readingRef.current) syncPin();
+      const target = readingRef.current
+        ? itemsRef.current.map(() => 1)
+        : measure();
       const next = historyDampOpenness(opennessRef.current, target, OPEN_EASE);
       const changed = next.some((value, index) => value !== opennessRef.current[index]);
       if (changed) {
@@ -235,7 +233,7 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
       window.removeEventListener("resize", kick);
       observer?.disconnect();
     };
-  }, [horizontal, itemKey, reveal]);
+  }, [horizontal, itemKey, reading, reduced]);
 
   const centerInPin = useCallback((index: number) => {
     const pin = pinRef.current;
@@ -256,30 +254,28 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
     });
   }, []);
 
-  const onToggle = (index: number) => {
-    const shown = opennessRef.current[index] ?? 0;
-    const nextValue = shown > 0.45 ? 0 : 1;
-    const locks = forcedRef.current.slice();
-    locks[index] = nextValue;
-    forcedRef.current = locks;
-    setForced(locks);
-    if (!reveal) {
-      const nextOpen = opennessRef.current.slice();
-      nextOpen[index] = nextValue;
-      opennessRef.current = nextOpen;
-      setOpenness(nextOpen);
-      return;
-    }
-    kickRef.current();
-  };
-
-  const onFocus = (event: FocusEvent<HTMLButtonElement>, index: number) => {
+  const onFocus = (event: FocusEvent<HTMLHeadingElement>, index: number) => {
     if (!horizontal) return;
-    const button = event.currentTarget;
+    const heading = event.currentTarget;
     window.requestAnimationFrame(() => {
-      if (button.matches(":focus-visible")) centerInPin(index);
+      if (heading.matches(":focus-visible")) centerInPin(index);
     });
   };
+
+  const canReadAll = items.some((item) => item.body);
+  const copy = SUBPAGE.history;
+  const readAll = canReadAll ? (
+    <div className={cn("stack-narrow", spaced && "history-follow")}>
+      <button
+        type="button"
+        className="history-all"
+        aria-expanded={reading}
+        onClick={() => setReading((value) => !value)}
+      >
+        {reading ? copy.collapseAll : copy.expandAll}
+      </button>
+    </div>
+  ) : null;
 
   const entries = items.map((item, index) => (
     <HistoryEntry
@@ -296,27 +292,32 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
       markerRef={(node) => {
         markerRefs.current[index] = node;
       }}
-      onToggle={() => onToggle(index)}
       onFocus={(event) => onFocus(event, index)}
     />
   ));
 
   if (horizontal) {
     return (
-      <div ref={pinRef} className={cn("history-pin", spaced && "history-follow")}>
-        <div ref={stickyRef} className="history-pin-sticky">
-          <ol ref={trackRef} className="history-track">
-            {entries}
-          </ol>
+      <>
+        {readAll}
+        <div ref={pinRef} className={cn("history-pin", !canReadAll && spaced && "history-follow")}>
+          <div ref={stickyRef} className="history-pin-sticky">
+            <ol ref={trackRef} className="history-track">
+              {entries}
+            </ol>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div className={cn("stack-narrow", spaced && "history-follow")}>
-      <ol className={cn("history-list", !reduced && "history-reveal")}>{entries}</ol>
-    </div>
+    <>
+      {readAll}
+      <div className={cn("stack-narrow", !canReadAll && spaced && "history-follow")}>
+        <ol className={cn("history-list", !reduced && !reading && "history-reveal")}>{entries}</ol>
+      </div>
+    </>
   );
 }
 
@@ -329,8 +330,7 @@ type HistoryEntryProps = {
   seen: boolean;
   itemRef: (node: HTMLLIElement | null) => void;
   markerRef: (node: HTMLElement | null) => void;
-  onToggle: () => void;
-  onFocus: (event: FocusEvent<HTMLButtonElement>) => void;
+  onFocus: (event: FocusEvent<HTMLHeadingElement>) => void;
 };
 
 function HistoryEntry({
@@ -342,12 +342,8 @@ function HistoryEntry({
   seen,
   itemRef,
   markerRef,
-  onToggle,
   onFocus,
 }: HistoryEntryProps) {
-  const panelId = useId();
-  const copy = SUBPAGE.history;
-  const expanded = open >= 0.5;
   const factor = historyWaveFactor(index);
   const nextFactor = historyWaveFactor(index + 1);
   const style: MotionCss = { "--open": open, "--wave": factor };
@@ -385,42 +381,20 @@ function HistoryEntry({
         ) : null}
       </div>
       <div className="history-copy">
-        <h3 className="history-title">
-          {item.body ? (
-            <button
-              type="button"
-              className="history-trigger"
-              aria-expanded={expanded}
-              aria-controls={panelId}
-              onClick={onToggle}
-              onFocus={onFocus}
-            >
-              <span className="history-trigger-label">{item.title}</span>
-              <span className="history-more">
-                <span>{expanded ? copy.collapse : copy.expand}</span>
-                <svg className="history-chevron" viewBox="0 0 24 24" aria-hidden>
-                  <path
-                    d="M6 9l6 6 6-6"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-            </button>
-          ) : (
-            item.title
-          )}
+        <h3
+          className="history-title"
+          tabIndex={horizontal ? 0 : undefined}
+          onFocus={horizontal ? onFocus : undefined}
+        >
+          {item.title}
         </h3>
-        {item.body ? <HistoryPanel id={panelId} body={item.body} open={open} /> : null}
+        {item.body ? <HistoryPanel body={item.body} open={open} /> : null}
       </div>
     </li>
   );
 }
 
-function HistoryPanel({ id, body, open }: { id: string; body: string; open: number }) {
+function HistoryPanel({ body, open }: { body: string; open: number }) {
   const innerRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
@@ -440,7 +414,6 @@ function HistoryPanel({ id, body, open }: { id: string; body: string; open: numb
   return (
     <div
       ref={panelRef}
-      id={id}
       className="history-panel"
       aria-hidden={open < 0.05 ? true : undefined}
     >
