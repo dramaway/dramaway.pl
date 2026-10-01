@@ -159,8 +159,9 @@ export function HeroSlider({ slides, settings }: HeroSliderProps) {
                   <circle
                     cx="16"
                     cy="16"
-                    r="14.5"
+                    r="14"
                     pathLength={100}
+                    transform="rotate(-90 16 16)"
                     onAnimationEnd={advanceFromRing}
                   />
                 </svg>

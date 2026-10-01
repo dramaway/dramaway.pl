@@ -141,7 +141,9 @@
   /* Crossfade between hero stills. Nav fades in on hover at lg+. */
   --hero-slider-fade: 0.7s;
   --hero-slider-nav-fade: 0.35s;
-  --hero-slider-dot: 1.75rem;
+  /* Dot box. The thumb sits inside it; the duration ring shares that centre. */
+  --hero-slider-dot: 2rem;
+  --hero-slider-thumb: 1.375rem;
   --media-split-max: 42vh;
   /* Figma footer quote ≈ 491px, narrower than .measure 62ch. */
   --footer-quote-max: 30.6875rem;
@@ -1049,24 +1051,28 @@
     }
 
     /*
-     * The dot band overlaps the photo by 0.55 of a dot. Keep the
-     * controls above that row.
+     * Top-right of the still, which meets the viewport there. The inset
+     * matches the desktop header's block padding, on both edges.
      */
     .hero-slider-controls {
       position: absolute;
       z-index: 2;
-      inset-block-end: calc(var(--dot-size) * 0.55 + 0.75rem);
-      inset-inline-start: 1.25rem;
-      margin-inline-start: 0;
-      margin-inline-end: 0;
-      max-width: 100%;
-      opacity: 0;
+      inset-block-start: 2rem;
+      inset-inline-end: 2rem;
+      margin: 0;
+      max-width: calc(100% - 4rem);
+      opacity: 0.65;
       transition: opacity var(--hero-slider-nav-fade) ease;
     }
 
     .hero-slider:hover > .hero-slider-controls,
     .hero-slider:focus-within > .hero-slider-controls {
       opacity: 1;
+    }
+
+    .hero-slider .hero-slider-tip {
+      inset-block-end: auto;
+      inset-block-start: calc(100% + 0.4rem);
     }
   }
 
@@ -1131,6 +1137,7 @@
     border: 0;
     border-radius: 50%;
     background: transparent;
+    line-height: 0;
     cursor: pointer;
   }
 
@@ -1151,13 +1158,18 @@
   }
 
   .hero-slider-thumb {
-    width: calc(100% - 0.35rem);
-    height: calc(100% - 0.35rem);
+    display: block;
+    width: var(--hero-slider-thumb);
+    height: var(--hero-slider-thumb);
     border-radius: 50%;
     object-fit: cover;
   }
 
-  /* Duration ring. Starts at 12 o'clock and draws clockwise. */
+  /*
+   * Duration ring, same centre as the thumb. viewBox 32 on a 2rem box:
+   * stroke midline r=14, thumb radius 11px, so the gap is 2px all round.
+   * Rotation is in SVG space, around that centre, so it cannot drift.
+   */
   .hero-slider-progress {
     position: absolute;
     inset: 0;
@@ -1165,13 +1177,12 @@
     height: 100%;
     overflow: visible;
     pointer-events: none;
-    transform: rotate(-90deg);
   }
 
   .hero-slider-progress circle {
     fill: none;
     stroke: var(--color-ink);
-    stroke-width: 2.25;
+    stroke-width: 2;
     stroke-linecap: butt;
     stroke-dasharray: 100;
     stroke-dashoffset: 100;
