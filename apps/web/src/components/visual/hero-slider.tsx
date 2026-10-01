@@ -142,6 +142,7 @@ export function HeroSlider({ slides, settings }: HeroSliderProps) {
               onClick={() => goTo(slideIndex)}
             >
               {/* Swatch inside the control. Hotspot is CSS object-position, same math as Media. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 className="hero-slider-thumb"
                 alt=""

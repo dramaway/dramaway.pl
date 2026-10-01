@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-10-01 — Hero: jedna lista `heroImages` (max 5). 0 = brak kadru, 1 = kadr, 2–5 = slider. Stare pola zniknęły ze schematu i z frontu. `pnpm patch:hero-images` skopiował pustą listę ze starego kadru (about + listing projektów, także draft) i nie ruszył dwóch slajdów strony głównej. `--unset-legacy` nieodpalone — żywy Netlify z `main` jeszcze czyta stare klucze. Podpis slajdu to tooltip kropki. Nawigator: miniatury, fade od `lg`, na wąskim ekranie przy prawej krawędzi koła. |
+| **Ostatnia aktualizacja** | 2026-10-01 — Hero: jedna lista `heroImages` (max 5). 0 = brak kadru, 1 = kadr, 2–5 = slider. Stare pola zniknęły ze schematu i z frontu. `pnpm patch:hero-images` skopiował pustą listę ze starego kadru (about + listing projektów, także draft) i nie ruszył dwóch slajdów strony głównej. `--unset-legacy` nieodpalone — żywy Netlify z `main` jeszcze czyta stare klucze. Podpis slajdu to tooltip kropki. Nawigator: miniatury, fade od `lg`, na wąskim ekranie przy prawej krawędzi koła. Deploy hosted Studio odrzucony: token zapisu nie ma grantów `deployStudio` / `deploySchema`. Schemat jest w repo; wgrać ręcznie po `sanity login`. |
 | **Gałąź / HEAD** | `cursor/hero-slider-b163` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
@@ -211,6 +211,8 @@ pnpm seed:navigation          # pusta siteSettings.navigation → obecne menu; n
 pnpm --filter studio run deploy   # https://dramaway.sanity.studio/
 # snapshot CMS: apps/studio → sanity datasets export production ../../private/sanity-snapshots/….tar.gz
 ```
+
+Hosted Studio (2026-10-01): `pnpm --filter studio run deploy` z tokenem zapisu buduje paczkę, potem odmawia — brak grantów `sanity.project/deployStudio` i `sanity.project/deploySchema`. Schemat hero jest w repo. Wgrać po `sanity login` na koncie, które te granty ma.
 
 Nie odpalaj ponownie `migrate:fundacja` / `migrate:art-generacje` / `migrate:czytelnia` bez potrzeby — nadpisze ręczną korektę. Archiwum z edycjami: `migrate:art-generacje` je pominie; przebudowa to `pnpm patch:archive-projects -- --force`.
 

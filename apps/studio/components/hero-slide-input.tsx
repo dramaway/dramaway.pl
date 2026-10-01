@@ -1,7 +1,7 @@
 import { Button, Stack } from "@sanity/ui";
-import { set, type ImageInputProps } from "sanity";
+import { set, type ImageValue, type ObjectInputProps } from "sanity";
 
-type SlideValue = {
+type SlideFields = {
   alt?: string | null;
   caption?: string | null;
 };
@@ -14,14 +14,15 @@ function text(value: unknown): string {
  * Default image input plus one copy action when alt and caption disagree
  * by emptiness. Both filled, or both empty, shows no button.
  */
-export function HeroSlideInput(props: ImageInputProps<SlideValue>) {
-  const alt = text(props.value?.alt);
-  const caption = text(props.value?.caption);
+export function HeroSlideInput(props: ObjectInputProps<ImageValue>) {
+  const value = props.value as (ImageValue & SlideFields) | undefined;
+  const alt = text(value?.alt);
+  const caption = text(value?.caption);
   const copyAltToCaption = Boolean(alt) && !caption;
   const copyCaptionToAlt = Boolean(caption) && !alt;
 
   return (
-    <Stack space={3}>
+    <Stack gap={3}>
       {props.renderDefault(props)}
       {copyAltToCaption ? (
         <Button
