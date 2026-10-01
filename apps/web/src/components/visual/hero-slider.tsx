@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type AnimationEvent, type CSSProperties } from "react";
 import { Media } from "@/components/visual/media";
 import type { HeroSlide, HeroSliderSettings } from "@/lib/hero-slides";
-import { objectPositionFromHotspot } from "@/lib/sanity/hotspot";
+import { focalThumbRect } from "@/lib/sanity/hotspot";
 import { urlFor } from "@/lib/sanity/image";
+import type { SanityImage } from "@/lib/sanity/types";
 import { SUBPAGE } from "@/lib/subpage-copy";
 
 const copy = SUBPAGE.hero.slider;
@@ -22,6 +23,14 @@ function slideLabel(index: number, total: number) {
 
 function wrapIndex(index: number, count: number) {
   return ((index % count) + count) % count;
+}
+
+/** Square crop around the hotspot so a 1.75rem dot still reads. */
+function thumbSrc(image: SanityImage) {
+  const rect = focalThumbRect(image);
+  const builder = urlFor(image).width(160).height(160).auto("format");
+  if (!rect) return builder.fit("crop").url();
+  return builder.rect(rect.left, rect.top, rect.width, rect.height).url();
 }
 
 /**
@@ -58,24 +67,9 @@ export function HeroSlider({ slides, settings }: HeroSliderProps) {
     return () => document.removeEventListener("visibilitychange", onVisibility);
   }, []);
 
+  const autoplay = settings.autoplay && !reduceMotion;
   const playing =
-    settings.autoplay &&
-    !reduceMotion &&
-    !userPaused &&
-    !hovered &&
-    !focused &&
-    !hidden;
-
-  useEffect(() => {
-    if (!playing || count < 2) return;
-    const id = window.setInterval(() => {
-      setIndex((current) => {
-        setLeaving(current);
-        return wrapIndex(current + 1, count);
-      });
-    }, settings.interval * 1000);
-    return () => window.clearInterval(id);
-  }, [playing, count, settings.interval, index]);
+    autoplay && !userPaused && !hovered && !focused && !hidden;
 
   function goTo(next: number) {
     setIndex((current) => {
@@ -86,7 +80,15 @@ export function HeroSlider({ slides, settings }: HeroSliderProps) {
     });
   }
 
-  const showPause = settings.autoplay && !reduceMotion;
+  const showPause = autoplay;
+
+  function advanceFromRing(event: AnimationEvent<SVGCircleElement>) {
+    if (event.animationName !== "hero-slider-ring") return;
+    setIndex((current) => {
+      setLeaving(current);
+      return wrapIndex(current + 1, count);
+    });
+  }
 
   return (
     <div
@@ -94,6 +96,11 @@ export function HeroSlider({ slides, settings }: HeroSliderProps) {
       role="region"
       aria-label={copy.region}
       data-animate={animate ? "true" : "false"}
+      data-autoplay={autoplay ? "true" : "false"}
+      data-playing={playing ? "true" : "false"}
+      style={
+        { "--hero-slider-interval": `${settings.interval}s` } as CSSProperties
+      }
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onFocus={() => setFocused(true)}
@@ -130,7 +137,6 @@ export function HeroSlider({ slides, settings }: HeroSliderProps) {
         {slides.map((slide, slideIndex) => {
           const active = slideIndex === index;
           const tipId = `hero-tip-${slide._key}`;
-          const objectPosition = objectPositionFromHotspot(slide.image);
           return (
             <button
               key={slide._key}
@@ -141,14 +147,24 @@ export function HeroSlider({ slides, settings }: HeroSliderProps) {
               aria-current={active ? "true" : undefined}
               onClick={() => goTo(slideIndex)}
             >
-              {/* Swatch inside the control. Hotspot is CSS object-position, same math as Media. */}
+              {/* Focal crop is already in the URL. The ring is the active marker. */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 className="hero-slider-thumb"
                 alt=""
-                src={urlFor(slide.image).width(128).fit("max").auto("format").url()}
-                style={objectPosition ? { objectPosition } : undefined}
+                src={thumbSrc(slide.image)}
               />
+              {active ? (
+                <svg className="hero-slider-progress" viewBox="0 0 32 32" aria-hidden>
+                  <circle
+                    cx="16"
+                    cy="16"
+                    r="14.5"
+                    pathLength={100}
+                    onAnimationEnd={advanceFromRing}
+                  />
+                </svg>
+              ) : null}
               {slide.caption ? (
                 <span className="hero-slider-tip" role="tooltip" id={tipId}>
                   {slide.caption}

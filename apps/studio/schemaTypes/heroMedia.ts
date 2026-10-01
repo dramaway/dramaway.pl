@@ -30,6 +30,8 @@ export function heroSlidesField(options: HeroSlidesFieldOptions = {}) {
         name: "heroSlide",
         title: "Slajd",
         options: { hotspot: true },
+        description:
+          "Ustaw hotspot: kropka nawigatora przybliża ten obszar, żeby było widać, co jest na zdjęciu.",
         components: { input: HeroSlideInput },
         fields: [
           defineField({
