@@ -1,5 +1,6 @@
 import { cache } from "react";
 import { cmsCta, cmsText } from "./cms-text";
+import { resolveHeroSlides } from "./hero-slides";
 import { safeHref } from "./safe-url";
 import { getAboutPage } from "./sanity/fetch";
 import type {
@@ -113,8 +114,7 @@ export const getResolvedAboutPage = cache(
       lead: cmsText(cms?.lead),
       ctaLabel: heroCta?.label ?? null,
       ctaHref: heroCta?.href ?? null,
-      image: cms?.image ?? null,
-      imageAlt: cmsText(cms?.image?.alt) || title || "",
+      slides: resolveHeroSlides(cms?.heroImages, cms?.image, title || ""),
       methods: {
         heading: cmsText(cms?.methods?.heading),
         lead: cmsText(cms?.methods?.lead),

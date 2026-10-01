@@ -1,5 +1,11 @@
+import { cache } from "react";
 import { cmsCta, cmsText } from "./cms-text";
 import { resolveContentSections } from "./content-sections";
+import {
+  resolveHeroSlider,
+  resolveHeroSlides,
+  type HeroSliderSettings,
+} from "./hero-slides";
 import { resolveMainNav } from "./navigation";
 import { DEFAULT_CENTRUM_URL } from "./routes";
 import { getSiteSettings } from "./sanity/fetch";
@@ -39,11 +45,22 @@ export async function getResolvedSite(): Promise<ResolvedSite> {
       lead: cmsText(settings?.heroLead),
       ctaLabel: heroCta?.label ?? null,
       ctaHref: heroCta?.href ?? null,
-      image: settings?.heroImage ?? null,
-      imageAlt: cmsText(settings?.heroImage?.alt) || heading || title,
+      slides: resolveHeroSlides(
+        settings?.heroImages,
+        settings?.heroImage,
+        heading || title,
+      ),
     },
     homepage: {
       sections: resolveContentSections(settings?.homepageSections),
     },
   };
 }
+
+/** Shared by every hero with two or more stills. One fetch per request. */
+export const getHeroSliderSettings = cache(
+  async function getHeroSliderSettings(): Promise<HeroSliderSettings> {
+    const settings = await getSiteSettings();
+    return resolveHeroSlider(settings?.heroSlider);
+  },
+);

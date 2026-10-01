@@ -1,6 +1,5 @@
 import { CtaLink } from "@/components/visual/cta-link";
-import { Blob } from "@/components/visual/blob";
-import { Media } from "@/components/visual/media";
+import { HeroMedia } from "@/components/visual/hero-media";
 import type { HeroContent } from "@/lib/sanity/types";
 
 /**
@@ -31,16 +30,7 @@ export function Hero({ hero }: { hero: HeroContent }) {
       </div>
 
       <div className="hero-media-wrap split-media">
-        <Blob />
-        <Media
-          image={hero.image}
-          alt={hero.imageAlt}
-          variant="bleed"
-          ratio="none"
-          sizes="(min-width: 64rem) 34vw, 70vw"
-          priority
-          className="hero-media"
-        />
+        <HeroMedia slides={hero.slides} empty="sand" />
       </div>
     </section>
   );

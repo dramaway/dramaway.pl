@@ -17,8 +17,7 @@ export default async function TeamPage() {
         lead={landing.lead}
         ctaLabel={landing.ctaLabel}
         ctaHref={landing.ctaHref}
-        image={landing.image}
-        imageAlt={landing.imageAlt}
+        slides={landing.slides}
         parent={{ href: "/fundacja", label: "O fundacji" }}
       />
       <TeamRow people={people} />

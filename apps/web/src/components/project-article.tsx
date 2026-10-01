@@ -10,6 +10,7 @@ import {
   splitPortableByHeading,
   type PortableHeadingSection,
 } from "@/lib/portable-split";
+import { resolveHeroSlides } from "@/lib/hero-slides";
 import { editionPath } from "@/lib/routes";
 import type { ProjectDetail } from "@/lib/sanity/types";
 import { SUBPAGE } from "@/lib/subpage-copy";
@@ -100,7 +101,11 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
         lead={project.summary?.trim() || null}
         ctaLabel={editions.length > 0 ? copy.ctaLabel : null}
         ctaHref={editions.length > 0 ? copy.ctaHref : null}
-        image={project.cover}
+        slides={resolveHeroSlides(
+          project.heroImages,
+          project.cover,
+          project.title,
+        )}
         parent={{ href: "/projekty", label: "Projekty" }}
       />
       {hasPortableContent(project.body) ? (

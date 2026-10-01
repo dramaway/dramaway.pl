@@ -137,6 +137,9 @@
   --site-header-bar: calc(57px + 1.5rem);
   --touch-target: 2.75rem;
   --hero-media-span: 70%;
+  /* Crossfade between hero stills. Dots stay small; the hit area is larger. */
+  --hero-slider-fade: 0.7s;
+  --hero-slider-dot: 0.55rem;
   --media-split-max: 42vh;
   /* Figma footer quote ≈ 491px, narrower than .measure 62ch. */
   --footer-quote-max: 30.6875rem;
@@ -799,6 +802,29 @@
       border-radius: 50%;
     }
 
+    /*
+     * Slider: the circle clips the crossfade. Dots sit under the circle,
+     * not inside it.
+     */
+    .hero-slider-frame {
+      aspect-ratio: 1;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .hero-slider-frame > .hero-slider-slide > .hero-media {
+      aspect-ratio: auto;
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+    }
+
+    .hero-slider-controls {
+      position: relative;
+      z-index: 1;
+      margin-block-start: 0.75rem;
+    }
+
     /* Circle still: the band sits below, it does not ride the photo. */
     .hero + .dot-band {
       margin-block-start: 0;
@@ -991,6 +1017,135 @@
       width: auto;
       height: auto;
       aspect-ratio: auto;
+    }
+
+    .hero > .hero-media-wrap > .hero-slider {
+      position: absolute;
+      inset: 0;
+    }
+
+    .hero-slider-frame {
+      position: absolute;
+      inset: 0;
+    }
+
+    .hero-slider-frame > .hero-slider-slide > .hero-media {
+      position: absolute;
+      inset: 0;
+      width: auto;
+      height: auto;
+      aspect-ratio: auto;
+    }
+
+    .hero-slider-controls {
+      position: absolute;
+      z-index: 2;
+      inset-block-end: 1.25rem;
+      inset-inline-start: 1.25rem;
+    }
+  }
+
+  /*
+   * Two or more hero stills. One still stays the static .hero-media and
+   * does not get this chrome. The incoming frame fades over the previous
+   * one so the sand fill never flashes between photos.
+   */
+  .hero-slider {
+    position: relative;
+    width: 100%;
+  }
+
+  .hero-slider-frame {
+    display: grid;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-slider-slide {
+    grid-area: 1 / 1;
+    opacity: 0;
+    z-index: 0;
+  }
+
+  .hero-slider-slide[data-leaving="true"] {
+    opacity: 1;
+    z-index: 0;
+  }
+
+  .hero-slider-slide[data-active="true"] {
+    opacity: 1;
+    z-index: 1;
+  }
+
+  .hero-slider[data-animate="true"] .hero-slider-slide[data-active="true"] {
+    transition: opacity var(--hero-slider-fade) ease;
+  }
+
+  .hero-slider-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.1rem;
+    width: max-content;
+    max-width: 100%;
+    padding: 0.15rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-sand) 86%, transparent);
+  }
+
+  .hero-slider-control {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .hero-slider-control:focus-visible {
+    outline: 2px solid var(--color-green-ink);
+    outline-offset: 2px;
+  }
+
+  .hero-slider-dot::after {
+    content: "";
+    width: var(--hero-slider-dot);
+    height: var(--hero-slider-dot);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--color-ink) 28%, var(--color-sand));
+  }
+
+  .hero-slider-dot[aria-current="true"]::after {
+    background: var(--color-green);
+  }
+
+  .hero-slider-glyph {
+    width: 0.15rem;
+    height: 0.6rem;
+    border-radius: 1px;
+    background: var(--color-ink);
+    box-shadow: 0.28rem 0 0 var(--color-ink);
+  }
+
+  .hero-slider-pause[data-state="paused"] .hero-slider-glyph {
+    width: 0;
+    height: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    border-style: solid;
+    border-width: 0.28rem 0 0.28rem 0.42rem;
+    border-color: transparent transparent transparent var(--color-ink);
+    margin-inline-start: 0.1rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-slider-slide,
+    .hero-slider[data-animate="true"] .hero-slider-slide[data-active="true"] {
+      transition: none;
     }
   }
 

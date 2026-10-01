@@ -32,8 +32,7 @@ export default async function FundacjaIndexPage() {
         lead={about.lead}
         ctaLabel={about.ctaLabel}
         ctaHref={about.ctaHref}
-        image={about.image}
-        imageAlt={about.imageAlt}
+        slides={about.slides}
       />
       {showMethods ? (
         <FundacjaValues

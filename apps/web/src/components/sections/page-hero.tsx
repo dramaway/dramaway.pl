@@ -1,9 +1,8 @@
-import { Blob } from "@/components/visual/blob";
 import { CtaLink } from "@/components/visual/cta-link";
 import { DotBand } from "@/components/visual/dot-band";
-import { Media } from "@/components/visual/media";
-import { hasHeroImage } from "@/lib/sanity/image";
-import type { SanityImage } from "@/lib/sanity/types";
+import { HeroMedia } from "@/components/visual/hero-media";
+import { resolveHeroSlides } from "@/lib/hero-slides";
+import type { CmsHeroImage, HeroSlide } from "@/lib/sanity/types";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
@@ -14,7 +13,12 @@ export type PageHeroContent = {
   lead?: string | null;
   ctaLabel?: string | null;
   ctaHref?: string | null;
-  image?: SanityImage | null;
+  /**
+   * Resolved stills. When omitted, `image` is the legacy single frame.
+   * One still stays static. Two or more use the shared slider.
+   */
+  slides?: HeroSlide[] | null;
+  image?: CmsHeroImage | null;
   imageAlt?: string | null;
   parent?: { href: string; label: string } | null;
 };
@@ -36,7 +40,8 @@ type PageHeroProps = PageHeroContent & {
  * the left column at lg+ (do not reuse `data-home` — that hides
  * `.subpage-palette`). Pass `layout="stack"` for edition pages. No CMS
  * photo = no still; the split column and media slot stay so text width
- * does not jump.
+ * does not jump. One still is static. Two or more crossfade (shared
+ * settings on site settings). `layout="stack"` ignores stills.
  * Do not import PortableBody from this file — listing pages must stay free
  * of the gallery/lightbox client graph.
  */
@@ -45,6 +50,7 @@ export function PageHero({
   lead,
   ctaLabel,
   ctaHref,
+  slides,
   image,
   imageAlt,
   parent,
@@ -54,7 +60,18 @@ export function PageHero({
   const hasTitle = Boolean(title?.trim());
   const hasCopy =
     Boolean(lead) || Boolean(children) || Boolean(ctaLabel && ctaHref);
-  if (!hasTitle && !hasCopy && !hasHeroImage(image)) return null;
+  const legacy =
+    image && typeof image === "object"
+      ? { ...image, alt: imageAlt ?? image.alt }
+      : null;
+  const stills =
+    slides ??
+    resolveHeroSlides(
+      null,
+      legacy,
+      imageAlt?.trim() || title?.trim() || "",
+    );
+  if (!hasTitle && !hasCopy && stills.length === 0) return null;
   const heading = (
     <div className="hero-heading">
       {parent ? (
@@ -107,25 +124,7 @@ export function PageHero({
         </div>
 
         <div className="hero-media-wrap split-media">
-          {hasHeroImage(image) ? (
-            <>
-              <Blob />
-              <Media
-                image={image}
-                alt={imageAlt?.trim() || title?.trim() || ""}
-                variant="bleed"
-                ratio="none"
-                sizes="(min-width: 64rem) 34vw, 70vw"
-                priority
-                className="hero-media"
-              />
-            </>
-          ) : (
-            <div
-              className="hero-media hero-media-empty"
-              aria-hidden
-            />
-          )}
+          <HeroMedia slides={stills} empty="slot" />
         </div>
       </section>
       <DotBand />

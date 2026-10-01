@@ -2,6 +2,7 @@ import { ContentModules } from "@/components/sections/content-modules";
 import { PageHero } from "@/components/sections/page-hero";
 import { Section } from "@/components/layout/section";
 import { PortableBody } from "@/components/portable-body";
+import { resolveHeroSlides } from "@/lib/hero-slides";
 import type { PageDetail } from "@/lib/sanity/types";
 
 type Crumb = { href: string; label: string };
@@ -20,7 +21,7 @@ export function PageArticle({
         lead={page.heroLead}
         ctaLabel={page.heroCtaLabel}
         ctaHref={page.heroCtaHref}
-        image={page.cover}
+        slides={resolveHeroSlides(page.heroImages, page.cover, page.title)}
         parent={parent}
       />
       <ContentModules sections={page.sections} variant="page" />

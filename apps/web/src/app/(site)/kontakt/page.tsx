@@ -5,6 +5,7 @@ import { ContentModules } from "@/components/sections/content-modules";
 import { Section } from "@/components/layout/section";
 import { PortableBody, hasPortableContent } from "@/components/portable-body";
 import { cmsText } from "@/lib/cms-text";
+import { resolveHeroSlides } from "@/lib/hero-slides";
 import { getPageBySlug, getPeople } from "@/lib/sanity/fetch";
 import { SUBPAGE } from "@/lib/subpage-copy";
 
@@ -32,8 +33,11 @@ export default async function ContactPage() {
         lead={body ? null : cmsText(page.heroLead)}
         ctaLabel={page.heroCtaLabel}
         ctaHref={page.heroCtaHref}
-        image={page.cover}
-        imageAlt={cmsText(page.title) || ""}
+        slides={resolveHeroSlides(
+          page.heroImages,
+          page.cover,
+          cmsText(page.title) || "",
+        )}
       >
         {body ? <PortableBody value={body} /> : null}
       </PageHero>

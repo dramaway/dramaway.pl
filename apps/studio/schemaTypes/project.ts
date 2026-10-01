@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { heroSlidesField } from "./heroMedia";
 
 export const project = defineType({
   name: "project",
@@ -38,6 +39,11 @@ export const project = defineType({
       initialValue: false,
     }),
     defineField({ name: "summary", title: "Summary", type: "text" }),
+    heroSlidesField({
+      title: "Hero images",
+      description:
+        "Up to 5 stills for this project's hero. One image stays a static frame. Two or more use the shared slider (Site settings → Hero). Empty = the first edition-gallery image, as before.",
+    }),
     defineField({ name: "body", title: "Body", type: "blockContent" }),
     defineField({
       name: "editions",

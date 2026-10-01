@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { heroSlidesField } from "./heroMedia";
 
 export const aboutPage = defineType({
   name: "aboutPage",
@@ -39,14 +40,15 @@ export const aboutPage = defineType({
       group: "hero",
       description: "Ścieżka wewnętrzna, np. /czytelnia",
     }),
+    heroSlidesField({ group: "hero" }),
     defineField({
       name: "image",
-      title: "Zdjęcie hero",
+      title: "Zdjęcie hero (pojedyncze)",
       type: "image",
       group: "hero",
       options: { hotspot: true },
       description:
-        "Puste = brak zdjęcia hero. Układ splitu (szerokość tekstu) zostaje.",
+        "Używane tylko gdy lista „Zdjęcia hero” jest pusta. Zanim dodasz kolejne kadry, przenieś to zdjęcie na listę. Pusta lista i puste to pole = brak kadru; układ splitu zostaje.",
       fields: [
         defineField({
           name: "alt",

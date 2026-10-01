@@ -21,8 +21,7 @@ export default async function CzytelniaListingLayout({
         lead={landing.lead}
         ctaLabel={landing.ctaLabel}
         ctaHref={landing.ctaHref}
-        image={landing.image}
-        imageAlt={landing.imageAlt}
+        slides={landing.slides}
         parent={{ href: knowledgeHubPath(), label: "Baza wiedzy" }}
       />
       {children}

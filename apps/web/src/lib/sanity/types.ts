@@ -4,6 +4,24 @@ import type { NavItem } from "../routes";
 
 export type SanityImage = SanityImageSource;
 
+/** Image field that may carry a slide key and alt (hero lists and the legacy still). */
+export type CmsHeroImage = SanityImage & {
+  _key?: string | null;
+  alt?: string | null;
+};
+
+export type CmsHeroSlider = {
+  interval?: number | null;
+  autoplay?: boolean | null;
+} | null;
+
+/** One hero still after legacy single-image fallback. */
+export type HeroSlide = {
+  _key: string;
+  image: SanityImage;
+  alt: string;
+};
+
 export type PortableContent = PortableTextProps["value"];
 
 export type PersonListItem = {
@@ -124,8 +142,9 @@ export type PageDetail = {
   heroLead?: string | null;
   heroCtaLabel?: string | null;
   heroCtaHref?: string | null;
+  heroImages?: CmsHeroImage[] | null;
   excerpt?: string | null;
-  cover?: SanityImage | null;
+  cover?: CmsHeroImage | null;
   sections: ResolvedSection[];
   body: PortableContent;
 };
@@ -212,7 +231,9 @@ export type SiteSettings = {
   heroLead: string | null;
   heroCtaLabel: string | null;
   heroCtaHref: string | null;
-  heroImage: (SanityImage & { alt?: string | null }) | null;
+  heroImages?: CmsHeroImage[] | null;
+  heroImage: CmsHeroImage | null;
+  heroSlider?: CmsHeroSlider;
   homepageSections?: CmsContentSection[] | null;
 };
 
@@ -221,8 +242,8 @@ export type HeroContent = {
   lead: string | null;
   ctaLabel: string | null;
   ctaHref: string | null;
-  image: SanityImage | null;
-  imageAlt: string;
+  /** One still is static. Two or more use the shared hero slider. */
+  slides: HeroSlide[];
 };
 
 export type HomepageContent = {
@@ -286,6 +307,7 @@ export type ProjectDetail = {
   status: string | null;
   featured: boolean | null;
   summary: string | null;
+  heroImages?: CmsHeroImage[] | null;
   cover: SanityImage | null;
   body: PortableContent;
   editions: ProjectEdition[] | null;
@@ -328,7 +350,8 @@ export type LandingPage = {
   lead: string | null;
   ctaLabel: string | null;
   ctaHref: string | null;
-  image: (SanityImage & { alt?: string | null }) | null;
+  heroImages?: CmsHeroImage[] | null;
+  image: CmsHeroImage | null;
   showCzytelnia?: boolean | null;
 };
 
@@ -359,7 +382,8 @@ export type AboutPage = {
   lead: string | null;
   ctaLabel: string | null;
   ctaHref: string | null;
-  image: (SanityImage & { alt?: string | null }) | null;
+  heroImages?: CmsHeroImage[] | null;
+  image: CmsHeroImage | null;
   methods: {
     heading: string | null;
     lead: string | null;
@@ -401,8 +425,7 @@ export type ResolvedAboutPage = {
   lead: string | null;
   ctaLabel: string | null;
   ctaHref: string | null;
-  image: SanityImage | null;
-  imageAlt: string;
+  slides: HeroSlide[];
   methods: {
     heading: string | null;
     lead: string | null;

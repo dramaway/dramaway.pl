@@ -1,6 +1,7 @@
 import { defineArrayMember, defineType, defineField } from "sanity";
 import { IcoFileInput } from "../components/ico-file-input";
 import { contentSectionMembers } from "./contentModule";
+import { heroSliderSettingsField, heroSlidesField } from "./heroMedia";
 
 export const siteSettings = defineType({
   name: "siteSettings",
@@ -223,12 +224,15 @@ export const siteSettings = defineType({
       group: "hero",
       description: "Ścieżka wewnętrzna, np. /projekty",
     }),
+    heroSlidesField({ group: "hero" }),
     defineField({
       name: "heroImage",
-      title: "Hero image",
+      title: "Zdjęcie hero (pojedyncze)",
       type: "image",
       group: "hero",
       options: { hotspot: true },
+      description:
+        "Używane tylko gdy lista „Zdjęcia hero” jest pusta. Zanim dodasz kolejne kadry, przenieś to zdjęcie na listę — lista zastępuje to pole.",
       fields: [
         defineField({
           name: "alt",
@@ -237,6 +241,7 @@ export const siteSettings = defineType({
         }),
       ],
     }),
+    heroSliderSettingsField(),
     defineField({
       name: "homepageSections",
       title: "Sekcje",

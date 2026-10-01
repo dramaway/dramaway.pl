@@ -123,9 +123,11 @@ export async function getPagesBySlugs(
     .filter((row): row is PageListItem => Boolean(row));
 }
 
-export async function getSiteSettings(): Promise<SiteSettings | null> {
+export const getSiteSettings = cache(async function getSiteSettings(): Promise<
+  SiteSettings | null
+> {
   return sanityClient.fetch(siteSettingsQuery, {}, revalidate);
-}
+});
 
 export async function getAboutPage(): Promise<AboutPage | null> {
   return sanityClient.fetch(aboutPageQuery, {}, revalidate);

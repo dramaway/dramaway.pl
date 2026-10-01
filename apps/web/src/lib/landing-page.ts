@@ -1,9 +1,10 @@
 import { cache } from "react";
 import { cmsCta, cmsText } from "./cms-text";
+import { resolveHeroSlides } from "./hero-slides";
 import { EXCERPT_FALLBACK_MAX } from "./homepage-copy";
 import { czytelniaPath } from "./routes";
 import { getLandingPage } from "./sanity/fetch";
-import type { LandingPage, SanityImage } from "./sanity/types";
+import type { HeroSlide, LandingPage } from "./sanity/types";
 
 export const LANDING_DOCUMENT_IDS = {
   projekty: "landing-projekty",
@@ -16,8 +17,7 @@ export type ResolvedLandingHero = {
   lead: string | null;
   ctaLabel: string | null;
   ctaHref: string | null;
-  image: SanityImage | null;
-  imageAlt: string;
+  slides: HeroSlide[];
 };
 
 export type ResolvedChannelTeaser = {
@@ -35,8 +35,7 @@ function resolveHero(cms: LandingPage | null): ResolvedLandingHero {
     lead: cmsText(cms?.lead),
     ctaLabel: cta?.label ?? null,
     ctaHref: cta?.href ?? null,
-    image: cms?.image ?? null,
-    imageAlt: cmsText(cms?.image?.alt) || title || "",
+    slides: resolveHeroSlides(cms?.heroImages, cms?.image, title || ""),
   };
 }
 

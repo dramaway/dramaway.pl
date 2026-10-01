@@ -53,8 +53,7 @@ export default async function ProjectsPage() {
         lead={landing.lead}
         ctaLabel={landing.ctaLabel}
         ctaHref={landing.ctaHref}
-        image={landing.image}
-        imageAlt={landing.imageAlt}
+        slides={landing.slides}
       />
       <div className="page py-section">
         <PaletteRow />

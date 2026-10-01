@@ -142,6 +142,14 @@ export const contentSectionsProjection = `{
   }
 }`;
 
+const heroSlidesProjection = `heroImages[] {
+  _key,
+  alt,
+  hotspot,
+  crop,
+  asset
+}`;
+
 export const pageBySlugQuery = `*[_type == "page" && slug.current == $slug][0] {
   _id,
   title,
@@ -149,6 +157,7 @@ export const pageBySlugQuery = `*[_type == "page" && slug.current == $slug][0] {
   heroLead,
   heroCtaLabel,
   heroCtaHref,
+  ${heroSlidesProjection},
   "excerpt": select(
     defined(excerpt) && excerpt != "" => excerpt,
     defined(heroLead) && heroLead != "" => heroLead,
@@ -215,6 +224,7 @@ export const projectBySlugQuery = `*[_type == "project" && slug.current == $slug
   status,
   featured,
   summary,
+  ${heroSlidesProjection},
   "cover": coalesce(
     (editions[].gallery[])[defined(asset)][0],
     body[_type == "image"][0]
@@ -244,6 +254,7 @@ export const landingPageByIdQuery = `*[_type == "landingPage" && _id == $id][0] 
   lead,
   ctaLabel,
   ctaHref,
+  ${heroSlidesProjection},
   image,
   showCzytelnia
 }`;
@@ -253,6 +264,7 @@ export const aboutPageQuery = `*[_type == "aboutPage"][0] {
   lead,
   ctaLabel,
   ctaHref,
+  ${heroSlidesProjection},
   image,
   methods {
     heading,
@@ -319,7 +331,9 @@ export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
   heroLead,
   heroCtaLabel,
   heroCtaHref,
+  ${heroSlidesProjection},
   heroImage,
+  heroSlider { interval, autoplay },
   homepageSections[] ${contentSectionsProjection}
 }`;
 

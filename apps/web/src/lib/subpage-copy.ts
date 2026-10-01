@@ -52,6 +52,14 @@ export const SUBPAGE = {
   video: {
     play: "Odtwórz film",
   },
+  hero: {
+    slider: {
+      region: "Zdjęcia",
+      pause: "Zatrzymaj pokaz",
+      play: "Wznów pokaz",
+      goTo: "Zdjęcie {n} z {total}",
+    },
+  },
   a11y: {
     skipToContent: "Przejdź do treści",
     moreNav: "Więcej w menu",
