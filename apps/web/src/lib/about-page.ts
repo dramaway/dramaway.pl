@@ -1,5 +1,6 @@
 import { cache } from "react";
 import { cmsCta, cmsText } from "./cms-text";
+import { resolveHistoryLayout } from "./history-timeline";
 import { resolveHeroSlides } from "./hero-slides";
 import { safeHref } from "./safe-url";
 import { getAboutPage } from "./sanity/fetch";
@@ -131,6 +132,7 @@ export const getResolvedAboutPage = cache(
       history: {
         heading: cmsText(cms?.history?.heading),
         lead: resolvePortable(cms?.history?.lead),
+        layout: resolveHistoryLayout(cms?.history?.layout),
         items: resolveHistoryItems(cms?.history?.items),
       },
       documents: {

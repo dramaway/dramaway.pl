@@ -397,6 +397,7 @@ export type AboutPage = {
   } | null;
   history: {
     heading: string | null;
+    layout?: string | null;
     lead: PortableContent | string | null;
     items: AboutHistoryItem[] | null;
   } | null;
@@ -417,6 +418,8 @@ export type ResolvedAboutHistoryItem = {
   title: string;
   body: string | null;
 };
+
+export type AboutHistoryLayout = "vertical" | "horizontal";
 
 export type ResolvedAboutPage = {
   title: string | null;
@@ -440,6 +443,7 @@ export type ResolvedAboutPage = {
   history: {
     heading: string | null;
     lead: PortableContent | null;
+    layout: AboutHistoryLayout;
     items: ResolvedAboutHistoryItem[];
   };
   documents: {

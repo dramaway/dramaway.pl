@@ -134,6 +134,21 @@ export const aboutPage = defineType({
             "Tekst nad osią czasu. Cytat, pogrubienie, akapity. Puste = brak leadu.",
         }),
         defineField({
+          name: "layout",
+          title: "Układ osi",
+          type: "string",
+          initialValue: "vertical",
+          options: {
+            layout: "radio",
+            list: [
+              { title: "Pionowy", value: "vertical" },
+              { title: "Poziomy", value: "horizontal" },
+            ],
+          },
+          description:
+            "Pionowy: lata jedno pod drugim. Poziomy: na dużym ekranie oś jedzie w bok razem ze scrollem strony. Na telefonie i przy ograniczeniu ruchu zawsze zostaje pion. Puste = pionowy.",
+        }),
+        defineField({
           name: "items",
           title: "Wpis na osi czasu",
           type: "array",

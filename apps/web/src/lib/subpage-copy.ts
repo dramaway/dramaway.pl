@@ -13,6 +13,11 @@ export const SUBPAGE = {
     expand: "Czytaj więcej",
     collapse: "Zwiń",
   },
+  /** Year row on /fundacja. Scroll opens the centre years; this pins one. */
+  history: {
+    expand: "więcej",
+    collapse: "zwiń",
+  },
   artGeneracje: {
     ctaLabel: "zobacz wszystkie edycje",
     ctaHref: "#edycje",

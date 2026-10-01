@@ -53,6 +53,7 @@ export default async function FundacjaIndexPage() {
       <FundacjaHistory
         heading={about.history.heading}
         lead={about.history.lead}
+        layout={about.history.layout}
         items={about.history.items}
       />
       {about.history.items.length > 0 ? (
