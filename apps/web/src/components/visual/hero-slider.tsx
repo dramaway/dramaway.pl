@@ -184,6 +184,12 @@ export function HeroSlider({ slides, settings }: HeroSliderProps) {
             onClick={() => setUserPaused((value) => !value)}
           >
             <span className="hero-slider-glyph" aria-hidden />
+            <svg className="hero-slider-play" viewBox="0 0 18 20" aria-hidden>
+              <path
+                fill="currentColor"
+                d="M2.5 5.8 L2.5 14.2 Q2.5 17.8 5.6 16 L11.9 12.5 Q16.2 10 11.9 7.5 L5.6 4 Q2.5 2.2 2.5 5.8 Z"
+              />
+            </svg>
           </button>
         ) : null}
       </div>

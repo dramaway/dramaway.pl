@@ -1253,16 +1253,20 @@
     box-shadow: 0.28rem 0 0 var(--color-ink);
   }
 
+  .hero-slider-play {
+    display: none;
+    width: 0.95rem;
+    height: 1.05rem;
+    margin-inline-start: 0.14rem;
+    color: var(--color-ink);
+  }
+
   .hero-slider-pause[data-state="paused"] .hero-slider-glyph {
-    width: 0;
-    height: 0;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-    border-style: solid;
-    border-width: 0.28rem 0 0.28rem 0.42rem;
-    border-color: transparent transparent transparent var(--color-ink);
-    margin-inline-start: 0.1rem;
+    display: none;
+  }
+
+  .hero-slider-pause[data-state="paused"] .hero-slider-play {
+    display: block;
   }
 
   @media (prefers-reduced-motion: reduce) {
