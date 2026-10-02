@@ -11,10 +11,9 @@ import {
 } from "react";
 import { SUBPAGE } from "@/lib/subpage-copy";
 import {
-  historyCollapseHold,
   historyDampOpenness,
-  historyHeldOpenness,
   historyOpenness,
+  historyScrollOpenness,
   historyPinProgress,
   historyPinSpan,
   historyTrackOffset,
@@ -39,6 +38,12 @@ const OPEN_EASE = 0.22;
 const VERTICAL_REACH = 0.34;
 const HORIZONTAL_REACH = 0.32;
 const FOCAL_Y = 0.46;
+/** Top of the buffer: a marker above this line starts closing its year. */
+const HOLD_Y = 0.28;
+/** A long body stays open until its end rises above this line. */
+const RELEASE_Y = 0.62;
+/** Marker travel, as a viewport share, over which a year closes. */
+const CLOSE_SPAN = 0.3;
 
 type HistoryTimelineProps = {
   items: readonly ResolvedAboutHistoryItem[];
@@ -55,10 +60,11 @@ type MotionCss = CSSProperties & {
  * /fundacja history. Vertical list with a desktop sine, or a sticky
  * horizontal track whose vertical scroll drives translateX. Phones and
  * reduced motion always get the vertical list. Scroll opens the two or
- * three markers nearest the focal point, in step with the scroll. A year
- * that has actually opened waits briefly before it follows a lower target,
- * then closes with the scroll again. "rozwiń całość" opens every year for
- * plain reading and turns the scroll effect off.
+ * years around the focal point, in step with the scroll. On the vertical
+ * list a year stays fully open while its dot and title pass through the top
+ * of the screen and closes only as the end of its body rises further.
+ * "rozwiń całość" opens every year for plain reading and turns the scroll
+ * effect off.
  */
 export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimelineProps) {
   const [wide, setWide] = useState(false);
@@ -91,10 +97,6 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
   const itemsRef = useRef(items);
   const readingRef = useRef(reading);
   const kickRef = useRef<() => void>(() => {});
-  const holdUntilRef = useRef<number[]>([]);
-  const holdTimerRef = useRef(0);
-  const wasReadingRef = useRef(false);
-  const resumeHoldRef = useRef(true);
   opennessRef.current = openness;
   itemsRef.current = items;
   readingRef.current = reading;
@@ -103,7 +105,6 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
   if (generation !== itemKey) {
     const blank = items.map(() => 0);
     opennessRef.current = blank;
-    holdUntilRef.current = [];
     setGeneration(itemKey);
     setOpenness(blank);
     setReading(false);
@@ -158,24 +159,42 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
 
     let frame = 0;
     let stopped = false;
-    if (wasReadingRef.current && !reading) resumeHoldRef.current = false;
-    wasReadingRef.current = reading;
 
     const measure = () => {
       const current = itemsRef.current;
+      if (!horizontal) {
+        const viewport = window.innerHeight;
+        const band = {
+          focal: viewport * FOCAL_Y,
+          reach: Math.max(1, viewport * VERTICAL_REACH),
+          hold: viewport * HOLD_Y,
+          release: viewport * RELEASE_Y,
+          span: Math.max(1, viewport * CLOSE_SPAN),
+        };
+        return current.map((_, index) => {
+          const marker = markerRefs.current[index];
+          if (!marker) return 0;
+          const rect = marker.getBoundingClientRect();
+          const center = rect.top + rect.height / 2;
+          const panel = itemRefs.current[index]?.querySelector<HTMLElement>(".history-panel");
+          let length = rect.height / 2;
+          if (panel) {
+            const full = Number(panel.style.getPropertyValue("--panel")) || 0;
+            length = panel.getBoundingClientRect().top - center + full;
+          }
+          return historyScrollOpenness(center, length, band);
+        });
+      }
       const sticky = stickyRef.current;
-      const focal = horizontal
-        ? (sticky?.getBoundingClientRect().left ?? 0) +
-          (sticky?.clientWidth ?? window.innerWidth) / 2
-        : window.innerHeight * FOCAL_Y;
-      const reach = horizontal
-        ? Math.max(1, (sticky?.clientWidth ?? window.innerWidth) * HORIZONTAL_REACH)
-        : Math.max(1, window.innerHeight * VERTICAL_REACH);
+      const focal =
+        (sticky?.getBoundingClientRect().left ?? 0) +
+        (sticky?.clientWidth ?? window.innerWidth) / 2;
+      const reach = Math.max(1, (sticky?.clientWidth ?? window.innerWidth) * HORIZONTAL_REACH);
       const positions = current.map((_, index) => {
         const marker = markerRefs.current[index];
         if (!marker) return focal + reach * 4;
         const rect = marker.getBoundingClientRect();
-        return horizontal ? rect.left + rect.width / 2 : rect.top + rect.height / 2;
+        return rect.left + rect.width / 2;
       });
       return historyOpenness(positions, focal, reach);
     };
@@ -198,48 +217,12 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
       track.style.transform = `translate3d(${historyTrackOffset(progress, travel)}px, 0, 0)`;
     };
 
-    const withHold = (goals: number[]) => {
-      if (!resumeHoldRef.current) {
-        holdUntilRef.current = goals.map(() => 0);
-        window.clearTimeout(holdTimerRef.current);
-        holdTimerRef.current = 0;
-        return goals;
-      }
-      const now = performance.now();
-      if (holdUntilRef.current.length !== goals.length) {
-        holdUntilRef.current = goals.map(() => 0);
-      }
-      let soonest = Infinity;
-      const target = goals.map((goal, index) => {
-        const prev = opennessRef.current[index] ?? 0;
-        const decision = historyCollapseHold(
-          prev,
-          goal,
-          now,
-          holdUntilRef.current[index] ?? 0,
-        );
-        holdUntilRef.current[index] = decision.until;
-        if (decision.hold && decision.until > now) {
-          soonest = Math.min(soonest, decision.until);
-        }
-        return historyHeldOpenness(prev, goal, decision.hold);
-      });
-      window.clearTimeout(holdTimerRef.current);
-      holdTimerRef.current = 0;
-      if (soonest < Infinity) {
-        holdTimerRef.current = window.setTimeout(() => {
-          kickRef.current();
-        }, Math.max(32, soonest - performance.now() + 20));
-      }
-      return target;
-    };
-
     const tick = (framesLeft: number) => {
       if (stopped) return;
       if (!readingRef.current) syncPin();
       const target = readingRef.current
         ? itemsRef.current.map(() => 1)
-        : withHold(measure());
+        : measure();
       const next = historyDampOpenness(opennessRef.current, target, OPEN_EASE);
       const changed = next.some((value, index) => value !== opennessRef.current[index]);
       if (changed) {
@@ -247,7 +230,6 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
         setOpenness(next);
       }
       const settled = next.every((value, index) => value === target[index]);
-      if (settled) resumeHoldRef.current = true;
       if (!settled && framesLeft > 0) {
         frame = window.requestAnimationFrame(() => tick(framesLeft - 1));
       }
@@ -277,8 +259,6 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
       stopped = true;
       kickRef.current = () => {};
       window.cancelAnimationFrame(frame);
-      window.clearTimeout(holdTimerRef.current);
-      holdTimerRef.current = 0;
       window.removeEventListener("scroll", kick);
       window.removeEventListener("resize", kick);
       observer?.disconnect();

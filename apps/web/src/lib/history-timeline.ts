@@ -95,58 +95,45 @@ export function historyMergeOpenness(
   });
 }
 
-/**
- * An entry has to be this open before a downward scroll target is delayed.
- * Partial neighbours still follow the scroll immediately.
- */
-export const HISTORY_OPEN_ENOUGH = 0.8;
-
-/** Pause before an open year starts following a lower scroll target. */
-export const HISTORY_COLLAPSE_HOLD_MS = 700;
-
-export type HistoryHold = {
-  /** Keep the openness already reached instead of following a lower `goal`. */
-  hold: boolean;
+export type HistoryScrollBand = {
+  /** Marker centre at which a year is fully open on the way up. */
+  focal: number;
+  /** Distance below `focal` over which the year opens. */
+  reach: number;
+  /** Top edge of the buffer: the year starts closing once its marker is above. */
+  hold: number;
   /**
-   * 0 — no pending release. A positive timestamp — release then.
-   * -1 — the release already fired, so a later frame must not start it again.
+   * A long body keeps the year open until its fully opened end rises above
+   * this line, even when the marker has already left the buffer.
    */
-  until: number;
+  release: number;
+  /** Marker travel over which the year closes once the close starts. */
+  span: number;
 };
 
 /**
- * Collapse lags the scroll target by one short pause. The pause starts when
- * the target first drops and is not refreshed, so the year then follows the
- * scroll again. Once the two are within a few percent the next drop may pause
- * again. A rise always passes through.
+ * Vertical openness as a pure function of position, no timing. Rises as the
+ * marker comes up to `focal`, stays at 1 through the top buffer, then falls
+ * over `span`. `length` is the distance from the marker centre to the end of
+ * the fully opened body; it does not depend on the current openness, so the
+ * curve does not feed back on itself.
  */
-export function historyCollapseHold(
-  current: number,
-  goal: number,
-  now: number,
-  until: number,
-): HistoryHold {
-  if (!(current >= HISTORY_OPEN_ENOUGH) || goal >= current - 0.03) {
-    return { hold: false, until: 0 };
-  }
-  if (until === 0) {
-    return { hold: true, until: now + HISTORY_COLLAPSE_HOLD_MS };
-  }
-  if (now < until) return { hold: true, until };
-  return { hold: false, until: -1 };
-}
-
-/**
- * While the pause lasts, stay at the openness scroll already produced.
- * A higher goal still wins, so opening is never held back.
- */
-export function historyHeldOpenness(
-  current: number,
-  goal: number,
-  hold: boolean,
+export function historyScrollOpenness(
+  center: number,
+  length: number,
+  band: HistoryScrollBand,
 ): number {
-  if (!hold) return goal;
-  return Math.max(current, goal);
+  if (!Number.isFinite(center)) return 0;
+  if (!(band.reach > 0) || !(band.span > 0)) return 0;
+  const rise = center <= band.focal
+    ? 1
+    : 1 - smoothstep((center - band.focal) / band.reach);
+  const reach = Number.isFinite(length) ? Math.max(0, length) : 0;
+  const start = Math.min(band.hold, band.release - reach);
+  const fall = center >= start
+    ? 1
+    : 1 - smoothstep((start - center) / band.span);
+  return Math.min(rise, fall);
 }
 
 /** Ease toward the target. Snaps when the gap is under 0.01. */

@@ -1,12 +1,10 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
-  HISTORY_COLLAPSE_HOLD_MS,
-  historyCollapseHold,
   historyDampOpenness,
-  historyHeldOpenness,
   historyMergeOpenness,
   historyOpenness,
+  historyScrollOpenness,
   historyPinProgress,
   historyPinSpan,
   historyTrackOffset,
@@ -78,40 +76,35 @@ test("a forced year overrides the scroll value", () => {
   ]);
 });
 
-test("collapse pauses once, then follows the lower scroll target", () => {
-  assert.deepEqual(historyCollapseHold(0.4, 0.9, 1000, 500), {
-    hold: false,
-    until: 0,
-  });
-  assert.deepEqual(historyCollapseHold(0.2, 0, 1000, 0), {
-    hold: false,
-    until: 0,
-  });
-
-  const started = historyCollapseHold(1, 0.4, 1000, 0);
-  assert.equal(started.hold, true);
-  assert.equal(started.until, 1000 + HISTORY_COLLAPSE_HOLD_MS);
-  const pending = historyCollapseHold(1, 0, started.until - 50, started.until);
-  assert.equal(pending.hold, true);
-  assert.equal(pending.until, started.until);
-  assert.deepEqual(historyCollapseHold(1, 0, pending.until, pending.until), {
-    hold: false,
-    until: -1,
-  });
-  assert.deepEqual(historyCollapseHold(0.9, 0, pending.until + 50, -1), {
-    hold: false,
-    until: -1,
-  });
-  assert.deepEqual(historyCollapseHold(0.94, 0.92, 5000, -1), {
-    hold: false,
-    until: 0,
-  });
+test("vertical openness follows position: rise, top buffer, then close", () => {
+  const band = { focal: 400, reach: 200, hold: 240, release: 520, span: 200 };
+  assert.equal(historyScrollOpenness(700, 200, band), 0);
+  assert.ok(Math.abs(historyScrollOpenness(500, 200, band) - 0.5) < 1e-9);
+  assert.equal(historyScrollOpenness(400, 200, band), 1);
+  assert.equal(historyScrollOpenness(240, 200, band), 1);
+  assert.ok(Math.abs(historyScrollOpenness(140, 200, band) - 0.5) < 1e-9);
+  assert.equal(historyScrollOpenness(40, 200, band), 0);
+  assert.equal(historyScrollOpenness(Number.NaN, 200, band), 0);
 });
 
-test("a hold keeps the openness scroll already reached", () => {
-  assert.equal(historyHeldOpenness(0.62, 0.1, true), 0.62);
-  assert.equal(historyHeldOpenness(0.62, 0.9, true), 0.9);
-  assert.equal(historyHeldOpenness(0.62, 0.1, false), 0.1);
+test("a long body keeps its year open until the end of the body rises", () => {
+  const band = { focal: 400, reach: 200, hold: 240, release: 520, span: 200 };
+  assert.equal(historyScrollOpenness(0, 600, band), 1);
+  assert.equal(historyScrollOpenness(-80, 600, band), 1);
+  assert.ok(Math.abs(historyScrollOpenness(-180, 600, band) - 0.5) < 1e-9);
+  assert.equal(historyScrollOpenness(-280, 600, band), 0);
+});
+
+test("vertical openness never jumps between nearby scroll positions", () => {
+  const band = { focal: 400, reach: 200, hold: 240, release: 520, span: 200 };
+  for (const length of [40, 200, 600]) {
+    let prev = historyScrollOpenness(800, length, band);
+    for (let center = 799; center >= -600; center -= 1) {
+      const next = historyScrollOpenness(center, length, band);
+      assert.ok(Math.abs(next - prev) < 0.02, `jump at ${center} (${length})`);
+      prev = next;
+    }
+  }
 });
 
 test("damping eases toward the target and then snaps", () => {
