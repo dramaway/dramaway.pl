@@ -78,44 +78,40 @@ test("a forced year overrides the scroll value", () => {
   ]);
 });
 
-test("collapse waits out a reading entry, then the release fires once", () => {
-  assert.deepEqual(historyCollapseHold(0.4, 0.9, 1000, 500, true), {
+test("collapse pauses once, then follows the lower scroll target", () => {
+  assert.deepEqual(historyCollapseHold(0.4, 0.9, 1000, 500), {
     hold: false,
     until: 0,
   });
-  assert.deepEqual(historyCollapseHold(0.2, 0, 1000, 0, true), {
+  assert.deepEqual(historyCollapseHold(0.2, 0, 1000, 0), {
     hold: false,
     until: 0,
   });
 
-  const reading = historyCollapseHold(1, 0, 1000, 0, true);
-  assert.equal(reading.hold, true);
-  assert.equal(reading.until, 1000 + HISTORY_COLLAPSE_HOLD_MS);
-  const refreshed = historyCollapseHold(1, 0, 2000, reading.until, true);
-  assert.equal(refreshed.until, 2000 + HISTORY_COLLAPSE_HOLD_MS);
-
-  const pending = historyCollapseHold(1, 0, 1000, refreshed.until, false);
+  const started = historyCollapseHold(1, 0.4, 1000, 0);
+  assert.equal(started.hold, true);
+  assert.equal(started.until, 1000 + HISTORY_COLLAPSE_HOLD_MS);
+  const pending = historyCollapseHold(1, 0, started.until - 50, started.until);
   assert.equal(pending.hold, true);
-  assert.equal(pending.until, refreshed.until);
-  assert.deepEqual(
-    historyCollapseHold(1, 0, pending.until, pending.until, false),
-    { hold: false, until: -1 },
-  );
-  assert.deepEqual(historyCollapseHold(0.9, 0, pending.until + 50, -1, false), {
+  assert.equal(pending.until, started.until);
+  assert.deepEqual(historyCollapseHold(1, 0, pending.until, pending.until), {
     hold: false,
     until: -1,
   });
+  assert.deepEqual(historyCollapseHold(0.9, 0, pending.until + 50, -1), {
+    hold: false,
+    until: -1,
+  });
+  assert.deepEqual(historyCollapseHold(0.94, 0.92, 5000, -1), {
+    hold: false,
+    until: 0,
+  });
 });
 
-test("the horizontal track times the release even while the card is visible", () => {
-  const first = historyCollapseHold(1, 0.2, 500, 0, true, true);
-  assert.equal(first.hold, true);
-  assert.equal(first.until, 500 + HISTORY_COLLAPSE_HOLD_MS);
-});
-
-test("a hold finishes at fully open", () => {
-  assert.equal(historyHeldOpenness(0, true), 1);
-  assert.equal(historyHeldOpenness(0.4, false), 0.4);
+test("a hold keeps the openness scroll already reached", () => {
+  assert.equal(historyHeldOpenness(0.62, 0.1, true), 0.62);
+  assert.equal(historyHeldOpenness(0.62, 0.9, true), 0.9);
+  assert.equal(historyHeldOpenness(0.62, 0.1, false), 0.1);
 });
 
 test("damping eases toward the target and then snaps", () => {

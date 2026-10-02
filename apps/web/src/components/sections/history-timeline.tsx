@@ -39,8 +39,6 @@ const OPEN_EASE = 0.22;
 const VERTICAL_REACH = 0.34;
 const HORIZONTAL_REACH = 0.32;
 const FOCAL_Y = 0.46;
-/** Body still above this line counts as being read, so collapse waits. */
-const RELEASE_Y = 0.12;
 
 type HistoryTimelineProps = {
   items: readonly ResolvedAboutHistoryItem[];
@@ -57,10 +55,10 @@ type MotionCss = CSSProperties & {
  * /fundacja history. Vertical list with a desktop sine, or a sticky
  * horizontal track whose vertical scroll drives translateX. Phones and
  * reduced motion always get the vertical list. Scroll opens the two or
- * three markers nearest the focal point. A year that has actually opened
- * stays open while its body is still on screen, then lingers briefly, so a
- * long mobile entry can be read before it eases shut. "rozwiń całość" opens
- * every year for plain reading and turns the scroll effect off.
+ * three markers nearest the focal point, in step with the scroll. A year
+ * that has actually opened waits briefly before it follows a lower target,
+ * then closes with the scroll again. "rozwiń całość" opens every year for
+ * plain reading and turns the scroll effect off.
  */
 export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimelineProps) {
   const [wide, setWide] = useState(false);
@@ -208,30 +206,23 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
         return goals;
       }
       const now = performance.now();
-      const release = window.innerHeight * RELEASE_Y;
-      const viewport = window.innerHeight;
       if (holdUntilRef.current.length !== goals.length) {
         holdUntilRef.current = goals.map(() => 0);
       }
       let soonest = Infinity;
       const target = goals.map((goal, index) => {
         const prev = opennessRef.current[index] ?? 0;
-        const node = itemRefs.current[index];
-        const rect = !horizontal && node ? node.getBoundingClientRect() : null;
-        const reading = rect ? rect.bottom > release && rect.top < viewport : false;
         const decision = historyCollapseHold(
           prev,
           goal,
           now,
           holdUntilRef.current[index] ?? 0,
-          reading,
-          horizontal,
         );
         holdUntilRef.current[index] = decision.until;
-        if (decision.hold && !reading && decision.until > now) {
+        if (decision.hold && decision.until > now) {
           soonest = Math.min(soonest, decision.until);
         }
-        return historyHeldOpenness(goal, decision.hold);
+        return historyHeldOpenness(prev, goal, decision.hold);
       });
       window.clearTimeout(holdTimerRef.current);
       holdTimerRef.current = 0;
