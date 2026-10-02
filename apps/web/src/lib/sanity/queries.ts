@@ -287,6 +287,7 @@ export const aboutPageQuery = `*[_type == "aboutPage"][0] {
   },
   history {
     heading,
+    layout,
     lead[] ${portableBodyProjection},
     items[] { year, title, body }
   },

@@ -13,6 +13,11 @@ export const SUBPAGE = {
     expand: "Czytaj więcej",
     collapse: "Zwiń",
   },
+  /** One control above the /fundacja timeline. Scroll still opens the centre years. */
+  history: {
+    expandAll: "rozwiń całość",
+    collapseAll: "zwiń całość",
+  },
   artGeneracje: {
     ctaLabel: "zobacz wszystkie edycje",
     ctaHref: "#edycje",

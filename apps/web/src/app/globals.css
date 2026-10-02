@@ -129,6 +129,11 @@
   /* Timeline year marker on /fundacja — Figma ~86 px; tightened for long lists. */
   --history-marker: clamp(2.75rem, 5vw, 4.25rem);
   --history-gap: 1.5rem;
+  /* Rightward sine on the desktop vertical axis. Never shifts past the left edge. */
+  --history-wave: clamp(2.5rem, 5vw, 4.5rem);
+  /* Horizontal scrollytelling card. Centred in the sticky window via cqw. */
+  --history-card: 18rem;
+  --history-pin-pad: clamp(3rem, 12dvh, 6rem);
   /* /fundacja team bio portrait — Figma ~178 px. */
   --team-bio-photo: clamp(7rem, 12vw, 11.125rem);
   /* Overlay header on `/` at lg+ (py-8 × 2 plus logo/nav, with wrap room). */
@@ -255,6 +260,12 @@
   --sidebar-ring: oklch(0.556 0 0);
   --text-primary: var(--foreground);
   --text-secondary: color-mix(in srgb, var(--foreground) 72%, transparent);
+}
+
+@property --open {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
 }
 
 @layer base {
@@ -706,7 +717,7 @@
   }
 
   /* Sentence case — skip the base `uppercase` on hero H1, Czytelnia
-   * categories, history item titles (Alexandria, not display), and the
+   * categories, history item titles (MuseoModerno, not uppercase), and the
    * archive band label on /projekty. */
   .hero-title,
   .pub-cat-head,
@@ -2075,22 +2086,70 @@
     }
   }
 
+  .history-follow {
+    margin-top: 2rem;
+  }
+
+  .history-list,
+  .history-track {
+    list-style: none;
+    margin: 0;
+  }
+
   .history-list {
     display: flex;
     flex-direction: column;
-    gap: var(--history-gap);
+    padding: 0;
   }
 
   .history-item {
     display: grid;
     grid-template-columns: var(--history-marker) minmax(0, 1fr);
-    gap: 1rem;
+    column-gap: 1rem;
     align-items: start;
   }
 
+  /* Year and title share a row so their alphabetic baselines line up.
+     The rail sits under the dot and still stretches to the next year. */
+  .history-item > .history-marker {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: baseline;
+  }
+
+  .history-item > .history-title {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: baseline;
+  }
+
+  .history-item > .history-rail {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: stretch;
+  }
+
+  .history-item > .history-panel {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .history-item:not(:last-child) > .history-panel {
+    margin-bottom: var(--history-gap);
+  }
+
+  .history-rail {
+    position: relative;
+    min-height: var(--history-gap);
+  }
+
   .history-marker {
-    display: grid;
-    place-items: center;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
     width: var(--history-marker);
     aspect-ratio: 1;
     border-radius: 50%;
@@ -2099,10 +2158,198 @@
     font-size: 0.75rem;
     font-weight: 600;
     line-height: 1;
+    text-align: center;
+  }
+
+  .history-stem {
+    display: block;
+    width: 2px;
+    height: calc(100% - 0.35rem);
+    margin-top: 0.35rem;
+    margin-inline: auto;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-ink) 16%, transparent);
+  }
+
+  .history-wave {
+    display: none;
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: calc(var(--history-marker) / -2);
+    width: var(--history-wave);
+    height: calc(100% + var(--history-marker) / 2);
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .history-wave path {
+    stroke: color-mix(in srgb, var(--color-ink) 16%, transparent);
+    stroke-width: 2px;
   }
 
   .history-title {
-    font-family: var(--font-body);
+    min-width: 0;
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-h4);
+    font-weight: 600;
+    line-height: var(--text-h4--line-height);
+  }
+
+  .history-all {
+    display: inline-flex;
+    margin: 0 0 0.75rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: color-mix(in srgb, var(--color-ink) 48%, transparent);
+    font-family: var(--font-display);
+    font-size: var(--text-small);
+    font-weight: 500;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .history-all:hover,
+  .history-all:focus-visible {
+    color: var(--color-ink);
+  }
+
+  .history-all:focus-visible {
+    outline: 2px solid var(--color-magenta);
+    outline-offset: 3px;
+  }
+
+  .history-title:focus-visible {
+    outline: 2px solid var(--color-magenta);
+    outline-offset: 3px;
+  }
+
+  .history-panel {
+    min-width: 0;
+    height: calc(var(--open, 0) * var(--panel, 0) * 1px);
+    overflow: hidden;
+    /* Veil stays until --open hits 1, then the fade length is zero.
+       Cap it so a short partial block still shows its first lines. */
+    --history-veil: clamp(0, (1 - var(--open, 0)) * 24, 1);
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      #000 0,
+      #000 calc(100% - min(3.25rem, 100%) * var(--history-veil)),
+      transparent
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      #000 0,
+      #000 calc(100% - min(3.25rem, 100%) * var(--history-veil)),
+      transparent
+    );
+  }
+
+  .history-panel-inner {
+    padding-top: 0.5rem;
+  }
+
+  .history-card .history-panel-inner {
+    padding-top: 0;
+  }
+
+  .history-body {
+    margin: 0;
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    color: color-mix(in srgb, var(--color-ink) 78%, transparent);
+  }
+
+  .history-pin {
+    min-height: 100dvh;
+  }
+
+  .history-pin-sticky {
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: flex-start;
+    height: 100dvh;
+    padding-top: var(--history-pin-pad);
+    overflow-x: clip;
+    container-type: inline-size;
+    container-name: history;
+  }
+
+  .history-track {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--history-gap);
+    padding-inline: max(var(--page-pad), calc(50cqw - var(--history-card) / 2));
+    transform: translate3d(0, 0, 0);
+  }
+
+  .history-card {
+    display: flex;
+    flex: 0 0 var(--history-card);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    width: var(--history-card);
+  }
+
+  .history-card .history-panel {
+    max-height: calc(
+      100dvh - var(--history-pin-pad) - var(--history-marker) - 7rem
+    );
+  }
+
+  .history-card:not(:last-child) .history-marker::after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    left: 100%;
+    top: 50%;
+    width: calc(var(--history-card) - var(--history-marker) + var(--history-gap));
+    height: 2px;
+    background: color-mix(in srgb, var(--color-ink) 16%, transparent);
+    transform: translateY(-50%);
+  }
+
+  @media (width >= 64rem) {
+    .history-list {
+      --history-marker: 3.5rem;
+      --history-gap: 2.75rem;
+    }
+
+    .history-list .history-item {
+      column-gap: 1.35rem;
+      transform: translateX(calc(var(--wave, 0) * var(--history-wave)));
+    }
+
+    .history-list .history-stem {
+      display: none;
+    }
+
+    .history-list .history-wave {
+      display: block;
+    }
+
+    .history-list .history-panel-inner {
+      padding-top: 0.85rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .history-reveal .history-item:not([data-seen]) {
+      opacity: 0;
+      translate: 0 1.25rem;
+    }
+
+    .history-reveal .history-item[data-seen] {
+      opacity: 1;
+      translate: 0 0;
+      transition:
+        opacity 0.7s ease,
+        translate 0.7s ease;
+    }
   }
 
   /* CTA list — not `.stack` (`--spacing-section` is a whole band, not a row). */
