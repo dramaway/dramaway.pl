@@ -128,7 +128,7 @@ Gdzie się logować:
 - **`studio-adres` (ekran logowania)** — okno prywatne na [https://dramaway.sanity.studio/](https://dramaway.sanity.studio/) **zanim** wpiszesz hasło. Nie wylogowywać zwykłej sesji. W kadrze ma być pasek adresu Studia, nie strony fundacji.
 - **`role-zaproszenie`** — to nie Studio. [https://www.sanity.io/manage](https://www.sanity.io/manage) → projekt Dramaway (`tr2qdg9j`) → członkowie. W kadrze Editor przy redakcji i Administrator przy `admin@dramaway.pl`.
 
-Zostało: `studio-adres`, `role-zaproszenie`, `studio-publish`, `studio-obraz`, `studio-link`, `strony-skroty`, `strony-listing`, `czytelnia-dokument`, `czytelnia-okladka`, `fundacja-dokumenty`, `tekst-toolbar`, `tekst-termin`, `tekst-indent`, `tekst-columns`, `tekst-button`.
+Zostało: `studio-adres`, `role-zaproszenie`, `studio-publish`, `studio-obraz`, `studio-link`, `strony-skroty`, `strony-listing`, `czytelnia-dokument`, `czytelnia-okladka`, `fundacja-dokumenty`, `fundacja-historia`, `tekst-toolbar`, `tekst-termin`, `tekst-indent`, `tekst-columns`, `tekst-button`.
 
 Cutover kont (skrzynka, GitHub, Netlify, Sanity/NGO, domena) jest opisany, nieodpalony: [guides/cutover.md](guides/cutover.md).
 

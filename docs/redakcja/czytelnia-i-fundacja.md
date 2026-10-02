@@ -43,7 +43,15 @@ Dokument **O fundacji**, adres `/fundacja`. Pusta lista w danej grupie chowa ca�
 
 **Zespół.** Nagłówek, wybrane osoby (dokumenty Person) i opcjonalny tekst pod zdjęciami. Skład ról w tekście oznaczamy listą Roles, patrz [Tekst](tekst.md). Puste osoby i pusty tekst = brak sekcji. Osobna strona `/zespol` to listing wszystkich osób i nie zastępuje tego bloku.
 
-**Historia.** Lead nad osią jest tekstem sformatowanym. Wpisy mają rok, tytuł i opis. Opis jest zwinięty: przy scrollu same rozwijają się dwa–trzy lata najbliżej środka ekranu, a ucięty tekst zanika gradientem, dopóki blok nie jest otwarty w całości. Rozwinięty wpis zostaje otwarty, gdy jego kropka przechodzi przez górną część ekranu, i zwija się dopiero przy dalszym przewijaniu — zawsze w ślad za ruchem palca. Długi opis zostaje otwarty dłużej, żeby dało się go doczytać. Nad osią jest jeden przełącznik „rozwiń całość” / „zwiń całość” — otwiera wszystkie opisy do zwykłego czytania i wyłącza efekt scrolla. Układ osi (Pionowy / Poziomy) jest w tej grupie. Poziomy na dużym ekranie jedzie w bok razem ze scrollem strony. Na telefonie i przy ograniczeniu ruchu oś jest zawsze pionowa, przy lewej krawędzi, bez wychyleń. Puste pole układu = pion. Pusta lista wpisów = brak osi. Nie wklejamy przykładowych lat z makiety.
+**Historia.** Nagłówek i lead stoją nad osią. Lead to tekst sformatowany. Pusty lead zostawia samą oś.
+
+Każdy wiersz na liście **Wpis na osi czasu** ma trzy pola: **Rok / znacznik** (napis w kółku, na przykład ‘11), **Tytuł** i **Opis**. Rok i tytuł są wymagane. Pusty opis zostawia sam rok i tytuł. Pusta lista wpisów chowa całą oś. Nie wklejamy przykładowych lat z makiety.
+
+Na stronie opisy startują zwinięte. Przy przewijaniu otwierają się lata najbliżej środka ekranu. Ucięty opis zanika, dopóki nie jest otwarty w całości. Gdy kółko jest już w górnej części ekranu, opis zostaje otwarty i zwija się dopiero przy dalszym przewijaniu. Dłuższy opis zostaje otwarty dłużej, żeby dało się go doczytać. Nad osią jest jeden napis „rozwiń całość”. Po kliknięciu zmienia się w „zwiń całość”: otwiera wszystkie opisy do zwykłego czytania i na ten czas wyłącza otwieranie scrollem.
+
+**Układ osi** to Pionowy albo Poziomy. Pionowy układa lata jedno pod drugim. Na szerokim ekranie kółka lekko schodzą w prawo. Poziomy na szerokim ekranie jedzie w bok razem ze scrollem strony. Na telefonie i przy ograniczeniu ruchu oś jest zawsze pionowa, przy lewej krawędzi. Puste pole = pion.
+
+<!-- screen: fundacja-historia | Grupa Historia: przełącznik Układ osi ustawiony na Pionowy i jeden wpis z rokiem, tytułem i opisem | Widać, że rok to tekst w kółku, a układ osi wybiera się w tej grupie -->
 
 **Dokumenty.** Każdy wiersz to tytuł plus strona z panelu, plik PDF albo adres. Pusta lista = brak sekcji.
 

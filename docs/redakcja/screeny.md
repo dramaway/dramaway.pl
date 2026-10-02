@@ -25,6 +25,7 @@ Jeszcze bez pliku, bo wymagałyby wylogowania, wejścia w Manage albo przełącz
 | `czytelnia-dokument` | [czytelnia-i-fundacja.md](czytelnia-i-fundacja.md) | Format i File (PDF) na jednym kadrze | Kadr uciął środek formularza; ma być widać, skąd bierze się cel wiersza |
 | `czytelnia-okladka` | [czytelnia-i-fundacja.md](czytelnia-i-fundacja.md) | Pierwszy blok Body to obrazek, z alt i hotspotem | Jeszcze nie |
 | `fundacja-dokumenty` | [czytelnia-i-fundacja.md](czytelnia-i-fundacja.md) | Wiersz dokumentu z podpiętym PDF | Na Statucie jest strona, slot PDF jest pusty; kadr uciął pola |
+| `fundacja-historia` | [czytelnia-i-fundacja.md](czytelnia-i-fundacja.md) | Grupa Historia: Układ osi na Pionowy i jeden wpis | Jeszcze nie |
 | `tekst-toolbar` | [tekst.md](tekst.md) | Sam pasek, z Termin, Indent i Roles | Pasek jest na górze kadru `tekst-roles` |
 | `tekst-termin` | [tekst.md](tekst.md) | Akapit w stylu Termin | Trzeba zaznaczyć styl, nie chciałem zmieniać tekstu |
 | `tekst-indent` | [tekst.md](tekst.md) | Lista Indent na dwóch poziomach | Jeszcze nie |
@@ -99,5 +100,6 @@ Znaczniki `<!-- screen: ... -->` zostają w tekście także przy wstawionych obr
 | `czytelnia-okladka` | [czytelnia-i-fundacja.md](czytelnia-i-fundacja.md) | Początek Body w Publication: obrazek jako pierwszy blok, z uzupełnionym alt i zaznaczonym hotspotem | Widać, że okładka spisu to pierwszy obrazek w tekście, nie osobne pole |
 | `fundacja-grupy` | [czytelnia-i-fundacja.md](czytelnia-i-fundacja.md) | Zakładki dokumentu O fundacji: Hero, Metody i wartości, Zespół, Historia, Dokumenty | Widać, że jedna strona jest podzielona na te pięć grup |
 | `fundacja-dokumenty` | [czytelnia-i-fundacja.md](czytelnia-i-fundacja.md) | Jeden wiersz dokumentów z tytułem i podpiętym PDF | Widać, że dokument może być plikiem, a nie tylko linkiem do strony |
+| `fundacja-historia` | [czytelnia-i-fundacja.md](czytelnia-i-fundacja.md) | Grupa Historia: przełącznik Układ osi ustawiony na Pionowy i jeden wpis z rokiem, tytułem i opisem | Widać, że rok to tekst w kółku, a układ osi wybiera się w tej grupie. Jeszcze bez pliku |
 
-Wstawione: 13. Zostało: 16, lista na górze tego pliku.
+Wstawione: 13. Zostało: 17, lista na górze tego pliku.
