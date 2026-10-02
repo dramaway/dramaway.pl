@@ -1,7 +1,10 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
+  HISTORY_COLLAPSE_HOLD_MS,
+  historyCollapseHold,
   historyDampOpenness,
+  historyHeldOpenness,
   historyMergeOpenness,
   historyOpenness,
   historyPinProgress,
@@ -73,6 +76,46 @@ test("a forced year overrides the scroll value", () => {
   assert.deepEqual(historyMergeOpenness([0.2, 0.8, 0], [null, 0, 1]), [
     0.2, 0, 1,
   ]);
+});
+
+test("collapse waits out a reading entry, then the release fires once", () => {
+  assert.deepEqual(historyCollapseHold(0.4, 0.9, 1000, 500, true), {
+    hold: false,
+    until: 0,
+  });
+  assert.deepEqual(historyCollapseHold(0.2, 0, 1000, 0, true), {
+    hold: false,
+    until: 0,
+  });
+
+  const reading = historyCollapseHold(1, 0, 1000, 0, true);
+  assert.equal(reading.hold, true);
+  assert.equal(reading.until, 1000 + HISTORY_COLLAPSE_HOLD_MS);
+  const refreshed = historyCollapseHold(1, 0, 2000, reading.until, true);
+  assert.equal(refreshed.until, 2000 + HISTORY_COLLAPSE_HOLD_MS);
+
+  const pending = historyCollapseHold(1, 0, 1000, refreshed.until, false);
+  assert.equal(pending.hold, true);
+  assert.equal(pending.until, refreshed.until);
+  assert.deepEqual(
+    historyCollapseHold(1, 0, pending.until, pending.until, false),
+    { hold: false, until: -1 },
+  );
+  assert.deepEqual(historyCollapseHold(0.9, 0, pending.until + 50, -1, false), {
+    hold: false,
+    until: -1,
+  });
+});
+
+test("the horizontal track times the release even while the card is visible", () => {
+  const first = historyCollapseHold(1, 0.2, 500, 0, true, true);
+  assert.equal(first.hold, true);
+  assert.equal(first.until, 500 + HISTORY_COLLAPSE_HOLD_MS);
+});
+
+test("a hold finishes at fully open", () => {
+  assert.equal(historyHeldOpenness(0, true), 1);
+  assert.equal(historyHeldOpenness(0.4, false), 0.4);
 });
 
 test("damping eases toward the target and then snaps", () => {

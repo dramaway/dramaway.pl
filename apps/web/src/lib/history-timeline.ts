@@ -95,6 +95,56 @@ export function historyMergeOpenness(
   });
 }
 
+/**
+ * An entry has to be this open before leaving the focal zone counts as a
+ * collapse worth delaying. Neighbours that only peeked open still shut at once.
+ */
+export const HISTORY_OPEN_ENOUGH = 0.8;
+
+/** How long a fully open entry lingers after it leaves the reading band. */
+export const HISTORY_COLLAPSE_HOLD_MS = 700;
+
+export type HistoryHold = {
+  /** Keep the entry fully open instead of following `goal`. */
+  hold: boolean;
+  /**
+   * 0 — no pending release. A positive timestamp — release then.
+   * -1 — the release already fired, so a later frame must not start it again.
+   */
+  until: number;
+};
+
+/**
+ * Collapse lags behind the scroll target. A rise always passes through.
+ * `reading` means the entry's body is still on screen (ignored when
+ * `timedOnly`, which is the horizontal track).
+ */
+export function historyCollapseHold(
+  current: number,
+  goal: number,
+  now: number,
+  until: number,
+  reading: boolean,
+  timedOnly = false,
+): HistoryHold {
+  if (!(current >= HISTORY_OPEN_ENOUGH) || goal >= current - 0.001) {
+    return { hold: false, until: 0 };
+  }
+  if (!timedOnly && reading) {
+    return { hold: true, until: now + HISTORY_COLLAPSE_HOLD_MS };
+  }
+  if (until === 0) {
+    return { hold: true, until: now + HISTORY_COLLAPSE_HOLD_MS };
+  }
+  if (now < until) return { hold: true, until };
+  return { hold: false, until: -1 };
+}
+
+/** While held, finish opening and stay there. Otherwise follow the scroll target. */
+export function historyHeldOpenness(goal: number, hold: boolean): number {
+  return hold ? 1 : goal;
+}
+
 /** Ease toward the target. Snaps when the gap is under 0.01. */
 export function historyDampOpenness(
   current: readonly number[],

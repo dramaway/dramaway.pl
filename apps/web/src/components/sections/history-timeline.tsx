@@ -11,7 +11,9 @@ import {
 } from "react";
 import { SUBPAGE } from "@/lib/subpage-copy";
 import {
+  historyCollapseHold,
   historyDampOpenness,
+  historyHeldOpenness,
   historyOpenness,
   historyPinProgress,
   historyPinSpan,
@@ -37,6 +39,8 @@ const OPEN_EASE = 0.22;
 const VERTICAL_REACH = 0.34;
 const HORIZONTAL_REACH = 0.32;
 const FOCAL_Y = 0.46;
+/** Body still above this line counts as being read, so collapse waits. */
+const RELEASE_Y = 0.12;
 
 type HistoryTimelineProps = {
   items: readonly ResolvedAboutHistoryItem[];
@@ -53,8 +57,10 @@ type MotionCss = CSSProperties & {
  * /fundacja history. Vertical list with a desktop sine, or a sticky
  * horizontal track whose vertical scroll drives translateX. Phones and
  * reduced motion always get the vertical list. Scroll opens the two or
- * three markers nearest the focal point. "rozwiń całość" opens every
- * year for plain reading and turns the scroll effect off.
+ * three markers nearest the focal point. A year that has actually opened
+ * stays open while its body is still on screen, then lingers briefly, so a
+ * long mobile entry can be read before it eases shut. "rozwiń całość" opens
+ * every year for plain reading and turns the scroll effect off.
  */
 export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimelineProps) {
   const [wide, setWide] = useState(false);
@@ -87,6 +93,10 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
   const itemsRef = useRef(items);
   const readingRef = useRef(reading);
   const kickRef = useRef<() => void>(() => {});
+  const holdUntilRef = useRef<number[]>([]);
+  const holdTimerRef = useRef(0);
+  const wasReadingRef = useRef(false);
+  const resumeHoldRef = useRef(true);
   opennessRef.current = openness;
   itemsRef.current = items;
   readingRef.current = reading;
@@ -95,6 +105,7 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
   if (generation !== itemKey) {
     const blank = items.map(() => 0);
     opennessRef.current = blank;
+    holdUntilRef.current = [];
     setGeneration(itemKey);
     setOpenness(blank);
     setReading(false);
@@ -149,6 +160,8 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
 
     let frame = 0;
     let stopped = false;
+    if (wasReadingRef.current && !reading) resumeHoldRef.current = false;
+    wasReadingRef.current = reading;
 
     const measure = () => {
       const current = itemsRef.current;
@@ -187,12 +200,55 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
       track.style.transform = `translate3d(${historyTrackOffset(progress, travel)}px, 0, 0)`;
     };
 
+    const withHold = (goals: number[]) => {
+      if (!resumeHoldRef.current) {
+        holdUntilRef.current = goals.map(() => 0);
+        window.clearTimeout(holdTimerRef.current);
+        holdTimerRef.current = 0;
+        return goals;
+      }
+      const now = performance.now();
+      const release = window.innerHeight * RELEASE_Y;
+      const viewport = window.innerHeight;
+      if (holdUntilRef.current.length !== goals.length) {
+        holdUntilRef.current = goals.map(() => 0);
+      }
+      let soonest = Infinity;
+      const target = goals.map((goal, index) => {
+        const prev = opennessRef.current[index] ?? 0;
+        const node = itemRefs.current[index];
+        const rect = !horizontal && node ? node.getBoundingClientRect() : null;
+        const reading = rect ? rect.bottom > release && rect.top < viewport : false;
+        const decision = historyCollapseHold(
+          prev,
+          goal,
+          now,
+          holdUntilRef.current[index] ?? 0,
+          reading,
+          horizontal,
+        );
+        holdUntilRef.current[index] = decision.until;
+        if (decision.hold && !reading && decision.until > now) {
+          soonest = Math.min(soonest, decision.until);
+        }
+        return historyHeldOpenness(goal, decision.hold);
+      });
+      window.clearTimeout(holdTimerRef.current);
+      holdTimerRef.current = 0;
+      if (soonest < Infinity) {
+        holdTimerRef.current = window.setTimeout(() => {
+          kickRef.current();
+        }, Math.max(32, soonest - performance.now() + 20));
+      }
+      return target;
+    };
+
     const tick = (framesLeft: number) => {
       if (stopped) return;
       if (!readingRef.current) syncPin();
       const target = readingRef.current
         ? itemsRef.current.map(() => 1)
-        : measure();
+        : withHold(measure());
       const next = historyDampOpenness(opennessRef.current, target, OPEN_EASE);
       const changed = next.some((value, index) => value !== opennessRef.current[index]);
       if (changed) {
@@ -200,6 +256,7 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
         setOpenness(next);
       }
       const settled = next.every((value, index) => value === target[index]);
+      if (settled) resumeHoldRef.current = true;
       if (!settled && framesLeft > 0) {
         frame = window.requestAnimationFrame(() => tick(framesLeft - 1));
       }
@@ -229,6 +286,8 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
       stopped = true;
       kickRef.current = () => {};
       window.cancelAnimationFrame(frame);
+      window.clearTimeout(holdTimerRef.current);
+      holdTimerRef.current = 0;
       window.removeEventListener("scroll", kick);
       window.removeEventListener("resize", kick);
       observer?.disconnect();
@@ -356,40 +415,33 @@ function HistoryEntry({
       className={horizontal ? "history-card" : "history-item"}
       style={style}
     >
-      <div className="history-axis">
-        <span
-          ref={markerRef}
-          aria-hidden
-          className={cn("history-marker", MARKER_TONES[index % MARKER_TONES.length])}
-        >
-          {item.year}
-        </span>
-        {!horizontal && !isLast ? <span className="history-stem" aria-hidden /> : null}
-        {!horizontal && !isLast ? (
-          <svg
-            className="history-wave"
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-            aria-hidden
-          >
+      <span
+        ref={markerRef}
+        aria-hidden
+        className={cn("history-marker", MARKER_TONES[index % MARKER_TONES.length])}
+      >
+        {item.year}
+      </span>
+      <h3
+        className="history-title"
+        tabIndex={horizontal ? 0 : undefined}
+        onFocus={horizontal ? onFocus : undefined}
+      >
+        {item.title}
+      </h3>
+      {!horizontal && !isLast ? (
+        <div className="history-rail" aria-hidden>
+          <span className="history-stem" />
+          <svg className="history-wave" viewBox="0 0 100 100" preserveAspectRatio="none">
             <path
               d={historyWavePath(factor, nextFactor)}
               fill="none"
               vectorEffect="non-scaling-stroke"
             />
           </svg>
-        ) : null}
-      </div>
-      <div className="history-copy">
-        <h3
-          className="history-title"
-          tabIndex={horizontal ? 0 : undefined}
-          onFocus={horizontal ? onFocus : undefined}
-        >
-          {item.title}
-        </h3>
-        {item.body ? <HistoryPanel body={item.body} open={open} /> : null}
-      </div>
+        </div>
+      ) : null}
+      {item.body ? <HistoryPanel body={item.body} open={open} /> : null}
     </li>
   );
 }
