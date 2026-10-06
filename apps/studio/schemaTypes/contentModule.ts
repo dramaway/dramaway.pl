@@ -281,7 +281,7 @@ export const newsFeedModule = defineType({
   },
 });
 
-/** Shared `sections` members for homepage and page documents. */
+/** Shared `sections` members for the homepage, page documents, and /projekty. */
 export function contentSectionMembers() {
   return [
     defineArrayMember({ type: "contentModule" }),

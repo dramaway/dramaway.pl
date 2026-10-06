@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { contentSectionMembers } from "./contentModule";
 import { heroSlidesField } from "./heroMedia";
 
 export const LANDING_ROUTES = [
@@ -63,13 +64,26 @@ export const landingPage = defineType({
     }),
     heroSlidesField({ group: "hero" }),
     defineField({
+      name: "sections",
+      title: "Sekcje",
+      type: "array",
+      group: "listing",
+      hidden: ({ document }) => document?.route !== "projekty",
+      description:
+        "Nad zakończonymi projektami. Te same bloki co na stronie głównej: zdjęcie i kafelki albo aktualności. Pusta lista zostawia automatyczny wiersz aktywnych projektów.",
+      of: contentSectionMembers(),
+    }),
+    defineField({
       name: "showCzytelnia",
       title: "Pokaż Czytelnię",
       type: "boolean",
       group: "listing",
-      hidden: ({ document }) => document?.route !== "projekty",
+      hidden: ({ document }) => {
+        if (document?.route !== "projekty") return true;
+        return Array.isArray(document.sections) && document.sections.length > 0;
+      },
       description:
-        "Wiersz na /projekty. Tytuł, lead i CTA biorą się z dokumentu Czytelnia — tutaj tylko włącznik. Odznacz, żeby schować.",
+        "Wiersz na /projekty, gdy lista Sekcje jest pusta. Tytuł, lead i CTA biorą się z dokumentu Czytelnia — tutaj tylko włącznik. Odznacz, żeby schować. Po dodaniu sekcji ten wiersz znika; Czytelnię wstaw jako kafelek.",
       initialValue: true,
     }),
   ],

@@ -1,10 +1,11 @@
 import { cache } from "react";
 import { cmsCta, cmsText } from "./cms-text";
+import { resolveContentSections } from "./content-sections";
 import { resolveHeroSlides } from "./hero-slides";
 import { EXCERPT_FALLBACK_MAX } from "./homepage-copy";
 import { czytelniaPath } from "./routes";
 import { getLandingPage } from "./sanity/fetch";
-import type { HeroSlide, LandingPage } from "./sanity/types";
+import type { HeroSlide, LandingPage, ResolvedSection } from "./sanity/types";
 
 export const LANDING_DOCUMENT_IDS = {
   projekty: "landing-projekty",
@@ -78,6 +79,8 @@ function shouldShowCzytelniaOnProjects(cms: LandingPage | null): boolean {
 
 export type ResolvedProjectsLanding = ResolvedLandingHero & {
   czytelnia: ResolvedChannelTeaser | null;
+  /** Same modules as the homepage. Empty = keep the automatic active-project row. */
+  sections: ResolvedSection[];
 };
 
 export const getProjectsLanding = cache(
@@ -86,9 +89,12 @@ export const getProjectsLanding = cache(
       getLandingPage(LANDING_DOCUMENT_IDS.projekty),
       getCzytelniaTeaser(),
     ]);
+    const sections = resolveContentSections(cms?.sections);
     return {
       ...resolveHero(cms),
-      czytelnia: shouldShowCzytelniaOnProjects(cms) ? czytelnia : null,
+      czytelnia:
+        sections.length === 0 && shouldShowCzytelniaOnProjects(cms) ? czytelnia : null,
+      sections,
     };
   },
 );
