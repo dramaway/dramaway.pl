@@ -27,7 +27,6 @@ export function heroSlidesField(options: HeroSlidesFieldOptions = {}) {
     of: [
       defineArrayMember({
         type: "image",
-        name: "heroSlide",
         title: "Slajd",
         options: { hotspot: true },
         description:
@@ -56,6 +55,20 @@ export function heroSlidesField(options: HeroSlidesFieldOptions = {}) {
 }
 
 /** One place for every multi-image hero on the site. */
+/** Single hero still before `heroImages`. Hidden until `pnpm patch:hero-images --unset-legacy`. */
+export function legacyHeroImageField(options: HeroSlidesFieldOptions = {}) {
+  return defineField({
+    name: "image",
+    title: "Zdjęcie (legacy)",
+    type: "image",
+    ...(options.group ? { group: options.group } : {}),
+    hidden: true,
+    readOnly: true,
+    description:
+      "Stare pole sprzed listy heroImages. Nie edytować — zniknie po `pnpm patch:hero-images -- --unset-legacy`.",
+  });
+}
+
 export function heroSliderSettingsField() {
   return defineField({
     name: "heroSlider",

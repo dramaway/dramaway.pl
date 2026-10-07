@@ -1,5 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { heroSlidesField } from "./heroMedia";
+import { heroSlidesField, legacyHeroImageField } from "./heroMedia";
 
 export const aboutPage = defineType({
   name: "aboutPage",
@@ -41,6 +41,7 @@ export const aboutPage = defineType({
       description: "Ścieżka wewnętrzna, np. /czytelnia",
     }),
     heroSlidesField({ group: "hero" }),
+    legacyHeroImageField({ group: "hero" }),
     defineField({
       name: "methods",
       title: "Metody i wartości",

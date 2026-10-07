@@ -1,6 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { contentSectionMembers } from "./contentModule";
-import { heroSlidesField } from "./heroMedia";
+import { heroSlidesField, legacyHeroImageField } from "./heroMedia";
 
 export const LANDING_ROUTES = [
   { title: "Projekty", value: "projekty" },
@@ -63,6 +63,7 @@ export const landingPage = defineType({
       description: "Ścieżka wewnętrzna, np. /projekty/art-generacje",
     }),
     heroSlidesField({ group: "hero" }),
+    legacyHeroImageField({ group: "hero" }),
     defineField({
       name: "sections",
       title: "Sekcje",
