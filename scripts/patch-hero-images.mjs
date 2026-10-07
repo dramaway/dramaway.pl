@@ -1,16 +1,18 @@
 /**
- * Copy a legacy single hero still into `heroImages` when that list is empty.
+ * Copy a legacy single hero still into `heroImages` when that list is empty,
+ * and rewrite slides stored as plain `_type: "image"` to `_type: "heroSlide"`
+ * (the named array member in Studio).
  *
- * Sources:
+ * Sources for an empty list:
  *   siteSettings.heroImage
  *   page.heroImage
  *   landingPage.image
  *   aboutPage.image
  *
- * A list that already has an asset is left alone. Legacy fields stay in the
- * document unless `--unset-legacy` is passed. Do not pass that flag until the
- * frontend that only reads `heroImages` is what Netlify is serving — `main`
- * still renders the old fields.
+ * A list that already has assets keeps them, but any item with `_type: "image"`
+ * becomes `"heroSlide"`. Legacy single-image fields stay unless `--unset-legacy`.
+ * Do not pass that flag until the frontend that only reads `heroImages` is what
+ * Netlify is serving.
  *
  * Usage (from repo root):
  *   pnpm patch:hero-images -- --dry-run
@@ -27,6 +29,9 @@ const SOURCES = [
   { type: "landingPage", field: "image" },
   { type: "aboutPage", field: "image" },
 ];
+
+/** Matches `name: "heroSlide"` on the heroImages array member in Studio. */
+const SLIDE_TYPE = "heroSlide";
 
 const projectId =
   process.env.SANITY_STUDIO_PROJECT_ID ||
@@ -70,7 +75,7 @@ function slideKey() {
   return randomBytes(6).toString("hex");
 }
 
-/** Keep the asset, hotspot, crop, and alt. Array items need a `_key`. */
+/** Keep the asset, hotspot, crop, alt, caption. Array items need a `_key`. */
 function toSlide(image) {
   const key =
     typeof image._key === "string" && image._key.trim()
@@ -78,19 +83,33 @@ function toSlide(image) {
       : slideKey();
   const slide = {
     _key: key,
-    _type: "image",
+    _type: SLIDE_TYPE,
     asset: image.asset,
   };
   if (image.hotspot) slide.hotspot = image.hotspot;
   if (image.crop) slide.crop = image.crop;
   if (typeof image.alt === "string") slide.alt = image.alt;
+  if (typeof image.caption === "string") slide.caption = image.caption;
   return slide;
+}
+
+function needsTypeRewrite(list) {
+  return filledSlides(list).some((slide) => slide._type !== SLIDE_TYPE);
+}
+
+function rewrittenSlides(list) {
+  return filledSlides(list).map((slide) =>
+    slide._type === SLIDE_TYPE ? slide : toSlide(slide),
+  );
 }
 
 const fieldByType = Object.fromEntries(
   SOURCES.map((source) => [source.type, source.field]),
 );
-const types = SOURCES.map((source) => source.type);
+const types = [
+  ...SOURCES.map((source) => source.type),
+  "project",
+];
 
 const rows = await client.fetch(
   `*[_type in $types]{
@@ -108,19 +127,21 @@ const plans = [];
 
 for (const row of rows) {
   const field = fieldByType[row._type];
-  const legacy = row[field];
+  const legacy = field ? row[field] : null;
   const legacyRef = assetRef(legacy);
   const existing = filledSlides(row.heroImages);
+  const rewrite = needsTypeRewrite(row.heroImages);
 
   if (existing.length > 0) {
     plans.push({
-      action: "keep",
+      action: rewrite ? "rewrite" : "keep",
       id: row._id,
       type: row._type,
       slug: row.slug ?? "",
       slides: existing.length,
       legacyRef,
       unset: Boolean(unsetLegacy && legacyRef),
+      heroImages: rewrite ? rewrittenSlides(row.heroImages) : undefined,
     });
     continue;
   }
@@ -155,6 +176,12 @@ for (const plan of plans) {
     );
     continue;
   }
+  if (plan.action === "rewrite") {
+    console.log(
+      `${dryRun ? "Would rewrite" : "Rewriting"} ${where}  ${plan.slides} slide(s) → _type ${SLIDE_TYPE}${plan.unset ? "  + unset legacy" : ""}`,
+    );
+    continue;
+  }
   const flags = [
     plan.slide.hotspot ? "hotspot" : null,
     plan.slide.crop ? "crop" : null,
@@ -168,7 +195,10 @@ for (const plan of plans) {
 }
 
 const writes = plans.filter(
-  (plan) => plan.action === "copy" || (plan.action === "keep" && plan.unset),
+  (plan) =>
+    plan.action === "copy" ||
+    plan.action === "rewrite" ||
+    (plan.action === "keep" && plan.unset),
 );
 
 if (writes.length === 0) {
@@ -186,6 +216,12 @@ for (const plan of writes) {
   if (plan.action === "copy") {
     const patch = { set: { heroImages: [plan.slide] } };
     if (plan.unset) patch.unset = [plan.field];
+    tx = tx.patch(plan.id, patch);
+    continue;
+  }
+  if (plan.action === "rewrite") {
+    const patch = { set: { heroImages: plan.heroImages } };
+    if (plan.unset) patch.unset = [fieldByType[plan.type]];
     tx = tx.patch(plan.id, patch);
     continue;
   }

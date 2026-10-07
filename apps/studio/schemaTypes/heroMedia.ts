@@ -27,6 +27,9 @@ export function heroSlidesField(options: HeroSlidesFieldOptions = {}) {
     of: [
       defineArrayMember({
         type: "image",
+        // Named so Studio stores `_type: "heroSlide"`. Plain `image` items
+        // (from an older patch) are rewritten by `pnpm patch:hero-images`.
+        name: "heroSlide",
         title: "Slajd",
         options: { hotspot: true },
         description:
@@ -54,7 +57,6 @@ export function heroSlidesField(options: HeroSlidesFieldOptions = {}) {
   });
 }
 
-/** One place for every multi-image hero on the site. */
 /** Single hero still before `heroImages`. Hidden until `pnpm patch:hero-images --unset-legacy`. */
 export function legacyHeroImageField(options: HeroSlidesFieldOptions = {}) {
   return defineField({
