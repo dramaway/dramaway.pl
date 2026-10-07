@@ -10,7 +10,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ (`readingMethod` = Category; `publication.methods` = Categories; publiczne `publication.format`) |
-| **Working tree** | Fala 0+1 + archiwum projektów na `main` |
+| **Working tree** | PR [#6](https://github.com/waether-the-strm/artgeneracje/pull/6) — gałąź `cursor/projekty-active-sections-7270` zmergowana z `main` (sekcje `/projekty`, `heroSlide`, footer `.footer-dots`); CI zielone, gotowe do merge |
 | **Owner Sanity (na razie)** | Jan = project Admin; backup klienta = `admin@dramaway.pl`; redakcja = Editor |
 
 ---
@@ -203,7 +203,7 @@ pnpm test:repair
 pnpm test:archive-projects
 pnpm test:web                 # allowlista URL + YouTube + menu z CMS
 pnpm patch:publication-format # legacyDrupal.format → format; nie zastępuje migrate:czytelnia
-pnpm patch:hero-images        # stary kadr → heroImages[0], tylko gdy lista pusta; nie zdejmuje starych kluczy
+pnpm patch:hero-images        # legacy kadr → heroImages gdy pusta; przepisuje _type image → heroSlide; nie zdejmuje starych kluczy
 # pnpm patch:hero-images -- --unset-legacy  # dopiero gdy Netlify serwuje front czytający wyłącznie heroImages
 pnpm seed:about-page          # singleton O fundacji, jeśli nie istnieje
 pnpm seed:landing-pages       # 4× landingPage (projekty, baza, czytelnia, zespół); puste pola
