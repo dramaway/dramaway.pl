@@ -35,7 +35,7 @@ type PageHeroProps = PageHeroContent & {
  * the text column sets the height and the still fills it (cover + hotspot);
  * below lg the still is a circle. `data-split-hero` overlays the header in
  * the left column at lg+ (do not reuse `data-home` — that hides
- * `.subpage-palette`). Pass `layout="stack"` for edition pages. No CMS
+ * `.footer-dots`). Pass `layout="stack"` for edition pages. No CMS
  * photo = no still; the split column and media slot stay so text width
  * does not jump. One still is static. Two or more crossfade (shared
  * settings on site settings). `layout="stack"` ignores stills.
