@@ -8,6 +8,8 @@ import Image from "next/image";
 import { ImageGallery } from "@/components/visual/image-gallery";
 import { Blob } from "@/components/visual/blob";
 import { CtaLink } from "@/components/visual/cta-link";
+import { CreditsList, type CreditsValue } from "@/components/visual/credits-list";
+import { Roster, RosterRow } from "@/components/visual/roster";
 import { ctaIndentLevel, resolveCtaButton, type CtaButtonInput } from "@/lib/cta-button";
 import {
   groupPortableImageRuns,
@@ -220,19 +222,13 @@ function rosterLineText(value: { children?: RosterSpan[] } | undefined) {
 
 function RosterItem({ value }: { value?: { children?: RosterSpan[] } }) {
   const { role, names } = splitRosterLine(rosterLineText(value));
-  const people = splitRosterNames(names);
-  return (
-    <div className={cn("pt-roster-row", !role && "pt-roster-row-plain")}>
-      {role ? <dt className="pt-roster-role">{role}</dt> : null}
-      <dd className="pt-roster-names">
-        {people.map((person, index) => (
-          <span key={`${person}-${index}`} className="pt-roster-name">
-            {person}
-          </span>
-        ))}
-      </dd>
-    </div>
-  );
+  return <RosterRow role={role} people={splitRosterNames(names)} />;
+}
+
+function PortableCredits({
+  value,
+}: PortableTextTypeComponentProps<CreditsValue>) {
+  return <CreditsList value={value} />;
 }
 
 const components: PortableTextComponents = {
@@ -266,7 +262,7 @@ const components: PortableTextComponents = {
       <ol className="list-decimal space-y-1 pl-6">{children}</ol>
     ),
     indent: ({ children }) => <div className="pt-indent">{children}</div>,
-    roster: ({ children }) => <dl className="pt-roster">{children}</dl>,
+    roster: ({ children }) => <Roster>{children}</Roster>,
   },
   listItem: {
     indent: ({ children }) => <div className="pt-indent-item">{children}</div>,
@@ -281,6 +277,7 @@ const components: PortableTextComponents = {
     youtube: PortableYoutube,
     textColumns: PortableColumns,
     ctaButton: PortableCta,
+    credits: PortableCredits,
     readMoreBreak: () => null,
   },
 };

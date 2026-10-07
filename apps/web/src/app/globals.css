@@ -2505,16 +2505,21 @@
    * Roles list (`listItem: roster`) in article flow:
    * no card, only subtle horizontal rules.
    */
-  .pt-roster {
+  .roster {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     width: 100%;
+    overflow-wrap: normal;
+    /* A role plus a name needs ~34rem; past that the rows leave a hole. */
+    max-width: min(34rem, 100%);
     margin-block: 0.25rem 0.75rem;
     border-top: 0.5px solid var(--border);
   }
 
-  .pt-roster-row {
+  .roster-row {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    min-width: 0;
     row-gap: 0.25rem;
     column-gap: 1.5rem;
     align-items: start;
@@ -2523,30 +2528,31 @@
   }
 
   @media (width >= 35rem) {
-    .pt-roster-row {
-      grid-template-columns: 12.5rem minmax(0, 1fr);
+    .roster-row {
+      grid-template-columns: minmax(0, 12.5rem) minmax(0, 1fr);
     }
   }
 
-  .pt-roster-row-plain {
-    grid-template-columns: 1fr;
+  .roster-row-plain {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .pt-roster-role,
-  .pt-roster-names {
+  .roster-role,
+  .roster-names {
+    min-width: 0;
     margin: 0;
     font-family: var(--font-body);
     text-transform: none;
   }
 
-  .pt-roster-role {
+  .roster-role {
     font-size: 0.8125rem;
     font-weight: 400;
     line-height: 1.5;
     color: var(--text-secondary);
   }
 
-  .pt-roster-names {
+  .roster-names {
     display: grid;
     gap: 0.1rem;
     font-size: 1rem;
@@ -2555,8 +2561,91 @@
     color: var(--text-primary);
   }
 
-  .pt-roster-name {
+  .roster-name {
     display: block;
+  }
+
+  /*
+   * Qualifier under a role ("w tym autorstwo utworu …"). Lighter, not
+   * smaller: the role is already 13 px and a seventh step would be unreadable.
+   */
+  .roster-note {
+    display: block;
+    margin-block-start: 0.2rem;
+    font-weight: 400;
+    line-height: 1.45;
+    color: color-mix(in srgb, var(--color-ink) 50%, transparent);
+  }
+
+  /* Cast: a wrapping sequence, not one name per line. */
+  .roster-names-inline {
+    display: block;
+  }
+
+  .roster-names-inline .roster-name {
+    display: inline;
+    /* `.portable-body` breaks anywhere so long URLs fit; a name must not
+       split, and "Ewa F." must not come apart at its space. */
+    white-space: nowrap;
+  }
+
+  .roster-sep {
+    color: var(--text-secondary);
+  }
+
+  /*
+   * Credits (`credits` block): groups of roster rows plus an optional closing
+   * note. Same rows, same hairlines as the Roles list on /fundacja — only the
+   * grouping and the width are new, because a cast list needs the room.
+   */
+  .credits {
+    display: grid;
+    /* Grid items default to a min-content floor; without this the longest
+       role would push the whole block past a phone screen. */
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(1.75rem, 3vw, 2.5rem);
+    margin-block: 2rem;
+  }
+
+  .credits-group,
+  .credits .roster,
+  .credits .roster-row {
+    min-width: 0;
+  }
+
+  /*
+   * Like `.pt-columns`, a credits list may outgrow `.measure` inside `.page`
+   * — a two-column list reads badly squeezed into a prose measure.
+   */
+  @media (width >= 48rem) {
+    .page .credits {
+      width: min(100cqi, var(--content-narrow));
+      max-width: none;
+    }
+  }
+
+  .credits .roster {
+    max-width: none;
+    margin-block: 0;
+  }
+
+  .credits-group {
+    display: block;
+  }
+
+  /* Short group label; the rule under it is the roster's own border-top. */
+  .credits-group-title {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-body);
+    text-transform: none;
+    font-size: var(--text-body);
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .credits-note {
+    margin: 0;
+    color: var(--text-secondary);
   }
 
   .pt-columns {

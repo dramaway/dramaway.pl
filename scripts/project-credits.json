@@ -1,0 +1,1026 @@
+{
+  "generatedAt": "2026-10-07T12:45:40.260Z",
+  "dataset": "production",
+  "entries": [
+    {
+      "docId": "project-art-generacje",
+      "slug": "art-generacje",
+      "where": "editions[5] Edycja VI - 2020",
+      "path": "editions[_key==\"55f65e09cb14\"].body",
+      "replaceKeys": [
+        "6f2b0582ad34",
+        "543682b9eabd",
+        "0d762370a1fd",
+        "df9e8094c893",
+        "60bab33d0d7b"
+      ],
+      "credits": {
+        "_type": "credits",
+        "heading": "VI Edycja Art Generacje — Harmonia",
+        "groups": [
+          {
+            "title": "Autorstwo",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "Autorki i autor projektu",
+                "people": "Aldona Żejmo-Kudelska, Adam Gąsecki, Maria Depta"
+              }
+            ]
+          },
+          {
+            "title": "Realizacja artystyczna",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "Oprawa muzyczna",
+                "people": "Katarzyna Żytomirska, Piotr Pardela"
+              },
+              {
+                "_type": "creditRow",
+                "role": "Oprawa filmowa",
+                "people": "Łukasz Jasiukowicz"
+              }
+            ]
+          },
+          {
+            "title": "Produkcja",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "Koordynacja projektu",
+                "people": "Katarzyna Błachiewicz-Koryga"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": [
+        "nagłówek wykazu przeniesiony z treści: \"VI Edycja Art Generacje - Harmonia\""
+      ]
+    },
+    {
+      "docId": "project-art-generacje",
+      "slug": "art-generacje",
+      "where": "editions[6] Edycja VI - 2021",
+      "path": "editions[_key==\"f1774fc47db8\"].body",
+      "replaceKeys": [
+        "c7044589e49f",
+        "92c7eb2d059b",
+        "9e38678c2b36",
+        "9fc9e98cea8c",
+        "d06bbcd14f81",
+        "df4157031c0c",
+        "c50e725afc1a",
+        "f7d61346d8e0",
+        "288b09077eda",
+        "edfe8887eb0e"
+      ],
+      "credits": {
+        "_type": "credits",
+        "heading": "VI Edycja Art Generacje 2021",
+        "groups": [
+          {
+            "title": "Autorstwo",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "Opieka merytoryczna, prowadzenie grup i reżyseria",
+                "people": "Aldona Żejmo-Kudelska, Adam Gąsecki, Maria Depta"
+              }
+            ]
+          },
+          {
+            "title": "Realizacja artystyczna",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "Muzyka",
+                "people": "Piotr Pardela"
+              },
+              {
+                "_type": "creditRow",
+                "role": "Oprawa muzyczna",
+                "people": "Katarzyna Żytomirska, Piotr Pardela"
+              },
+              {
+                "_type": "creditRow",
+                "role": "Zdjęcia",
+                "people": "Sylwia Zawadzka"
+              },
+              {
+                "_type": "creditRow",
+                "role": "Oprawa oświetleniowa spektaklu „Tańczące z cieniami”",
+                "people": "Jolanta Sikorska"
+              },
+              {
+                "_type": "creditRow",
+                "role": "Plakat/grafika",
+                "people": "Aleksandra Cieślak"
+              },
+              {
+                "_type": "creditRow",
+                "role": "Realizacja filmu/klipu",
+                "people": "Sash Art"
+              }
+            ]
+          },
+          {
+            "title": "Produkcja",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "Koordynacja projektu i promocja",
+                "people": "Katarzyna Błachiewicz-Koryga"
+              },
+              {
+                "_type": "creditRow",
+                "role": "Zoom obsługa techniczna",
+                "people": "Sonia Ruszkowska"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": [
+        "nagłówek wykazu przeniesiony z treści: \"VI Edycja Art Generacje 2021\""
+      ]
+    },
+    {
+      "docId": "project-art-generacje",
+      "slug": "art-generacje",
+      "where": "editions[8] Edycja VII - 2022",
+      "path": "editions[_key==\"b351996713a6\"].body",
+      "replaceKeys": [
+        "e0d85802203c",
+        "01b16e43db32",
+        "61c82bcd3a9a",
+        "99f5a2e5d4ce",
+        "3951ebdbf632",
+        "ef297821ab3c",
+        "791ed95aa985",
+        "912deca5e053",
+        "c4040f9bc8cd",
+        "129cc21dfb83",
+        "c27f0e689409"
+      ],
+      "credits": {
+        "_type": "credits",
+        "heading": "VII Edycja Art Generacje 2022 — „Tańczące z Cieniami”",
+        "groups": [
+          {
+            "title": "Autorstwo",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "opieka merytoryczna, prowadzący grupę, reżyseria",
+                "people": "Adam Gąsecki"
+              },
+              {
+                "_type": "creditRow",
+                "role": "scenariusz spektaklu",
+                "people": "Adam Gąsecki i aktorki"
+              }
+            ]
+          },
+          {
+            "title": "Obsada",
+            "rows": [
+              {
+                "_type": "creditNames",
+                "label": "obsada",
+                "people": "Agata Falęcka, Justyna Janiewicz, Bogumiła Karbowiak, Luiza Lutek, Mariola Orłowska, Karolina Patynko, Beata Peciakowska, Izabela Połatyńska, Justyna Zbiróg - Dąbrowska"
+              }
+            ]
+          },
+          {
+            "title": "Realizacja artystyczna",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "praca nad warsztatem pospektaklowym",
+                "people": "Aldona Żejmo-Kudelska, aktorki"
+              },
+              {
+                "_type": "creditRow",
+                "role": "oprawa muzyczna",
+                "people": "Katarzyna Żytomirska, Piotr Pardela"
+              },
+              {
+                "_type": "creditRow",
+                "role": "realizacja świateł",
+                "people": "Tomasz Kot (Centrum ŁOWICKA)"
+              },
+              {
+                "_type": "creditRow",
+                "role": "zdjęcia",
+                "people": "Matylda Durka"
+              }
+            ]
+          },
+          {
+            "title": "Produkcja",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "koordynacja projektu",
+                "people": "Monika Zielińska"
+              },
+              {
+                "_type": "creditRow",
+                "role": "promocja projektu",
+                "people": "Weronika Szmaja"
+              }
+            ]
+          },
+          {
+            "title": "Partnerzy",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "partner projektu",
+                "people": "Centrum ŁOWICKA"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": [
+        "nagłówek wykazu przeniesiony z treści: \"VII Edycja Art Generacje 2022 - „Tańczące z Cieniami\"\""
+      ]
+    },
+    {
+      "docId": "project-art-generacje",
+      "slug": "art-generacje",
+      "where": "editions[8] Edycja VII - 2022",
+      "path": "editions[_key==\"b351996713a6\"].body",
+      "replaceKeys": [
+        "19521ccda90b",
+        "70532c1e0f4b",
+        "c5bd8c240723",
+        "f996b931a60e",
+        "48d258f81ea7",
+        "e3c0a99f0405",
+        "abacccc07b2e",
+        "5c2d521b8f2d",
+        "503550a325fb",
+        "46025abd5612",
+        "25ee1d634e95",
+        "dc5ce1958cb2",
+        "9f4d90111467",
+        "b50eb3db7961",
+        "6830bebbd2de"
+      ],
+      "credits": {
+        "_type": "credits",
+        "heading": "VII Edycja Art Generacje 2022 — „Splecione”",
+        "groups": [
+          {
+            "title": "Autorstwo",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "koncepcja projektu i prowadzenie grupy",
+                "people": "Adam Gąsecki, Aldona Żejmo-Kudelska"
+              },
+              {
+                "_type": "creditRow",
+                "role": "scenariusz spektaklu",
+                "people": "Adam Gąsecki i aktorki"
+              },
+              {
+                "_type": "creditRow",
+                "role": "reżyseria",
+                "people": "Adam Gąsecki"
+              },
+              {
+                "_type": "creditRow",
+                "role": "monologi i wiersze",
+                "people": "Aktorki"
+              }
+            ]
+          },
+          {
+            "title": "Obsada",
+            "rows": [
+              {
+                "_type": "creditNames",
+                "label": "obsada",
+                "people": "Anna, Ludmiła, Ewa, Halina, Alicja, Aleksandra, Agnieszka, Daria, Sławka, Justyna, Mariola, Dorota, Alina, Milena oraz Luiza"
+              }
+            ]
+          },
+          {
+            "title": "Realizacja artystyczna",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "koncepcja warsztatu pospektaklowego i prowadzenie",
+                "people": "Aldona Żejmo-Kudelska oraz aktorki"
+              },
+              {
+                "_type": "creditRow",
+                "role": "scenografia i wykonanie obiektów scenicznych",
+                "people": "Monika Wyrzykowska"
+              },
+              {
+                "_type": "creditRow",
+                "role": "muzyka",
+                "people": "Igor Buszkowski"
+              },
+              {
+                "_type": "creditRow",
+                "role": "realizacja świateł",
+                "people": "Tomasz Kot (Centrum ŁOWICKA)"
+              },
+              {
+                "_type": "creditRow",
+                "role": "zdjęcia",
+                "people": "Matylda Durka"
+              },
+              {
+                "_type": "creditRow",
+                "role": "realizacja filmu",
+                "people": "Małgorzata Kaznowska - Filipek, Sash-art"
+              }
+            ]
+          },
+          {
+            "title": "Produkcja",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "koordynacja projektu",
+                "people": "Monika Zielińska"
+              },
+              {
+                "_type": "creditRow",
+                "role": "promocja projektu",
+                "people": "Weronika Szmaja"
+              }
+            ]
+          },
+          {
+            "title": "Partnerzy",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "partner projektu",
+                "people": "Centrum ŁOWICKA"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": [
+        "nagłówek wykazu przeniesiony z treści: \"VII Edycja Art Generacje 2022 - „Splecione\"\""
+      ]
+    },
+    {
+      "docId": "project-art-generacje",
+      "slug": "art-generacje",
+      "where": "editions[9] EDYCJA VIII - 2023",
+      "path": "editions[_key==\"c639561b5b77\"].body",
+      "replaceKeys": [
+        "b02399572902",
+        "e506d10546af"
+      ],
+      "credits": {
+        "_type": "credits",
+        "heading": "VIII Edycja Art Generacje 2023 — „Bywają ognie”",
+        "groups": [
+          {
+            "title": "Autorstwo",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "koncepcja projektu i prowadzenie grupy",
+                "people": "Adam Gąsecki, Aldona Żejmo-Kudelska"
+              },
+              {
+                "_type": "creditRow",
+                "role": "scenariusz spektaklu",
+                "people": "Adam Gąsecki i aktorki"
+              },
+              {
+                "_type": "creditRow",
+                "role": "reżyseria",
+                "people": "Adam Gąsecki"
+              }
+            ]
+          },
+          {
+            "title": "Obsada",
+            "rows": [
+              {
+                "_type": "creditNames",
+                "label": "obsada",
+                "people": "Alina, Ludmiła, Dorota, Olga, Sławka, Ewa, Alicja, Ania, Małgo, Agnieszka, Daria, Małgorzata, Marta, Aleksandra"
+              }
+            ]
+          },
+          {
+            "title": "Realizacja artystyczna",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "koncepcja warsztatu pospektaklowego i prowadzenie",
+                "people": "Aldona Żejmo-Kudelska oraz aktorki"
+              },
+              {
+                "_type": "creditRow",
+                "role": "scenografia",
+                "people": "Monika Wyrzykowska"
+              },
+              {
+                "_type": "creditRow",
+                "role": "muzyka",
+                "people": "Piotr Pardela"
+              },
+              {
+                "_type": "creditRow",
+                "role": "realizacja świateł",
+                "people": "Tomasz Kot (Centrum ŁOWICKA)"
+              }
+            ]
+          },
+          {
+            "title": "Produkcja",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "koordynacja projektu",
+                "people": "Monika Zielińska"
+              },
+              {
+                "_type": "creditRow",
+                "role": "promocja projektu",
+                "people": "Weronika Szmaja"
+              }
+            ]
+          },
+          {
+            "title": "Partnerzy",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "partner projektu",
+                "people": "Centrum ŁOWICKA"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": [
+        "nagłówek wykazu przeniesiony z treści: \"VIII Edycja Art Generacje 2023 - „Bywają ognie\"\""
+      ]
+    },
+    {
+      "docId": "project-art-generacje",
+      "slug": "art-generacje",
+      "where": "editions[9] EDYCJA VIII - 2023",
+      "path": "editions[_key==\"c639561b5b77\"].body",
+      "replaceKeys": [
+        "4e569cad1aa2",
+        "6911f07b6bb8"
+      ],
+      "credits": {
+        "_type": "credits",
+        "heading": "VIII Edycja Art Generacje 2023 — „Splecione”",
+        "groups": [
+          {
+            "title": "Autorstwo",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "koncepcja projektu i prowadzenie grupy",
+                "people": "Adam Gąsecki, Aldona Żejmo-Kudelska"
+              },
+              {
+                "_type": "creditRow",
+                "role": "scenariusz spektaklu",
+                "people": "Adam Gąsecki i aktorki"
+              },
+              {
+                "_type": "creditRow",
+                "role": "reżyseria",
+                "people": "Adam Gąsecki"
+              },
+              {
+                "_type": "creditRow",
+                "role": "monologi i wiersze",
+                "people": "Aktorki"
+              }
+            ]
+          },
+          {
+            "title": "Obsada",
+            "rows": [
+              {
+                "_type": "creditNames",
+                "label": "obsada",
+                "people": "Anna, Ludmiła, Ewa, Halina, Alicja, Aleksandra, Agnieszka, Daria, Sławka, Mariola, Dorota, Alina, Marta oraz Luiza"
+              }
+            ]
+          },
+          {
+            "title": "Realizacja artystyczna",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "koncepcja warsztatu pospektaklowego i prowadzenie",
+                "people": "Aldona Żejmo-Kudelska, Monika Wyrzykowska oraz aktorki"
+              },
+              {
+                "_type": "creditRow",
+                "role": "scenografia i wykonanie obiektów scenicznych",
+                "people": "Monika Wyrzykowska"
+              },
+              {
+                "_type": "creditRow",
+                "role": "muzyka",
+                "people": "Igor Buszkowski"
+              },
+              {
+                "_type": "creditRow",
+                "role": "realizacja świateł",
+                "people": "Tomasz Kot (Centrum ŁOWICKA)"
+              }
+            ]
+          },
+          {
+            "title": "Produkcja",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "koordynacja projektu",
+                "people": "Monika Zielińska"
+              },
+              {
+                "_type": "creditRow",
+                "role": "promocja projektu",
+                "people": "Weronika Szmaja"
+              }
+            ]
+          },
+          {
+            "title": "Partnerzy",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "partner projektu",
+                "people": "Centrum ŁOWICKA"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": [
+        "nagłówek wykazu przeniesiony z treści: \"VIII Edycja Art Generacje 2023 - „Splecione\"\""
+      ]
+    },
+    {
+      "docId": "project-art-generacje",
+      "slug": "art-generacje",
+      "where": "editions[10] 2024: MĄDRE CIAŁO?",
+      "path": "editions[_key==\"9ada9702db63\"].body",
+      "replaceKeys": [
+        "fa9cbc0eb857",
+        "cfe9061162b7",
+        "d026b321f974",
+        "7d4f286afeb7",
+        "65b0e720b529",
+        "7de086b3e298",
+        "6257b6bc04d3",
+        "e1f30652bb95",
+        "d16979e4768f",
+        "5c0ab0d50513",
+        "710363fc4ed4"
+      ],
+      "credits": {
+        "_type": "credits",
+        "heading": "Twórcy",
+        "groups": [
+          {
+            "title": "Autorstwo",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "koncepcja projektu i prowadzenie grupy",
+                "people": "Adam Gąsecki, Aldona Żejmo-Kudelska"
+              },
+              {
+                "_type": "creditRow",
+                "role": "scenariusz spektaklu",
+                "people": "Adam Gąsecki i obsada"
+              },
+              {
+                "_type": "creditRow",
+                "role": "reżyseria",
+                "people": "Adam Gąsecki"
+              }
+            ]
+          },
+          {
+            "title": "Obsada",
+            "rows": [
+              {
+                "_type": "creditNames",
+                "label": "obsada",
+                "people": "Agnieszka, Albert, Ania, Barbara, Bogumiła, Daria, Dorota, Emilia, Ewa, Ewa, Ganna, Hanna, Justyna, Kinga, Ludmiła, Magdalena, Małgorzata, Małgo, Marta, Marta, Natalia, Sławka, Paweł, Robert, Sandra"
+              }
+            ]
+          },
+          {
+            "title": "Realizacja artystyczna",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "koncepcja warsztatu pospektaklowego i prowadzenie",
+                "people": "Aldona Żejmo-Kudelska oraz obsada"
+              },
+              {
+                "_type": "creditRow",
+                "role": "muzyka",
+                "people": "Igor Buszkowski"
+              },
+              {
+                "_type": "creditRow",
+                "role": "realizacja świateł",
+                "people": "Tomasz Kot (Centrum ŁOWICKA)"
+              }
+            ]
+          },
+          {
+            "title": "Produkcja",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "koordynacja projektu",
+                "people": "Monika Zielińska"
+              },
+              {
+                "_type": "creditRow",
+                "role": "promocja projektu",
+                "people": "Weronika Szmaja"
+              }
+            ]
+          },
+          {
+            "title": "Partnerzy",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "partner projektu",
+                "people": "Centrum ŁOWICKA"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "docId": "project-art-generacje",
+      "slug": "art-generacje",
+      "where": "editions[11] 2025: 404: LOST NOT FOUND",
+      "path": "editions[_key==\"c07ce02c1a53\"].body",
+      "replaceKeys": [
+        "324188fd4b5e",
+        "23baf98109a5"
+      ],
+      "credits": {
+        "_type": "credits",
+        "heading": "Twórcy",
+        "groups": [
+          {
+            "title": "Autorstwo",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "koncepcja projektu i prowadzenie grupy",
+                "people": "Adam Gąsecki, Aldona Żejmo-Kudelska"
+              },
+              {
+                "_type": "creditRow",
+                "role": "scenariusz spektaklu",
+                "people": "Adam Gąsecki i uczestnicy/czki projektu"
+              },
+              {
+                "_type": "creditRow",
+                "role": "reżyseria",
+                "people": "Adam Gąsecki"
+              }
+            ]
+          },
+          {
+            "title": "Obsada",
+            "rows": [
+              {
+                "_type": "creditNames",
+                "label": "obsada - uczestnicy/czki projektu",
+                "people": "Adam, Ala, Alina, Aneta, Anna, Anna, Daria, Dariusz, Dorota, Dorota, Ewa, Ewa, Ewa, Ewa, Grażyna, Hanna, Justyna, Kasia, Kasia, Kinga, Luiza, Magdalena, Marcin, Maria, Marta, Matylda, Małgosia, Małgorzata, Natalia, Nina, Paweł, Piotr, Sandra, Sławka, Zuza"
+              }
+            ]
+          },
+          {
+            "title": "Realizacja artystyczna",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "koncepcja warsztatu pospektaklowego i prowadzenie",
+                "people": "Aldona Żejmo-Kudelska oraz uczestnicy/czki projektu"
+              },
+              {
+                "_type": "creditRow",
+                "role": "muzyka",
+                "people": "Igor Buszkowski"
+              },
+              {
+                "_type": "creditRow",
+                "role": "realizacja świateł",
+                "people": "Tomasz Kot (Centrum ŁOWICKA)"
+              },
+              {
+                "_type": "creditRow",
+                "role": "wykonanie szachownicy-ryby",
+                "people": "Paulina Pankiewicz"
+              },
+              {
+                "_type": "creditRow",
+                "role": "aranżacja śpiewu",
+                "people": "Maria Matosek, Dobromiła Życzyńska"
+              },
+              {
+                "_type": "creditRow",
+                "role": "realizacja zdjęć",
+                "people": "Kamil Kowalski"
+              },
+              {
+                "_type": "creditRow",
+                "role": "montaż",
+                "people": "Sash Art"
+              }
+            ]
+          },
+          {
+            "title": "Produkcja",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "koordynacja projektu",
+                "people": "Monika Zielińska"
+              },
+              {
+                "_type": "creditRow",
+                "role": "promocja projektu",
+                "people": "Weronika Szmaja"
+              }
+            ]
+          },
+          {
+            "title": "Partnerzy",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "partner projektu",
+                "people": "Centrum ŁOWICKA"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "docId": "project-art-generacje",
+      "slug": "art-generacje",
+      "where": "editions[12] 2026: W kolejce do lasu",
+      "path": "editions[_key==\"08e5b36dd976\"].body",
+      "replaceKeys": [
+        "aac20a79dec3",
+        "8e2d6576a67b",
+        "2228a108de2b"
+      ],
+      "credits": {
+        "_type": "credits",
+        "heading": "Twórcy",
+        "groups": [
+          {
+            "title": "Autorstwo",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "koncepcja projektu i prowadzenie grupy",
+                "people": "Adam Gąsecki, Aldona Żejmo-Kudelska"
+              },
+              {
+                "_type": "creditRow",
+                "role": "scenariusz spektaklu",
+                "people": "Adam Gąsecki i osoby uczestniczące"
+              },
+              {
+                "_type": "creditRow",
+                "role": "reżyseria",
+                "people": "Adam Gąsecki"
+              }
+            ]
+          },
+          {
+            "title": "Obsada",
+            "rows": [
+              {
+                "_type": "creditNames",
+                "label": "osoby tworzące spektakl i obsada",
+                "people": "Alina, Aneta, Anna J., Anna T., Dariusz, Dorota, Emilia, Ewa F., Ewa P., Ewa W., Ganna, Grażyna, Justyna, Kacper, Katarzyna, Maja, Małgosia, Marta, Mateusz, Natalia, Piotr, Sandra, Sławka"
+              }
+            ]
+          },
+          {
+            "title": "Realizacja artystyczna",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "koncepcja spotkania pospektaklowego i prowadzenie",
+                "people": "Aldona Żejmo-Kudelska oraz osoby uczestniczące"
+              },
+              {
+                "_type": "creditRow",
+                "role": "muzyka i oprawa dźwiękowa",
+                "note": "w tym autorstwo i wykonanie w czasie spektaklu utworu “Gadatliwość drzew”",
+                "people": "Anna Jędrzejewska"
+              },
+              {
+                "_type": "creditRow",
+                "role": "koncepcja świateł",
+                "people": "Adam Gąsecki, Kacper Stykowski"
+              },
+              {
+                "_type": "creditRow",
+                "role": "wizualizacje video",
+                "people": "Anna Jędrzejewska, Piotr Cieślik"
+              },
+              {
+                "_type": "creditRow",
+                "role": "realizacja video w czasie spektaklu",
+                "people": "Piotr Cieślik"
+              },
+              {
+                "_type": "creditRow",
+                "role": "realizacja świateł",
+                "people": "Kacper Stykowski"
+              },
+              {
+                "_type": "creditRow",
+                "role": "oprawa graficzna",
+                "people": "Aleksandra Szaro"
+              }
+            ]
+          },
+          {
+            "title": "Produkcja",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "koordynacja projektu",
+                "people": "Monika Zielińska, Aleksandra Szaro"
+              },
+              {
+                "_type": "creditRow",
+                "role": "promocja projektu",
+                "people": "Weronika Szmaja"
+              }
+            ]
+          },
+          {
+            "title": "Partnerzy",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "partner projektu",
+                "people": "Teatr Dramatyczny, TR Warszawa, RDC"
+              }
+            ]
+          }
+        ],
+        "note": "Projekt współfinansowany przez M.St Warszawa."
+      },
+      "warnings": [
+        "dopisek wyjęty z nazwy roli: \"muzyka i oprawa dźwiękowa\" — \"w tym autorstwo i wykonanie w czasie spektaklu utworu “Gadatliwość drzew”\""
+      ]
+    },
+    {
+      "docId": "project-teatr-codzienny",
+      "slug": "teatr-codzienny",
+      "where": "afterword",
+      "path": "afterword",
+      "replaceKeys": [
+        "0449172a4d1d"
+      ],
+      "credits": {
+        "_type": "credits",
+        "groups": [
+          {
+            "title": null,
+            "rows": [
+              {
+                "_type": "creditNames",
+                "people": "Maria Depta, Aldona Żejmo-Kudelska, Jarek Rebeliński, Weronika Brączek, Justyna Klingemann"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": [
+        "linki do starego Drupala zostaną zgubione: http://teatrzaangazowany.dramaway.pl/ludzie-teatru/maria-depta, http://teatrzaangazowany.dramaway.pl/ludzie-teatru/aldona, http://teatrzaangazowany.dramaway.pl/ludzie-teatru/jarek-rebelinski, http://teatrzaangazowany.dramaway.pl/ludzie-teatru/weronika-braczek"
+      ]
+    },
+    {
+      "docId": "project-teatr-codzienny",
+      "slug": "teatr-codzienny",
+      "where": "afterword",
+      "path": "afterword",
+      "replaceKeys": [
+        "4c975f690dd8"
+      ],
+      "credits": {
+        "_type": "credits",
+        "groups": [
+          {
+            "title": null,
+            "rows": [
+              {
+                "_type": "creditNames",
+                "people": "Maria Depta, Aldona Żejmo-Kudelska, Karol Smaczny, Magdalena Juchnowicz, Weronika Brączek, Justyna Klingemann"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": [
+        "linki do starego Drupala zostaną zgubione: http://teatrzaangazowany.dramaway.pl/ludzie-teatru/maria-depta, http://teatrzaangazowany.dramaway.pl/ludzie-teatru/aldona, http://teatrzaangazowany.dramaway.pl/ludzie-teatru/karol-smaczny, http://teatrzaangazowany.dramaway.pl/ludzie-teatru/magdalena-juchnowicz, http://teatrzaangazowany.dramaway.pl/ludzie-teatru/weronika-braczek"
+      ]
+    },
+    {
+      "docId": "project-to-mi-gra",
+      "slug": "to-mi-gra",
+      "where": "afterword",
+      "path": "afterword",
+      "replaceKeys": [
+        "969b67475da2"
+      ],
+      "credits": {
+        "_type": "credits",
+        "groups": [
+          {
+            "title": null,
+            "rows": [
+              {
+                "_type": "creditNames",
+                "people": "Adam Gąsecki, Amina Demilova, Aldona Żejmo-Kudelska, Artur Świtalski, Barbara Żach, Dorota Sobolewska, Emil Wardin, Jacek Wajszczak, Katarzyna Kalinowska, Kheda Soldaeva, Łukasz Mordon, Maciej Hanczewski, Magdalena Zaborska, Maria Depta, Maria Maievska, Inga Shemaeva, Monika Nowogrodzka, Paweł Tomanek, Radosław Kaliski, Wiktor Troyan, Weronika Brączek"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": [
+        "linki do starego Drupala zostaną zgubione: http://teatrzaangazowany.dramaway.pl/ludzie/adam-gasecki, http://teatrzaangazowany.dramaway.pl/ludzie/aldona-zejmo-kudelska, http://teatrzaangazowany.dramaway.pl/ludzie/maria-depta"
+      ]
+    },
+    {
+      "docId": "project-wieloglos",
+      "slug": "wieloglos",
+      "where": "afterword",
+      "path": "afterword",
+      "replaceKeys": [
+        "9630c3c671dd"
+      ],
+      "credits": {
+        "_type": "credits",
+        "groups": [
+          {
+            "title": "Realizacja artystyczna",
+            "rows": [
+              {
+                "_type": "creditRow",
+                "role": "Koordynator projektu",
+                "people": "Aldona Żejmo-Kudelska"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": [
+        "rozdzielone półpauzą, nie dwukropkiem: \"Koordynator projektu\"",
+        "linki do starego Drupala zostaną zgubione: http://teatrzaangazowany.dramaway.pl/ludzie/aldona-zejmo-kudelska"
+      ]
+    }
+  ],
+  "curatedAt": "2026-10-07",
+  "curatedNotes": [
+    "Art Generacje / afterword pominięte: sekcje AUTORKI i WSPÓŁPRACA zostają prozą — mają link do /zespol/… i zdanie-dopowiedzenie, nie wykaz.",
+    "Nagłówki wykazów: poprawiona tylko interpunkcja (półpauza, domknięty cudzysłów) — żadne słowo nie zniknęło.",
+    "Obsada zapisana jako creditNames: etykieta po lewej, imiona w zawijanym ciągu.",
+    "Role warsztatu pospektaklowego przypisane do grupy Realizacja artystyczna — do przejrzenia."
+  ]
+}
