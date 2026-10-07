@@ -218,6 +218,8 @@
   --sidebar-ring: oklch(0.708 0 0);
   --text-primary: var(--color-ink);
   --text-secondary: color-mix(in srgb, var(--color-ink) 72%, transparent);
+  /* Section hairline. One value, so /fundacja's rules cannot drift apart. */
+  --rule-color: color-mix(in srgb, var(--color-ink) 8%, transparent);
 }
 
 @media (width < 48rem) {
@@ -260,6 +262,7 @@
   --sidebar-ring: oklch(0.556 0 0);
   --text-primary: var(--foreground);
   --text-secondary: color-mix(in srgb, var(--foreground) 72%, transparent);
+  --rule-color: color-mix(in srgb, var(--foreground) 12%, transparent);
 }
 
 @property --open {
@@ -2399,21 +2402,30 @@
 
   .team-bios {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: clamp(2rem, 4vw, 3.25rem);
   }
 
   @media (width >= 64rem) {
     .team-bios {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     }
   }
 
   .team-bio {
     display: flex;
+    min-width: 0;
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
+  }
+
+  /*
+   * A column-flex item sized to its content can outgrow the track; next to
+   * the roster that pushed the bio text into the other column.
+   */
+  .team-bio > * {
+    max-width: 100%;
   }
 
   .team-bio .team-photo {
@@ -2429,16 +2441,73 @@
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
-    max-width: 36ch;
+    max-width: min(36ch, 100%);
+  }
+
+  /*
+   * /fundacja: Zarząd and Zespół side by side from lg. Two short blocks under
+   * one another left a hole and pushed Społeczność far down the page.
+   */
+  .team-split {
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .team-split-col {
+    min-width: 0;
+  }
+
+  /* Stacked: the hairline keeps Zarząd and Zespół from reading as one block. */
+  @media (width < 80rem) {
+    .team-split-pair > .team-split-col + .team-split-col {
+      padding-block-start: clamp(2rem, 4vw, 3rem);
+      border-block-start: 1px solid var(--rule-color);
+    }
+  }
+
+  /*
+   * From 80rem, not 64rem: below that the board column cannot hold two bio
+   * cards without squeezing the photo, so the blocks stay stacked.
+   */
+  @media (width >= 80rem) {
+    /* Two bio cards need more room than four roster rows. */
+    .team-split-pair {
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      align-items: start;
+    }
+
+    /* Narrower label column: the roster now lives in half the page. */
+    .team-split .roster-row {
+      grid-template-columns: minmax(0, 9.5rem) minmax(0, 1fr);
+    }
+
+    /*
+     * Figma's 301 px CTA no longer fits a half-page card. Let the rule take
+     * the card instead of setting its width — a stub under the label reads
+     * like a cut-off line.
+     */
+    .team-split-pair .team-bio .cta {
+      min-width: 100%;
+    }
+  }
+
+  /* Społeczność and anything after it: one reading column under the pair. */
+  .team-rest {
+    margin-block-start: clamp(2.5rem, 5vw, 3.75rem);
+    padding-block-start: clamp(2rem, 4vw, 3rem);
+    border-block-start: 1px solid var(--rule-color);
+  }
+
+  .team-rest-item + .team-rest-item {
+    margin-block-start: clamp(2.5rem, 4.5vw, 3.5rem);
+    padding-block-start: clamp(1.5rem, 3vw, 2.25rem);
+    border-block-start: 1px solid var(--rule-color);
   }
 
   /*
    * Copy under the /fundacja board photos. Same left edge as Zarząd.
    * Prose is capped at 62ch; headings stay the full column.
    */
-  .team-copy-after-bios {
-    margin-block-start: clamp(2.75rem, 5vw, 4.25rem);
-  }
 
   .team-copy .portable-body {
     margin-block-start: 0;
@@ -3462,8 +3531,9 @@
   }
 
   /*
-   * Values + people on /fundacja sit in consecutive sections. Full
-   * py-section twice made a hole between the circles and Zarząd.
+   * The single vertical rhythm for /fundacja. Full py-section between every
+   * pair of sections left holes (first between the circles and Zarząd); the
+   * bigger breaks on that page are carried by DotBand and PaletteRow.
    */
   .fundacja-flow {
     padding-block: clamp(2.25rem, 5vw, 4rem);
@@ -3477,59 +3547,32 @@
     padding-block-start: 0;
   }
 
+  /*
+   * Section headings are rendered by TeamBios, not by Portable Text, so every
+   * block on /fundacja carries the same rank. What is left here is the rhythm
+   * inside one section.
+   */
   .team-copy .portable-body {
-    margin-block-start: 0;
-    font-size: var(--text-body);
-    line-height: var(--text-body--line-height);
-  }
-
-  .team-copy .portable-body h2 {
-    font-family: var(--font-body);
-    text-transform: none;
-    font-size: 1.125rem;
-    font-weight: 500;
-    line-height: 1.4;
-    margin-block-end: 1.5rem;
+    margin-block-start: 1.5rem;
   }
 
   .team-copy .portable-body > :not([hidden]) ~ :not([hidden]) {
     margin-top: 0.55rem;
   }
 
-  .team-copy .portable-body > :not([hidden]) ~ .pt-roster {
+  .team-copy .portable-body > :not([hidden]) ~ .roster {
     margin-top: 0.85rem;
     margin-bottom: 1.5rem;
   }
 
-  .team-copy .portable-body .pt-roster + p {
+  /* Aside under the staff list: marked by colour, not by a fifth text size. */
+  .team-copy .portable-body .roster + p {
     margin-top: 1.5rem;
-    font-size: 0.875rem;
-    line-height: 1.5;
     color: var(--text-secondary);
   }
 
-  /*
-   * Subtle rules between /fundacja sub-sections (Zarząd → Zespół →
-   * Społeczność) — a hairline plus breathing room, not just a margin,
-   * so the block doesn't read as one dense wall of text.
-   */
-  .team-copy-after-bios {
-    padding-block-start: clamp(2rem, 4vw, 3rem);
-    border-block-start: 1px solid color-mix(in srgb, var(--color-ink) 8%, transparent);
-  }
-
-  /*
-   * `:not([hidden])` twice matches the general-sibling override below
-   * (0,4,0) — bump specificity the same way so margin-top actually wins.
-   */
-  .team-copy .portable-body h2:not([hidden]):not(:first-child) {
-    margin-top: clamp(2.5rem, 4.5vw, 3.5rem);
-    padding-top: clamp(1.5rem, 3vw, 2.25rem);
-    border-top: 1px solid color-mix(in srgb, var(--color-ink) 8%, transparent);
-  }
-
   /* Społeczność — essay rhythm, not the tight staff list. */
-  .team-copy .portable-body h2:not(:first-child) ~ p + p {
+  .team-rest-item .team-copy .portable-body p + p {
     margin-top: 1.15em;
   }
 }

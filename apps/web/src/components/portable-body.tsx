@@ -303,10 +303,9 @@ export function PortableBody({
   if (!hasPortableContent(value)) return null;
   const raw = Array.isArray(value) ? value : [value];
   const split = splitPortableAtReadMore(value);
-  const shell = cn(
-    "portable-body mt-8 max-w-none space-y-4 text-lead",
-    className,
-  );
+  // No size class here: long copy inherits `text-body` (18 px) from `body`,
+  // so anything a redactor adds gets the running-text size for free.
+  const shell = cn("portable-body mt-8 max-w-none space-y-4", className);
 
   if (!split) {
     return (

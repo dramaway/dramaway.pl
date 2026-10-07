@@ -42,11 +42,11 @@ export function FundacjaValues({
   return (
     <Section className="fundacja-flow">
       {hasCopy ? (
-        <div className="stack-wide">
+        <div className="measure">
           {heading ? (
             <h2 className="font-display text-h3 font-black">{heading}</h2>
           ) : null}
-          {lead ? <p className="mt-8 text-lead">{lead}</p> : null}
+          {lead ? <p className="mt-8">{lead}</p> : null}
           {ctaLabel && ctaHref ? (
             <CtaLink href={ctaHref} className="mt-8">
               {ctaLabel}
