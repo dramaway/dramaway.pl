@@ -1,6 +1,6 @@
 # Zależności i wersje
 
-Dokładne wersje trzyma **`pnpm-lock.yaml`**. Wspólne pakiety (React, TypeScript, Sanity) — **`catalog:`** w [pnpm-workspace.yaml](../pnpm-workspace.yaml). Majory (Next 16, TypeScript 6+, ESLint 10) nie wchodzą przy okazji — tylko świadoma decyzja. Sanity **zostaje na 6.10.1**: 6.12.0 ciągnie nieistniejące `@portabletext/schema@3`.
+Dokładne wersje trzyma **`pnpm-lock.yaml`**. Wspólne pakiety (React, TypeScript, Sanity) — **`catalog:`** w [pnpm-workspace.yaml](../pnpm-workspace.yaml). Majory (Next 16, TypeScript 6+, ESLint 10) nie wchodzą przy okazji — tylko świadoma decyzja. Sanity trzyma wspólną wersję w `catalog:` (obecnie 6.18.x). Podbij `sanity`, `@sanity/schema` i `@sanity/vision` razem, potem `pnpm install`.
 
 ## Cotygodniowo (GitHub)
 

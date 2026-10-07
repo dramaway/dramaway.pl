@@ -31,10 +31,11 @@ Pola: tytuł, slug, data, zajawka, treść. **CTA target** puste zostawia przyci
 
 Sekcja to blok pod dużym nagłówkiem: kilka kafelków albo lista najnowszych rzeczy. Kolejność na liście w Studio jest kolejnością na stronie. Pusta lista nic nie dodaje.
 
-Są dwa miejsca:
+Są trzy miejsca:
 
 1. **Strona główna** → zakładka **Sekcje** → lista **Sekcje**. Bloki wchodzą pod duży nagłówek.
 2. Dokument **Page** (Baza wiedzy, Kontakt, statut i inne zwykłe strony) → pole **Sekcje**, nad treścią artykułu. Dokument **News** tego pola nie ma: to sam artykuł.
+3. Listing **Projekty** (`/projekty`) → grupa **Listing** → lista **Sekcje**. Bloki wchodzą nad „Zakończone projekty”. Pusta lista zostawia dotychczasowy wiersz aktywnych projektów (dziś Art Generacje) i opcjonalny wiersz Czytelni. Gdy dodasz choć jeden blok, ten wiersz znika — Art Generacje i Czytelnię wstawiasz wtedy jako kafelki. Zakończone projekty niżej redakcja nie układa: biorą się z projektów oznaczonych jako zakończone.
 
 Na liście: **Add item**, potem **Kafelki** albo **Aktualności**. Wiersz da się przeciągnąć. Na stronę wychodzi dopiero po **Publish**.
 
@@ -79,6 +80,8 @@ Trzy dokumenty **Landing page**, przypięte jako skróty, gdy menu jest puste al
 **Baza wiedzy** (`/baza-wiedzy`) nie jest listingiem. To zwykła strona **Page**: nagłówek, lead, sekcje i treść z opisem metod. Stary adres `/metody` przekierowuje tutaj. W menu ma jedno dziecko, Czytelnię.
 
 Pola hero (tytuł, lead, przycisk, do pięciu zdjęć) są na tym dokumencie. Puste = tego elementu nie ma. Jedno zdjęcie zostaje kadrem. Od dwóch działa slider ze strony głównej (czas klatki i autoodtwarzanie, miniatury, podpis jako podpowiedź przy kropce). Adresu listingu nie da się zmienić: pole strony jest zablokowane po pierwszym zapisie.
+
+Na **Projektach** jest dodatkowo grupa **Listing**. Lista **Sekcje** to te same kafelki i aktualności co na stronie głównej; opis w [Sekcje](#sekcje). Pole **Pokaż Czytelnię** widać tylko, gdy ta lista jest pusta.
 
 <!-- screen: strony-listing | Dokument Projekty z zablokowanym polem strony i pustym tytułem | Widać, że adres jest stały, a pusty tytuł nie wymyśla nagłówka -->
 

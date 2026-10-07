@@ -584,7 +584,8 @@
       z-index: -1;
       inset: 0;
       pointer-events: none;
-      background-color: var(--color-sand);
+      backdrop-filter: blur(1.5px);
+      background-color: color-mix(in srgb, var(--color-sand) 70%, transparent);
       border-radius: 2.4em 2.9em 2.5em 2.7em / 1.9em 2.3em 2.6em 2.1em;
       transform: scale(0.78, 0.62);
       transform-origin: 35% 1.15em;

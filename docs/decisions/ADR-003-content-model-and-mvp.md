@@ -21,7 +21,7 @@ Stary portal (`teatrzaangazowany`, baza `drama_teatr`) — **źródło** artyku�
 | `person` | Zespół, zarząd |
 | `page` | Statyczne podstrony (statut, baza wiedzy, kontakt, newsy…) |
 | `aboutPage` | Singleton `/fundacja`: hero, wartości, zespół na tej stronie, historia, dokumenty |
-| `landingPage` | Singletony listingów (`/projekty`, `/czytelnia`, `/zespol`): hero; puste pole = blok nie pojawia się na stronie. `/baza-wiedzy` jest zwykłym `page` |
+| `landingPage` | Singletony listingów (`/projekty`, `/czytelnia`, `/zespol`): hero; puste pole = blok nie pojawia się na stronie. `/projekty` ma też `sections` (te same moduły co strona główna) nad archiwum; pusta lista zostawia wiersz aktywnych. `/baza-wiedzy` jest zwykłym `page` |
 | `publication` | Czytelnia / wydawnictwo / materiały z portalu wiedzy |
 | `siteSettings` | Nawigacja, footer, globalne CTA |
 

@@ -352,6 +352,8 @@ export type LandingPage = {
   ctaHref: string | null;
   heroImages?: CmsHeroImage[] | null;
   showCzytelnia?: boolean | null;
+  /** Current-projects modules on `/projekty`. Empty keeps the automatic active row. */
+  sections?: CmsContentSection[] | null;
 };
 
 export type AboutValue = {

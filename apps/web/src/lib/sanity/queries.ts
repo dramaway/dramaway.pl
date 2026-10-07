@@ -100,7 +100,7 @@ export const contentFeedQuery = `{
   }
 }`;
 
-/** Shared by homepage and page documents. */
+/** Shared by the homepage, page documents, and the projects listing. */
 export const contentSectionsProjection = `{
   _key,
   _type,
@@ -255,7 +255,8 @@ export const landingPageByIdQuery = `*[_type == "landingPage" && _id == $id][0] 
   ctaLabel,
   ctaHref,
   ${heroSlidesProjection},
-  showCzytelnia
+  showCzytelnia,
+  sections[] ${contentSectionsProjection}
 }`;
 
 export const aboutPageQuery = `*[_type == "aboutPage"][0] {

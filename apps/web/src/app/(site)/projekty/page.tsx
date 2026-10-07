@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { BlobRow } from "@/components/sections/blob-row";
+import { ContentModules } from "@/components/sections/content-modules";
 import { PageHero } from "@/components/sections/page-hero";
 import { DotBand } from "@/components/visual/dot-band";
 import { PaletteRow } from "@/components/visual/palette-row";
@@ -58,11 +59,15 @@ export default async function ProjectsPage() {
       <div className="page py-section">
         <PaletteRow />
       </div>
-      <BlobRow
-        width="wide"
-        items={activeItems}
-        emptyMessage="Brak aktywnych projektów w CMS."
-      />
+      {landing.sections.length > 0 ? (
+        <ContentModules sections={landing.sections} variant="page" />
+      ) : (
+        <BlobRow
+          width="wide"
+          items={activeItems}
+          emptyMessage="Brak aktywnych projektów w CMS."
+        />
+      )}
       <div className="page py-section">
         <PaletteRow />
       </div>
