@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-10-06 — `/projekty`: lista `sections` na `landing-projekty` (te same Kafelki i Aktualności co strona główna) zastępuje wiersz aktywnych projektów. Pusta lista zostawia Art Generacje i Czytelnię (`showCzytelnia`). Archiwum compact bez zmian. Hosted Studio: wgrać schemat ręcznie (`deployStudio`). |
+| **Ostatnia aktualizacja** | 2026-10-07 — Hero: elementy `heroImages` mają `_type: "heroSlide"` (nazwany member w schemacie). `pnpm patch:hero-images` przepisuje stare `_type: "image"` i nadal kopiuje legacy `image`/`heroImage` gdy lista pusta. Sanity catalog 6.18.0. `/projekty.sections` jak wcześniej. |
 | **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
