@@ -1,6 +1,6 @@
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { PaletteRow } from "@/components/visual/palette-row";
+import { DotBand } from "@/components/visual/dot-band";
 import { getResolvedSite } from "@/lib/site";
 import { SUBPAGE } from "@/lib/subpage-copy";
 
@@ -20,9 +20,7 @@ export default async function SiteLayout({
       <main id="main-content" className="flex-1" tabIndex={-1}>
         {children}
       </main>
-      <div className="subpage-palette page py-section" aria-hidden>
-        <PaletteRow />
-      </div>
+      <DotBand className="footer-dots" />
       <SiteFooter
         title={site.title}
         logo={site.footer.logo}

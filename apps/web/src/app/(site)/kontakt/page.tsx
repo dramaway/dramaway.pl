@@ -27,7 +27,7 @@ export default async function ContactPage() {
   const body = hasPortableContent(page.body) ? page.body : null;
 
   return (
-    <div data-no-palette="">
+    <>
       <PageHero
         title={cmsText(page.title)}
         lead={body ? null : cmsText(page.heroLead)}
@@ -61,6 +61,6 @@ export default async function ContactPage() {
           </ul>
         </Section>
       ) : null}
-    </div>
+    </>
   );
 }

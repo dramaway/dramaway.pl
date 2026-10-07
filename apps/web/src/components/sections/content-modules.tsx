@@ -163,11 +163,7 @@ function HomeRhythm({
     }
   });
 
-  blocks.push(
-    <div key="palette-end" className="home-palette page pb-section">
-      <PaletteRow />
-    </div>,
-  );
+  blocks.push(<DotBand key="before-footer" />);
 
   return <>{blocks}</>;
 }

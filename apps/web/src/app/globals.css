@@ -974,21 +974,6 @@
       inset-block-end: calc(-1 * var(--module-edge-out));
     }
 
-    /*
-     * The closing brand row is one line of circles, not a stepped sand band.
-     * A left-hand photo would otherwise keep reaching for the lower sand row
-     * and cover the palette. Stop the still on the circles' centre; the row
-     * stacks above the photo the same way .dot-band does.
-     */
-    .content-split:has(+ .home-palette) > .split-media {
-      inset-block-end: calc(var(--palette-size) / -2);
-    }
-
-    .home-palette {
-      position: relative;
-      z-index: 1;
-    }
-
     .content-split-solo > .split-text {
       display: flex;
       flex-direction: column;
@@ -1001,7 +986,7 @@
      * Split heroes at lg+: header leaves vertical flow and sits in the left
      * column (same span as .split-text). Photo occupies the right column
      * from the top of the page — nav never overlaps it. `data-home` is `/`
-     * only (also hides .subpage-palette). Inner pages use `data-split-hero`.
+     * only (also hides .footer-dots). Inner pages use `data-split-hero`.
      *
      * The text column sets the section height. The still is taken out of
      * flow and stretched over that box (`object-fit: cover` + the Sanity
@@ -1507,6 +1492,10 @@
     pointer-events: none;
   }
 
+  /*
+   * Gradient stand-in until DotBand has measured the row. Same geometry as
+   * the real circles, so the swap does not jump.
+   */
   .dot-band::before,
   .dot-band::after {
     content: "";
@@ -1532,12 +1521,19 @@
     background-repeat: repeat-x;
   }
 
-  .dot-band::before {
+  .dot-band:has(.dot-row)::before,
+  .dot-band:has(.dot-row)::after {
+    content: none;
+  }
+
+  .dot-band::before,
+  .dot-row-left {
     inset-inline-start: 0;
     inset-block-end: 0;
   }
 
-  .dot-band::after {
+  .dot-band::after,
+  .dot-row-right {
     inset-inline-end: 0;
     inset-block-start: 0;
   }
@@ -1550,19 +1546,60 @@
    * band up to the right too, but there the "Metody" block ends far higher than
    * CMS-driven copy can be relied on to end.
    */
-  .dot-band-mirror::before {
+  .dot-band-mirror::before,
+  .dot-band-mirror .dot-row-left {
     inset-block-start: 0;
     inset-block-end: auto;
   }
 
-  .dot-band-mirror::after {
+  .dot-band-mirror::after,
+  .dot-band-mirror .dot-row-right {
     inset-block-start: auto;
     inset-block-end: 0;
   }
 
-  /* Inner pages get a palette before the footer; `/` paints its own;
-   * `/fundacja` and `/kontakt` hide it (`data-no-palette`). */
-  .site-shell:has([data-home], [data-no-palette]) .subpage-palette {
+  .dot-row {
+    position: absolute;
+    display: flex;
+    width: calc(var(--dot-count) * var(--dot-size));
+    height: var(--dot-size);
+    pointer-events: none;
+  }
+
+  .dot-row-right {
+    z-index: 1;
+  }
+
+  .dot-band-mirror .dot-row-left {
+    z-index: 1;
+  }
+
+  .dot-band-mirror .dot-row-right {
+    z-index: 0;
+  }
+
+  .dot-band-dot {
+    flex: 0 0 var(--dot-size);
+    width: var(--dot-size);
+    height: var(--dot-size);
+    border-radius: 50%;
+    background-color: var(--color-sand);
+    pointer-events: none;
+    animation-duration: 2.2s;
+    animation-timing-function: ease-in-out;
+    animation-delay: var(--dot-delay, 0ms);
+    animation-fill-mode: both;
+    animation-iteration-count: 1;
+  }
+
+  /*
+   * `/` and `/fundacja` paint their own closing band. A page that already
+   * ends on a sand band (a hero with nothing after it) must not grow a
+   * second one — two stepped bands stack into three visible rows.
+   */
+  .site-shell:has([data-home], [data-no-palette]) .footer-dots,
+  .site-shell:has(main > .dot-band:last-child) .footer-dots,
+  .site-shell:has(main > :last-child > .dot-band:last-child) .footer-dots {
     display: none;
   }
 
@@ -3404,5 +3441,46 @@
   /* Społeczność — essay rhythm, not the tight staff list. */
   .team-copy .portable-body h2:not(:first-child) ~ p + p {
     margin-top: 1.15em;
+  }
+}
+
+/*
+ * Unlayered on purpose. DotBand sets `animation-name` inline, and an inline
+ * (unlayered) name does not see `@keyframes` nested in `@layer`. Two names so
+ * a second hover can restart the wave. Colour only — no transform.
+ */
+@keyframes dot-confetti-a {
+  0% {
+    background-color: var(--color-sand);
+  }
+  22% {
+    background-color: var(--dot-tone, var(--color-sand));
+  }
+  46% {
+    background-color: var(--dot-tone, var(--color-sand));
+  }
+  100% {
+    background-color: var(--color-sand);
+  }
+}
+
+@keyframes dot-confetti-b {
+  0% {
+    background-color: var(--color-sand);
+  }
+  22% {
+    background-color: var(--dot-tone, var(--color-sand));
+  }
+  46% {
+    background-color: var(--dot-tone, var(--color-sand));
+  }
+  100% {
+    background-color: var(--color-sand);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot-band-dot {
+    animation: none !important;
   }
 }
