@@ -6,11 +6,11 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | | |
 |--|--|
 | **Ostatnia aktualizacja** | 2026-10-07 — **Wykaz twórców** jako blok `credits` (grupy → wiersze rola/dopisek/osoby, lista bez ról, notka); wspólny `.roster` z sekcją Zespół na `/fundacja`. Migracja `pnpm patch:project-credits` **odpalona** (13 wykazów, 104 wiersze). `/fundacja` na jednej kolumnie 773 px i jednym rytmie. Długi tekst z CMS zszedł z 20 na 18 px (`PortableBody` bez `text-lead`). Snapshot przed migracją: `private/sanity-snapshots/production-2026-10-07-pre-credits.tar.gz`. |
-| **Gałąź / HEAD** | `cursor/projekty-active-sections-7270` |
+| **Gałąź / HEAD** | `feat/credits-block-and-fundacja-rhythm` (od `main`; PR #6 zmergowany) |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ (`readingMethod` = Category; `publication.methods` = Categories; publiczne `publication.format`) |
-| **Working tree** | PR [#6](https://github.com/waether-the-strm/artgeneracje/pull/6) — gałąź `cursor/projekty-active-sections-7270` zmergowana z `main` (sekcje `/projekty`, `heroSlide`, footer `.footer-dots`); CI zielone, gotowe do merge |
+| **Working tree** | PR [#8](https://github.com/waether-the-strm/artgeneracje/pull/8) — blok `credits`, skład `/fundacja`, rozmiar tekstu z CMS. Migracja danych **już odpalona** na `production`, więc preview gubi wykazy do czasu merge’a. |
 | **Owner Sanity (na razie)** | Jan = project Admin; backup klienta = `admin@dramaway.pl`; redakcja = Editor |
 
 ---
