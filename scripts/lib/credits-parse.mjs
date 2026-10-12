@@ -1,3 +1,5 @@
+import { newKey } from "./portable-text-repair.mjs";
+
 /**
  * Turn free-text credits in Portable Text into the `credits` block.
  *
@@ -28,6 +30,64 @@ const GROUP_RULES = [
 
 /** Anything role-like that is not matched above is a craft credit. */
 const DEFAULT_GROUP = "Realizacja artystyczna";
+
+/** A key that is unique inside one Sanity array. Keeps a usable existing key. */
+function takeKey(item, used) {
+  const raw = typeof item?._key === "string" ? item._key.trim() : "";
+  if (raw && !used.has(raw)) {
+    used.add(raw);
+    return raw;
+  }
+  let key = newKey();
+  while (used.has(key)) key = newKey();
+  used.add(key);
+  return key;
+}
+
+function rowType(row) {
+  if (row?._type === "creditNames" || row?._type === "creditRow") return row._type;
+  if (typeof row?.label === "string" && row?.role == null) return "creditNames";
+  return "creditRow";
+}
+
+/**
+ * Sanity refuses to edit an array whose items have no `_key`
+ * ("Missing keys"). The credits patch writes groups and rows through the
+ * API, so those keys have to be stamped here — Studio only generates them
+ * for items created in the form.
+ *
+ * Returns the same object when every group and row already has a unique key
+ * and the right `_type`.
+ */
+export function stampCreditKeys(credits) {
+  if (!credits || !Array.isArray(credits.groups)) return credits;
+  const usedGroups = new Set();
+  let changed = false;
+  const groups = credits.groups.map((group) => {
+    const groupKey = takeKey(group, usedGroups);
+    const usedRows = new Set();
+    const sourceRows = Array.isArray(group?.rows) ? group.rows : null;
+    let rowsChanged = false;
+    const rows = sourceRows
+      ? sourceRows.map((row) => {
+          const rowKey = takeKey(row, usedRows);
+          const type = rowType(row);
+          if (row?._key !== rowKey || row?._type !== type) {
+            rowsChanged = true;
+            return { ...row, _type: type, _key: rowKey };
+          }
+          return row;
+        })
+      : group?.rows;
+    if (group?._key !== groupKey || group?._type !== "creditGroup" || rowsChanged) {
+      changed = true;
+      return { ...group, _type: "creditGroup", _key: groupKey, rows };
+    }
+    return group;
+  });
+  if (!changed) return credits;
+  return { ...credits, groups };
+}
 
 /**
  * A cast reads as a wrapping sequence of first names, not as one name per
@@ -342,12 +402,12 @@ function buildRun({ collected, headingBlock, noteBlock }) {
 
   return {
     replaceKeys: keys,
-    credits: {
+    credits: stampCreditKeys({
       _type: "credits",
       ...(heading ? { heading } : {}),
       groups,
       ...(noteBlock ? { note: normalizeText(blockText(noteBlock)) } : {}),
-    },
+    }),
     warnings,
   };
 }
@@ -361,7 +421,7 @@ export function namesRunFromBlock(block, label) {
   if (!text) return null;
   return {
     replaceKeys: [block._key].filter(Boolean),
-    credits: {
+    credits: stampCreditKeys({
       _type: "credits",
       groups: [
         {
@@ -375,7 +435,7 @@ export function namesRunFromBlock(block, label) {
           ],
         },
       ],
-    },
+    }),
     warnings: blockLinks(block).length
       ? [`linki do starego Drupala zostaną zgubione: ${blockLinks(block).join(", ")}`]
       : [],

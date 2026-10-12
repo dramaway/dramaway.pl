@@ -8,6 +8,7 @@ import {
   missingWords,
   normalizeText,
   parseCreditLine,
+  stampCreditKeys,
 } from "./credits-parse.mjs";
 
 let keySeed = 0;
@@ -136,6 +137,18 @@ test("findCreditRuns reads one paragraph with newlines, and the funding note", (
   const cast = runs[0].credits.groups.find((group) => group.title === "Obsada");
   assert.equal(cast.rows[0]._type, "creditNames");
   assert.equal(cast.rows[0].label, "obsada");
+  for (const group of runs[0].credits.groups) {
+    assert.equal(group._type, "creditGroup");
+    assert.equal(typeof group._key, "string");
+    assert.ok(group._key.length > 0);
+    const rowKeys = new Set();
+    for (const row of group.rows) {
+      assert.ok(row._type === "creditRow" || row._type === "creditNames");
+      assert.equal(typeof row._key, "string");
+      assert.equal(rowKeys.has(row._key), false);
+      rowKeys.add(row._key);
+    }
+  }
 });
 
 test("findCreditRuns leaves an h2 alone — it is an accordion title", () => {
@@ -144,6 +157,49 @@ test("findCreditRuns leaves an h2 alone — it is an accordion title", () => {
     block("Maria Depta, Aldona Żejmo-Kudelska, Jarek Rebeliński"),
   ];
   assert.deepEqual(findCreditRuns(blocks), []);
+});
+
+test("stampCreditKeys fills missing keys and leaves a finished block alone", () => {
+  const stamped = stampCreditKeys({
+    _type: "credits",
+    heading: "Twórcy",
+    groups: [
+      {
+        title: "Autorstwo",
+        rows: [
+          { _type: "creditRow", role: "reżyseria", people: "Ada" },
+          { _type: "creditRow", _key: "keep", role: "muzyka", people: "Ewa" },
+        ],
+      },
+      {
+        _key: "g",
+        title: "Obsada",
+        rows: [{ _key: "same", _type: "creditNames", label: "obsada", people: "Ala" }],
+      },
+      {
+        _key: "g",
+        _type: "creditGroup",
+        title: "Partnerzy",
+        rows: [
+          { _key: "same", _type: "creditRow", role: "partner", people: "TR" },
+          { _key: "same", _type: "creditRow", role: "sponsor", people: "Miasto" },
+        ],
+      },
+    ],
+  });
+
+  assert.equal(stamped.heading, "Twórcy");
+  assert.equal(stamped.groups[0]._type, "creditGroup");
+  assert.equal(typeof stamped.groups[0]._key, "string");
+  assert.equal(stamped.groups[0].rows[0].role, "reżyseria");
+  assert.equal(stamped.groups[0].rows[1]._key, "keep");
+  assert.notEqual(stamped.groups[0].rows[0]._key, "keep");
+  assert.equal(stamped.groups[1]._key, "g");
+  assert.equal(stamped.groups[1]._type, "creditGroup");
+  assert.notEqual(stamped.groups[2]._key, "g");
+  assert.equal(stamped.groups[2].rows[0]._key, "same");
+  assert.notEqual(stamped.groups[2].rows[1]._key, "same");
+  assert.equal(stampCreditKeys(stamped), stamped);
 });
 
 test("the word bag catches a dropped name", () => {

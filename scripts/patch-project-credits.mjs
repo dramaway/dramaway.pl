@@ -23,6 +23,7 @@ import {
   blocksWordBag,
   creditsWordBag,
   missingWords,
+  stampCreditKeys,
 } from "./lib/credits-parse.mjs";
 
 const DRAFT_PATH = new URL("./project-credits.json", import.meta.url).pathname;
@@ -188,7 +189,7 @@ function applyEntry(blocks, entry) {
     return { ok: false, reason: "między blokami wykazu stoi inna treść" };
   }
   const next = blocks.slice();
-  next.splice(first, span, { ...entry.credits, _key: newKey() });
+  next.splice(first, span, { ...stampCreditKeys(entry.credits), _key: newKey() });
   return { ok: true, blocks: next, removed: span, at: first };
 }
 
