@@ -129,10 +129,10 @@ export const aboutPage = defineType({
         defineField({ name: "heading", title: "Nagłówek", type: "string" }),
         defineField({
           name: "lead",
-          title: "Lead",
+          title: "Tekst nad osią",
           type: "blockContent",
           description:
-            "Tekst nad osią czasu. Cytat, pogrubienie, akapity. Puste = brak leadu.",
+            "Zwykły tekst nad osią czasu — akapity, cytat, pogrubienie, separator Czytaj więcej. Formatuje się jak treść każdej innej strony, nie jak lead. Puste = brak bloku.",
         }),
         defineField({
           name: "layout",

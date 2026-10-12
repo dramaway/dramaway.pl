@@ -29,7 +29,7 @@ export function FundacjaHistory({
   const headingId = heading ? "fundacja-historia" : undefined;
 
   return (
-    <Section aria-labelledby={headingId}>
+    <Section className="fundacja-flow" aria-labelledby={headingId}>
       {heading || leadBody ? (
         <div className="stack-narrow">
           {heading ? (

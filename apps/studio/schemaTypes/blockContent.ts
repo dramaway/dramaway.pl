@@ -11,6 +11,7 @@ import {
   ColumnsPreview,
 } from "./columnsPreview";
 import { ButtonIcon } from "./buttonIcon";
+import { CreditsIcon } from "./creditsIcon";
 import { IndentIcon } from "./indentIcon";
 import { validateReadMoreBreaks } from "./readMoreValidation";
 import { RosterIcon } from "./rosterIcon";
@@ -234,6 +235,11 @@ export const blockContent = defineType({
       type: "ctaButton",
       title: "Button",
       icon: ButtonIcon,
+    }),
+    defineArrayMember({
+      type: "credits",
+      title: "Wykaz twórców",
+      icon: CreditsIcon,
     }),
     defineArrayMember({
       type: "readMoreBreak",

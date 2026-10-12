@@ -52,16 +52,17 @@ Mapa dokumentów projektu. Treść po polsku; nazwy plików ADR i ścieżek kodu
 
 ## Redakcja
 
-Instrukcja dla osób uzupełniających treść. Część zrzutów jest już w tekście, reszta jest opisana w [redakcja/screeny.md](redakcja/screeny.md).
+Instrukcja dla osób uzupełniających treść. Część zrzutów jest już w tekście, reszta jest opisana w [guides/zrzuty-manuala.md](guides/zrzuty-manuala.md) (lista robocza, nie część instrukcji).
 
 | Plik | Opis |
 |------|------|
-| [redakcja/README.md](redakcja/README.md) | Start: adres Studia i spis instrukcji |
-| [redakcja/dostep-i-role.md](redakcja/dostep-i-role.md) | Który mail do czego służy i dlaczego redakcja jest Editor |
+| [redakcja/README.md](redakcja/README.md) | Start: adres Studia, spis instrukcji, słowniczek |
+| [redakcja/zadania.md](redakcja/zadania.md) | Typowe zadania krok po kroku: aktualność, menu, zdjęcia, Czytelnia, zespół |
+| [redakcja/dostep-i-role.md](redakcja/dostep-i-role.md) | Którym mailem się logować i czego redakcja nie rusza |
 | [redakcja/studio-podstawy.md](redakcja/studio-podstawy.md) | Szkic, publikacja, zdjęcia, linki |
-| [redakcja/strony.md](redakcja/strony.md) | Który dokument w panelu jest którą stroną |
+| [redakcja/strony.md](redakcja/strony.md) | Który dokument w panelu jest którą stroną, hero, sekcje |
 | [redakcja/menu.md](redakcja/menu.md) | Menu witryny i skróty po lewej w Studio |
-| [redakcja/tekst.md](redakcja/tekst.md) | Termin, wcięcie, Roles, kolumny |
+| [redakcja/tekst.md](redakcja/tekst.md) | Termin, wcięcie, Roles, kolumny, Button, Wykaz twórców, film |
 | [redakcja/czytelnia-i-fundacja.md](redakcja/czytelnia-i-fundacja.md) | Spis Czytelni oraz O fundacji i Kontakt |
 
 ## Źródło konceptu

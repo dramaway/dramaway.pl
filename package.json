@@ -26,6 +26,8 @@
     "migrate:news": "node --env-file=apps/studio/.env scripts/migrate-news.mjs",
     "patch:knowledge-page": "node --env-file=apps/studio/.env scripts/patch-knowledge-page.mjs",
     "patch:hero-images": "node --env-file-if-exists=apps/studio/.env scripts/patch-hero-images.mjs",
+    "patch:project-credits": "node --env-file-if-exists=apps/studio/.env scripts/patch-project-credits.mjs",
+    "repair:credit-keys": "node --env-file-if-exists=apps/studio/.env scripts/repair-credit-keys.mjs",
     "seed:about-page": "node --env-file=apps/studio/.env scripts/seed-about-page.mjs",
     "seed:landing-pages": "node --env-file=apps/studio/.env scripts/seed-landing-pages.mjs",
     "seed:navigation": "node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --env-file=apps/studio/.env scripts/seed-navigation.mjs",
@@ -33,7 +35,8 @@
     "repair:portable-text": "node --env-file=apps/studio/.env scripts/repair-portable-text.mjs",
     "test:repair": "node --test scripts/lib/portable-text-repair.test.mjs",
     "test:archive-projects": "node --test scripts/lib/archive-project-reshape.test.mjs",
-    "test:web": "node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/lib/register-ts-extension.mjs --test scripts/lib/cms-url-safety.test.mjs scripts/lib/roster-line.test.mjs scripts/lib/navigation.test.mjs scripts/lib/nav-overflow.test.mjs scripts/lib/desk-nav.test.mjs scripts/lib/content-sections.test.mjs scripts/lib/hotspot.test.mjs scripts/lib/page-path.test.mjs scripts/lib/knowledge-page.test.mjs scripts/lib/page-desk.test.mjs scripts/lib/news-cta.test.mjs scripts/lib/news-migrate.test.mjs scripts/lib/cta-button.test.mjs scripts/lib/czytelnia-filters.test.mjs scripts/lib/portable-read-more.test.mjs scripts/lib/hero-slides.test.mjs scripts/lib/history-timeline.test.mjs"
+    "test:credits": "node --test scripts/lib/credits-parse.test.mjs",
+    "test:web": "node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/lib/register-ts-extension.mjs --test scripts/lib/credits-parse.test.mjs scripts/lib/cms-url-safety.test.mjs scripts/lib/roster-line.test.mjs scripts/lib/navigation.test.mjs scripts/lib/nav-overflow.test.mjs scripts/lib/desk-nav.test.mjs scripts/lib/content-sections.test.mjs scripts/lib/hotspot.test.mjs scripts/lib/page-path.test.mjs scripts/lib/knowledge-page.test.mjs scripts/lib/page-desk.test.mjs scripts/lib/news-cta.test.mjs scripts/lib/news-migrate.test.mjs scripts/lib/cta-button.test.mjs scripts/lib/czytelnia-filters.test.mjs scripts/lib/portable-read-more.test.mjs scripts/lib/hero-slides.test.mjs scripts/lib/history-timeline.test.mjs"
   },
   "engines": {
     "node": ">=22.12",

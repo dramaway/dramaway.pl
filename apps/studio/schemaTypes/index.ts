@@ -1,6 +1,7 @@
 import { aboutPage } from "./aboutPage";
 import { blockContent, textColumns, youtube } from "./blockContent";
 import { readMoreBreak } from "./readMoreBreak";
+import { credits, creditGroup, creditNames, creditRow } from "./credits";
 import { ctaButton } from "./ctaButton";
 import { contentModule, contentTile, newsFeedModule } from "./contentModule";
 import { edition } from "./edition";
@@ -18,6 +19,10 @@ import { siteSettings } from "./siteSettings";
 export const schemaTypes = [
   blockContent,
   ctaButton,
+  creditRow,
+  creditNames,
+  creditGroup,
+  credits,
   readMoreBreak,
   youtube,
   textColumns,
