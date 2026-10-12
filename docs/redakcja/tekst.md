@@ -4,7 +4,7 @@ Zwykły akapit, nagłówek, cytat, lista i pogrubienie działają jak w edytorze
 
 <!-- screen: tekst-toolbar | Pasek edytora z listą stylów, w tym Termin, oraz list Bullet, Numbered, Indent, Roles | Widać, które pozycje są nasze, a które są zwykłym tekstem -->
 
-Poniżej są tylko dodatki zrobione dla tej strony.
+Poniżej są tylko dodatki zrobione dla tej strony. Część z nich to **style i listy** na pasku edytora (Termin, Indent, Roles). Reszta to **bloki**, czyli osobne elementy wstawiane plusem między akapitami (Columns, Button, Wykaz twórców, YouTube).
 
 ## Termin
 
@@ -56,7 +56,7 @@ Obiekt **Button** to zielony przycisk z rulką i kropką, taki jak „więcej”
 7. Jeśli trzeba dotrzeć do konkretnego miejsca na stronie (kotwica) albo otworzyć Czytelnię na jednej metodzie (parametry), rozwiń **Zaawansowane** — niżej.
 8. **Publish**.
 
-Button można też wstawić wewnątrz bloku **Columns**. Nie da się włożyć Buttona w Button: to nie jest pole tekstowe.
+Button można też wstawić wewnątrz bloku **Columns**. Wewnątrz samego Buttona nie da się wstawić żadnych innych bloków.
 
 <!-- screen: tekst-button | Blok Button z etykietą, celem Dokument i zwiniętym Zaawansowane | Widać, że przycisk jest osobnym blokiem, nie zaznaczeniem w zdaniu -->
 

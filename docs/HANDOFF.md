@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-10-07 — **Wykaz twórców** jako blok `credits` (grupy → wiersze rola/dopisek/osoby, lista bez ról, notka); wspólny `.roster` z sekcją Zespół na `/fundacja`. Migracja `pnpm patch:project-credits` **odpalona** (13 wykazów, 104 wiersze). `/fundacja` na jednej kolumnie 773 px i jednym rytmie. Długi tekst z CMS zszedł z 20 na 18 px (`PortableBody` bez `text-lead`). Snapshot przed migracją: `private/sanity-snapshots/production-2026-10-07-pre-credits.tar.gz`. |
+| **Ostatnia aktualizacja** | 2026-10-12 — **Missing keys** w wykazie twórców: migracja z 2026-10-07 zapisała grupy i wiersze bez `_key`, Studio odmawiało edycji listy. `pnpm repair:credit-keys -- --write` **odpalony** (13 wykazów, 4 dokumenty: Art Generacje, Teatr Codzienny, To mi gra, Wielogłos). Treść ról i nazwisk bez zmian. **Manual redakcji przeredagowany:** rozdział o wykazie twórców, nowa strona „Typowe zadania”, słowniczek, ostrzeżenia o menu i sekcjach na górze, tabela „dokąd prowadzi wiersz Czytelni”, odchudzony `dostep-i-role.md`. Lista kadrów do zrobienia przeszła do `guides/zrzuty-manuala.md`. |
 | **Gałąź / HEAD** | `feat/credits-block-and-fundacja-rhythm` (od `main`; PR #6 zmergowany) |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
@@ -120,7 +120,7 @@ Ten plik + [fundacja-status.md](migration/fundacja-status.md) + [ustalenia-2026-
 
 ### Dokończyć kadry manuala (Jan)
 
-Spis braków: [redakcja/screeny.md](redakcja/screeny.md). Wstawić plik do `docs/redakcja/img/` i obrazek pod znacznikiem `<!-- screen: ... -->` w podanym pliku. Nie naciskać **Publish**.
+Spis braków: [guides/zrzuty-manuala.md](guides/zrzuty-manuala.md). Wstawić plik do `docs/redakcja/img/` i obrazek pod znacznikiem `<!-- screen: ... -->` w podanym pliku. Nie naciskać **Publish**.
 
 Gdzie się logować:
 
@@ -207,6 +207,8 @@ pnpm patch:hero-images        # legacy kadr → heroImages gdy pusta; przepisuje
 pnpm patch:project-credits -- --scan      # parsuje wykazy twórców, raport + szkic scripts/project-credits.json, nic nie zapisuje
 pnpm patch:project-credits -- --dry-run   # diff z przejrzanego pliku
 pnpm patch:project-credits                # zapis (odpalony 2026-10-07; nie odpalać drugi raz)
+pnpm repair:credit-keys       # dry-run: grupy/wiersze credits bez _key
+pnpm repair:credit-keys -- --write  # dopisuje _key (odpalony 2026-10-12; drugi raz jest no-op)
 pnpm test:credits             # parser wykazów
 # pnpm patch:hero-images -- --unset-legacy  # dopiero gdy Netlify serwuje front czytający wyłącznie heroImages
 pnpm seed:about-page          # singleton O fundacji, jeśli nie istnieje

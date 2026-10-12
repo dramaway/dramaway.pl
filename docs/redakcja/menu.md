@@ -1,58 +1,60 @@
 # Menu
 
-Menu witryny ustawia się w **Strona główna → Nawigacja**. To samo ustawienie układa skróty na górze lewej listy w Studio.
+Menu witryny ustawia się w **Strona główna** → **Nawigacja**. Ta sama lista układa skróty na górze lewej listy **Content** w Studio.
+
+> **Uwaga.** Dopóki lista **Nawigacja** jest pusta, strona pokazuje menu domyślne (Projekty, Baza wiedzy z podpozycją Czytelnia, O fundacji, Kontakt). Gdy dodasz choćby jeden wiersz, menu domyślne znika i na stronie jest **tylko to, co zostało wpisane na liście**. Dlatego wpisz od razu wszystkie pozycje, które mają zostać, i dopiero potem opublikuj.
 
 <!-- screen: menu-grupa | Grupa Nawigacja z kilkoma wierszami | Widać, że menu jest listą w ustawieniach strony głównej, a nie osobnym programem -->
 
 ![Grupa Nawigacja z czterema wierszami menu](img/menu-grupa.png)
 
-## Wiersz menu
+## Jak dodać pozycję
 
-Każdy wiersz ma etykietę i cel.
+1. Otwórz **Strona główna** → zakładka **Nawigacja**.
+2. Naciśnij **Add item**.
+3. Wybierz **Cel** (opis niżej) i wskaż stronę albo wpisz adres.
+4. Wpisz **Etykietę**, czyli napis w menu. Przy celu **Strona z CMS** możesz ją zostawić pustą: menu pokaże wtedy tytuł wybranej strony. Przy celu **Adres** etykieta jest wymagana.
+5. Ustaw kolejność, przeciągając wiersze. Kolejność na liście to kolejność w menu.
+6. Naciśnij **Publish**.
 
-**Etykieta.** Pusta = na stronie i w skrócie Studia widać tytuł wybranego dokumentu.
+Strony głównej nie dodajesz do menu: prowadzi na nią logo w nagłówku.
 
 <!-- screen: menu-pusta-etykieta | Wiersz z wybraną stroną i pustym polem etykiety | Widać, że puste pole etykiety bierze tytuł dokumentu -->
 
-![Pole etykiety z podpowiedzią, że puste bierze tytuł strony. Na kadrze etykieta jest wypełniona, żeby nie czyścić opublikowanego menu.](img/menu-pusta-etykieta.png)
+![Pole etykiety z podpowiedzią, że puste bierze tytuł strony](img/menu-pusta-etykieta.png)
 
-**Cel.**
+## Cel pozycji
 
-- **Strona z CMS** — wybór istniejącego dokumentu: zwykła strona (w tym Baza wiedzy), News, projekt, publikacja, osoba, listing (Projekty, Czytelnia, Zespół) albo O fundacji. Stare duplikaty projektów nie pojawiają się na liście wyboru.
-- **Adres** — ścieżka od ukośnika (`/projekty`) albo pełny `https://…`. Tak dodaje się link poza stronę, na przykład do Centrum.
+- **Strona z CMS**: wybierasz istniejący dokument. Może to być zwykła strona (w tym Baza wiedzy), aktualność, projekt, publikacja, osoba, listing (Projekty, Czytelnia, Zespół) albo O fundacji. Stare duplikaty projektów nie pokazują się na liście wyboru.
+- **Adres**: ścieżka od ukośnika (`/projekty`) albo pełny adres `https://…`. W ten sposób dodaje się link poza stronę, na przykład do Centrum.
 
 <!-- screen: menu-adres | Wiersz przełączony na Adres, z wpisanym https | Widać, że link zewnętrzny nie wymaga dokumentu w Studio -->
 
-![Przełącznik celu: Strona z CMS albo Adres. Nie przełączałem na Adres, żeby nie zostawić niezapisanego szkicu.](img/menu-adres.png)
+![Przełącznik celu: Strona z CMS albo Adres](img/menu-adres.png)
 
-Kolejność wierszy to kolejność w menu. Przeciąganie działa tak jak na innych listach Sanity: [Array fields](https://www.sanity.io/docs/studio/array-type).
+## Podpozycje
 
-## Drugi poziom
+Pod każdym wierszem jest lista **Podpozycje**. Daje to jeden dodatkowy poziom menu, a nie więcej: formularz nie pokazuje trzeciego poziomu i strona go nie rysuje. Pod jednym wierszem może być do ośmiu podpozycji.
 
-Pod wierszem jest lista **Podpozycje**. To jedyny dodatkowy poziom. Trzeciego nie ma: formularz go nie pokazuje, a strona go nie rysuje.
-
-Rodzic nadal jest linkiem (na przykład Baza wiedzy prowadzi na `/baza-wiedzy`). Podpozycje są obok niego w menu.
+Wiersz nadrzędny nadal jest zwykłym linkiem. Na przykład Baza wiedzy prowadzi na `/baza-wiedzy`, a jej podpozycja Czytelnia rozwija się pod nią.
 
 <!-- screen: menu-podpozycje | Rozwinięta Baza wiedzy z podpozycją Czytelnia | Widać rodzica i dokładnie jeden poziom dzieci -->
 
-![Podpozycja Bazy wiedzy: Czytelnia](img/menu-podpozycje.png)
+![Pozycja Baza wiedzy z podpozycją Czytelnia](img/menu-podpozycje.png)
 
-Pozycja, która jest samym adresem i nie wskazuje dokumentu, **nie dostaje skrótu** w lewym nawigatorze. W menu na stronie nadal działa.
+## Jak wrócić do menu domyślnego
 
-## Pusta lista
+Wyczyść listę **Nawigacja** (usuń wszystkie wiersze) i opublikuj.
 
-Pusta Nawigacja zostawia menu wbudowane: Projekty, Baza wiedzy (Czytelnia), O fundacji, Kontakt. Logo i tak prowadzi na stronę główną. Nie dodajemy jej do menu.
+## Skróty po lewej w Studio
 
-Gdy lista coś zawiera, na stronie jest **tylko** to, co wpisane. Żeby wrócić do układu domyślnego, czyścimy listę i publikujemy.
+- **Strona główna** jest na górze zawsze, także wtedy, gdy nie ma jej w menu.
+- Pozostałe skróty powtarzają menu. Pozycja z podpozycjami otwiera listę: najpierw sama strona, potem jej podpozycje.
+- Pozycja, która jest samym adresem i nie wskazuje dokumentu, nie dostaje skrótu w Studio. W menu na stronie działa normalnie.
+- Po opublikowaniu menu odśwież kartę Studia, żeby lewa lista się przebudowała.
 
-## Skróty po lewej
-
-**Strona główna** jest na górze zawsze, nawet gdy nie ma jej w menu.
-
-Reszta skrótów powtarza Nawigację. Wiersz z podpozycjami otwiera listę: najpierw sam dokument, potem dzieci. Po publikacji menu odśwież kartę Studia, żeby lewa lista się przebudowała.
+Dopóki **Nawigacja** jest pusta, skróty są dotychczasowe: Projekty, Czytelnia i Zespół (listingi), Art Generacje, Baza wiedzy, Kontakt i O fundacji. Gdy menu jest uzupełnione, a Art Generacje w nim nie ma, skrót do tego projektu znika z góry listy. Dokument zostaje na liście **Project**.
 
 <!-- screen: menu-skroty-desku | Lewa lista Content po uzupełnionym menu, ze Stroną główną na górze i gałęzią Baza wiedzy | Widać, że skróty idą za menu, a Strona główna zostaje -->
 
-![Po otwarciu skrótu Baza wiedzy: sam dokument i Czytelnia](img/menu-skroty-desku.png)
-
-Dopóki Nawigacja jest pusta, skróty są te dotychczasowe, łącznie z Art Generacje. Art Generacje znika z góry, gdy menu jest uzupełnione i tego projektu w nim nie ma. Dokument dalej jest na liście **Project**.
+![Skrót Baza wiedzy po otwarciu: sama strona i Czytelnia](img/menu-skroty-desku.png)

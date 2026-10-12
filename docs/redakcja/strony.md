@@ -1,75 +1,98 @@
 # Który dokument jest którą stroną
 
-Skrót po lewej otwiera jeden dokument. Ten dokument składa konkretny adres na stronie. Puste pole znika: nie pokazujemy wtedy pustego nagłówka ani pustego przycisku.
+Skrót po lewej otwiera jeden dokument. Ten dokument składa konkretny adres na stronie. Puste pole znika ze strony: nie pokazujemy wtedy pustego nagłówka ani pustego przycisku.
 
 <!-- screen: strony-skroty | Góra listy Content ze skrótami | Widać, że Strona główna, listingi i O fundacji są osobnymi pozycjami, nie jedną „stroną o wszystkim” -->
 
 ## Strona główna
 
-Skrót **Strona główna** (na dole listy ta sama rzecz nazywa się **Site settings**).
+Skrót **Strona główna**. Na dole listy ten sam dokument nazywa się **Site settings**: to jedno i to samo miejsce.
 
-Grupy:
+Dokument ma zakładki:
 
-- **Ogólne** — tytuł witryny.
-- **Nawigacja** — menu. Osobna instrukcja: [Menu](menu.md).
-- **Stopka** — logo, adres, cytat.
-- **Ikony** — ikona karty przeglądarki i obrazek do udostępniania. Zwykle zostaje przy utrzymaniu.
-- **Hero** — duży nagłówek strony startowej, lead, przycisk i do pięciu zdjęć. Zero zdjęć = brak kadru. Jedno zdjęcie zostaje kadrem, bez kropek. Od dwóch włącza się pokaz slajdów: miniatury przybliżają hotspot, więc warto go ustawić. Na szerokim ekranie pasek jest w prawym górnym rogu zdjęcia i zostaje tam przy przewijaniu, aż dojedziesz do dołu zdjęcia. Jest lekko przygaszony, aż najedziesz albo przejdziesz tabem. Na wąskim jest zawsze przy prawej krawędzi strony. Nieaktywna kropka jest przygaszona, aktywna dorysowuje pierścień czasu slajdu. Przy każdym zdjęciu są **Alt** (czytnik i brak obrazu, krótki opis treści) i **Podpis** (podpowiedź przy kropce; może być bardziej redakcyjny). Gdy wypełnione jest dokładnie jedno z tych pól, Studio pokazuje przycisk kopiowania w drugą stronę. Jedno zdjęcie nie ma kropek, więc podpis wtedy nie wychodzi na stronę. W tej samej zakładce **Slider hero** ustawia czas klatki i autoodtwarzanie — te ustawienia są wspólne dla każdego takiego hero na stronie (listingi, O fundacji, zwykłe strony, projekty).
-- **Sekcje** — lista bloków pod dużym nagłówkiem. Jak je dodawać: niżej, rozdział [Sekcje](#sekcje).
+- **Ogólne**: tytuł witryny.
+- **Nawigacja**: menu. Osobna instrukcja: [Menu](menu.md).
+- **Stopka**: logo, adres, cytat.
+- **Ikony**: ikona karty przeglądarki i obrazek do udostępniania. Zwykle zostaje przy osobie od utrzymania.
+- **Hero**: duży nagłówek na górze strony głównej. Opis niżej, w rozdziale [Hero](#hero).
+- **Sekcje**: lista bloków pod dużym nagłówkiem. Opis niżej, w rozdziale [Sekcje](#sekcje).
 
-<!-- screen: strony-glowna-grupy | Dokument Strona główna z widocznymi zakładkami grup | Widać Nawigacja, Stopkę, Hero i Sekcje jako osobne karty jednego dokumentu -->
+<!-- screen: strony-glowna-grupy | Dokument Strona główna z widocznymi zakładkami grup | Widać Nawigację, Stopkę, Hero i Sekcje jako osobne karty jednego dokumentu -->
 
 ![Zakładki dokumentu Strona główna](img/strony-glowna-grupy.png)
 
-Aktualności to osobny typ **News**, na tej samej liście co Project, Person i Page. Adres to `/{slug}`, bez przedrostka. Na stronie głównej zbiera je sekcja **Aktualności**, opisana niżej.
+## Hero
 
-Pola: tytuł, slug, data, zajawka, treść. **CTA target** puste zostawia przycisk „czytaj więcej”, który prowadzi do tej aktualności. Inny adres — ścieżka od ukośnika albo `https://` — wymaga własnej etykiety. Bez etykiety Studio nie pozwoli opublikować, a strona i tak zostawi zwykły przycisk.
+**Hero** to duży nagłówek na górze strony: tytuł, krótki opis, przycisk i zdjęcia. Strona główna, listingi, **O fundacji**, zwykłe strony i projekty mają go w formularzu. Puste pole oznacza, że tego elementu nie ma na stronie. Gdy puste jest wszystko, nagłówka nie ma wcale.
 
-<!-- screen: strony-aktualnosc | Dokument News z pustym CTA i z wypełnionym adresem, przy którym widać etykietę | Widać, że własny link wymaga własnego tekstu przycisku -->
+**Zdjęcia** (pole **Zdjęcia hero**):
+
+- Można dodać od zera do pięciu. Kolejność na liście to kolejność pokazu.
+- Zero zdjęć: strona nie pokazuje zdjęcia.
+- Jedno zdjęcie: stoi nieruchomo.
+- Dwa lub więcej: pokaz slajdów z miniaturami.
+
+Przy każdym zdjęciu:
+
+- **Hotspot**: ustaw go, bo miniatury pokazują przybliżony kadr wokół niego.
+- **Alt**: krótki opis dla osób, które nie widzą zdjęcia.
+- **Podpis**: opcjonalny, pokazuje się jako podpowiedź przy miniaturze. Może być bardziej redakcyjny niż Alt. Przy jednym zdjęciu nie ma miniatur, więc podpis nie pojawia się na stronie.
+- Jeśli wypełnisz tylko jedno z pól Alt i Podpis, Studio pokaże przycisk, który kopiuje wpis do drugiego.
+
+**Tempo pokazu** ustawia się raz dla wszystkich nagłówków na stronie: **Strona główna** → **Hero** → **Slider hero**. Są tam dwa ustawienia:
+
+- **Czas klatki**: ile sekund widać jedno zdjęcie. Od 4 do 20, puste = 7.
+- **Autoodtwarzanie**: włączone zmienia zdjęcia samo, wyłączone zostawia tylko miniatury. Osoby, które w systemie mają włączone „mniej animacji”, widzą pokaz zatrzymany niezależnie od tego ustawienia.
 
 ## Sekcje
 
 Sekcja to blok pod dużym nagłówkiem: kilka kafelków albo lista najnowszych rzeczy. Kolejność na liście w Studio jest kolejnością na stronie. Pusta lista nic nie dodaje.
 
-Są trzy miejsca:
+Są trzy miejsca na sekcje:
 
 1. **Strona główna** → zakładka **Sekcje** → lista **Sekcje**. Bloki wchodzą pod duży nagłówek.
-2. Dokument **Page** (Baza wiedzy, Kontakt, statut i inne zwykłe strony) → pole **Sekcje**, nad treścią artykułu. Dokument **News** tego pola nie ma: to sam artykuł.
-3. Listing **Projekty** (`/projekty`) → grupa **Listing** → lista **Sekcje**. Bloki wchodzą nad „Zakończone projekty”. Pusta lista zostawia dotychczasowy wiersz aktywnych projektów (dziś Art Generacje) i opcjonalny wiersz Czytelni. Gdy dodasz choć jeden blok, ten wiersz znika — Art Generacje i Czytelnię wstawiasz wtedy jako kafelki. Zakończone projekty niżej redakcja nie układa: biorą się z projektów oznaczonych jako zakończone.
+2. Dokument **Page** (Baza wiedzy, Kontakt, statut i inne zwykłe strony) → pole **Sekcje**, nad treścią artykułu. Dokument **News** tego pola nie ma.
+3. Listing **Projekty** (`/projekty`) → grupa **Listing** → lista **Sekcje**. Bloki wchodzą nad „Zakończone projekty”.
 
-Na liście: **Add item**, potem **Kafelki** albo **Aktualności**. Wiersz da się przeciągnąć. Na stronę wychodzi dopiero po **Publish**.
+> **Uwaga na listingu Projekty.** Dopóki lista **Sekcje** jest pusta, strona pokazuje wiersz aktywnych projektów (dziś Art Generacje) i opcjonalnie wiersz Czytelni. Gdy dodasz choćby jeden blok, ten wiersz znika. Art Generacje i Czytelnię trzeba wtedy dodać jako kafelki. „Zakończone projekty” niżej nie układa się ręcznie: biorą się z projektów oznaczonych jako zakończone.
+
+Jak dodać: na liście naciśnij **Add item** i wybierz **Kafelki** albo **Aktualności**. Wiersz można przeciągnąć. Na stronie pojawi się po **Publish**.
 
 <!-- screen: strony-sekcje | Lista Sekcje z jednym wierszem Kafelki i jednym Aktualności | Widać, że nowy blok dodaje się do listy, a nie jako osobny dokument -->
 
 ### Kafelki
 
-Do trzech kafelków w jednej sekcji. Każdy kafelek to tytuł, krótki opis i etykieta linku. Cały kafelek prowadzi w jedno miejsce. Nie da się osobno podlinkować przycisku i tytułu.
+W jednej sekcji może być do trzech kafelków. Kafelek ma tytuł, krótki opis i etykietę linku. Cały kafelek prowadzi w jedno miejsce: nie da się osobno podlinkować przycisku i tytułu.
 
-Cel kafelka:
+**Cel kafelka:**
 
-- **Dokument z CMS** — istniejąca strona, projekt, publikacja, osoba, listing (Projekty, Czytelnia, Zespół) albo O fundacji. Baza wiedzy to zwykła strona, nie listing.
-- **Adres** — ścieżka od ukośnika (`/projekty`) albo adres `https://`.
+- **Dokument z CMS**: istniejąca strona, projekt, publikacja, osoba, listing (Projekty, Czytelnia, Zespół) albo O fundacji. Baza wiedzy to zwykła strona, nie listing.
+- **Adres**: ścieżka od ukośnika (`/projekty`) albo adres `https://`.
 
-Pusty **Tytuł** bierze tytuł dokumentu. Pusty **Opis** bierze zajawkę dokumentu. Pusta **Etykieta linku** to „zobacz” przy osobie i projekcie, a „czytaj więcej” przy reszcie.
+**Co się dzieje, gdy zostawisz pole puste:**
 
-Bez zdjęcia jest pole **Układ tekstu**:
+| Pole | Gdy puste |
+|------|-----------|
+| **Tytuł** | Kafelek bierze tytuł dokumentu |
+| **Opis** | Kafelek bierze zajawkę dokumentu |
+| **Etykieta linku** | „zobacz” przy osobie i projekcie, „czytaj więcej” przy reszcie |
 
-- **Siatka** — do trzech kolumn obok siebie. Na wąskim ekranie jeden kafelek pod drugim.
-- **Lista** — jeden pod drugim, szersza kolumna na środku.
+**Układ.** Bez zdjęcia wybierasz pole **Układ tekstu**:
 
-Ze **Zdjęciem** układ tekstu znika. Strona kadru ustawia się sama: pierwsze zdjęcie w danej liście sekcji po lewej, następne po prawej, i tak na zmianę. Tego nie wybiera się ręcznie. Przy dwóch lub trzech kafelkach opis na stronie skraca się do trzech linii. Przy jednym kafelek jest wyśrodkowany w pionie obok zdjęcia.
+- **Siatka**: do trzech kolumn obok siebie. Na wąskim ekranie kafelki układają się jeden pod drugim.
+- **Lista**: jeden pod drugim, szersza kolumna na środku.
+
+Ze zdjęciem pole **Układ tekstu** znika. Strona kadru ustawia się sama: pierwsze zdjęcie w danej liście sekcji jest po lewej, następne po prawej, i tak na zmianę. Tego nie wybiera się ręcznie. Przy dwóch lub trzech kafelkach opis na stronie skraca się do trzech linii. Przy jednym kafelku tekst stoi pośrodku wysokości, obok zdjęcia.
 
 ### Aktualności
 
-Nagłówek pusty zostaje jako „Aktualności”.
-
-**Ile najnowszych** to liczba od 1 do 12. Puste pole oznacza 3.
-
-**Rodzaje treści** można zaznaczyć kilka naraz: News, strony, osoby, projekty, publikacje. Puste zaznaczenie oznacza same News. Na stronie powstaje jedna lista, od najnowszej daty, bez względu na rodzaj.
+- **Nagłówek**: puste zostawia „Aktualności”.
+- **Ile najnowszych**: liczba od 1 do 12, puste = 3.
+- **Rodzaje treści**: można zaznaczyć kilka naraz (News, strony, osoby, projekty, publikacje). Puste zaznaczenie oznacza same News. Na stronie powstaje jedna lista, od najnowszej daty, bez względu na rodzaj.
 
 ## Listingi
 
-Trzy dokumenty **Landing page**, przypięte jako skróty, gdy menu jest puste albo gdy są w menu:
+Trzy dokumenty typu **Landing page**. Skrót do nich jest na górze listy, gdy menu jest puste albo gdy są w menu.
 
 | Skrót | Adres |
 |-------|--------|
@@ -77,31 +100,33 @@ Trzy dokumenty **Landing page**, przypięte jako skróty, gdy menu jest puste al
 | Czytelnia | `/czytelnia` |
 | Zespół | `/zespol` |
 
-**Baza wiedzy** (`/baza-wiedzy`) nie jest listingiem. To zwykła strona **Page**: nagłówek, lead, sekcje i treść z opisem metod. Stary adres `/metody` przekierowuje tutaj. W menu ma jedno dziecko, Czytelnię.
+**Baza wiedzy** (`/baza-wiedzy`) nie jest listingiem. To zwykła strona **Page**: nagłówek, krótki opis, sekcje i treść z opisem metod. Stary adres `/metody` przekierowuje tutaj. W menu ma jedną podpozycję, Czytelnię.
 
-Pola hero (tytuł, lead, przycisk, do pięciu zdjęć) są na tym dokumencie. Puste = tego elementu nie ma. Jedno zdjęcie zostaje kadrem. Od dwóch działa slider ze strony głównej (czas klatki i autoodtwarzanie, miniatury, podpis jako podpowiedź przy kropce). Adresu listingu nie da się zmienić: pole strony jest zablokowane po pierwszym zapisie.
+Hero listingu (tytuł, krótki opis, przycisk, zdjęcia) wypełnia się tak samo jak wszędzie: [Hero](#hero). Adresu listingu nie da się zmienić, bo pole strony jest zablokowane po pierwszym zapisie.
 
-Na **Projektach** jest dodatkowo grupa **Listing**. Lista **Sekcje** to te same kafelki i aktualności co na stronie głównej; opis w [Sekcje](#sekcje). Pole **Pokaż Czytelnię** widać tylko, gdy ta lista jest pusta.
+Na **Projektach** jest dodatkowo grupa **Listing** z listą **Sekcje** i polem **Pokaż Czytelnię**. To pole widać tylko wtedy, gdy lista **Sekcje** jest pusta. Opis sekcji: [Sekcje](#sekcje).
 
 <!-- screen: strony-listing | Dokument Projekty z zablokowanym polem strony i pustym tytułem | Widać, że adres jest stały, a pusty tytuł nie wymyśla nagłówka -->
 
 ## O fundacji
 
-Skrót **O fundacji**, adres `/fundacja`. Grupy: Hero, Metody i wartości, Zespół, Historia, Dokumenty. Co wpisać w dalszych grupach: [Czytelnia i O fundacji](czytelnia-i-fundacja.md).
+Skrót **O fundacji**, adres `/fundacja`. Zakładki: Hero, Metody i wartości, Zespół, Historia, Dokumenty. Co wpisać w kolejnych zakładkach: [Czytelnia i O fundacji](czytelnia-i-fundacja.md).
 
 ## Projekty, osoby, publikacje, zwykłe strony
 
-Niżej na liście są typy, nie pojedyncze skróty:
+Niżej na liście Content są typy dokumentów, a nie pojedyncze skróty:
 
-- **Project** — jeden projekt, adres `/projekty/…`. Art Generacje ma dodatkowo podstrony edycji. Hero może dostać do pięciu zdjęć (slider jak na stronie głównej). Pusta lista zostawia dotychczasowy kadr: pierwsza galeria edycji, a gdy jej nie ma — pierwszy obraz w treści.
-- **Person** — osoba, adres `/zespol/…`.
-- **News** — aktualność. Adres `/{slug}`. Krótki formularz: tytuł, data, zajawka, treść i opcjonalny przycisk. Własny adres przycisku wymaga własnej etykiety.
-- **Page** — Baza wiedzy, Kontakt, strony typu statut. Adres to `/{slug}`. W Studio lista dzieli się na **Drupal** (stare resztki do wygaszenia), **W menu** i **Poza menu**. Hero: do pięciu zdjęć, tak jak na stronie głównej. Pole **Sekcje** nad artykułem: [Sekcje](#sekcje).
-- **Publication** — tekst Czytelni. Książka, multimedia, film w tekście albo brak pliku: podstrona `/czytelnia/…`. Artykuł albo scenariusz z PDF: spis otwiera plik, a adres `/czytelnia/…` przerzuca na ten PDF. Kiedy które: [Czytelnia i O fundacji](czytelnia-i-fundacja.md).
-- **Category** — etykieta kategorii w Czytelni, nie opis metod na stronie Baza wiedzy.
+- **Project**: jeden projekt, adres `/projekty/…`. Art Generacje ma dodatkowo podstrony edycji. Hero działa jak wszędzie: [Hero](#hero). Pusta lista zdjęć zostawia dotychczasowy kadr: pierwszą galerię edycji, a gdy jej nie ma, pierwszy obraz w treści.
+- **Person**: osoba, adres `/zespol/…`.
+- **News**: aktualność, adres `/{slug}`. Pola: tytuł, data, zajawka, treść i opcjonalny przycisk. Pole **CTA target** puste zostawia przycisk „czytaj więcej”, który prowadzi do tej aktualności. Inny adres (ścieżka od ukośnika albo `https://`) wymaga własnej etykiety w polu **CTA label**. Bez etykiety Studio nie pozwoli opublikować. Na stronie głównej aktualności zbiera sekcja **Aktualności**.
+- **Page**: Baza wiedzy, Kontakt, strony typu statut. Adres to `/{slug}`. W Studio lista dzieli się na **Drupal** (stare pozostałości po poprzedniej stronie, do wygaszenia), **W menu** i **Poza menu**. Hero działa jak wszędzie, a pole **Sekcje** stoi nad artykułem.
+- **Publication**: tekst Czytelni. Dokąd prowadzi wiersz na spisie: [Czytelnia i O fundacji](czytelnia-i-fundacja.md#dokąd-prowadzi-wiersz-na-spisie).
+- **Category**: etykieta kategorii w Czytelni, nie opis metod na stronie Baza wiedzy.
+
+<!-- screen: strony-aktualnosc | Dokument News z pustym CTA i z wypełnionym adresem, przy którym widać etykietę | Widać, że własny link wymaga własnego tekstu przycisku -->
 
 <!-- screen: strony-typy | Dolna część listy Content: Project, Person, Page, Category, Publication | Widać, gdzie szukać tekstu, który nie ma własnego skrótu na górze -->
 
 ![Listy typów pod kreską](img/strony-typy.png)
 
-Nowy dokument dostaje adres z pola **Slug**. Slug powstaje z tytułu. Po publikacji nie zmieniamy go bez potrzeby: zmieni się link, który ktoś mógł już dostać.
+Nowy dokument dostaje adres z pola **Slug**, a slug powstaje z tytułu. Po publikacji nie zmieniaj go bez potrzeby: zmieni się link, który ktoś mógł już dostać.

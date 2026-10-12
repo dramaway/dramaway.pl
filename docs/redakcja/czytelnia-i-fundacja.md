@@ -2,61 +2,84 @@
 
 ## Czytelnia
 
-Tekst Czytelni to dokument **Publication**. Nie każdy dokument dostaje własną stronę.
+Tekst Czytelni to dokument **Publication**. Nie każdy dokument dostaje własną stronę: wiersz na spisie `/czytelnia` prowadzi albo na podstronę, albo prosto do pliku PDF. Przepis krok po kroku: [Dodać tekst do Czytelni](zadania.md#dodać-tekst-do-czytelni).
 
 <!-- screen: czytelnia-dokument | Dokument Publication z widocznym Format i polem File (PDF) | Widać, skąd bierze się cel wiersza: podstrona albo pobranie -->
 
-**Format** decyduje o dwóch rzeczach: w której szufladzie spisu wisi tekst (na stronie etykiety są po polsku; w panelu lista jest po angielsku: Articles, Books, Scripts, Multimedia) oraz dokąd prowadzi wiersz.
+### Dokąd prowadzi wiersz na spisie
 
-- **Books** i **Multimedia** — wiersz idzie na podstronę `/czytelnia/` plus końcówka z pola Slug. Na spisie napis to „więcej”.
-- **Articles** i **Scripts**, gdy w **File** jest PDF — wiersz otwiera ten plik (napis „pobierz PDF”). Osobnej strony nie ma. Wejście na adres `/czytelnia/…` przerzuca na plik. Sam opis w tekście nie tworzy strony: opis widać w wierszu.
-- Film (**YouTube** w tekście) zostawia podstronę, także przy artykule albo scenariuszu z plikiem. Na tej stronie zostaje „pobierz PDF”, jeśli plik jest.
-- Brak pliku — podstrona, bo tekst nie ma innego miejsca.
+To zależy od trzech rzeczy: **Format**, PDF w polu **File (PDF)** i filmu YouTube w treści.
 
-**Categories** to etykiety z listy **Category** (w danych nazywają się metodami czytania). To nie jest opis metod na stronie Baza wiedzy i nie jest drugi spis.
+| Format | PDF w polu **File** | Film YouTube w treści | Co robi wiersz na spisie |
+|--------|---------------------|------------------------|---------------------------|
+| Books, Multimedia | dowolnie | dowolnie | Prowadzi na podstronę. Napis w wierszu: „więcej” |
+| Articles, Scripts | jest | nie ma | Otwiera plik. Napis w wierszu: „pobierz PDF” |
+| Articles, Scripts | jest | jest | Prowadzi na podstronę. Na podstronie zostaje „pobierz PDF” |
+| Articles, Scripts | brak | dowolnie | Prowadzi na podstronę |
 
-**Listed in Czytelnia** tylko włącza tekst do spisu na `/czytelnia`. Odznaczenie chowa pozycję z listy. Nie decyduje, czy powstaje podstrona, czy link do pliku.
+Gdy wiersz otwiera plik, osobnej podstrony nie ma. Wejście na adres `/czytelnia/…` przerzuca wtedy od razu na PDF.
+
+**Format** decyduje też o tym, pod którym rodzajem tekst pojawia się na spisie. Na stronie nazwy rodzajów są po polsku, a w panelu lista jest po angielsku: Articles, Books, Scripts, Multimedia.
+
+### Pola dokumentu
+
+- **Categories**: etykiety z listy dokumentów **Category**. To nie jest opis metod ze strony Baza wiedzy ani drugi spis.
+- **Authors**: wpisane nazwiska. Nie są odnośnikami do dokumentów osób.
+- **File (PDF)**: tu wgrywa się plik do pobrania.
+- **Listed in Czytelnia**: włącza tekst do spisu na `/czytelnia`. **Nowy dokument ma to pole domyślnie wyłączone.** Dopóki go nie zaznaczysz, tekst nie pokaże się na spisie. Odznaczenie chowa istniejący tekst ze spisu. Pole nie decyduje o tym, dokąd prowadzi wiersz: o tym mówi tabela wyżej.
 
 <!-- screen: czytelnia-listed | Pole Listed in Czytelnia odznaczone | Widać, że da się schować tekst ze spisu; przełącznik nie wybiera strony ani pliku -->
 
-![Przełącznik Listed in Czytelnia. Na tym tekście jest włączony.](img/czytelnia-listed.png)
+![Przełącznik Listed in Czytelnia](img/czytelnia-listed.png)
 
-Autorzy to wpisane nazwiska, nie link do dokumentu osoby. PDF wisi w polu **File**.
+### Okładka na spisie
 
-Okładka na spisie to **pierwszy obrazek w tekście** (Body). Osobnego pola okładki nie ma. Hotspot tego obrazka jest środkiem kółka. Pusty tekst bez obrazka zostawia piaskowe kółko. Obrazek wstawiamy na początku tekstu, zanim pójdą akapity.
+Okładka kółka na spisie to **pierwszy obrazek w treści** (**Body**). Osobnego pola okładki nie ma. Środkiem kółka jest hotspot tego obrazka. Bez obrazka kółko jest piaskowe. Wstaw obrazek na początku tekstu, przed akapitami.
 
 <!-- screen: czytelnia-okladka | Początek Body w Publication: obrazek jako pierwszy blok, z uzupełnionym alt i zaznaczonym hotspotem | Widać, że okładka spisu to pierwszy obrazek w tekście, nie osobne pole -->
 
-Szczegóły układu spisu (przyciski rodzaju, sekcje kategorii) wynikają z Format i Categories. Nie ma osobnego ekranu „ułożenia Czytelni” poza dokumentem listingu **Czytelnia** (hero) i samymi publikacjami.
+### Przyciski rodzaju i sekcje kategorii
 
-Żeby z Bazy wiedzy (albo z innego tekstu) otworzyć jedną metodę: w treści wstaw **Button**, cel **Dokument**, listing **Czytelnia**, w **Zaawansowane → Parametry** wpisz `kategoria=…` (na przykład `kategoria=teatr-forum`). Tabela slugów i kotwica: [Tekst](tekst.md#zaawansowane-kotwica-i-parametry). Bez parametru wszystkie sekcje są otwarte. Na spisie nagłówek zwija i rozwija swoją sekcję; adres dostaje `kategoria`, gdy zostaje otwarta dokładnie jedna.
+Wynikają z pól **Format** i **Categories**. Nie ma osobnego ekranu do układania Czytelni. Poza samymi publikacjami ustawia się tylko dokument listingu **Czytelnia** (hero).
+
+Żeby z Bazy wiedzy albo innego tekstu otworzyć jedną metodę, wstaw przycisk **Button**: cel **Dokument**, listing **Czytelnia**, a w **Zaawansowane** → **Parametry** wpisz `kategoria=…` (na przykład `kategoria=teatr-forum`). Tabela wartości: [Tekst](tekst.md#zaawansowane-kotwica-i-parametry). Bez parametru wszystkie sekcje na spisie są otwarte. Nagłówek każdej sekcji zwija ją i rozwija.
 
 ## O fundacji
 
-Dokument **O fundacji**, adres `/fundacja`. Pusta lista w danej grupie chowa cały blok.
+Dokument **O fundacji**, adres `/fundacja`. Zakładki: Hero, Metody i wartości, Zespół, Historia, Dokumenty. Pusta lista w zakładce chowa cały blok. Hero wypełnia się tak jak wszędzie: [Strony](strony.md#hero).
 
 <!-- screen: fundacja-grupy | Zakładki dokumentu O fundacji: Hero, Metody i wartości, Zespół, Historia, Dokumenty | Widać, że jedna strona jest podzielona na te pięć grup -->
 
 ![Zakładki dokumentu O fundacji](img/fundacja-grupy.png)
 
-**Metody i wartości.** Kręgi z krótką nazwą. Pusta lista = brak kręgów. Na telefonie jest jeden przewijany rząd.
+### Metody i wartości
 
-**Zespół.** Nagłówek, wybrane osoby (dokumenty Person) i opcjonalny tekst pod zdjęciami. Skład ról w tekście oznaczamy listą Roles, patrz [Tekst](tekst.md). Puste osoby i pusty tekst = brak sekcji. Osobna strona `/zespol` to listing wszystkich osób i nie zastępuje tego bloku.
+Kręgi z krótką nazwą. Pusta lista oznacza brak kręgów. Na telefonie kręgi stoją w jednym przewijanym rzędzie.
 
-**Historia.** Nagłówek i lead stoją nad osią. Lead to tekst sformatowany. Pusty lead zostawia samą oś.
+### Zespół
 
-Każdy wiersz na liście **Wpis na osi czasu** ma trzy pola: **Rok / znacznik** (napis w kółku, na przykład ‘11), **Tytuł** i **Opis**. Rok i tytuł są wymagane. Pusty opis zostawia sam rok i tytuł. Pusta lista wpisów chowa całą oś. Nie wklejamy przykładowych lat z makiety.
+- **Nagłówek** sekcji.
+- **Osoby na tej stronie**: wybrane dokumenty **Person**, w wybranej kolejności. Nie podstawiamy automatycznie wszystkich osób.
+- **Tekst pod zdjęciami**: opis zespołu, społeczności, cytaty. Role w tekście układa się listą **Roles** albo blokiem **Wykaz twórców** ([Tekst](tekst.md)). Nagłówki H2 w tym polu wyglądają na stronie jak tytuł sekcji.
 
-Na stronie opisy startują zwinięte. Przy przewijaniu otwierają się lata najbliżej środka ekranu. Ucięty opis zanika, dopóki nie jest otwarty w całości. Gdy kółko jest już w górnej części ekranu, opis zostaje otwarty i zwija się dopiero przy dalszym przewijaniu. Dłuższy opis zostaje otwarty dłużej, żeby dało się go doczytać. Nad osią jest jeden napis „rozwiń całość”. Po kliknięciu zmienia się w „zwiń całość”: otwiera wszystkie opisy do zwykłego czytania i na ten czas wyłącza otwieranie scrollem.
+Sekcja znika tylko wtedy, gdy puste są i osoby, i tekst. Osobna strona `/zespol` to listing wszystkich osób i nie zastępuje tej sekcji.
 
-**Układ osi** to Pionowy albo Poziomy. Pionowy układa lata jedno pod drugim. Na szerokim ekranie kółka lekko schodzą w prawo. Poziomy na szerokim ekranie jedzie w bok razem ze scrollem strony. Na telefonie i przy ograniczeniu ruchu oś jest zawsze pionowa, przy lewej krawędzi. Puste pole = pion.
+### Historia
+
+- **Nagłówek** i **Tekst nad osią**: zwykły tekst sformatowany nad osią czasu. Pusty tekst zostawia samą oś.
+- **Wpis na osi czasu**: każdy wiersz ma **Rok / znacznik** (napis w kółku, na przykład ‘11 albo 2011), **Tytuł** i **Opis**. Rok i tytuł są wymagane. Pusty opis zostawia sam rok i tytuł. Pusta lista wpisów chowa całą oś. Nie wklejaj przykładowych lat z makiety.
+- **Układ osi**: **Pionowy** (lata jedno pod drugim) albo **Poziomy** (na dużym ekranie oś przesuwa się w bok razem z przewijaniem strony). Na telefonie i przy włączonym w systemie „mniej animacji” oś jest zawsze pionowa. Puste pole oznacza pion.
+
+Na stronie opisy są domyślnie zwinięte i otwierają się same podczas przewijania, najpierw te najbliżej środka ekranu. Nad osią jest przycisk „rozwiń całość”, który otwiera wszystkie opisy naraz, do zwykłego czytania.
 
 <!-- screen: fundacja-historia | Grupa Historia: przełącznik Układ osi ustawiony na Pionowy i jeden wpis z rokiem, tytułem i opisem | Widać, że rok to tekst w kółku, a układ osi wybiera się w tej grupie -->
 
-**Dokumenty.** Każdy wiersz to tytuł plus strona z panelu, plik PDF albo adres. Pusta lista = brak sekcji.
+### Dokumenty
+
+Każdy wiersz to tytuł plus strona z panelu, plik PDF albo adres. Pusta lista oznacza brak sekcji.
 
 <!-- screen: fundacja-dokumenty | Jeden wiersz dokumentów z tytułem i podpiętym PDF | Widać, że dokument może być plikiem, a nie tylko linkiem do strony -->
 
 ## Kontakt
 
-**Kontakt** to zwykła strona (Page). Nie ma formularza. Adresy mailowe na tej stronie biorą się z pól e-mail przy osobach, nie z osobnego formularza.
+**Kontakt** to zwykła strona (**Page**). Nie ma formularza. Adresy mailowe na tej stronie biorą się z pól e-mail przy osobach.
