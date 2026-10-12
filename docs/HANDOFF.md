@@ -6,11 +6,11 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | | |
 |--|--|
 | **Ostatnia aktualizacja** | 2026-10-12 — **Missing keys** w wykazie twórców: migracja z 2026-10-07 zapisała grupy i wiersze bez `_key`, Studio odmawiało edycji listy. `pnpm repair:credit-keys -- --write` **odpalony** (13 wykazów, 4 dokumenty: Art Generacje, Teatr Codzienny, To mi gra, Wielogłos). Treść ról i nazwisk bez zmian. **Manual redakcji przeredagowany:** rozdział o wykazie twórców, nowa strona „Typowe zadania”, słowniczek, ostrzeżenia o menu i sekcjach na górze, tabela „dokąd prowadzi wiersz Czytelni”, odchudzony `dostep-i-role.md`. Lista kadrów do zrobienia przeszła do `guides/zrzuty-manuala.md`. |
-| **Gałąź / HEAD** | `feat/credits-block-and-fundacja-rhythm` (od `main`; PR #6 zmergowany) |
+| **Gałąź / HEAD** | `main` (2026-10-12: zmergowana gałąź `feat/credits-block-and-fundacja-rhythm`). Lokalna kopia dawnego commita docs o osi historii: gałąź `backup/main-history-axis-docs` (niezmergowana; zasadnicze fakty przeniesione do manuala) |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ (`readingMethod` = Category; `publication.methods` = Categories; publiczne `publication.format`) |
-| **Working tree** | PR [#8](https://github.com/waether-the-strm/artgeneracje/pull/8) — blok `credits`, skład `/fundacja`, rozmiar tekstu z CMS. Migracja danych **już odpalona** na `production`, więc preview gubi wykazy do czasu merge’a. |
+| **Working tree** | Czyste po merge’u: blok `credits`, skład `/fundacja`, rozmiar tekstu z CMS, naprawa kluczy wykazów, przeredagowany manual redakcji. Migracja danych była odpalona na `production` 2026-10-07, a klucze dopisane 2026-10-12. |
 | **Owner Sanity (na razie)** | Jan = project Admin; backup klienta = `admin@dramaway.pl`; redakcja = Editor |
 
 ---
