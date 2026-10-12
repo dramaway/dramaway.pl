@@ -31,6 +31,8 @@ Jeszcze bez pliku, bo wymagałyby wylogowania, wejścia w Manage albo przełącz
 | `tekst-indent` | [tekst.md](tekst.md) | Lista Indent na dwóch poziomach | Jeszcze nie |
 | `tekst-columns` | [tekst.md](tekst.md) | Blok Columns, dwie kolumny | Jeszcze nie |
 | `tekst-button` | [tekst.md](tekst.md) | Blok Button z celem Dokument i zwiniętym Zaawansowane | Jeszcze nie |
+| `tekst-credits` | [tekst.md](tekst.md) | Otwarty blok Wykaz twórców: jedna grupa, wiersz Rola i wiersz Lista bez ról | Jeszcze nie |
+| `tekst-credits-strona` | [tekst.md](tekst.md) | Ten sam wykaz na stronie edycji | Jeszcze nie |
 
 Znaczniki `<!-- screen: ... -->` zostają w tekście także przy wstawionych obrazkach.
 
@@ -90,6 +92,8 @@ Znaczniki `<!-- screen: ... -->` zostają w tekście także przy wstawionych obr
 | `tekst-roles` | [tekst.md](tekst.md) | Lista Roles z wierszem „komunikacja: imię i nazwisko” | Widać dwukropek w treści i styl Roles na pasku |
 | `tekst-columns` | [tekst.md](tekst.md) | Blok Columns ustawiony na dwie kolumny, w każdej krótki akapit | Widać wybór 2 albo 3 i brak trzeciego zagnieżdżenia |
 | `tekst-button` | [tekst.md](tekst.md) | Blok Button z etykietą, celem Dokument i zwiniętym Zaawansowane | Widać, że przycisk jest osobnym blokiem, nie zaznaczeniem w zdaniu |
+| `tekst-credits` | [tekst.md](tekst.md) | Otwarty blok Wykaz twórców z jedną grupą, wierszem Rola i wierszem Lista bez ról | Widać cztery poziomy: nagłówek, grupy, wiersze, notka końcowa |
+| `tekst-credits-strona` | [tekst.md](tekst.md) | Ten sam wykaz na stronie edycji | Widać tabelę rola i nazwiska, linię pod nagłówkiem grupy i notkę na końcu |
 
 ## Czytelnia i O fundacji
 
@@ -102,4 +106,4 @@ Znaczniki `<!-- screen: ... -->` zostają w tekście także przy wstawionych obr
 | `fundacja-dokumenty` | [czytelnia-i-fundacja.md](czytelnia-i-fundacja.md) | Jeden wiersz dokumentów z tytułem i podpiętym PDF | Widać, że dokument może być plikiem, a nie tylko linkiem do strony |
 | `fundacja-historia` | [czytelnia-i-fundacja.md](czytelnia-i-fundacja.md) | Grupa Historia: przełącznik Układ osi ustawiony na Pionowy i jeden wpis z rokiem, tytułem i opisem | Widać, że rok to tekst w kółku, a układ osi wybiera się w tej grupie. Jeszcze bez pliku |
 
-Wstawione: 13. Zostało: 17, lista na górze tego pliku.
+Wstawione: 13. Zostało: 19, lista na górze tego pliku.
