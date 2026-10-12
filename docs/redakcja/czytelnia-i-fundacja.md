@@ -67,7 +67,8 @@ Sekcja znika tylko wtedy, gdy puste są i osoby, i tekst. Osobna strona `/zespol
 ### Historia
 
 - **Nagłówek** i **Tekst nad osią**: zwykły tekst sformatowany nad osią czasu. Pusty tekst zostawia samą oś.
-- **Wpis na osi czasu**: każdy wiersz ma **Rok / znacznik** (napis w kółku, na przykład ‘11 albo 2011), **Tytuł** i **Opis**. Rok i tytuł są wymagane. Pusty opis zostawia sam rok i tytuł. Pusta lista wpisów chowa całą oś. Nie wklejaj przykładowych lat z makiety.
+- **Wpis na osi czasu**: każdy wiersz ma **Rok / znacznik** (napis w kółku, na przykład ‘11 albo 2011), **Tytuł** i **Opis**. Rok i tytuł są wymagane. **Opis** to zwykły tekst bez paska formatowania, a pusty opis zostawia sam rok i tytuł. Pusta lista wpisów chowa całą oś. Nie wklejaj przykładowych lat z makiety.
+- **Kolejność wpisów** jest kolejnością na stronie. Rok nie sortuje się sam, więc wiersz przeciągnij na właściwe miejsce. Nowy wpis dodajesz przyciskiem **Add item**.
 - **Układ osi**: **Pionowy** (lata jedno pod drugim) albo **Poziomy** (na dużym ekranie oś przesuwa się w bok razem z przewijaniem strony). Na telefonie i przy włączonym w systemie „mniej animacji” oś jest zawsze pionowa. Puste pole oznacza pion.
 
 Na stronie opisy są domyślnie zwinięte i otwierają się same podczas przewijania, najpierw te najbliżej środka ekranu. Nad osią jest przycisk „rozwiń całość”, który otwiera wszystkie opisy naraz, do zwykłego czytania.
