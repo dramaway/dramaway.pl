@@ -218,7 +218,7 @@ pnpm --filter studio run deploy   # https://dramaway.sanity.studio/
 # snapshot CMS: apps/studio → sanity datasets export production ../../private/sanity-snapshots/….tar.gz
 ```
 
-Hosted Studio (2026-10-01): `pnpm --filter studio run deploy` z tokenem zapisu buduje paczkę, potem odmawia — brak grantów `sanity.project/deployStudio` i `sanity.project/deploySchema`. Schemat hero jest w repo. Wgrać po `sanity login` na koncie, które te granty ma.
+Hosted Studio: **2026-10-12 `pnpm --filter studio run deploy` przeszedł** (Studio + 1/1 schematów, w tym `credits`) po zalogowaniu `sanity login` kontem z grantami. Wcześniej (2026-10-01) deploy z samym tokenem zapisu budował paczkę i odmawiał — brak grantów `sanity.project/deployStudio` i `sanity.project/deploySchema`. Po każdej zmianie schematu trzeba go powtórzyć.
 
 Nie odpalaj ponownie `migrate:fundacja` / `migrate:art-generacje` / `migrate:czytelnia` bez potrzeby — nadpisze ręczną korektę. Archiwum z edycjami: `migrate:art-generacje` je pominie; przebudowa to `pnpm patch:archive-projects -- --force`.
 
