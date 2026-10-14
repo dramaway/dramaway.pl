@@ -90,17 +90,11 @@ export const siteSettings = defineType({
       title: "Footer",
       type: "object",
       group: "footer",
-      options: { columns: 2 },
-      fieldsets: [
-        { name: "left", title: "Left — logo & address" },
-        { name: "right", title: "Right — quote" },
-      ],
       fields: [
         defineField({
           name: "logo",
           title: "Logo",
           type: "image",
-          fieldset: "left",
           options: { hotspot: true },
           description:
             "Empty = the header wordmark (public/logo-dramaway.png).",
@@ -117,21 +111,23 @@ export const siteSettings = defineType({
           title: "Address",
           type: "text",
           rows: 4,
-          fieldset: "left",
           description: "Under the logo. Line breaks are kept.",
         }),
+      ],
+    }),
+    defineField({
+      name: "newsletter",
+      title: "Newsletter",
+      type: "object",
+      group: "newsletter",
+      fields: [
         defineField({
-          name: "quote",
-          title: "Quote",
-          type: "text",
-          rows: 6,
-          fieldset: "right",
-        }),
-        defineField({
-          name: "attribution",
-          title: "Attribution",
-          type: "string",
-          fieldset: "right",
+          name: "enabled",
+          title: "Włączony",
+          type: "boolean",
+          initialValue: true,
+          description:
+            "Wyłączone = w stopce nie ma formularza zapisu. Brak wartości traktujemy jak włączone.",
         }),
       ],
     }),
@@ -239,6 +235,7 @@ export const siteSettings = defineType({
     { name: "general", title: "Ogólne", default: true },
     { name: "navigation", title: "Nawigacja" },
     { name: "footer", title: "Stopka" },
+    { name: "newsletter", title: "Newsletter" },
     { name: "branding", title: "Ikony" },
     { name: "hero", title: "Hero" },
     { name: "homepage", title: "Sekcje" },

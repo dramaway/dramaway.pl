@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { NewsletterForm } from "@/components/newsletter-form";
 import { urlFor } from "@/lib/sanity/image";
 import type { SanityImage } from "@/lib/sanity/types";
 
@@ -8,8 +9,7 @@ type Props = {
   logo: SanityImage | null;
   logoAlt: string;
   address: string | null;
-  quote: string | null;
-  attribution: string | null;
+  newsletterEnabled: boolean;
 };
 
 const FALLBACK_LOGO = "/logo-dramaway.png";
@@ -19,13 +19,12 @@ export function SiteFooter({
   logo,
   logoAlt,
   address,
-  quote,
-  attribution,
+  newsletterEnabled,
 }: Props) {
   const logoSrc = logo ? urlFor(logo).width(234).url() : FALLBACK_LOGO;
 
   return (
-    <footer className="mt-auto">
+    <footer className="site-footer-wrap mt-auto">
       <div className="site-footer page py-section">
         <div className="footer-brand">
           <Link href="/" aria-label={title}>
@@ -41,14 +40,7 @@ export function SiteFooter({
             <p className="footer-address text-body">{address}</p>
           ) : null}
         </div>
-        {quote ? (
-          <div className="footer-quote text-body">
-            <p>{quote}</p>
-            {attribution ? (
-              <p className="footer-attribution">{attribution}</p>
-            ) : null}
-          </div>
-        ) : null}
+        {newsletterEnabled ? <NewsletterForm /> : null}
       </div>
     </footer>
   );

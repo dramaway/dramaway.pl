@@ -8,6 +8,7 @@ import {
 } from "./hero-slides";
 import { resolveMainNav } from "./navigation";
 import { DEFAULT_CENTRUM_URL } from "./routes";
+import { isNewsletterEnabled } from "./newsletter";
 import { getSiteSettings } from "./sanity/fetch";
 import type { ResolvedFooter, ResolvedSite, SiteSettings } from "./sanity/types";
 
@@ -22,8 +23,7 @@ function resolveFooter(
     logo: cms?.logo ?? null,
     logoAlt: cmsText(cms?.logo?.alt) || title,
     address: cmsText(cms?.address) || cmsText(settings?.footerNote),
-    quote: cmsText(cms?.quote),
-    attribution: cmsText(cms?.attribution),
+    newsletterEnabled: isNewsletterEnabled(settings?.newsletter?.enabled),
   };
 }
 

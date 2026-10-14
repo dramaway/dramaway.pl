@@ -197,8 +197,11 @@ export type SiteSettingsBranding = {
 export type SiteSettingsFooter = {
   logo?: (SanityImage & { alt?: string | null }) | null;
   address?: string | null;
-  quote?: string | null;
-  attribution?: string | null;
+};
+
+export type SiteSettingsNewsletter = {
+  /** Missing or null means the footer form stays visible. */
+  enabled?: boolean | null;
 };
 
 export type SiteSettingsNavPage = {
@@ -227,6 +230,7 @@ export type SiteSettings = {
   navigation?: SiteSettingsNavItem[] | null;
   footerNote: string | null;
   footer?: SiteSettingsFooter | null;
+  newsletter?: SiteSettingsNewsletter | null;
   branding?: SiteSettingsBranding | null;
   heroHeading: string | null;
   heroLead: string | null;
@@ -254,8 +258,7 @@ export type ResolvedFooter = {
   logo: SanityImage | null;
   logoAlt: string;
   address: string | null;
-  quote: string | null;
-  attribution: string | null;
+  newsletterEnabled: boolean;
 };
 
 export type ResolvedSite = {

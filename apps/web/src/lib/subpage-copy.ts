@@ -65,6 +65,16 @@ export const SUBPAGE = {
       goTo: "Zdjęcie {n} z {total}",
     },
   },
+  newsletter: {
+    lead: "Chcesz być na bieżąco? Zapisz się do naszego newslettera",
+    emailLabel: "E-mail",
+    placeholder: "wpisz swój e-mail",
+    submit: "zapisz",
+    pending: "Zapisuję…",
+    unconfigured: "Zapis do newslettera jeszcze nie jest podłączony.",
+    invalid: "Podaj prawidłowy adres e-mail.",
+    error: "Nie udało się zapisać. Spróbuj ponownie.",
+  },
   a11y: {
     skipToContent: "Przejdź do treści",
     moreNav: "Więcej w menu",

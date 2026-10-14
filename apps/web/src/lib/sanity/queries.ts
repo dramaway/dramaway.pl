@@ -314,9 +314,10 @@ export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
   footerNote,
   footer {
     logo,
-    address,
-    quote,
-    attribution
+    address
+  },
+  newsletter {
+    enabled
   },
   branding {
     faviconSvg { asset->{ url, mimeType } },
