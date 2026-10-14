@@ -31,7 +31,7 @@ export function RosterRow({
 }: {
   role?: string | null;
   note?: string | null;
-  people: readonly string[];
+  people: readonly ReactNode[];
   inline?: boolean;
 }) {
   if (people.length === 0 && !role) return null;
@@ -45,7 +45,7 @@ export function RosterRow({
       ) : null}
       <dd className={cn("roster-names", inline && "roster-names-inline")}>
         {people.map((person, index) => (
-          <Fragment key={`${person}-${index}`}>
+          <Fragment key={index}>
             {/* A real text node, so the sequence has somewhere to wrap —
                 the names themselves must not come apart. */}
             {inline && index > 0 ? (

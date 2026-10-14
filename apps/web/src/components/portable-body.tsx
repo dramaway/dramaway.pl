@@ -5,6 +5,7 @@ import {
   type PortableTextTypeComponentProps,
 } from "@portabletext/react";
 import Image from "next/image";
+import { Fragment, type ReactNode } from "react";
 import { ImageGallery } from "@/components/visual/image-gallery";
 import { Blob } from "@/components/visual/blob";
 import { CtaLink } from "@/components/visual/cta-link";
@@ -18,7 +19,11 @@ import {
   type ImageGalleryNode,
   type PortableNode,
 } from "@/lib/gallery";
-import { splitRosterLine, splitRosterNames } from "@/lib/roster-line";
+import {
+  groupRosterNameSpans,
+  splitRosterSpanLine,
+  type RosterSpan,
+} from "@/lib/roster-line";
 import { safeHref } from "@/lib/safe-url";
 import type { PortableContent, SanityImage } from "@/lib/sanity/types";
 import { urlFor } from "@/lib/sanity/image";
@@ -214,15 +219,47 @@ function PortableColumns({
   );
 }
 
-type RosterSpan = { text?: string };
+type RosterMarkDef = { _key?: string; _type?: string; href?: string };
 
-function rosterLineText(value: { children?: RosterSpan[] } | undefined) {
-  return (value?.children ?? []).map((child) => child.text ?? "").join("");
+function RosterItem({
+  value,
+}: {
+  value?: { children?: RosterSpan[]; markDefs?: RosterMarkDef[] };
+}) {
+  const { role, nameSpans } = splitRosterSpanLine(value?.children ?? []);
+  const markDefs = value?.markDefs ?? [];
+  const people = groupRosterNameSpans(nameSpans).map((group, index) => (
+    <Fragment key={index}>
+      {group.map((span, spanIndex) => (
+        <Fragment key={span._key ?? spanIndex}>
+          {renderRosterSpan(span, markDefs)}
+        </Fragment>
+      ))}
+    </Fragment>
+  ));
+  return <RosterRow role={role} people={people} />;
 }
 
-function RosterItem({ value }: { value?: { children?: RosterSpan[] } }) {
-  const { role, names } = splitRosterLine(rosterLineText(value));
-  return <RosterRow role={role} people={splitRosterNames(names)} />;
+function renderRosterSpan(span: RosterSpan, markDefs: readonly RosterMarkDef[]) {
+  let node: ReactNode = span.text ?? "";
+  const marks = span.marks ?? [];
+  if (marks.includes("em")) node = <em>{node}</em>;
+  if (marks.includes("strong")) node = <strong>{node}</strong>;
+  const link = markDefs.find(
+    (def) => def._type === "link" && def._key && marks.includes(def._key),
+  );
+  const safe = safeHref(link?.href);
+  if (!safe) return node;
+  const newTab = safe.kind === "http";
+  return (
+    <a
+      href={safe.href}
+      className="underline underline-offset-2"
+      {...(newTab ? { target: "_blank", rel: "noreferrer" } : {})}
+    >
+      {node}
+    </a>
+  );
 }
 
 function PortableCredits({

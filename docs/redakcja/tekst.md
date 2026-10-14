@@ -22,7 +22,7 @@ Lista **Indent** robi głębsze wcięcie. W edytorze Tab schodzi poziom niżej, 
 
 ## Roles
 
-Lista **Roles** jest do wierszy „rola: imiona”, na przykład w składzie zespołu na stronie O fundacji. Każdy punkt to jedna rola, dwukropek oddziela rolę od nazwisk.
+Lista **Roles** jest do wierszy „rola: imiona”, na przykład w składzie zespołu na stronie O fundacji. Każdy punkt to jedna rola, dwukropek oddziela rolę od nazwisk. Nazwisko i adres e-mail mogą być linkiem: zaznacz je i wstaw odnośnik (`mailto:` albo zwykły adres). Link zostaje klikalny. Nowa linia po dwukropku stawia kolejną pozycję pod spodem, na przykład adres pod nazwiskiem.
 
 Nie zamieniamy na Roles zwykłego zdania, w którym przypadkiem jest dwukropek. Styl trzeba wybrać w pasku.
 
