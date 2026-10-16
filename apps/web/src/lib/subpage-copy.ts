@@ -78,6 +78,8 @@ export const SUBPAGE = {
   a11y: {
     skipToContent: "Przejdź do treści",
     moreNav: "Więcej w menu",
+    footerLinks: "Kontakt i media społecznościowe",
+    newTab: "(otwiera się w nowej karcie)",
   },
   notFound: {
     title: "Nie znaleziono strony",

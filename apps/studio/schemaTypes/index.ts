@@ -5,6 +5,7 @@ import { credits, creditGroup, creditNames, creditRow } from "./credits";
 import { ctaButton } from "./ctaButton";
 import { contentModule, contentTile, newsFeedModule } from "./contentModule";
 import { edition } from "./edition";
+import { footerLink } from "./footerLink";
 import { editionOutcome } from "./editionOutcome";
 import { landingPage } from "./landingPage";
 import { navChild, navItem } from "./navItem";
@@ -41,5 +42,6 @@ export const schemaTypes = [
   readingMethod,
   publication,
   aboutPage,
+  footerLink,
   siteSettings,
 ];

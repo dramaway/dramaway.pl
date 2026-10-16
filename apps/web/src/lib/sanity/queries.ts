@@ -314,7 +314,14 @@ export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
   footerNote,
   footer {
     logo,
-    address
+    address,
+    links[] {
+      _key,
+      service,
+      value,
+      label,
+      icon { asset->{ url, mimeType } }
+    }
   },
   newsletter {
     enabled

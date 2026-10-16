@@ -26,6 +26,7 @@ export default async function SiteLayout({
         logo={site.footer.logo}
         logoAlt={site.footer.logoAlt}
         address={site.footer.address}
+        links={site.footer.links}
         newsletterEnabled={site.footer.newsletterEnabled}
       />
     </div>

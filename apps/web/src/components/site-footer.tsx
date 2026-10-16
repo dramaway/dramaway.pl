@@ -1,14 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
+import { FooterLinks } from "@/components/footer-links";
 import { NewsletterForm } from "@/components/newsletter-form";
 import { urlFor } from "@/lib/sanity/image";
-import type { SanityImage } from "@/lib/sanity/types";
+import type { FooterLink, SanityImage } from "@/lib/sanity/types";
 
 type Props = {
   title: string;
   logo: SanityImage | null;
   logoAlt: string;
   address: string | null;
+  links: FooterLink[];
   newsletterEnabled: boolean;
 };
 
@@ -19,6 +21,7 @@ export function SiteFooter({
   logo,
   logoAlt,
   address,
+  links,
   newsletterEnabled,
 }: Props) {
   const logoSrc = logo ? urlFor(logo).width(234).url() : FALLBACK_LOGO;
@@ -27,7 +30,7 @@ export function SiteFooter({
     <footer className="site-footer-wrap mt-auto">
       <div className="site-footer page py-section">
         <div className="footer-brand">
-          <Link href="/" aria-label={title}>
+          <Link href="/" aria-label={title} className="footer-logo-link">
             <Image
               src={logoSrc}
               alt={logoAlt}
@@ -40,6 +43,7 @@ export function SiteFooter({
             <p className="footer-address text-body">{address}</p>
           ) : null}
         </div>
+        <FooterLinks links={links} />
         {newsletterEnabled ? <NewsletterForm /> : null}
       </div>
     </footer>

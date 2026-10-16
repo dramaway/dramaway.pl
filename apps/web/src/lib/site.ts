@@ -7,6 +7,7 @@ import {
   type HeroSliderSettings,
 } from "./hero-slides";
 import { resolveMainNav } from "./navigation";
+import { resolveFooterLinks } from "./footer-links";
 import { DEFAULT_CENTRUM_URL } from "./routes";
 import { isNewsletterEnabled } from "./newsletter";
 import { getSiteSettings } from "./sanity/fetch";
@@ -23,6 +24,7 @@ function resolveFooter(
     logo: cms?.logo ?? null,
     logoAlt: cmsText(cms?.logo?.alt) || title,
     address: cmsText(cms?.address) || cmsText(settings?.footerNote),
+    links: resolveFooterLinks(cms?.links),
     newsletterEnabled: isNewsletterEnabled(settings?.newsletter?.enabled),
   };
 }

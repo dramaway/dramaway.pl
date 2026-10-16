@@ -1294,16 +1294,27 @@
     width: 100%;
   }
 
-  /* Footer: logo + address on the left, newsletter on the right. */
+  /*
+   * Footer: logo + address on the left; newsletter, then contact and
+   * social on the right. Below lg one column: contact sits right under
+   * the address, the newsletter a section lower.
+   */
   .site-footer-wrap {
     position: relative;
     z-index: 2;
   }
 
   .site-footer {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-section);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .site-footer > .footer-links {
+    margin-block-start: 1.25rem;
+  }
+
+  .site-footer > .footer-newsletter {
+    margin-block-start: var(--spacing-section);
   }
 
   .footer-brand {
@@ -1323,6 +1334,108 @@
   .footer-address {
     margin: 0;
     white-space: pre-wrap;
+  }
+
+  /*
+   * Contact under the address: text rows (e-mail, phone, labelled links)
+   * share the address's left edge and size; icon-only links sit in one
+   * row of sand circles, the same disc as the dot band above.
+   */
+  .footer-links {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 100%;
+  }
+
+  .footer-contact,
+  .footer-social {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .footer-contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 2.75rem;
+    max-width: 100%;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .footer-contact-link .footer-link-icon {
+    flex: 0 0 auto;
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--color-green-ink);
+  }
+
+  .footer-contact-text {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    text-decoration-line: underline;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    transition: text-decoration-color 0.15s ease;
+  }
+
+  .footer-contact-link:hover .footer-contact-text,
+  .footer-contact-link:focus-visible .footer-contact-text {
+    text-decoration-color: currentColor;
+  }
+
+  .footer-social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+  }
+
+  .footer-social-link {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background-color: var(--color-sand);
+    color: var(--color-ink);
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .footer-social-link .footer-link-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    object-fit: contain;
+  }
+
+  .footer-social-link:hover,
+  .footer-social-link:focus-visible {
+    background-color: var(--color-green);
+    color: #fff;
+  }
+
+  .footer-contact-link:focus-visible,
+  .footer-social-link:focus-visible {
+    outline: 2px solid var(--color-green);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .footer-contact-text,
+    .footer-social-link {
+      transition: none;
+    }
   }
 
   .footer-newsletter {
@@ -1410,15 +1523,52 @@
   }
 
   @media (width >= 64rem) {
+    /*
+     * Right column is as wide as the newsletter; contact and social share
+     * its left edge. The brand block opens into the grid so the contact
+     * row starts on the address's first line. Without the newsletter the
+     * links start level with the logo.
+     */
     .site-footer {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-start;
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-rows: auto 1fr;
+      grid-template-areas:
+        "logo news"
+        "address links";
+      column-gap: 4rem;
+      row-gap: 1.25rem;
+      align-items: start;
     }
 
-    .footer-newsletter {
+    .site-footer:not(:has(> .footer-newsletter)) {
+      grid-template-areas:
+        "logo links"
+        "address links";
+    }
+
+    .footer-brand {
+      display: contents;
+    }
+
+    .footer-logo-link {
+      grid-area: logo;
+      align-self: end;
+    }
+
+    .footer-address {
+      grid-area: address;
+      max-width: 24rem;
+    }
+
+    /* Centre the first 44 px row on the address's first line. */
+    .site-footer > .footer-links {
+      grid-area: links;
+      margin-block-start: calc((1lh - 2.75rem) / 2);
+    }
+
+    .site-footer > .footer-newsletter {
+      grid-area: news;
       align-items: flex-start;
-      margin-inline-start: auto;
       /*
        * Clear the footer's own top padding, then sit the lead beside the
        * sand dots. The logo column stays under the band. The lead, field,
