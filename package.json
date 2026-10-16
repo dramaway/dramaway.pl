@@ -27,6 +27,7 @@
     "patch:knowledge-page": "node --env-file=apps/studio/.env scripts/patch-knowledge-page.mjs",
     "patch:hero-images": "node --env-file-if-exists=apps/studio/.env scripts/patch-hero-images.mjs",
     "patch:footer-newsletter": "node --env-file-if-exists=apps/studio/.env scripts/patch-footer-newsletter.mjs",
+    "seed:footer-links": "node --env-file-if-exists=apps/studio/.env scripts/seed-footer-links.mjs",
     "patch:project-credits": "node --env-file-if-exists=apps/studio/.env scripts/patch-project-credits.mjs",
     "repair:credit-keys": "node --env-file-if-exists=apps/studio/.env scripts/repair-credit-keys.mjs",
     "seed:about-page": "node --env-file=apps/studio/.env scripts/seed-about-page.mjs",

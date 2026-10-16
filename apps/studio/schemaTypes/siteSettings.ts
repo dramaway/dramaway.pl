@@ -113,6 +113,15 @@ export const siteSettings = defineType({
           rows: 4,
           description: "Under the logo. Line breaks are kept.",
         }),
+        defineField({
+          name: "links",
+          title: "Kontakt i social media",
+          type: "array",
+          description:
+            "Pod adresem. Wpisy z tekstem (e-mail, telefon, wszystko z etykietą) stoją na liście, reszta jako rząd ikon. Kolejność jak tutaj. Linki zewnętrzne otwierają się w nowej karcie, na telefonie w aplikacji serwisu.",
+          of: [defineArrayMember({ type: "footerLink" })],
+          validation: (rule) => rule.max(12),
+        }),
       ],
     }),
     defineField({

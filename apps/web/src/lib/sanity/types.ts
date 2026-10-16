@@ -194,9 +194,46 @@ export type SiteSettingsBranding = {
   shareImage?: SanityImage | null;
 };
 
+export type FooterLinkService =
+  | "facebook"
+  | "instagram"
+  | "youtube"
+  | "tiktok"
+  | "linkedin"
+  | "x"
+  | "threads"
+  | "bluesky"
+  | "vimeo"
+  | "spotify"
+  | "email"
+  | "phone"
+  | "custom";
+
+export type CmsFooterLink = {
+  _key?: string | null;
+  service?: string | null;
+  value?: string | null;
+  label?: string | null;
+  icon?: SanityFile | null;
+};
+
+export type FooterLink = {
+  key: string;
+  service: FooterLinkService;
+  href: string;
+  /** Visible text. Null = icon-only button in the social row. */
+  text: string | null;
+  ariaLabel: string;
+  /** http(s) opens in a new tab; mailto/tel stay in place. */
+  external: boolean;
+  /** Uploaded icon of a custom link. */
+  iconUrl: string | null;
+};
+
 export type SiteSettingsFooter = {
   logo?: (SanityImage & { alt?: string | null }) | null;
   address?: string | null;
+  links?: CmsFooterLink[] | null;
 };
 
 export type SiteSettingsNewsletter = {
@@ -258,6 +295,7 @@ export type ResolvedFooter = {
   logo: SanityImage | null;
   logoAlt: string;
   address: string | null;
+  links: FooterLink[];
   newsletterEnabled: boolean;
 };
 
