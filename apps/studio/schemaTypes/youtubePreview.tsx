@@ -25,6 +25,8 @@ export function YoutubePreview(props: PreviewProps) {
     ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
     : undefined;
   const filmTitle = useYoutubeTitle(url);
+  const size =
+    (props as { size?: string }).size === "full" ? "Full width" : "Medium";
 
   return (
     <div style={{ display: "flex", gap: 12, alignItems: "center", padding: 4 }}>
@@ -48,7 +50,7 @@ export function YoutubePreview(props: PreviewProps) {
             whiteSpace: "nowrap",
           }}
         >
-          {url || "Brak URL"}
+          {url ? `${size} · ${url}` : "Brak URL"}
         </div>
       </div>
     </div>

@@ -30,10 +30,10 @@ import { urlFor } from "@/lib/sanity/image";
 import { BodyReadMore } from "@/components/visual/body-read-more";
 import { YoutubeEmbed } from "@/components/visual/youtube-embed";
 import { splitPortableAtReadMore } from "@/lib/portable-read-more";
+import { blockAlign, embedSize, type BlockAlign } from "@/lib/body-frame";
 import { cn } from "@/lib/utils";
 
 type BodyImageSize = "small" | "medium" | "wide";
-type BodyImageAlign = "left" | "center" | "right";
 
 const BODY_IMAGE_CDN_WIDTH: Record<BodyImageSize, number> = {
   small: 800,
@@ -58,7 +58,7 @@ type ImageValue = {
   asset?: { _ref?: string; _id?: string };
 };
 
-type YoutubeValue = { _type?: string; url?: string };
+type YoutubeValue = { _type?: string; url?: string; size?: string; align?: string };
 
 type ColumnValue = {
   _key?: string;
@@ -77,18 +77,11 @@ function bodyImageSize(value: string | undefined): BodyImageSize {
   return "medium";
 }
 
-function bodyImageAlign(value: string | undefined): BodyImageAlign {
-  if (value === "left" || value === "center" || value === "right") {
-    return value;
-  }
-  return "center";
-}
-
 /** Wrap only beside a left or right picture that is not breaking out of the column. */
 function bodyImageWraps(
   layout: string | undefined,
   size: BodyImageSize,
-  align: BodyImageAlign,
+  align: BlockAlign,
 ): boolean {
   return layout === "inline" && size !== "wide" && align !== "center";
 }
@@ -105,7 +98,7 @@ function bodyImageSrcSet(value: ImageValue, size: BodyImageSize): string {
 function PortableImage({ value }: PortableTextTypeComponentProps<ImageValue>) {
   if (!value?.asset) return null;
   const size = bodyImageSize(value.size);
-  const align = bodyImageAlign(value.align);
+  const align = blockAlign(value.align);
   const wraps = bodyImageWraps(value.layout, size, align);
   const cdnWidth = BODY_IMAGE_CDN_WIDTH[size];
   const dims = parseSanityImageDimensions(sanityAssetRef(value));
@@ -158,7 +151,16 @@ function PortableYoutube({
   value,
 }: PortableTextTypeComponentProps<YoutubeValue>) {
   if (!value?.url) return null;
-  return <YoutubeEmbed url={value.url} />;
+  const size = embedSize(value.size);
+  return (
+    <YoutubeEmbed
+      url={value.url}
+      className={cn(
+        size === "full" ? "pt-embed-full" : "pt-embed-medium",
+        `pt-embed-${blockAlign(value.align)}`,
+      )}
+    />
+  );
 }
 
 function PortableLink({
