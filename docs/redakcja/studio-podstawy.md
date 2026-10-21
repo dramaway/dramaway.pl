@@ -32,7 +32,7 @@ Biblioteka wszystkich plików jest w zakładce **Media** na górnym pasku Studia
 
 Wyjątek: ikona `.ico` (stara ikona karty przeglądarki) nie wchodzi do Media. Wgrywa się ją w polu pliku w ustawieniach strony, grupa **Ikony**. To robi osoba od utrzymania, nie codzienna redakcja.
 
-Zdjęcia w tekście mają rozmiar: Small, Medium (domyślny), Wide. Osobno ustawia się **wyrównanie** (lewo, środek, prawo) i **umieszczenie**: Block (zdjęcie w osobnym wierszu) albo Wrap text (tekst pod spodem opływa zdjęcie). Opływanie działa przy lewej albo prawej stronie i przy Small albo Medium. Środek i Wide zostają osobnym wierszem. Na wąskim ekranie opływanie też wraca do osobnego wiersza. Po zmianie trzeba opublikować dokument.
+Zdjęcia w tekście mają rozmiar: Small, Medium (domyślny), Wide. Osobno ustawia się **wyrównanie** (lewo, środek, prawo; puste pole siada z lewej) i **umieszczenie**: Block (zdjęcie w osobnym wierszu) albo Wrap text (tekst pod spodem opływa zdjęcie). Opływanie działa przy lewej albo prawej stronie i przy Small albo Medium. Środek i Wide zostają osobnym wierszem. Na wąskim ekranie opływanie też wraca do osobnego wiersza. Film YouTube ma to samo wyrównanie i dwa rozmiary: Medium (domyślny, ten sam rząd co zdjęcie Medium) albo pełna szerokość kolumny. Po zmianie trzeba opublikować dokument.
 
 ## Odnośniki
 

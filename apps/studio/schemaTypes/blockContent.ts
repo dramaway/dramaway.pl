@@ -30,9 +30,42 @@ export const youtube = defineType({
       type: "url",
       validation: (r) => r.required(),
     }),
+    defineField({
+      name: "size",
+      title: "Size",
+      type: "string",
+      options: {
+        list: [
+          { title: "Medium", value: "medium" },
+          { title: "Full width", value: "full" },
+        ],
+        layout: "radio",
+        direction: "horizontal",
+      },
+      initialValue: "medium",
+      description:
+        "How wide the player is. Medium (default, also an empty value) is 40rem, the same slot as a Medium picture. Full width takes the whole text column. Publish after changing.",
+    }),
+    defineField({
+      name: "align",
+      title: "Alignment",
+      type: "string",
+      options: {
+        list: [
+          { title: "Left", value: "left" },
+          { title: "Centre", value: "center" },
+          { title: "Right", value: "right" },
+        ],
+        layout: "radio",
+        direction: "horizontal",
+      },
+      initialValue: "left",
+      description:
+        "Where the player sits. Empty value sits on the left. Full width already fills the column, so alignment barely moves it.",
+    }),
   ],
   preview: {
-    select: { url: "url", title: "url" },
+    select: { url: "url", title: "url", size: "size" },
   },
   components: { preview: YoutubePreview },
 });
@@ -121,9 +154,9 @@ const imageBlockMember = defineArrayMember({
         layout: "radio",
         direction: "horizontal",
       },
-      initialValue: "center",
+      initialValue: "left",
       description:
-        "Where the picture sits in the text column. Most visible on Small, or when text wraps. Existing pictures without a value stay centred.",
+        "Where the picture sits in the text column. Most visible on Small, or when text wraps. Empty value sits on the left.",
     }),
     defineField({
       name: "layout",
@@ -150,7 +183,7 @@ const imageBlockMember = defineArrayMember({
             if (parent?.size === "wide") {
               return "Wide stays a block. Choose Small or Medium to wrap text.";
             }
-            if (!parent?.align || parent.align === "center") {
+            if (parent?.align === "center") {
               return "Centre stays a block. Choose Left or Right to wrap text.";
             }
             return true;

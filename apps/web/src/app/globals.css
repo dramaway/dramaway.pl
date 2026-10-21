@@ -181,6 +181,8 @@
   --body-image-inline: 14rem;
   --body-image-inline-medium: 18rem;
   --body-image-inline-max: 20rem;
+  /* YouTube Medium. Same slot as a Medium picture (the 40rem sizes hint). */
+  --embed-medium: 40rem;
 }
 
 :root {
@@ -2999,12 +3001,26 @@
    */
   .pt-embed {
     position: relative;
-    width: 100%;
+    width: min(var(--embed-medium), 100%);
     aspect-ratio: 16 / 9;
     margin-block: 1.5rem;
+    margin-inline: 0 auto;
     overflow: hidden;
     border-radius: var(--radius-media);
     background-color: var(--color-sand);
+  }
+
+  /* Full width is the text column. Medium is the default, also when unset. */
+  .pt-embed-full {
+    width: 100%;
+  }
+
+  .pt-embed-center {
+    margin-inline: auto;
+  }
+
+  .pt-embed-right {
+    margin-inline: auto 0;
   }
 
   .pt-embed-frame {
@@ -3267,8 +3283,8 @@
   }
 
   /*
-   * Alignment is the figure's place in the column. Centre is the default
-   * when the CMS field is empty. Wide is already the page content width,
+   * Alignment is the figure's place in the column. Left is the default
+   * when the CMS field is empty. Wide already fills the content width,
    * so left / centre / right barely move it.
    */
   .body-figure-left {

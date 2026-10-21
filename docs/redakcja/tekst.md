@@ -163,3 +163,5 @@ pokaże się na stronie jako nagłówek „Twórcy”, dwie grupy z cienką lini
 ## Film
 
 Obiekt **YouTube** przyjmuje adres filmu z YouTube. Działa w zwykłym tekście i w kolumnie. Na stronie widać klatkę filmu i przycisk play; odtwarzacz włącza się po kliknięciu. Inne serwisy wideo zostają zwykłym linkiem w tekście, nie odtwarzaczem.
+
+**Rozmiar** to Medium albo pełna szerokość. Medium jest domyślne (także puste pole) i ma tę samą szerokość co zdjęcie Medium. Pełna szerokość bierze całą kolumnę tekstu. **Wyrównanie** to lewo, środek albo prawo; puste pole siada z lewej. Przy pełnej szerokości wyrównanie prawie nic nie zmienia, bo odtwarzacz i tak wypełnia kolumnę. Po zmianie trzeba opublikować dokument.

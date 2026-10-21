@@ -7,6 +7,7 @@ import {
   youtubeVideoIdFromUrl,
 } from "@/lib/sanity/youtube";
 import { SUBPAGE } from "@/lib/subpage-copy";
+import { cn } from "@/lib/utils";
 
 const POSTER_DOTS = 6;
 /** YouTube serves a 120×90 gray tile when a named size is missing. */
@@ -14,9 +15,10 @@ const PLACEHOLDER_WIDTH = 120;
 
 type YoutubeEmbedProps = {
   url: string;
+  className?: string;
 };
 
-export function YoutubeEmbed({ url }: YoutubeEmbedProps) {
+export function YoutubeEmbed({ url, className }: YoutubeEmbedProps) {
   const src = youtubeEmbedSrc(url);
   const playSrc = youtubeEmbedSrc(url, { autoplay: true });
   const videoId = youtubeVideoIdFromUrl(url);
@@ -29,7 +31,7 @@ export function YoutubeEmbed({ url }: YoutubeEmbedProps) {
 
   if (playing) {
     return (
-      <div className="pt-embed">
+      <div className={cn("pt-embed", className)}>
         <iframe
           src={playSrc}
           title={SUBPAGE.video.play}
@@ -42,7 +44,7 @@ export function YoutubeEmbed({ url }: YoutubeEmbedProps) {
   }
 
   return (
-    <div className="pt-embed">
+    <div className={cn("pt-embed", className)}>
       <button
         type="button"
         className="pt-embed-poster"

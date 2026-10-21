@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-10-21 — Treść artykułów bez limitu 62ch (`.article-body`; `.measure` zostaje na leadach i listingach, `.team-copy` i `.pt-columns` bez capu). `/fundacja`: Zespół pod Zarządem, wspólna siatka dwóch ścieżek (karty Zarządu z kołem obok tekstu, roster w dwóch kolumnach). `/projekty`: usunięta omyłkowa paleta pod hero. |
+| **Ostatnia aktualizacja** | 2026-10-21 — Film YouTube ma rozmiar: Medium (domyślnie, `--embed-medium` 40 rem) albo pełna szerokość kolumny. Puste wyrównanie obrazu i filmu siada z lewej. |
 | **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |
