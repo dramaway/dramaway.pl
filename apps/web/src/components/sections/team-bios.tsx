@@ -5,7 +5,6 @@ import { Media } from "@/components/visual/media";
 import { splitPortableByHeading } from "@/lib/portable-split";
 import { publicPathForPersonSlug } from "@/lib/routes";
 import type { PortableContent, SanityImage } from "@/lib/sanity/types";
-import { cn } from "@/lib/utils";
 
 export type TeamBioPerson = {
   name: string;
@@ -29,13 +28,14 @@ function personBlurb(person: TeamBioPerson) {
 const SECTION_HEADING = "font-display text-h3 font-black";
 
 /**
- * Board bios and the staff list stand side by side on a wide screen — two short
- * blocks stacked left a hole and pushed the essay far down the page.
+ * Zarząd, then Zespół, then anything else under its own H2 — one column of
+ * blocks with a shared rhythm and hairlines between them. Every block uses
+ * the same two tracks from lg: the two bio cards fill them side by side, and
+ * the staff roster flows across them, so nothing hugs the left edge.
  *
- * The pairing rule is positional: the **first** H2 section of `team.body`
- * (Zespół) joins the board, and everything after it (Społeczność) reads below
- * in one column — an essay next to four roster rows would not balance.
- * Survives zero people, missing photos, an empty body, and a body with no H2.
+ * Each H2 of `team.body` becomes a block; blocks before the first H2 stay
+ * under the board. Survives zero people, missing photos, an empty body, and
+ * a body with no H2.
  */
 export function TeamBios({ people, heading, ctaLabel, body }: TeamBiosProps) {
   const copy = hasPortableContent(body) ? body : null;
@@ -44,14 +44,13 @@ export function TeamBios({ people, heading, ctaLabel, body }: TeamBiosProps) {
   const { preamble, sections } = copy
     ? splitPortableByHeading(copy)
     : { preamble: null, sections: [] };
-  const [paired, ...rest] = sections;
 
   const hasBoard = Boolean(heading || people.length > 0 || preamble);
   const board = hasBoard ? (
-    <div className="team-split-col">
+    <section className="team-block">
       {heading ? <h2 className={SECTION_HEADING}>{heading}</h2> : null}
       {people.length > 0 ? (
-        <ul className={heading ? "team-bios mt-8" : "team-bios"}>
+        <ul className={heading ? "team-bios team-block-body" : "team-bios"}>
           {people.map((person) => {
             const blurb = personBlurb(person);
             return (
@@ -64,7 +63,7 @@ export function TeamBios({ people, heading, ctaLabel, body }: TeamBiosProps) {
                   sizes="(min-width: 64rem) 12vw, 40vw"
                   className="team-photo"
                 />
-                <div>
+                <div className="team-bio-copy">
                   <h3 className="team-bio-name text-h4 font-semibold">
                     {person.name}
                   </h3>
@@ -90,39 +89,21 @@ export function TeamBios({ people, heading, ctaLabel, body }: TeamBiosProps) {
           <PortableBody value={preamble} />
         </div>
       ) : null}
-    </div>
-  ) : null;
-
-  const roster = paired ? (
-    <div className="team-split-col">
-      <h2 className={SECTION_HEADING}>{paired.title}</h2>
-      <div className="team-copy">
-        <PortableBody value={paired.blocks} />
-      </div>
-    </div>
+    </section>
   ) : null;
 
   return (
     <Section className="fundacja-flow">
-      <div className="stack-wide">
-        {board || roster ? (
-          <div className={cn("team-split", board && roster && "team-split-pair")}>
-            {board}
-            {roster}
-          </div>
-        ) : null}
-        {rest.length > 0 ? (
-          <div className="team-rest">
-            {rest.map((section) => (
-              <section key={section.title} className="team-rest-item">
-                <h2 className={SECTION_HEADING}>{section.title}</h2>
-                <div className="team-copy">
-                  <PortableBody value={section.blocks} />
-                </div>
-              </section>
-            ))}
-          </div>
-        ) : null}
+      <div className="team-blocks stack-wide">
+        {board}
+        {sections.map((section) => (
+          <section key={section.title} className="team-block">
+            <h2 className={SECTION_HEADING}>{section.title}</h2>
+            <div className="team-copy">
+              <PortableBody value={section.blocks} />
+            </div>
+          </section>
+        ))}
       </div>
     </Section>
   );

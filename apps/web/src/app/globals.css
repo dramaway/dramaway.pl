@@ -136,6 +136,8 @@
   --history-pin-pad: clamp(3rem, 12dvh, 6rem);
   /* /fundacja team bio portrait — Figma ~178 px. */
   --team-bio-photo: clamp(7rem, 12vw, 11.125rem);
+  /* Gutter of the two /fundacja team tracks (bio cards, roster columns). */
+  --team-gap: clamp(2rem, 4vw, 3.25rem);
   /* Overlay header on `/` at lg+ (py-8 × 2 plus logo/nav, with wrap room). */
   --site-header-space: 9rem;
   /* Compact sticky bar below lg: logo 57px + padding-block 0.75rem × 2. */
@@ -2653,15 +2655,31 @@
     gap: 1.5rem;
   }
 
+  /*
+   * /fundacja team: Zarząd, Zespół, then any further H2 of `team.body`, one
+   * under the other. One rhythm and a hairline between blocks. From lg every
+   * block shares two tracks of the `.stack-wide` column, so the bio cards
+   * and the roster columns start on the same verticals.
+   */
+  .team-block + .team-block {
+    margin-block-start: clamp(2.5rem, 4.5vw, 3.5rem);
+    padding-block-start: clamp(2rem, 3.5vw, 2.75rem);
+    border-block-start: 1px solid var(--rule-color);
+  }
+
+  .team-block-body {
+    margin-block-start: 1.5rem;
+  }
+
   .team-bios {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: clamp(2rem, 4vw, 3.25rem);
+    gap: var(--team-gap);
   }
 
   @media (width >= 64rem) {
     .team-bios {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
@@ -2673,16 +2691,36 @@
     gap: 1rem;
   }
 
+  /* Photo beside the copy: a card fills its track instead of a thin column. */
+  @media (width >= 30rem) {
+    .team-bio {
+      flex-direction: row;
+      align-items: center;
+      gap: clamp(1.25rem, 2.5vw, 2rem);
+    }
+  }
+
   /*
-   * A column-flex item sized to its content can outgrow the track; next to
-   * the roster that pushed the bio text into the other column.
+   * A flex item sized to its content can outgrow the track and push the
+   * text into the next card.
    */
   .team-bio > * {
     max-width: 100%;
   }
 
   .team-bio .team-photo {
+    flex: none;
     width: var(--team-bio-photo);
+  }
+
+  .team-bio-copy {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  /* Figma's 301 px rule; in a card the rule takes the copy column instead. */
+  .team-bio .cta {
+    min-width: 100%;
   }
 
   .team-bio-name {
@@ -2694,72 +2732,33 @@
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
-    max-width: min(36ch, 100%);
+  }
+
+  /* The staff roster runs across the hairlines at full block width. */
+  .team-copy .roster {
+    max-width: none;
   }
 
   /*
-   * /fundacja: Zarząd and Zespół side by side from lg. Two short blocks under
-   * one another left a hole and pushed Społeczność far down the page.
+   * From lg the roster flows into the same two tracks as the bio cards. The
+   * top hairline moves onto the first row of each column so it breaks at
+   * the gutter like the row rules do.
    */
-  .team-split {
-    display: grid;
-    gap: clamp(2.5rem, 5vw, 4rem);
-  }
+  @media (width >= 64rem) {
+    .team-copy .roster {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--team-gap);
+      border-top: 0;
+    }
 
-  .team-split-col {
-    min-width: 0;
-  }
-
-  /* Stacked: the hairline keeps Zarząd and Zespół from reading as one block. */
-  @media (width < 80rem) {
-    .team-split-pair > .team-split-col + .team-split-col {
-      padding-block-start: clamp(2rem, 4vw, 3rem);
-      border-block-start: 1px solid var(--rule-color);
+    .team-copy .roster > .roster-row:nth-child(-n + 2) {
+      border-top: 0.5px solid var(--border);
     }
   }
 
   /*
-   * From 80rem, not 64rem: below that the board column cannot hold two bio
-   * cards without squeezing the photo, so the blocks stay stacked.
-   */
-  @media (width >= 80rem) {
-    /* Two bio cards need more room than four roster rows. */
-    .team-split-pair {
-      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-      align-items: start;
-    }
-
-    /* Narrower label column: the roster now lives in half the page. */
-    .team-split .roster-row {
-      grid-template-columns: minmax(0, 9.5rem) minmax(0, 1fr);
-    }
-
-    /*
-     * Figma's 301 px CTA no longer fits a half-page card. Let the rule take
-     * the card instead of setting its width — a stub under the label reads
-     * like a cut-off line.
-     */
-    .team-split-pair .team-bio .cta {
-      min-width: 100%;
-    }
-  }
-
-  /* Społeczność and anything after it: one reading column under the pair. */
-  .team-rest {
-    margin-block-start: clamp(2.5rem, 5vw, 3.75rem);
-    padding-block-start: clamp(2rem, 4vw, 3rem);
-    border-block-start: 1px solid var(--rule-color);
-  }
-
-  .team-rest-item + .team-rest-item {
-    margin-block-start: clamp(2.5rem, 4.5vw, 3.5rem);
-    padding-block-start: clamp(1.5rem, 3vw, 2.25rem);
-    border-block-start: 1px solid var(--rule-color);
-  }
-
-  /*
-   * Copy under the /fundacja board photos. Same left edge as Zarząd.
-   * Prose is capped at 62ch; headings stay the full column.
+   * Portable Text of a /fundacja team block. Same left edge as Zarząd; the
+   * column, not a character cap, sets the line length.
    */
 
   .team-copy .portable-body {
@@ -3808,8 +3807,8 @@
     color: var(--text-secondary);
   }
 
-  /* Społeczność — essay rhythm, not the tight staff list. */
-  .team-rest-item .team-copy .portable-body p + p {
+  /* Essay rhythm (Społeczność), not the tight staff list. */
+  .team-copy .portable-body p + p {
     margin-top: 1.15em;
   }
 }
