@@ -299,7 +299,7 @@
     max-width: var(--page-max);
     margin-inline: auto;
     padding-inline: var(--page-pad);
-    /* Content-box width for .pt-columns, which may outgrow .measure. */
+    /* Content-box width (100cqi) for blocks such as .credits. */
     container-type: inline-size;
     container-name: page;
   }
@@ -1295,6 +1295,15 @@
   }
 
   /*
+   * Article copy (Portable Text bodies) is not capped: the parent container
+   * (.page, .split-text, a grid column) sets the line length. Only leads and
+   * listing columns keep `.measure`.
+   */
+  .article-body {
+    width: 100%;
+  }
+
+  /*
    * Footer: logo + address on the left; newsletter, then contact and
    * social on the right. Below lg one column: contact sits right under
    * the address, the newsletter a section lower.
@@ -2149,7 +2158,7 @@
   }
 
   /* Figure rhythm under a lead mosaic — not a second section band. */
-  .page > .gallery-mosaic + .measure {
+  .page > .gallery-mosaic + .article-body {
     margin-block-start: 1.5rem;
   }
 
@@ -2761,10 +2770,6 @@
     margin-block-start: 0;
   }
 
-  .team-copy .portable-body p {
-    max-width: 62ch;
-  }
-
   .team-copy .portable-body em {
     font-style: italic;
     font-weight: 400;
@@ -2772,10 +2777,10 @@
 
   /*
    * Body images — do not edit filter-row/fold blocks
-   * PortableBody sits inside .measure (62ch). The figure has an explicit
-   * width so Wide can outgrow that column; img max-width: 100% then refers
-   * to the figure (and still beats Tailwind preflight). Do not use
-   * max-width: min(…, 100%) on Wide — 100% of .measure made all sizes equal.
+   * The figure has an explicit width so Wide can outgrow a narrow parent
+   * (a split column); img max-width: 100% then refers to the figure (and
+   * still beats Tailwind preflight). Do not use max-width: min(…, 100%) on
+   * Wide — 100% of the column made all sizes equal.
    */
   .portable-body {
     position: relative;
@@ -2927,8 +2932,8 @@
   }
 
   /*
-   * Like `.pt-columns`, a credits list may outgrow `.measure` inside `.page`
-   * — a two-column list reads badly squeezed into a prose measure.
+   * A credits list is a table, not prose: inside `.page` it stays at
+   * `--content-narrow` so the role and name columns do not drift apart.
    */
   @media (width >= 48rem) {
     .page .credits {
@@ -3208,10 +3213,8 @@
   }
 
   /*
-   * Two or three łamy aim for a full reading measure each (62ch).
-   * Inside .page they may outgrow .measure, up to the page content box
-   * (100cqi). Below lg they stack and stay inside .measure.
-   * A split column is already half the page — do not widen those.
+   * Two or three łamy from lg, sharing the article column. Below lg they
+   * stack. No character cap — the parent sets the width.
    */
   @media (width >= 64rem) {
     .pt-columns-2 {
@@ -3220,16 +3223,6 @@
 
     .pt-columns-3 {
       grid-template-columns: 1fr 1fr 1fr;
-    }
-
-    .page .pt-columns-2 {
-      width: min(100cqi, calc(2 * 62ch + 1.5rem));
-      max-width: none;
-    }
-
-    .page .pt-columns-3 {
-      width: min(100cqi, calc(3 * 62ch + 3rem));
-      max-width: none;
     }
   }
 

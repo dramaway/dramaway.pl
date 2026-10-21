@@ -26,7 +26,7 @@ export function PageArticle({
       />
       <ContentModules sections={page.sections} variant="page" />
       <Section>
-        <div className="measure">
+        <div className="article-body">
           <PortableBody value={page.body} />
         </div>
       </Section>

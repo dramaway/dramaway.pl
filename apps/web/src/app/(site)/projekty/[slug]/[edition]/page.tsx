@@ -60,7 +60,7 @@ export default async function EditionPage({ params }: Props) {
         <Section className="edition-follow">
           <LeadGallery images={gallery} alt={heading} />
           {edition.body ? (
-            <div className="measure">
+            <div className="article-body">
               <PortableBody value={edition.body} />
             </div>
           ) : null}
@@ -68,7 +68,7 @@ export default async function EditionPage({ params }: Props) {
       ) : null}
       {outcomes.length > 0 ? (
         <Section>
-          <div className="measure">
+          <div className="article-body">
             <h2 className="font-display text-h3 font-black">Rezultaty</h2>
             <ul className="mt-8 stack">
               {outcomes.map((outcome) => (

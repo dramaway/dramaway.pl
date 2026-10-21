@@ -14,7 +14,7 @@ export function NewsArticle({ news }: { news: NewsDetail }) {
         ctaHref={cta.ctaHref}
       />
       <Section>
-        <div className="measure">
+        <div className="article-body">
           <PortableBody value={news.body} />
         </div>
       </Section>

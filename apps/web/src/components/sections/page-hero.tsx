@@ -80,11 +80,7 @@ export function PageHero({
           {lead}
         </p>
       ) : null}
-      {children ? (
-        <div className={layout === "stack" ? undefined : "measure"}>
-          {children}
-        </div>
-      ) : null}
+      {children ? <div>{children}</div> : null}
       {ctaLabel && ctaHref ? (
         <CtaLink href={ctaHref}>{ctaLabel}</CtaLink>
       ) : null}

@@ -41,7 +41,7 @@ export function PublicationArticle({
       />
       {hasMeta || hasBody ? (
         <Section>
-          <div className="measure">
+          <div className="article-body">
             {authors.length > 0 ? (
               <p className="text-body">{authors.join(", ")}</p>
             ) : null}

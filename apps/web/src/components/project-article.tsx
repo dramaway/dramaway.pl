@@ -116,7 +116,7 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
       />
       {hasPortableContent(project.body) ? (
         <Section>
-          <div className="measure">
+          <div className="article-body">
             <PortableBody value={project.body} />
           </div>
         </Section>
@@ -133,7 +133,7 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
       ) : null}
       {preamble || foldItems.length > 0 ? (
         <Section>
-          <div className="measure">
+          <div className="article-body">
             {preamble ? <PortableBody value={preamble} /> : null}
             <FoldList items={foldItems} />
           </div>
