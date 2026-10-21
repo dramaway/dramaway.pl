@@ -56,9 +56,6 @@ export default async function ProjectsPage() {
         ctaHref={landing.ctaHref}
         slides={landing.slides}
       />
-      <div className="page py-section">
-        <PaletteRow />
-      </div>
       {landing.sections.length > 0 ? (
         <ContentModules sections={landing.sections} variant="page" />
       ) : (
