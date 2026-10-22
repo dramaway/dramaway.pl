@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-10-22 — Lead nad kołami wartości na `/fundacja` na pełną szerokość `.page` (bez `.measure`). |
+| **Ostatnia aktualizacja** | 2026-10-22 — `/fundacja`: lead nad wartościami ma oddech od pasma kół (ok. 3.5 rem bieli) i od kolorowych kół (do 3.75 rem). |
 | **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
 | **Preview** | https://dramaway.netlify.app/ |

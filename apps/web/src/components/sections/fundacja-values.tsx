@@ -40,7 +40,7 @@ export function FundacjaValues({
   if (!hasCopy && values.length === 0) return null;
 
   return (
-    <Section className="fundacja-flow">
+    <Section className="fundacja-flow fundacja-values">
       {heading ? (
         <h2 className="font-display text-h3 font-black">{heading}</h2>
       ) : null}

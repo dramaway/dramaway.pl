@@ -2339,7 +2339,7 @@
   }
 
   .values-row-after-copy {
-    margin-block-start: 2.5rem;
+    margin-block-start: clamp(3rem, 4vw, 3.75rem);
   }
 
   .values-item {
@@ -3789,6 +3789,16 @@
    */
   .fundacja-flow {
     padding-block: clamp(2.25rem, 5vw, 4rem);
+  }
+
+  /*
+   * The hero DotBand overlaps this section by 0.55 diameters, so the shared
+   * rhythm left about 1.2rem of white under the sand row. Put the lead a
+   * short reading gap below those dots. The gap before the value circles
+   * matches it.
+   */
+  .fundacja-values {
+    padding-block-start: calc(var(--dot-size) * 0.55 + clamp(2.75rem, 4vw, 3.5rem));
   }
 
   /*
