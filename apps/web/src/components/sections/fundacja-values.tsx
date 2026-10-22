@@ -41,18 +41,14 @@ export function FundacjaValues({
 
   return (
     <Section className="fundacja-flow">
-      {hasCopy ? (
-        <div className="measure">
-          {heading ? (
-            <h2 className="font-display text-h3 font-black">{heading}</h2>
-          ) : null}
-          {lead ? <p className="mt-8">{lead}</p> : null}
-          {ctaLabel && ctaHref ? (
-            <CtaLink href={ctaHref} className="mt-8">
-              {ctaLabel}
-            </CtaLink>
-          ) : null}
-        </div>
+      {heading ? (
+        <h2 className="font-display text-h3 font-black">{heading}</h2>
+      ) : null}
+      {lead ? <p className={heading ? "mt-8" : undefined}>{lead}</p> : null}
+      {ctaLabel && ctaHref ? (
+        <CtaLink href={ctaHref} className="mt-8">
+          {ctaLabel}
+        </CtaLink>
       ) : null}
       {values.length > 0 ? (
         <ul className={cn("values-row", hasCopy && "values-row-after-copy")}>
