@@ -1,3 +1,4 @@
+import { ClientConsoleLog } from "@/components/client-console-log";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { DotBand } from "@/components/visual/dot-band";
@@ -13,6 +14,7 @@ export default async function SiteLayout({
 
   return (
     <div className="site-shell flex min-h-screen flex-col">
+      <ClientConsoleLog />
       <a href="#main-content" className="skip-link">
         {SUBPAGE.a11y.skipToContent}
       </a>
