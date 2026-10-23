@@ -2,6 +2,19 @@
 
 Read `CLAUDE.md` first, then `knowledge.yaml` and `docs/README.md`.
 
+## GitHub Copilot coding agent
+
+Requests come from non-developers through the "Zmiana na stronie" issue form, written in Polish. Reply and write PR descriptions in Polish, in plain language: what changed on which page, and how to check it in the Netlify Deploy Preview.
+
+- **Content is not code.** Texts, images, menus, people, projects and news live in Sanity and are edited in Studio (https://dramaway.sanity.studio/). If an issue asks to change content, do not hardcode it. Say in the PR or issue which Studio document to edit, pointing to `docs/redakcja/`.
+- Before touching `apps/web`, read `docs/design/system.md`. Figma is a visual direction, not a spec; deviations listed there are deliberate. Do not "fix" them back.
+- Keep changes small and limited to what the issue asks. One issue = one PR.
+- Never run `pnpm migrate:*`, `pnpm patch:*`, `pnpm seed:*` or anything that writes to the Sanity dataset. There is no write token in this environment, and there must not be.
+- Never commit `.env*` files (except `.env.example`), `private/**` or `apps/web/src/data/extracted/`.
+- Do not change `netlify.toml`, `NEXT_PUBLIC_SITE_INDEX` or the noindex setup unless the issue explicitly asks for the domain cutover.
+- Studio code (`apps/studio/**`) deploys itself after merge to `main` (`.github/workflows/studio-deploy.yml`). Avoid schema changes: renaming or removing a field hides existing content in Studio. If one is unavoidable, say so clearly at the top of the PR.
+- Before finishing, run: `pnpm --filter web lint`, `pnpm test:web`, and `pnpm --filter web build`. If the build cannot reach Sanity (network firewall), say so in the PR instead of skipping silently.
+
 ## Cursor Cloud specific instructions
 
 Cloud Agent install and start live in `.cursor/environment.json`. That file is the setup new agents use when their checkout contains it.

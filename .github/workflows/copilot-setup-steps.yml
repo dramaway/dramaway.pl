@@ -1,0 +1,38 @@
+# Environment for the GitHub Copilot coding agent (runs before the agent starts).
+# The job name must stay `copilot-setup-steps`. Public Sanity id only; never add SANITY_API_WRITE_TOKEN.
+
+name: Copilot setup steps
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+  pull_request:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+
+jobs:
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      # Same public values as CI and Netlify. Dataset `production` is public, so no token.
+      - name: Public Sanity env
+        run: |
+          printf 'NEXT_PUBLIC_SANITY_PROJECT_ID=tr2qdg9j\nNEXT_PUBLIC_SANITY_DATASET=production\n' > apps/web/.env.local
+          printf 'SANITY_STUDIO_PROJECT_ID=tr2qdg9j\nSANITY_STUDIO_DATASET=production\n' > apps/studio/.env

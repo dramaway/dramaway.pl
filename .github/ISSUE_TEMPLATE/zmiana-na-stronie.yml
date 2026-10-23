@@ -1,0 +1,46 @@
+name: Zmiana na stronie
+description: Poprawka wyglądu albo działania strony, której nie da się zrobić w Studio.
+title: "[Zmiana] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Najpierw sprawdź, czy to nie jest zmiana treści.** Teksty, zdjęcia, menu, zespół, projekty i aktualności zmienia się w Studio: https://dramaway.sanity.studio/ (instrukcja: `docs/redakcja/README.md`).
+
+        Ten formularz jest na zmiany w kodzie: wygląd, układ, odstępy, działanie elementów. Po wysłaniu przypisz zgłoszenie do **Copilot** (po prawej, *Assignees*).
+  - type: input
+    id: url
+    attributes:
+      label: Której strony dotyczy?
+      description: Wklej adres, np. https://dramaway.netlify.app/fundacja
+    validations:
+      required: true
+  - type: textarea
+    id: now
+    attributes:
+      label: Co jest teraz?
+      description: Opisz, co widzisz. Wklej zrzut ekranu, jeśli się da.
+    validations:
+      required: true
+  - type: textarea
+    id: wanted
+    attributes:
+      label: Jak ma być?
+      description: Konkretnie, jednym-dwoma zdaniami. Na przykład „większy odstęp pod nagłówkiem, mniej więcej jak między akapitami”.
+    validations:
+      required: true
+  - type: dropdown
+    id: screens
+    attributes:
+      label: Na jakich ekranach?
+      options:
+        - Wszędzie
+        - Tylko komputer
+        - Tylko telefon
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Coś jeszcze?
+      description: Np. czego nie ruszać, wzór z innej strony.

@@ -45,6 +45,8 @@ Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona głów
 - Netlify: `netlify.toml` w repo (`pnpm --filter web build`, `X-Robots-Tag: noindex` na static). Preview: https://dramaway.netlify.app/. Next: `metadata.robots` + `headers()` (CSP, noindex dopóki `NEXT_PUBLIC_SITE_INDEX` nie jest `true`).
 - **Indeksacja (cutover):** w Netlify `NEXT_PUBLIC_SITE_URL=https://fundacja.dramaway.pl` i `NEXT_PUBLIC_SITE_INDEX=true` — wtedy robots/sitemap/canonical żyją. Do tego czasu Google ma nie indeksować roboczego netlify.app.
 - CI: `.github/workflows/ci.yml` — `pnpm install`, lint, `web` build, `test:repair` / `test:archive-projects` / `test:web`.
+- Studio deploy: `.github/workflows/studio-deploy.yml` po merge'u zmian w `apps/studio/**` do `main` (sekret repo `SANITY_AUTH_TOKEN`, token „Deploy Studio”).
+- Zmiany w kodzie po przekazaniu: Copilot coding agent (zgłoszenie „Zmiana na stronie” → PR → Netlify Deploy Preview → merge). Środowisko agenta: `.github/workflows/copilot-setup-steps.yml`, zasady: `AGENTS.md`, instrukcja: [redakcja/zmiany-w-kodzie.md](redakcja/zmiany-w-kodzie.md).
 - Zależności: catalog w `pnpm-workspace.yaml`, lockfile, Dependabot (tydzień), skrypty `pnpm deps:outdated` / `pnpm deps:update`. Kanwa: [guides/dependencies.md](guides/dependencies.md). Next 16 / TS 6+ / ESLint 10 zostają poza automatami.
 - Mapa 301 na premierę = **osobne zadanie tuż przed DNS**, nie teraz. Kolejność przekazania kont i dnia domeny: [guides/cutover.md](guides/cutover.md). Mail/checklista dla Fundacji (RODO + analityka): [guides/cutover-foundation.md](guides/cutover-foundation.md). Manual redakcji: [redakcja/README.md](redakcja/README.md).
 
