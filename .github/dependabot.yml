@@ -41,3 +41,13 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "@sanity/client"
         update-types: ["version-update:semver-major"]
+
+  # Workflow actions (checkout, setup-node, pnpm). One grouped PR a month.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns:
+          - "*"
