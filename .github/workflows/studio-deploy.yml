@@ -32,11 +32,11 @@ jobs:
           echo "::error::Brak sekretu SANITY_AUTH_TOKEN (Settings → Secrets and variables → Actions)."
           exit 1
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: pnpm
