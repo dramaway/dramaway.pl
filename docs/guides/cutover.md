@@ -16,28 +16,29 @@ Wspólna sesja z osobą z Fundacji. Najpierw skrzynka, dopiero potem zaproszenia
 
 Kto: Fundacja i Jan, przy operatorze poczty i DNS `dramaway.pl`.
 
-- [ ] Założyć `admin@dramaway.pl`.
-- [ ] Hasło i kody 2FA zostają u Fundacji, nie tylko u Jana.
+- [x] Założyć `admin@dramaway.pl`.
+- [x] Hasło i kody 2FA zostają u Fundacji, nie tylko u Jana. Wszystko w Bitwardenie (bitwarden.eu); Fundacja dostaje master password.
 - [ ] Ustalić, kto ma dostęp do DNS tej domeny. Bez tego nie da się utrzymać poczty ani później przepiąć `fundacja.dramaway.pl`.
 
 ### GitHub
 
 Kto prowadzi: Jan. Fundacja akceptuje zaproszenia na `admin@dramaway.pl`.
 
-Konto osobiste „Fundacja” jest złym właścicielem. Właścicielem jest **organizacja**.
+Zrobione 2026-10-23, ale inaczej niż w planie: repo jest na **koncie osobistym** `dramaway`, nie w organizacji. Darmowy Netlify nie deployuje z prywatnych repo organizacji. Organizacja `fundacja-dramaway` została założona i jest pusta. Drugiego właściciela zastępuje Bitwarden: dostęp do konta ma każdy, kto zna master password.
 
-- [ ] Założyć organizację GitHub na `admin@dramaway.pl`. Dodać drugiego właściciela.
-- [ ] Przenieść `waether-the-strm/artgeneracje` do tej organizacji.
-- [ ] Zanim zniknie stare połączenie: na nowej organizacji od razu autoryzować aplikację Netlify. Inaczej deploye ze `main` staną.
-- [ ] Jan zostaje członkiem z prawem utrzymania.
-- [ ] Po transferze sprawdzić sekrety Actions. Część nie przenosi się sama. Dependabot jedzie razem z repo.
+- [x] Konto GitHub `dramaway` na `admin@dramaway.pl`, 2FA.
+- [x] Nowe prywatne repo `dramaway/dramaway.pl`. Wypchnięty tylko `main` z pełną historią. Nie transfer forka: prywatny fork zależałby od `szaroale-pl`.
+- [x] Aplikacja Netlify autoryzowana na koncie `dramaway`, deploye ze `main` działają.
+- [x] Jan = collaborator z zapisem (na repo osobistym nie ma roli Admin). PR-y z gałęzi w tym repo.
+- [x] Stary fork `waether-the-strm/artgeneracje` zarchiwizowany.
+- [x] Sekrety Actions: `ci.yml` nie używa `secrets.*`, nic do przenoszenia.
 
 ### Netlify
 
 Kto prowadzi: Jan. Fundacja akceptuje na `admin@dramaway.pl`.
 
-- [ ] Konto i team na `admin@dramaway.pl`. Drugi właściciel teamu.
-- [ ] Przenieść **istniejącą** stronę do tego teamu. Nie zakładać drugiej. Transfer zostawia env (`NEXT_PUBLIC_SANITY_*`, `SANITY_REVALIDATE_SECRET`), domenę i build z `netlify.toml`.
+- [x] Konto i team na `admin@dramaway.pl`, 2FA.
+- [x] Projekt przeniesiony do tego teamu, adres `dramaway.netlify.app` bez zmian. Env: `NEXT_PUBLIC_SANITY_*`, `NEXT_PUBLIC_SITE_URL`, `SANITY_REVALIDATE_SECRET`.
 - [ ] Sprawdzić, że w env strony **nie ma** `SANITY_API_WRITE_TOKEN`.
 - [ ] Redakcja nie dostaje loginu do Netlify.
 
