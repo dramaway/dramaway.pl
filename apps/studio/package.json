@@ -16,7 +16,7 @@
     "react-dom": "catalog:",
     "sanity": "catalog:",
     "sanity-plugin-media": "6.4.0",
-    "styled-components": "^6.5.3"
+    "styled-components": "^6.6.0"
   },
   "devDependencies": {
     "@types/react": "catalog:",
