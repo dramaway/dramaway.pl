@@ -5,15 +5,15 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-10-23 — przekazanie kont (faza A cutover) zrobione dla GitHub i Netlify: repo `dramaway/dramaway.pl`, projekt Netlify w teamie `admin@dramaway.pl`, webhook revalidate działa, 2FA + Bitwarden. |
+| **Ostatnia aktualizacja** | 2026-10-23 — projekt przekazany Fundacji: repo `dramaway/dramaway.pl` (publiczne, ruleset na `main`), Netlify i Sanity (plan NGO) na `admin@dramaway.pl`, webhook revalidate, 2FA + Bitwarden. Zmiany w kodzie przez Copilota: [redakcja/zmiany-w-kodzie.md](redakcja/zmiany-w-kodzie.md). |
 | **Gałąź / HEAD** | `main` |
-| **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (prywatne repo na koncie osobistym klienta; Jan = collaborator z zapisem, PR-y z gałęzi w tym repo). `fork` = `waether-the-strm/artgeneracje` (zarchiwizowany, stare gałęzie robocze i PR-y #1–#14). |
+| **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
 | **Netlify** | Projekt przeniesiony do teamu `admin@dramaway.pl`, adres bez zmian. Env: `NEXT_PUBLIC_SANITY_*`, `NEXT_PUBLIC_SITE_URL`, `SANITY_REVALIDATE_SECRET` (tylko Production). |
 | **Hasła** | Bitwarden Fundacji (bitwarden.eu): hasła i kody odzyskiwania kont. Fundacja dostaje master password. |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ (`readingMethod` = Category; `publication.methods` = Categories; publiczne `publication.format`) |
 | **Working tree** | Czysto po pushu na `main`. Nadal do potwierdzenia przez redakcję: kanał YouTube w stopce (`UCqnZ4VG2xTkiTYDbrOLMfEQ`) i adres e-mail. |
-| **Owner Sanity** | Organizacja na `admin@dramaway.pl`, plan NGO. Jan = project Admin (utrzymanie); redakcja = Editor |
+| **Owner Sanity** | Organizacja na `admin@dramaway.pl`, plan NGO. `admin@dramaway.pl` = project Admin; redakcja = Editor |
 
 ---
 
@@ -67,19 +67,19 @@ Przy przejęciu `fundacja.dramaway.pl`:
 - **Netlify env** — `NEXT_PUBLIC_SANITY_*`, `SANITY_REVALIDATE_SECRET` (webhook, nie write). **Brak** `SANITY_API_WRITE_TOKEN`. CORS Studio: origin produkcji w Sanity Manage.
 - **DNS / TLS** + smoke po wgraniu `_redirects`.
 
-Rollback: poprzedni deploy Netlify + snapshot `private/sanity-snapshots/production-2026-09-07-pre-client.tar.gz`.
+Rollback: poprzedni deploy Netlify (Deploys → Publish deploy) + eksport datasetu z dysku Fundacji.
 
 
 ### Sanity — role i przekazanie (2026-09-07)
 
 Billing jest w **organizacji**, nie w project Admin. Kanon: [guides/sanity-roles.md](guides/sanity-roles.md).
 
-- Jan zostaje **project Administrator**; później ewentualnie **Developer**, gdy ktoś drugi będzie wspierać (też Dev).
-- `admin@dramaway.pl` — świadomy **Admin** po stronie klienta, tylko backup pełnego zarządzania projektem, nie codzienny CMS.
+- `admin@dramaway.pl` — właściciel organizacji i **project Administrator**; pełne zarządzanie, nie codzienny CMS.
+- Osoba od kodu / zlecony wykonawca — **Developer** na czas zlecenia, potem usunąć.
 - Osoby edytujące treści — **Editor** (żeby nie ruszyć tokenów / CORS / datasetu).
 - Contributor / Viewer / Blueprints editor — na start nie. Viewer = podgląd (darmowe miejsce). Contributor = szkice bez publikacji.
 - Dane billingowe doda klient przy **migracji serwisu** (org-admin).
-- Snapshot treści przed startem redakcji: `private/sanity-snapshots/production-2026-09-07-pre-client.tar.gz` (chmurowa kopia datasetu nie jest na planie) + tag `snapshot-2026-09-07-pre-client`.
+- Kopia treści: eksport datasetu (`sanity datasets export production`) na dysku Fundacji; chmurowa kopia datasetu nie jest na planie. Kod sprzed startu redakcji: tag `snapshot-2026-09-07-pre-client`.
 
 ### Warstwa wizualna (od 2026-08-30, skład `/` 2026-09-03, polish 2026-09-03, mobile 2026-09-03)
 
@@ -119,7 +119,7 @@ Figma zmierzona i przełożona na mały system. Kanon: [design/system.md](design
 
 Ten plik + [fundacja-status.md](migration/fundacja-status.md) + [ustalenia-2026-09-05.md](concept/ustalenia-2026-09-05.md). Nie odtwarzać dumpów rozmów. Nie wołać Figmy bez potrzeby.
 
-### Dokończyć kadry manuala (Jan)
+### Dokończyć kadry manuala
 
 Spis braków: [guides/zrzuty-manuala.md](guides/zrzuty-manuala.md). Wstawić plik do `docs/redakcja/img/` i obrazek pod znacznikiem `<!-- screen: ... -->` w podanym pliku. Nie naciskać **Publish**.
 
@@ -194,7 +194,7 @@ Z baseline (wcześniej): brak ekranów mobilnych · logo jako raster zamiast SVG
 ## Komendy
 
 ```bash
-cd /Users/jmirecki-letsreg/Code/waether-the-strm/drama
+cd dramaway.pl                # katalog z klonem repo
 pnpm dev:all                  # :3000 + :3333
 pnpm deps:outdated            # co odstaje
 pnpm deps:update              # bump w ramach ^/~

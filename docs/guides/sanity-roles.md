@@ -4,15 +4,13 @@ Billing i plan siedzą w **organizacji** (`sanity.io/manage` → Organization). 
 
 Źródło ról: [Sanity roles](https://www.sanity.io/docs/content-lake/roles-concepts).
 
-## Ustalenia (2026-09-07)
+## Role po przekazaniu (2026-10-23)
 
 | Kto | Rola | Po co |
 |-----|------|--------|
-| Jan | project **Administrator** (na razie) | utrzymanie, tokeny, zaproszenia; później ewentualnie **Developer** |
-| Druga osoba od kodu (gdy będzie) | **Developer** | infrastruktura bez usuwania członków |
-| `admin@dramaway.pl` | project **Administrator** | świadomy backup pełnego zarządzania po stronie klienta; **nie** do codziennej edycji |
+| `admin@dramaway.pl` | właściciel **organizacji** + project **Administrator** | plan NGO, tokeny, CORS, webhooki, zaproszenia; **nie** do codziennej edycji |
+| Osoba od kodu / zlecony wykonawca (gdy potrzebny) | **Developer** | infrastruktura bez usuwania członków; usunąć po zakończeniu zlecenia |
 | Redakcja | **Editor** | treści; bez tokenów i ustawień projektu |
-| Klient (billing) | administrator **organizacji** | faktura i dane rozliczeniowe — przy migracji serwisu, nie teraz |
 
 Nie dawać redakcji project Admin: mogą utworzyć token z zapisem i zepsuć dataset.
 
@@ -24,6 +22,6 @@ Nie dawać redakcji project Admin: mogą utworzyć token z zapisem i zepsuć dat
 
 Custom role (np. tylko Czytelnia) wymagają Enterprise. Chowanie typów w Structure to tylko UI.
 
-## Snapshot przed edycją klienta
+## Kopia treści
 
-Przed startem redakcji (2026-09-07): `sanity datasets export production` → `private/sanity-snapshots/production-2026-09-07-pre-client.tar.gz` (poza gitem). Kopia datasetu w chmurze (`datasets copy`) **nie jest na planie**. Przywracanie: `sanity datasets import <plik.tar.gz> production --replace` (ostrożnie — nadpisuje live). Kod: tag git `snapshot-2026-09-07-pre-client` na `main`.
+Eksport: `sanity datasets export production` (plik `.tar.gz`, trzymać na dysku Fundacji, nie w repo). Kopia datasetu w chmurze (`datasets copy`) **nie jest na planie**. Przywracanie: `sanity datasets import <plik.tar.gz> production --replace` (ostrożnie — nadpisuje live). Kod: tag git `snapshot-2026-09-07-pre-client` na `main`.

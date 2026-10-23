@@ -1,6 +1,6 @@
 # Cutover — checklista dla Fundacji (RODO, treści, analityka)
 
-Dokument dla Jana: co wysłać klientowi i czego od nich potrzebujemy **przed** podpięciem `fundacja.dramaway.pl`. Treści prawnych **nie piszemy za nich**.
+Co Fundacja musi przygotować **przed** podpięciem `fundacja.dramaway.pl`. Treści prawne pisze Fundacja (albo jej prawnik). Mail poniżej opisuje wszystko w całości. Można go przekazać osobie, która przygotuje treści.
 
 ## Mail (do wklejenia)
 
