@@ -5,13 +5,15 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-10-23 — repo przeniesione do organizacji klienta `fundacja-dramaway` (tylko `main`, pełna historia). |
+| **Ostatnia aktualizacja** | 2026-10-23 — przekazanie kont (faza A cutover) zrobione dla GitHub i Netlify: repo `dramaway/dramaway.pl`, projekt Netlify w teamie `admin@dramaway.pl`, webhook revalidate działa, 2FA + Bitwarden. |
 | **Gałąź / HEAD** | `main` |
-| **Remote** | `origin` = `git@github.com:fundacja-dramaway/dramaway.pl.git` (repo klienta, Jan = Admin). `fork` = stary `waether-the-strm/artgeneracje` (do archiwizacji), `upstream` = `szaroale-pl/artgeneracje` (historyczny). |
+| **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (prywatne repo na koncie osobistym klienta; Jan = collaborator z zapisem, PR-y z gałęzi w tym repo). `fork` = `waether-the-strm/artgeneracje` (zarchiwizowany, stare gałęzie robocze i PR-y #1–#14). |
+| **Netlify** | Projekt przeniesiony do teamu `admin@dramaway.pl`, adres bez zmian. Env: `NEXT_PUBLIC_SANITY_*`, `NEXT_PUBLIC_SITE_URL`, `SANITY_REVALIDATE_SECRET` (tylko Production). |
+| **Hasła** | Bitwarden Fundacji (bitwarden.eu): hasła i kody odzyskiwania kont. Fundacja dostaje master password. |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ (`readingMethod` = Category; `publication.methods` = Categories; publiczne `publication.format`) |
 | **Working tree** | Czysto po pushu na `main`. Nadal do potwierdzenia przez redakcję: kanał YouTube w stopce (`UCqnZ4VG2xTkiTYDbrOLMfEQ`) i adres e-mail. |
-| **Owner Sanity (na razie)** | Jan = project Admin; backup klienta = `admin@dramaway.pl`; redakcja = Editor |
+| **Owner Sanity** | Organizacja na `admin@dramaway.pl`, plan NGO. Jan = project Admin (utrzymanie); redakcja = Editor |
 
 ---
 
@@ -37,10 +39,7 @@ Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona głów
 - Newsy na `/`: sekcja `newsFeedModule` — domyślnie 3 najnowsze dokumenty `news` (data publikacji, inaczej `_createdAt`). W Studio typ nazywa się **News**, obok Project / Person / Page. Pola: tytuł, slug, data, zajawka, treść. CTA puste = „czytaj więcej” na podstronę newsa. Inny adres (ścieżka albo https) wymaga własnej etykiety; tytuł karty zostaje linkiem do artykułu. W sekcji: limit (1–12) i rodzaje (News, strony, osoby, projekty, publikacje). `pnpm migrate:news` przenosi stare `page` z przedrostkiem `aktualnosc-` (nowy `_id`, bo Sanity nie zmienia typu przy starym; ucina przedrostek i `[Aktualność]` w tytule). Trzeci news `news-syrena` jest wypełniaczem z ramki — **do draftu** z adnotacją PL (wykaz: [fundacja-status.md](migration/fundacja-status.md) „Luki vs ramka”).
 - Skip-link (`Przejdź do treści`) i strony 404 / błąd — **są** w kodzie (chrome w `subpage-copy.ts`).
 - Studio: plugin **Media** (`sanity-plugin-media`) — zakładka w menu + źródło przy polach **`image`**. Pola **`file`** (ICO) zostają na wbudowanym pickerze Sanity: Media w trybie plików pokazuje tylko `sanity.fileAsset`, a tych jest zero. Typy `media.tag` / `media.folder` ukryte w desk. Credit line włączony. **Content (góra):** Strona główna zostaje na stałe (`siteSettings`). Dalej skróty z `siteSettings.navigation` (ta sama lista co menu witryny, z jednym poziomem dzieci). Pusta lista = dotychczasowe skróty: Projekty / Czytelnia / Zespół (`landingPage`), Art Generacje (`project`), Baza wiedzy / Kontakt (`page`), O fundacji (`aboutPage`). Lista Page ukrywa strony, które są już skrótem. Site settings nadal na dole (ten sam dokument co Strona główna). Portable Text: styl **Termin** (`term`) — blob + krój body, Strong opcjonalnie; lista **Indent** (Tab = głębsze wcięcie); lista **Roles** (`roster`) — wiersze `rola: imiona`, render jako `.roster` (hairline’y, bez karty); obiekt **Wykaz twórców** (`credits`) — grupy (Autorstwo / Obsada / Realizacja / Produkcja / Partnerzy) z wierszami `rola` + opcjonalny `dopisek` + `osoby`, blok **Lista bez ról** dla obsady i opcjonalna notka końcowa; ten sam `.roster` co Roles; obiekt **Columns** (2 albo 3, stack poniżej `lg`); obiekt **Button** (`ctaButton`) — zielone CTA w osobnym wierszu, do lewej, z wcięciem 0–3 stopnie jak lista Indent; cel to dokument, plik albo adres, a `#` i `?` są w zwiniętym Zaawansowane; separator **Czytaj więcej** (`readMoreBreak`) — max jeden w głównym `body`, tylko w środku (nie na początku/końcu), treść poniżej zwinięta na stronie (copy: „Czytaj więcej” / „Zwiń”); nie w kolumnach. Quote bez zmian. Nie zgadywać listy ról z dwukropków w prozie **w runtime** — redaktor zaznacza Roles / Wykaz twórców w toolbarze. Jednorazowy wyjątek offline: `pnpm patch:project-credits` (parser → ręcznie przejrzany `scripts/project-credits.json` → zapis), odpalony 2026-10-07. Deploy: `pnpm --filter studio run deploy` → https://dramaway.sanity.studio/.
-- **Publikacja w Studio:** Next trzyma HTML do 60 s (ISR). Żeby nie czekać: webhook Sanity → `POST /api/revalidate` (`revalidateTag` + `revalidatePath`). Koszt ≈ 0 (webhook Sanity darmowy, kilka wywołań Netlify dziennie). **Do skonfigurowania po deployu** (nie da się z repo):
-  1. Losowy sekret (np. `openssl rand -hex 24`).
-  2. Netlify → env `SANITY_REVALIDATE_SECRET` (server, nie `NEXT_PUBLIC_`). Przebudowa.
-  3. Sanity Manage → API → Webhooks: URL `https://dramaway.netlify.app/api/revalidate`, header `Authorization: Bearer <sekret>`, dataset `production`, trigger create/update/delete na opublikowanych. Po cutoverze ten sam hook na docelową domenę.
+- **Publikacja w Studio:** Next trzyma HTML do 60 s (ISR). Żeby nie czekać: webhook Sanity → `POST /api/revalidate` (`revalidateTag` + `revalidatePath`). Koszt ≈ 0 (webhook Sanity darmowy, kilka wywołań Netlify dziennie). **Skonfigurowane 2026-10-23:** sekret w Netlify (`SANITY_REVALIDATE_SECRET`, kontekst Production, oznaczony jako secret) i webhook w Sanity Manage → API → Webhooks (`https://dramaway.netlify.app/api/revalidate`, header `Authorization: Bearer <sekret>`, dataset `production`, create/update/delete, bez draftów, pole „Secret” puste). Sekret w Bitwardenie. Po cutoverze URL hooka na docelową domenę. Test: `POST` bez sekretu → 401 (503 = zmienna nie dotarła, trzeba redeploy).
   Fallback 60 s zostaje, gdy hook nie dojdzie.
 - Netlify: `netlify.toml` w repo (`pnpm --filter web build`, `X-Robots-Tag: noindex` na static). Preview: https://dramaway.netlify.app/. Next: `metadata.robots` + `headers()` (CSP, noindex dopóki `NEXT_PUBLIC_SITE_INDEX` nie jest `true`).
 - **Indeksacja (cutover):** w Netlify `NEXT_PUBLIC_SITE_URL=https://fundacja.dramaway.pl` i `NEXT_PUBLIC_SITE_INDEX=true` — wtedy robots/sitemap/canonical żyją. Do tego czasu Google ma nie indeksować roboczego netlify.app.
@@ -130,7 +129,7 @@ Gdzie się logować:
 
 Zostało: `studio-adres`, `role-zaproszenie`, `studio-publish`, `studio-obraz`, `studio-link`, `strony-skroty`, `strony-listing`, `czytelnia-dokument`, `czytelnia-okladka`, `fundacja-dokumenty`, `fundacja-historia`, `tekst-toolbar`, `tekst-termin`, `tekst-indent`, `tekst-columns`, `tekst-button`.
 
-Cutover kont (skrzynka, GitHub, Netlify, Sanity/NGO, domena) jest opisany, nieodpalony: [guides/cutover.md](guides/cutover.md).
+Cutover kont: skrzynka, GitHub, Netlify i Sanity (plan NGO, organizacja na `admin@dramaway.pl`) zrobione 2026-10-23. Został eksport datasetu, nowy token zapisu i dzień domeny: [guides/cutover.md](guides/cutover.md).
 
 **Baza wiedzy ≠ Czytelnia.** `/baza-wiedzy` to strona z opisem metod. Czytelnia zostaje `/czytelnia` (dziecko w menu). `/metody` przekierowuje na `/baza-wiedzy`. Faza 2 kanału Czytelni **zrobiona**. Listing: wszystkie `publication` mają `listed` (`pnpm patch:publication-listed`).
 
