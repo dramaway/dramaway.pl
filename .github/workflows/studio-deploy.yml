@@ -1,0 +1,51 @@
+# Deploy Sanity Studio (https://dramaway.sanity.studio/) after Studio code lands on main.
+# Needs repo secret SANITY_AUTH_TOKEN: Sanity Manage → API → Tokens, permission "Deploy Studio".
+# Not a write token; never use SANITY_API_WRITE_TOKEN here.
+
+name: Studio deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - apps/studio/**
+      - pnpm-lock.yaml
+      - pnpm-workspace.yaml
+  workflow_dispatch:
+
+concurrency:
+  group: studio-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SANITY_STUDIO_PROJECT_ID: tr2qdg9j
+      SANITY_STUDIO_DATASET: production
+      SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
+    steps:
+      - name: Check token
+        if: env.SANITY_AUTH_TOKEN == ''
+        run: |
+          echo "::error::Brak sekretu SANITY_AUTH_TOKEN (Settings → Secrets and variables → Actions)."
+          exit 1
+
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm --filter studio typecheck
+
+      - name: Deploy
+        run: pnpm --filter studio run deploy

@@ -27,6 +27,7 @@ Szukasz konkretnej czynności, na przykład „dodać aktualność” albo „zm
 | [Menu](menu.md) | Jak ułożyć menu witryny i skróty po lewej |
 | [Tekst](tekst.md) | Akapity, nagłówki, przycisk, kolumny, wykaz twórców, linki zaawansowane |
 | [Czytelnia i O fundacji](czytelnia-i-fundacja.md) | Spis publikacji oraz wartości, zespół, historia, dokumenty |
+| [Zmiany w kodzie](zmiany-w-kodzie.md) | Wygląd i działanie strony, czyli to, czego nie da się zmienić w Studio. Z pomocą Copilota na GitHubie |
 
 ## Słowniczek
 
