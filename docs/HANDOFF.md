@@ -13,7 +13,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ (`readingMethod` = Category; `publication.methods` = Categories; publiczne `publication.format`) |
 | **Working tree** | Czysto po pushu na `main`. Nadal do potwierdzenia przez redakcję: kanał YouTube w stopce (`UCqnZ4VG2xTkiTYDbrOLMfEQ`) i adres e-mail. |
-| **Owner Sanity (na razie)** | Jan = project Admin; backup klienta = `admin@dramaway.pl`; redakcja = Editor |
+| **Owner Sanity** | Organizacja na `admin@dramaway.pl`, plan NGO. Jan = project Admin (utrzymanie); redakcja = Editor |
 
 ---
 
@@ -129,7 +129,7 @@ Gdzie się logować:
 
 Zostało: `studio-adres`, `role-zaproszenie`, `studio-publish`, `studio-obraz`, `studio-link`, `strony-skroty`, `strony-listing`, `czytelnia-dokument`, `czytelnia-okladka`, `fundacja-dokumenty`, `fundacja-historia`, `tekst-toolbar`, `tekst-termin`, `tekst-indent`, `tekst-columns`, `tekst-button`.
 
-Cutover kont: skrzynka, GitHub i Netlify zrobione 2026-10-23. Zostały Sanity/NGO i dzień domeny: [guides/cutover.md](guides/cutover.md).
+Cutover kont: skrzynka, GitHub, Netlify i Sanity (plan NGO, organizacja na `admin@dramaway.pl`) zrobione 2026-10-23. Został eksport datasetu, nowy token zapisu i dzień domeny: [guides/cutover.md](guides/cutover.md).
 
 **Baza wiedzy ≠ Czytelnia.** `/baza-wiedzy` to strona z opisem metod. Czytelnia zostaje `/czytelnia` (dziecko w menu). `/metody` przekierowuje na `/baza-wiedzy`. Faza 2 kanału Czytelni **zrobiona**. Listing: wszystkie `publication` mają `listed` (`pnpm patch:publication-listed`).
 

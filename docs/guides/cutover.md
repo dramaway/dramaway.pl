@@ -24,13 +24,14 @@ Kto: Fundacja i Jan, przy operatorze poczty i DNS `dramaway.pl`.
 
 Kto prowadzi: Jan. Fundacja akceptuje zaproszenia na `admin@dramaway.pl`.
 
-Zrobione 2026-10-23, ale inaczej niż w planie: repo jest na **koncie osobistym** `dramaway`, nie w organizacji. Darmowy Netlify nie deployuje z prywatnych repo organizacji. Organizacja `fundacja-dramaway` została założona i jest pusta. Drugiego właściciela zastępuje Bitwarden: dostęp do konta ma każdy, kto zna master password.
+Zrobione 2026-10-23, ale inaczej niż w planie: repo jest na **koncie osobistym** `dramaway`, nie w organizacji. Darmowy Netlify nie deployuje z prywatnych repo organizacji. Pusta organizacja `fundacja-dramaway` usunięta. Drugiego właściciela zastępuje Bitwarden: dostęp do konta ma każdy, kto zna master password.
 
 - [x] Konto GitHub `dramaway` na `admin@dramaway.pl`, 2FA.
 - [x] Nowe prywatne repo `dramaway/dramaway.pl`. Wypchnięty tylko `main` z pełną historią. Nie transfer forka: prywatny fork zależałby od `szaroale-pl`.
 - [x] Aplikacja Netlify autoryzowana na koncie `dramaway`, deploye ze `main` działają.
 - [x] Jan = collaborator z zapisem (na repo osobistym nie ma roli Admin). PR-y z gałęzi w tym repo.
 - [x] Stary fork `waether-the-strm/artgeneracje` zarchiwizowany.
+- [x] `szaroale-pl` zaproszona jako collaborator (drobne zmiany przez PR-y).
 - [x] Sekrety Actions: `ci.yml` nie używa `secrets.*`, nic do przenoszenia.
 
 ### Netlify
@@ -48,10 +49,9 @@ Kto prowadzi: Jan. Fundacja akceptuje na `admin@dramaway.pl`.
 
 Faktura i plan siedzą w **organizacji**, nie w roli Administrator projektu. Szczegóły ról: [sanity-roles.md](sanity-roles.md).
 
-- [ ] Sprawdzić, czy projekt `tr2qdg9j` jest w organizacji Jana, czy już w osobnej.
-- [ ] Zaprosić `admin@dramaway.pl` jako właściciela organizacji. Dodać drugiego właściciela na czas przekazania.
+- [x] Projekt `tr2qdg9j` przepięty na organizację na `admin@dramaway.pl` (2026-10-23).
 - [ ] Rola Administrator **projektu** dla tej skrzynki zostaje świadomym backupem, nie codzienną redakcją.
-- [ ] Gdy skrzynka jest zalogowana w Manage: dokończyć wniosek NGO (zgoda od Sanity już jest). Plan non-profit siada na organizacji Fundacji, nie na prywatnym loginie Jana.
+- [x] Gdy skrzynka jest zalogowana w Manage: dokończyć wniosek NGO (zgoda od Sanity już jest). Plan non-profit siada na organizacji Fundacji, nie na prywatnym loginie Jana.
 - [ ] Jan zostaje project Administrator na czas utrzymania. Zdejmowanie go nie jest częścią tego kroku.
 - [ ] Świeży eksport: `sanity datasets export production` obok `private/sanity-snapshots/production-2026-09-07-pre-client.tar.gz`.
 - [ ] Nowy token robota zapisu (`SANITY_API_WRITE_TOKEN`). Zostaje u osoby od utrzymania. Nie w skrzynce redakcji i nie w env strony.
