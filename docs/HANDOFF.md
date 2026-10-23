@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-10-22 — `/fundacja`: lead nad wartościami ma oddech od pasma kół (ok. 3.5 rem bieli) i od kolorowych kół (do 3.75 rem). |
+| **Ostatnia aktualizacja** | 2026-10-23 — repo przeniesione do organizacji klienta `fundacja-dramaway` (tylko `main`, pełna historia). |
 | **Gałąź / HEAD** | `main` |
-| **Remote** | `origin` = `git@github.com:waether-the-strm/artgeneracje.git` |
+| **Remote** | `origin` = `git@github.com:fundacja-dramaway/dramaway.pl.git` (repo klienta, Jan = Admin). `fork` = stary `waether-the-strm/artgeneracje` (do archiwizacji), `upstream` = `szaroale-pl/artgeneracje` (historyczny). |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ (`readingMethod` = Category; `publication.methods` = Categories; publiczne `publication.format`) |
 | **Working tree** | Czysto po pushu na `main`. Nadal do potwierdzenia przez redakcję: kanał YouTube w stopce (`UCqnZ4VG2xTkiTYDbrOLMfEQ`) i adres e-mail. |
