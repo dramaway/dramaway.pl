@@ -5,7 +5,7 @@ import type { HeroContent } from "@/lib/sanity/types";
 /**
  * Opening composition. From lg: the text column sets the section height;
  * the still fills that box (cover + Sanity hotspot) and bleeds to the
- * viewport edge. Below lg: heading, circular still, then lead and CTA.
+ * viewport edge. Below lg: heading, square still, then lead and CTA.
  * Nav never sits on the photo — see system.md.
  */
 export function Hero({ hero }: { hero: HeroContent }) {

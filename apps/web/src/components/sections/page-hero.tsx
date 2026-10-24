@@ -33,7 +33,7 @@ type PageHeroProps = PageHeroContent & {
 /**
  * Opening block for inner pages. Default is the same split as `/`: at lg+
  * the text column sets the height and the still fills it (cover + hotspot);
- * below lg the still is a circle. `data-split-hero` overlays the header in
+ * below lg the still is square. `data-split-hero` overlays the header in
  * the left column at lg+ (do not reuse `data-home` — that hides
  * `.footer-dots`). Pass `layout="stack"` for edition pages. No CMS
  * photo = no still; the split column and media slot stay so text width
