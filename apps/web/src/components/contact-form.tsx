@@ -1,15 +1,17 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { CONTACT_LIMITS } from "@/lib/contact";
+import {
+  CONTACT_FORM_ENDPOINT,
+  CONTACT_FORM_NAME,
+  CONTACT_LIMITS,
+} from "@/lib/contact";
 import { SUBPAGE } from "@/lib/subpage-copy";
 
 type Status =
   | "idle"
   | "pending"
   | "success"
-  | "invalid"
-  | "unconfigured"
   | "error";
 
 export function ContactForm() {
@@ -22,25 +24,23 @@ export function ContactForm() {
     const data = new FormData(form);
     setStatus("pending");
     try {
-      const response = await fetch("/api/contact", {
+      const params = new URLSearchParams({
+        "form-name": CONTACT_FORM_NAME,
+        name: String(data.get("name") ?? ""),
+        email: String(data.get("email") ?? ""),
+        subject: String(data.get("subject") ?? ""),
+        message: String(data.get("message") ?? ""),
+        website: String(data.get("website") ?? ""),
+        consent: data.get("consent") === "on" ? "tak" : "",
+      });
+      const response = await fetch(CONTACT_FORM_ENDPOINT, {
         method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          name: data.get("name"),
-          email: data.get("email"),
-          subject: data.get("subject"),
-          message: data.get("message"),
-          website: data.get("website"),
-          consent: data.get("consent") === "on",
-        }),
+        headers: { "content-type": "application/x-www-form-urlencoded" },
+        body: params.toString(),
       });
       if (response.ok) {
         form.reset();
         setStatus("success");
-      } else if (response.status === 400) {
-        setStatus("invalid");
-      } else if (response.status === 501) {
-        setStatus("unconfigured");
       } else {
         setStatus("error");
       }
@@ -52,13 +52,9 @@ export function ContactForm() {
   const message =
     status === "success"
       ? copy.success
-      : status === "invalid"
-        ? copy.invalid
-        : status === "unconfigured"
-          ? copy.unconfigured
-          : status === "error"
-            ? copy.error
-            : null;
+      : status === "error"
+        ? copy.error
+        : null;
   const disabled = status === "pending";
 
   return (

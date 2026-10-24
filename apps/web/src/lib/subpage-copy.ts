@@ -58,8 +58,6 @@ export const SUBPAGE = {
       submit: "wyślij wiadomość",
       pending: "Wysyłam…",
       success: "Dziękujemy! Wiadomość została wysłana. Odezwiemy się wkrótce.",
-      invalid: "Uzupełnij wszystkie wymagane pola i zaznacz zgodę.",
-      unconfigured: "Wysyłanie wiadomości jeszcze nie jest podłączone.",
       error: "Nie udało się wysłać wiadomości. Spróbuj ponownie lub napisz na biuro@dramaway.pl.",
     },
   },
