@@ -866,6 +866,11 @@
       padding-inline: var(--page-pad);
     }
 
+    /* The wrapper already carries the pad; do not stack it on the H1. */
+    .hero-heading .hero-title {
+      padding-inline: 0;
+    }
+
     .hero .split-text {
       display: contents;
     }
