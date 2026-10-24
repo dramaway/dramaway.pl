@@ -3,7 +3,6 @@ import { BlobRow } from "@/components/sections/blob-row";
 import { ContentModules } from "@/components/sections/content-modules";
 import { PageHero } from "@/components/sections/page-hero";
 import { DotBand } from "@/components/visual/dot-band";
-import { PaletteRow } from "@/components/visual/palette-row";
 import { publicPathForProjectSlug } from "@/lib/routes";
 import { getProjects } from "@/lib/sanity/fetch";
 import type { ProjectListItem } from "@/lib/sanity/types";
@@ -65,9 +64,6 @@ export default async function ProjectsPage() {
           emptyMessage="Brak aktywnych projektów w CMS."
         />
       )}
-      <div className="page py-section">
-        <PaletteRow />
-      </div>
       <DotBand />
       <BlobRow
         heading="Zakończone projekty"
