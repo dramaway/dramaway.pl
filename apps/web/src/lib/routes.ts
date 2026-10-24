@@ -22,9 +22,8 @@ export type NavItem = {
   children?: NavItem[];
 };
 
-export function czytelniaPath() {
-  return "/czytelnia";
-}
+/** Heading of the full library on the Baza wiedzy page. */
+export const LIBRARY_ANCHOR = "pelna-biblioteka";
 
 export function knowledgeHubPath() {
   return "/baza-wiedzy";
@@ -45,7 +44,6 @@ export function mainNav(): NavItem[] {
     {
       href: knowledgeHubPath(),
       label: "Baza wiedzy",
-      children: [{ href: czytelniaPath(), label: "Czytelnia" }],
     },
     { href: "/fundacja", label: "O fundacji" },
     { href: "/kontakt", label: "Kontakt" },

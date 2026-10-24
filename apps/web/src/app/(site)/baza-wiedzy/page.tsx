@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { PageArticle } from "@/components/page-article";
 import { Section } from "@/components/layout/section";
 import {
   CzytelniaStack,
   type CzytelniaRowItem,
 } from "@/components/sections/czytelnia-stack";
 import { FilterRow } from "@/components/sections/filter-row";
-import { PublicationCategoryList } from "@/components/sections/publication-category-list";
+import { PublicationCategories } from "@/components/sections/publication-categories";
 import {
   UNCATEGORIZED_CATEGORY_SLUG,
   czytelniaFilterHref,
@@ -20,14 +22,18 @@ import {
   publicationDestination,
   publicationListLead,
 } from "@/lib/publication-destination";
-import { publicationPath } from "@/lib/routes";
+import { LIBRARY_ANCHOR, publicationPath } from "@/lib/routes";
 import { safeHrefString } from "@/lib/safe-url";
-import { getPublications, getReadingMethods } from "@/lib/sanity/fetch";
+import {
+  getPageBySlug,
+  getPublications,
+  getReadingMethods,
+} from "@/lib/sanity/fetch";
 import { hasHeroImage } from "@/lib/sanity/image";
 import type { PublicationListItem } from "@/lib/sanity/types";
 import { LIST_CTA_LABEL, SUBPAGE } from "@/lib/subpage-copy";
 
-export const metadata: Metadata = { title: "Czytelnia" };
+export const metadata: Metadata = { title: "Baza wiedzy" };
 export const revalidate = 60;
 
 type SearchParams = Promise<{
@@ -60,13 +66,14 @@ function toCzytelniaRows(items: PublicationListItem[]): CzytelniaRowItem[] {
   });
 }
 
-export default async function CzytelniaPage({
+export default async function KnowledgeHubPage({
   searchParams,
 }: {
   searchParams: SearchParams;
 }) {
   const params = await searchParams;
-  const [publications, categories] = await Promise.all([
+  const [page, publications, categories] = await Promise.all([
+    getPageBySlug("baza-wiedzy"),
     getPublications(),
     getReadingMethods(),
   ]);
@@ -100,37 +107,52 @@ export default async function CzytelniaPage({
         )
       : undefined;
 
+  if (!page) notFound();
+
   return (
-    <Section>
-      <FilterRow
-        label={copy.filters.formatLabel}
-        chips={available.map((format) => ({
-          href: czytelniaFilterHref({
-            rodzaj: format,
-            kategoria: kategoriaParam,
-          }),
-          label: copy.filters.formats[format],
-          current: rodzaj === format,
-        }))}
+    <>
+      <PageArticle
+        page={{
+          ...page,
+          heroCtaLabel: copy.libraryCta,
+          heroCtaHref: `#${LIBRARY_ANCHOR}`,
+        }}
       />
-      {filtered.length === 0 ? (
-        <p className="text-body">{copy.empty}</p>
-      ) : listing.kind === "flat" ? (
-        <div className="stack-wide">
-          <CzytelniaStack items={toCzytelniaRows(listing.items)} />
-        </div>
-      ) : (
-        <PublicationCategoryList
-          groups={listing.groups.map((group) => ({
-            slug: group.slug,
-            title: group.title,
-            items: toCzytelniaRows(group.items),
+      <Section id="pelna-biblioteka" className="library-section scroll-mt-24">
+        <h2 className="font-display text-h3 font-black">
+          {copy.heading}
+        </h2>
+        <FilterRow
+          label={copy.filters.formatLabel}
+          chips={available.map((format) => ({
+            href: czytelniaFilterHref({
+              rodzaj: format,
+              kategoria: kategoriaParam,
+            }),
+            label: copy.filters.formats[format],
+            current: rodzaj === format,
           }))}
-          copy={copy.sections}
-          rodzaj={rodzaj}
-          focusedSlug={focusedSlug}
         />
-      )}
-    </Section>
+        {filtered.length === 0 ? (
+          <p className="text-body">{copy.empty}</p>
+        ) : listing.kind === "flat" ? (
+          <div className="stack-wide">
+            <CzytelniaStack items={toCzytelniaRows(listing.items)} />
+          </div>
+        ) : (
+          <PublicationCategories
+            groups={listing.groups.map((group) => ({
+              slug: group.slug,
+              title: group.title,
+              items: toCzytelniaRows(group.items),
+            }))}
+            rodzaj={rodzaj}
+            focusedSlug={focusedSlug}
+            allLabel={copy.sections.all}
+            navLabel={copy.sections.navLabel}
+          />
+        )}
+      </Section>
+    </>
   );
 }

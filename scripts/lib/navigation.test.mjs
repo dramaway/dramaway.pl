@@ -8,7 +8,6 @@ const builtin = [
   {
     href: "/baza-wiedzy",
     label: "Baza wiedzy",
-    children: [{ href: "/czytelnia", label: "Czytelnia" }],
   },
   { href: "/fundacja", label: "O fundacji" },
   { href: "/kontakt", label: "Kontakt" },
@@ -152,4 +151,24 @@ test("a single valid item replaces the built-in menu", () => {
     resolveMainNav([{ label: "Kontakt", target: "path", href: "/kontakt" }]),
     [{ href: "/kontakt", label: "Kontakt" }],
   );
+});
+
+test("a CMS menu entry for the retired Czytelnia page is dropped", () => {
+  const nav = resolveMainNav([
+    { target: "path", href: "/projekty", label: "Projekty" },
+    {
+      target: "path",
+      href: "/baza-wiedzy",
+      label: "Baza wiedzy",
+      children: [{ target: "path", href: "/czytelnia", label: "Czytelnia" }],
+    },
+    {
+      target: "reference",
+      page: { _type: "landingPage", route: "czytelnia", title: "Czytelnia" },
+    },
+  ]);
+  assert.deepEqual(nav, [
+    { href: "/projekty", label: "Projekty" },
+    { href: "/baza-wiedzy", label: "Baza wiedzy" },
+  ]);
 });

@@ -3,7 +3,7 @@ import { cmsCta, cmsText } from "./cms-text";
 import { resolveContentSections } from "./content-sections";
 import { resolveHeroSlides } from "./hero-slides";
 import { EXCERPT_FALLBACK_MAX } from "./homepage-copy";
-import { czytelniaPath } from "./routes";
+import { knowledgeHubPath, LIBRARY_ANCHOR } from "./routes";
 import { getLandingPage } from "./sanity/fetch";
 import type { HeroSlide, LandingPage, ResolvedSection } from "./sanity/types";
 
@@ -69,7 +69,7 @@ export const getCzytelniaLanding = cache(
 
 export const getCzytelniaTeaser = cache(
   async function getCzytelniaTeaser(): Promise<ResolvedChannelTeaser | null> {
-    return teaserFromLanding(await getCzytelniaLanding(), czytelniaPath());
+    return teaserFromLanding(await getCzytelniaLanding(), `${knowledgeHubPath()}#${LIBRARY_ANCHOR}`);
   },
 );
 

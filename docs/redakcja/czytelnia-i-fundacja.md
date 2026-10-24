@@ -2,7 +2,7 @@
 
 ## Czytelnia
 
-Tekst Czytelni to dokument **Publication**. Nie każdy dokument dostaje własną stronę: wiersz na spisie `/czytelnia` prowadzi albo na podstronę, albo prosto do pliku PDF. Przepis krok po kroku: [Dodać tekst do Czytelni](zadania.md#dodać-tekst-do-czytelni).
+Tekst Czytelni to dokument **Publication**. Nie każdy dokument dostaje własną stronę: wiersz na spisie pod tekstem na stronie `/baza-wiedzy` (dawna Czytelnia) prowadzi albo na podstronę, albo prosto do pliku PDF. Przepis krok po kroku: [Dodać tekst do Czytelni](zadania.md#dodać-tekst-do-czytelni).
 
 <!-- screen: czytelnia-dokument | Dokument Publication z widocznym Format i polem File (PDF) | Widać, skąd bierze się cel wiersza: podstrona albo pobranie -->
 
@@ -26,7 +26,7 @@ Gdy wiersz otwiera plik, osobnej podstrony nie ma. Wejście na adres `/czytelnia
 - **Categories**: etykiety z listy dokumentów **Category**. To nie jest opis metod ze strony Baza wiedzy ani drugi spis.
 - **Authors**: wpisane nazwiska. Nie są odnośnikami do dokumentów osób.
 - **File (PDF)**: tu wgrywa się plik do pobrania.
-- **Listed in Czytelnia**: włącza tekst do spisu na `/czytelnia`. **Nowy dokument ma to pole domyślnie wyłączone.** Dopóki go nie zaznaczysz, tekst nie pokaże się na spisie. Odznaczenie chowa istniejący tekst ze spisu. Pole nie decyduje o tym, dokąd prowadzi wiersz: o tym mówi tabela wyżej.
+- **Listed in Czytelnia**: włącza tekst do spisu na `/baza-wiedzy`. **Nowy dokument ma to pole domyślnie wyłączone.** Dopóki go nie zaznaczysz, tekst nie pokaże się na spisie. Odznaczenie chowa istniejący tekst ze spisu. Pole nie decyduje o tym, dokąd prowadzi wiersz: o tym mówi tabela wyżej.
 
 <!-- screen: czytelnia-listed | Pole Listed in Czytelnia odznaczone | Widać, że da się schować tekst ze spisu; przełącznik nie wybiera strony ani pliku -->
 
@@ -40,9 +40,9 @@ Okładka kółka na spisie to **pierwszy obrazek w treści** (**Body**). Osobneg
 
 ### Przyciski rodzaju i sekcje kategorii
 
-Wynikają z pól **Format** i **Categories**. Nie ma osobnego ekranu do układania Czytelni. Poza samymi publikacjami ustawia się tylko dokument listingu **Czytelnia** (hero).
+Wynikają z pól **Format** i **Categories**. Nie ma osobnego ekranu do układania Czytelni. Podstrona `/czytelnia` już nie istnieje: przekierowuje na Bazę wiedzy, a spis stoi pod jej tekstem. Dokument listingu **Czytelnia** (hero) nie jest już pokazywany.
 
-Żeby z Bazy wiedzy albo innego tekstu otworzyć jedną metodę, wstaw przycisk **Button**: cel **Dokument**, listing **Czytelnia**, a w **Zaawansowane** → **Parametry** wpisz `kategoria=…` (na przykład `kategoria=teatr-forum`). Tabela wartości: [Tekst](tekst.md#zaawansowane-kotwica-i-parametry). Bez parametru wszystkie sekcje na spisie są otwarte. Nagłówek każdej sekcji zwija ją i rozwija.
+Żeby z Bazy wiedzy albo innego tekstu otworzyć jedną kategorię, wstaw przycisk **Button**: cel **Dokument**, listing **Czytelnia**, a w **Zaawansowane** → **Parametry** wpisz `kategoria=…` (na przykład `kategoria=teatr-forum`). Przycisk sam prowadzi do nagłówka „Pełna biblioteka” na Bazie wiedzy; kategorie są tam kafelkami, a wybrana pokazuje tylko swoje teksty. Tabela wartości: [Tekst](tekst.md#zaawansowane-kotwica-i-parametry). Bez parametru widać wszystkie kategorie jedna pod drugą.
 
 ## O fundacji
 

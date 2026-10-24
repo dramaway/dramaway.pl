@@ -1,4 +1,4 @@
-import { czytelniaPath } from "./routes";
+import { knowledgeHubPath } from "./routes";
 import type {
   PublicationFormat,
   PublicationListItem,
@@ -94,7 +94,7 @@ export function czytelniaFilterHref(
     params.set("kategoria", filters.kategoria);
   }
   const query = params.toString();
-  return query ? `${czytelniaPath()}?${query}` : czytelniaPath();
+  return query ? `${knowledgeHubPath()}?${query}` : knowledgeHubPath();
 }
 
 export function filterPublicationsByFormat(

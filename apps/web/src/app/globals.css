@@ -724,7 +724,6 @@
    * categories, history item titles (MuseoModerno, not uppercase), and the
    * archive band label on /projekty. */
   .hero-title,
-  .pub-cat-head,
   .history-title,
   .team-bio-name,
   .blob-row-label {
@@ -3496,6 +3495,7 @@
    * Hidden when fewer than two drawers have anything to show.
    */
   .filter-row-switches {
+    margin-block-start: 1.5rem;
     margin-block-end: var(--spacing-section);
   }
 
@@ -3515,101 +3515,87 @@
   }
 
   /*
-   * Czytelnia category sections. Each heading toggles its own list.
-   * `?kategoria=` on arrival opens that section and closes the rest.
-   * Title is Alexandria Light magenta (not display uppercase). Count stays
-   * grey and small. Gap under the title clears the first row's blob — keep
-   * it on the list, not the toggle, so the hit area stays the heading row.
+   * Library categories. Tiles are the table of contents: one link per
+   * category with its count. `?kategoria=` shows only that category.
    */
+  .cat-tiles {
+    margin-block-end: 2.5rem;
+  }
+
+  .cat-tiles ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .cat-tile {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: var(--touch-target);
+    padding-block: 0.4rem;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .cat-tile::before {
+    content: "";
+    flex-shrink: 0;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background-color: var(--tone, var(--color-sand));
+  }
+
+  .cat-tile:hover .cat-tile-title,
+  .cat-tile:focus-visible .cat-tile-title {
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+  }
+
+  .cat-tile:focus-visible {
+    outline: 2px solid var(--color-green-ink);
+    outline-offset: 3px;
+  }
+
+  .cat-tile[aria-current="true"] .cat-tile-title {
+    font-weight: 900;
+  }
+
+  [data-tone="1"] { --tone: var(--color-brand-1); }
+  [data-tone="2"] { --tone: var(--color-brand-2); }
+  [data-tone="3"] { --tone: var(--color-brand-3); }
+  [data-tone="4"] { --tone: var(--color-brand-4); }
+  [data-tone="5"] { --tone: var(--color-brand-5); }
+  [data-tone="6"] { --tone: var(--color-brand-6); }
+  [data-tone="7"] { --tone: var(--color-brand-7); }
+
+  .cat-tile-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  .cat-tile-count {
+    font-size: var(--text-small);
+    color: var(--muted-foreground);
+  }
+
+  .library-section {
+    padding-block-start: 0;
+  }
+
   .pub-cat + .pub-cat {
     margin-block-start: 1.75rem;
     padding-block-start: 1.75rem;
     border-block-start: 1px solid color-mix(in srgb, var(--color-ink) 12%, transparent);
   }
 
-  .pub-cat-head {
-    margin: 0;
-    font-family: var(--font-body);
-    font-size: var(--text-lead);
-    font-weight: 300;
-    line-height: var(--text-lead--line-height);
-    letter-spacing: 0;
-    text-transform: none;
-    color: var(--color-magenta);
-  }
-
-  @media (width < 64rem) {
-    .pub-cat-head {
-      scroll-margin-block-start: var(--site-header-bar);
-    }
-  }
-
-  .pub-cat-toggle {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    width: 100%;
-    min-height: var(--touch-target);
-    padding-block: 0.35rem;
-    margin: 0;
-    border: 0;
-    background: transparent;
-    text-align: start;
-    cursor: pointer;
-    color: inherit;
-    font: inherit;
-    letter-spacing: inherit;
-    text-transform: none;
-    text-decoration: none;
-  }
-
-  .pub-cat-toggle:focus {
-    outline: none;
-  }
-
-  .pub-cat-toggle:focus-visible {
-    outline: 2px solid var(--color-green-ink);
-    outline-offset: 4px;
-  }
-
-  .pub-cat-count {
-    font-size: var(--text-small);
-    font-weight: 300;
-    color: var(--muted-foreground);
-  }
-
-  .pub-cat-action {
-    flex-shrink: 0;
-    font-family: var(--font-display);
-    font-size: var(--text-small);
-    font-weight: 600;
-    letter-spacing: 0;
-    text-transform: none;
-    color: var(--color-magenta);
-    opacity: 0;
-    transition: opacity 150ms ease;
-  }
-
-  .pub-cat-toggle:hover .pub-cat-action,
-  .pub-cat-toggle:focus-visible .pub-cat-action {
-    opacity: 1;
-  }
-
-  @media (hover: none) {
-    .pub-cat-action {
-      opacity: 1;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .pub-cat-action {
-      transition: none;
-    }
-  }
-
   .pub-cat-list {
-    padding-block-start: 6rem;
+    padding-block-start: 4rem;
     padding-block-end: 1.25rem;
   }
 }

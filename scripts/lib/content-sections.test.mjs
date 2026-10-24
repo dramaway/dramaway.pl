@@ -205,7 +205,7 @@ test("keeps an image and ignores text layout when the asset is set", () => {
   assert.equal(sections[0].imageAlt, "Scena");
   assert.deepEqual(
     sections[0].tiles.map((tile) => tile.href),
-    ["/fundacja", "/czytelnia", "/kontakt"],
+    ["/fundacja", "/baza-wiedzy#pelna-biblioteka", "/kontakt"],
   );
 });
 
