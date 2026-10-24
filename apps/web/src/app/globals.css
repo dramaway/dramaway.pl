@@ -143,8 +143,6 @@
   /* Compact sticky bar below lg: logo 57px + padding-block 0.75rem × 2. */
   --site-header-bar: calc(57px + 1.5rem);
   --touch-target: 2.75rem;
-  --hero-media-frac: 0.7;
-  --hero-media-span: calc(var(--hero-media-frac) * 100%);
   /* Crossfade between hero stills. Nav fades in on hover at lg+. */
   --hero-slider-fade: 0.7s;
   --hero-slider-nav-fade: 0.35s;
@@ -814,8 +812,7 @@
 
     .hero-media-wrap {
       grid-area: media;
-      width: min(var(--hero-media-span), 24rem);
-      justify-self: start;
+      width: 100%;
     }
 
     .hero-media,
@@ -842,17 +839,14 @@
     }
 
     /*
-     * The bar lives in the 70% circle column. Shift it by the leftover
-     * fraction so its right edge meets the page content edge, not the circle.
+     * The image spans the content width, so the bar sits flush with its
+     * right edge.
      */
     .hero-slider-controls {
       position: relative;
       z-index: 1;
       margin-block-start: 0.75rem;
       margin-inline-start: auto;
-      margin-inline-end: calc(
-        100% * (var(--hero-media-frac) - 1) / var(--hero-media-frac)
-      );
       max-width: none;
     }
 
