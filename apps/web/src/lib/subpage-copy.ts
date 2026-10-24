@@ -47,8 +47,8 @@ export const SUBPAGE = {
   contact: {
     directHeading: "Napisz bezpośrednio",
     form: {
-      heading: "Napisz do nas",
-      lead: "Masz pytanie, pomysł na współpracę albo chcesz dowiedzieć się więcej o naszych działaniach? Wypełnij formularz – odpowiemy najszybciej, jak to możliwe.",
+      heading: "Formularz kontaktowy",
+      lead: "Masz pytanie, pomysł na współpracę albo chcesz dołączyć do naszych działań? Napisz — odpowiadamy w ciągu kilku dni roboczych.",
       name: "Imię i nazwisko",
       email: "E-mail",
       subject: "Temat (opcjonalnie)",
