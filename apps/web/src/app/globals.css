@@ -1904,6 +1904,32 @@
     border-radius: 50%;
   }
 
+  /* Quote section: palette row, text, author, palette row. Text indents like the page lead. */
+  .quote-block {
+    display: grid;
+    gap: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .quote-text,
+  .quote-author {
+    max-width: var(--content-narrow);
+    margin-inline-start: var(--page-indent);
+    white-space: pre-line;
+  }
+
+  .quote-text {
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: 600;
+    line-height: 1.9;
+  }
+
+  .quote-author {
+    margin-block-start: calc(-1 * clamp(0.75rem, 2vw, 1.75rem));
+    font-size: var(--text-body);
+    font-weight: 300;
+  }
+
   .blob {
     position: absolute;
     z-index: -1;

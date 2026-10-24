@@ -107,6 +107,8 @@ export const contentSectionsProjection = `{
   heading,
   limit,
   sources,
+  text,
+  author,
   textLayout,
   image,
   tiles[] {

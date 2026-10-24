@@ -108,6 +108,17 @@ export function resolveContentSections(
       });
       continue;
     }
+    if (section._type === "quoteModule") {
+      const text = cmsText(section.text);
+      if (!text) continue;
+      resolved.push({
+        key: section._key,
+        kind: "quote",
+        text,
+        author: cmsText(section.author),
+      });
+      continue;
+    }
     if (section._type !== "contentModule") continue;
     const tiles = (section.tiles ?? [])
       .slice(0, 3)

@@ -258,3 +258,17 @@ test("a news card keeps the article on the title and a labeled custom button", (
   assert.equal(item.ctaLabel, "zobacz w Centrum");
   assert.equal(item.createdAt, "2026-01-02T00:00:00.000Z");
 });
+
+test("a quote keeps text and optional author, and an empty quote is dropped", () => {
+  assert.deepEqual(
+    resolveContentSections([
+      { _key: "q", _type: "quoteModule", text: " Teatr to czasownik. ", author: " A. Boal " },
+      { _key: "e", _type: "quoteModule", text: "  " },
+      { _key: "n", _type: "quoteModule", text: "Bez autora" },
+    ]),
+    [
+      { key: "q", kind: "quote", text: "Teatr to czasownik.", author: "A. Boal" },
+      { key: "n", kind: "quote", text: "Bez autora", author: null },
+    ],
+  );
+});

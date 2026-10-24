@@ -106,6 +106,9 @@ export type CmsContentSection = {
   textLayout?: "grid" | "list" | string | null;
   image?: CmsContentImage | null;
   tiles?: CmsContentTile[] | null;
+  /** Quote section. */
+  text?: string | null;
+  author?: string | null;
 };
 
 export type ResolvedTile = {
@@ -135,7 +138,17 @@ export type ResolvedContentModule = {
   tiles: ResolvedTile[];
 };
 
-export type ResolvedSection = ResolvedNewsSection | ResolvedContentModule;
+export type ResolvedQuote = {
+  key: string;
+  kind: "quote";
+  text: string;
+  author: string | null;
+};
+
+export type ResolvedSection =
+  | ResolvedNewsSection
+  | ResolvedContentModule
+  | ResolvedQuote;
 
 export type PageDetail = {
   _id: string;
