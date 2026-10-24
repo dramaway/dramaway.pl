@@ -3,7 +3,7 @@ import { blockContent, textColumns, youtube } from "./blockContent";
 import { readMoreBreak } from "./readMoreBreak";
 import { credits, creditGroup, creditNames, creditRow } from "./credits";
 import { ctaButton } from "./ctaButton";
-import { contentModule, contentTile, newsFeedModule } from "./contentModule";
+import { contentModule, contentTile, newsFeedModule, quoteModule } from "./contentModule";
 import { edition } from "./edition";
 import { footerLink } from "./footerLink";
 import { editionOutcome } from "./editionOutcome";
@@ -30,6 +30,7 @@ export const schemaTypes = [
   contentTile,
   contentModule,
   newsFeedModule,
+  quoteModule,
   editionOutcome,
   edition,
   project,
