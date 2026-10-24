@@ -2113,15 +2113,12 @@
   }
 
   /*
-   * Four-up preview stays inside one viewport. Below lg: one frame over two.
+   * Four-up preview fills its parent. Below lg: one frame over two.
    * From lg: a 3:2-ish still on the left, three strips on the right.
-   * Width shrinks with max-height so a short window keeps the ratio.
    */
   .gallery-mosaic[data-layout="hero-trio"] {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: minmax(0, 1.4fr) minmax(0, 1fr);
-    width: min(100%, calc(70vh * 1.35));
-    max-height: 70vh;
     aspect-ratio: 1.35 / 1;
   }
 
@@ -2149,7 +2146,6 @@
     .gallery-mosaic[data-layout="hero-trio"] {
       grid-template-columns: 2fr 1fr;
       grid-template-rows: repeat(3, minmax(0, 1fr));
-      width: min(100%, calc(70vh * 2.25));
       aspect-ratio: 2.25 / 1;
     }
 
