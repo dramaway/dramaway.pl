@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { CtaLink } from "@/components/visual/cta-link";
 import { Media } from "@/components/visual/media";
-import { isPublicationFormat } from "@/lib/czytelnia-filters";
-import type { PublicationFormat, SanityImage } from "@/lib/sanity/types";
+import type { SanityImage } from "@/lib/sanity/types";
 import { cn } from "@/lib/utils";
 
 export type CzytelniaRowItem = {
@@ -12,7 +11,6 @@ export type CzytelniaRowItem = {
   ctaLabel: string;
   /** PDF opens in a new tab. The page row stays on this site. */
   external?: boolean;
-  format: PublicationFormat | null;
   cover: SanityImage | null;
   /** File rows clamp the body text. Page rows show the CMS summary in full. */
   clampLead?: boolean;
@@ -28,36 +26,21 @@ export function CzytelniaStack({ items }: { items: CzytelniaRowItem[] }) {
   return (
     <ul className="stack">
       {items.map((item) => {
-        const format =
-          item.format && isPublicationFormat(item.format)
-            ? item.format
-            : undefined;
         return (
           <li
             key={`${item.href}-${item.title}`}
             className="stack-item card-hover pub-row"
-            data-format={format}
           >
             <span className="pub-mark" aria-hidden>
               {item.cover ? (
-                <>
-                  <Media
-                    image={item.cover}
-                    alt=""
-                    variant="bleed"
-                    ratio="none"
-                    sizes="9rem"
-                    className="pub-mark-photo"
-                  />
-                  <Media
-                    image={item.cover}
-                    alt=""
-                    variant="bleed"
-                    ratio="none"
-                    sizes="9rem"
-                    className="pub-mark-photo pub-mark-ink"
-                  />
-                </>
+                <Media
+                  image={item.cover}
+                  alt=""
+                  variant="bleed"
+                  ratio="none"
+                  sizes="9rem"
+                  className="pub-mark-photo"
+                />
               ) : null}
             </span>
             <div className="pub-row-copy">

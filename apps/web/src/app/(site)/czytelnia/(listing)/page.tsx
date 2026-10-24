@@ -54,7 +54,6 @@ function toCzytelniaRows(items: PublicationListItem[]): CzytelniaRowItem[] {
       href: external && fileHref ? fileHref : publicationPath(item.slug),
       ctaLabel: external ? SUBPAGE.czytelnia.pdfCta : LIST_CTA_LABEL,
       external,
-      format: item.format,
       cover: hasHeroImage(item.cover) ? item.cover : null,
       clampLead: external,
     };
