@@ -11,6 +11,7 @@ import {
   type PortableHeadingSection,
 } from "@/lib/portable-split";
 import { resolveHeroSlides } from "@/lib/hero-slides";
+import { hasHeroImage } from "@/lib/sanity/image";
 import { editionPath } from "@/lib/routes";
 import type { HeroSlide, ProjectDetail } from "@/lib/sanity/types";
 import { SUBPAGE } from "@/lib/subpage-copy";
@@ -93,13 +94,16 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
   const editions = sortEditionsNewestFirst(project.editions ?? []).filter(
     (edition) => edition.slug,
   );
+  const isArtGeneracje = project.slug === "art-generacje";
   const rows = editions.map((edition) => ({
     title: editionHeading(edition),
     lead: edition.summary?.trim() || null,
     href: editionPath(project.slug, edition.slug),
     ctaLabel: SUBPAGE.artGeneracje.editionCta,
+    image: isArtGeneracje
+      ? (edition.gallery?.find((image) => hasHeroImage(image)) ?? null)
+      : null,
   }));
-  const isArtGeneracje = project.slug === "art-generacje";
   const { preamble, sections } = splitPortableByHeading(project.afterword);
   const foldItems = projectFoldItems(project, sections);
   const copy = SUBPAGE.artGeneracje;
@@ -128,7 +132,11 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
       ) : null}
       {editions.length > 0 ? (
         <section id="edycje" aria-label={copy.editionsHeading}>
-          <BlobRow width="wide" items={rows} />
+          <BlobRow
+            width="wide"
+            items={rows}
+            variant={isArtGeneracje ? "thumbnail" : "blob"}
+          />
         </section>
       ) : null}
       {preamble || foldItems.length > 0 ? (

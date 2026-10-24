@@ -1663,6 +1663,26 @@
     position: relative;
   }
 
+  .blob-row-thumbnails {
+    display: grid;
+    gap: var(--spacing-section);
+  }
+
+  .blob-row-thumbnail {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .blob-row-thumbnail.has-thumbnail {
+    grid-template-columns: clamp(6rem, 14vw, 12rem) minmax(0, 1fr);
+    gap: clamp(1rem, 3vw, 2rem);
+  }
+
+  .blob-row-thumbnail-image {
+    border-radius: var(--radius-media);
+  }
+
   /*
    * Caps a text or list column and pins it to the left edge of .page.
    * Text inside stays left-aligned; leftover width stays on the right.
