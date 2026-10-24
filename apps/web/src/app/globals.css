@@ -3584,10 +3584,6 @@
     color: var(--muted-foreground);
   }
 
-  .library-section {
-    padding-block-start: 0;
-  }
-
   .pub-cat + .pub-cat {
     margin-block-start: 1.75rem;
     padding-block-start: 1.75rem;
@@ -3601,6 +3597,15 @@
 }
 
 @layer utilities {
+  /* Library sits right under the essay; must live here to beat `py-section`. */
+  .essay-before-library {
+    padding-block-end: clamp(1rem, 2vw, 1.5rem);
+  }
+
+  .library-section {
+    padding-block-start: 0;
+  }
+
   /*
    * Termin is often nested (Indent, Columns), so this is a descendant
    * selector. Blob hangs 1.8rem above the first line; Indent items are

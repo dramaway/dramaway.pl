@@ -112,6 +112,7 @@ export default async function KnowledgeHubPage({
   return (
     <>
       <PageArticle
+        className="essay-before-library"
         page={{
           ...page,
           heroCtaLabel: copy.libraryCta,
@@ -119,9 +120,7 @@ export default async function KnowledgeHubPage({
         }}
       />
       <Section id="pelna-biblioteka" className="library-section scroll-mt-24">
-        <h2 className="font-display text-h3 font-black">
-          {copy.heading}
-        </h2>
+        <h2 className="font-display text-h2 font-black">{copy.heading}</h2>
         <FilterRow
           label={copy.filters.formatLabel}
           chips={available.map((format) => ({
