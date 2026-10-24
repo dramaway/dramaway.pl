@@ -136,6 +136,19 @@ export function historyScrollOpenness(
   return Math.min(rise, fall);
 }
 
+/**
+ * Once the last vertical entry has opened while scrolling down, keep it open.
+ * This prevents its collapsing height from shifting the document at its end.
+ */
+export function historyHoldLastOpen(
+  openness: number,
+  latched: boolean,
+  scrollDirection: "up" | "down" | null,
+): number {
+  if (latched && scrollDirection === "down") return 1;
+  return clamp01(openness);
+}
+
 /** Ease toward the target. Snaps when the gap is under 0.01. */
 export function historyDampOpenness(
   current: readonly number[],

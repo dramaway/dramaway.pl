@@ -12,6 +12,7 @@ import {
 import { SUBPAGE } from "@/lib/subpage-copy";
 import {
   historyDampOpenness,
+  historyHoldLastOpen,
   historyOpenness,
   historyScrollOpenness,
   historyPinProgress,
@@ -97,6 +98,9 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
   const itemsRef = useRef(items);
   const readingRef = useRef(reading);
   const kickRef = useRef<() => void>(() => {});
+  const lastOpenRef = useRef(false);
+  const scrollDirectionRef = useRef<"up" | "down" | null>(null);
+  const lastScrollYRef = useRef(0);
   opennessRef.current = openness;
   itemsRef.current = items;
   readingRef.current = reading;
@@ -109,6 +113,8 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
     setOpenness(blank);
     setReading(false);
     setSeen(items.map(() => false));
+    lastOpenRef.current = false;
+    scrollDirectionRef.current = null;
   }
 
   const pinRef = useRef<HTMLDivElement>(null);
@@ -171,7 +177,7 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
           release: viewport * RELEASE_Y,
           span: Math.max(1, viewport * CLOSE_SPAN),
         };
-        return current.map((_, index) => {
+        const target = current.map((_, index) => {
           const marker = markerRefs.current[index];
           if (!marker) return 0;
           const rect = marker.getBoundingClientRect();
@@ -184,6 +190,19 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
           }
           return historyScrollOpenness(center, length, band);
         });
+        const lastIndex = target.length - 1;
+        if (lastIndex >= 0) {
+          if (scrollDirectionRef.current === "up") lastOpenRef.current = false;
+          if (scrollDirectionRef.current === "down" && target[lastIndex] > 0) {
+            lastOpenRef.current = true;
+          }
+          target[lastIndex] = historyHoldLastOpen(
+            target[lastIndex],
+            lastOpenRef.current,
+            scrollDirectionRef.current,
+          );
+        }
+        return target;
       }
       const sticky = stickyRef.current;
       const focal =
@@ -241,8 +260,16 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
     };
 
     kickRef.current = kick;
+    lastScrollYRef.current = window.scrollY;
     kick();
-    window.addEventListener("scroll", kick, { passive: true });
+    const onScroll = () => {
+      const scrollY = window.scrollY;
+      if (scrollY > lastScrollYRef.current) scrollDirectionRef.current = "down";
+      if (scrollY < lastScrollYRef.current) scrollDirectionRef.current = "up";
+      lastScrollYRef.current = scrollY;
+      kick();
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", kick);
     const sticky = stickyRef.current;
     let lastWidth = sticky?.clientWidth ?? 0;
@@ -259,7 +286,7 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
       stopped = true;
       kickRef.current = () => {};
       window.cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", kick);
+      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", kick);
       observer?.disconnect();
     };

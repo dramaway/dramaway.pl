@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
   historyDampOpenness,
+  historyHoldLastOpen,
   historyMergeOpenness,
   historyOpenness,
   historyScrollOpenness,
@@ -93,6 +94,13 @@ test("a long body keeps its year open until the end of the body rises", () => {
   assert.equal(historyScrollOpenness(-80, 600, band), 1);
   assert.ok(Math.abs(historyScrollOpenness(-180, 600, band) - 0.5) < 1e-9);
   assert.equal(historyScrollOpenness(-280, 600, band), 0);
+});
+
+test("the last year stays open while scrolling down after it has opened", () => {
+  assert.equal(historyHoldLastOpen(0, true, "down"), 1);
+  assert.equal(historyHoldLastOpen(0.4, true, "down"), 1);
+  assert.equal(historyHoldLastOpen(0.4, true, "up"), 0.4);
+  assert.equal(historyHoldLastOpen(0.4, false, "down"), 0.4);
 });
 
 test("vertical openness never jumps between nearby scroll positions", () => {
