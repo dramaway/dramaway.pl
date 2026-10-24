@@ -8,7 +8,7 @@ catalog:
   react-dom: 19.3.1
   typescript: 5.9.3
   "@types/react": 19.3.0
-  "@sanity/client": 8.10.0
+  "@sanity/client": 8.10.1
   # 6.20 rebases an edit onto a missing draft after publish and throws
   # "getAttribute only applies to plain objects". Stay on the last
   # deployed Studio until a release past 6.20 fixes that.
