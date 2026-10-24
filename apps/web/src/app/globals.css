@@ -764,7 +764,7 @@
   /*
    * Empty still: the column stays (text width does not jump) but it does
    * not impose a height. At lg+ the text column sizes the section; below
-   * lg the circle rule on .hero-media still draws the round slot.
+   * lg .hero-media gets the mobile frame treatment.
    */
   .hero-media-empty {
     width: 100%;
@@ -783,8 +783,8 @@
     }
 
     /*
-     * Hero: title, circular still, then lead/CTA. Photo never eats the
-     * viewport; the following dot band does not overlap the circle.
+     * Hero: title, still, then lead/CTA. Photo never eats the viewport; the
+     * following dot band does not overlap the frame.
      */
     .hero {
       display: grid;
@@ -856,7 +856,7 @@
       max-width: none;
     }
 
-    /* Circle still: the band sits below, it does not ride the photo. */
+    /* Mobile still: the band sits below, it does not ride the photo. */
     .hero + .dot-band {
       margin-block-start: 0;
     }
@@ -869,6 +869,30 @@
       grid-template-areas:
         "title"
         "copy";
+    }
+  }
+
+  @media (width < 48rem) {
+    [data-home] > .hero {
+      row-gap: clamp(1.5rem, 6vw, 2rem);
+    }
+
+    [data-home] > .hero .hero-media-wrap {
+      width: min(100%, 18rem);
+      justify-self: center;
+    }
+
+    [data-home] > .hero .hero-media,
+    [data-home] > .hero .hero-slider-frame {
+      border-radius: var(--radius-media);
+    }
+
+    [data-home] > .hero .hero-copy .cta {
+      margin-block-start: 1.5rem;
+    }
+
+    [data-home] > .hero .hero-slider-controls {
+      margin-inline-end: 0;
     }
   }
 
