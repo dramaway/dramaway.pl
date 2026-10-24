@@ -1,6 +1,5 @@
 import { CtaLink } from "@/components/visual/cta-link";
 import { DotBand } from "@/components/visual/dot-band";
-import { PaletteRow } from "@/components/visual/palette-row";
 import { HeroMedia } from "@/components/visual/hero-media";
 import type { HeroSlide } from "@/lib/sanity/types";
 import Link from "next/link";
@@ -109,8 +108,7 @@ export function PageHero({
           <HeroMedia slides={stills} empty="slot" />
         </div>
       </section>
-      <DotBand className="hero-dots" />
-      <PaletteRow className="hero-palette" />
+      <DotBand />
     </div>
   );
 }
