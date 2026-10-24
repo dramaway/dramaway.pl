@@ -54,7 +54,7 @@ export function BlobStack({
                 image={item.image}
                 alt=""
                 variant="inset"
-                ratio="landscape"
+                ratio="none"
                 sizes="(min-width: 64rem) 12rem, 30vw"
                 className="blob-row-thumbnail-image"
               />

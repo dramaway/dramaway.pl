@@ -1680,7 +1680,8 @@
   }
 
   .blob-row-thumbnail-image {
-    border-radius: var(--radius-media);
+    aspect-ratio: 1;
+    border-radius: 50%;
   }
 
   /*
@@ -1917,49 +1918,22 @@
     inset-inline-start: calc(-1 * min(3.4rem, max(0px, var(--page-pad) - 0.5rem)));
   }
 
-  /*
-   * Czytelnia row mark. Same box as `.blob`, and the title still sits on it.
-   * A cover is one ink (grayscale × the format colour) with a soft sand
-   * ramp so the letters stay readable. The ink sits on a second copy of the
-   * photo and fades out on hover, so the square shows the real cover.
-   * Hover slides the copy right without changing its width.
-   * Below `lg` the cover and the copy sit side by side, and the ink is lighter.
-   * No photo: the sand oval stays put.
-   */
+  /* Czytelnia rows use the same image-left, copy-right layout as project editions. */
   .pub-row {
     --pub-mark-size: clamp(5.5rem, 9.9vw, 143px);
-    --pub-mark-outset: min(3.4rem, max(0px, var(--page-pad) - 0.5rem));
-    --pub-clear: calc(var(--pub-mark-size) - var(--pub-mark-outset));
-    --pub-shift: calc(var(--pub-clear) + 0.75rem);
-    --pub-veil: var(--color-sand);
-  }
-
-  .pub-row[data-format="books"] {
-    --pub-veil: var(--color-magenta);
-  }
-
-  .pub-row[data-format="scripts"] {
-    --pub-veil: var(--color-navy);
-  }
-
-  .pub-row[data-format="multimedia"] {
-    --pub-veil: var(--color-green);
+    display: grid;
+    grid-template-columns: var(--pub-mark-size) minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(1rem, 3vw, 2rem);
   }
 
   .pub-mark {
-    position: absolute;
-    z-index: -1;
+    position: relative;
     width: var(--pub-mark-size);
-    aspect-ratio: 143 / 139;
+    aspect-ratio: 1;
     border-radius: 50%;
     overflow: hidden;
-    isolation: isolate;
     background-color: var(--color-sand);
-    inset-block-start: -1.8rem;
-    inset-inline-start: calc(-1 * var(--pub-mark-outset));
-    transition:
-      border-radius 400ms ease,
-      transform 400ms ease;
   }
 
   .pub-mark .pub-mark-photo {
@@ -1970,57 +1944,6 @@
     background-color: transparent;
   }
 
-  /* One ink, painted over the real photo so it can fade away. */
-  .pub-mark .pub-mark-ink {
-    z-index: 1;
-    isolation: isolate;
-    background-color: var(--color-sand);
-    opacity: 1;
-    transition: opacity 400ms ease;
-  }
-
-  .pub-mark .pub-mark-ink img {
-    filter: grayscale(1) contrast(1.08);
-    mix-blend-mode: multiply;
-  }
-
-  .pub-mark:has(.pub-mark-photo)::after {
-    content: "";
-    position: absolute;
-    z-index: 2;
-    inset: 0;
-    background-color: var(--pub-veil);
-    mix-blend-mode: color;
-    opacity: 1;
-    pointer-events: none;
-    transition: opacity 400ms ease;
-  }
-
-  /*
-   * Sand ramp across the whole mark, strongest under the title.
-   * A long falloff so the cover does not end in a hard edge.
-   */
-  .pub-mark:has(.pub-mark-photo)::before {
-    content: "";
-    position: absolute;
-    z-index: 3;
-    inset: 0;
-    background: linear-gradient(
-      to right,
-      color-mix(in srgb, var(--color-sand) 42%, transparent) 0%,
-      color-mix(in srgb, var(--color-sand) 58%, transparent) 24%,
-      color-mix(in srgb, var(--color-sand) 74%, transparent) 48%,
-      color-mix(in srgb, var(--color-sand) 90%, transparent) 72%,
-      var(--color-sand) 100%
-    );
-    pointer-events: none;
-    transition: opacity 400ms ease;
-  }
-
-  .pub-row-copy {
-    transition: transform 400ms ease;
-  }
-
   .pub-row-lead {
     display: -webkit-box;
     overflow: hidden;
@@ -2029,69 +1952,8 @@
   }
 
   @media (width < 64rem) {
-    .pub-row:has(.pub-mark-photo) .pub-row-copy {
-      padding-inline-start: var(--pub-shift);
-    }
-
-    .pub-mark:has(.pub-mark-photo)::before {
-      content: none;
-    }
-
-    .pub-mark .pub-mark-ink,
-    .pub-mark:has(.pub-mark-photo)::after {
-      opacity: 0.34;
-    }
-  }
-
-  @media (hover: hover) and (pointer: fine) and (width >= 64rem) {
-    .pub-row:has(.pub-mark-photo):hover .pub-mark,
-    .pub-row:has(.pub-mark-photo):focus-within .pub-mark {
-      border-radius: var(--radius-media);
-      transform: translateX(-0.35rem);
-    }
-
-    .pub-row:has(.pub-mark-photo):hover .pub-row-copy,
-    .pub-row:has(.pub-mark-photo):focus-within .pub-row-copy {
-      transform: translateX(var(--pub-shift));
-    }
-
-    .pub-row:has(.pub-mark-photo):hover .pub-mark-ink,
-    .pub-row:has(.pub-mark-photo):focus-within .pub-mark-ink,
-    .pub-row:has(.pub-mark-photo):hover .pub-mark::after,
-    .pub-row:has(.pub-mark-photo):focus-within .pub-mark::after,
-    .pub-row:has(.pub-mark-photo):hover .pub-mark::before,
-    .pub-row:has(.pub-mark-photo):focus-within .pub-mark::before {
-      opacity: 0;
-    }
-  }
-
-  @media (hover: hover) and (pointer: fine) and (width >= 64rem) and (prefers-reduced-motion: reduce) {
-    .pub-mark,
-    .pub-mark::before,
-    .pub-mark::after,
-    .pub-mark-ink,
-    .pub-row-copy {
-      transition: none;
-    }
-
-    .pub-row:has(.pub-mark-photo):hover .pub-mark,
-    .pub-row:has(.pub-mark-photo):focus-within .pub-mark {
-      border-radius: 50%;
-      transform: none;
-    }
-
-    .pub-row:has(.pub-mark-photo):hover .pub-row-copy,
-    .pub-row:has(.pub-mark-photo):focus-within .pub-row-copy {
-      transform: none;
-    }
-
-    .pub-row:has(.pub-mark-photo):hover .pub-mark-ink,
-    .pub-row:has(.pub-mark-photo):focus-within .pub-mark-ink,
-    .pub-row:has(.pub-mark-photo):hover .pub-mark::after,
-    .pub-row:has(.pub-mark-photo):focus-within .pub-mark::after,
-    .pub-row:has(.pub-mark-photo):hover .pub-mark::before,
-    .pub-row:has(.pub-mark-photo):focus-within .pub-mark::before {
-      opacity: 1;
+    .pub-row {
+      --pub-mark-size: clamp(5.5rem, 18vw, 8rem);
     }
   }
 
