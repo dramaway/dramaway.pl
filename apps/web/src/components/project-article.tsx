@@ -115,21 +115,24 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
         parent={{ href: "/projekty", label: "Projekty" }}
       />
       {hasPortableContent(project.body) ? (
-        <Section>
+        <Section className={isArtGeneracje ? "project-article-copy" : undefined}>
           <div className="article-body">
             <PortableBody value={project.body} />
           </div>
         </Section>
       ) : null}
       {isArtGeneracje ? (
-        <div className="page py-section">
+        <div className="page py-section project-palette">
           <PaletteRow />
         </div>
       ) : null}
       {editions.length > 0 ? (
-        <section id="edycje" aria-label={copy.editionsHeading}>
-          <BlobRow width="wide" items={rows} />
-        </section>
+        <BlobRow
+          heading={copy.editionsHeading}
+          headingId="edycje"
+          width="wide"
+          items={rows}
+        />
       ) : null}
       {preamble || foldItems.length > 0 ? (
         <Section>

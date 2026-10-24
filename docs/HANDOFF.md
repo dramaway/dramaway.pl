@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-10-24 — Galeria `hero-trio` wypełnia szerokość rodzica i zachowuje proporcje bez limitu wysokości. Studio cofnięte z Sanity 6.20.0 na 6.18.0. 6.20 wywala edycję (`getAttribute only applies to plain objects`) po publikacji, gdy szkic znika zanim wróci opublikowany dokument. Dotyczy każdego dokumentu, nie tylko Kontaktu i Wydawnictwa. Live Studio zmieni się po merge i deployu. |
+| **Ostatnia aktualizacja** | 2026-10-24 — Galeria `hero-trio` wypełnia szerokość rodzica i zachowuje proporcje bez limitu wysokości. Studio cofnięte z Sanity 6.20.0 na 6.18.0. 6.20 wywala edycję (`getAttribute only applies to plain objects`) po publikacji, gdy szkic znika zanim wróci opublikowany dokument. Dotyczy każdego dokumentu, nie tylko Kontaktu i Wydawnictwa. Live Studio zmieni się po merge i deployu. Na `/projekty/art-generacje` skrócono przerwę między opisem a paletą oraz dodano nagłówek „Edycje” nad listą. |
 | **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
 | **Netlify** | Projekt przeniesiony do teamu `admin@dramaway.pl`, adres bez zmian. Env: `NEXT_PUBLIC_SANITY_*`, `NEXT_PUBLIC_SITE_URL`, `SANITY_REVALIDATE_SECRET` (tylko Production). |
