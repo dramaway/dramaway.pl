@@ -9,9 +9,12 @@ catalog:
   typescript: 5.9.3
   "@types/react": 19.3.0
   "@sanity/client": 8.10.0
-  sanity: 6.20.0
-  "@sanity/schema": 6.20.0
-  "@sanity/vision": 6.20.0
+  # 6.20 rebases an edit onto a missing draft after publish and throws
+  # "getAttribute only applies to plain objects". Stay on the last
+  # deployed Studio until a release past 6.20 fixes that.
+  sanity: 6.18.0
+  "@sanity/schema": 6.18.0
+  "@sanity/vision": 6.18.0
 
 allowBuilds:
   esbuild: true

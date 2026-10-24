@@ -41,6 +41,14 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "@sanity/client"
         update-types: ["version-update:semver-major"]
+      # 6.19–6.20 crash Studio while editing (rebase onto a missing draft).
+      # A 6.21+ PR may land; do not take 6.19 or 6.20.
+      - dependency-name: sanity
+        versions: ["6.19.x", "6.20.x"]
+      - dependency-name: "@sanity/schema"
+        versions: ["6.19.x", "6.20.x"]
+      - dependency-name: "@sanity/vision"
+        versions: ["6.19.x", "6.20.x"]
 
   # Workflow actions (checkout, setup-node, pnpm). One grouped PR a month.
   - package-ecosystem: github-actions

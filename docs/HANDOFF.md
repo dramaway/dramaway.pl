@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-10-23 — projekt przekazany Fundacji: repo `dramaway/dramaway.pl` (publiczne, ruleset na `main`), Netlify i Sanity (plan NGO) na `admin@dramaway.pl`, webhook revalidate, 2FA + Bitwarden. Zmiany w kodzie przez Copilota: [redakcja/zmiany-w-kodzie.md](redakcja/zmiany-w-kodzie.md). |
+| **Ostatnia aktualizacja** | 2026-10-24 — Studio cofnięte z Sanity 6.20.0 na 6.18.0. 6.20 wywala edycję (`getAttribute only applies to plain objects`) po publikacji, gdy szkic znika zanim wróci opublikowany dokument. Dotyczy każdego dokumentu, nie tylko Kontaktu i Wydawnictwa. Live Studio zmieni się po merge i deployu. |
 | **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
 | **Netlify** | Projekt przeniesiony do teamu `admin@dramaway.pl`, adres bez zmian. Env: `NEXT_PUBLIC_SANITY_*`, `NEXT_PUBLIC_SITE_URL`, `SANITY_REVALIDATE_SECRET` (tylko Production). |
