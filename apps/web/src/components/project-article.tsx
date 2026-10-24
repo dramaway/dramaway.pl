@@ -3,7 +3,6 @@ import { PageHero } from "@/components/sections/page-hero";
 import { Section } from "@/components/layout/section";
 import { PortableBody, hasPortableContent } from "@/components/portable-body";
 import { FoldList, type FoldListItem } from "@/components/visual/fold-list";
-import { PaletteRow } from "@/components/visual/palette-row";
 import { editionHeading } from "@/lib/edition-label";
 import { sortEditionsNewestFirst } from "@/lib/edition-sort";
 import {
@@ -124,11 +123,6 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
             <PortableBody value={project.body} />
           </div>
         </Section>
-      ) : null}
-      {isArtGeneracje ? (
-        <div className="page py-section project-palette">
-          <PaletteRow />
-        </div>
       ) : null}
       {editions.length > 0 ? (
         <section id="edycje" aria-label={copy.editionsHeading}>
