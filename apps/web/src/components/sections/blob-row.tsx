@@ -73,7 +73,9 @@ export function BlobRow({
           className={
             density === "compact"
               ? "blob-row-label"
-              : "font-display text-h3 font-black"
+              : variant === "thumbnail"
+                ? "font-display text-h2 font-black"
+                : "font-display text-h3 font-black"
           }
         >
           {heading}
