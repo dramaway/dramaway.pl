@@ -73,7 +73,7 @@ export function BlobRow({
           className={
             density === "compact"
               ? "blob-row-label"
-              : "font-display text-h3 font-black"
+              : "font-display text-h2 font-black"
           }
         >
           {heading}
@@ -81,11 +81,11 @@ export function BlobRow({
       ) : null}
 
       {items.length === 0 ? (
-        <p className={cn("text-body", heading && density !== "compact" && "mt-8")}>
+        <p className={cn("text-body", heading && density !== "compact" && "mt-10")}>
           {emptyMessage}
         </p>
       ) : (
-        <div className={cn(heading && density !== "compact" && "mt-8")}>
+        <div className={cn(heading && density !== "compact" && "mt-10")}>
           <BlobStack items={items} density={density} variant={variant} />
         </div>
       )}
