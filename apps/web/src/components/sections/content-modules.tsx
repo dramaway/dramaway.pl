@@ -141,7 +141,10 @@ function HomeRhythm({
   feed: FeedCandidate[];
 }) {
   const placed = place(sections);
-  const blocks: ReactNode[] = [<DotBand key="after-hero" />];
+  const blocks: ReactNode[] = [
+    <DotBand key="after-hero" className="hero-dots" />,
+    <PaletteRow key="after-hero-palette" className="hero-palette" />,
+  ];
   let paletteBeforeList = false;
 
   placed.forEach((section, index) => {

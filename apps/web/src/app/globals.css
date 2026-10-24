@@ -805,7 +805,7 @@
       content: "";
       position: absolute;
       z-index: 1;
-      width: 75%;
+      width: round(down, 75%, var(--dot-size));
       height: var(--dot-size);
       background-image: radial-gradient(
         circle closest-side,
@@ -911,6 +911,19 @@
 
     .hero-copy .cta {
       margin-block-start: 1.5rem;
+    }
+
+    /* Coloured circles replace the sand band under the hero. */
+    .hero-dots {
+      display: none;
+    }
+
+    .hero-palette {
+      --palette-size: min(
+        var(--dot-size),
+        calc((100% - 2 * var(--page-pad)) / 7)
+      );
+      margin-block: 0 var(--spacing-section);
     }
 
     /* The band sits below the image; it does not ride over it. */
@@ -1963,6 +1976,12 @@
     flex-wrap: nowrap;
     justify-content: safe center;
     width: 100%;
+  }
+
+  @media (width >= 64rem) {
+    .hero-palette {
+      display: none;
+    }
   }
 
   .palette-row > * {
