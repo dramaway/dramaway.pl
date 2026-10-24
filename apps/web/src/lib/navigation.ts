@@ -75,6 +75,15 @@ function resolveLink(item: SiteSettingsNavLink): NavItem | null {
   return dest.external ? { href: dest.href, label, external: true } : { href: dest.href, label };
 }
 
+/** Czytelnia no longer has its own page, so a menu entry for it is dropped. */
+function isRetiredLibraryLink(link: NavItem): boolean {
+  const [path, hash] = link.href.split("#");
+  return (
+    path.split("?")[0] === "/czytelnia" ||
+    (path === knowledgeHubPath() && hash === LIBRARY_ANCHOR)
+  );
+}
+
 /**
  * CMS menu. An empty list, or a list with nothing resolvable, keeps `mainNav()`.
  * A `/` item is kept here; the header hides it because the logo already goes home.
@@ -88,7 +97,11 @@ export function resolveMainNav(
     if (!link) continue;
     const children = (item.children ?? [])
       .map((child) => resolveLink(child))
-      .filter((child): child is NavItem => child !== null);
+      .filter(
+        (child): child is NavItem =>
+          child !== null && !isRetiredLibraryLink(child),
+      );
+    if (isRetiredLibraryLink(link)) continue;
     resolved.push(children.length > 0 ? { ...link, children } : link);
   }
   return resolved.length > 0 ? resolved : mainNav();

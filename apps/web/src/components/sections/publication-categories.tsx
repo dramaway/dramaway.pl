@@ -3,10 +3,7 @@ import {
   CzytelniaStack,
   type CzytelniaRowItem,
 } from "@/components/sections/czytelnia-stack";
-import {
-  czytelniaCategoryHeadingId,
-  czytelniaFilterHref,
-} from "@/lib/czytelnia-filters";
+import { czytelniaFilterHref } from "@/lib/czytelnia-filters";
 import type { PublicationFormat } from "@/lib/sanity/types";
 
 export type PublicationCategorySection = {
@@ -69,17 +66,12 @@ export function PublicationCategories({
         </ul>
       </nav>
       {visible.map((group) => {
-        const headingId = czytelniaCategoryHeadingId(group.slug);
         return (
           <section
             key={group.slug}
             className="pub-cat"
-            aria-labelledby={headingId}
+            aria-label={group.title}
           >
-            <h3 id={headingId} className="pub-cat-head">
-              {group.title}{" "}
-              <span className="pub-cat-count">({group.items.length})</span>
-            </h3>
             <div className="pub-cat-list">
               <div className="stack-wide">
                 <CzytelniaStack items={group.items} />

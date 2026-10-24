@@ -724,7 +724,6 @@
    * categories, history item titles (MuseoModerno, not uppercase), and the
    * archive band label on /projekty. */
   .hero-title,
-  .pub-cat-head,
   .history-title,
   .team-bio-name,
   .blob-row-label {
@@ -3540,7 +3539,8 @@
 
   .cat-tiles ul {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 0.75rem;
     margin: 0;
     padding: 0;
@@ -3548,19 +3548,27 @@
   }
 
   .cat-tile {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
     min-height: var(--touch-target);
-    padding: 0.9rem 1.1rem;
+    padding: 0.5rem 1.25rem 0.5rem 0.9rem;
     border: 1px solid color-mix(in srgb, var(--color-ink) 18%, transparent);
-    border-radius: 0.75rem;
+    border-radius: 999px;
     color: inherit;
     text-decoration: none;
     transition:
       border-color 150ms ease,
-      background-color 150ms ease;
+      color 150ms ease;
+  }
+
+  .cat-tile::before {
+    content: "";
+    flex-shrink: 0;
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 50%;
+    border: 2px solid var(--color-magenta);
   }
 
   .cat-tile:hover,
@@ -3575,8 +3583,11 @@
 
   .cat-tile[aria-current="true"] {
     border-color: var(--color-magenta);
-    background: color-mix(in srgb, var(--color-magenta) 8%, transparent);
     color: var(--color-magenta);
+  }
+
+  .cat-tile[aria-current="true"]::before {
+    background: var(--color-magenta);
   }
 
   .cat-tile-title {
@@ -3590,31 +3601,18 @@
     color: var(--muted-foreground);
   }
 
+  .library-section {
+    padding-block-start: 0;
+  }
+
   .pub-cat + .pub-cat {
     margin-block-start: 1.75rem;
     padding-block-start: 1.75rem;
     border-block-start: 1px solid color-mix(in srgb, var(--color-ink) 12%, transparent);
   }
 
-  .pub-cat-head {
-    margin: 0;
-    font-family: var(--font-body);
-    font-size: var(--text-lead);
-    font-weight: 300;
-    line-height: var(--text-lead--line-height);
-    letter-spacing: 0;
-    text-transform: none;
-    color: var(--color-magenta);
-  }
-
-  .pub-cat-count {
-    font-size: var(--text-small);
-    font-weight: 300;
-    color: var(--muted-foreground);
-  }
-
   .pub-cat-list {
-    padding-block-start: 6rem;
+    padding-block-start: 4rem;
     padding-block-end: 1.25rem;
   }
 }

@@ -152,3 +152,23 @@ test("a single valid item replaces the built-in menu", () => {
     [{ href: "/kontakt", label: "Kontakt" }],
   );
 });
+
+test("a CMS menu entry for the retired Czytelnia page is dropped", () => {
+  const nav = resolveMainNav([
+    { target: "path", href: "/projekty", label: "Projekty" },
+    {
+      target: "path",
+      href: "/baza-wiedzy",
+      label: "Baza wiedzy",
+      children: [{ target: "path", href: "/czytelnia", label: "Czytelnia" }],
+    },
+    {
+      target: "reference",
+      page: { _type: "landingPage", route: "czytelnia", title: "Czytelnia" },
+    },
+  ]);
+  assert.deepEqual(nav, [
+    { href: "/projekty", label: "Projekty" },
+    { href: "/baza-wiedzy", label: "Baza wiedzy" },
+  ]);
+});
