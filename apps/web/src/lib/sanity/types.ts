@@ -147,6 +147,7 @@ export type PageDetail = {
   heroImages?: CmsHeroImage[] | null;
   excerpt?: string | null;
   sections: ResolvedSection[];
+  sectionsAfterBody: ResolvedSection[];
   body: PortableContent;
 };
 
