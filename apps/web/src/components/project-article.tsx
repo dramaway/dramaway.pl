@@ -115,14 +115,14 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
         parent={{ href: "/projekty", label: "Projekty" }}
       />
       {hasPortableContent(project.body) ? (
-        <Section>
+        <Section className={isArtGeneracje ? "project-article-copy" : undefined}>
           <div className="article-body">
             <PortableBody value={project.body} />
           </div>
         </Section>
       ) : null}
       {isArtGeneracje ? (
-        <div className="page py-section">
+        <div className="page py-section project-palette">
           <PaletteRow />
         </div>
       ) : null}

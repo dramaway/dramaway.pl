@@ -3811,6 +3811,14 @@
     padding-block-start: 0;
   }
 
+  .project-article-copy {
+    padding-block-end: 0;
+  }
+
+  .project-palette {
+    padding-block: clamp(2rem, 4vw, 3rem);
+  }
+
   /*
    * Section headings are rendered by TeamBios, not by Portable Text, so every
    * block on /fundacja carries the same rank. What is left here is the rhythm
