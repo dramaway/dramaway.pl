@@ -18,29 +18,29 @@ test("firstSearchParam takes the first trimmed value", () => {
 });
 
 test("czytelniaFilterHref omits the default format and encodes both axes", () => {
-  assert.equal(czytelniaFilterHref(), "/czytelnia");
-  assert.equal(czytelniaFilterHref({ rodzaj: "articles" }), "/czytelnia");
+  assert.equal(czytelniaFilterHref(), "/baza-wiedzy");
+  assert.equal(czytelniaFilterHref({ rodzaj: "articles" }), "/baza-wiedzy");
   assert.equal(
     czytelniaFilterHref({ rodzaj: "books" }),
-    "/czytelnia?rodzaj=books",
+    "/baza-wiedzy?rodzaj=books",
   );
   assert.equal(
     czytelniaFilterHref({ kategoria: "teatr-forum" }),
-    "/czytelnia?kategoria=teatr-forum",
+    "/baza-wiedzy?kategoria=teatr-forum",
   );
   assert.equal(
     czytelniaFilterHref({
       rodzaj: "scripts",
       kategoria: "teatr-w-edukacji",
     }),
-    "/czytelnia?rodzaj=scripts&kategoria=teatr-w-edukacji",
+    "/baza-wiedzy?rodzaj=scripts&kategoria=teatr-w-edukacji",
   );
   assert.equal(
     czytelniaFilterHref({
       rodzaj: "articles",
       kategoria: UNCATEGORIZED_CATEGORY_SLUG,
     }),
-    "/czytelnia?kategoria=pozostale",
+    "/baza-wiedzy?kategoria=pozostale",
   );
 });
 

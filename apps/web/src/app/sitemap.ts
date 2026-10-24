@@ -22,7 +22,6 @@ const HUBS = [
   "/",
   "/projekty",
   knowledgeHubPath(),
-  "/czytelnia",
   "/fundacja",
   "/kontakt",
   "/zespol",

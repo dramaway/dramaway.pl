@@ -8,7 +8,6 @@ const builtin = [
   {
     href: "/baza-wiedzy",
     label: "Baza wiedzy",
-    children: [{ href: "/czytelnia", label: "Czytelnia" }],
   },
   { href: "/fundacja", label: "O fundacji" },
   { href: "/kontakt", label: "Kontakt" },

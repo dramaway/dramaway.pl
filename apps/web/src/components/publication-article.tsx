@@ -2,7 +2,7 @@ import { PageHero } from "@/components/sections/page-hero";
 import { Section } from "@/components/layout/section";
 import { PortableBody } from "@/components/portable-body";
 import { CtaLink } from "@/components/visual/cta-link";
-import { czytelniaPath } from "@/lib/routes";
+import { knowledgeHubPath } from "@/lib/routes";
 import { SUBPAGE } from "@/lib/subpage-copy";
 import type { PublicationDetail } from "@/lib/sanity/types";
 import { cn } from "@/lib/utils";
@@ -37,7 +37,7 @@ export function PublicationArticle({
       <PageHero
         title={publication.title}
         lead={publication.summary}
-        parent={{ href: czytelniaPath(), label: "Czytelnia" }}
+        parent={{ href: knowledgeHubPath(), label: "Baza wiedzy" }}
       />
       {hasMeta || hasBody ? (
         <Section>

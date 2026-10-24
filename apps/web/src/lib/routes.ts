@@ -22,10 +22,6 @@ export type NavItem = {
   children?: NavItem[];
 };
 
-export function czytelniaPath() {
-  return "/czytelnia";
-}
-
 export function knowledgeHubPath() {
   return "/baza-wiedzy";
 }
@@ -45,7 +41,6 @@ export function mainNav(): NavItem[] {
     {
       href: knowledgeHubPath(),
       label: "Baza wiedzy",
-      children: [{ href: czytelniaPath(), label: "Czytelnia" }],
     },
     { href: "/fundacja", label: "O fundacji" },
     { href: "/kontakt", label: "Kontakt" },

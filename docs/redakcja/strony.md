@@ -97,10 +97,10 @@ Trzy dokumenty typu **Landing page**. Skrót do nich jest na górze listy, gdy m
 | Skrót | Adres |
 |-------|--------|
 | Projekty | `/projekty` |
-| Czytelnia | `/czytelnia` |
+| Czytelnia | (już nie ma, przekierowuje na `/baza-wiedzy`) |
 | Zespół | `/zespol` |
 
-**Baza wiedzy** (`/baza-wiedzy`) nie jest listingiem. To zwykła strona **Page**: nagłówek, krótki opis, sekcje i treść z opisem metod. Stary adres `/metody` przekierowuje tutaj. W menu ma jedną podpozycję, Czytelnię.
+**Baza wiedzy** (`/baza-wiedzy`) nie jest listingiem. To zwykła strona **Page**: nagłówek, krótki opis, sekcje i treść z opisem metod. Stary adres `/metody` przekierowuje tutaj. Pod tekstem strony automatycznie wyświetla się spis publikacji (dawna Czytelnia).
 
 Hero listingu (tytuł, krótki opis, przycisk, zdjęcia) wypełnia się tak samo jak wszędzie: [Hero](#hero). Adresu listingu nie da się zmienić, bo pole strony jest zablokowane po pierwszym zapisie.
 
