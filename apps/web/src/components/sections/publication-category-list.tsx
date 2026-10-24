@@ -60,7 +60,7 @@ function CategorySection({
       </h2>
       {open ? (
         <div className="pub-cat-list">
-          <div className="measure">
+          <div className="stack-wide">
             <CzytelniaStack items={group.items} />
           </div>
         </div>

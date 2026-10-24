@@ -1676,6 +1676,14 @@
     max-width: var(--content-wide);
   }
 
+  /* From lg the columns span the whole page, like the article copy. */
+  @media (width >= 64rem) {
+    .stack-narrow,
+    .stack-wide {
+      max-width: none;
+    }
+  }
+
   /*
    * Archive pair on /projekty. Label is magenta sentence-case (Figma 73:1284,
    * 15 px Medium → text-small 600). Two columns from lg, right column nudged
