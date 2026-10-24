@@ -127,12 +127,9 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
         </div>
       ) : null}
       {editions.length > 0 ? (
-        <BlobRow
-          heading={copy.editionsHeading}
-          headingId="edycje"
-          width="wide"
-          items={rows}
-        />
+        <section id="edycje" aria-label={copy.editionsHeading}>
+          <BlobRow width="wide" items={rows} />
+        </section>
       ) : null}
       {preamble || foldItems.length > 0 ? (
         <Section>

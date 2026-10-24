@@ -3816,7 +3816,7 @@
   }
 
   .project-palette {
-    padding-block-start: clamp(2rem, 4vw, 3rem);
+    padding-block: clamp(2rem, 4vw, 3rem);
   }
 
   /*
