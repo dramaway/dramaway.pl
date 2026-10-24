@@ -128,6 +128,7 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
         <section id="edycje" aria-label={copy.editionsHeading}>
           <BlobRow
             width="wide"
+            heading={isArtGeneracje ? project.editionsHeading?.trim() : null}
             items={rows}
             variant={isArtGeneracje ? "thumbnail" : "blob"}
           />

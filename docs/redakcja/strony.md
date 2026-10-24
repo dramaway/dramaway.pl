@@ -116,7 +116,7 @@ Skrót **O fundacji**, adres `/fundacja`. Zakładki: Hero, Metody i wartości, Z
 
 Niżej na liście Content są typy dokumentów, a nie pojedyncze skróty:
 
-- **Project**: jeden projekt, adres `/projekty/…`. Art Generacje ma dodatkowo podstrony edycji. Hero działa jak wszędzie: [Hero](#hero). Pusta lista zdjęć zostawia dotychczasowy kadr: pierwszą galerię edycji, a gdy jej nie ma, pierwszy obraz w treści.
+- **Project**: jeden projekt, adres `/projekty/…`. Art Generacje ma dodatkowo podstrony edycji. Hero działa jak wszędzie: [Hero](#hero). Pusta lista zdjęć zostawia dotychczasowy kadr: pierwszą galerię edycji, a gdy jej nie ma, pierwszy obraz w treści. Pole **Nagłówek listy edycji** pozwala ustawić nagłówek nad listą Art Generacji; puste pole ukrywa nagłówek.
 - **Person**: osoba, adres `/zespol/…`.
 - **News**: aktualność, adres `/{slug}`. Pola: tytuł, data, zajawka, treść i opcjonalny przycisk. Pole **CTA target** puste zostawia przycisk „czytaj więcej”, który prowadzi do tej aktualności. Inny adres (ścieżka od ukośnika albo `https://`) wymaga własnej etykiety w polu **CTA label**. Bez etykiety Studio nie pozwoli opublikować. Na stronie głównej aktualności zbiera sekcja **Aktualności**.
 - **Page**: Baza wiedzy, Kontakt, strony typu statut. Adres to `/{slug}`. W Studio lista dzieli się na **Drupal** (stare pozostałości po poprzedniej stronie, do wygaszenia), **W menu** i **Poza menu**. Hero działa jak wszędzie, a pole **Sekcje** stoi nad artykułem.
