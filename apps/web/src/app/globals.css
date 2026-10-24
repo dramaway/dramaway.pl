@@ -708,6 +708,12 @@
     min-width: 0;
   }
 
+  @media (width >= 64rem) {
+    .split-media-frame {
+      display: contents;
+    }
+  }
+
   .hero-copy {
     margin-block-start: 2rem;
   }
@@ -771,12 +777,50 @@
   }
 
   @media (width < 64rem) {
-    .split:not(.hero) > .split-media {
+    .split:not(.hero) .split-media {
       width: 100%;
-      max-height: var(--media-split-max);
       margin-inline: 0;
-      aspect-ratio: 4 / 5;
+      aspect-ratio: 3 / 4;
       border-radius: 0;
+    }
+
+    /* Photo between two dot rows: top right and bottom left, centred on its edges. */
+    .split-media-frame {
+      position: relative;
+      overflow-x: clip;
+      margin-block: calc(var(--dot-size) / 2);
+    }
+
+    .split-media-frame::before,
+    .split-media-frame::after {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      width: round(up, 50%, var(--dot-size));
+      height: var(--dot-size);
+      background-image: radial-gradient(
+        circle closest-side,
+        var(--color-sand) 99%,
+        transparent 100%
+      );
+      background-size: var(--dot-size) var(--dot-size);
+      background-repeat: repeat-x;
+      pointer-events: none;
+    }
+
+    .split-media-frame::before {
+      inset-block-start: calc(var(--dot-size) / -2);
+      inset-inline-end: 0;
+    }
+
+    .split-media-frame::after {
+      inset-block-end: calc(var(--dot-size) / -2);
+      inset-inline-start: 0;
+    }
+
+    /* The frame's own bottom row replaces the band after a photo module. */
+    .content-split + .dot-band {
+      display: none;
     }
 
     /*
@@ -823,7 +867,7 @@
 
     .hero-media,
     .hero-media.media-portrait {
-      aspect-ratio: 1;
+      aspect-ratio: 3 / 4;
       border-radius: 0;
     }
 
@@ -832,7 +876,7 @@
      * not inside it.
      */
     .hero-slider-frame {
-      aspect-ratio: 1;
+      aspect-ratio: 3 / 4;
       border-radius: 0;
       overflow: hidden;
     }
