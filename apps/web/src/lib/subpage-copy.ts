@@ -46,6 +46,22 @@ export const SUBPAGE = {
   },
   contact: {
     directHeading: "Napisz bezpośrednio",
+    form: {
+      heading: "Napisz do nas",
+      lead: "Masz pytanie, pomysł na współpracę albo chcesz dowiedzieć się więcej o naszych działaniach? Wypełnij formularz – odpowiemy najszybciej, jak to możliwe.",
+      name: "Imię i nazwisko",
+      email: "E-mail",
+      subject: "Temat (opcjonalnie)",
+      message: "Wiadomość",
+      consent:
+        "Wyrażam zgodę na przetwarzanie moich danych osobowych w celu udzielenia odpowiedzi na wiadomość.",
+      submit: "wyślij wiadomość",
+      pending: "Wysyłam…",
+      success: "Dziękujemy! Wiadomość została wysłana. Odezwiemy się wkrótce.",
+      invalid: "Uzupełnij wszystkie wymagane pola i zaznacz zgodę.",
+      unconfigured: "Wysyłanie wiadomości jeszcze nie jest podłączone.",
+      error: "Nie udało się wysłać wiadomości. Spróbuj ponownie lub napisz na biuro@dramaway.pl.",
+    },
   },
   gallery: {
     more: "+{n}",

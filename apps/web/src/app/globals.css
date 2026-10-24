@@ -1532,6 +1532,117 @@
     line-height: var(--text-small--line-height);
   }
 
+  .contact-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+    margin-block-start: 2rem;
+    max-width: var(--content-narrow);
+  }
+
+  @media (width >= 48rem) {
+    .contact-form {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .contact-field-wide {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .contact-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .contact-field label {
+    font-size: var(--text-small);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .contact-field input,
+  .contact-field textarea {
+    width: 100%;
+    border: 0;
+    border-radius: var(--radius);
+    background-color: var(--color-sand);
+    padding: 0.75rem 1rem;
+    font: inherit;
+    font-size: var(--text-body);
+    line-height: 1.4;
+    color: var(--color-ink);
+  }
+
+  .contact-field textarea {
+    resize: vertical;
+    min-height: 10rem;
+  }
+
+  .contact-field input:focus-visible,
+  .contact-field textarea:focus-visible,
+  .contact-consent input:focus-visible {
+    outline: 2px solid var(--color-green);
+    outline-offset: 2px;
+  }
+
+  .contact-trap {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .contact-consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: var(--text-small);
+    line-height: 1.5;
+  }
+
+  .contact-consent input {
+    flex: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-block-start: 0.1rem;
+    accent-color: var(--color-green);
+  }
+
+  .contact-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .contact-actions .cta {
+    border: 0;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+    text-align: start;
+  }
+
+  .contact-actions .cta:disabled {
+    cursor: progress;
+    opacity: 0.65;
+  }
+
+  .contact-status {
+    margin: 0;
+    font-size: var(--text-small);
+    line-height: var(--text-small--line-height);
+  }
+
+  .contact-status[data-status="success"] {
+    color: var(--color-green-ink);
+    font-weight: 600;
+  }
+
   @media (width >= 64rem) {
     /*
      * Right column is as wide as the newsletter; contact and social share
