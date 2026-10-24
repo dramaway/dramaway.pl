@@ -45,11 +45,11 @@ export function HomeNews({
     <Section aria-labelledby={headingId}>
       <h2
         id={headingId}
-        className="font-display text-h2 font-black"
+        className="sr-only font-display text-h2 font-black lg:not-sr-only"
       >
         {title}
       </h2>
-      <ul className="cols-3 mt-12">
+      <ul className="cols-3 lg:mt-12">
         {cards.map((item, index) => {
           const date = item.publishedAt
             ? formatPolishMonthYear(item.publishedAt)
