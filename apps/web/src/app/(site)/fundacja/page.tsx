@@ -5,7 +5,6 @@ import { FundacjaValues } from "@/components/sections/fundacja-values";
 import { PageHero } from "@/components/sections/page-hero";
 import { TeamBios } from "@/components/sections/team-bios";
 import { DotBand } from "@/components/visual/dot-band";
-import { PaletteRow } from "@/components/visual/palette-row";
 import { getResolvedAboutPage } from "@/lib/about-page";
 
 export const revalidate = 60;
@@ -56,11 +55,6 @@ export default async function FundacjaIndexPage() {
         layout={about.history.layout}
         items={about.history.items}
       />
-      {about.history.items.length > 0 ? (
-        <div className="page py-section">
-          <PaletteRow />
-        </div>
-      ) : null}
       {about.documents.items.length > 0 ? (
         <FundacjaDocuments
           heading={about.documents.heading}
