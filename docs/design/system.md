@@ -108,7 +108,7 @@ Autorskie, bo Figma ich nie ma:
 | zielony `#369125` w tekście | `#2f7d20` (`green-ink`) | oryginał daje 4,0:1 i nie przechodzi WCAG AA; dekoracje zostają na oryginale |
 | czerń tekstu `#000000` | `#282828` (`ink`) | jedna czerń zamiast dwóch |
 | 11 różnych lewych marginesów | `--page-pad` i `--page-indent` | rozrzut ręcznego rysowania, nie intencja |
-| kolumna tekstu wyśrodkowana w stronie (równe marginesy) | `.measure`, `.stack-narrow`, `.stack-wide` i hero tekstowy przy lewej krawędzi `.page` | długi tekst i listingi czyta się od wspólnej lewej; szerokość kolumny zostaje, reszta miejsca jest po prawej |
+| kolumna tekstu wyśrodkowana w stronie (równe marginesy) | `.measure` (lead hero) i hero tekstowy przy lewej krawędzi `.page`; `.stack-narrow` i `.stack-wide` od `lg` zajmują całą szerokość `.page` | długi tekst i listingi mają te same marginesy co treść artykułu (decyzja redakcji); lead zostaje w wąskiej kolumnie |
 | zdjęcie hero od y = 0, za nagłówkiem, kadr 481×823 | na `lg+`: fotka od góry **prawej kolumny**, przycięta do wysokości tekstu (hotspot zostaje); logo i nav w lewej (ten sam span co `.split-text`). Poniżej `lg`: H1, potem kwadratowy kadr 1:1 na całą szerokość treści, nav w sticky overlayu | nav nigdy nie nachodzi na zdjęcie. Sztywny portret zostawiał puste pole pod krótkim leadem i spychał resztę strony. Ten sam portret na pełną szerokość telefonu zjadał pierwszy ekran — brak makiet mobilnych, nie intencja |
 | paleta na x = 269 | wyśrodkowana | pozycja w Figmie nie wynika z żadnej siatki |
 | trzeci krój Poppins | MuseoModerno | 6 wystąpień wobec dwóch rodzin w reszcie pliku |

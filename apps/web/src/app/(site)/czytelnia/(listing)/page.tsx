@@ -117,7 +117,7 @@ export default async function CzytelniaPage({
       {filtered.length === 0 ? (
         <p className="text-body">{copy.empty}</p>
       ) : listing.kind === "flat" ? (
-        <div className="measure">
+        <div className="stack-wide">
           <CzytelniaStack items={toCzytelniaRows(listing.items)} />
         </div>
       ) : (

@@ -59,7 +59,7 @@ export function BlobRow({
       : width === "narrow"
         ? "stack-narrow"
         : width === "wide"
-          ? "measure"
+          ? "stack-wide"
           : undefined;
 
   const inner = (
