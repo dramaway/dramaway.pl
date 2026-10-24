@@ -764,7 +764,7 @@
   /*
    * Empty still: the column stays (text width does not jump) but it does
    * not impose a height. At lg+ the text column sizes the section; below
-   * lg the circle rule on .hero-media still draws the round slot.
+   * lg the square rule on .hero-media still draws the empty slot.
    */
   .hero-media-empty {
     width: 100%;
@@ -783,8 +783,8 @@
     }
 
     /*
-     * Hero: title, circular still, then lead/CTA. Photo never eats the
-     * viewport; the following dot band does not overlap the circle.
+     * Hero: title, square still, then lead/CTA. Photo never eats the
+     * viewport; the following dot band does not overlap the image.
      */
     .hero {
       display: grid;
@@ -793,7 +793,7 @@
         "title"
         "media"
         "copy";
-      gap: clamp(1.25rem, 4vw, 2rem);
+      gap: clamp(1.5rem, 4vw, 2rem);
       padding-inline: var(--page-pad);
       padding-block: var(--spacing-section);
     }
@@ -814,23 +814,23 @@
 
     .hero-media-wrap {
       grid-area: media;
-      width: var(--hero-media-span);
+      width: min(var(--hero-media-span), 24rem);
       justify-self: start;
     }
 
     .hero-media,
     .hero-media.media-portrait {
       aspect-ratio: 1;
-      border-radius: 50%;
+      border-radius: var(--radius-media);
     }
 
     /*
-     * Slider: the circle clips the crossfade. Dots sit under the circle,
+     * Slider: the square frame clips the crossfade. Dots sit under the image,
      * not inside it.
      */
     .hero-slider-frame {
       aspect-ratio: 1;
-      border-radius: 50%;
+      border-radius: var(--radius-media);
       overflow: hidden;
     }
 
@@ -856,7 +856,11 @@
       max-width: none;
     }
 
-    /* Circle still: the band sits below, it does not ride the photo. */
+    .hero-copy .cta {
+      margin-block-start: 1.5rem;
+    }
+
+    /* The band sits below the image; it does not ride over it. */
     .hero + .dot-band {
       margin-block-start: 0;
     }
@@ -997,7 +1001,7 @@
      * The text column sets the section height. The still is taken out of
      * flow and stretched over that box (`object-fit: cover` + the Sanity
      * hotspot). No 481:823 frame and no viewport cap — a short lead must
-     * not push the rest of the page down. Below lg the circle stays.
+     * not push the rest of the page down. Below lg the square crop stays.
      */
     .site-shell:has([data-home], [data-split-hero]) {
       position: relative;
