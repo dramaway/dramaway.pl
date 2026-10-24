@@ -30,6 +30,7 @@ export function PageArticle({
           <PortableBody value={page.body} />
         </div>
       </Section>
+      <ContentModules sections={page.sectionsAfterBody} variant="page" />
     </>
   );
 }

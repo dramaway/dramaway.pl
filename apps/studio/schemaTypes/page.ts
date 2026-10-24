@@ -49,6 +49,13 @@ export const page = defineType({
       of: contentSectionMembers(),
     }),
     defineField({ name: "body", title: "Body", type: "blockContent" }),
+    defineField({
+      name: "sectionsAfterBody",
+      title: "Sekcje po treści",
+      type: "array",
+      description: "Moduły wyświetlane pod treścią artykułu.",
+      of: contentSectionMembers(),
+    }),
   ],
   preview: {
     select: { title: "title", slug: "slug.current" },

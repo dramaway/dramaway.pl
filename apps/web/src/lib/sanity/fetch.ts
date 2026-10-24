@@ -91,12 +91,16 @@ export const getPageBySlug = cache(async function getPageBySlug(
   slug: string,
 ): Promise<PageDetail | null> {
   const page = await sanityClient.fetch<
-    Omit<PageDetail, "sections"> & { sections?: CmsContentSection[] | null }
+    Omit<PageDetail, "sections" | "sectionsAfterBody"> & {
+      sections?: CmsContentSection[] | null;
+      sectionsAfterBody?: CmsContentSection[] | null;
+    }
   >(pageBySlugQuery, { slug }, revalidate);
   if (!page) return null;
   return {
     ...page,
     sections: resolveContentSections(page.sections),
+    sectionsAfterBody: resolveContentSections(page.sectionsAfterBody),
   };
 });
 
