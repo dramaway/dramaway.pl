@@ -12,7 +12,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | **Hasła** | Bitwarden Fundacji (bitwarden.eu): hasła i kody odzyskiwania kont. Fundacja dostaje master password. |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ (`readingMethod` = Category; `publication.methods` = Categories; publiczne `publication.format`) |
-| **Working tree** | PR #36: przywrócone okrągłe miniaturki oraz nagłówki list o rozmiarze H2. Pierwszy build Netlify po zmianie nie pobrał fontów Google (`next/font`); ponowienie podglądu w toku. Bez wdrożenia na produkcję. Nadal do potwierdzenia przez redakcję: kanał YouTube w stopce (`UCqnZ4VG2xTkiTYDbrOLMfEQ`) i adres e-mail. |
+| **Working tree** | PR #36: przywrócone okrągłe miniaturki oraz nagłówki list o rozmiarze H2. Po przejściowym błędzie pobierania fontów Google podgląd Netlify jest już gotowy pod `/projekty/art-generacje` i `/baza-wiedzy#pelna-biblioteka`. Bez wdrożenia na produkcję. Nadal do potwierdzenia przez redakcję: kanał YouTube w stopce (`UCqnZ4VG2xTkiTYDbrOLMfEQ`) i adres e-mail. |
 | **Owner Sanity** | Organizacja na `admin@dramaway.pl`, plan NGO. `admin@dramaway.pl` = project Admin; redakcja = Editor |
 
 ---
