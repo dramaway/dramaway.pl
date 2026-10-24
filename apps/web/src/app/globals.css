@@ -829,15 +829,13 @@
     }
 
     /*
-     * The band overlaps the next section by --dot-overlap, so the blob under
-     * the circles needs that back plus the same 1rem air a photo's bottom
-     * row leaves.
+     * One gap under every band, whatever follows it: the band gives back its
+     * overlap and leaves 1rem. A tile blob (sitting 1.8rem above its text)
+     * then starts ~35px under the circles, same as after a photo's bottom
+     * row (whose frame margin is also 1rem past the dots).
      */
-    .dot-band + .content-split > .split-text,
-    .dot-band + .py-section {
-      padding-block-start: calc(
-        var(--spacing-section) + var(--dot-overlap) + 1rem
-      );
+    .dot-band {
+      margin-block-end: 1rem;
     }
 
     /* The frame's own bottom row replaces the band after a photo module. */
