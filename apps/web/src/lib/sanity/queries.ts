@@ -224,6 +224,7 @@ export const projectBySlugQuery = `*[_type == "project" && slug.current == $slug
   status,
   featured,
   summary,
+  editionsHeading,
   ${heroSlidesProjection},
   "cover": coalesce(
     (editions[].gallery[])[defined(asset)][0],
