@@ -6,13 +6,13 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | | |
 |--|--|
 | **Ostatnia aktualizacja** | 2026-10-24 — Prostokątne miniaturki 4:3 z zaokrąglonymi rogami na liście edycji Art Generacje i w Czytelni; są po lewej stronie treści. W Czytelni okładka to pierwszy obrazek w `body`, a brak obrazka pokazuje piaskowy prostokąt. Wcześniej: miniaturki były okrągłe; w Czytelni usunięto nakładki kolorystyczne i przesuwanie okładki pod tekst. Z listy Art Generacje usunięto paletę kolorowych kółek; palety usunięto też ze stron Projekty i O fundacji, pozostawiając piaskowe pasma kropek. Miniatury YouTube pokazują oryginalne kolory bez beżowego filtra; redakcja może ustawić własny cover w każdym bloku YouTube (zastępuje miniaturę YouTube). Art Generacje może mieć edytowalny nagłówek nad listingiem edycji (`editionsHeading` w Studio); pusty tekst ukrywa nagłówek. Produkcyjny build web uruchamia `next build` bez Turbopacka: Netlify nie rozwiązywał fontów `next/font/google` przy kompilacji Turbopackiem. Galeria `hero-trio` wypełnia szerokość rodzica i zachowuje proporcje bez limitu wysokości. Studio cofnięte z Sanity 6.20.0 na 6.18.0. 6.20 wywala edycję (`getAttribute only applies to plain objects`) po publikacji, gdy szkic znika zanim wróci opublikowany dokument. Dotyczy każdego dokumentu, nie tylko Kontaktu i Wydawnictwa. Live Studio zmieni się po merge i deployu. |
-| **Gałąź / HEAD** | `main` |
+| **Gałąź / HEAD** | `szaroale-pl-rectangular-list-thumbnails` |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
 | **Netlify** | Projekt przeniesiony do teamu `admin@dramaway.pl`, adres bez zmian. Env: `NEXT_PUBLIC_SANITY_*`, `NEXT_PUBLIC_SITE_URL`, `SANITY_REVALIDATE_SECRET` (tylko Production). |
 | **Hasła** | Bitwarden Fundacji (bitwarden.eu): hasła i kody odzyskiwania kont. Fundacja dostaje master password. |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ (`readingMethod` = Category; `publication.methods` = Categories; publiczne `publication.format`) |
-| **Working tree** | Czysto po pushu na `main`. Nadal do potwierdzenia przez redakcję: kanał YouTube w stopce (`UCqnZ4VG2xTkiTYDbrOLMfEQ`) i adres e-mail. |
+| **Working tree** | Miniaturki 4:3 w PR #36; czekają na podgląd Netlify. Bez wdrożenia na produkcję. Nadal do potwierdzenia przez redakcję: kanał YouTube w stopce (`UCqnZ4VG2xTkiTYDbrOLMfEQ`) i adres e-mail. |
 | **Owner Sanity** | Organizacja na `admin@dramaway.pl`, plan NGO. `admin@dramaway.pl` = project Admin; redakcja = Editor |
 
 ---
