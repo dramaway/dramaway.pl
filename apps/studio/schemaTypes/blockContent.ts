@@ -31,6 +31,14 @@ export const youtube = defineType({
       validation: (r) => r.required(),
     }),
     defineField({
+      name: "cover",
+      title: "Cover image",
+      type: "image",
+      options: { hotspot: true },
+      description:
+        "Optional image shown before the video starts. If empty, the thumbnail from YouTube is used.",
+    }),
+    defineField({
       name: "size",
       title: "Size",
       type: "string",

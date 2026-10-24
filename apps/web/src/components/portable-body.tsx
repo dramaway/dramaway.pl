@@ -58,7 +58,13 @@ type ImageValue = {
   asset?: { _ref?: string; _id?: string };
 };
 
-type YoutubeValue = { _type?: string; url?: string; size?: string; align?: string };
+type YoutubeValue = {
+  _type?: string;
+  url?: string;
+  cover?: SanityImage | null;
+  size?: string;
+  align?: string;
+};
 
 type ColumnValue = {
   _key?: string;
@@ -155,6 +161,7 @@ function PortableYoutube({
   return (
     <YoutubeEmbed
       url={value.url}
+      cover={value.cover}
       className={cn(
         size === "full" ? "pt-embed-full" : "pt-embed-medium",
         `pt-embed-${blockAlign(value.align)}`,

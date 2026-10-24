@@ -45,6 +45,13 @@ export const project = defineType({
     }),
     defineField({ name: "body", title: "Body", type: "blockContent" }),
     defineField({
+      name: "editionsHeading",
+      title: "Nagłówek listy edycji",
+      type: "string",
+      description:
+        "Opcjonalny nagłówek nad listą edycji. Uzupełnij tylko dla Art Generacje; puste pole ukrywa nagłówek.",
+    }),
+    defineField({
       name: "editions",
       title: "Editions",
       type: "array",

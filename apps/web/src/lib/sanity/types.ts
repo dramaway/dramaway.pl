@@ -348,6 +348,7 @@ export type ProjectDetail = {
   status: string | null;
   featured: boolean | null;
   summary: string | null;
+  editionsHeading: string | null;
   heroImages?: CmsHeroImage[] | null;
   cover: SanityImage | null;
   body: PortableContent;

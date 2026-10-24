@@ -6,6 +6,8 @@ import {
   youtubePosterUrls,
   youtubeVideoIdFromUrl,
 } from "@/lib/sanity/youtube";
+import type { SanityImage } from "@/lib/sanity/types";
+import { urlFor } from "@/lib/sanity/image";
 import { SUBPAGE } from "@/lib/subpage-copy";
 import { cn } from "@/lib/utils";
 
@@ -15,14 +17,23 @@ const PLACEHOLDER_WIDTH = 120;
 
 type YoutubeEmbedProps = {
   url: string;
+  cover?: SanityImage | null;
   className?: string;
 };
 
-export function YoutubeEmbed({ url, className }: YoutubeEmbedProps) {
+export function YoutubeEmbed({ url, cover, className }: YoutubeEmbedProps) {
   const src = youtubeEmbedSrc(url);
   const playSrc = youtubeEmbedSrc(url, { autoplay: true });
   const videoId = youtubeVideoIdFromUrl(url);
-  const posters = videoId ? youtubePosterUrls(videoId) : [];
+  const customPoster = cover
+    ? urlFor(cover).width(1600).height(900).fit("crop").auto("format").url()
+    : null;
+  const posters = [
+    ...(customPoster ? [{ url: customPoster, isYoutube: false }] : []),
+    ...(videoId
+      ? youtubePosterUrls(videoId).map((url) => ({ url, isYoutube: true }))
+      : []),
+  ];
   const [playing, setPlaying] = useState(false);
   const [posterIndex, setPosterIndex] = useState(0);
   const poster = posters[posterIndex];
@@ -68,13 +79,16 @@ export function YoutubeEmbed({ url, className }: YoutubeEmbedProps) {
           // Remote still; size ladder is tried in onError / tiny-placeholder onLoad.
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            key={poster}
-            src={poster}
+            key={poster.url}
+            src={poster.url}
             alt=""
             className="pt-embed-still"
             decoding="async"
             onLoad={(event) => {
-              if (event.currentTarget.naturalWidth <= PLACEHOLDER_WIDTH) {
+              if (
+                poster.isYoutube &&
+                event.currentTarget.naturalWidth <= PLACEHOLDER_WIDTH
+              ) {
                 setPosterIndex((index) => index + 1);
               }
             }}
