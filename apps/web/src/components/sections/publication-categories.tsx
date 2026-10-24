@@ -3,6 +3,7 @@ import {
   CzytelniaStack,
   type CzytelniaRowItem,
 } from "@/components/sections/czytelnia-stack";
+import { categoryToneForSlug } from "@/lib/category-tones";
 import { czytelniaFilterHref } from "@/lib/czytelnia-filters";
 import type { PublicationFormat } from "@/lib/sanity/types";
 
@@ -50,12 +51,13 @@ export function PublicationCategories({
               <span className="cat-tile-count">{total}</span>
             </Link>
           </li>
-          {groups.map((group) => (
+          {groups.map((group, index) => (
             <li key={group.slug}>
               <Link
                 href={czytelniaFilterHref({ rodzaj, kategoria: group.slug })}
                 scroll={false}
                 className="cat-tile"
+                data-tone={categoryToneForSlug(group.slug, index)}
                 aria-current={group.slug === focusedSlug ? "true" : undefined}
               >
                 <span className="cat-tile-title">{group.title}</span>

@@ -3538,10 +3538,9 @@
   }
 
   .cat-tiles ul {
-    display: grid;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
+    gap: 0.25rem 2rem;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -3552,28 +3551,24 @@
     align-items: center;
     gap: 0.6rem;
     min-height: var(--touch-target);
-    padding: 0.5rem 1.25rem 0.5rem 0.9rem;
-    border: 1px solid color-mix(in srgb, var(--color-ink) 18%, transparent);
-    border-radius: 999px;
+    padding-block: 0.4rem;
     color: inherit;
     text-decoration: none;
-    transition:
-      border-color 150ms ease,
-      color 150ms ease;
   }
 
   .cat-tile::before {
     content: "";
     flex-shrink: 0;
-    width: 0.9rem;
-    height: 0.9rem;
+    width: 1rem;
+    height: 1rem;
     border-radius: 50%;
-    border: 2px solid var(--color-magenta);
+    background-color: var(--tone, var(--color-sand));
   }
 
-  .cat-tile:hover,
-  .cat-tile:focus-visible {
-    border-color: var(--color-magenta);
+  .cat-tile:hover .cat-tile-title,
+  .cat-tile:focus-visible .cat-tile-title {
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
   }
 
   .cat-tile:focus-visible {
@@ -3581,13 +3576,21 @@
     outline-offset: 3px;
   }
 
-  .cat-tile[aria-current="true"] {
-    border-color: var(--color-magenta);
-    color: var(--color-magenta);
+  .cat-tile[aria-current="true"] .cat-tile-title {
+    font-weight: 900;
   }
 
-  .cat-tile[aria-current="true"]::before {
-    background: var(--color-magenta);
+  [data-tone="1"] { --tone: var(--color-brand-1); }
+  [data-tone="2"] { --tone: var(--color-brand-2); }
+  [data-tone="3"] { --tone: var(--color-brand-3); }
+  [data-tone="4"] { --tone: var(--color-brand-4); }
+  [data-tone="5"] { --tone: var(--color-brand-5); }
+  [data-tone="6"] { --tone: var(--color-brand-6); }
+  [data-tone="7"] { --tone: var(--color-brand-7); }
+
+  /* Headword circle in the essay: category tone, softened so the text stays readable. */
+  .pt-term[data-tone] > .blob {
+    background-color: color-mix(in srgb, var(--tone) 38%, transparent);
   }
 
   .cat-tile-title {

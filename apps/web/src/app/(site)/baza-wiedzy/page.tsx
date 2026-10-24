@@ -22,7 +22,7 @@ import {
   publicationDestination,
   publicationListLead,
 } from "@/lib/publication-destination";
-import { publicationPath } from "@/lib/routes";
+import { LIBRARY_ANCHOR, publicationPath } from "@/lib/routes";
 import { safeHrefString } from "@/lib/safe-url";
 import {
   getPageBySlug,
@@ -111,7 +111,13 @@ export default async function KnowledgeHubPage({
 
   return (
     <>
-      <PageArticle page={page} />
+      <PageArticle
+        page={{
+          ...page,
+          heroCtaLabel: copy.libraryCta,
+          heroCtaHref: `#${LIBRARY_ANCHOR}`,
+        }}
+      />
       <Section id="pelna-biblioteka" className="library-section scroll-mt-24">
         <h2 className="font-display text-h3 font-black">
           {copy.heading}

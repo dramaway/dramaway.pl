@@ -7,6 +7,7 @@ import {
 import Image from "next/image";
 import { Fragment, type ReactNode } from "react";
 import { ImageGallery } from "@/components/visual/image-gallery";
+import { categoryToneForTerm } from "@/lib/category-tones";
 import { Blob } from "@/components/visual/blob";
 import { CtaLink } from "@/components/visual/cta-link";
 import { CreditsList, type CreditsValue } from "@/components/visual/credits-list";
@@ -286,12 +287,21 @@ const components: PortableTextComponents = {
         {children}
       </blockquote>
     ),
-    term: ({ children }) => (
-      <p className="pt-term whitespace-pre-wrap">
+    term: ({ children, value }) => {
+      const text = (value?.children ?? [])
+        .map((child) => ("text" in child ? String(child.text ?? "") : ""))
+        .join("");
+      const tone = categoryToneForTerm(text);
+      return (
+      <p
+        className="pt-term whitespace-pre-wrap"
+        data-tone={tone ?? undefined}
+      >
         <Blob />
         {children}
       </p>
-    ),
+      );
+    },
   },
   list: {
     bullet: ({ children }) => (

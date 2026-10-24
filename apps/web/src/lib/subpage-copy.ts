@@ -27,6 +27,7 @@ export const SUBPAGE = {
   czytelnia: {
     pdfCta: "pobierz PDF",
     heading: "Pełna biblioteka",
+    libraryCta: "zobacz pełną bibliotekę",
     empty: "Czytelnia jest pusta — w CMS nie ma jeszcze publikacji.",
     filters: {
       formatLabel: "Rodzaj",
