@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-10-23 — projekt przekazany Fundacji: repo `dramaway/dramaway.pl` (publiczne, ruleset na `main`), Netlify i Sanity (plan NGO) na `admin@dramaway.pl`, webhook revalidate, 2FA + Bitwarden. Zmiany w kodzie przez Copilota: [redakcja/zmiany-w-kodzie.md](redakcja/zmiany-w-kodzie.md). |
+| **Ostatnia aktualizacja** | 2026-10-24 — mobilny hero strony głównej ma kwadratowy kadr na telefonach. Projekt przekazany Fundacji: repo `dramaway/dramaway.pl` (publiczne, ruleset na `main`), Netlify i Sanity (plan NGO) na `admin@dramaway.pl`, webhook revalidate, 2FA + Bitwarden. Zmiany w kodzie przez Copilota: [redakcja/zmiany-w-kodzie.md](redakcja/zmiany-w-kodzie.md). |
 | **Gałąź / HEAD** | `main` |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
 | **Netlify** | Projekt przeniesiony do teamu `admin@dramaway.pl`, adres bez zmian. Env: `NEXT_PUBLIC_SANITY_*`, `NEXT_PUBLIC_SITE_URL`, `SANITY_REVALIDATE_SECRET` (tylko Production). |
@@ -27,7 +27,7 @@ Stack: Next.js 15, Tailwind v4, shadcn/ui, Sanity Studio v6, Netlify. Kod/CMS EN
 
 ## Stan teraz
 
-Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona główna ma skład z Figmy plus polish desktopowy** (hero od góry kolumny, pasma pełnych kół przy krawędziach, naprzemienne kolory tytułów, klikalne kafelki) **i świadomy pass mobilny poniżej 1024 px** (sticky header + overlay, hero H1 → kadr w kole → lead, stacked split tekst → kadr 4:5). Nie pixel-perfect. Sprawdzone lokalnie: 375 (H1 w pierwszym ekranie, koło 227 px, brak overflow), 768, desktop (overlay header i portret bleed bez regresji).
+Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona główna ma skład z Figmy plus polish desktopowy** (hero od góry kolumny, pasma pełnych kół przy krawędziach, naprzemienne kolory tytułów, klikalne kafelki) **i świadomy pass mobilny poniżej 1024 px** (sticky header + overlay, hero H1 → zdjęcie w kwadratowym kadrze do 288 px na telefonach poniżej 48 rem → lead, stacked split tekst → kadr 4:5). Zdjęcia hero podstron pozostają okrągłe na mobile. Nie pixel-perfect. Sprawdzić w Deploy Preview: 375 px (H1 w pierwszym ekranie, brak overflow), 768 px i desktop (bez zmian).
 
 - Dataset `production` (`tr2qdg9j`) publiczny. Next bez tokenu. Write token **tylko** `apps/studio/.env`.
 - Mapa URL: `apps/web/src/lib/routes.ts`. Prefiks bierze się z typu dokumentu: `project` → `/projekty/{slug}`, `person` → `/zespol/{slug}`, `publication` → `/czytelnia/{slug}`, `page` i `news` → `/{slug}`. Stary przedrostek `aktualnosc-` na stronie nadal się obcina. Menu tylko linkuje, nie składa adresu. Stary `/fundacja/{slug}` i `/projekty/{slug}` dla strony, która nie jest projektem, przekierowuje na `/{slug}`. Header czyta `siteSettings.navigation` (etykieta + strona z CMS albo adres, jeden poziom dzieci). Pusta lista = menu wbudowane: Projekty, **Baza wiedzy** (`/baza-wiedzy`, zwykła strona z opisem metod) z dzieckiem Czytelnia (desktop disclosure, mobile overlay), O fundacji, Kontakt. `/metody` przekierowuje na `/baza-wiedzy`. `/zespol` poza menu, dopóki ktoś go nie doda. Seed: `pnpm seed:navigation` (nie nadpisuje istniejącej listy). Hosted Studio widzi grupę Nawigacja po `pnpm --filter studio run deploy`.
