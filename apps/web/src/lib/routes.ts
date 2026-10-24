@@ -22,6 +22,9 @@ export type NavItem = {
   children?: NavItem[];
 };
 
+/** Heading of the full library on the Baza wiedzy page. */
+export const LIBRARY_ANCHOR = "pelna-biblioteka";
+
 export function knowledgeHubPath() {
   return "/baza-wiedzy";
 }

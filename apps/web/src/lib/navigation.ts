@@ -1,5 +1,7 @@
 import { cmsText } from "./cms-text";
 import {
+  knowledgeHubPath,
+  LIBRARY_ANCHOR,
   mainNav,
   personPath,
   projectPath,
@@ -25,6 +27,7 @@ export function hrefForDocument(page: {
   switch (page._type) {
     case "landingPage": {
       const route = page.route?.trim();
+      if (route === "czytelnia") return `${knowledgeHubPath()}#${LIBRARY_ANCHOR}`;
       return route ? `/${route}` : null;
     }
     case "aboutPage":

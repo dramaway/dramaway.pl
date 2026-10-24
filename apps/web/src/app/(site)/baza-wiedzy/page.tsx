@@ -7,7 +7,7 @@ import {
   type CzytelniaRowItem,
 } from "@/components/sections/czytelnia-stack";
 import { FilterRow } from "@/components/sections/filter-row";
-import { PublicationCategoryList } from "@/components/sections/publication-category-list";
+import { PublicationCategories } from "@/components/sections/publication-categories";
 import {
   UNCATEGORIZED_CATEGORY_SLUG,
   czytelniaFilterHref,
@@ -112,7 +112,10 @@ export default async function KnowledgeHubPage({
   return (
     <>
       <PageArticle page={page} />
-      <Section>
+      <Section id="pelna-biblioteka" className="scroll-mt-24">
+        <h2 className="font-display text-h3 font-black">
+          {copy.heading}
+        </h2>
         <FilterRow
           label={copy.filters.formatLabel}
           chips={available.map((format) => ({
@@ -131,15 +134,16 @@ export default async function KnowledgeHubPage({
             <CzytelniaStack items={toCzytelniaRows(listing.items)} />
           </div>
         ) : (
-          <PublicationCategoryList
+          <PublicationCategories
             groups={listing.groups.map((group) => ({
               slug: group.slug,
               title: group.title,
               items: toCzytelniaRows(group.items),
             }))}
-            copy={copy.sections}
             rodzaj={rodzaj}
             focusedSlug={focusedSlug}
+            allLabel={copy.sections.all}
+            navLabel={copy.sections.navLabel}
           />
         )}
       </Section>

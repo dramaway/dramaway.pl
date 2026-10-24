@@ -124,7 +124,19 @@ test("anchor and query are appended, with or without the leading symbol", () => 
       query: "?rodzaj=books",
       hash: "lista",
     })?.href,
-    "/czytelnia?rodzaj=books#lista",
+    "/baza-wiedzy?rodzaj=books#lista",
+  );
+});
+
+test("a Czytelnia button with a category lands on the library of Baza wiedzy", () => {
+  assert.equal(
+    resolveCtaButton({
+      label: "zobacz publikacje",
+      target: "reference",
+      page: { _type: "landingPage", route: "czytelnia" },
+      query: "kategoria=teatr-forum",
+    })?.href,
+    "/baza-wiedzy?kategoria=teatr-forum#pelna-biblioteka",
   );
 });
 

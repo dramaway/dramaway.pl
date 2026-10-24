@@ -42,7 +42,7 @@ Okładka kółka na spisie to **pierwszy obrazek w treści** (**Body**). Osobneg
 
 Wynikają z pól **Format** i **Categories**. Nie ma osobnego ekranu do układania Czytelni. Podstrona `/czytelnia` już nie istnieje: przekierowuje na Bazę wiedzy, a spis stoi pod jej tekstem. Dokument listingu **Czytelnia** (hero) nie jest już pokazywany.
 
-Żeby z Bazy wiedzy albo innego tekstu otworzyć jedną metodę, wstaw przycisk **Button**: cel **Dokument**, listing **Czytelnia**, a w **Zaawansowane** → **Parametry** wpisz `kategoria=…` (na przykład `kategoria=teatr-forum`). Tabela wartości: [Tekst](tekst.md#zaawansowane-kotwica-i-parametry). Bez parametru wszystkie sekcje na spisie są otwarte. Nagłówek każdej sekcji zwija ją i rozwija.
+Żeby z Bazy wiedzy albo innego tekstu otworzyć jedną kategorię, wstaw przycisk **Button**: cel **Dokument**, listing **Czytelnia**, a w **Zaawansowane** → **Parametry** wpisz `kategoria=…` (na przykład `kategoria=teatr-forum`). Przycisk sam prowadzi do nagłówka „Pełna biblioteka” na Bazie wiedzy; kategorie są tam kafelkami, a wybrana pokazuje tylko swoje teksty. Tabela wartości: [Tekst](tekst.md#zaawansowane-kotwica-i-parametry). Bez parametru widać wszystkie kategorie jedna pod drugą.
 
 ## O fundacji
 
