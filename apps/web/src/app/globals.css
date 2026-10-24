@@ -1679,7 +1679,7 @@
     gap: clamp(1rem, 3vw, 2rem);
   }
 
-  .blob-row-thumbnail-image {
+  .media.blob-row-thumbnail-image {
     aspect-ratio: 1;
     border-radius: 50%;
   }
