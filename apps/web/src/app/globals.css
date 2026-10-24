@@ -2880,7 +2880,7 @@
   }
 
   /*
-   * YouTube in Portable Text: brand cover until play, then nocookie iframe.
+   * YouTube in Portable Text: full-color thumbnail until play, then nocookie iframe.
    * Play disc + palette dots (hover / focus). No pixel values in sections.
    */
   .pt-embed {
@@ -2941,21 +2941,6 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* Soften wild YouTube stills toward sand / body chroma. */
-    filter: saturate(0.62) contrast(0.95);
-    mix-blend-mode: multiply;
-    opacity: 0.92;
-  }
-
-  .pt-embed-poster::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background-color: var(--color-sand);
-    mix-blend-mode: color;
-    opacity: 0.24;
-    pointer-events: none;
   }
 
   .pt-embed-burst {
