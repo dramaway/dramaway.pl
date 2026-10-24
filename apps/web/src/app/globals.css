@@ -834,7 +834,7 @@
      * then starts ~35px under the circles, same as after a photo's bottom
      * row (whose frame margin is also 1rem past the dots).
      */
-    .dot-band {
+    .dot-band:not(.footer-dots) {
       margin-block-end: 1rem;
     }
 
