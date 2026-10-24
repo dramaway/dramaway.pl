@@ -3588,11 +3588,6 @@
   [data-tone="6"] { --tone: var(--color-brand-6); }
   [data-tone="7"] { --tone: var(--color-brand-7); }
 
-  /* Headword circle in the essay: category tone, softened so the text stays readable. */
-  .pt-term[data-tone] > .blob {
-    background-color: color-mix(in srgb, var(--tone) 38%, transparent);
-  }
-
   .cat-tile-title {
     font-family: var(--font-display);
     font-weight: 600;

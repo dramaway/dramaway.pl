@@ -68,22 +68,3 @@ test("czytelniaCategoryHeadingId is stable for URL hashes", () => {
     "czytelnia-teatr-ze-spolecznoscia",
   );
 });
-
-test("essay headwords share the tone of their category", async () => {
-  const { categoryToneForSlug, categoryToneForTerm } = await import(
-    "../../apps/web/src/lib/category-tones.ts"
-  );
-  assert.equal(
-    categoryToneForTerm("Teatr w Edukacji (TIE)"),
-    categoryToneForSlug("teatr-w-edukacji"),
-  );
-  assert.equal(
-    categoryToneForTerm("Teatr zaangażowany społecznie"),
-    categoryToneForSlug("teatr-zaangazowany-spolecznie"),
-  );
-  assert.equal(
-    categoryToneForTerm("Drama edukacyjna"),
-    categoryToneForSlug("drama"),
-  );
-  assert.equal(categoryToneForTerm("Coś innego"), null);
-});
