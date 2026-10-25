@@ -100,6 +100,7 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
   const readingRef = useRef(reading);
   const kickRef = useRef<() => void>(() => {});
   const lastOpenRef = useRef(false);
+  const lastReleaseReadyRef = useRef(false);
   const scrollDirectionRef = useRef<"up" | "down" | null>(null);
   const lastScrollYRef = useRef(0);
   opennessRef.current = openness;
@@ -115,6 +116,7 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
     setReading(false);
     setSeen(items.map(() => false));
     lastOpenRef.current = false;
+    lastReleaseReadyRef.current = false;
     scrollDirectionRef.current = null;
   }
 
@@ -195,15 +197,27 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
         });
         const lastIndex = target.length - 1;
         if (lastIndex >= 0) {
+          if (
+            lastOpenRef.current &&
+            scrollDirectionRef.current === "up" &&
+            target[lastIndex] >= 0.99
+          ) {
+            lastReleaseReadyRef.current = true;
+          }
+          const wasLatched = lastOpenRef.current;
           lastOpenRef.current = historyLastOpenLatch(
-            lastOpenRef.current,
+            wasLatched,
             target[lastIndex],
             opennessRef.current[lastIndex] ?? 0,
+            lastReleaseReadyRef.current,
             scrollDirectionRef.current,
             document.documentElement.scrollHeight - viewport - window.scrollY,
             lastPanelHeight,
             viewport,
           );
+          if (lastOpenRef.current !== wasLatched) {
+            lastReleaseReadyRef.current = false;
+          }
           target[lastIndex] = historyHoldLastOpen(target[lastIndex], lastOpenRef.current);
         }
         return target;

@@ -147,6 +147,7 @@ export function historyLastOpenLatch(
   latched: boolean,
   openness: number,
   currentOpenness: number,
+  reachedNaturalPeak: boolean,
   scrollDirection: "up" | "down" | null,
   availableScroll: number,
   panelHeight: number,
@@ -164,6 +165,7 @@ export function historyLastOpenLatch(
   if (
     latched &&
     scrollDirection === "up" &&
+    reachedNaturalPeak &&
     Number.isFinite(availableScroll) &&
     Number.isFinite(panelHeight) &&
     Number.isFinite(viewport) &&
