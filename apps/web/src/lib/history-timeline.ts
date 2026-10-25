@@ -138,23 +138,30 @@ export function historyScrollOpenness(
 
 /**
  * Once the last vertical entry has opened, keep it open until its marker has
- * moved below the viewport on the way back up. Collapsing it while it is in
- * view would shorten the document underneath the user's scroll position.
+ * enough scrollable space exists below the viewport to absorb its full
+ * collapse plus a safety margin. This lets it rejoin the natural scroll
+ * curve on the way up without shortening the document underneath the user's
+ * scroll position while easing catches up.
  */
 export function historyLastOpenLatch(
   latched: boolean,
   openness: number,
   scrollDirection: "up" | "down" | null,
-  markerTop: number,
+  availableScroll: number,
+  panelHeight: number,
   viewport: number,
 ): boolean {
   if (!latched && scrollDirection === "down" && openness > 0) return true;
+  const safetyMargin = Math.max(16, viewport * 0.1);
   if (
     latched &&
     scrollDirection === "up" &&
-    Number.isFinite(markerTop) &&
+    Number.isFinite(availableScroll) &&
+    Number.isFinite(panelHeight) &&
     Number.isFinite(viewport) &&
-    markerTop >= viewport
+    panelHeight > 0 &&
+    openness < 1 &&
+    availableScroll > panelHeight + safetyMargin
   ) {
     return false;
   }

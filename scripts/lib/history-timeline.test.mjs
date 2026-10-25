@@ -103,10 +103,11 @@ test("the last year stays open while scrolling down after it has opened", () => 
   assert.equal(historyHoldLastOpen(0.4, false), 0.4);
 });
 
-test("the last year stays open on the way up until it is below the viewport", () => {
-  assert.equal(historyLastOpenLatch(false, 0.4, "down", 400, 800), true);
-  assert.equal(historyLastOpenLatch(true, 0, "up", 400, 800), true);
-  assert.equal(historyLastOpenLatch(true, 0, "up", 800, 800), false);
+test("the last year rejoins the scroll curve only with room for its full collapse", () => {
+  assert.equal(historyLastOpenLatch(false, 0.4, "down", 0, 374, 800), true);
+  assert.equal(historyLastOpenLatch(true, 1, "up", 1_000, 374, 800), true);
+  assert.equal(historyLastOpenLatch(true, 0.5, "up", 454, 374, 800), true);
+  assert.equal(historyLastOpenLatch(true, 0.5, "up", 455, 374, 800), false);
 });
 
 test("vertical openness never jumps between nearby scroll positions", () => {

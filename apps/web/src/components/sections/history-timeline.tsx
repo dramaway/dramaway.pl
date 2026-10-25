@@ -178,17 +178,17 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
           release: viewport * RELEASE_Y,
           span: Math.max(1, viewport * CLOSE_SPAN),
         };
-        let lastMarkerTop = Number.NaN;
+        let lastPanelHeight = 0;
         const target = current.map((_, index) => {
           const marker = markerRefs.current[index];
           if (!marker) return 0;
           const rect = marker.getBoundingClientRect();
-          if (index === current.length - 1) lastMarkerTop = rect.top;
           const center = rect.top + rect.height / 2;
           const panel = itemRefs.current[index]?.querySelector<HTMLElement>(".history-panel");
           let length = rect.height / 2;
           if (panel) {
             const full = Number(panel.style.getPropertyValue("--panel")) || 0;
+            if (index === current.length - 1) lastPanelHeight = full;
             length = panel.getBoundingClientRect().top - center + full;
           }
           return historyScrollOpenness(center, length, band);
@@ -199,7 +199,8 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
             lastOpenRef.current,
             target[lastIndex],
             scrollDirectionRef.current,
-            lastMarkerTop,
+            document.documentElement.scrollHeight - viewport - window.scrollY,
+            lastPanelHeight,
             viewport,
           );
           target[lastIndex] = historyHoldLastOpen(target[lastIndex], lastOpenRef.current);
@@ -264,14 +265,56 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
     kickRef.current = kick;
     lastScrollYRef.current = window.scrollY;
     kick();
+    const setScrollDirection = (direction: "up" | "down") => {
+      scrollDirectionRef.current = direction;
+    };
+    const onWheel = (event: WheelEvent) => {
+      if (event.deltaY > 0) setScrollDirection("down");
+      if (event.deltaY < 0) setScrollDirection("up");
+    };
+    let lastTouchY: number | null = null;
+    const onTouchStart = (event: TouchEvent) => {
+      lastTouchY = event.touches[0]?.clientY ?? null;
+    };
+    const onTouchMove = (event: TouchEvent) => {
+      const touchY = event.touches[0]?.clientY;
+      if (touchY == null || lastTouchY == null) return;
+      if (touchY < lastTouchY) setScrollDirection("down");
+      if (touchY > lastTouchY) setScrollDirection("up");
+      lastTouchY = touchY;
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (
+        event.key === "ArrowDown" ||
+        event.key === "PageDown" ||
+        event.key === "End" ||
+        (event.key === " " && !event.shiftKey)
+      ) {
+        setScrollDirection("down");
+      }
+      if (
+        event.key === "ArrowUp" ||
+        event.key === "PageUp" ||
+        event.key === "Home" ||
+        (event.key === " " && event.shiftKey)
+      ) {
+        setScrollDirection("up");
+      }
+    };
     const onScroll = () => {
       const scrollY = window.scrollY;
-      if (scrollY > lastScrollYRef.current) scrollDirectionRef.current = "down";
-      if (scrollY < lastScrollYRef.current) scrollDirectionRef.current = "up";
+      if (scrollDirectionRef.current == null) {
+        if (scrollY > lastScrollYRef.current) setScrollDirection("down");
+        if (scrollY < lastScrollYRef.current) setScrollDirection("up");
+      }
       lastScrollYRef.current = scrollY;
       kick();
     };
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("wheel", onWheel, { passive: true });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("keydown", onKeyDown);
     window.addEventListener("resize", kick);
     const sticky = stickyRef.current;
     let lastWidth = sticky?.clientWidth ?? 0;
@@ -289,6 +332,10 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
       kickRef.current = () => {};
       window.cancelAnimationFrame(frame);
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("resize", kick);
       observer?.disconnect();
     };
