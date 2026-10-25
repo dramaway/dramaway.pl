@@ -5,6 +5,7 @@ import {
   historyHoldLastOpen,
   historyMergeOpenness,
   historyOpenness,
+  historyScrollDirection,
   historyScrollOpenness,
   historyPinProgress,
   historyPinSpan,
@@ -101,6 +102,13 @@ test("the last year stays open while scrolling down after it has opened", () => 
   assert.equal(historyHoldLastOpen(0.4, true, "down"), 1);
   assert.equal(historyHoldLastOpen(0.4, true, "up"), 0.4);
   assert.equal(historyHoldLastOpen(0.4, false, "down"), 0.4);
+});
+
+test("a document shrink does not look like an upward scroll", () => {
+  assert.equal(historyScrollDirection(100, 180, 1000, 1200, false, null), "down");
+  assert.equal(historyScrollDirection(180, 100, 1200, 1200, true, "down"), "up");
+  assert.equal(historyScrollDirection(180, 100, 1200, 1100, true, "down"), "down");
+  assert.equal(historyScrollDirection(180, 180, 1200, 1100, true, "down"), "down");
 });
 
 test("vertical openness never jumps between nearby scroll positions", () => {

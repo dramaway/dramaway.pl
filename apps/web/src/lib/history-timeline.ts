@@ -136,6 +136,24 @@ export function historyScrollOpenness(
   return Math.min(rise, fall);
 }
 
+export function historyScrollDirection(
+  previousY: number,
+  currentY: number,
+  previousHeight: number,
+  currentHeight: number,
+  lastOpen: boolean,
+  currentDirection: "up" | "down" | null,
+): "up" | "down" | null {
+  if (currentY > previousY) return "down";
+  if (
+    currentY < previousY &&
+    !(lastOpen && currentHeight < previousHeight)
+  ) {
+    return "up";
+  }
+  return currentDirection;
+}
+
 /**
  * Once the last vertical entry has opened while scrolling down, keep it open.
  * This prevents its collapsing height from shifting the document at its end.

@@ -14,6 +14,7 @@ import {
   historyDampOpenness,
   historyHoldLastOpen,
   historyOpenness,
+  historyScrollDirection,
   historyScrollOpenness,
   historyPinProgress,
   historyPinSpan,
@@ -101,6 +102,7 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
   const lastOpenRef = useRef(false);
   const scrollDirectionRef = useRef<"up" | "down" | null>(null);
   const lastScrollYRef = useRef(0);
+  const lastScrollHeightRef = useRef(0);
   opennessRef.current = openness;
   itemsRef.current = items;
   readingRef.current = reading;
@@ -261,12 +263,21 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
 
     kickRef.current = kick;
     lastScrollYRef.current = window.scrollY;
+    lastScrollHeightRef.current = document.documentElement.scrollHeight;
     kick();
     const onScroll = () => {
       const scrollY = window.scrollY;
-      if (scrollY > lastScrollYRef.current) scrollDirectionRef.current = "down";
-      if (scrollY < lastScrollYRef.current) scrollDirectionRef.current = "up";
+      const scrollHeight = document.documentElement.scrollHeight;
+      scrollDirectionRef.current = historyScrollDirection(
+        lastScrollYRef.current,
+        scrollY,
+        lastScrollHeightRef.current,
+        scrollHeight,
+        lastOpenRef.current,
+        scrollDirectionRef.current,
+      );
       lastScrollYRef.current = scrollY;
+      lastScrollHeightRef.current = scrollHeight;
       kick();
     };
     window.addEventListener("scroll", onScroll, { passive: true });
