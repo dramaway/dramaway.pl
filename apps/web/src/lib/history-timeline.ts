@@ -137,21 +137,29 @@ export function historyScrollOpenness(
 }
 
 /**
- * Once the last vertical entry has opened, keep it open until its marker has
- * enough scrollable space exists below the viewport to absorb its full
- * collapse plus a safety margin. This lets it rejoin the natural scroll
- * curve on the way up without shortening the document underneath the user's
- * scroll position while easing catches up.
+ * Once the last vertical entry has naturally finished opening, keep it open
+ * until enough scrollable space exists below the viewport to absorb its full
+ * collapse plus a safety margin. This lets it rejoin the natural scroll curve
+ * on the way up without shortening the document underneath the user's scroll
+ * position while easing catches up.
  */
 export function historyLastOpenLatch(
   latched: boolean,
   openness: number,
+  currentOpenness: number,
   scrollDirection: "up" | "down" | null,
   availableScroll: number,
   panelHeight: number,
   viewport: number,
 ): boolean {
-  if (!latched && scrollDirection === "down" && openness > 0) return true;
+  if (
+    !latched &&
+    scrollDirection === "down" &&
+    openness >= 0.99 &&
+    currentOpenness >= 0.99
+  ) {
+    return true;
+  }
   const safetyMargin = Math.max(16, viewport * 0.1);
   if (
     latched &&

@@ -198,6 +198,7 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
           lastOpenRef.current = historyLastOpenLatch(
             lastOpenRef.current,
             target[lastIndex],
+            opennessRef.current[lastIndex] ?? 0,
             scrollDirectionRef.current,
             document.documentElement.scrollHeight - viewport - window.scrollY,
             lastPanelHeight,
