@@ -31,26 +31,31 @@ export default async function ContactPage() {
     <>
       <PageHero
         title={cmsText(page.title)}
-        lead={body ? null : cmsText(page.heroLead)}
+        lead={cmsText(page.heroLead)}
         ctaLabel={page.heroCtaLabel}
         ctaHref={page.heroCtaHref}
         slides={resolveHeroSlides(page.heroImages, cmsText(page.title) || "")}
       >
-        {body ? <PortableBody value={body} /> : null}
-        <section
-          className="contact-block"
-          aria-labelledby="contact-form-heading"
-        >
-          <h2
-            id="contact-form-heading"
-            className="font-display text-h3 font-black"
-          >
-            {SUBPAGE.contact.form.heading}
-          </h2>
-          <p className="mt-3">{SUBPAGE.contact.form.lead}</p>
-          <ContactForm />
-        </section>
       </PageHero>
+      <Section aria-labelledby="contact-form-heading">
+        <div className="contact-layout">
+          <div className="contact-main">
+            <h2
+              id="contact-form-heading"
+              className="font-display text-h3 font-black"
+            >
+              {SUBPAGE.contact.form.heading}
+            </h2>
+            <p className="mt-3">{SUBPAGE.contact.form.lead}</p>
+            <ContactForm />
+          </div>
+          {body ? (
+            <aside className="contact-aside article-body">
+              <PortableBody value={body} />
+            </aside>
+          ) : null}
+        </div>
+      </Section>
       <ContentModules sections={page.sections} variant="page" />
       {withEmail.length > 0 ? (
         <Section>

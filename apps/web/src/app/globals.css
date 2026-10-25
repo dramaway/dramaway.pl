@@ -1532,10 +1532,17 @@
     line-height: var(--text-small--line-height);
   }
 
-  .contact-block {
-    margin-block-start: 3rem;
-    padding-block-start: 2rem;
-    border-block-start: 1px solid color-mix(in srgb, var(--color-ink) 20%, transparent);
+  .contact-layout {
+    display: grid;
+    gap: var(--spacing-section);
+  }
+
+  @media (width >= 64rem) {
+    .contact-layout {
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 4rem;
+      align-items: start;
+    }
   }
 
   .contact-form {
