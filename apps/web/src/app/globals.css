@@ -814,6 +814,11 @@
       width: 100%;
     }
 
+    /* No photo: drop the invisible square so no blank band sits under the title. */
+    .hero-media-wrap:has(> .hero-media-empty) {
+      display: none;
+    }
+
     .hero-media,
     .hero-media.media-portrait {
       aspect-ratio: 1;
