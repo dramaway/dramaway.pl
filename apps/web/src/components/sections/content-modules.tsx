@@ -93,16 +93,14 @@ function ModuleView({
             ))}
           </div>
         </div>
-        <div className="split-media-frame">
-          <Media
-            image={section.image}
-            alt={section.imageAlt}
-            variant="bleed"
-            ratio="portrait"
-            sizes="(min-width: 64rem) 34vw, 100vw"
-            className="split-media"
-          />
-        </div>
+        <Media
+          image={section.image}
+          alt={section.imageAlt}
+          variant="bleed"
+          ratio="portrait"
+          sizes="(min-width: 64rem) 34vw, 100vw"
+          className="split-media"
+        />
       </section>
     );
   }

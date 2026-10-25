@@ -708,12 +708,6 @@
     min-width: 0;
   }
 
-  @media (width >= 64rem) {
-    .split-media-frame {
-      display: contents;
-    }
-  }
-
   .hero-copy {
     margin-block-start: 2rem;
   }
@@ -777,70 +771,12 @@
   }
 
   @media (width < 64rem) {
-    .split:not(.hero) .split-media {
-      width: 100%;
-      margin-inline: 0;
-      aspect-ratio: 3 / 4;
-      border-radius: 0;
-    }
-
-    /* Photo between two dot rows: top right and bottom left, centred on its edges. */
-    .split-media-frame {
-      position: relative;
-      overflow-x: clip;
-      margin-block: calc(var(--dot-size) / 2 + 1rem);
-    }
-
-    /* Even rhythm: the frame's margin is the only gap between text and photo. */
-    .content-split {
-      gap: 0;
-    }
-
-    /* Same air under the dot band as every other section; tight above the photo. */
-    .content-split > .split-text {
-      padding-block: var(--spacing-section) 2rem;
-    }
-
-    .split-media-frame::before,
-    .split-media-frame::after {
-      content: "";
-      position: absolute;
-      z-index: 1;
-      width: round(down, 75%, var(--dot-size));
-      height: var(--dot-size);
-      background-image: radial-gradient(
-        circle closest-side,
-        var(--color-sand) 99%,
-        transparent 100%
-      );
-      background-size: var(--dot-size) var(--dot-size);
-      background-repeat: repeat-x;
-      pointer-events: none;
-    }
-
-    .split-media-frame::before {
-      inset-block-start: calc(var(--dot-size) / -2);
-      inset-inline-end: 0;
-    }
-
-    .split-media-frame::after {
-      inset-block-end: calc(var(--dot-size) / -2);
-      inset-inline-start: 0;
-    }
-
-    /*
-     * One gap under every band, whatever follows it: the band gives back its
-     * overlap and leaves 1rem. A tile blob (sitting 1.8rem above its text)
-     * then starts ~35px under the circles, same as after a photo's bottom
-     * row (whose frame margin is also 1rem past the dots).
-     */
-    .dot-band:not(.footer-dots) {
-      margin-block-end: 1rem;
-    }
-
-    /* The frame's own bottom row replaces the band after a photo module. */
-    .content-split + .dot-band {
-      display: none;
+    .split:not(.hero) > .split-media {
+      width: calc(100% - 2 * var(--page-pad));
+      max-height: var(--media-split-max);
+      margin-inline: auto;
+      aspect-ratio: 4 / 5;
+      border-radius: var(--radius-media);
     }
 
     /*
@@ -851,24 +787,12 @@
       display: grid;
       grid-template-columns: minmax(0, 1fr);
       grid-template-areas:
-        "media"
         "title"
+        "media"
         "copy";
-      gap: 1.5rem;
-      padding-inline: 0;
-      padding-block-start: 0;
-      padding-block-end: var(--spacing-section);
-    }
-
-    .hero-title,
-    .hero-heading,
-    .hero-copy {
+      gap: clamp(1.5rem, 4vw, 2rem);
       padding-inline: var(--page-pad);
-    }
-
-    /* The wrapper already carries the pad; do not stack it on the H1. */
-    .hero-heading .hero-title {
-      padding-inline: 0;
+      padding-block: var(--spacing-section);
     }
 
     .hero .split-text {
@@ -897,8 +821,8 @@
 
     .hero-media,
     .hero-media.media-portrait {
-      aspect-ratio: 3 / 4;
-      border-radius: 0;
+      aspect-ratio: 1;
+      border-radius: var(--radius-media);
     }
 
     /*
@@ -906,8 +830,8 @@
      * not inside it.
      */
     .hero-slider-frame {
-      aspect-ratio: 3 / 4;
-      border-radius: 0;
+      aspect-ratio: 1;
+      border-radius: var(--radius-media);
       overflow: hidden;
     }
 
@@ -923,10 +847,10 @@
      * right edge.
      */
     .hero-slider-controls {
-      position: absolute;
+      position: relative;
       z-index: 1;
-      inset-block-end: 1rem;
-      inset-inline-end: var(--page-pad);
+      margin-block-start: 0.75rem;
+      margin-inline-start: auto;
       max-width: none;
     }
 
@@ -947,14 +871,6 @@
       grid-template-areas:
         "title"
         "copy";
-      padding-inline: var(--page-pad);
-      padding-block-start: var(--spacing-section);
-    }
-
-    .hero.hero-stack .hero-title,
-    .hero.hero-stack .hero-heading,
-    .hero.hero-stack .hero-copy {
-      padding-inline: 0;
     }
   }
 
