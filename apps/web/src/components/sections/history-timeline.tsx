@@ -11,6 +11,7 @@ import {
 } from "react";
 import { SUBPAGE } from "@/lib/subpage-copy";
 import {
+  historyDampOpenness,
   historyHoldLastOpen,
   historyLastOpenLatch,
   historyOpenness,
@@ -35,6 +36,7 @@ const MARKER_TONES = [
   "bg-brand-7",
 ] as const;
 
+const OPEN_EASE = 0.22;
 const VERTICAL_REACH = 0.34;
 const HORIZONTAL_REACH = 0.32;
 const FOCAL_Y = 0.46;
@@ -236,22 +238,27 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
       track.style.transform = `translate3d(${historyTrackOffset(progress, travel)}px, 0, 0)`;
     };
 
-    const tick = () => {
+    const tick = (framesLeft: number) => {
       if (stopped) return;
       if (!readingRef.current) syncPin();
       const target = readingRef.current
         ? itemsRef.current.map(() => 1)
         : measure();
-      const changed = target.some((value, index) => value !== opennessRef.current[index]);
+      const next = historyDampOpenness(opennessRef.current, target, OPEN_EASE);
+      const changed = next.some((value, index) => value !== opennessRef.current[index]);
       if (changed) {
-        opennessRef.current = target;
-        setOpenness(target);
+        opennessRef.current = next;
+        setOpenness(next);
+      }
+      const settled = next.every((value, index) => value === target[index]);
+      if (!settled && framesLeft > 0) {
+        frame = window.requestAnimationFrame(() => tick(framesLeft - 1));
       }
     };
 
     const kick = () => {
       window.cancelAnimationFrame(frame);
-      frame = window.requestAnimationFrame(tick);
+      frame = window.requestAnimationFrame(() => tick(24));
     };
 
     kickRef.current = kick;
