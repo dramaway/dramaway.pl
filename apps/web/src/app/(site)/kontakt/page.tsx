@@ -39,6 +39,11 @@ export default async function ContactPage() {
       </PageHero>
       <Section aria-labelledby="contact-form-heading">
         <div className="contact-layout">
+          {body ? (
+            <aside className="contact-aside article-body">
+              <PortableBody value={body} />
+            </aside>
+          ) : null}
           <div className="contact-main">
             <h2
               id="contact-form-heading"
@@ -49,11 +54,6 @@ export default async function ContactPage() {
             <p className="mt-3">{SUBPAGE.contact.form.lead}</p>
             <ContactForm />
           </div>
-          {body ? (
-            <aside className="contact-aside article-body">
-              <PortableBody value={body} />
-            </aside>
-          ) : null}
         </div>
       </Section>
       <ContentModules sections={page.sections} variant="page" />

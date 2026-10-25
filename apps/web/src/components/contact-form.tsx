@@ -8,11 +8,7 @@ import {
 } from "@/lib/contact";
 import { SUBPAGE } from "@/lib/subpage-copy";
 
-type Status =
-  | "idle"
-  | "pending"
-  | "success"
-  | "error";
+type Status = "idle" | "pending" | "success" | "error";
 
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
@@ -59,32 +55,34 @@ export function ContactForm() {
 
   return (
     <form className="contact-form" onSubmit={onSubmit}>
-      <div className="contact-field">
-        <label htmlFor="contact-name">{copy.name}</label>
-        <input
-          id="contact-name"
-          name="name"
-          type="text"
-          autoComplete="name"
-          required
-          maxLength={CONTACT_LIMITS.name}
-          disabled={disabled}
-        />
+      <div className="contact-pair">
+        <div className="contact-field">
+          <label htmlFor="contact-name">{copy.name}</label>
+          <input
+            id="contact-name"
+            name="name"
+            type="text"
+            autoComplete="name"
+            required
+            maxLength={CONTACT_LIMITS.name}
+            disabled={disabled}
+          />
+        </div>
+        <div className="contact-field">
+          <label htmlFor="contact-email">{copy.email}</label>
+          <input
+            id="contact-email"
+            name="email"
+            type="email"
+            inputMode="email"
+            autoComplete="email"
+            required
+            maxLength={CONTACT_LIMITS.email}
+            disabled={disabled}
+          />
+        </div>
       </div>
       <div className="contact-field">
-        <label htmlFor="contact-email">{copy.email}</label>
-        <input
-          id="contact-email"
-          name="email"
-          type="email"
-          inputMode="email"
-          autoComplete="email"
-          required
-          maxLength={CONTACT_LIMITS.email}
-          disabled={disabled}
-        />
-      </div>
-      <div className="contact-field contact-field-wide">
         <label htmlFor="contact-subject">{copy.subject}</label>
         <input
           id="contact-subject"
@@ -94,7 +92,7 @@ export function ContactForm() {
           disabled={disabled}
         />
       </div>
-      <div className="contact-field contact-field-wide">
+      <div className="contact-field contact-field-grow">
         <label htmlFor="contact-message">{copy.message}</label>
         <textarea
           id="contact-message"
@@ -115,11 +113,11 @@ export function ContactForm() {
           autoComplete="off"
         />
       </div>
-      <label className="contact-consent contact-field-wide">
+      <label className="contact-consent">
         <input type="checkbox" name="consent" required disabled={disabled} />
         <span>{copy.consent}</span>
       </label>
-      <div className="contact-actions contact-field-wide">
+      <div className="contact-actions">
         <button type="submit" className="cta" disabled={disabled}>
           <span>{disabled ? copy.pending : copy.submit}</span>
           <span aria-hidden className="cta-rule" />
