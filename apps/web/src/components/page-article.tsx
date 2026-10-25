@@ -14,6 +14,9 @@ export function PageArticle({
   page: PageDetail;
   parent?: Crumb;
 }) {
+  const quoteBeforeBody = page.sections.at(-1)?.kind === "quote";
+  const quoteAfterBody = page.sectionsAfterBody[0]?.kind === "quote";
+
   return (
     <>
       <PageHero
@@ -25,7 +28,15 @@ export function PageArticle({
         parent={parent}
       />
       <ContentModules sections={page.sections} variant="page" />
-      <Section>
+      <Section
+        className={
+          quoteBeforeBody
+            ? "article-section-after-quote"
+            : quoteAfterBody
+              ? "article-section-before-quote"
+              : undefined
+        }
+      >
         <div className="article-body">
           <PortableBody value={page.body} />
         </div>

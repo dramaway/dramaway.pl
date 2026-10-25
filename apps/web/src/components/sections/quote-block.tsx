@@ -9,7 +9,7 @@ export function QuoteBlock({
   author: string | null;
 }) {
   return (
-    <Section>
+    <Section className="quote-section">
       <figure className="quote-block">
         <PaletteRow />
         <blockquote className="quote-text">{text}</blockquote>

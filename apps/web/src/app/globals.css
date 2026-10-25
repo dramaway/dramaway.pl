@@ -1994,6 +1994,18 @@
     gap: clamp(2rem, 4vw, 3.5rem);
   }
 
+  section.quote-section {
+    padding-block: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  section.article-section-after-quote {
+    padding-block-start: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  section.article-section-before-quote {
+    padding-block-end: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
   .quote-text,
   .quote-author {
     width: min(100%, calc(6 * var(--palette-size)));
