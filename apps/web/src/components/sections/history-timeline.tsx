@@ -11,10 +11,9 @@ import {
 } from "react";
 import { SUBPAGE } from "@/lib/subpage-copy";
 import {
-  historyDampOpenness,
   historyHoldLastOpen,
+  historyLastOpenLatch,
   historyOpenness,
-  historyScrollDirection,
   historyScrollOpenness,
   historyPinProgress,
   historyPinSpan,
@@ -36,7 +35,6 @@ const MARKER_TONES = [
   "bg-brand-7",
 ] as const;
 
-const OPEN_EASE = 0.22;
 const VERTICAL_REACH = 0.34;
 const HORIZONTAL_REACH = 0.32;
 const FOCAL_Y = 0.46;
@@ -102,7 +100,6 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
   const lastOpenRef = useRef(false);
   const scrollDirectionRef = useRef<"up" | "down" | null>(null);
   const lastScrollYRef = useRef(0);
-  const lastScrollHeightRef = useRef(0);
   opennessRef.current = openness;
   itemsRef.current = items;
   readingRef.current = reading;
@@ -179,10 +176,12 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
           release: viewport * RELEASE_Y,
           span: Math.max(1, viewport * CLOSE_SPAN),
         };
+        let lastMarkerTop = Number.NaN;
         const target = current.map((_, index) => {
           const marker = markerRefs.current[index];
           if (!marker) return 0;
           const rect = marker.getBoundingClientRect();
+          if (index === current.length - 1) lastMarkerTop = rect.top;
           const center = rect.top + rect.height / 2;
           const panel = itemRefs.current[index]?.querySelector<HTMLElement>(".history-panel");
           let length = rect.height / 2;
@@ -194,15 +193,14 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
         });
         const lastIndex = target.length - 1;
         if (lastIndex >= 0) {
-          if (scrollDirectionRef.current === "up") lastOpenRef.current = false;
-          if (scrollDirectionRef.current === "down" && target[lastIndex] > 0) {
-            lastOpenRef.current = true;
-          }
-          target[lastIndex] = historyHoldLastOpen(
-            target[lastIndex],
+          lastOpenRef.current = historyLastOpenLatch(
             lastOpenRef.current,
+            target[lastIndex],
             scrollDirectionRef.current,
+            lastMarkerTop,
+            viewport,
           );
+          target[lastIndex] = historyHoldLastOpen(target[lastIndex], lastOpenRef.current);
         }
         return target;
       }
@@ -238,46 +236,32 @@ export function HistoryTimeline({ items, layout, spaced = false }: HistoryTimeli
       track.style.transform = `translate3d(${historyTrackOffset(progress, travel)}px, 0, 0)`;
     };
 
-    const tick = (framesLeft: number) => {
+    const tick = () => {
       if (stopped) return;
       if (!readingRef.current) syncPin();
       const target = readingRef.current
         ? itemsRef.current.map(() => 1)
         : measure();
-      const next = historyDampOpenness(opennessRef.current, target, OPEN_EASE);
-      const changed = next.some((value, index) => value !== opennessRef.current[index]);
+      const changed = target.some((value, index) => value !== opennessRef.current[index]);
       if (changed) {
-        opennessRef.current = next;
-        setOpenness(next);
-      }
-      const settled = next.every((value, index) => value === target[index]);
-      if (!settled && framesLeft > 0) {
-        frame = window.requestAnimationFrame(() => tick(framesLeft - 1));
+        opennessRef.current = target;
+        setOpenness(target);
       }
     };
 
     const kick = () => {
       window.cancelAnimationFrame(frame);
-      frame = window.requestAnimationFrame(() => tick(24));
+      frame = window.requestAnimationFrame(tick);
     };
 
     kickRef.current = kick;
     lastScrollYRef.current = window.scrollY;
-    lastScrollHeightRef.current = document.documentElement.scrollHeight;
     kick();
     const onScroll = () => {
       const scrollY = window.scrollY;
-      const scrollHeight = document.documentElement.scrollHeight;
-      scrollDirectionRef.current = historyScrollDirection(
-        lastScrollYRef.current,
-        scrollY,
-        lastScrollHeightRef.current,
-        scrollHeight,
-        lastOpenRef.current,
-        scrollDirectionRef.current,
-      );
+      if (scrollY > lastScrollYRef.current) scrollDirectionRef.current = "down";
+      if (scrollY < lastScrollYRef.current) scrollDirectionRef.current = "up";
       lastScrollYRef.current = scrollY;
-      lastScrollHeightRef.current = scrollHeight;
       kick();
     };
     window.addEventListener("scroll", onScroll, { passive: true });

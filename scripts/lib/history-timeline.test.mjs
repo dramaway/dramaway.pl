@@ -3,9 +3,9 @@ import { test } from "node:test";
 import {
   historyDampOpenness,
   historyHoldLastOpen,
+  historyLastOpenLatch,
   historyMergeOpenness,
   historyOpenness,
-  historyScrollDirection,
   historyScrollOpenness,
   historyPinProgress,
   historyPinSpan,
@@ -98,17 +98,15 @@ test("a long body keeps its year open until the end of the body rises", () => {
 });
 
 test("the last year stays open while scrolling down after it has opened", () => {
-  assert.equal(historyHoldLastOpen(0, true, "down"), 1);
-  assert.equal(historyHoldLastOpen(0.4, true, "down"), 1);
-  assert.equal(historyHoldLastOpen(0.4, true, "up"), 0.4);
-  assert.equal(historyHoldLastOpen(0.4, false, "down"), 0.4);
+  assert.equal(historyHoldLastOpen(0, true), 1);
+  assert.equal(historyHoldLastOpen(0.4, true), 1);
+  assert.equal(historyHoldLastOpen(0.4, false), 0.4);
 });
 
-test("a document shrink does not look like an upward scroll", () => {
-  assert.equal(historyScrollDirection(100, 180, 1000, 1200, false, null), "down");
-  assert.equal(historyScrollDirection(180, 100, 1200, 1200, true, "down"), "up");
-  assert.equal(historyScrollDirection(180, 100, 1200, 1100, true, "down"), "down");
-  assert.equal(historyScrollDirection(180, 180, 1200, 1100, true, "down"), "down");
+test("the last year stays open on the way up until it is below the viewport", () => {
+  assert.equal(historyLastOpenLatch(false, 0.4, "down", 400, 800), true);
+  assert.equal(historyLastOpenLatch(true, 0, "up", 400, 800), true);
+  assert.equal(historyLastOpenLatch(true, 0, "up", 800, 800), false);
 });
 
 test("vertical openness never jumps between nearby scroll positions", () => {

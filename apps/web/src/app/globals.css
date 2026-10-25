@@ -2411,6 +2411,7 @@
     min-width: 0;
     height: calc(var(--open, 0) * var(--panel, 0) * 1px);
     overflow: hidden;
+    transition: height 180ms ease-out;
     /* Veil stays until --open hits 1, then the fade length is zero.
        Cap it so a short partial block still shows its first lines. */
     --history-veil: clamp(0, (1 - var(--open, 0)) * 24, 1);
@@ -2522,6 +2523,12 @@
     .history-reveal .history-item:not([data-seen]) {
       opacity: 0;
       translate: 0 1.25rem;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .history-panel {
+        transition: none;
+      }
     }
 
     .history-reveal .history-item[data-seen] {

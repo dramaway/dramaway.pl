@@ -136,35 +136,33 @@ export function historyScrollOpenness(
   return Math.min(rise, fall);
 }
 
-export function historyScrollDirection(
-  previousY: number,
-  currentY: number,
-  previousHeight: number,
-  currentHeight: number,
-  lastOpen: boolean,
-  currentDirection: "up" | "down" | null,
-): "up" | "down" | null {
-  if (currentY > previousY) return "down";
+/**
+ * Once the last vertical entry has opened, keep it open until its marker has
+ * moved below the viewport on the way back up. Collapsing it while it is in
+ * view would shorten the document underneath the user's scroll position.
+ */
+export function historyLastOpenLatch(
+  latched: boolean,
+  openness: number,
+  scrollDirection: "up" | "down" | null,
+  markerTop: number,
+  viewport: number,
+): boolean {
+  if (!latched && scrollDirection === "down" && openness > 0) return true;
   if (
-    currentY < previousY &&
-    !(lastOpen && currentHeight < previousHeight)
+    latched &&
+    scrollDirection === "up" &&
+    Number.isFinite(markerTop) &&
+    Number.isFinite(viewport) &&
+    markerTop >= viewport
   ) {
-    return "up";
+    return false;
   }
-  return currentDirection;
+  return latched;
 }
 
-/**
- * Once the last vertical entry has opened while scrolling down, keep it open.
- * This prevents its collapsing height from shifting the document at its end.
- */
-export function historyHoldLastOpen(
-  openness: number,
-  latched: boolean,
-  scrollDirection: "up" | "down" | null,
-): number {
-  if (latched && scrollDirection === "down") return 1;
-  return clamp01(openness);
+export function historyHoldLastOpen(openness: number, latched: boolean): number {
+  return latched ? 1 : clamp01(openness);
 }
 
 /** Ease toward the target. Snaps when the gap is under 0.01. */
