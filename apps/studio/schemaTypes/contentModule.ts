@@ -281,10 +281,45 @@ export const newsFeedModule = defineType({
   },
 });
 
+export const quoteModule = defineType({
+  name: "quoteModule",
+  title: "Cytat",
+  type: "object",
+  fields: [
+    defineField({
+      name: "text",
+      title: "Cytat",
+      type: "text",
+      rows: 4,
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "author",
+      title: "Autor",
+      type: "string",
+      description: "Puste = bez podpisu.",
+    }),
+  ],
+  preview: {
+    select: { text: "text", author: "author" },
+    prepare(selection: { text?: string; author?: string }) {
+      return {
+        title: selection.text?.trim() || "Cytat",
+        subtitle: selection.author?.trim() || "Cytat",
+      };
+    },
+  },
+});
+
 /** Shared `sections` members for the homepage, page documents, and /projekty. */
 export function contentSectionMembers() {
   return [
     defineArrayMember({ type: "contentModule" }),
     defineArrayMember({ type: "newsFeedModule" }),
   ];
+}
+
+/** Page documents also take quotes (before and after the article). */
+export function pageSectionMembers() {
+  return [...contentSectionMembers(), defineArrayMember({ type: "quoteModule" })];
 }

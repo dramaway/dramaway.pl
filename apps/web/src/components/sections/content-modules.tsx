@@ -2,6 +2,7 @@ import { Fragment, type ReactNode } from "react";
 import { Section } from "@/components/layout/section";
 import { ContentTile } from "@/components/sections/content-tile";
 import { HomeNews } from "@/components/sections/home-news";
+import { QuoteBlock } from "@/components/sections/quote-block";
 import { DotBand } from "@/components/visual/dot-band";
 import { Media } from "@/components/visual/media";
 import { PaletteRow } from "@/components/visual/palette-row";
@@ -19,7 +20,9 @@ type ContentModulesProps = {
 type PlacedModule = Extract<ResolvedSection, { kind: "module" }> & {
   imageOnLeft: boolean;
 };
-type PlacedSection = Extract<ResolvedSection, { kind: "news" }> | PlacedModule;
+type PlacedSection =
+  | Extract<ResolvedSection, { kind: "news" | "quote" }>
+  | PlacedModule;
 
 function place(sections: ResolvedSection[]): PlacedSection[] {
   let images = 0;
@@ -62,6 +65,10 @@ function ModuleView({
     );
   }
 
+  if (section.kind === "quote") {
+    return <QuoteBlock text={section.text} author={section.author} />;
+  }
+
   const clamp = section.tiles.length >= 2;
 
   if (section.image) {
@@ -86,14 +93,16 @@ function ModuleView({
             ))}
           </div>
         </div>
-        <Media
-          image={section.image}
-          alt={section.imageAlt}
-          variant="bleed"
-          ratio="portrait"
-          sizes="(min-width: 64rem) 34vw, 100vw"
-          className="split-media"
-        />
+        <div className="split-media-frame">
+          <Media
+            image={section.image}
+            alt={section.imageAlt}
+            variant="bleed"
+            ratio="portrait"
+            sizes="(min-width: 64rem) 34vw, 100vw"
+            className="split-media"
+          />
+        </div>
       </section>
     );
   }

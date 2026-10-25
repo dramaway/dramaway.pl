@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { contentSectionMembers } from "./contentModule";
+import { pageSectionMembers } from "./contentModule";
 import { heroSlidesField } from "./heroMedia";
 
 export const page = defineType({
@@ -46,9 +46,16 @@ export const page = defineType({
       title: "Sekcje",
       type: "array",
       description: "Moduły nad treścią artykułu. Pusta lista = sam artykuł.",
-      of: contentSectionMembers(),
+      of: pageSectionMembers(),
     }),
     defineField({ name: "body", title: "Body", type: "blockContent" }),
+    defineField({
+      name: "sectionsAfterBody",
+      title: "Sekcje po treści",
+      type: "array",
+      description: "Moduły wyświetlane pod treścią artykułu.",
+      of: pageSectionMembers(),
+    }),
   ],
   preview: {
     select: { title: "title", slug: "slug.current" },

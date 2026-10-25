@@ -107,6 +107,8 @@ export const contentSectionsProjection = `{
   heading,
   limit,
   sources,
+  text,
+  author,
   textLayout,
   image,
   tiles[] {
@@ -165,6 +167,7 @@ export const pageBySlugQuery = `*[_type == "page" && slug.current == $slug][0] {
     array::join(string::split(pt::text(body), "")[0...${EXCERPT_FALLBACK_MAX}], "")
   ),
   sections[] ${contentSectionsProjection},
+  sectionsAfterBody[] ${contentSectionsProjection},
   body[] ${portableBodyProjection}
 }`;
 
