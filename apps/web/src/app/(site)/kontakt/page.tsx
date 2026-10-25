@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { ContactForm } from "@/components/contact-form";
 import { PageHero } from "@/components/sections/page-hero";
 import { ContentModules } from "@/components/sections/content-modules";
 import { Section } from "@/components/layout/section";
@@ -30,13 +31,31 @@ export default async function ContactPage() {
     <>
       <PageHero
         title={cmsText(page.title)}
-        lead={body ? null : cmsText(page.heroLead)}
+        lead={cmsText(page.heroLead)}
         ctaLabel={page.heroCtaLabel}
         ctaHref={page.heroCtaHref}
         slides={resolveHeroSlides(page.heroImages, cmsText(page.title) || "")}
       >
-        {body ? <PortableBody value={body} /> : null}
       </PageHero>
+      <Section aria-labelledby="contact-form-heading">
+        <div className="contact-layout">
+          {body ? (
+            <aside className="contact-aside article-body">
+              <PortableBody value={body} />
+            </aside>
+          ) : null}
+          <div className="contact-main">
+            <h2
+              id="contact-form-heading"
+              className="font-display text-h3 font-black"
+            >
+              {SUBPAGE.contact.form.heading}
+            </h2>
+            <p className="mt-3">{SUBPAGE.contact.form.lead}</p>
+            <ContactForm />
+          </div>
+        </div>
+      </Section>
       <ContentModules sections={page.sections} variant="page" />
       {withEmail.length > 0 ? (
         <Section>
