@@ -771,6 +771,16 @@
   }
 
   @media (width < 64rem) {
+    /*
+     * Keep the first text after a dot band one and a half rem below its
+     * lower row. The band overlaps the next section by 0.55 diameters, so
+     * restore that overlap before adding the readable gap.
+     */
+    .dot-band + .content-split > .split-text,
+    main > :has(> .dot-band) + .content-split > .split-text {
+      padding-block-start: calc(var(--dot-size) * 0.55 + 1.5rem);
+    }
+
     .split:not(.hero) > .split-media {
       width: calc(100% - 2 * var(--page-pad));
       max-height: var(--media-split-max);
@@ -3808,6 +3818,48 @@
    * pair of sections left holes (first between the circles and Zarząd); the
    * bigger breaks on that page are carried by DotBand and PaletteRow.
    */
+  @media (width < 64rem) {
+    .dot-band + .py-section,
+    main > :has(> .dot-band) + .py-section,
+    main
+      > [data-no-palette]
+      > [data-split-hero]:has(> .dot-band)
+      + .py-section {
+      padding-block-start: calc(var(--dot-size) * 0.55 + 1.5rem);
+    }
+
+    .dot-band + .py-section .page > :first-child .portable-body,
+    main > :has(> .dot-band) + .py-section .page > :first-child .portable-body,
+    main
+      > [data-no-palette]
+      > [data-split-hero]:has(> .dot-band)
+      + .py-section
+      .page
+      > :first-child
+      .portable-body {
+      margin-block-start: 0;
+    }
+
+    .dot-band + .py-section .portable-body > :first-child,
+    main
+      > :has(> .dot-band)
+      + .py-section
+      .page
+      > :first-child
+      .portable-body
+      > :first-child,
+    main
+      > [data-no-palette]
+      > [data-split-hero]:has(> .dot-band)
+      + .py-section
+      .page
+      > :first-child
+      .portable-body
+      > :first-child {
+      margin-block-start: 0;
+    }
+  }
+
   .fundacja-flow {
     padding-block: clamp(2.25rem, 5vw, 4rem);
   }
