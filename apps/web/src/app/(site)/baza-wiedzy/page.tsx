@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PageArticle } from "@/components/page-article";
 import { Section } from "@/components/layout/section";
+import { DotBand } from "@/components/visual/dot-band";
 import {
   CzytelniaStack,
   type CzytelniaRowItem,
@@ -124,7 +125,7 @@ export default async function KnowledgeHubPage({
       />
       {featured.length > 0 ? (
         <>
-          <div className="library-dot-separator" aria-hidden />
+          <DotBand className="library-dot-band" />
           <Section className="library-section">
             <h2 className="font-display text-h2 font-black">
               {copy.featuredHeading}
@@ -133,7 +134,7 @@ export default async function KnowledgeHubPage({
               <CzytelniaStack items={toCzytelniaRows(featured)} />
             </div>
           </Section>
-          <div className="library-dot-separator" aria-hidden />
+          <DotBand className="library-dot-band" />
         </>
       ) : null}
       <Section id="pelna-biblioteka" className="library-section scroll-mt-24">
