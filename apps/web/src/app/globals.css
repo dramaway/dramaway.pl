@@ -2021,7 +2021,7 @@
 
   .quote-text {
     font-family: var(--font-display);
-    font-size: var(--text-h3);
+    font-size: var(--text-body);
     font-weight: 600;
     line-height: 1.9;
   }
