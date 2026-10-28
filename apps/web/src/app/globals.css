@@ -1991,24 +1991,30 @@
   /* Quote section: keep text inside the visual width of the palette row. */
   .quote-block {
     display: grid;
-    gap: clamp(2rem, 4vw, 3.5rem);
+    gap: clamp(1rem, 2vw, 1.5rem);
   }
 
   section.quote-section {
-    padding-block: clamp(1.5rem, 3vw, 2.5rem);
+    padding-block: clamp(0.75rem, 1.5vw, 1.25rem);
   }
 
   section.article-section-after-quote {
-    padding-block-start: clamp(1.5rem, 3vw, 2.5rem);
+    padding-block-start: clamp(0.75rem, 1.5vw, 1.25rem);
   }
 
   section.article-section-before-quote {
-    padding-block-end: clamp(1.5rem, 3vw, 2.5rem);
+    padding-block-end: clamp(0.75rem, 1.5vw, 1.25rem);
   }
 
   .quote-text,
   .quote-author {
-    width: min(100%, calc(6 * var(--palette-size)));
+    width: min(
+      100%,
+      calc(
+        var(--palette-size) + var(--palette-size) + var(--palette-size) +
+          var(--palette-size) + var(--palette-size) + var(--palette-size)
+      )
+    );
     margin-inline: auto;
     white-space: pre-line;
   }
