@@ -3926,17 +3926,29 @@ h3 {
 }
 
 @media (hover: hover) {
-  h1:hover,
-  h2:hover,
-  h3:hover {
+  h1:hover {
     color: var(--color-brand-1);
+  }
+
+  h2:hover {
+    color: var(--color-brand-2);
+  }
+
+  h3:hover {
+    color: var(--color-brand-4);
   }
 }
 
-h1:focus-within,
-h2:focus-within,
-h3:focus-within {
+h1:focus-within {
   color: var(--color-brand-1);
+}
+
+h2:focus-within {
+  color: var(--color-brand-2);
+}
+
+h3:focus-within {
+  color: var(--color-brand-4);
 }
 
 @media (prefers-reduced-motion: reduce) {
