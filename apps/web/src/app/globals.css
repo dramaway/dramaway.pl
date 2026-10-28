@@ -3956,7 +3956,7 @@
 
 @media (width < 64rem) {
   .dot-band {
-    margin-block: var(--spacing-mobile-rhythm);
+    margin-block: var(--spacing-mobile-rhythm) 0;
   }
 
   .hero:not(.hero-stack) {
@@ -3970,7 +3970,7 @@
   }
 
   .dot-band + .content-split > .split-text {
-    padding-block-start: 0;
+    padding-block-start: var(--spacing-mobile-rhythm);
   }
 
   .content-split > .split-text {
@@ -3982,19 +3982,24 @@
   }
 
   .dot-band + .py-section {
-    padding-block-start: 0;
+    padding-block-start: var(--spacing-mobile-rhythm);
   }
 
-  [data-split-hero] + .py-section {
-    padding-block-start: 0;
+  [data-split-hero] + .py-section:not(.fundacja-values) {
+    padding-block-start: var(--spacing-mobile-rhythm);
   }
 
-  .fundacja-flow {
+  .stack,
+  .blob-row-thumbnails {
+    gap: var(--spacing-mobile-rhythm);
+  }
+
+  .fundacja-flow:not(.fundacja-values) {
     padding-block: calc(var(--spacing-mobile-rhythm) / 2);
   }
 
-  .fundacja-gallery {
-    padding-block: calc(var(--spacing-mobile-rhythm) / 2);
+  .fundacja-values {
+    padding-block-end: var(--spacing-mobile-rhythm);
   }
 
   .values-row-after-copy {
@@ -4007,6 +4012,11 @@
 
   .team-bio {
     gap: var(--spacing-mobile-rhythm);
+  }
+
+  .team-block + .team-block {
+    margin-block-start: var(--spacing-mobile-rhythm);
+    padding-block-start: 0;
   }
 
   .team-row-name {
