@@ -3837,6 +3837,14 @@
     padding-block-end: 0;
   }
 
+  .project-archive-content .article-body {
+    max-width: var(--content-narrow);
+  }
+
+  .project-archive-content .body-figure {
+    max-width: 100%;
+  }
+
   .project-palette {
     padding-block: clamp(2rem, 4vw, 3rem);
   }

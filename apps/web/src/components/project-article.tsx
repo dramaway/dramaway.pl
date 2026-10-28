@@ -94,6 +94,12 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
     (edition) => edition.slug,
   );
   const isArtGeneracje = project.slug === "art-generacje";
+  const projectCopyClass =
+    project.status === "archive"
+      ? "project-archive-content"
+      : isArtGeneracje
+        ? "project-article-copy"
+        : undefined;
   const rows = editions.map((edition) => ({
     title: editionHeading(edition),
     lead: edition.summary?.trim() || null,
@@ -118,7 +124,7 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
         parent={{ href: "/projekty", label: "Projekty" }}
       />
       {hasPortableContent(project.body) ? (
-        <Section className={isArtGeneracje ? "project-article-copy" : undefined}>
+        <Section className={projectCopyClass}>
           <div className="article-body">
             <PortableBody value={project.body} />
           </div>
@@ -135,7 +141,7 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
         </section>
       ) : null}
       {preamble || foldItems.length > 0 ? (
-        <Section>
+        <Section className={projectCopyClass}>
           <div className="article-body">
             {preamble ? <PortableBody value={preamble} /> : null}
             <FoldList items={foldItems} />
