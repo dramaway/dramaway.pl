@@ -3811,6 +3811,10 @@
     padding-block: clamp(2.25rem, 5vw, 4rem);
   }
 
+  .fundacja-gallery {
+    padding-block: 0;
+  }
+
   /*
    * The hero DotBand overlaps this section by 0.55 diameters, so the shared
    * rhythm left about 1.2rem of white under the sand row. Put the lead a
