@@ -3970,7 +3970,11 @@
   }
 
   .dot-band + .content-split > .split-text {
-    padding-block-start: var(--spacing-mobile-rhythm);
+    padding-block-start: calc(var(--spacing-mobile-rhythm) * 2);
+  }
+
+  .dot-band + .content-split .blob {
+    inset-block-start: calc(-1.8rem + var(--spacing-mobile-rhythm));
   }
 
   .content-split > .split-text {
