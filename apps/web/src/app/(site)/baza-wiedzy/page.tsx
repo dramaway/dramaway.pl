@@ -15,6 +15,7 @@ import {
   firstSearchParam,
   formatsWithItems,
   groupPublicationsByCategory,
+  orderFeaturedPublications,
   resolvePublicationCategory,
   resolvePublicationFormat,
 } from "@/lib/czytelnia-filters";
@@ -77,6 +78,11 @@ export default async function KnowledgeHubPage({
     getPublications(),
     getReadingMethods(),
   ]);
+  if (!page) notFound();
+  const featured = orderFeaturedPublications(
+    publications,
+    page.featuredPublicationIds,
+  );
   const available = formatsWithItems(publications);
   const rodzaj = resolvePublicationFormat(
     firstSearchParam(params.rodzaj),
@@ -107,8 +113,6 @@ export default async function KnowledgeHubPage({
         )
       : undefined;
 
-  if (!page) notFound();
-
   return (
     <>
       <PageArticle
@@ -118,6 +122,16 @@ export default async function KnowledgeHubPage({
           heroCtaHref: `#${LIBRARY_ANCHOR}`,
         }}
       />
+      {featured.length > 0 ? (
+        <Section className="library-section">
+          <h2 className="font-display text-h2 font-black">
+            {copy.featuredHeading}
+          </h2>
+          <div className="stack-wide">
+            <CzytelniaStack items={toCzytelniaRows(featured)} />
+          </div>
+        </Section>
+      ) : null}
       <Section id="pelna-biblioteka" className="library-section scroll-mt-24">
         <h2 className="font-display text-h2 font-black">
           {copy.heading}

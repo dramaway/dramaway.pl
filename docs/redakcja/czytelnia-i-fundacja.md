@@ -40,7 +40,7 @@ Okładka kółka na spisie to **pierwszy obrazek w treści** (**Body**). Osobneg
 
 ### Przyciski rodzaju i sekcje kategorii
 
-Wynikają z pól **Format** i **Categories**. Nie ma osobnego ekranu do układania Czytelni. Podstrona `/czytelnia` już nie istnieje: przekierowuje na Bazę wiedzy, a spis stoi pod jej tekstem. Dokument listingu **Czytelnia** (hero) nie jest już pokazywany.
+Przyciski rodzaju i sekcje kategorii wynikają z pól **Format** i **Categories**. Nad biblioteką może być też sekcja **Polecane**. Ustawia się ją w dokumencie **Baza wiedzy**: dodaj publikacje do pola **Polecane publikacje** i przeciągnij je na liście w wybranej kolejności. Można wybrać tylko publikacje zaznaczone jako **Listed in Czytelnia**. Polecane pozycje pokażą się w tej sekcji oraz ponownie w **Pełnej bibliotece**. Pusta lista ukrywa sekcję. Podstrona `/czytelnia` już nie istnieje: przekierowuje na Bazę wiedzy, a spis stoi pod jej tekstem. Dokument listingu **Czytelnia** (hero) nie jest już pokazywany.
 
 Żeby z Bazy wiedzy albo innego tekstu otworzyć jedną kategorię, wstaw przycisk **Button**: cel **Dokument**, listing **Czytelnia**, a w **Zaawansowane** → **Parametry** wpisz `kategoria=…` (na przykład `kategoria=teatr-forum`). Przycisk sam prowadzi do nagłówka „Pełna biblioteka” na Bazie wiedzy; kategorie są tam kafelkami, a wybrana pokazuje tylko swoje teksty. Tabela wartości: [Tekst](tekst.md#zaawansowane-kotwica-i-parametry). Bez parametru widać wszystkie kategorie jedna pod drugą.
 

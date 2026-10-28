@@ -106,6 +106,17 @@ export function filterPublicationsByFormat(
   );
 }
 
+export function orderFeaturedPublications(
+  publications: PublicationListItem[],
+  featuredIds: readonly (string | null)[] | null | undefined,
+): PublicationListItem[] {
+  const byId = new Map(publications.map((publication) => [publication._id, publication]));
+  return (featuredIds ?? []).flatMap((id) => {
+    const publication = id ? byId.get(id) : undefined;
+    return publication ? [publication] : [];
+  });
+}
+
 function methodSlugs(item: PublicationListItem): string[] {
   return (item.methods ?? [])
     .map((method) => method.slug)
