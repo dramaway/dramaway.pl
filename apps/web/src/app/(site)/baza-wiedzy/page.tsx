@@ -123,14 +123,18 @@ export default async function KnowledgeHubPage({
         }}
       />
       {featured.length > 0 ? (
-        <Section className="library-section">
-          <h2 className="font-display text-h2 font-black">
-            {copy.featuredHeading}
-          </h2>
-          <div className="stack-wide">
-            <CzytelniaStack items={toCzytelniaRows(featured)} />
-          </div>
-        </Section>
+        <>
+          <div className="library-dot-separator" aria-hidden />
+          <Section className="library-section">
+            <h2 className="font-display text-h2 font-black">
+              {copy.featuredHeading}
+            </h2>
+            <div className="stack-wide mt-5">
+              <CzytelniaStack items={toCzytelniaRows(featured)} />
+            </div>
+          </Section>
+          <div className="library-dot-separator" aria-hidden />
+        </>
       ) : null}
       <Section id="pelna-biblioteka" className="library-section scroll-mt-24">
         <h2 className="font-display text-h2 font-black">

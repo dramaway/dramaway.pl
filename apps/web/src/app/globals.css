@@ -3753,6 +3753,22 @@
     padding-block-start: 0;
   }
 
+  .library-dot-separator {
+    --library-dot-size: clamp(0.5rem, 0.8vw, 0.75rem);
+    width: calc(var(--library-dot-size) * 7.5);
+    height: var(--library-dot-size);
+    margin-block-start: calc(var(--spacing-section) * -0.5);
+    margin-block-end: calc(var(--spacing-section) * 0.5);
+    margin-inline: auto;
+    background-image: radial-gradient(
+      circle,
+      color-mix(in srgb, var(--color-ink) 25%, transparent) 45%,
+      transparent 50%
+    );
+    background-size: calc(var(--library-dot-size) * 2.5) var(--library-dot-size);
+    background-repeat: repeat-x;
+  }
+
   .pub-cat + .pub-cat {
     margin-block-start: 1.75rem;
     padding-block-start: 1.75rem;
