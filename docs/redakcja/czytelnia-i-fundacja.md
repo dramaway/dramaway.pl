@@ -46,9 +46,9 @@ Wynikają z pól **Format** i **Categories**. Nie ma osobnego ekranu do układan
 
 ## O fundacji
 
-Dokument **O fundacji**, adres `/fundacja`. Zakładki: Hero, Metody i wartości, Zespół, Historia, Dokumenty. Pusta lista w zakładce chowa cały blok. Hero wypełnia się tak jak wszędzie: [Strony](strony.md#hero).
+Dokument **O fundacji**, adres `/fundacja`. Zakładki: Hero, Metody i wartości, Zespół, Galeria, Historia, Dokumenty. Pusta lista w zakładce chowa cały blok. Hero wypełnia się tak jak wszędzie: [Strony](strony.md#hero).
 
-<!-- screen: fundacja-grupy | Zakładki dokumentu O fundacji: Hero, Metody i wartości, Zespół, Historia, Dokumenty | Widać, że jedna strona jest podzielona na te pięć grup -->
+<!-- screen: fundacja-grupy | Przykład podziału dokumentu O fundacji na zakładki (zrzut sprzed dodania Galerii) | Widać, że jedna strona jest podzielona na grupy pól -->
 
 ![Zakładki dokumentu O fundacji](img/fundacja-grupy.png)
 
@@ -63,6 +63,11 @@ Kręgi z krótką nazwą. Pusta lista oznacza brak kręgów. Na telefonie kręgi
 - **Tekst pod zdjęciami**: opis zespołu, społeczności, cytaty. Role w tekście układa się listą **Roles** albo blokiem **Wykaz twórców** ([Tekst](tekst.md)). Nagłówki H2 w tym polu wyglądają na stronie jak tytuł sekcji.
 
 Sekcja znika tylko wtedy, gdy puste są i osoby, i tekst. Osobna strona `/zespol` to listing wszystkich osób i nie zastępuje tej sekcji.
+
+### Galeria
+
+- **Nagłówek**: opcjonalny tytuł galerii.
+- **Zdjęcia**: dodaj w kolejności, w jakiej mają się wyświetlać. Galeria pojawia się między sekcją Zespół (w tym Społeczność) a Historią. Zdjęcia otwierają się w powiększeniu; pusta lista chowa galerię.
 
 ### Historia
 

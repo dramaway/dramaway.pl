@@ -129,6 +129,10 @@ export const getResolvedAboutPage = cache(
         body: resolvePortable(cms?.team?.body),
         people: teamPeople,
       },
+      gallery: {
+        heading: cmsText(cms?.gallery?.heading),
+        images: cms?.gallery?.images ?? [],
+      },
       history: {
         heading: cmsText(cms?.history?.heading),
         lead: resolvePortable(cms?.history?.lead),

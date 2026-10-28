@@ -453,6 +453,10 @@ export type AboutPage = {
     body: PortableContent | null;
     people: PersonListItem[] | null;
   } | null;
+  gallery: {
+    heading: string | null;
+    images: SanityImage[] | null;
+  } | null;
   history: {
     heading: string | null;
     layout?: string | null;
@@ -497,6 +501,10 @@ export type ResolvedAboutPage = {
     ctaLabel: string | null;
     body: PortableContent | null;
     people: PersonListItem[];
+  };
+  gallery: {
+    heading: string | null;
+    images: SanityImage[];
   };
   history: {
     heading: string | null;

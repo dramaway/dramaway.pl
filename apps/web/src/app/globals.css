@@ -3805,8 +3805,7 @@
 
   /*
    * The single vertical rhythm for /fundacja. Full py-section between every
-   * pair of sections left holes (first between the circles and Zarząd); the
-   * bigger breaks on that page are carried by DotBand and PaletteRow.
+   * pair of sections left holes (first between the circles and Zarząd).
    */
   .fundacja-flow {
     padding-block: clamp(2.25rem, 5vw, 4rem);
