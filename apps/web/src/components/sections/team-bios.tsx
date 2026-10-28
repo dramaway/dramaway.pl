@@ -29,7 +29,7 @@ const SECTION_HEADING = "font-display text-h3 font-black";
 
 /**
  * Zarząd, then Zespół, then anything else under its own H2 — one column of
- * blocks with a shared rhythm and hairlines between them. Every block uses
+ * blocks with a shared rhythm. Every block uses
  * the same two tracks from lg: the two bio cards fill them side by side, and
  * the staff roster flows across them, so nothing hugs the left edge.
  *
