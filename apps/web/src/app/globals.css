@@ -2708,14 +2708,13 @@
 
   /*
    * /fundacja team: Zarząd, Zespół, then any further H2 of `team.body`, one
-   * under the other. One rhythm and a hairline between blocks. From lg every
+   * under the other. One rhythm between blocks. From lg every
    * block shares two tracks of the `.stack-wide` column, so the bio cards
    * and the roster columns start on the same verticals.
    */
   .team-block + .team-block {
     margin-block-start: clamp(2.5rem, 4.5vw, 3.5rem);
     padding-block-start: clamp(2rem, 3.5vw, 2.75rem);
-    border-block-start: 1px solid var(--rule-color);
   }
 
   .team-block-body {
