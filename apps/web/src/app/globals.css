@@ -1819,8 +1819,8 @@
   }
 
   .media.blob-row-thumbnail-image {
-    aspect-ratio: 1;
-    border-radius: 50%;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-media);
   }
 
   /*
@@ -2095,8 +2095,8 @@
   .pub-mark {
     position: relative;
     width: var(--pub-mark-size);
-    aspect-ratio: 1;
-    border-radius: 50%;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-media);
     overflow: hidden;
     background-color: var(--color-sand);
   }
