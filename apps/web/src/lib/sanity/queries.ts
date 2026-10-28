@@ -168,6 +168,7 @@ export const pageBySlugQuery = `*[_type == "page" && slug.current == $slug][0] {
   ),
   sections[] ${contentSectionsProjection},
   sectionsAfterBody[] ${contentSectionsProjection},
+  "featuredPublicationIds": featuredPublications[]._ref,
   body[] ${portableBodyProjection}
 }`;
 

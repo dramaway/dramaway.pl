@@ -50,6 +50,31 @@ export const page = defineType({
     }),
     defineField({ name: "body", title: "Body", type: "blockContent" }),
     defineField({
+      name: "featuredPublications",
+      title: "Polecane publikacje",
+      type: "array",
+      hidden: ({ document }) => {
+        const slug = document?.slug;
+        if (!slug || typeof slug !== "object" || !("current" in slug)) {
+          return true;
+        }
+        return slug.current !== "baza-wiedzy";
+      },
+      description:
+        "Kolejność na liście jest kolejnością na stronie. Polecane publikacje pokażą się też w Pełnej bibliotece.",
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "publication" }],
+          options: {
+            disableNew: true,
+            filter: "listed == true",
+          },
+        },
+      ],
+      validation: (rule) => rule.unique(),
+    }),
+    defineField({
       name: "sectionsAfterBody",
       title: "Sekcje po treści",
       type: "array",

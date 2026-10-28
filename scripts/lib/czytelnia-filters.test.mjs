@@ -5,6 +5,7 @@ import {
   czytelniaCategoryHeadingId,
   czytelniaFilterHref,
   firstSearchParam,
+  orderFeaturedPublications,
   resolvePublicationCategory,
   resolvePublicationFormat,
 } from "../../apps/web/src/lib/czytelnia-filters.ts";
@@ -60,6 +61,23 @@ test("resolvePublicationFormat still prefers articles when present", () => {
     resolvePublicationFormat("nope", ["articles", "books"]),
     "articles",
   );
+});
+
+test("orderFeaturedPublications follows the editor's order and skips unlisted items", () => {
+  const publications = [
+    { _id: "listed-a", title: "A" },
+    { _id: "listed-b", title: "B" },
+  ];
+  assert.deepEqual(
+    orderFeaturedPublications(publications, [
+      "listed-b",
+      "missing",
+      null,
+      "listed-a",
+    ]),
+    [publications[1], publications[0]],
+  );
+  assert.deepEqual(orderFeaturedPublications(publications, null), []);
 });
 
 test("czytelniaCategoryHeadingId is stable for URL hashes", () => {

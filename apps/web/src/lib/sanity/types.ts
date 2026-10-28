@@ -159,6 +159,7 @@ export type PageDetail = {
   heroCtaHref?: string | null;
   heroImages?: CmsHeroImage[] | null;
   excerpt?: string | null;
+  featuredPublicationIds?: (string | null)[] | null;
   sections: ResolvedSection[];
   sectionsAfterBody: ResolvedSection[];
   body: PortableContent;
