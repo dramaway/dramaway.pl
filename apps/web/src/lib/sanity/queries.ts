@@ -290,6 +290,10 @@ export const aboutPageQuery = `*[_type == "aboutPage"][0] {
       "excerpt": pt::text(bio)
     }
   },
+  gallery {
+    heading,
+    images
+  },
   history {
     heading,
     layout,

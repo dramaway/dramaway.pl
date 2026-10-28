@@ -110,7 +110,7 @@ Na **Projektach** jest dodatkowo grupa **Listing** z listą **Sekcje** i polem *
 
 ## O fundacji
 
-Skrót **O fundacji**, adres `/fundacja`. Zakładki: Hero, Metody i wartości, Zespół, Historia, Dokumenty. Co wpisać w kolejnych zakładkach: [Czytelnia i O fundacji](czytelnia-i-fundacja.md).
+Skrót **O fundacji**, adres `/fundacja`. Zakładki: Hero, Metody i wartości, Zespół, Galeria, Historia, Dokumenty. Co wpisać w kolejnych zakładkach: [Czytelnia i O fundacji](czytelnia-i-fundacja.md).
 
 ## Projekty, osoby, publikacje, zwykłe strony
 

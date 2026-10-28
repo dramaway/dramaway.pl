@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { FundacjaDocuments } from "@/components/sections/fundacja-documents";
+import { FundacjaGallery } from "@/components/sections/fundacja-gallery";
 import { FundacjaHistory } from "@/components/sections/fundacja-history";
 import { FundacjaValues } from "@/components/sections/fundacja-values";
 import { PageHero } from "@/components/sections/page-hero";
@@ -48,7 +49,10 @@ export default async function FundacjaIndexPage() {
         ctaLabel={about.team.ctaLabel}
         body={about.team.body}
       />
-      <DotBand />
+      <FundacjaGallery
+        heading={about.gallery.heading}
+        images={about.gallery.images}
+      />
       <FundacjaHistory
         heading={about.history.heading}
         lead={about.history.lead}

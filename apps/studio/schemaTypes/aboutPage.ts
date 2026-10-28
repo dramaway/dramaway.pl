@@ -9,6 +9,7 @@ export const aboutPage = defineType({
     { name: "hero", title: "Hero", default: true },
     { name: "methods", title: "Metody i wartości" },
     { name: "team", title: "Zespół" },
+    { name: "gallery", title: "Galeria" },
     { name: "history", title: "Historia" },
     { name: "documents", title: "Dokumenty" },
   ],
@@ -115,6 +116,32 @@ export const aboutPage = defineType({
           type: "blockContent",
           description:
             "Zespół, Społeczność, cytaty. Puste = brak bloku. Nagłówki H2 w tym polu renderują się jak tytuł sekcji.",
+        }),
+      ],
+    }),
+    defineField({
+      name: "gallery",
+      title: "Galeria zdjęć",
+      type: "object",
+      group: "gallery",
+      fields: [
+        defineField({
+          name: "heading",
+          title: "Nagłówek",
+          type: "string",
+        }),
+        defineField({
+          name: "images",
+          title: "Zdjęcia",
+          type: "array",
+          description:
+            "Zdjęcia pojawią się między Społecznością a Historią. Pusta lista = brak galerii.",
+          of: [
+            defineArrayMember({
+              type: "image",
+              options: { hotspot: true },
+            }),
+          ],
         }),
       ],
     }),
