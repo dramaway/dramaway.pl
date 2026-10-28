@@ -107,6 +107,7 @@
   --text-small--line-height: 1.57;
 
   --spacing-section: clamp(3rem, 8vw, 7.5rem);
+  --spacing-mobile-rhythm: clamp(1.5rem, 4vw, 2rem);
   /* Mosaic gutter (~12 px). Not --spacing-section — that is a whole band. */
   --gallery-gap: 0.75rem;
   /* Archive pair on /projekty: row rhythm (~80 px) and a light column stagger. */
@@ -3950,6 +3951,77 @@
 @media (prefers-reduced-motion: reduce) {
   .dot-band-dot {
     animation: none !important;
+  }
+}
+
+@media (width < 64rem) {
+  .dot-band {
+    margin-block: var(--spacing-mobile-rhythm);
+  }
+
+  .hero:not(.hero-stack) {
+    padding-block-end: 0;
+    gap: var(--spacing-mobile-rhythm);
+  }
+
+  .content-split {
+    gap: var(--spacing-mobile-rhythm);
+    padding-block-end: 0;
+  }
+
+  .dot-band + .content-split > .split-text {
+    padding-block-start: 0;
+  }
+
+  .content-split > .split-text {
+    padding-block-end: 0;
+  }
+
+  .py-section:has(+ .dot-band) {
+    padding-block-end: 0;
+  }
+
+  .dot-band + .py-section {
+    padding-block-start: 0;
+  }
+
+  [data-split-hero] + .py-section {
+    padding-block-start: 0;
+  }
+
+  .fundacja-flow {
+    padding-block: calc(var(--spacing-mobile-rhythm) / 2);
+  }
+
+  .fundacja-gallery {
+    padding-block: calc(var(--spacing-mobile-rhythm) / 2);
+  }
+
+  .values-row-after-copy {
+    margin-block-start: var(--spacing-mobile-rhythm);
+  }
+
+  .quote-block {
+    gap: var(--spacing-mobile-rhythm);
+  }
+
+  .team-bio {
+    gap: var(--spacing-mobile-rhythm);
+  }
+
+  .team-row-name {
+    margin-block-start: var(--spacing-mobile-rhythm);
+  }
+
+  .pub-row,
+  .blob-row-thumbnail.has-thumbnail {
+    gap: var(--spacing-mobile-rhythm);
+  }
+}
+
+@media (width >= 64rem) {
+  .team-row-name {
+    margin-block-start: 1rem;
   }
 }
 
