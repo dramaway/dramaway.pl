@@ -12,7 +12,7 @@ export function FundacjaGallery({ heading, images }: FundacjaGalleryProps) {
 
   return (
     <Section
-      className="fundacja-flow"
+      className="fundacja-flow fundacja-gallery"
       aria-labelledby={heading ? "fundacja-galeria" : undefined}
     >
       <div className="stack-wide space-y-6">
