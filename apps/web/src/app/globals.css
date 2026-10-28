@@ -69,6 +69,7 @@
   --color-brand-5: #426a21;
   --color-brand-6: #34466b;
   --color-brand-7: #51648a;
+  --color-brand-3-dark: #8a6900;
 
   --font-display: var(--font-museomoderno), ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-alexandria), ui-sans-serif, system-ui, sans-serif;
@@ -3922,17 +3923,29 @@ h3 {
 }
 
 @media (hover: hover) {
-  h1:hover,
-  h2:hover,
-  h3:hover {
+  h1:hover {
     color: var(--color-brand-1);
+  }
+
+  h2:hover {
+    color: var(--color-brand-5);
+  }
+
+  h3:hover {
+    color: var(--color-brand-3-dark);
   }
 }
 
-h1:focus-within,
-h2:focus-within,
-h3:focus-within {
+h1:focus-within {
   color: var(--color-brand-1);
+}
+
+h2:focus-within {
+  color: var(--color-brand-5);
+}
+
+h3:focus-within {
+  color: var(--color-brand-3-dark);
 }
 
 @media (prefers-reduced-motion: reduce) {
