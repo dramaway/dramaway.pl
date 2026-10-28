@@ -3753,10 +3753,6 @@
     padding-block-start: 0;
   }
 
-  .library-dot-band {
-    --color-sand: color-mix(in srgb, var(--color-ink) 10%, white);
-  }
-
   .pub-cat + .pub-cat {
     margin-block-start: 1.75rem;
     padding-block-start: 1.75rem;
