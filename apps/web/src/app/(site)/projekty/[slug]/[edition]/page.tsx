@@ -67,7 +67,11 @@ export default async function EditionPage({ params }: Props) {
         </Section>
       ) : null}
       {outcomes.length > 0 ? (
-        <Section>
+        <Section
+          className={
+            project.slug === "teatr-codzienny" ? "edition-outcomes" : undefined
+          }
+        >
           <div className="article-body">
             <h2 className="font-display text-h3 font-black">Rezultaty</h2>
             <ul className="mt-8 stack">
