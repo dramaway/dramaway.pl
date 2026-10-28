@@ -3918,3 +3918,31 @@
     animation: none !important;
   }
 }
+
+h1,
+h2,
+h3 {
+  transition: color 350ms ease;
+}
+
+@media (hover: hover) {
+  h1:hover,
+  h2:hover,
+  h3:hover {
+    color: var(--color-brand-1);
+  }
+}
+
+h1:focus-within,
+h2:focus-within,
+h3:focus-within {
+  color: var(--color-brand-1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  h1,
+  h2,
+  h3 {
+    transition: none;
+  }
+}
