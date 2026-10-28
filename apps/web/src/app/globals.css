@@ -2394,12 +2394,31 @@
   .values-item {
     display: grid;
     flex: 0 0 var(--values-size);
+    position: relative;
     place-items: center;
     width: var(--values-size);
     aspect-ratio: 1;
     padding: 0.6rem;
     border-radius: 50%;
     text-align: center;
+    transition: transform 180ms ease;
+  }
+
+  @media (hover: hover) {
+    .values-item:hover {
+      z-index: 1;
+      transform: translateY(-0.35rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .values-item {
+      transition: none;
+    }
+
+    .values-item:hover {
+      transform: none;
+    }
   }
 
   .values-label {
@@ -2430,6 +2449,25 @@
     .values-label {
       white-space: nowrap;
       overflow-wrap: normal;
+    }
+  }
+
+  @media (width < 64rem) and (orientation: portrait) {
+    .values-row {
+      width: min(100%, calc(4 * var(--values-size)));
+      flex-wrap: wrap;
+      justify-content: center;
+      overflow: visible;
+    }
+
+    .values-item {
+      flex-basis: 25%;
+      width: 25%;
+    }
+
+    .values-label {
+      white-space: normal;
+      overflow-wrap: anywhere;
     }
   }
 
