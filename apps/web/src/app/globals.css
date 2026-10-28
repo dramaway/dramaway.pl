@@ -2447,8 +2447,11 @@
     }
 
     .values-label {
-      white-space: nowrap;
+      font-size: clamp(0.6rem, 2.6vw, 0.75rem);
+      max-width: 100%;
       overflow-wrap: normal;
+      text-wrap: balance;
+      white-space: normal;
     }
   }
 
@@ -2508,9 +2511,7 @@
     }
 
     .values-label {
-      font-size: clamp(0.625rem, 3vw, var(--text-small));
-      white-space: normal;
-      overflow-wrap: normal;
+      font-size: clamp(0.6rem, 2.6vw, 0.75rem);
     }
   }
 
