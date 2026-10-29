@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 import { Section } from "@/components/layout/section";
 import { CtaLink } from "@/components/visual/cta-link";
 import { cn } from "@/lib/utils";
@@ -51,11 +53,16 @@ export function FundacjaValues({
         </CtaLink>
       ) : null}
       {values.length > 0 ? (
-        <ul className={cn("values-row", hasCopy && "values-row-after-copy")}>
+        <ul
+          className={cn("values-row", hasCopy && "values-row-after-copy")}
+          data-ring={values.length >= 3 ? "" : undefined}
+          style={{ "--values-count": values.length } as CSSProperties}
+        >
           {values.map((label, index) => (
             <li
               key={`${label}-${index}`}
               className={cn("values-item", VALUE_TONES[index % VALUE_TONES.length])}
+              style={{ "--values-i": index } as CSSProperties}
             >
               <span className="values-label">{label}</span>
             </li>
