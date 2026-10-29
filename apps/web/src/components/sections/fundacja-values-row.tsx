@@ -24,8 +24,8 @@ const FRICTION = 0.94;
 const WALL_BOUNCE = 0.5;
 const CIRCLE_BOUNCE = 0.6;
 const SIDE_MARGIN = 4;
-const PULL_RANGE = 1.1;
-const PULL_STRENGTH = 0.12;
+const PULL_RANGE = 1.4;
+const PULL_STRENGTH = 0.17;
 
 type Body = {
   el: HTMLElement;
