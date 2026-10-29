@@ -24,6 +24,8 @@ const FRICTION = 0.94;
 const WALL_BOUNCE = 0.5;
 const CIRCLE_BOUNCE = 0.6;
 const SIDE_MARGIN = 4;
+const PULL_RANGE = 1.1;
+const PULL_STRENGTH = 0.12;
 
 type Body = {
   el: HTMLElement;
@@ -47,7 +49,7 @@ type Drag = {
 /**
  * The value circles. On a portrait phone they can be dragged by finger inside
  * the section (full viewport width, the row's height plus its padding); they
- * push each other, bounce off the edges and glide to a stop. Everywhere else
+ * pull towards and push each other, bounce off the edges and glide to a stop. Everywhere else
  * the row stays a static CSS layout.
  */
 export function FundacjaValuesRow({
@@ -164,6 +166,29 @@ export function FundacjaValuesRow({
         lastFrame = now;
         let moving = drag !== null;
         const slow = Math.pow(FRICTION, elapsed);
+
+        const held = drag?.body;
+        for (let i = 0; i < bodies.length; i += 1) {
+          for (let j = i + 1; j < bodies.length; j += 1) {
+            const a = bodies[i];
+            const b = bodies[j];
+            const dx = b.x - a.x;
+            const dy = b.y - a.y;
+            const distance = Math.hypot(dx, dy) || 0.001;
+            const gap = a.radius + b.radius;
+            const reach = gap + (a.radius + b.radius) * PULL_RANGE / 2;
+            if (distance <= gap + 1 || distance >= reach) continue;
+            const pull = PULL_STRENGTH * (1 - (distance - gap) / (reach - gap)) * elapsed;
+            if (a !== held) {
+              a.vx += (dx / distance) * pull;
+              a.vy += (dy / distance) * pull;
+            }
+            if (b !== held) {
+              b.vx -= (dx / distance) * pull;
+              b.vy -= (dy / distance) * pull;
+            }
+          }
+        }
 
         for (const body of bodies) {
           if (body === drag?.body) continue;
