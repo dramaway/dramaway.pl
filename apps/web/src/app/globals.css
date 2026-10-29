@@ -3978,6 +3978,10 @@
     inset-block-start: calc(-1.8rem + var(--spacing-mobile-rhythm));
   }
 
+  .dot-band + .content-split > .split-text .stack-item {
+    display: flow-root;
+  }
+
   .dot-band + .content-split > .split-text .stack-item > :is(h2, h3) {
     margin-block-start: calc(var(--blob-size) / 2);
     margin-inline-start: calc(
