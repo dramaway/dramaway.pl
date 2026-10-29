@@ -1801,6 +1801,7 @@
 
   .stack-item {
     position: relative;
+    --blob-size: clamp(5.5rem, 9.9vw, 143px);
   }
 
   .blob-row-thumbnails {
@@ -2074,8 +2075,7 @@
   .blob {
     position: absolute;
     z-index: -1;
-    --blob-size: clamp(5.5rem, 9.9vw, 143px);
-    width: var(--blob-size);
+    width: var(--blob-size, clamp(5.5rem, 9.9vw, 143px));
     aspect-ratio: 143 / 139;
     border-radius: 50%;
     background-color: var(--color-sand);
