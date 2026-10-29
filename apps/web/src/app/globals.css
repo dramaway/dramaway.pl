@@ -1734,17 +1734,25 @@
       flex-direction: row;
       align-items: center;
       justify-content: flex-start;
-      width: max-content;
+      flex-wrap: wrap;
+      width: 100%;
       max-width: 100%;
     }
 
     .footer-newsletter-input {
-      max-width: none;
+      max-width: 100%;
     }
 
     /* A length, so the shrink-wrapped row keeps the rule inside itself. */
     .footer-newsletter .cta {
       min-width: 19rem;
+      max-width: 100%;
+    }
+
+    @media (width < 80rem) {
+      .site-footer {
+        grid-template-columns: minmax(0, 1fr) minmax(0, min(36rem, 40vw));
+      }
     }
   }
 
@@ -1881,6 +1889,13 @@
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
+  }
+
+  .home-news-excerpt {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
   }
 
   .blob-row-compact .blob-row-excerpt {
@@ -2821,6 +2836,22 @@
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
+  }
+
+  /*
+   * Browser zoom reduces the effective viewport width. Let descriptions
+   * expand before the page feels cramped, while preserving desktop clamps.
+   */
+  @media (width < 80rem) {
+    .content-tile-clamp,
+    .blob-row-excerpt,
+    .pub-row-lead,
+    .team-bio-blurb,
+    .news-card-body > .home-news-excerpt {
+      display: block;
+      overflow: visible;
+      -webkit-line-clamp: unset;
+    }
   }
 
   /* The staff roster runs across the hairlines at full block width. */
