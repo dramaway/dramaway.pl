@@ -86,7 +86,9 @@ export function HomeNews({
               ) : null}
               <div className="news-card-body">
                 {item.excerpt ? (
-                  <p className="mt-5 line-clamp-4 text-body">{item.excerpt}</p>
+                  <p className="home-news-excerpt mt-5 text-body">
+                    {item.excerpt}
+                  </p>
                 ) : null}
               </div>
               {item.ctaHref ? (
