@@ -3983,7 +3983,7 @@
   }
 
   .dot-band + .content-split > .split-text .stack-item > :is(h2, h3) {
-    margin-block-start: calc(var(--blob-size) / 2);
+    margin-block-start: calc(var(--blob-size) * 0.4);
     margin-inline-start: calc(
       var(--blob-size) / 2 -
         min(3.4rem, max(0px, var(--page-pad) - 0.5rem))
