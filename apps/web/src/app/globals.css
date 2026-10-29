@@ -2408,6 +2408,26 @@
     margin-block-start: clamp(3rem, 4vw, 3.75rem);
   }
 
+  .values-links {
+    display: none;
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    list-style: none;
+    pointer-events: none;
+  }
+
+  .values-links svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .values-links line {
+    stroke: color-mix(in srgb, var(--color-ink) 16%, transparent);
+    stroke-width: 2px;
+  }
+
   .values-item {
     display: grid;
     flex: 0 0 var(--values-size);
@@ -2479,9 +2499,14 @@
       grid-auto-rows: var(--values-size);
       width: min(100%, calc(3.5 * var(--values-size)));
       position: relative;
+      isolation: isolate;
       overflow: visible;
       padding-block: 1.5rem;
       --values-size: clamp(5rem, 23vw, 6rem);
+    }
+
+    .values-links {
+      display: block;
     }
 
     .values-item {

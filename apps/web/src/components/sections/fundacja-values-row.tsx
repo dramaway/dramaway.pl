@@ -60,6 +60,7 @@ export function FundacjaValuesRow({
   afterCopy: boolean;
 }) {
   const rowRef = useRef<HTMLUListElement>(null);
+  const linksRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
     const row = rowRef.current;
@@ -71,7 +72,7 @@ export function FundacjaValuesRow({
     let width = window.innerWidth;
 
     const setup = () => {
-      const bodies: Body[] = Array.from(row.children).map((child) => {
+      const bodies: Body[] = Array.from(row.querySelectorAll(":scope > .values-item")).map((child) => {
         const el = child as HTMLElement;
         const radius = el.offsetWidth / 2;
         const homeX = el.offsetLeft + radius;
@@ -79,6 +80,27 @@ export function FundacjaValuesRow({
         el.style.transition = "none";
         return { el, homeX, homeY, x: homeX, y: homeY, vx: 0, vy: 0, radius };
       });
+
+      const svg = linksRef.current;
+      const links: { a: Body; b: Body; line: SVGLineElement }[] = [];
+      if (svg) {
+        for (let i = 0; i < bodies.length; i += 1) {
+          for (let j = i + 1; j < bodies.length; j += 1) {
+            const a = bodies[i];
+            const b = bodies[j];
+            const touching =
+              Math.hypot(a.homeX - b.homeX, a.homeY - b.homeY) <=
+              (a.radius + b.radius) * 1.2;
+            if (!touching) continue;
+            const line = document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "line",
+            );
+            svg.appendChild(line);
+            links.push({ a, b, line });
+          }
+        }
+      }
 
       let drag: Drag | null = null;
       let frame = 0;
@@ -159,7 +181,14 @@ export function FundacjaValuesRow({
             body.y - body.homeY
           }px, 0)${lift}`;
         }
+        for (const { a, b, line } of links) {
+          line.setAttribute("x1", String(a.x));
+          line.setAttribute("y1", String(a.y));
+          line.setAttribute("x2", String(b.x));
+          line.setAttribute("y2", String(b.y));
+        }
       };
+      paint();
 
       const tick = (now: number) => {
         const elapsed = Math.min((now - lastFrame) / 16.667, 3);
@@ -218,7 +247,7 @@ export function FundacjaValuesRow({
 
       const onDown = (event: PointerEvent) => {
         if (drag || event.button > 0) return;
-        const item = (event.target as HTMLElement).closest("li");
+        const item = (event.target as HTMLElement).closest(".values-item");
         const body = bodies.find((candidate) => candidate.el === item);
         if (!body) return;
 
@@ -285,6 +314,7 @@ export function FundacjaValuesRow({
 
       return () => {
         cancelAnimationFrame(frame);
+        for (const { line } of links) line.remove();
         row.removeEventListener("pointerdown", onDown);
         row.removeEventListener("pointermove", onMove);
         row.removeEventListener("pointerup", onUp);
@@ -334,6 +364,9 @@ export function FundacjaValuesRow({
           <span className="values-label">{label}</span>
         </li>
       ))}
+      <li className="values-links" aria-hidden="true">
+        <svg ref={linksRef} />
+      </li>
     </ul>
   );
 }
