@@ -1735,24 +1735,64 @@
       align-items: center;
       justify-content: flex-start;
       flex-wrap: wrap;
-      width: 100%;
+      width: max-content;
       max-width: 100%;
     }
 
     .footer-newsletter-input {
-      max-width: 100%;
+      max-width: none;
     }
 
     /* A length, so the shrink-wrapped row keeps the rule inside itself. */
     .footer-newsletter .cta {
       min-width: 19rem;
-      max-width: 100%;
+    }
+  }
+
+  @media (width >= 48rem) and (width < 80rem) {
+    .site-footer {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-areas:
+        "logo news"
+        "address links";
+      column-gap: 2rem;
     }
 
-    @media (width < 80rem) {
-      .site-footer {
-        grid-template-columns: minmax(0, 1fr) minmax(0, min(36rem, 40vw));
-      }
+    .footer-brand {
+      display: contents;
+    }
+
+    .footer-logo-link {
+      grid-area: logo;
+    }
+
+    .footer-address {
+      grid-area: address;
+    }
+
+    .site-footer > .footer-links {
+      grid-area: links;
+    }
+
+    .site-footer > .footer-newsletter {
+      grid-area: news;
+      width: 100%;
+      margin-block-start: 0;
+    }
+
+    .footer-newsletter-row {
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    .footer-newsletter-input {
+      width: 100%;
+    }
+
+    .footer-newsletter .cta {
+      width: 100%;
+      min-width: 0;
     }
   }
 
@@ -1878,28 +1918,7 @@
     align-items: start;
   }
 
-  .blob-row-excerpt {
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-  }
-
-  .content-tile-clamp {
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-  }
-
-  .home-news-excerpt {
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
-  }
-
-  .blob-row-compact .blob-row-excerpt {
+  .blob-row-compact .blob-row-lead {
     margin-block-start: .5rem;
   }
 
@@ -2124,13 +2143,6 @@
     width: 100%;
     height: 100%;
     background-color: transparent;
-  }
-
-  .pub-row-lead {
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 6;
   }
 
   @media (width < 64rem) {
@@ -2889,29 +2901,6 @@
 
   .team-bio-name {
     font-family: var(--font-body);
-  }
-
-  .team-bio-blurb {
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-  }
-
-  /*
-   * Browser zoom reduces the effective viewport width. Let descriptions
-   * expand before the page feels cramped, while preserving desktop clamps.
-   */
-  @media (width < 80rem) {
-    .content-tile-clamp,
-    .blob-row-excerpt,
-    .pub-row-lead,
-    .team-bio-blurb,
-    .news-card-body > .home-news-excerpt {
-      display: block;
-      overflow: visible;
-      -webkit-line-clamp: unset;
-    }
   }
 
   /* The staff roster runs across the hairlines at full block width. */

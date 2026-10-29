@@ -12,8 +12,6 @@ export type BlobRowItem = {
   href: string;
   ctaLabel?: string | null;
   image?: SanityImage | null;
-  /** Clamp the lead to ~3 lines (channel teasers, archive). */
-  excerpt?: boolean;
 };
 
 const DEFAULT_CTA = LIST_CTA_LABEL;
@@ -70,11 +68,7 @@ export function BlobStack({
             </h3>
             {item.lead ? (
               <p
-                className={cn(
-                  "text-body",
-                  compact ? "blob-row-excerpt" : "mt-5",
-                  item.excerpt && "blob-row-excerpt",
-                )}
+                className={cn("text-body", compact ? "blob-row-lead" : "mt-5")}
               >
                 {item.lead}
               </p>

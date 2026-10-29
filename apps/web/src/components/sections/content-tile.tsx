@@ -4,7 +4,6 @@ import { CtaLink } from "@/components/visual/cta-link";
 import { Blob } from "@/components/visual/blob";
 import type { ResolvedTile } from "@/lib/sanity/types";
 import { safeHref } from "@/lib/safe-url";
-import { cn } from "@/lib/utils";
 
 function TileAnchor({
   href,
@@ -37,12 +36,10 @@ function TileAnchor({
  */
 export function ContentTile({
   tile,
-  clamp,
   heading = "h2",
   layout = "stack",
 }: {
   tile: ResolvedTile;
-  clamp: boolean;
   heading?: "h2" | "h3";
   /** `card` aligns the CTA with neighbouring grid tiles. */
   layout?: "stack" | "card";
@@ -64,7 +61,7 @@ export function ContentTile({
     </Title>
   ) : null;
   const excerpt = tile.excerpt ? (
-    <p className={cn("mt-5 text-body", clamp && "content-tile-clamp")}>{tile.excerpt}</p>
+    <p className="mt-5 text-body">{tile.excerpt}</p>
   ) : null;
   const cta =
     tile.href && tile.ctaLabel ? (

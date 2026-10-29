@@ -68,7 +68,7 @@ export function TeamBios({ people, heading, ctaLabel, body }: TeamBiosProps) {
                     {person.name}
                   </h3>
                   {blurb ? (
-                    <p className="team-bio-blurb mt-4 text-body">{blurb}</p>
+                    <p className="mt-4 line-clamp-3 text-body">{blurb}</p>
                   ) : null}
                   {ctaLabel ? (
                     <CtaLink

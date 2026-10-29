@@ -40,7 +40,6 @@ export default async function ProjectsPage() {
             lead: czytelnia.lead,
             href: czytelnia.href,
             ctaLabel: czytelnia.ctaLabel,
-            excerpt: true,
           },
         ]
       : []),

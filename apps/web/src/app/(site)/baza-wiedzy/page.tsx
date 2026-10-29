@@ -63,7 +63,6 @@ function toCzytelniaRows(items: PublicationListItem[]): CzytelniaRowItem[] {
       ctaLabel: external ? SUBPAGE.czytelnia.pdfCta : LIST_CTA_LABEL,
       external,
       cover: hasHeroImage(item.cover) ? item.cover : null,
-      clampLead: external,
     };
   });
 }
