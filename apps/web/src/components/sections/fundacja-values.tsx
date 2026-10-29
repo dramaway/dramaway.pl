@@ -1,21 +1,6 @@
 import { Section } from "@/components/layout/section";
 import { CtaLink } from "@/components/visual/cta-link";
-import { cn } from "@/lib/utils";
-
-/**
- * Eight tones: brand 1–7, then brand-3 (gold) as in Figma frame `130:1316`.
- * Extra labels wrap this list.
- */
-const VALUE_TONES = [
-  "bg-brand-1",
-  "bg-brand-2",
-  "bg-brand-3",
-  "bg-brand-4",
-  "bg-brand-5",
-  "bg-brand-6",
-  "bg-brand-7",
-  "bg-brand-3",
-] as const;
+import { FundacjaValuesRow } from "@/components/sections/fundacja-values-row";
 
 type FundacjaValuesProps = {
   heading?: string | null;
@@ -51,16 +36,7 @@ export function FundacjaValues({
         </CtaLink>
       ) : null}
       {values.length > 0 ? (
-        <ul className={cn("values-row", hasCopy && "values-row-after-copy")}>
-          {values.map((label, index) => (
-            <li
-              key={`${label}-${index}`}
-              className={cn("values-item", VALUE_TONES[index % VALUE_TONES.length])}
-            >
-              <span className="values-label">{label}</span>
-            </li>
-          ))}
-        </ul>
+        <FundacjaValuesRow values={values} afterCopy={hasCopy} />
       ) : null}
     </Section>
   );
