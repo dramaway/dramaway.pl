@@ -49,7 +49,7 @@ export function HomeNews({
       >
         {title}
       </h2>
-      <ul className="cols-3 mt-12">
+      <ul className="home-news-cards cols-3 mt-12">
         {cards.map((item, index) => {
           const date = item.publishedAt
             ? formatPolishMonthYear(item.publishedAt)
