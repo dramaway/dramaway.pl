@@ -2074,7 +2074,8 @@
   .blob {
     position: absolute;
     z-index: -1;
-    width: clamp(5.5rem, 9.9vw, 143px);
+    --blob-size: clamp(5.5rem, 9.9vw, 143px);
+    width: var(--blob-size);
     aspect-ratio: 143 / 139;
     border-radius: 50%;
     background-color: var(--color-sand);
@@ -3975,6 +3976,14 @@
 
   .dot-band + .content-split .blob {
     inset-block-start: calc(-1.8rem + var(--spacing-mobile-rhythm));
+  }
+
+  .dot-band + .content-split > .split-text .stack-item > :is(h2, h3) {
+    margin-block-start: calc(var(--blob-size) / 2);
+    margin-inline-start: calc(
+      var(--blob-size) / 2 -
+        min(3.4rem, max(0px, var(--page-pad) - 0.5rem))
+    );
   }
 
   .content-split > .split-text {
