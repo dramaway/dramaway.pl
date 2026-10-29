@@ -1730,35 +1730,6 @@
       );
     }
 
-    @media (width < 80rem) {
-      .site-footer {
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      }
-
-      .site-footer > .footer-newsletter {
-        margin-block-start: 0;
-      }
-
-      .footer-newsletter {
-        width: 100%;
-      }
-
-      .footer-newsletter-row {
-        flex-direction: column;
-        align-items: stretch;
-        width: 100%;
-      }
-
-      .footer-newsletter-input {
-        width: 100%;
-      }
-
-      .footer-newsletter .cta {
-        width: 100%;
-        min-width: 0;
-      }
-    }
-
     .footer-newsletter-row {
       flex-direction: row;
       align-items: center;
@@ -1775,6 +1746,53 @@
     /* A length, so the shrink-wrapped row keeps the rule inside itself. */
     .footer-newsletter .cta {
       min-width: 19rem;
+    }
+  }
+
+  @media (width >= 48rem) and (width < 80rem) {
+    .site-footer {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-areas:
+        "logo news"
+        "address links";
+      column-gap: 2rem;
+    }
+
+    .footer-brand {
+      display: contents;
+    }
+
+    .footer-logo-link {
+      grid-area: logo;
+    }
+
+    .footer-address {
+      grid-area: address;
+    }
+
+    .site-footer > .footer-links {
+      grid-area: links;
+    }
+
+    .site-footer > .footer-newsletter {
+      grid-area: news;
+      width: 100%;
+      margin-block-start: 0;
+    }
+
+    .footer-newsletter-row {
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    .footer-newsletter-input {
+      width: 100%;
+    }
+
+    .footer-newsletter .cta {
+      width: 100%;
+      min-width: 0;
     }
   }
 
