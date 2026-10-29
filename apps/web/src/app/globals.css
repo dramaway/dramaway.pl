@@ -1730,6 +1730,12 @@
       );
     }
 
+    @media (width < 80rem) {
+      .site-footer > .footer-newsletter {
+        margin-block-start: 0;
+      }
+    }
+
     .footer-newsletter-row {
       flex-direction: row;
       align-items: center;
