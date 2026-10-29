@@ -69,8 +69,6 @@ function ModuleView({
     return <QuoteBlock text={section.text} author={section.author} />;
   }
 
-  const clamp = section.tiles.length >= 2;
-
   if (section.image) {
     const solo = section.tiles.length === 1;
     return (
@@ -88,7 +86,7 @@ function ModuleView({
                 key={tile.key}
                 className={cn("stack-item", tile.href && "card-hover")}
               >
-                <ContentTile tile={tile} clamp={clamp} />
+                <ContentTile tile={tile} />
               </div>
             ))}
           </div>
@@ -114,7 +112,7 @@ function ModuleView({
               key={tile.key}
               className={cn("stack-item", tile.href && "card-hover")}
             >
-              <ContentTile tile={tile} clamp={clamp} />
+              <ContentTile tile={tile} />
             </div>
           ))}
         </div>
@@ -130,7 +128,7 @@ function ModuleView({
             key={tile.key}
             className={cn("news-card relative isolate", tile.href && "card-hover")}
           >
-            <ContentTile tile={tile} clamp={clamp} heading="h3" layout="card" />
+            <ContentTile tile={tile} heading="h3" layout="card" />
           </li>
         ))}
       </ul>

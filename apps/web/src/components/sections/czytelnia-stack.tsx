@@ -2,7 +2,6 @@ import Link from "next/link";
 import { CtaLink } from "@/components/visual/cta-link";
 import { Media } from "@/components/visual/media";
 import type { SanityImage } from "@/lib/sanity/types";
-import { cn } from "@/lib/utils";
 
 export type CzytelniaRowItem = {
   title: string;
@@ -12,8 +11,6 @@ export type CzytelniaRowItem = {
   /** PDF opens in a new tab. The page row stays on this site. */
   external?: boolean;
   cover: SanityImage | null;
-  /** File rows clamp the body text. Page rows show the CMS summary in full. */
-  clampLead?: boolean;
 };
 
 /**
@@ -62,14 +59,7 @@ export function CzytelniaStack({ items }: { items: CzytelniaRowItem[] }) {
                 )}
               </h3>
               {item.lead ? (
-                <p
-                  className={cn(
-                    "mt-5 text-body",
-                    item.clampLead && "pub-row-lead",
-                  )}
-                >
-                  {item.lead}
-                </p>
+                <p className="mt-5 text-body">{item.lead}</p>
               ) : null}
               <CtaLink href={item.href} presentational className="mt-8">
                 {item.ctaLabel}
