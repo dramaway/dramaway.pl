@@ -2396,9 +2396,9 @@
    */
   .values-row {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
-    width: max-content;
+    width: 100%;
     max-width: 100%;
     min-width: 0;
     margin-inline: auto;
@@ -2410,10 +2410,12 @@
 
   .values-item {
     display: grid;
-    flex: 0 0 var(--values-size);
+    flex: 1 1 var(--values-size);
     position: relative;
     place-items: center;
     width: var(--values-size);
+    max-width: var(--values-size);
+    min-width: 0;
     aspect-ratio: 1;
     padding: 0.6rem;
     border-radius: 50%;
@@ -2460,6 +2462,7 @@
     }
 
     .values-item {
+      flex: 0 0 var(--values-size);
       padding: 0.45rem;
     }
 
