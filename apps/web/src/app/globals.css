@@ -2531,7 +2531,11 @@
       grid-area: 3 / 3 / auto / span 2;
     }
 
-    .values-item:nth-child(n + 9) {
+    .values-item:nth-child(9) {
+      grid-area: 3 / 5 / auto / span 2;
+    }
+
+    .values-item:nth-child(n + 10) {
       grid-row: 4;
     }
 
