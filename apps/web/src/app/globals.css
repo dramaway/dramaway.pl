@@ -2458,7 +2458,8 @@
   /*
    * Portrait phones: tangent circles on a ring. For n circles of diameter d the
    * ring radius is d / (2 sin(pi/n)), so the container is d * (1 / sin(pi/n) + 1)
-   * wide. Items are placed by index from the top, clockwise.
+   * wide. Items are placed by index from the top, clockwise. With five or more
+   * values the first one fills the middle (diameter d * (1 / sin(pi/n) - 1)).
    */
   @media (width < 64rem) and (orientation: portrait) {
     .values-row[data-ring] {
@@ -2484,6 +2485,18 @@
 
     .values-row[data-ring] .values-label {
       font-size: calc(var(--values-d) * 0.125);
+    }
+
+    /* Filled disc: the first value sits in the middle, sized to touch the ring. */
+    .values-row[data-ring] .values-center {
+      --values-big: calc(var(--values-d) * (1 / sin(pi / var(--values-count)) - 1));
+      width: var(--values-big);
+      left: calc(50cqw - var(--values-big) / 2);
+      top: calc(50cqw - var(--values-big) / 2);
+    }
+
+    .values-row[data-ring] .values-center .values-label {
+      font-size: calc(var(--values-big) * 0.125);
     }
   }
 

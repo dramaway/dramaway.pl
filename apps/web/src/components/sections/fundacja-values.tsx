@@ -38,6 +38,8 @@ export function FundacjaValues({
   ctaHref,
   values,
 }: FundacjaValuesProps) {
+  const filled = values.length >= 5;
+  const ringCount = filled ? values.length - 1 : values.length;
   const hasCopy = Boolean(heading || lead || (ctaLabel && ctaHref));
   if (!hasCopy && values.length === 0) return null;
 
@@ -56,13 +58,17 @@ export function FundacjaValues({
         <ul
           className={cn("values-row", hasCopy && "values-row-after-copy")}
           data-ring={values.length >= 3 ? "" : undefined}
-          style={{ "--values-count": values.length } as CSSProperties}
+          style={{ "--values-count": ringCount } as CSSProperties}
         >
           {values.map((label, index) => (
             <li
               key={`${label}-${index}`}
-              className={cn("values-item", VALUE_TONES[index % VALUE_TONES.length])}
-              style={{ "--values-i": index } as CSSProperties}
+              className={cn(
+                "values-item",
+                filled && index === 0 && "values-center",
+                VALUE_TONES[index % VALUE_TONES.length],
+              )}
+              style={{ "--values-i": filled ? index - 1 : index } as CSSProperties}
             >
               <span className="values-label">{label}</span>
             </li>
