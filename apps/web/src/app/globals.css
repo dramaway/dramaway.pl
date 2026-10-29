@@ -3971,7 +3971,8 @@
   }
 
   .dot-band + .content-split > .split-text {
-    padding-block-start: calc(var(--spacing-mobile-rhythm) * 2);
+    /* Half the visible gap after accounting for the circle's upward offset. */
+    padding-block-start: calc(var(--spacing-mobile-rhythm) / 2 + 0.9rem);
   }
 
   .dot-band + .content-split .blob {
