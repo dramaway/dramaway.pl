@@ -14,7 +14,8 @@ export function PageArticle({
   page: PageDetail;
   parent?: Crumb;
 }) {
-  return (
+  const textOnlyHero = /^(sprawozdania|statut)(?:-|$)/i.test(page.slug);
+  const content = (
     <>
       <PageHero
         title={page.title}
@@ -23,6 +24,7 @@ export function PageArticle({
         ctaHref={page.heroCtaHref}
         slides={resolveHeroSlides(page.heroImages, page.title)}
         parent={parent}
+        layout={textOnlyHero ? "stack" : "split"}
       />
       <ContentModules sections={page.sections} variant="page" />
       <Section>
@@ -32,5 +34,11 @@ export function PageArticle({
       </Section>
       <ContentModules sections={page.sectionsAfterBody} variant="page" />
     </>
+  );
+
+  return textOnlyHero ? (
+    <div className="page-article-text-only">{content}</div>
+  ) : (
+    content
   );
 }
