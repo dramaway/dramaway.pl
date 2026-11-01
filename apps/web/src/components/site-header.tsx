@@ -293,6 +293,13 @@ function NavItemWithChildren({
     >
       <span className="site-nav-sizer" aria-hidden>
         {item.label}
+        <span className="site-nav-sizer-sub">
+          {children.map((child, index) => (
+            <span key={`${child.href}:${child.label}:${index}`}>
+              {child.label}
+            </span>
+          ))}
+        </span>
       </span>
       <div className="site-nav-flyout">
         <span className="site-nav-cloud" aria-hidden />
