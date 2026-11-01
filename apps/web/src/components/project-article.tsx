@@ -97,7 +97,7 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
   const isTeatrCodzienny = project.slug === "teatr-codzienny";
   const usesThumbnailListing = isArtGeneracje || isTeatrCodzienny;
   const rows = editions.map((edition) => ({
-    title: editionHeading(edition),
+    title: isTeatrCodzienny ? edition.title : editionHeading(edition),
     lead: edition.summary?.trim() || null,
     href: editionPath(project.slug, edition.slug),
     ctaLabel: SUBPAGE.artGeneracje.editionCta,
