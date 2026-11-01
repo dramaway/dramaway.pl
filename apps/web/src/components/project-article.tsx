@@ -1,4 +1,5 @@
 import { BlobRow } from "@/components/sections/blob-row";
+import { ContentModules } from "@/components/sections/content-modules";
 import { PageHero } from "@/components/sections/page-hero";
 import { Section } from "@/components/layout/section";
 import { PortableBody, hasPortableContent } from "@/components/portable-body";
@@ -138,6 +139,10 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
           </div>
         </Section>
       ) : null}
+      <ContentModules
+        sections={project.sectionsBeforeEditions}
+        variant="page"
+      />
       {editions.length > 0 ? (
         <section id="edycje" aria-label={copy.editionsHeading}>
           <BlobRow

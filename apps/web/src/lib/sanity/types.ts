@@ -377,6 +377,7 @@ export type ProjectDetail = {
   heroImages?: CmsHeroImage[] | null;
   cover: SanityImage | null;
   body: PortableContent;
+  sectionsBeforeEditions: ResolvedSection[];
   editions: ProjectEdition[] | null;
   afterword: PortableContent;
   partners: string[] | null;
