@@ -1,6 +1,7 @@
 import { PageHero } from "@/components/sections/page-hero";
 import { Section } from "@/components/layout/section";
 import { PortableBody } from "@/components/portable-body";
+import { resolveHeroSlides } from "@/lib/hero-slides";
 import { newsCta } from "@/lib/news-cta";
 import type { NewsDetail } from "@/lib/sanity/types";
 
@@ -10,6 +11,7 @@ export function NewsArticle({ news }: { news: NewsDetail }) {
     <>
       <PageHero
         title={news.title}
+        slides={resolveHeroSlides(news.heroImages, news.title)}
         ctaLabel={cta.ctaHref ? cta.label : null}
         ctaHref={cta.ctaHref}
       />

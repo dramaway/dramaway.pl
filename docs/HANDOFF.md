@@ -19,6 +19,8 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 ---
 
+Aktualizacja 2026-11-01: aktualności mogą mieć własne zdjęcia hero (do pięciu, statyczny kadr albo slider), edytowane w Studio w polu **Zdjęcia hero**.
+
 ## Co to jest
 
 Redesign **fundacja.dramaway.pl**. MVP = jedna witryna. Art Generacje = serce. Czytelnia = dział (`drama_teatr`), nie drugi Next. Centrum = link zewnętrzny.
