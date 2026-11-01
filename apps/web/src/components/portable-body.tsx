@@ -288,6 +288,9 @@ const components: PortableTextComponents = {
     normal: ({ children }) => (
       <p className="whitespace-pre-wrap">{children}</p>
     ),
+    center: ({ children }) => (
+      <p className="whitespace-pre-wrap text-center">{children}</p>
+    ),
     blockquote: ({ children }) => (
       <blockquote className="border-l-2 pl-4 italic text-muted-foreground">
         {children}
