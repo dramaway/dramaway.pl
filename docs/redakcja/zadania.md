@@ -12,15 +12,16 @@ Krótkie przepisy na rzeczy, które robi się najczęściej. Każdy kończy się
 
 1. Na liście **Content** wybierz typ **News** i utwórz nowy dokument (plus nad listą).
 2. Wpisz **Title**. Adres (**Slug**) powstanie z tytułu. Nie dopisuj do niego przedrostka `aktualnosc-`, Studio tego nie przyjmie.
-3. Uzupełnij **Published at** (puste = data dodania), **Excerpt** (krótki opis na karcie; puste = początek treści) i **Body**.
-4. Pole **CTA target** zostaw puste, jeśli przycisk „czytaj więcej” ma prowadzić do tej aktualności. Jeśli ma prowadzić gdzie indziej, wpisz adres i własny tekst przycisku w polu **CTA label**.
-5. Naciśnij **Publish**.
+3. Opcjonalnie dodaj zdjęcia w polu **Zdjęcia hero**. Jedno zdjęcie będzie nieruchomym kadrem, a kilka pokaże się jako pokaz slajdów.
+4. Uzupełnij **Published at** (puste = data dodania), **Excerpt** (krótki opis na karcie; puste = początek treści) i **Body**.
+5. Pole **CTA target** zostaw puste, jeśli przycisk „czytaj więcej” ma prowadzić do tej aktualności. Jeśli ma prowadzić gdzie indziej, wpisz adres i własny tekst przycisku w polu **CTA label**.
+6. Naciśnij **Publish**.
 
 Aktualność pokaże się na stronie głównej, jeśli na liście **Sekcje** na Stronie głównej jest sekcja **Aktualności**. Pokazuje trzy najnowsze, chyba że ustawisz inaczej. Więcej: [Strony](strony.md#sekcje).
 
 ## Zmienić zdjęcia na górze strony
 
-1. Otwórz dokument, którego zdjęcia chcesz zmienić. Strona główna, listingi, **O fundacji**, zwykłe strony i projekty mają pole **Zdjęcia hero**.
+1. Otwórz dokument, którego zdjęcia chcesz zmienić. Strona główna, listingi, **O fundacji**, zwykłe strony, projekty i aktualności mają pole **Zdjęcia hero**.
 2. W polu **Zdjęcia hero** dodaj od jednego do pięciu zdjęć. Kolejność na liście to kolejność pokazu.
 3. Przy każdym zdjęciu ustaw **hotspot** i wpisz **Alt**. **Podpis** jest opcjonalny.
 4. Naciśnij **Publish**.

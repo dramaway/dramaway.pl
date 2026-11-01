@@ -220,3 +220,7 @@ test("every rendered Portable Text field expands Button links", () => {
   assert.match(aboutPageQuery, /lead\[\]/);
   assert.doesNotMatch(aboutPageQuery, /methods \{[^}]*lead\[\]/);
 });
+
+test("news detail query includes its hero images", () => {
+  assert.match(newsBySlugQuery, /heroImages\[\]/);
+});
