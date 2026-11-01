@@ -15,6 +15,7 @@ export function NewsArticle({ news }: { news: NewsDetail }) {
         slides={resolveHeroSlides(news.heroImages, news.title)}
         ctaLabel={cta.ctaHref ? cta.label : null}
         ctaHref={cta.ctaHref}
+        showBand={false}
       />
       <Section>
         <div className="article-body">
