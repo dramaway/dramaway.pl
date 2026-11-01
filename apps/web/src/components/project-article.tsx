@@ -97,7 +97,7 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
   const isTeatrCodzienny = project.slug === "teatr-codzienny";
   const usesThumbnailListing = isArtGeneracje || isTeatrCodzienny;
   const rows = editions.map((edition) => ({
-    title: editionHeading(edition),
+    title: isTeatrCodzienny ? edition.title : editionHeading(edition),
     lead: edition.summary?.trim() || null,
     href: editionPath(project.slug, edition.slug),
     ctaLabel: SUBPAGE.artGeneracje.editionCta,
@@ -136,7 +136,13 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
         <section id="edycje" aria-label={copy.editionsHeading}>
           <BlobRow
             width="wide"
-            heading={isArtGeneracje ? project.editionsHeading?.trim() : null}
+            heading={
+              isArtGeneracje
+                ? project.editionsHeading?.trim()
+                : isTeatrCodzienny
+                  ? copy.editionsListHeading
+                  : null
+            }
             items={rows}
             variant={usesThumbnailListing ? "thumbnail" : "blob"}
           />

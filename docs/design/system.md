@@ -71,6 +71,7 @@ Poniżej `lg` odstęp `--spacing-mobile-rhythm` (1.5–2 rem) ustawia przerwę m
 | `.library-dot-band` / `.library-section` | `/baza-wiedzy`: schodkowe pasmo dużych kół `DotBand`, w tym samym kolorze `sand` co pozostałe pasma, dzieli esej, sekcję „Polecane” i pełną bibliotekę; rozmiar i pionowy odstęp korzystają z tokenów `DotBand`, w tym responsywnego zmniejszenia kół na mobile. Nagłówek „Polecane” ma `1.25rem` odstępu do listy, jak tytuł publikacji do opisu. |
 | `.pub-row` / `.pub-mark` / `-photo` / `.pub-row-copy` | `/czytelnia`: wiersz spisu z poziomą okładką 4:3 z zaokrąglonymi rogami po lewej i tekstem po prawej. Nagłówek „Pełna biblioteka” ma rozmiar `text-h2`. Okładka = pierwszy obrazek w `body`, kadr `object-cover` z hotspotem. Bez obrazka zostaje piaskowy prostokąt. Lead wyświetla całą treść. |
 | `.blob-row-label` / `.blob-row-compact` / `.blob-row-lead` | Archiwum na `/projekty` (`density="compact"`): etykieta magenta zdaniowa; dwie kolumny od `lg` z lekkim offsetem prawej (`--archive-stagger`); pełna zajawka; bez plamy za tytułem |
+| `.blob-row-thumbnails` | Listing edycji Teatru Codziennego ma nagłówek „Zobacz wszystkie edycje”, pokazuje pełne pole `Edition title` z Sanity i miniaturę z pierwszego dostępnego zdjęcia galerii lub rezultatu edycji |
 
 ## Prymitywy
 

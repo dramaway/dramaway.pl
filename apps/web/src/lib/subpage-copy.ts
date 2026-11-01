@@ -22,6 +22,7 @@ export const SUBPAGE = {
     ctaLabel: "zobacz wszystkie edycje",
     ctaHref: "#edycje",
     editionsHeading: "Edycje",
+    editionsListHeading: "Zobacz wszystkie edycje",
     editionCta: "zobacz jak graliśmy",
   },
   czytelnia: {
