@@ -15,6 +15,8 @@ type ContentModulesProps = {
   sections: ResolvedSection[];
   /** `home` paints the homepage rhythm (bands + palette). `page` is quieter. */
   variant: "home" | "page";
+  /** Add title-based anchor targets to tiles, for links from the site navigation. */
+  anchorTiles?: boolean;
 };
 
 type PlacedModule = Extract<ResolvedSection, { kind: "module" }> & {
@@ -42,9 +44,11 @@ function isTextList(section: PlacedSection): boolean {
 function ModuleView({
   section,
   feed,
+  anchorTiles,
 }: {
   section: PlacedSection;
   feed: FeedCandidate[];
+  anchorTiles: boolean;
 }) {
   if (section.kind === "news") {
     const items = selectFeedItems(feed, section).map((item) => ({
@@ -84,7 +88,12 @@ function ModuleView({
             {section.tiles.map((tile) => (
               <div
                 key={tile.key}
-                className={cn("stack-item", tile.href && "card-hover")}
+                id={anchorTiles ? tile.anchorId ?? undefined : undefined}
+                className={cn(
+                  "stack-item",
+                  tile.href && "card-hover",
+                  anchorTiles && tile.anchorId && "scroll-mt-24",
+                )}
               >
                 <ContentTile tile={tile} />
               </div>
@@ -110,7 +119,12 @@ function ModuleView({
           {section.tiles.map((tile) => (
             <div
               key={tile.key}
-              className={cn("stack-item", tile.href && "card-hover")}
+              id={anchorTiles ? tile.anchorId ?? undefined : undefined}
+              className={cn(
+                "stack-item",
+                tile.href && "card-hover",
+                anchorTiles && tile.anchorId && "scroll-mt-24",
+              )}
             >
               <ContentTile tile={tile} />
             </div>
@@ -126,7 +140,12 @@ function ModuleView({
         {section.tiles.map((tile) => (
           <li
             key={tile.key}
-            className={cn("news-card relative isolate", tile.href && "card-hover")}
+            id={anchorTiles ? tile.anchorId ?? undefined : undefined}
+            className={cn(
+              "news-card relative isolate",
+              tile.href && "card-hover",
+              anchorTiles && tile.anchorId && "scroll-mt-24",
+            )}
           >
             <ContentTile tile={tile} heading="h3" layout="card" />
           </li>
@@ -157,7 +176,14 @@ function HomeRhythm({
       paletteBeforeList = true;
     }
 
-    blocks.push(<ModuleView key={section.key} section={section} feed={feed} />);
+    blocks.push(
+      <ModuleView
+        key={section.key}
+        section={section}
+        feed={feed}
+        anchorTiles={false}
+      />,
+    );
 
     const next = placed[index + 1];
     if (!next) return;
@@ -176,9 +202,11 @@ function HomeRhythm({
 function PageRhythm({
   sections,
   feed,
+  anchorTiles,
 }: {
   sections: ResolvedSection[];
   feed: FeedCandidate[];
+  anchorTiles: boolean;
 }) {
   const placed = place(sections);
   return placed.map((section, index) => {
@@ -186,17 +214,21 @@ function PageRhythm({
     const hasImage = section.kind === "module" && Boolean(section.image);
     return (
       <Fragment key={section.key}>
-        <ModuleView section={section} feed={feed} />
+        <ModuleView section={section} feed={feed} anchorTiles={anchorTiles} />
         {next && hasImage ? <DotBand /> : null}
       </Fragment>
     );
   });
 }
 
-export async function ContentModules({ sections, variant }: ContentModulesProps) {
+export async function ContentModules({
+  sections,
+  variant,
+  anchorTiles = false,
+}: ContentModulesProps) {
   if (variant === "page" && sections.length === 0) return null;
   const needsFeed = sections.some((section) => section.kind === "news");
   const feed = needsFeed ? toFeedCandidates(await getContentFeed()) : [];
   if (variant === "home") return <HomeRhythm sections={sections} feed={feed} />;
-  return <PageRhythm sections={sections} feed={feed} />;
+  return <PageRhythm sections={sections} feed={feed} anchorTiles={anchorTiles} />;
 }
