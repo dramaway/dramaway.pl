@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-01 — Kontakt wrócił do układu formularza nad dwiema kolumnami: kontakt bezpośredni i adres; na desktopie szerokość formularza jest dopasowana do końca wiersza z nazwą Fundacji. Odstępy pozostają rytmiczne i responsywne. Odstęp między body projektu a nagłówkiem listy edycji Teatru Codziennego jest skrócony o połowę. W nawigacji desktopowej submenu odsuwa dalsze pozycje w poziomie bez zmiany wysokości rzędu; font podstron zmniejszono o 2 px, a ruch wydłużono i złagodzono. Pozostałe decyzje i zmiany poniżej bez zmian. |
-| **Gałąź / HEAD** | `szaroale-pl-animate-subpage-menu` |
-| **Zmiana bieżąca** | 2026-11-01 — Rozwijane menu desktopowe płynnie odsuwa dalsze pozycje w poziomie, nie zmieniając wysokości rzędu; font podstron jest mniejszy o 2 px. Ruch wydłużono i złagodzono dla bardziej płynnego przesunięcia. |
+| **Ostatnia aktualizacja** | 2026-11-01 — Na stronie O fundacji odstęp przed nagłówkiem Społeczność ma ten sam rytm co Historia fundacji. Pozostałe decyzje i zmiany poniżej bez zmian. |
+| **Gałąź / HEAD** | `szaroale-pl-zmniejsz-odstep-spolecznosc` |
+| **Zmiana bieżąca** | 2026-11-01 — Zmniejszono odstęp przed nagłówkiem Społeczność na stronie O fundacji, wyrównując go do rytmu sekcji Historia fundacji. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
 | **Netlify** | Projekt przeniesiony do teamu `admin@dramaway.pl`, adres bez zmian. Env: `NEXT_PUBLIC_SANITY_*`, `NEXT_PUBLIC_SITE_URL`, `SANITY_REVALIDATE_SECRET` (tylko Production). |
 | **Hasła** | Bitwarden Fundacji (bitwarden.eu): hasła i kody odzyskiwania kont. Fundacja dostaje master password. |
