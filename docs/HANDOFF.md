@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-01 — Projekty mogą mieć tekstowe bloki między treścią a listą edycji; zdjęcia redakcyjne mają pole tekstu alternatywnego. Wcześniejsze decyzje poniżej bez zmian. |
-| **Gałąź / HEAD** | `szaroale-pl-miniature-chainsaw` |
-| **Zmiana bieżąca** | 2026-11-01 — Dokument Project pozwala dodać bloki z nagłówkiem i tekstem przed listą edycji; układ dwóch kolumn nawiązuje do archiwum. |
+| **Ostatnia aktualizacja** | 2026-11-01 — Desktopowe podstrony w rozwijanym menu są wyrównane do lewej krawędzi rodzica i używają MuseoModerno SemiBold 14 px. Wcześniejsze decyzje poniżej bez zmian. |
+| **Gałąź / HEAD** | `szaroale-pl-syrena-project-anchor` |
+| **Zmiana bieżąca** | 2026-11-01 — O fundacji ma kotwice Wartości (`/fundacja#wartosci`), Ludzie (`/fundacja#ludzie`), Historia (`/fundacja#historia-fundacji`) i Dokumenty (`/fundacja#dokumenty`). Baza wiedzy ma kotwice do eseju (`/baza-wiedzy#metody`) i sekcji Polecane (`/baza-wiedzy#polecane`). Desktopowe podstrony w rozwijanym menu są wyrównane do lewej krawędzi rodzica i używają MuseoModerno SemiBold 14 px (mobile bez zmian). Wcześniej: dokumenty Project mogą mieć tekstowe bloki między treścią a listą edycji; kafelek „Projekt Syrena” ma kotwicę `/projekty#projekt-syrena`. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
 | **Netlify** | Projekt przeniesiony do teamu `admin@dramaway.pl`, adres bez zmian. Env: `NEXT_PUBLIC_SANITY_*`, `NEXT_PUBLIC_SITE_URL`, `SANITY_REVALIDATE_SECRET` (tylko Production). |
 | **Hasła** | Bitwarden Fundacji (bitwarden.eu): hasła i kody odzyskiwania kont. Fundacja dostaje master password. |

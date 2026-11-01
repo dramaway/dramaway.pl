@@ -116,6 +116,7 @@ export default async function KnowledgeHubPage({
   return (
     <>
       <PageArticle
+        bodyId="metody"
         page={{
           ...page,
           heroCtaLabel: copy.libraryCta,
@@ -125,7 +126,7 @@ export default async function KnowledgeHubPage({
       {featured.length > 0 ? (
         <>
           <DotBand className="library-dot-band" />
-          <Section className="library-section">
+          <Section id="polecane" className="library-section scroll-mt-24">
             <h2 className="font-display text-h2 font-black">
               {copy.featuredHeading}
             </h2>

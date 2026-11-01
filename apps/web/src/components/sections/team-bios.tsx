@@ -93,7 +93,7 @@ export function TeamBios({ people, heading, ctaLabel, body }: TeamBiosProps) {
   ) : null;
 
   return (
-    <Section className="fundacja-flow">
+    <Section id="ludzie" className="fundacja-flow scroll-mt-24">
       <div className="team-blocks stack-wide">
         {board}
         {sections.map((section) => (
