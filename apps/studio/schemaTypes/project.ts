@@ -47,11 +47,11 @@ export const project = defineType({
     defineField({ name: "body", title: "Body", type: "blockContent" }),
     defineField({
       name: "sectionsBeforeEditions",
-      title: "Kafelki przed listą edycji",
+      title: "Teksty przed listą edycji",
       type: "array",
       description:
-        "Opcjonalne sekcje z kafelkami wyświetlane po treści projektu, bezpośrednio przed listą edycji.",
-      of: [defineArrayMember({ type: "contentModule" })],
+        "Opcjonalne bloki z nagłówkiem i tekstem. Pojawią się po treści projektu, bezpośrednio przed listą edycji.",
+      of: [defineArrayMember({ type: "projectTextSection" })],
     }),
     defineField({
       name: "editionsHeading",
