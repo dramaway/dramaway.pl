@@ -154,17 +154,7 @@ export async function getProjects(): Promise<ProjectListItem[]> {
 export async function getProjectBySlug(
   slug: string,
 ): Promise<ProjectDetail | null> {
-  const project = await sanityClient.fetch<
-    | (Omit<ProjectDetail, "sectionsBeforeEditions"> & {
-        sectionsBeforeEditions?: CmsContentSection[] | null;
-      })
-    | null
-  >(projectBySlugQuery, { slug }, revalidate);
-  if (!project) return null;
-  return {
-    ...project,
-    sectionsBeforeEditions: resolveContentSections(project.sectionsBeforeEditions),
-  };
+  return sanityClient.fetch(projectBySlugQuery, { slug }, revalidate);
 }
 
 export async function getProjectSlugs(): Promise<string[]> {

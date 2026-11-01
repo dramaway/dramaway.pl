@@ -367,6 +367,12 @@ export type ProjectEdition = {
   outcomes: EditionOutcome[] | null;
 };
 
+export type ProjectTextSection = {
+  _key: string;
+  heading: string | null;
+  text: string | null;
+};
+
 export type ProjectDetail = {
   _id: string;
   title: string;
@@ -379,7 +385,7 @@ export type ProjectDetail = {
   heroImages?: CmsHeroImage[] | null;
   cover: CmsImage | null;
   body: PortableContent;
-  sectionsBeforeEditions: ResolvedSection[];
+  sectionsBeforeEditions: ProjectTextSection[] | null;
   editions: ProjectEdition[] | null;
   afterword: PortableContent;
   partners: string[] | null;
