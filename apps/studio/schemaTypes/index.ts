@@ -13,6 +13,7 @@ import { news } from "./news";
 import { page } from "./page";
 import { person } from "./person";
 import { project } from "./project";
+import { projectTextSection } from "./projectTextSection";
 import { publication } from "./publication";
 import { readingMethod } from "./readingMethod";
 import { siteSettings } from "./siteSettings";
@@ -34,6 +35,7 @@ export const schemaTypes = [
   editionOutcome,
   edition,
   project,
+  projectTextSection,
   person,
   page,
   news,

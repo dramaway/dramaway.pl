@@ -1,5 +1,4 @@
 import { BlobRow } from "@/components/sections/blob-row";
-import { ContentModules } from "@/components/sections/content-modules";
 import { PageHero } from "@/components/sections/page-hero";
 import { Section } from "@/components/layout/section";
 import { PortableBody, hasPortableContent } from "@/components/portable-body";
@@ -139,10 +138,25 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
           </div>
         </Section>
       ) : null}
-      <ContentModules
-        sections={project.sectionsBeforeEditions}
-        variant="page"
-      />
+      {project.sectionsBeforeEditions?.some(
+        (section) => section.heading?.trim() && section.text?.trim(),
+      ) ? (
+        <Section>
+          <div className="project-text-sections">
+            {project.sectionsBeforeEditions.map((section) => {
+              const heading = section.heading?.trim();
+              const text = section.text?.trim();
+              if (!heading || !text) return null;
+              return (
+                <section key={section._key}>
+                  <h2 className="blob-row-label">{heading}</h2>
+                  <p className="project-text-section-copy">{text}</p>
+                </section>
+              );
+            })}
+          </div>
+        </Section>
+      ) : null}
       {editions.length > 0 ? (
         <section id="edycje" aria-label={copy.editionsHeading}>
           <BlobRow
