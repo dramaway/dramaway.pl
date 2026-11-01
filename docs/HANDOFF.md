@@ -18,6 +18,8 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 ---
 
+Aktualizacja 2026-11-01: Na tekstowych podstronach odstęp nad H1 zmniejszono do 1.5 rem; w hero bez leadu usunięto pusty wiersz siatki, dzięki czemu pierwsza treść zaczyna się 1.5 rem pod H1.
+
 Aktualizacja 2026-11-01: na stronie Projekty magentowy nagłówek „Zakończone projekty” ma 15 px na desktopie i rozmiar nagłówka sekcji na mobile, żeby wyraźniej zaznaczyć początek archiwum. Aktualności mogą mieć własne zdjęcia hero (do pięciu, statyczny kadr albo slider), edytowane w Studio w polu **Zdjęcia hero**.
 
 ## Co to jest
