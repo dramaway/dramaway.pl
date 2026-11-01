@@ -35,6 +35,7 @@ export default async function ContactPage() {
         ctaLabel={page.heroCtaLabel}
         ctaHref={page.heroCtaHref}
         slides={resolveHeroSlides(page.heroImages, cmsText(page.title) || "")}
+        showBand={false}
       >
       </PageHero>
       <Section aria-labelledby="contact-form-heading">

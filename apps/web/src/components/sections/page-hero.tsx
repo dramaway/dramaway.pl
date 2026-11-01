@@ -18,6 +18,7 @@ export type PageHeroContent = {
    */
   slides?: HeroSlide[] | null;
   parent?: { href: string; label: string } | null;
+  showBand?: boolean;
 };
 
 type PageHeroProps = PageHeroContent & {
@@ -50,6 +51,7 @@ export function PageHero({
   slides,
   parent,
   layout = "split",
+  showBand = true,
   children,
 }: PageHeroProps) {
   const hasTitle = Boolean(title?.trim());
@@ -108,7 +110,7 @@ export function PageHero({
           <HeroMedia slides={stills} empty="slot" />
         </div>
       </section>
-      <DotBand />
+      {showBand ? <DotBand /> : null}
     </div>
   );
 }

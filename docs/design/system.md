@@ -31,6 +31,7 @@ Poniżej `lg` odstęp `--spacing-mobile-rhythm` (1.5–2 rem) ustawia przerwę m
 | Klasa | Do czego |
 |-------|----------|
 | `.page` | kontener wyśrodkowany, `--page-max` z `--page-pad` |
+| `PageHero` / `.hero-stack` | Strony `sprawozdania` i `statut` mają tekstowy hero bez zdjęcia i pasma; pierwsza sekcja po hero nie dokłada drugiego pełnego górnego odstępu. `showBand={false}` pozwala wyłączyć pasmo pod hero na widoku Kontakt. |
 | `.split` / `.split-text` / `.split-media` | pełna szerokość viewportu; tekst w kolumnie ograniczonej do ~2/3 `--page-max` z `--page-pad`; zdjęcie dobija do krawędzi **viewportu** (od `lg`). Poniżej `lg`: tekst pierwszy, kadr inset 4:5 z `--media-split-max` |
 | `.content-split` | moduł kafelków ze zdjęciem. Od `lg`: połówki viewportu. Zdjęcie ma szerokość połowy minus 1,5 kropki (światło od środka, po stronie kadru). Tekst zaczyna się 1,5 kropki od środka, po swojej stronie. Górna i dolna krawędź zdjęcia leżą na osi kółek po jego stronie (lewe kółka niżej niż prawe). Pasmo zamykające stronę główną to ten sam schodek, więc dół zdjęcia liczy się jak przy każdym innym `DotBand`. `.content-split-solo` wyśrodkowuje jeden kafelek w pionie. |
 | Opisy w listingach | Zajawki z CMS są wyświetlane w całości niezależnie od szerokości widoku i powiększenia; układ kart dopasowuje się do naturalnej wysokości treści |
