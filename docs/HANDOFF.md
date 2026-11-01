@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-01 — Kontakt wrócił do układu formularza nad dwiema kolumnami: kontakt bezpośredni i adres; na desktopie szerokość formularza jest dopasowana do końca wiersza z nazwą Fundacji. Odstępy pozostają rytmiczne i responsywne. Pozostałe decyzje i zmiany poniżej bez zmian. |
+| **Ostatnia aktualizacja** | 2026-11-01 — Kontakt wrócił do układu formularza nad dwiema kolumnami: kontakt bezpośredni i adres; na desktopie szerokość formularza jest dopasowana do końca wiersza z nazwą Fundacji. Odstępy pozostają rytmiczne i responsywne. Odstęp między body projektu a nagłówkiem listy edycji Teatru Codziennego jest skrócony o połowę. Pozostałe decyzje i zmiany poniżej bez zmian. |
 | **Gałąź / HEAD** | `szaroale-pl-remove-dots-spacing` |
 | **Zmiana bieżąca** | 2026-11-01 — Kontakt: formularz o ograniczonej szerokości na desktopie; kontakt bezpośredni i adres w dwóch kolumnach pod formularzem. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
