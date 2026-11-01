@@ -4186,12 +4186,7 @@ h3:focus-within {
 }
 
 .page-article-text-only > .hero-stack {
-  padding-block-start: 1.5rem;
   padding-block-end: 1.5rem;
-}
-
-.page-article-text-only > .hero-stack:not(:has(.hero-copy)) {
-  grid-template-areas: "title";
 }
 
 .page-article-text-only > .hero-stack + .py-section {
