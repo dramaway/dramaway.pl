@@ -54,7 +54,7 @@ Obiekt **Button** to zielony przycisk z rulką i kropką, taki jak „więcej”
 4. W polu **Cel** zostaw **Dokument** albo przełącz na **Plik** lub **Adres**.
 5. Uzupełnij pole, które się pokaże:
    - **Dokument** — wybierz istniejącą treść (strona, news, projekt, publikacja, osoba, listing Projekty / Czytelnia / Zespół, O fundacji). Adres złoży się sam.
-   - **Plik** — PDF albo inne medium. Wgrywa się je w tym polu, nie z zakładki Media. Otwiera się w nowej karcie.
+   - **Plik** — PDF albo inne medium. Wgrywa się je w tym polu, nie z zakładki Media. Otwiera się w tej samej karcie.
    - **Adres** — ścieżka od ukośnika (`/projekty`) albo `https://`. Kotwicy i parametrów tu nie wpisuj.
 6. **Wcięcie** zostaw na „Bez wcięcia”. Wybierz **1 stopień**, gdy akapit obok jest raz wcięty listą Indent — tak stoją hasła Termin na Bazie wiedzy. **2** i **3** to kolejne poziomy tej samej listy. Sam styl Termin wcięcia nie dodaje.
 7. Jeśli trzeba dotrzeć do konkretnego miejsca na stronie (kotwica) albo otworzyć Czytelnię na jednej metodzie (parametry), rozwiń **Zaawansowane** — niżej.

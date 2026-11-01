@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-01 — Kontakt wrócił do układu formularza nad dwiema kolumnami: kontakt bezpośredni i adres; na desktopie szerokość formularza jest dopasowana do końca wiersza z nazwą Fundacji. Odstępy pozostają rytmiczne i responsywne. Odstęp między body projektu a nagłówkiem listy edycji Teatru Codziennego jest skrócony o połowę. W nawigacji desktopowej submenu odsuwa dalsze pozycje w poziomie bez zmiany wysokości rzędu; font podstron zmniejszono o 2 px, a ruch wydłużono i złagodzono. Pozostałe decyzje i zmiany poniżej bez zmian. |
-| **Gałąź / HEAD** | `szaroale-pl-animate-subpage-menu` |
-| **Zmiana bieżąca** | 2026-11-01 — Rozwijane menu desktopowe płynnie odsuwa dalsze pozycje w poziomie, nie zmieniając wysokości rzędu; font podstron jest mniejszy o 2 px. Ruch wydłużono i złagodzono dla bardziej płynnego przesunięcia. |
+| **Ostatnia aktualizacja** | 2026-11-01 — Wszystkie linki otwierają się w tej samej karcie, także adresy zewnętrzne i pliki PDF. Wcześniejsze zmiany poniżej bez zmian. |
+| **Gałąź / HEAD** | `szaroale-pl-links-same-tab` |
+| **Zmiana bieżąca** | 2026-11-01 — Usunięto otwieranie linków w nowej karcie: dotyczy menu, kafelków, CTA, treści, stopki i PDF-ów. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
 | **Netlify** | Projekt przeniesiony do teamu `admin@dramaway.pl`, adres bez zmian. Env: `NEXT_PUBLIC_SANITY_*`, `NEXT_PUBLIC_SITE_URL`, `SANITY_REVALIDATE_SECRET` (tylko Production). |
 | **Hasła** | Bitwarden Fundacji (bitwarden.eu): hasła i kody odzyskiwania kont. Fundacja dostaje master password. |
@@ -21,6 +21,8 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 Aktualizacja 2026-11-01: na stronie Projekty magentowy nagłówek „Zakończone projekty” ma 15 px na desktopie i rozmiar nagłówka sekcji na mobile, żeby wyraźniej zaznaczyć początek archiwum. Aktualności mogą mieć własne zdjęcia hero (do pięciu, statyczny kadr albo slider), edytowane w Studio w polu **Zdjęcia hero**.
 
 Aktualizacja 2026-11-01: submenu w nawigacji desktopowej przesuwa kolejne pozycje menu razem z płynnie rozwijanym tłem, bez zmiany wysokości rzędu. Przesunięcie wydłużono do 0.6 s i zastosowano łagodniejszą krzywą. Font podstron zmniejszono o 2 px. Animacja respektuje `prefers-reduced-motion`.
+
+Aktualizacja 2026-11-01: wszystkie linki w serwisie, także zewnętrzne i prowadzące do plików PDF, otwierają się w tej samej karcie.
 
 ## Co to jest
 
