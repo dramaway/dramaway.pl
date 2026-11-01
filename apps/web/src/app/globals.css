@@ -1816,9 +1816,8 @@
   }
 
   /*
-   * News cards share one baseline: the title always occupies two lines and the
-   * excerpt absorbs the slack, so every CTA rule sits at the same height —
-   * Figma draws all three at y=1372 regardless of copy length.
+   * News cards share one baseline: the title occupies at least two lines and
+   * can grow for long headlines; the excerpt absorbs the remaining slack.
    */
   .news-card {
     display: flex;

@@ -23,7 +23,7 @@ Dokument ma zakładki:
 
 ## Hero
 
-**Hero** to duży nagłówek na górze strony: tytuł, krótki opis, przycisk i zdjęcia. Strona główna, listingi, **O fundacji**, zwykłe strony i projekty mają go w formularzu. Puste pole oznacza, że tego elementu nie ma na stronie. Gdy puste jest wszystko, nagłówka nie ma wcale.
+**Hero** to duży nagłówek na górze strony: tytuł, krótki opis, przycisk i zdjęcia. Strona główna, listingi, **O fundacji**, zwykłe strony, projekty i aktualności mają go w formularzu. Puste pole oznacza, że tego elementu nie ma na stronie. Gdy puste jest wszystko, nagłówka nie ma wcale.
 
 W leadzie hero możesz nacisnąć **Enter**, żeby zacząć nową linię. Dotyczy to także pola **Summary** w dokumencie **Project**. Wpisz lead tak jak zwykle — podział linii zostanie zachowany na stronie.
 
@@ -120,7 +120,7 @@ Niżej na liście Content są typy dokumentów, a nie pojedyncze skróty:
 
 - **Project**: jeden projekt, adres `/projekty/…`. Art Generacje ma dodatkowo podstrony edycji. Hero działa jak wszędzie: [Hero](#hero). Pusta lista zdjęć zostawia dotychczasowy kadr: pierwszą galerię edycji, a gdy jej nie ma, pierwszy obraz w treści. Pole **Nagłówek listy edycji** pozwala ustawić nagłówek nad listą Art Generacji; puste pole ukrywa nagłówek.
 - **Person**: osoba, adres `/zespol/…`.
-- **News**: aktualność, adres `/{slug}`. Pola: tytuł, data, zajawka, treść i opcjonalny przycisk. Pole **CTA target** puste zostawia przycisk „czytaj więcej”, który prowadzi do tej aktualności. Inny adres (ścieżka od ukośnika albo `https://`) wymaga własnej etykiety w polu **CTA label**. Bez etykiety Studio nie pozwoli opublikować. Na stronie głównej aktualności zbiera sekcja **Aktualności**.
+- **News**: aktualność, adres `/{slug}`. Pola: tytuł, zdjęcia hero, data, zajawka, treść i opcjonalny przycisk. Pole **CTA target** puste zostawia przycisk „czytaj więcej”, który prowadzi do tej aktualności. Inny adres (ścieżka od ukośnika albo `https://`) wymaga własnej etykiety w polu **CTA label**. Bez etykiety Studio nie pozwoli opublikować. Na stronie głównej aktualności zbiera sekcja **Aktualności**.
 - **Page**: Baza wiedzy, Kontakt, strony typu statut. Adres to `/{slug}`. W Studio lista dzieli się na **Drupal** (stare pozostałości po poprzedniej stronie, do wygaszenia), **W menu** i **Poza menu**. Hero działa jak wszędzie, a pole **Sekcje** stoi nad artykułem.
 - **Publication**: tekst Czytelni. Dokąd prowadzi wiersz na spisie: [Czytelnia i O fundacji](czytelnia-i-fundacja.md#dokąd-prowadzi-wiersz-na-spisie).
 - **Category**: etykieta kategorii w Czytelni, nie opis metod na stronie Baza wiedzy.
