@@ -176,13 +176,8 @@ function PortableLink({
 }: PortableTextMarkComponentProps<{ _type: string; href?: string }>) {
   const safe = safeHref(value?.href);
   if (!safe) return <>{children}</>;
-  const newTab = safe.kind === "http";
   return (
-    <a
-      href={safe.href}
-      className="underline underline-offset-2"
-      {...(newTab ? { target: "_blank", rel: "noreferrer" } : {})}
-    >
+    <a href={safe.href} className="underline underline-offset-2">
       {children}
     </a>
   );
@@ -259,13 +254,8 @@ function renderRosterSpan(span: RosterSpan, markDefs: readonly RosterMarkDef[]) 
   );
   const safe = safeHref(link?.href);
   if (!safe) return node;
-  const newTab = safe.kind === "http";
   return (
-    <a
-      href={safe.href}
-      className="underline underline-offset-2"
-      {...(newTab ? { target: "_blank", rel: "noreferrer" } : {})}
-    >
+    <a href={safe.href} className="underline underline-offset-2">
       {node}
     </a>
   );

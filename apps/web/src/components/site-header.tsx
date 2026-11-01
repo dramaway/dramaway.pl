@@ -397,7 +397,7 @@ function NavLink({
   const className = cn("hover:text-magenta", currentBranch && "text-magenta");
   if (item.external || /^https?:\/\//i.test(item.href)) {
     return (
-      <a href={item.href} className={className} rel="noopener noreferrer" target="_blank">
+      <a href={item.href} className={className}>
         {children}
       </a>
     );

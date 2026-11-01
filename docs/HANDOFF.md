@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-01 — Dodano pole Tekst alternatywny do zdjęć redakcyjnych, w tym zdjęć w galeriach. Pozostałe decyzje i zmiany poniżej bez zmian. |
+| **Ostatnia aktualizacja** | 2026-11-01 — Dodano pole Tekst alternatywny do zdjęć redakcyjnych, w tym zdjęć w galeriach. Wszystkie linki otwierają się w tej samej karcie. |
 | **Gałąź / HEAD** | `szaroale-pl-add-image-alt-fields` |
 | **Zmiana bieżąca** | 2026-11-01 — Studio udostępnia pole Tekst alternatywny przy zdjęciach hero, osobach, galeriach, rezultatach edycji, kafelkach i zdjęciach w tekście. Komponenty odczytują je na stronie; dotychczasowe wartości domyślne pozostają dla pustych pól. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
@@ -21,6 +21,8 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 Aktualizacja 2026-11-01: na stronie Projekty magentowy nagłówek „Zakończone projekty” ma 15 px na desktopie i rozmiar nagłówka sekcji na mobile, żeby wyraźniej zaznaczyć początek archiwum. Aktualności mogą mieć własne zdjęcia hero (do pięciu, statyczny kadr albo slider), edytowane w Studio w polu **Zdjęcia hero**.
 
 Aktualizacja 2026-11-01: submenu w nawigacji desktopowej przesuwa kolejne pozycje menu razem z płynnie rozwijanym tłem, bez zmiany wysokości rzędu. Przesunięcie wydłużono do 0.6 s i zastosowano łagodniejszą krzywą. Font podstron zmniejszono o 2 px. Animacja respektuje `prefers-reduced-motion`.
+
+Aktualizacja 2026-11-01: wszystkie linki w serwisie, także zewnętrzne i prowadzące do plików PDF, otwierają się w tej samej karcie.
 
 ## Co to jest
 

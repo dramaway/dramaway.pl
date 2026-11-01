@@ -151,7 +151,7 @@ export const ctaButton = defineType({
       name: "file",
       title: "Plik",
       type: "file",
-      description: "PDF albo inne medium. Przycisk otwiera plik w nowej karcie.",
+      description: "PDF albo inne medium. Przycisk otwiera plik w tej samej karcie.",
       hidden: ({ parent }) => parentOf({ parent }).target !== "file",
       validation: (rule) =>
         rule.custom((value, context) => {
