@@ -4,7 +4,11 @@ Zwykły akapit, nagłówek, cytat, lista i pogrubienie działają jak w edytorze
 
 <!-- screen: tekst-toolbar | Pasek edytora z listą stylów, w tym Termin, oraz list Bullet, Numbered, Indent, Roles | Widać, które pozycje są nasze, a które są zwykłym tekstem -->
 
-Poniżej są tylko dodatki zrobione dla tej strony. Część z nich to **style i listy** na pasku edytora (Termin, Indent, Roles). Reszta to **bloki**, czyli osobne elementy wstawiane plusem między akapitami (Columns, Button, Wykaz twórców, YouTube).
+Poniżej są tylko dodatki zrobione dla tej strony. Część z nich to **style i listy** na pasku edytora (Termin, Centered, Indent, Roles). Reszta to **bloki**, czyli osobne elementy wstawiane plusem między akapitami (Columns, Button, Wykaz twórców, YouTube).
+
+## Wyrównanie do środka
+
+Styl **Centered** wyrównuje tekst akapitu do środka jego kolumny. Zaznacz akapit i wybierz **Centered** na pasku stylów. To wyrównanie dotyczy tylko tego akapitu; pozostały tekst i nagłówki nie zmieniają położenia. Aby wrócić do zwykłego wyrównania, wybierz **Normal**.
 
 ## Termin
 

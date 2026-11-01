@@ -477,7 +477,7 @@
       min-width: 0;
       flex-wrap: nowrap;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       column-gap: 1.5rem;
       font-family: var(--font-display);
       font-size: var(--text-nav);
@@ -752,10 +752,6 @@
   .hero-stack .hero-copy {
     max-width: 62ch;
     width: 100%;
-  }
-
-  .page-article-text-only > .hero-stack + .py-section {
-    padding-block-start: 0;
   }
 
   .hero-media-wrap {
@@ -4153,6 +4149,22 @@ h1:focus-within,
 h2:focus-within,
 h3:focus-within {
   color: var(--color-brand-1);
+}
+
+.page-article-text-only > .hero-stack {
+  padding-block-end: 1.5rem;
+}
+
+.page-article-text-only > .hero-stack + .py-section {
+  padding-block-start: 0;
+}
+
+.page-article-text-only > .py-section .portable-body {
+  margin-block-start: 0;
+}
+
+.page-article-text-only > .py-section .portable-body > :first-child {
+  margin-block-start: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
