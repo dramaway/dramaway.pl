@@ -17,6 +17,7 @@ import { validateReadMoreBreaks } from "./readMoreValidation";
 import { RosterIcon } from "./rosterIcon";
 import { TermStyle } from "./termStyle";
 import { YoutubePreview } from "./youtubePreview";
+import { imageAltField } from "./imageAltField";
 
 export const youtube = defineType({
   name: "youtube",
@@ -35,6 +36,7 @@ export const youtube = defineType({
       title: "Cover image",
       type: "image",
       options: { hotspot: true },
+      fields: [imageAltField()],
       description:
         "Optional image shown before the video starts. If empty, the thumbnail from YouTube is used.",
     }),
@@ -128,11 +130,7 @@ const imageBlockMember = defineArrayMember({
   icon: ImageIcon,
   options: { hotspot: true },
   fields: [
-    {
-      name: "alt",
-      type: "string",
-      title: "Alt text",
-    },
+    imageAltField(),
     defineField({
       name: "size",
       title: "Size",

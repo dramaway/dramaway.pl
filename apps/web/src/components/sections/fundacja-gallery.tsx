@@ -1,10 +1,10 @@
 import { Section } from "@/components/layout/section";
 import { ImageGallery } from "@/components/visual/image-gallery";
-import type { SanityImage } from "@/lib/sanity/types";
+import type { CmsImage } from "@/lib/sanity/types";
 
 type FundacjaGalleryProps = {
   heading?: string | null;
-  images: readonly SanityImage[];
+  images: readonly CmsImage[];
 };
 
 export function FundacjaGallery({ heading, images }: FundacjaGalleryProps) {

@@ -4,6 +4,7 @@ import {
   heroTextAlignField,
   legacyHeroImageField,
 } from "./heroMedia";
+import { imageAltField } from "./imageAltField";
 
 export const aboutPage = defineType({
   name: "aboutPage",
@@ -145,6 +146,7 @@ export const aboutPage = defineType({
             defineArrayMember({
               type: "image",
               options: { hotspot: true },
+              fields: [imageAltField()],
             }),
           ],
         }),

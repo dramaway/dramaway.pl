@@ -1,4 +1,4 @@
-import type { SanityImage } from "@/lib/sanity/types";
+import type { CmsImage } from "@/lib/sanity/types";
 
 /** Skip mosaic tiles when the shorter asset side is below this. Lightbox still lists them. */
 export const GALLERY_MIN_SHORT_SIDE = 400;
@@ -23,7 +23,7 @@ export type PortableNode = {
 export type ImageGalleryNode = {
   _type: "imageGallery";
   _key: string;
-  images: SanityImage[];
+  images: CmsImage[];
 };
 
 const IMAGE_REF_SIZE = /-(\d+)x(\d+)-[a-z0-9]+$/i;
@@ -131,13 +131,13 @@ export function groupPortableImageRuns(
       continue;
     }
 
-    const images: SanityImage[] = [current as SanityImage];
+    const images: CmsImage[] = [current as CmsImage];
     let cursor = index + 1;
 
     while (cursor < blocks.length) {
       const next = blocks[cursor];
       if (joinsImageMosaic(next)) {
-        images.push(next as SanityImage);
+        images.push(next as CmsImage);
         cursor += 1;
         continue;
       }

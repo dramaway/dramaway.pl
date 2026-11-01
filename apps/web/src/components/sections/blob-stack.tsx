@@ -3,7 +3,7 @@ import { Blob } from "@/components/visual/blob";
 import { CtaLink } from "@/components/visual/cta-link";
 import { Media } from "@/components/visual/media";
 import { LIST_CTA_LABEL } from "@/lib/subpage-copy";
-import type { SanityImage } from "@/lib/sanity/types";
+import type { CmsImage } from "@/lib/sanity/types";
 import { cn } from "@/lib/utils";
 
 export type BlobRowItem = {
@@ -12,7 +12,7 @@ export type BlobRowItem = {
   href: string;
   id?: string;
   ctaLabel?: string | null;
-  image?: SanityImage | null;
+  image?: CmsImage | null;
 };
 
 const DEFAULT_CTA = LIST_CTA_LABEL;
@@ -53,7 +53,7 @@ export function BlobStack({
             item.image ? (
               <Media
                 image={item.image}
-                alt=""
+                alt={item.image.alt?.trim() || ""}
                 variant="inset"
                 ratio="none"
                 sizes="(min-width: 64rem) 12rem, 30vw"

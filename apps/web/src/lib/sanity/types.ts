@@ -6,8 +6,10 @@ export type SanityImage = SanityImageSource;
 
 export type HeroTextAlign = "left" | "center" | "right";
 
+export type CmsImage = SanityImage & { alt?: string | null };
+
 /** Image field that may carry a slide key, alt, and an optional visible caption. */
-export type CmsHeroImage = SanityImage & {
+export type CmsHeroImage = CmsImage & {
   _key?: string | null;
   alt?: string | null;
   caption?: string | null;
@@ -21,7 +23,7 @@ export type CmsHeroSlider = {
 /** One hero still. A caption is shown only as a slider-dot tooltip. */
 export type HeroSlide = {
   _key: string;
-  image: SanityImage;
+  image: CmsImage;
   alt: string;
   caption: string | null;
 };
@@ -34,7 +36,7 @@ export type PersonListItem = {
   slug: string;
   role: string | null;
   email: string | null;
-  photo: SanityImage | null;
+  photo: CmsImage | null;
   excerpt: string | null;
 };
 
@@ -44,7 +46,7 @@ export type PersonDetail = {
   slug: string;
   role: string | null;
   email: string | null;
-  photo: SanityImage | null;
+  photo: CmsImage | null;
   bio: PortableContent;
 };
 
@@ -56,7 +58,7 @@ export type PageListItem = {
   _id: string;
   title: string;
   slug: string;
-  cover?: SanityImage | null;
+  cover?: CmsImage | null;
   excerpt?: string | null;
   publishedAt?: string | null;
 };
@@ -76,7 +78,7 @@ export type ContentFeedDoc = {
 
 export type ContentFeedPool = Record<FeedSource, ContentFeedDoc[] | null>;
 
-export type CmsContentImage = SanityImage & { alt?: string | null };
+export type CmsContentImage = CmsImage;
 
 export type CmsContentTileTarget = {
   _type: string;
@@ -135,7 +137,7 @@ export type ResolvedNewsSection = {
 export type ResolvedContentModule = {
   key: string;
   kind: "module";
-  image: SanityImage | null;
+  image: CmsImage | null;
   imageAlt: string;
   textLayout: "grid" | "list";
   tiles: ResolvedTile[];
@@ -252,7 +254,7 @@ export type FooterLink = {
 };
 
 export type SiteSettingsFooter = {
-  logo?: (SanityImage & { alt?: string | null }) | null;
+  logo?: CmsImage | null;
   address?: string | null;
   links?: CmsFooterLink[] | null;
 };
@@ -315,7 +317,7 @@ export type HomepageContent = {
 };
 
 export type ResolvedFooter = {
-  logo: SanityImage | null;
+  logo: CmsImage | null;
   logoAlt: string;
   address: string | null;
   links: FooterLink[];
@@ -340,14 +342,14 @@ export type ProjectListItem = {
   featured: boolean | null;
   summary: string | null;
   editionCount: number;
-  cover: SanityImage | null;
+  cover: CmsImage | null;
 };
 
 export type EditionOutcome = {
   title: string;
   subtitle: string | null;
   date: string | null;
-  image: SanityImage | null;
+  image: CmsImage | null;
   description: string | null;
 };
 
@@ -360,7 +362,7 @@ export type ProjectEdition = {
   summary: string | null;
   heroTextAlign?: HeroTextAlign | null;
   body: PortableContent;
-  gallery: SanityImage[] | null;
+  gallery: CmsImage[] | null;
   partners: string[] | null;
   outcomes: EditionOutcome[] | null;
 };
@@ -375,7 +377,7 @@ export type ProjectDetail = {
   heroTextAlign?: HeroTextAlign | null;
   editionsHeading: string | null;
   heroImages?: CmsHeroImage[] | null;
-  cover: SanityImage | null;
+  cover: CmsImage | null;
   body: PortableContent;
   editions: ProjectEdition[] | null;
   afterword: PortableContent;
@@ -383,7 +385,7 @@ export type ProjectDetail = {
   sponsors: string[] | null;
 };
 
-export type PublicationCover = SanityImage & { alt?: string | null };
+export type PublicationCover = CmsImage;
 
 export type PublicationListItem = {
   _id: string;
@@ -469,7 +471,7 @@ export type AboutPage = {
   } | null;
   gallery: {
     heading: string | null;
-    images: SanityImage[] | null;
+    images: CmsImage[] | null;
   } | null;
   history: {
     heading: string | null;
@@ -519,7 +521,7 @@ export type ResolvedAboutPage = {
   };
   gallery: {
     heading: string | null;
-    images: SanityImage[];
+    images: CmsImage[];
   };
   history: {
     heading: string | null;

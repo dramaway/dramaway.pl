@@ -1,8 +1,8 @@
 import { ImageGallery } from "@/components/visual/image-gallery";
-import type { SanityImage } from "@/lib/sanity/types";
+import type { CmsImage } from "@/lib/sanity/types";
 
 type LeadGalleryProps = {
-  images: SanityImage[];
+  images: CmsImage[];
   alt: string;
 };
 

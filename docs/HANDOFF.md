@@ -5,15 +5,15 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-01 — Na stronie O fundacji odstęp przed nagłówkiem Społeczność ma ten sam rytm co Historia fundacji. Pozostałe decyzje i zmiany poniżej bez zmian. |
-| **Gałąź / HEAD** | `szaroale-pl-zmniejsz-odstep-spolecznosc` |
-| **Zmiana bieżąca** | 2026-11-01 — Zmniejszono odstęp przed nagłówkiem Społeczność na stronie O fundacji, wyrównując go do rytmu sekcji Historia fundacji. |
+| **Ostatnia aktualizacja** | 2026-11-01 — Dodano pole Tekst alternatywny do zdjęć redakcyjnych, w tym zdjęć w galeriach. Pozostałe decyzje i zmiany poniżej bez zmian. |
+| **Gałąź / HEAD** | `szaroale-pl-add-image-alt-fields` |
+| **Zmiana bieżąca** | 2026-11-01 — Studio udostępnia pole Tekst alternatywny przy zdjęciach hero, osobach, galeriach, rezultatach edycji, kafelkach i zdjęciach w tekście. Komponenty odczytują je na stronie; dotychczasowe wartości domyślne pozostają dla pustych pól. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
 | **Netlify** | Projekt przeniesiony do teamu `admin@dramaway.pl`, adres bez zmian. Env: `NEXT_PUBLIC_SANITY_*`, `NEXT_PUBLIC_SITE_URL`, `SANITY_REVALIDATE_SECRET` (tylko Production). |
 | **Hasła** | Bitwarden Fundacji (bitwarden.eu): hasła i kody odzyskiwania kont. Fundacja dostaje master password. |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ (`readingMethod` = Category; `publication.methods` = Categories; publiczne `publication.format`) |
-| **Working tree** | O fundacji: galeria zdjęć między Społecznością a Historią; schemat Studio wdrożony. Kolejna zmiana w toku: usunięcie szarych linii rozdzielających bloki Zespołu. Nadal do potwierdzenia przez redakcję: kanał YouTube w stopce (`UCqnZ4VG2xTkiTYDbrOLMfEQ`) i adres e-mail. |
+| **Working tree** | O fundacji: galeria zdjęć między Społecznością a Historią; schemat Studio wdrożony. Dodano pola tekstu alternatywnego do zdjęć redakcyjnych, także w galeriach. Nadal do potwierdzenia przez redakcję: kanał YouTube w stopce (`UCqnZ4VG2xTkiTYDbrOLMfEQ`) i adres e-mail. |
 | **Owner Sanity** | Organizacja na `admin@dramaway.pl`, plan NGO. `admin@dramaway.pl` = project Admin; redakcja = Editor |
 
 ---
