@@ -5,7 +5,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-01 — Wszystkie linki otwierają się w tej samej karcie, także adresy zewnętrzne i pliki PDF. Wcześniejsze zmiany poniżej bez zmian. |
+| **Ostatnia aktualizacja** | 2026-11-01 — Wszystkie linki otwierają się w tej samej karcie, także adresy zewnętrzne i pliki PDF. Na stronie O fundacji odstęp przed nagłówkiem Społeczność ma ten sam rytm co Historia fundacji. Wcześniejsze decyzje poniżej bez zmian. |
 | **Gałąź / HEAD** | `szaroale-pl-links-same-tab` |
 | **Zmiana bieżąca** | 2026-11-01 — Usunięto otwieranie linków w nowej karcie: dotyczy menu, kafelków, CTA, treści, stopki i PDF-ów. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
