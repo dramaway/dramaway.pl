@@ -94,6 +94,8 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
     (edition) => edition.slug,
   );
   const isArtGeneracje = project.slug === "art-generacje";
+  const isTeatrCodzienny = project.slug === "teatr-codzienny";
+  const usesThumbnailListing = isArtGeneracje || isTeatrCodzienny;
   const rows = editions.map((edition) => ({
     title: editionHeading(edition),
     lead: edition.summary?.trim() || null,
@@ -101,7 +103,12 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
     ctaLabel: SUBPAGE.artGeneracje.editionCta,
     image: isArtGeneracje
       ? (edition.gallery?.find((image) => hasHeroImage(image)) ?? null)
-      : null,
+      : isTeatrCodzienny
+        ? (edition.gallery?.find((image) => hasHeroImage(image)) ??
+          edition.outcomes?.find((outcome) => hasHeroImage(outcome.image))
+            ?.image ??
+          null)
+        : null,
   }));
   const { preamble, sections } = splitPortableByHeading(project.afterword);
   const foldItems = projectFoldItems(project, sections);
@@ -131,7 +138,7 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
             width="wide"
             heading={isArtGeneracje ? project.editionsHeading?.trim() : null}
             items={rows}
-            variant={isArtGeneracje ? "thumbnail" : "blob"}
+            variant={usesThumbnailListing ? "thumbnail" : "blob"}
           />
         </section>
       ) : null}
