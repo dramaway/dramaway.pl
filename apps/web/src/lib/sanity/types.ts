@@ -169,6 +169,7 @@ export type NewsDetail = {
   _id: string;
   title: string;
   slug: string;
+  heroImages?: CmsHeroImage[] | null;
   excerpt?: string | null;
   publishedAt?: string | null;
   ctaHref?: string | null;

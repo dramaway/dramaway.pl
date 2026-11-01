@@ -180,6 +180,7 @@ export const newsBySlugQuery = `*[_type == "news" && slug.current == $slug][0] {
   _id,
   title,
   "slug": slug.current,
+  ${heroSlidesProjection},
   "excerpt": select(
     defined(excerpt) && excerpt != "" => excerpt,
     ${excerptFallback}

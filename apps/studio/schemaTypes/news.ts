@@ -1,4 +1,5 @@
 import { defineField, defineType, type SlugValue } from "sanity";
+import { heroSlidesField } from "./heroMedia";
 
 const NEWS_SLUG_PREFIX = "aktualnosc-";
 
@@ -46,6 +47,7 @@ export const news = defineType({
           return true;
         }),
     }),
+    heroSlidesField(),
     defineField({
       name: "publishedAt",
       title: "Published at",
