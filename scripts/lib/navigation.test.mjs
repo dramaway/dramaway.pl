@@ -153,6 +153,15 @@ test("a single valid item replaces the built-in menu", () => {
   );
 });
 
+test("a path with an anchor stays an internal navigation link", () => {
+  assert.deepEqual(
+    resolveMainNav([
+      { label: "Projekt Syrena", target: "path", href: "/projekty#syrena" },
+    ]),
+    [{ href: "/projekty#syrena", label: "Projekt Syrena" }],
+  );
+});
+
 test("a CMS menu entry for the retired Czytelnia page is dropped", () => {
   const nav = resolveMainNav([
     { target: "path", href: "/projekty", label: "Projekty" },

@@ -10,6 +10,7 @@ export type BlobRowItem = {
   title: string;
   lead?: string | null;
   href: string;
+  id?: string;
   ctaLabel?: string | null;
   image?: SanityImage | null;
 };
@@ -40,8 +41,10 @@ export function BlobStack({
       {items.map((item) => (
         <li
           key={`${item.href}-${item.title}`}
+          id={item.id}
           className={cn(
             "stack-item card-hover",
+            item.id && "scroll-mt-24",
             thumbnails && "blob-row-thumbnail",
             thumbnails && item.image && "has-thumbnail",
           )}
