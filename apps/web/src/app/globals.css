@@ -573,7 +573,7 @@
       height: 0;
       overflow: visible;
       padding-inline-end: 2.2em;
-      font-family: var(--font-body);
+      font-family: var(--font-display);
       font-size: calc(var(--text-nav) - 1px);
       font-weight: 600;
       line-height: var(--text-nav--line-height);
@@ -665,7 +665,7 @@
     }
 
     .site-nav-sub-list:not(.site-nav-overflow-list) a {
-      font-family: var(--font-body);
+      font-family: var(--font-display);
       font-size: calc(var(--text-nav) - 1px);
       font-weight: 600;
       line-height: var(--text-nav--line-height);
