@@ -1620,6 +1620,11 @@
     margin-block-start: 1.5rem;
   }
 
+  .contact-address .portable-body :is(h2, h3, h4) {
+    font-size: var(--text-h3);
+    line-height: var(--text-h3--line-height);
+  }
+
   .contact-person-body {
     margin-block-start: 0;
   }

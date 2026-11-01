@@ -88,4 +88,6 @@ Każdy wiersz to tytuł plus strona z panelu, plik PDF albo adres. Pusta lista o
 
 ## Kontakt
 
-**Kontakt** to zwykła strona (**Page**). Nie ma formularza. Adresy mailowe na tej stronie biorą się z pól e-mail przy osobach.
+**Kontakt** to strona **Page** o adresie `/kontakt`. Jej tekst edytuje się w polu **Body** dokumentu **Kontakt**. W tym polu możesz zmienić adres Fundacji i numer konta, a także ich nagłówki. W Studio znajdź nagłówek **Adres** i edytuj treść pod nim; zostaw go jako nagłówek o dokładnie tej nazwie — wyznacza początek sekcji adresu. Nagłówek **Numer konta** możesz edytować tak samo. Nagłówki w tej sekcji mają ten sam rozmiar co „Lub napisz do nas bezpośrednio” i „Formularz kontaktowy”.
+
+Adresy mailowe osób na stronie biorą się z pola **E-mail** w ich dokumentach **Person**.
