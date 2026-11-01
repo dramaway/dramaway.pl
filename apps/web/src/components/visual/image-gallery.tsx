@@ -11,7 +11,7 @@ import {
   type GalleryLayout,
 } from "@/lib/gallery";
 import { urlFor } from "@/lib/sanity/image";
-import type { SanityImage } from "@/lib/sanity/types";
+import type { CmsImage } from "@/lib/sanity/types";
 import { SUBPAGE } from "@/lib/subpage-copy";
 
 const GalleryLightbox = dynamic(
@@ -21,7 +21,7 @@ const GalleryLightbox = dynamic(
 );
 
 type ImageGalleryProps = {
-  images: SanityImage[];
+  images: CmsImage[];
   alt: string;
 };
 
@@ -46,7 +46,7 @@ function tileSizes(layout: GalleryLayout, index: number) {
   return "(min-width: 64rem) 22vw, 50vw";
 }
 
-function imageAlt(image: SanityImage, fallback: string): string {
+function imageAlt(image: CmsImage, fallback: string): string {
   if (image && typeof image === "object" && "alt" in image) {
     const value = image.alt;
     if (typeof value === "string" && value.trim()) return value;
@@ -54,7 +54,7 @@ function imageAlt(image: SanityImage, fallback: string): string {
   return fallback;
 }
 
-function toSlide(image: SanityImage, alt: string) {
+function toSlide(image: CmsImage, alt: string) {
   const dims = parseSanityImageDimensions(sanityAssetRef(image)) ?? {
     width: 1600,
     height: 1200,

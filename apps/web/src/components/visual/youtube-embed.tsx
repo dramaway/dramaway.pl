@@ -6,7 +6,7 @@ import {
   youtubePosterUrls,
   youtubeVideoIdFromUrl,
 } from "@/lib/sanity/youtube";
-import type { SanityImage } from "@/lib/sanity/types";
+import type { CmsImage } from "@/lib/sanity/types";
 import { urlFor } from "@/lib/sanity/image";
 import { SUBPAGE } from "@/lib/subpage-copy";
 import { cn } from "@/lib/utils";
@@ -17,7 +17,7 @@ const PLACEHOLDER_WIDTH = 120;
 
 type YoutubeEmbedProps = {
   url: string;
-  cover?: SanityImage | null;
+  cover?: CmsImage | null;
   className?: string;
 };
 
@@ -25,6 +25,7 @@ export function YoutubeEmbed({ url, cover, className }: YoutubeEmbedProps) {
   const src = youtubeEmbedSrc(url);
   const playSrc = youtubeEmbedSrc(url, { autoplay: true });
   const videoId = youtubeVideoIdFromUrl(url);
+  const coverAlt = cover?.alt?.trim();
   const customPoster = cover
     ? urlFor(cover).width(1600).height(900).fit("crop").auto("format").url()
     : null;
@@ -73,7 +74,9 @@ export function YoutubeEmbed({ url, cover, className }: YoutubeEmbedProps) {
         onBlur={(event) => {
           event.currentTarget.dataset.burst = "out";
         }}
-        aria-label={SUBPAGE.video.play}
+        aria-label={
+          coverAlt ? `${SUBPAGE.video.play}: ${coverAlt}` : SUBPAGE.video.play
+        }
       >
         {poster ? (
           // Remote still; size ladder is tried in onError / tiny-placeholder onLoad.

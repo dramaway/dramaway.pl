@@ -1,4 +1,5 @@
 import { defineType, defineField } from "sanity";
+import { imageAltField } from "./imageAltField";
 
 export const person = defineType({
   name: "person",
@@ -8,7 +9,13 @@ export const person = defineType({
     defineField({ name: "name", title: "Name", type: "string", validation: (r) => r.required() }),
     defineField({ name: "slug", title: "Slug", type: "slug", options: { source: "name" }, validation: (r) => r.required() }),
     defineField({ name: "role", title: "Role", type: "string" }),
-    defineField({ name: "photo", title: "Photo", type: "image", options: { hotspot: true } }),
+    defineField({
+      name: "photo",
+      title: "Photo",
+      type: "image",
+      options: { hotspot: true },
+      fields: [imageAltField()],
+    }),
     defineField({ name: "bio", title: "Bio", type: "blockContent" }),
     defineField({ name: "email", title: "Email", type: "string" }),
   ],

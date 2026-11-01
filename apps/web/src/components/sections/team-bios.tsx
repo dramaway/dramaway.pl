@@ -4,13 +4,13 @@ import { CtaLink } from "@/components/visual/cta-link";
 import { Media } from "@/components/visual/media";
 import { splitPortableByHeading } from "@/lib/portable-split";
 import { publicPathForPersonSlug } from "@/lib/routes";
-import type { PortableContent, SanityImage } from "@/lib/sanity/types";
+import type { CmsImage, PortableContent } from "@/lib/sanity/types";
 
 export type TeamBioPerson = {
   name: string;
   slug: string;
   role?: string | null;
-  photo?: SanityImage | null;
+  photo?: CmsImage | null;
   excerpt?: string | null;
 };
 
@@ -57,7 +57,7 @@ export function TeamBios({ people, heading, ctaLabel, body }: TeamBiosProps) {
               <li key={person.slug} className="team-bio">
                 <Media
                   image={person.photo ?? null}
-                  alt={person.name}
+                  alt={person.photo?.alt?.trim() || person.name}
                   variant="bleed"
                   ratio="portrait"
                   sizes="(min-width: 64rem) 12vw, 40vw"

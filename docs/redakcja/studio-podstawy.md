@@ -20,7 +20,7 @@ Jak szkic różni się od wersji na stronie: [Drafts](https://www.sanity.io/docs
 
 ## Zdjęcia
 
-Pole obrazka przyjmuje plik, podpis (alt) i kadr (hotspot). Alt to krótki opis dla osób, które nie widzą zdjęcia. Hotspot mówi, który fragment ma zostać, gdy kadr przytnie brzegi.
+Pole obrazka przyjmuje plik, **Tekst alternatywny** i kadr (hotspot). Tekst alternatywny krótko opisuje najważniejszą treść zdjęcia osobom, które go nie widzą. Uzupełniaj go przy zdjęciach hero, portretach, galeriach, rezultatach edycji, kafelkach i zdjęciach w tekście. Zostaw pusty, gdy obraz jest dekoracyjny. Hotspot mówi, który fragment ma zostać, gdy kadr przytnie brzegi.
 
 <!-- screen: studio-obraz | Otwarte pole obrazka z uzupełnionym alt i zaznaczonym hotspotem | Widać, że sam plik nie wystarcza: jest podpis i punkt kadru -->
 

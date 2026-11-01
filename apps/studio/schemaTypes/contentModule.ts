@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { imageAltField } from "./imageAltField";
 
 /**
  * Leftover pages that should not be picked as tiles.
@@ -172,13 +173,7 @@ export const contentModule = defineType({
       options: { hotspot: true },
       description:
         "Puste = same kafelki (siatka albo lista). Ze zdjęciem strona kadru ustawia się sama: lewo, prawo, lewo…",
-      fields: [
-        defineField({
-          name: "alt",
-          title: "Tekst alternatywny",
-          type: "string",
-        }),
-      ],
+      fields: [imageAltField()],
     }),
     defineField({
       name: "textLayout",

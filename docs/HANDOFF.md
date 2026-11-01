@@ -5,15 +5,15 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-01 — Projekty mogą mieć sekcje kafelków między treścią a listą edycji. Wcześniejsze decyzje poniżej bez zmian. |
-| **Gałąź / HEAD** | `szaroale-pl-links-same-tab` |
+| **Ostatnia aktualizacja** | 2026-11-01 — Projekty mogą mieć sekcje kafelków między treścią a listą edycji; zdjęcia redakcyjne mają pole tekstu alternatywnego. Wcześniejsze decyzje poniżej bez zmian. |
+| **Gałąź / HEAD** | `szaroale-pl-miniature-chainsaw` |
 | **Zmiana bieżąca** | 2026-11-01 — Dodano opcjonalne sekcje kafelków przed listą edycji projektu; konfiguracja w dokumencie Project w Studio. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
 | **Netlify** | Projekt przeniesiony do teamu `admin@dramaway.pl`, adres bez zmian. Env: `NEXT_PUBLIC_SANITY_*`, `NEXT_PUBLIC_SITE_URL`, `SANITY_REVALIDATE_SECRET` (tylko Production). |
 | **Hasła** | Bitwarden Fundacji (bitwarden.eu): hasła i kody odzyskiwania kont. Fundacja dostaje master password. |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ (`readingMethod` = Category; `publication.methods` = Categories; publiczne `publication.format`) |
-| **Working tree** | O fundacji: galeria zdjęć między Społecznością a Historią; schemat Studio wdrożony. Kolejna zmiana w toku: usunięcie szarych linii rozdzielających bloki Zespołu. Nadal do potwierdzenia przez redakcję: kanał YouTube w stopce (`UCqnZ4VG2xTkiTYDbrOLMfEQ`) i adres e-mail. |
+| **Working tree** | O fundacji: galeria zdjęć między Społecznością a Historią; schemat Studio wdrożony. Dodano pola tekstu alternatywnego do zdjęć redakcyjnych, także w galeriach. Nadal do potwierdzenia przez redakcję: kanał YouTube w stopce (`UCqnZ4VG2xTkiTYDbrOLMfEQ`) i adres e-mail. |
 | **Owner Sanity** | Organizacja na `admin@dramaway.pl`, plan NGO. `admin@dramaway.pl` = project Admin; redakcja = Editor |
 
 ---
