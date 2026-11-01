@@ -1,6 +1,7 @@
 import { defineField, defineType } from "sanity";
 import { pageSectionMembers } from "./contentModule";
 import { heroSlidesField, heroTextAlignField } from "./heroMedia";
+import { titleLanguageField } from "./titleLanguageField";
 
 export const page = defineType({
   name: "page",
@@ -8,6 +9,7 @@ export const page = defineType({
   type: "document",
   fields: [
     defineField({ name: "title", title: "Title", type: "string", validation: (r) => r.required() }),
+    titleLanguageField(),
     defineField({ name: "slug", title: "Slug", type: "slug", options: { source: "title" }, validation: (r) => r.required() }),
     heroSlidesField(),
     heroTextAlignField(),

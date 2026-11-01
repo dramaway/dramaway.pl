@@ -34,6 +34,7 @@ export type FeedCandidate = {
   id: string;
   source: FeedSource;
   title: string;
+  titleLanguage?: ContentFeedDoc["titleLanguage"];
   href: string;
   excerpt: string | null;
   createdAt: string | null;
@@ -96,6 +97,7 @@ function resolveTile(tile: CmsContentTile): ResolvedTile | null {
   return {
     key: tile._key,
     title,
+    titleLanguage: page?.titleLanguage,
     anchorId: anchorId(title),
     excerpt,
     href,
@@ -195,6 +197,7 @@ export function toFeedCandidates(pool: ContentFeedPool | null | undefined): Feed
         id: doc._id,
         source,
         title,
+        titleLanguage: doc.titleLanguage,
         href: custom?.articleHref ?? href,
         excerpt: clip(cmsText(doc.excerpt)),
         createdAt:

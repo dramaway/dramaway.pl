@@ -284,6 +284,18 @@
   body {
     @apply bg-background font-light text-body text-ink;
   }
+  :where(
+    a,
+    button,
+    input,
+    select,
+    textarea,
+    summary,
+    [tabindex]:not([tabindex="-1"])
+  ):focus-visible {
+    outline: 3px solid var(--color-green-ink);
+    outline-offset: 3px;
+  }
   h1,
   h2,
   h3,
@@ -1524,15 +1536,8 @@
   }
 
   .footer-newsletter-label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
+    font-size: var(--text-small);
+    line-height: var(--text-small--line-height);
   }
 
   .footer-newsletter-row {
@@ -2490,6 +2495,11 @@
    */
   .card-link {
     color: inherit;
+  }
+
+  .card-hover:focus-within {
+    outline: 3px solid var(--color-green-ink);
+    outline-offset: 4px;
   }
 
   .card-link::after {

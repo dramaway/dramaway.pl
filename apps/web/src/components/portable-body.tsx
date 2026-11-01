@@ -61,6 +61,8 @@ type ImageValue = {
 type YoutubeValue = {
   _type?: string;
   url?: string;
+  title?: string;
+  titleLanguage?: "pl" | "en" | "pt" | null;
   cover?: CmsImage | null;
   size?: string;
   align?: string;
@@ -161,6 +163,8 @@ function PortableYoutube({
   return (
     <YoutubeEmbed
       url={value.url}
+      title={value.title}
+      titleLanguage={value.titleLanguage}
       cover={value.cover}
       className={cn(
         size === "full" ? "pt-embed-full" : "pt-embed-medium",
@@ -191,7 +195,11 @@ function PortableCta({
   const indent = ctaIndentLevel(value?.indent);
   return (
     <div className={cn("pt-cta", indent > 0 && `pt-cta-${indent}`)}>
-      <CtaLink href={cta.href}>{cta.label}</CtaLink>
+      <CtaLink href={cta.href}>
+        {cta.fileDescription
+          ? `${cta.label} (${cta.fileDescription})`
+          : cta.label}
+      </CtaLink>
     </div>
   );
 }
@@ -304,6 +312,8 @@ const components: PortableTextComponents = {
     roster: ({ children }) => <Roster>{children}</Roster>,
   },
   listItem: {
+    bullet: ({ children }) => <li>{children}</li>,
+    number: ({ children }) => <li>{children}</li>,
     indent: ({ children }) => <div className="pt-indent-item">{children}</div>,
     roster: ({ value }) => <RosterItem value={value} />,
   },

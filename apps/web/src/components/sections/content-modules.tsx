@@ -54,6 +54,7 @@ function ModuleView({
     const items = selectFeedItems(feed, section).map((item) => ({
       _id: item.id,
       title: item.title,
+      titleLanguage: item.titleLanguage,
       href: item.href,
       excerpt: item.excerpt,
       publishedAt: item.createdAt,

@@ -10,6 +10,7 @@ import type {
   HeroTextAlign,
   LandingPage,
   ResolvedSection,
+  TitleLanguage,
 } from "./sanity/types";
 
 export const LANDING_DOCUMENT_IDS = {
@@ -20,6 +21,7 @@ export const LANDING_DOCUMENT_IDS = {
 
 export type ResolvedLandingHero = {
   title: string | null;
+  titleLanguage?: TitleLanguage;
   lead: string | null;
   ctaLabel: string | null;
   ctaHref: string | null;
@@ -39,6 +41,7 @@ function resolveHero(cms: LandingPage | null): ResolvedLandingHero {
   const cta = cmsCta(cms?.ctaLabel, cms?.ctaHref);
   return {
     title,
+    titleLanguage: cms?.titleLanguage,
     lead: cmsText(cms?.lead),
     ctaLabel: cta?.label ?? null,
     ctaHref: cta?.href ?? null,

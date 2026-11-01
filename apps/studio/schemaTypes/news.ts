@@ -1,5 +1,6 @@
 import { defineField, defineType, type SlugValue } from "sanity";
 import { heroSlidesField, heroTextAlignField } from "./heroMedia";
+import { titleLanguageField } from "./titleLanguageField";
 
 const NEWS_SLUG_PREFIX = "aktualnosc-";
 
@@ -33,6 +34,7 @@ export const news = defineType({
       type: "string",
       validation: (rule) => rule.required(),
     }),
+    titleLanguageField(),
     defineField({
       name: "slug",
       title: "Slug",

@@ -26,7 +26,7 @@ Strony głównej nie dodajesz do menu: prowadzi na nią logo w nagłówku.
 ## Cel pozycji
 
 - **Strona z CMS**: wybierasz istniejący dokument. Może to być zwykła strona (w tym Baza wiedzy), aktualność, projekt, publikacja, osoba, listing (Projekty, Czytelnia, Zespół) albo O fundacji. Stare duplikaty projektów nie pokazują się na liście wyboru.
-- **Adres**: ścieżka od ukośnika (`/projekty`) albo pełny adres `https://…`. Ścieżka może zawierać kotwicę, np. `/projekty#syrena`. Każdy link otwiera się w tej samej karcie. W ten sposób dodaje się link poza stronę, na przykład do Centrum.
+- **Adres**: ścieżka od ukośnika (`/projekty`) albo pełny adres `https://…`. Ścieżka może zawierać kotwicę, np. `/projekty#syrena`. Nie wklejaj adresu podglądu `dramaway.netlify.app` — linki do stron tego serwisu powinny być ścieżkami od `/`. Każdy link otwiera się w tej samej karcie. W ten sposób dodaje się link poza stronę, na przykład do Centrum.
 
 ### Link do zajawki projektu
 

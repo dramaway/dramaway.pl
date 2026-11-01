@@ -3,7 +3,13 @@
 import { useState, type FormEvent } from "react";
 import { SUBPAGE } from "@/lib/subpage-copy";
 
-type Status = "idle" | "pending" | "invalid" | "unconfigured" | "error";
+type Status =
+  | "idle"
+  | "pending"
+  | "success"
+  | "invalid"
+  | "unconfigured"
+  | "error";
 
 export function NewsletterForm() {
   const [status, setStatus] = useState<Status>("idle");
@@ -30,14 +36,16 @@ export function NewsletterForm() {
         setStatus("unconfigured");
         return;
       }
-      setStatus("error");
+      setStatus(response.ok ? "success" : "error");
     } catch {
       setStatus("error");
     }
   }
 
   const message =
-    status === "invalid"
+    status === "success"
+      ? copy.success
+      : status === "invalid"
       ? copy.invalid
       : status === "unconfigured"
         ? copy.unconfigured
@@ -66,6 +74,12 @@ export function NewsletterForm() {
           maxLength={254}
           placeholder={copy.placeholder}
           disabled={status === "pending"}
+          onInvalid={() => setStatus("invalid")}
+          onChange={() => {
+            if (status === "invalid") setStatus("idle");
+          }}
+          aria-invalid={status === "invalid" ? true : undefined}
+          aria-describedby={message ? "footer-newsletter-status" : undefined}
         />
         <button type="submit" className="cta" disabled={status === "pending"}>
           <span>{status === "pending" ? copy.pending : copy.submit}</span>
@@ -73,7 +87,13 @@ export function NewsletterForm() {
         </button>
       </div>
       {message ? (
-        <p className="footer-newsletter-status" role="status">
+        <p
+          id="footer-newsletter-status"
+          className="footer-newsletter-status"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           {message}
         </p>
       ) : null}

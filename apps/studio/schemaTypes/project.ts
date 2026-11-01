@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { heroSlidesField, heroTextAlignField } from "./heroMedia";
+import { titleLanguageField } from "./titleLanguageField";
 
 export const project = defineType({
   name: "project",
@@ -12,6 +13,7 @@ export const project = defineType({
       type: "string",
       validation: (r) => r.required(),
     }),
+    titleLanguageField(),
     defineField({
       name: "slug",
       title: "Slug",

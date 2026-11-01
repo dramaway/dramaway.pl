@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import {
   youtubeEmbedSrc,
   youtubePosterUrls,
@@ -17,15 +17,22 @@ const PLACEHOLDER_WIDTH = 120;
 
 type YoutubeEmbedProps = {
   url: string;
+  title?: string | null;
+  titleLanguage?: "pl" | "en" | "pt" | null;
   cover?: CmsImage | null;
   className?: string;
 };
 
-export function YoutubeEmbed({ url, cover, className }: YoutubeEmbedProps) {
+export function YoutubeEmbed({
+  url,
+  title,
+  titleLanguage,
+  cover,
+  className,
+}: YoutubeEmbedProps) {
   const src = youtubeEmbedSrc(url);
   const playSrc = youtubeEmbedSrc(url, { autoplay: true });
   const videoId = youtubeVideoIdFromUrl(url);
-  const coverAlt = cover?.alt?.trim();
   const customPoster = cover
     ? urlFor(cover).width(1600).height(900).fit("crop").auto("format").url()
     : null;
@@ -37,6 +44,8 @@ export function YoutubeEmbed({ url, cover, className }: YoutubeEmbedProps) {
   ];
   const [playing, setPlaying] = useState(false);
   const [posterIndex, setPosterIndex] = useState(0);
+  const accessibleTitle = title?.trim() || SUBPAGE.video.fallbackTitle;
+  const labelId = useId();
   const poster = posters[posterIndex];
 
   if (!src || !playSrc) return null;
@@ -46,7 +55,8 @@ export function YoutubeEmbed({ url, cover, className }: YoutubeEmbedProps) {
       <div className={cn("pt-embed", className)}>
         <iframe
           src={playSrc}
-          title={SUBPAGE.video.play}
+          title={accessibleTitle}
+          lang={titleLanguage ?? undefined}
           className="pt-embed-frame"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
@@ -74,10 +84,12 @@ export function YoutubeEmbed({ url, cover, className }: YoutubeEmbedProps) {
         onBlur={(event) => {
           event.currentTarget.dataset.burst = "out";
         }}
-        aria-label={
-          coverAlt ? `${SUBPAGE.video.play}: ${coverAlt}` : SUBPAGE.video.play
-        }
+        aria-labelledby={labelId}
       >
+        <span id={labelId} className="sr-only">
+          {SUBPAGE.video.play}:{" "}
+          <span lang={titleLanguage ?? undefined}>{accessibleTitle}</span>
+        </span>
         {poster ? (
           // Remote still; size ladder is tried in onError / tiny-placeholder onLoad.
           // eslint-disable-next-line @next/next/no-img-element

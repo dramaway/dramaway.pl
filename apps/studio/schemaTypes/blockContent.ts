@@ -18,6 +18,7 @@ import { RosterIcon } from "./rosterIcon";
 import { TermStyle } from "./termStyle";
 import { YoutubePreview } from "./youtubePreview";
 import { imageAltField } from "./imageAltField";
+import { titleLanguageField } from "./titleLanguageField";
 
 export const youtube = defineType({
   name: "youtube",
@@ -25,6 +26,15 @@ export const youtube = defineType({
   type: "object",
   icon: PlayIcon,
   fields: [
+    defineField({
+      name: "title",
+      title: "Tytuł filmu",
+      type: "string",
+      validation: (rule) => rule.required(),
+      description:
+        "Krótki, rozpoznawalny tytuł używany jako nazwa ramki dla czytników ekranu.",
+    }),
+    titleLanguageField(),
     defineField({
       name: "url",
       title: "URL",
@@ -75,7 +85,7 @@ export const youtube = defineType({
     }),
   ],
   preview: {
-    select: { url: "url", title: "url", size: "size" },
+    select: { title: "title", url: "url", size: "size" },
   },
   components: { preview: YoutubePreview },
 });
