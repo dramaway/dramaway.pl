@@ -8,7 +8,7 @@ import type { NewsDetail } from "@/lib/sanity/types";
 export function NewsArticle({ news }: { news: NewsDetail }) {
   const cta = newsCta(news);
   return (
-    <>
+    <div className="page-hero-spacing">
       <PageHero
         title={news.title}
         textAlign={news.heroTextAlign}
@@ -21,6 +21,6 @@ export function NewsArticle({ news }: { news: NewsDetail }) {
           <PortableBody value={news.body} />
         </div>
       </Section>
-    </>
+    </div>
   );
 }
