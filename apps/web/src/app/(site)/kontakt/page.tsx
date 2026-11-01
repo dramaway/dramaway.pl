@@ -8,7 +8,7 @@ import { PortableBody, hasPortableContent } from "@/components/portable-body";
 import { cmsText } from "@/lib/cms-text";
 import { splitContactBody } from "@/lib/contact-body";
 import { resolveHeroSlides } from "@/lib/hero-slides";
-import { getPageBySlug, getPeople } from "@/lib/sanity/fetch";
+import { getPageBySlug } from "@/lib/sanity/fetch";
 import { SUBPAGE } from "@/lib/subpage-copy";
 
 export const revalidate = 60;
@@ -19,13 +19,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ContactPage() {
-  const [page, people] = await Promise.all([
-    getPageBySlug("kontakt"),
-    getPeople(),
-  ]);
+  const page = await getPageBySlug("kontakt");
   if (!page) notFound();
 
-  const withEmail = people.filter((person) => person.email?.trim());
   const body = hasPortableContent(page.body) ? page.body : null;
   const contactBody = splitContactBody(body);
 
@@ -41,7 +37,10 @@ export default async function ContactPage() {
         showBand={false}
       >
       </PageHero>
-      <Section aria-labelledby="contact-form-heading">
+      <Section
+        aria-labelledby="contact-form-heading"
+        className="contact-form-section"
+      >
         <div className="contact-page-layout">
           <div className="contact-main">
             <h2
@@ -67,29 +66,24 @@ export default async function ContactPage() {
                   className="contact-body article-body"
                 />
               ) : null}
-              {withEmail.length > 0 ? (
-                <ul className="team-row contact-people">
-                  {withEmail.map((person) => (
-                    <li key={person.slug}>
-                      <p className="font-display text-h4 font-black">
-                        {person.name}
-                      </p>
-                      {person.role ? (
-                        <p className="mt-2 text-small">{person.role}</p>
-                      ) : null}
-                      <a
-                        href={`mailto:${person.email}`}
-                        className="mt-4 inline-block text-green-ink"
-                      >
-                        {person.email}
-                      </a>
+              {contactBody.people.length > 0 ? (
+                <ul className="contact-people">
+                  {contactBody.people.map((person, index) => (
+                    <li key={index}>
+                      <PortableBody
+                        value={[person]}
+                        className="contact-person-body article-body"
+                      />
                     </li>
                   ))}
                 </ul>
               ) : null}
             </section>
             {contactBody.address ? (
-              <section aria-label="Adres i numer konta">
+              <section
+                className="contact-address"
+                aria-label="Adres i numer konta"
+              >
                 <PortableBody
                   value={contactBody.address}
                   className="contact-body article-body"

@@ -1575,12 +1575,11 @@
     gap: 2rem;
   }
 
-  @media (width >= 64rem) {
-    .contact-layout {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 4rem;
-      align-items: start;
-    }
+  .contact-people {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+    margin-block-start: 2rem;
   }
 
   .contact-main {
@@ -1592,8 +1591,14 @@
     margin-block-start: 1.5rem;
   }
 
-  .contact-people {
-    margin-block-start: 2rem;
+  .contact-person-body {
+    margin-block-start: 0;
+  }
+
+  @media (width >= 64rem) {
+    .contact-people {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
 
   .contact-form {
@@ -4232,6 +4237,16 @@ h3:focus-within {
 
 .page-hero-spacing > .py-section:first-of-type .portable-body > :first-child {
   margin-block-start: 0;
+}
+
+.page-hero-spacing > .contact-form-section:first-of-type {
+  padding-block-start: 0;
+}
+
+@media (width >= 64rem) {
+  .page-hero-spacing > .contact-form-section:first-of-type {
+    padding-block-start: calc(var(--spacing-section) - 1.5rem);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
