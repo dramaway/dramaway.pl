@@ -53,6 +53,7 @@ export default async function EditionPage({ params }: Props) {
       <PageHero
         title={heading}
         lead={lead}
+        textAlign={edition.heroTextAlign}
         layout="stack"
         parent={{ href: projectPath(project.slug), label: project.title }}
       />

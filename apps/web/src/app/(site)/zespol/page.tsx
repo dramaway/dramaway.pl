@@ -15,6 +15,7 @@ export default async function TeamPage() {
       <PageHero
         title={landing.title}
         lead={landing.lead}
+        textAlign={landing.textAlign}
         ctaLabel={landing.ctaLabel}
         ctaHref={landing.ctaHref}
         slides={landing.slides}

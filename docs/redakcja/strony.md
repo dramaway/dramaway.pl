@@ -23,7 +23,9 @@ Dokument ma zakładki:
 
 ## Hero
 
-**Hero** to duży nagłówek na górze strony: tytuł, krótki opis, przycisk i zdjęcia. Strona główna, listingi, **O fundacji**, zwykłe strony, projekty i aktualności mają go w formularzu. Puste pole oznacza, że tego elementu nie ma na stronie. Gdy puste jest wszystko, nagłówka nie ma wcale.
+**Hero** to duży nagłówek na górze strony: tytuł, krótki opis, przycisk i zdjęcia. Strona główna, listingi, **O fundacji**, zwykłe strony, projekty, edycje, publikacje i aktualności mają go w formularzu. Puste pole oznacza, że tego elementu nie ma na stronie. Gdy puste jest wszystko, nagłówka nie ma wcale.
+
+Pole **Wyrównanie tekstu hero** ustawia nagłówek, lead i przycisk do lewej, do środka albo do prawej. Domyślne wyrównanie to lewa strona. Zmiana dotyczy tylko hero danego dokumentu.
 
 W leadzie hero możesz nacisnąć **Enter**, żeby zacząć nową linię. Dotyczy to także pola **Summary** w dokumencie **Project**. Wpisz lead tak jak zwykle — podział linii zostanie zachowany na stronie.
 

@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { heroSlidesField } from "./heroMedia";
+import { heroSlidesField, heroTextAlignField } from "./heroMedia";
 
 export const project = defineType({
   name: "project",
@@ -39,6 +39,7 @@ export const project = defineType({
       initialValue: false,
     }),
     defineField({ name: "summary", title: "Summary", type: "text" }),
+    heroTextAlignField(),
     heroSlidesField({
       description:
         "Do 5 zdjęć, w kolejności pokazu. Jedno zdjęcie zostaje kadrem bez slidera. Dwa lub więcej uruchamiają slider. Tempo i autoodtwarzanie są wspólne: Site settings → Hero → Slider hero. Pusta lista zostawia kadr z galerii edycji albo z pierwszego obrazu w treści.",

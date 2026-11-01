@@ -11,6 +11,7 @@ export function NewsArticle({ news }: { news: NewsDetail }) {
     <>
       <PageHero
         title={news.title}
+        textAlign={news.heroTextAlign}
         slides={resolveHeroSlides(news.heroImages, news.title)}
         ctaLabel={cta.ctaHref ? cta.label : null}
         ctaHref={cta.ctaHref}

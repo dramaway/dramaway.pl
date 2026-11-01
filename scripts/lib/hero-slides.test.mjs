@@ -1,11 +1,20 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
+  resolveHeroTextAlign,
   resolveHeroSlider,
   resolveHeroSlides,
 } from "../../apps/web/src/lib/hero-slides.ts";
 
 const asset = { _ref: "image-abc" };
+
+test("hero text alignment allows the three editor choices and defaults left", () => {
+  assert.equal(resolveHeroTextAlign("left"), "left");
+  assert.equal(resolveHeroTextAlign("center"), "center");
+  assert.equal(resolveHeroTextAlign("right"), "right");
+  assert.equal(resolveHeroTextAlign(undefined), "left");
+  assert.equal(resolveHeroTextAlign("invalid"), "left");
+});
 
 test("zero assets means no stills", () => {
   assert.deepEqual(resolveHeroSlides(null, "Tytuł"), []);

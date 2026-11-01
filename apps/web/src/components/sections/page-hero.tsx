@@ -2,7 +2,8 @@ import { CtaLink } from "@/components/visual/cta-link";
 import { DotBand } from "@/components/visual/dot-band";
 import { HeroLead } from "@/components/sections/hero-lead";
 import { HeroMedia } from "@/components/visual/hero-media";
-import type { HeroSlide } from "@/lib/sanity/types";
+import { resolveHeroTextAlign } from "@/lib/hero-slides";
+import type { HeroSlide, HeroTextAlign } from "@/lib/sanity/types";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
@@ -11,6 +12,7 @@ export type PageHeroLayout = "split" | "stack";
 export type PageHeroContent = {
   title?: string | null;
   lead?: string | null;
+  textAlign?: HeroTextAlign | null;
   ctaLabel?: string | null;
   ctaHref?: string | null;
   /**
@@ -47,6 +49,7 @@ type PageHeroProps = PageHeroContent & {
 export function PageHero({
   title,
   lead,
+  textAlign,
   ctaLabel,
   ctaHref,
   slides,
@@ -58,6 +61,7 @@ export function PageHero({
   const hasTitle = Boolean(title?.trim());
   const hasCopy =
     Boolean(lead) || Boolean(children) || Boolean(ctaLabel && ctaHref);
+  const resolvedTextAlign = resolveHeroTextAlign(textAlign);
   const stills = slides ?? [];
   if (!hasTitle && !hasCopy && stills.length === 0) return null;
   const heading = (
@@ -94,7 +98,7 @@ export function PageHero({
 
   if (layout === "stack") {
     return (
-      <section className="hero hero-stack">
+      <section className="hero hero-stack" data-text-align={resolvedTextAlign}>
         {heading}
         {copy}
       </section>
@@ -104,7 +108,7 @@ export function PageHero({
   return (
     <div data-split-hero="">
       <section className="hero split">
-        <div className="split-text">
+        <div className="split-text" data-text-align={resolvedTextAlign}>
           {heading}
           {copy}
         </div>
