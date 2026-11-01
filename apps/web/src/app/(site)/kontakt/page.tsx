@@ -28,7 +28,7 @@ export default async function ContactPage() {
   const body = hasPortableContent(page.body) ? page.body : null;
 
   return (
-    <>
+    <div className="page-hero-spacing">
       <PageHero
         title={cmsText(page.title)}
         lead={cmsText(page.heroLead)}
@@ -82,6 +82,6 @@ export default async function ContactPage() {
           </ul>
         </Section>
       ) : null}
-    </>
+    </div>
   );
 }
