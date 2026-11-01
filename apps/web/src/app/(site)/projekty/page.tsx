@@ -20,6 +20,7 @@ function projectToRow(project: ProjectListItem) {
     title: project.title,
     lead: project.summary,
     href: publicPathForProjectSlug(project.slug),
+    id: project.slug,
   };
 }
 

@@ -26,7 +26,13 @@ Strony głównej nie dodajesz do menu: prowadzi na nią logo w nagłówku.
 ## Cel pozycji
 
 - **Strona z CMS**: wybierasz istniejący dokument. Może to być zwykła strona (w tym Baza wiedzy), aktualność, projekt, publikacja, osoba, listing (Projekty, Czytelnia, Zespół) albo O fundacji. Stare duplikaty projektów nie pokazują się na liście wyboru.
-- **Adres**: ścieżka od ukośnika (`/projekty`) albo pełny adres `https://…`. W ten sposób dodaje się link poza stronę, na przykład do Centrum.
+- **Adres**: ścieżka od ukośnika (`/projekty`) albo pełny adres `https://…`. Ścieżka może zawierać kotwicę, np. `/projekty#syrena`; link do ścieżki otwiera się w tej samej karcie. Pełny adres `https://…` otwiera się w nowej karcie. W ten sposób dodaje się link poza stronę, na przykład do Centrum.
+
+### Link do zajawki projektu
+
+Zajawki projektów na automatycznej liście **Projekty** mają kotwice odpowiadające slugom opublikowanych dokumentów typu **Project** w Sanity. Gdy projekt jest już na tej liście, ustaw cel pozycji menu na **Adres** i wpisz `/projekty#<slug>`, np. `/projekty#syrena`. Otworzy to stronę Projekty w tej samej karcie i przewinie do wiersza projektu.
+
+Obecnie w Sanity nie ma dokumentu projektu Syrena — istniejący `news-syrena` jest placeholderem newsa, nie projektem. Link `/projekty#syrena` zadziała dopiero, gdy właściwy projekt zostanie dodany i opublikowany tak, aby pojawił się na automatycznej liście.
 
 <!-- screen: menu-adres | Wiersz przełączony na Adres, z wpisanym https | Widać, że link zewnętrzny nie wymaga dokumentu w Studio -->
 
