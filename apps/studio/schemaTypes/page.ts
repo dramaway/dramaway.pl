@@ -51,7 +51,13 @@ export const page = defineType({
       description: "Moduły nad treścią artykułu. Pusta lista = sam artykuł.",
       of: pageSectionMembers(),
     }),
-    defineField({ name: "body", title: "Body", type: "blockContent" }),
+    defineField({
+      name: "body",
+      title: "Body",
+      type: "blockContent",
+      description:
+        "On Kontakt, edit the address and bank account here after the 'Adres' heading. Keep that heading so the contact details stay in the address section.",
+    }),
     defineField({
       name: "featuredPublications",
       title: "Polecane publikacje",

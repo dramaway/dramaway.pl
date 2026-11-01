@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 export type BlobRowItem = {
   title: string;
-  titleLanguage?: "pl" | "en" | null;
+  titleLanguage?: "pl" | "en" | "pt" | null;
   lead?: string | null;
   href: string;
   id?: string;

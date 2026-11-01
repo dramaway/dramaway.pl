@@ -62,7 +62,7 @@ type YoutubeValue = {
   _type?: string;
   url?: string;
   title?: string;
-  titleLanguage?: "pl" | "en" | null;
+  titleLanguage?: "pl" | "en" | "pt" | null;
   cover?: CmsImage | null;
   size?: string;
   align?: string;

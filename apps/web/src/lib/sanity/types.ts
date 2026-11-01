@@ -4,7 +4,7 @@ import type { NavItem } from "../routes";
 
 export type SanityImage = SanityImageSource;
 
-export type TitleLanguage = "pl" | "en" | null;
+export type TitleLanguage = "pl" | "en" | "pt" | null;
 
 export type HeroTextAlign = "left" | "center" | "right";
 

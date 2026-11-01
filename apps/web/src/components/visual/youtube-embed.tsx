@@ -18,7 +18,7 @@ const PLACEHOLDER_WIDTH = 120;
 type YoutubeEmbedProps = {
   url: string;
   title?: string | null;
-  titleLanguage?: "pl" | "en" | null;
+  titleLanguage?: "pl" | "en" | "pt" | null;
   cover?: CmsImage | null;
   className?: string;
 };

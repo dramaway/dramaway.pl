@@ -11,11 +11,12 @@ export function titleLanguageField(group?: string) {
       list: [
         { title: "Polski", value: "pl" },
         { title: "English", value: "en" },
+        { title: "Português", value: "pt" },
       ],
       layout: "radio",
       direction: "horizontal",
     },
     description:
-      "Język tytułu wyświetlanego na stronie. Dla tytułu angielskiego wybierz English.",
+      "Język tytułu wyświetlanego na stronie. Wybierz język tytułu, nie język całego nagrania.",
   });
 }

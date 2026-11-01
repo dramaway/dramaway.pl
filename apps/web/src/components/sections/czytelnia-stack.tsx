@@ -5,7 +5,7 @@ import type { SanityImage } from "@/lib/sanity/types";
 
 export type CzytelniaRowItem = {
   title: string;
-  titleLanguage?: "pl" | "en" | null;
+  titleLanguage?: "pl" | "en" | "pt" | null;
   lead?: string | null;
   href: string;
   ctaLabel: string;
