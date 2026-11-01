@@ -126,7 +126,13 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
         parent={{ href: "/projekty", label: "Projekty" }}
       />
       {hasPortableContent(project.body) ? (
-        <Section className={isArtGeneracje ? "project-article-copy" : undefined}>
+        <Section
+          className={
+            isArtGeneracje || isTeatrCodzienny
+              ? "project-article-copy"
+              : undefined
+          }
+        >
           <div className="article-body">
             <PortableBody value={project.body} />
           </div>
