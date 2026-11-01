@@ -29,7 +29,11 @@ export function FundacjaHistory({
   const headingId = heading ? "fundacja-historia" : undefined;
 
   return (
-    <Section className="fundacja-flow" aria-labelledby={headingId}>
+    <Section
+      id="historia-fundacji"
+      className="fundacja-flow scroll-mt-24"
+      aria-labelledby={headingId}
+    >
       {heading || leadBody ? (
         <div className="stack-narrow">
           {heading ? (

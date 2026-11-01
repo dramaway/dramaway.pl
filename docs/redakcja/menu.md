@@ -36,6 +36,13 @@ Zajawki projektów na automatycznej liście mają kotwice odpowiadające slugom 
 
 Esej o metodach ma kotwicę `/baza-wiedzy#metody`, a sekcja **Polecane** — `/baza-wiedzy#polecane`. Aby dodać do menu np. podpozycje „Metody” i „Polecane” pod pozycją Baza wiedzy, ustaw cel każdej z nich na **Adres**, wpisz odpowiedni adres i opublikuj menu.
 
+Na stronie **O fundacji** możesz użyć adresów:
+
+- `/fundacja#wartosci` — wartości
+- `/fundacja#ludzie` — Zarząd i Zespół
+- `/fundacja#historia-fundacji` — historia fundacji
+- `/fundacja#dokumenty` — dokumenty
+
 <!-- screen: menu-adres | Wiersz przełączony na Adres, z wpisanym https | Widać, że link zewnętrzny nie wymaga dokumentu w Studio -->
 
 ![Przełącznik celu: Strona z CMS albo Adres](img/menu-adres.png)
