@@ -2929,8 +2929,8 @@
    * and the roster columns start on the same verticals.
    */
   .team-block + .team-block {
-    margin-block-start: clamp(2.5rem, 4.5vw, 3.5rem);
-    padding-block-start: clamp(2rem, 3.5vw, 2.75rem);
+    margin-block-start: clamp(2.25rem, 5vw, 4rem);
+    padding-block-start: 0;
   }
 
   .team-block-body {
