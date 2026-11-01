@@ -1564,24 +1564,36 @@
     line-height: var(--text-small--line-height);
   }
 
+  .contact-page-layout {
+    display: grid;
+    gap: var(--spacing-section);
+  }
+
   .contact-layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--spacing-section);
+    gap: 2rem;
   }
 
   @media (width >= 64rem) {
     .contact-layout {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: 4rem;
-      align-items: stretch;
+      align-items: start;
     }
   }
 
-  /* The form column takes the height of the contact list on the left. */
   .contact-main {
     display: flex;
     flex-direction: column;
+  }
+
+  .contact-body {
+    margin-block-start: 1.5rem;
+  }
+
+  .contact-people {
+    margin-block-start: 2rem;
   }
 
   .contact-form {
