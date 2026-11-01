@@ -56,7 +56,7 @@ export default async function ProjectsPage() {
         slides={landing.slides}
       />
       {landing.sections.length > 0 ? (
-        <ContentModules sections={landing.sections} variant="page" />
+        <ContentModules sections={landing.sections} variant="page" anchorTiles />
       ) : (
         <BlobRow
           width="wide"

@@ -114,6 +114,7 @@ export type CmsContentSection = {
 export type ResolvedTile = {
   key: string;
   title: string | null;
+  anchorId: string | null;
   excerpt: string | null;
   href: string | null;
   ctaLabel: string | null;

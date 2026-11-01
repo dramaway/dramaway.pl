@@ -30,9 +30,7 @@ Strony głównej nie dodajesz do menu: prowadzi na nią logo w nagłówku.
 
 ### Link do zajawki projektu
 
-Zajawki projektów na automatycznej liście **Projekty** mają kotwice odpowiadające slugom opublikowanych dokumentów typu **Project** w Sanity. Gdy projekt jest już na tej liście, ustaw cel pozycji menu na **Adres** i wpisz `/projekty#<slug>`, np. `/projekty#syrena`. Otworzy to stronę Projekty w tej samej karcie i przewinie do wiersza projektu.
-
-Obecnie w Sanity nie ma dokumentu projektu Syrena — istniejący `news-syrena` jest placeholderem newsa, nie projektem. Link `/projekty#syrena` zadziała dopiero, gdy właściwy projekt zostanie dodany i opublikowany tak, aby pojawił się na automatycznej liście.
+Zajawki projektów na automatycznej liście mają kotwice odpowiadające slugom dokumentów typu **Project**. Kafelki tekstowe w sekcjach CMS na stronie **Projekty** mają kotwice tworzone z ich tytułów: tytuł „Projekt Syrena” ma adres `/projekty#projekt-syrena`. Aby pozycja menu prowadziła do tej zajawki, ustaw jej cel na **Adres** i wpisz `/projekty#projekt-syrena`. Otworzy to stronę Projekty w tej samej karcie i przewinie do kafelka.
 
 <!-- screen: menu-adres | Wiersz przełączony na Adres, z wpisanym https | Widać, że link zewnętrzny nie wymaga dokumentu w Studio -->
 
