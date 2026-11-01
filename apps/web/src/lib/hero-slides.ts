@@ -1,8 +1,17 @@
 import { cmsText } from "./cms-text";
 import { hasHeroImage } from "./sanity/image";
-import type { CmsHeroImage, HeroSlide, SanityImage } from "./sanity/types";
+import type {
+  CmsHeroImage,
+  HeroSlide,
+  HeroTextAlign,
+  SanityImage,
+} from "./sanity/types";
 
 export type { HeroSlide };
+
+export function resolveHeroTextAlign(value: unknown): HeroTextAlign {
+  return value === "center" || value === "right" ? value : "left";
+}
 
 export const HERO_SLIDES_MAX = 5;
 export const HERO_SLIDER_INTERVAL_DEFAULT = 7;

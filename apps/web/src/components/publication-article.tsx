@@ -37,6 +37,7 @@ export function PublicationArticle({
       <PageHero
         title={publication.title}
         lead={publication.summary}
+        textAlign={publication.heroTextAlign}
         parent={{ href: knowledgeHubPath(), label: "Baza wiedzy" }}
       />
       {hasMeta || hasBody ? (

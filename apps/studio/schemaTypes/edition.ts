@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { heroTextAlignField } from "./heroMedia";
 
 export const edition = defineType({
   name: "edition",
@@ -36,6 +37,7 @@ export const edition = defineType({
       type: "string",
     }),
     defineField({ name: "summary", title: "Summary", type: "text" }),
+    heroTextAlignField(),
     defineField({ name: "body", title: "Body", type: "blockContent" }),
     defineField({
       name: "outcomes",

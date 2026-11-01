@@ -712,7 +712,23 @@
   }
 
   .hero-copy {
-    margin-block-start: 2rem;
+    margin-block-start: 1.5rem;
+  }
+
+  [data-text-align="center"] {
+    text-align: center;
+  }
+
+  [data-text-align="right"] {
+    text-align: right;
+  }
+
+  [data-text-align="center"] .measure {
+    margin-inline: auto;
+  }
+
+  [data-text-align="right"] .measure {
+    margin-inline-start: auto;
   }
 
   .hero-copy .portable-body {
@@ -756,6 +772,14 @@
     width: 100%;
   }
 
+  .hero-stack[data-text-align="center"] > :is(.hero-heading, .hero-copy) {
+    margin-inline: auto;
+  }
+
+  .hero-stack[data-text-align="right"] > :is(.hero-heading, .hero-copy) {
+    margin-inline-start: auto;
+  }
+
   .hero-media-wrap {
     position: relative;
     isolation: isolate;
@@ -793,7 +817,7 @@
         "title"
         "media"
         "copy";
-      gap: clamp(1.5rem, 4vw, 2rem);
+      gap: 1.5rem;
       padding-inline: var(--page-pad);
       padding-block: var(--spacing-section);
     }

@@ -112,6 +112,7 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
       <PageHero
         title={project.title}
         lead={project.summary?.trim() || null}
+        textAlign={project.heroTextAlign}
         ctaLabel={editions.length > 0 ? copy.ctaLabel : null}
         ctaHref={editions.length > 0 ? copy.ctaHref : null}
         slides={projectHeroSlides(project)}

@@ -10,8 +10,32 @@ type HeroSlidesFieldOptions = {
   description?: string;
 };
 
+type HeroTextAlignFieldOptions = {
+  group?: string;
+};
+
 const DESCRIPTION_PL =
   "Do 5 zdjęć, w kolejności pokazu. Jedno zdjęcie zostaje kadrem bez slidera. Dwa lub więcej uruchamiają slider. Tempo i autoodtwarzanie są wspólne: Site settings → Hero → Slider hero. Pusta lista = brak kadru.";
+
+export function heroTextAlignField(options: HeroTextAlignFieldOptions = {}) {
+  return defineField({
+    name: "heroTextAlign",
+    title: "Wyrównanie tekstu hero",
+    type: "string",
+    ...(options.group ? { group: options.group } : {}),
+    description:
+      "Wyrównuje nagłówek, lead i przycisk. Puste pole = wyrównanie do lewej.",
+    initialValue: "left",
+    options: {
+      list: [
+        { title: "Do lewej", value: "left" },
+        { title: "Do środka", value: "center" },
+        { title: "Do prawej", value: "right" },
+      ],
+      layout: "radio",
+    },
+  });
+}
 
 /**
  * Up to five hero stills. One asset stays a static frame; more becomes the

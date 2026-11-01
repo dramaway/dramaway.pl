@@ -1,7 +1,11 @@
 import { defineArrayMember, defineType, defineField } from "sanity";
 import { IcoFileInput } from "../components/ico-file-input";
 import { contentSectionMembers } from "./contentModule";
-import { heroSliderSettingsField, heroSlidesField } from "./heroMedia";
+import {
+  heroSliderSettingsField,
+  heroSlidesField,
+  heroTextAlignField,
+} from "./heroMedia";
 
 export const siteSettings = defineType({
   name: "siteSettings",
@@ -229,6 +233,7 @@ export const siteSettings = defineType({
       group: "hero",
       description: "Ścieżka wewnętrzna, np. /projekty",
     }),
+    heroTextAlignField({ group: "hero" }),
     heroSlidesField({ group: "hero" }),
     heroSliderSettingsField(),
     defineField({

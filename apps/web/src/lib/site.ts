@@ -2,6 +2,7 @@ import { cache } from "react";
 import { cmsCta, cmsText } from "./cms-text";
 import { resolveContentSections } from "./content-sections";
 import {
+  resolveHeroTextAlign,
   resolveHeroSlider,
   resolveHeroSlides,
   type HeroSliderSettings,
@@ -47,6 +48,7 @@ export async function getResolvedSite(): Promise<ResolvedSite> {
       lead: cmsText(settings?.heroLead),
       ctaLabel: heroCta?.label ?? null,
       ctaHref: heroCta?.href ?? null,
+      textAlign: resolveHeroTextAlign(settings?.heroTextAlign),
       slides: resolveHeroSlides(settings?.heroImages, heading || title),
     },
     homepage: {
