@@ -1,6 +1,7 @@
 import { defineField, defineType } from "sanity";
 import { heroTextAlignField } from "./heroMedia";
 import { imageAltField } from "./imageAltField";
+import { titleLanguageField } from "./titleLanguageField";
 
 export const edition = defineType({
   name: "edition",
@@ -13,6 +14,7 @@ export const edition = defineType({
       type: "string",
       validation: (r) => r.required(),
     }),
+    titleLanguageField(),
     defineField({
       name: "slug",
       title: "Slug",

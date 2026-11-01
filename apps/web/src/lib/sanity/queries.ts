@@ -6,9 +6,10 @@ const ctaButtonProjection = `_type == "ctaButton" => {
   page->{
     _type,
     "slug": slug.current,
-    route
+    route,
+    titleLanguage
   },
-  file { asset->{ url } }
+  file { asset->{ url, originalFilename, mimeType, size } }
 }`;
 
 /** Resolves Button targets inside Portable Text, including a button nested in Columns. */
@@ -63,6 +64,7 @@ const feedDoc = `{
   _id,
   _createdAt,
   publishedAt,
+  titleLanguage,
   title,
   "slug": slug.current,
   ctaHref,
@@ -88,6 +90,7 @@ export const contentFeedQuery = `{
     _id,
     _createdAt,
     title,
+    titleLanguage,
     "slug": slug.current,
     "excerpt": summary
   },
@@ -95,6 +98,7 @@ export const contentFeedQuery = `{
     _id,
     _createdAt,
     title,
+    titleLanguage,
     "slug": slug.current,
     "excerpt": summary
   }
@@ -121,6 +125,7 @@ export const contentSectionsProjection = `{
     page->{
       _type,
       title,
+      titleLanguage,
       name,
       "slug": slug.current,
       route,
@@ -156,6 +161,7 @@ const heroSlidesProjection = `heroImages[] {
 export const pageBySlugQuery = `*[_type == "page" && slug.current == $slug][0] {
   _id,
   title,
+  titleLanguage,
   "slug": slug.current,
   heroTextAlign,
   heroLead,
@@ -180,6 +186,7 @@ export const pageRoutesQuery = `*[_type == "page" && defined(slug.current)]{
 export const newsBySlugQuery = `*[_type == "news" && slug.current == $slug][0] {
   _id,
   title,
+  titleLanguage,
   "slug": slug.current,
   heroTextAlign,
   ${heroSlidesProjection},
@@ -199,6 +206,7 @@ export const newsRoutesQuery = `*[_type == "news" && defined(slug.current)]{
 
 const editionProjection = `{
   title,
+  titleLanguage,
   "slug": slug.current,
   year,
   years,
@@ -214,6 +222,7 @@ const editionProjection = `{
 export const projectsListQuery = `*[_type == "project"] | order(featured desc, title asc) {
   _id,
   title,
+  titleLanguage,
   "slug": slug.current,
   status,
   featured,
@@ -228,6 +237,7 @@ export const projectsListQuery = `*[_type == "project"] | order(featured desc, t
 export const projectBySlugQuery = `*[_type == "project" && slug.current == $slug][0] {
   _id,
   title,
+  titleLanguage,
   "slug": slug.current,
   status,
   featured,
@@ -262,6 +272,7 @@ export const pagesBySlugsQuery = `*[_type == "page" && slug.current in $slugs] {
 
 export const landingPageByIdQuery = `*[_type == "landingPage" && _id == $id][0] {
   title,
+  titleLanguage,
   lead,
   ctaLabel,
   ctaHref,
@@ -273,6 +284,7 @@ export const landingPageByIdQuery = `*[_type == "landingPage" && _id == $id][0] 
 
 export const aboutPageQuery = `*[_type == "aboutPage"][0] {
   title,
+  titleLanguage,
   lead,
   ctaLabel,
   ctaHref,
@@ -315,7 +327,7 @@ export const aboutPageQuery = `*[_type == "aboutPage"][0] {
       title,
       href,
       "page": page->{ title, "slug": slug.current },
-      file { asset->{ url, originalFilename, mimeType } }
+      file { asset->{ url, originalFilename, mimeType, size } }
     }
   }
 }`;
@@ -362,7 +374,7 @@ export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
   homepageSections[] ${contentSectionsProjection}
 }`;
 
-const publicationFileProjection = `file { asset->{ url, originalFilename, mimeType } }`;
+const publicationFileProjection = `file { asset->{ url, originalFilename, mimeType, size } }`;
 /** First picture in the text is the listing mark. YouTube in Columns still counts as a page. */
 const publicationListingSignalsProjection = `
   "bodyText": pt::text(body),
@@ -393,6 +405,7 @@ const publicationFormatProjection = `"format": select(
 export const publicationsListQuery = `*[_type == "publication" && listed == true && defined(slug.current)] | order(title asc) {
   _id,
   title,
+  titleLanguage,
   "slug": slug.current,
   summary,
   authors,
@@ -405,6 +418,7 @@ export const publicationsListQuery = `*[_type == "publication" && listed == true
 export const publicationBySlugQuery = `*[_type == "publication" && slug.current == $slug][0] {
   _id,
   title,
+  titleLanguage,
   "slug": slug.current,
   summary,
   authors,

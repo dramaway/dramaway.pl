@@ -29,6 +29,7 @@ export default async function ContactPage() {
     <div className="page-hero-spacing">
       <PageHero
         title={cmsText(page.title)}
+        titleLanguage={page.titleLanguage}
         lead={cmsText(page.heroLead)}
         textAlign={page.heroTextAlign}
         ctaLabel={page.heroCtaLabel}

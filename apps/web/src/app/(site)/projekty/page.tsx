@@ -18,6 +18,7 @@ function isActive(project: ProjectListItem) {
 function projectToRow(project: ProjectListItem) {
   return {
     title: project.title,
+    titleLanguage: project.titleLanguage,
     lead: project.summary,
     href: publicPathForProjectSlug(project.slug),
     id: project.slug,
@@ -50,6 +51,7 @@ export default async function ProjectsPage() {
     <>
       <PageHero
         title={landing.title}
+        titleLanguage={landing.titleLanguage}
         lead={landing.lead}
         textAlign={landing.textAlign}
         ctaLabel={landing.ctaLabel}

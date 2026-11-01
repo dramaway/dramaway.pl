@@ -4,6 +4,8 @@ import type { NavItem } from "../routes";
 
 export type SanityImage = SanityImageSource;
 
+export type TitleLanguage = "pl" | "en" | null;
+
 export type HeroTextAlign = "left" | "center" | "right";
 
 export type CmsImage = SanityImage & { alt?: string | null };
@@ -70,6 +72,7 @@ export type ContentFeedDoc = {
   _createdAt?: string | null;
   publishedAt?: string | null;
   title?: string | null;
+  titleLanguage?: TitleLanguage;
   slug?: string | null;
   excerpt?: string | null;
   ctaHref?: string | null;
@@ -83,6 +86,7 @@ export type CmsContentImage = CmsImage;
 export type CmsContentTileTarget = {
   _type: string;
   title: string | null;
+  titleLanguage?: TitleLanguage;
   name: string | null;
   slug: string | null;
   route: string | null;
@@ -118,6 +122,7 @@ export type CmsContentSection = {
 export type ResolvedTile = {
   key: string;
   title: string | null;
+  titleLanguage?: TitleLanguage;
   anchorId: string | null;
   excerpt: string | null;
   href: string | null;
@@ -158,6 +163,7 @@ export type ResolvedSection =
 export type PageDetail = {
   _id: string;
   title: string;
+  titleLanguage?: TitleLanguage;
   slug: string;
   heroTextAlign?: HeroTextAlign | null;
   heroLead?: string | null;
@@ -174,6 +180,7 @@ export type PageDetail = {
 export type NewsDetail = {
   _id: string;
   title: string;
+  titleLanguage?: TitleLanguage;
   slug: string;
   heroTextAlign?: HeroTextAlign | null;
   heroImages?: CmsHeroImage[] | null;
@@ -189,6 +196,7 @@ export type SanityFile = {
     url?: string | null;
     mimeType?: string | null;
     originalFilename?: string | null;
+    size?: number | null;
   } | null;
 };
 
@@ -337,6 +345,7 @@ export type ResolvedSite = {
 export type ProjectListItem = {
   _id: string;
   title: string;
+  titleLanguage?: TitleLanguage;
   slug: string;
   status: string | null;
   featured: boolean | null;
@@ -355,6 +364,7 @@ export type EditionOutcome = {
 
 export type ProjectEdition = {
   title: string;
+  titleLanguage?: TitleLanguage;
   slug: string;
   year: number | null;
   years: string | null;
@@ -376,6 +386,7 @@ export type ProjectTextSection = {
 export type ProjectDetail = {
   _id: string;
   title: string;
+  titleLanguage?: TitleLanguage;
   slug: string;
   status: string | null;
   featured: boolean | null;
@@ -397,6 +408,7 @@ export type PublicationCover = CmsImage;
 export type PublicationListItem = {
   _id: string;
   title: string;
+  titleLanguage?: TitleLanguage;
   slug: string;
   summary: string | null;
   authors: string[] | null;
@@ -424,6 +436,7 @@ export type PublicationDetail = PublicationListItem & {
 
 export type LandingPage = {
   title: string | null;
+  titleLanguage?: TitleLanguage;
   lead: string | null;
   ctaLabel: string | null;
   ctaHref: string | null;
@@ -458,6 +471,7 @@ export type AboutDocumentItem = {
 
 export type AboutPage = {
   title: string | null;
+  titleLanguage?: TitleLanguage;
   lead: string | null;
   ctaLabel: string | null;
   ctaHref: string | null;
@@ -496,6 +510,7 @@ export type ResolvedAboutDocument = {
   title: string;
   href: string;
   external: boolean;
+  fileDescription?: string | null;
 };
 
 export type ResolvedAboutHistoryItem = {
@@ -508,6 +523,7 @@ export type AboutHistoryLayout = "vertical" | "horizontal";
 
 export type ResolvedAboutPage = {
   title: string | null;
+  titleLanguage?: TitleLanguage;
   lead: string | null;
   ctaLabel: string | null;
   ctaHref: string | null;

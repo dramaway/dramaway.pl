@@ -5,9 +5,11 @@ import type { SanityImage } from "@/lib/sanity/types";
 
 export type CzytelniaRowItem = {
   title: string;
+  titleLanguage?: "pl" | "en" | null;
   lead?: string | null;
   href: string;
   ctaLabel: string;
+  fileDescription?: string | null;
   /** PDF destination; the row stays on this site. */
   external?: boolean;
   cover: SanityImage | null;
@@ -47,12 +49,22 @@ export function CzytelniaStack({ items }: { items: CzytelniaRowItem[] }) {
                     href={item.href}
                     className="card-link"
                   >
-                    {item.title}
+                    <span lang={item.titleLanguage ?? undefined}>
+                      {item.title}
+                    </span>
+                    {item.fileDescription ? (
+                      <span className="sr-only">
+                        {" "}
+                        ({item.fileDescription})
+                      </span>
+                    ) : null}
                     <span className="sr-only">, {item.ctaLabel}</span>
                   </a>
                 ) : (
                   <Link href={item.href} className="card-link">
-                    {item.title}
+                    <span lang={item.titleLanguage ?? undefined}>
+                      {item.title}
+                    </span>
                   </Link>
                 )}
               </h3>
@@ -60,7 +72,9 @@ export function CzytelniaStack({ items }: { items: CzytelniaRowItem[] }) {
                 <p className="mt-5 text-body">{item.lead}</p>
               ) : null}
               <CtaLink href={item.href} presentational className="mt-8">
-                {item.ctaLabel}
+                {item.fileDescription
+                  ? `${item.ctaLabel} (${item.fileDescription})`
+                  : item.ctaLabel}
               </CtaLink>
             </div>
           </li>

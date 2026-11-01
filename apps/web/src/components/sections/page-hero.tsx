@@ -3,7 +3,11 @@ import { DotBand } from "@/components/visual/dot-band";
 import { HeroLead } from "@/components/sections/hero-lead";
 import { HeroMedia } from "@/components/visual/hero-media";
 import { resolveHeroTextAlign } from "@/lib/hero-slides";
-import type { HeroSlide, HeroTextAlign } from "@/lib/sanity/types";
+import type {
+  HeroSlide,
+  HeroTextAlign,
+  TitleLanguage,
+} from "@/lib/sanity/types";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
@@ -11,6 +15,7 @@ export type PageHeroLayout = "split" | "stack";
 
 export type PageHeroContent = {
   title?: string | null;
+  titleLanguage?: TitleLanguage;
   lead?: string | null;
   textAlign?: HeroTextAlign | null;
   ctaLabel?: string | null;
@@ -48,6 +53,7 @@ type PageHeroProps = PageHeroContent & {
  */
 export function PageHero({
   title,
+  titleLanguage,
   lead,
   textAlign,
   ctaLabel,
@@ -75,7 +81,7 @@ export function PageHero({
       ) : null}
       {hasTitle ? (
         <h1 className="hero-title font-display text-display font-black">
-          {title}
+          <span lang={titleLanguage ?? undefined}>{title}</span>
         </h1>
       ) : null}
     </div>

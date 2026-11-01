@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 export type HomeNewsItem = {
   _id: string;
   title: string;
+  titleLanguage?: "pl" | "en" | null;
   href: string;
   excerpt: string | null;
   publishedAt: string | null;
@@ -77,10 +78,14 @@ export function HomeNews({
                 >
                   {item.href ? (
                     <Link href={item.href} className="card-link">
-                      {item.title}
+                      <span lang={item.titleLanguage ?? undefined}>
+                        {item.title}
+                      </span>
                     </Link>
                   ) : (
-                    item.title
+                    <span lang={item.titleLanguage ?? undefined}>
+                      {item.title}
+                    </span>
                   )}
                 </h3>
               ) : null}

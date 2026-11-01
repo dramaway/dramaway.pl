@@ -14,6 +14,7 @@ export default async function TeamPage() {
     <>
       <PageHero
         title={landing.title}
+        titleLanguage={landing.titleLanguage}
         lead={landing.lead}
         textAlign={landing.textAlign}
         ctaLabel={landing.ctaLabel}

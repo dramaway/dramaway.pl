@@ -20,11 +20,13 @@ export function YoutubePreview(props: PreviewProps) {
     typeof (props as { url?: string }).url === "string"
       ? (props as { url?: string }).url
       : undefined;
+  const savedTitle =
+    typeof props.title === "string" ? props.title.trim() : "";
   const id = youtubeId(url);
   const thumb = id
     ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
     : undefined;
-  const filmTitle = useYoutubeTitle(url);
+  const filmTitle = useYoutubeTitle(savedTitle ? undefined : url);
   const size =
     (props as { size?: string }).size === "full" ? "Full width" : "Medium";
 
@@ -40,7 +42,9 @@ export function YoutubePreview(props: PreviewProps) {
         />
       ) : null}
       <div style={{ minWidth: 0 }}>
-        <div style={{ fontWeight: 600 }}>{youtubeLabel(filmTitle)}</div>
+        <div style={{ fontWeight: 600 }}>
+          {youtubeLabel(savedTitle || filmTitle)}
+        </div>
         <div
           style={{
             fontSize: 12,

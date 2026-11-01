@@ -52,6 +52,7 @@ export default async function EditionPage({ params }: Props) {
     <>
       <PageHero
         title={heading}
+        titleLanguage={edition.titleLanguage}
         lead={lead}
         textAlign={edition.heroTextAlign}
         layout="stack"

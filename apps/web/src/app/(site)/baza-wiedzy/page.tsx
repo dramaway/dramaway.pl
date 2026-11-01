@@ -26,6 +26,7 @@ import {
 } from "@/lib/publication-destination";
 import { LIBRARY_ANCHOR, publicationPath } from "@/lib/routes";
 import { safeHrefString } from "@/lib/safe-url";
+import { pdfDescription } from "@/lib/file-description";
 import {
   getPageBySlug,
   getPublications,
@@ -54,6 +55,7 @@ function toCzytelniaRows(items: PublicationListItem[]): CzytelniaRowItem[] {
     const external = destination === "file" && Boolean(fileHref);
     return {
       title: item.title,
+      titleLanguage: item.titleLanguage,
       lead: publicationListLead({
         destination,
         summary: item.summary,
@@ -61,6 +63,7 @@ function toCzytelniaRows(items: PublicationListItem[]): CzytelniaRowItem[] {
       }),
       href: external && fileHref ? fileHref : publicationPath(item.slug),
       ctaLabel: external ? SUBPAGE.czytelnia.pdfCta : LIST_CTA_LABEL,
+      fileDescription: external ? pdfDescription(item.file?.asset) : null,
       external,
       cover: hasHeroImage(item.cover) ? item.cover : null,
     };

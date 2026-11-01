@@ -5,6 +5,7 @@ import {
   heroTextAlignField,
   legacyHeroImageField,
 } from "./heroMedia";
+import { titleLanguageField } from "./titleLanguageField";
 
 export const LANDING_ROUTES = [
   { title: "Projekty", value: "projekty" },
@@ -46,6 +47,7 @@ export const landingPage = defineType({
       group: "hero",
       description: "H1. Puste = nagłówek nie pojawia się na stronie.",
     }),
+    titleLanguageField("hero"),
     defineField({
       name: "lead",
       title: "Lead",

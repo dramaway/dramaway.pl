@@ -98,7 +98,11 @@ export function SiteHeader({ title, items }: Props) {
         />
       </Link>
 
-      <nav ref={navRef} aria-label="Główna" className="site-nav-desktop">
+      <nav
+        ref={navRef}
+        aria-label="Nawigacja główna"
+        className="site-nav-desktop"
+      >
         <div ref={measureRef} className="site-nav-measure" aria-hidden>
           {visible.map((item, index) => (
             <span key={`${item.href}:${item.label}:${index}`}>{item.label}</span>
@@ -138,7 +142,7 @@ export function SiteHeader({ title, items }: Props) {
 
       <nav
         id={navId}
-        aria-label="Główna"
+        aria-label="Nawigacja główna"
         className="site-nav-overlay"
         hidden={!open}
       >
@@ -238,6 +242,7 @@ function useNavFlyout(resetKey: string) {
   return {
     rootRef,
     open,
+    setOpen,
     flyoutProps: {
       onPointerEnter: () => {
         if (!ignoreHover) setOpen(true);
@@ -251,6 +256,14 @@ function useNavFlyout(resetKey: string) {
       },
       onBlurCapture: (event: FocusEvent<HTMLDivElement>) => {
         closeIfLeft(event.relatedTarget);
+      },
+      onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (event.key !== "Escape" || !open) return;
+        event.preventDefault();
+        event.stopPropagation();
+        setIgnoreHover(true);
+        setOpen(false);
+        rootRef.current?.querySelector<HTMLElement>("a, button")?.focus();
       },
     },
   };
@@ -331,7 +344,7 @@ function NavOverflow({
   pathname: string;
   resetKey: string;
 }) {
-  const { rootRef, open, flyoutProps } = useNavFlyout(resetKey);
+  const { rootRef, open, setOpen, flyoutProps } = useNavFlyout(resetKey);
   const current = items.some((item) => itemIsCurrent(item, pathname));
 
   return (
@@ -353,6 +366,7 @@ function NavOverflow({
           aria-expanded={open}
           aria-haspopup="true"
           aria-label={SUBPAGE.a11y.moreNav}
+          onClick={() => setOpen(true)}
         >
           <MoreIcon />
         </button>

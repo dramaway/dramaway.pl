@@ -42,6 +42,7 @@ function isNavHref(value: string | undefined): boolean {
   if (href.startsWith("/")) return true;
   try {
     const url = new URL(href);
+    if (url.hostname === "dramaway.netlify.app") return false;
     return url.protocol === "http:" || url.protocol === "https:";
   } catch {
     return false;
@@ -124,7 +125,7 @@ function navLinkFields(): FieldDefinition[] {
         rule.custom((value, context) => {
           if (parentOf(context).target !== "path") return true;
           if (isNavHref(typeof value === "string" ? value : undefined)) return true;
-          return "Ścieżka od / albo adres http(s)";
+          return "Ścieżka wewnętrzna albo adres http(s) inny niż adres podglądu.";
         }),
     }),
   ];

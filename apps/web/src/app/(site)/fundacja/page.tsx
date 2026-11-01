@@ -29,6 +29,7 @@ export default async function FundacjaIndexPage() {
     <div data-no-palette="">
       <PageHero
         title={about.title}
+        titleLanguage={about.titleLanguage}
         lead={about.lead}
         textAlign={about.heroTextAlign}
         ctaLabel={about.ctaLabel}

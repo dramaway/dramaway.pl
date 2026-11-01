@@ -97,6 +97,36 @@ test("a file opens its asset url and an address keeps https or a path", () => {
   );
 });
 
+test("a PDF button includes its format and available file size", () => {
+  assert.deepEqual(
+    resolveCtaButton({
+      label: "Sprawozdanie 2018",
+      target: "file",
+      file: {
+        asset: {
+          url: "https://cdn.sanity.io/files/tr2qdg9j/production/report.pdf",
+          mimeType: "application/pdf",
+          originalFilename: "report.pdf",
+          size: 1_200_000,
+        },
+      },
+    }),
+    {
+      href: "https://cdn.sanity.io/files/tr2qdg9j/production/report.pdf",
+      label: "Sprawozdanie 2018",
+      fileDescription: "PDF, 1,2 MB",
+    },
+  );
+  assert.deepEqual(
+    resolveCtaButton({
+      label: "więcej",
+      target: "url",
+      href: "/kontakt",
+    }),
+    { href: "/kontakt", label: "więcej" },
+  );
+});
+
 test("anchor and query are appended, with or without the leading symbol", () => {
   const page = { _type: "project", slug: "art-generacje" };
   assert.equal(

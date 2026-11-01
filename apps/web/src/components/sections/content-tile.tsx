@@ -53,10 +53,10 @@ export function ContentTile({
     <Title className={titleClass}>
       {tile.href ? (
         <TileAnchor href={tile.href} className="card-link">
-          {tile.title}
+          <span lang={tile.titleLanguage ?? undefined}>{tile.title}</span>
         </TileAnchor>
       ) : (
-        tile.title
+        <span lang={tile.titleLanguage ?? undefined}>{tile.title}</span>
       )}
     </Title>
   ) : null;

@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 
 export type BlobRowItem = {
   title: string;
+  titleLanguage?: "pl" | "en" | null;
   lead?: string | null;
   href: string;
   id?: string;
@@ -66,7 +67,7 @@ export function BlobStack({
           <div className={thumbnails ? "blob-row-thumbnail-copy" : undefined}>
             <h3 className="font-display text-h3 font-black">
               <Link href={item.href} className="card-link">
-                {item.title}
+                <span lang={item.titleLanguage ?? undefined}>{item.title}</span>
               </Link>
             </h3>
             {item.lead ? (
