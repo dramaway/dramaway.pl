@@ -4240,7 +4240,7 @@ h3:focus-within {
 }
 
 .page-hero-spacing > .contact-form-section:first-of-type {
-  padding-block-start: var(--spacing-section);
+  padding-block-start: 0;
 }
 
 @media (width >= 64rem) {
