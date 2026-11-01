@@ -1,7 +1,7 @@
 import { cache } from "react";
 import { cmsCta, cmsText } from "./cms-text";
 import { resolveHistoryLayout } from "./history-timeline";
-import { resolveHeroSlides } from "./hero-slides";
+import { resolveHeroSlides, resolveHeroTextAlign } from "./hero-slides";
 import { safeHref } from "./safe-url";
 import { getAboutPage } from "./sanity/fetch";
 import type {
@@ -115,6 +115,7 @@ export const getResolvedAboutPage = cache(
       lead: cmsText(cms?.lead),
       ctaLabel: heroCta?.label ?? null,
       ctaHref: heroCta?.href ?? null,
+      heroTextAlign: resolveHeroTextAlign(cms?.heroTextAlign),
       slides: resolveHeroSlides(cms?.heroImages, title || ""),
       methods: {
         heading: cmsText(cms?.methods?.heading),

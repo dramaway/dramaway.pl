@@ -30,6 +30,7 @@ export default async function FundacjaIndexPage() {
       <PageHero
         title={about.title}
         lead={about.lead}
+        textAlign={about.heroTextAlign}
         ctaLabel={about.ctaLabel}
         ctaHref={about.ctaHref}
         slides={about.slides}

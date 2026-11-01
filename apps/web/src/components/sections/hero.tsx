@@ -12,7 +12,7 @@ import type { HeroContent } from "@/lib/sanity/types";
 export function Hero({ hero }: { hero: HeroContent }) {
   return (
     <section className="hero split">
-      <div className="split-text">
+      <div className="split-text" data-text-align={hero.textAlign}>
         {hero.heading ? (
           <h1 className="hero-title font-display text-display font-black">
             {hero.heading}

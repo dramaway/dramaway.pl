@@ -32,6 +32,7 @@ export default async function ContactPage() {
       <PageHero
         title={cmsText(page.title)}
         lead={cmsText(page.heroLead)}
+        textAlign={page.heroTextAlign}
         ctaLabel={page.heroCtaLabel}
         ctaHref={page.heroCtaHref}
         slides={resolveHeroSlides(page.heroImages, cmsText(page.title) || "")}

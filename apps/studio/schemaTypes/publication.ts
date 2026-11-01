@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { heroTextAlignField } from "./heroMedia";
 
 export const publication = defineType({
   name: "publication",
@@ -57,6 +58,7 @@ export const publication = defineType({
       description: "Portal persona names as strings — not person documents.",
     }),
     defineField({ name: "summary", title: "Summary", type: "text" }),
+    heroTextAlignField(),
     defineField({ name: "body", title: "Body", type: "blockContent" }),
     defineField({ name: "file", title: "File (PDF)", type: "file" }),
     defineField({

@@ -1,11 +1,16 @@
 import { cache } from "react";
 import { cmsCta, cmsText } from "./cms-text";
 import { resolveContentSections } from "./content-sections";
-import { resolveHeroSlides } from "./hero-slides";
+import { resolveHeroSlides, resolveHeroTextAlign } from "./hero-slides";
 import { EXCERPT_FALLBACK_MAX } from "./homepage-copy";
 import { knowledgeHubPath, LIBRARY_ANCHOR } from "./routes";
 import { getLandingPage } from "./sanity/fetch";
-import type { HeroSlide, LandingPage, ResolvedSection } from "./sanity/types";
+import type {
+  HeroSlide,
+  HeroTextAlign,
+  LandingPage,
+  ResolvedSection,
+} from "./sanity/types";
 
 export const LANDING_DOCUMENT_IDS = {
   projekty: "landing-projekty",
@@ -18,6 +23,7 @@ export type ResolvedLandingHero = {
   lead: string | null;
   ctaLabel: string | null;
   ctaHref: string | null;
+  textAlign: HeroTextAlign;
   slides: HeroSlide[];
 };
 
@@ -36,6 +42,7 @@ function resolveHero(cms: LandingPage | null): ResolvedLandingHero {
     lead: cmsText(cms?.lead),
     ctaLabel: cta?.label ?? null,
     ctaHref: cta?.href ?? null,
+    textAlign: resolveHeroTextAlign(cms?.heroTextAlign),
     slides: resolveHeroSlides(cms?.heroImages, title || ""),
   };
 }

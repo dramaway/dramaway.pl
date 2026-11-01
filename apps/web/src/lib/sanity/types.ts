@@ -4,6 +4,8 @@ import type { NavItem } from "../routes";
 
 export type SanityImage = SanityImageSource;
 
+export type HeroTextAlign = "left" | "center" | "right";
+
 /** Image field that may carry a slide key, alt, and an optional visible caption. */
 export type CmsHeroImage = SanityImage & {
   _key?: string | null;
@@ -155,6 +157,7 @@ export type PageDetail = {
   _id: string;
   title: string;
   slug: string;
+  heroTextAlign?: HeroTextAlign | null;
   heroLead?: string | null;
   heroCtaLabel?: string | null;
   heroCtaHref?: string | null;
@@ -170,6 +173,7 @@ export type NewsDetail = {
   _id: string;
   title: string;
   slug: string;
+  heroTextAlign?: HeroTextAlign | null;
   heroImages?: CmsHeroImage[] | null;
   excerpt?: string | null;
   publishedAt?: string | null;
@@ -290,6 +294,7 @@ export type SiteSettings = {
   heroLead: string | null;
   heroCtaLabel: string | null;
   heroCtaHref: string | null;
+  heroTextAlign?: HeroTextAlign | null;
   heroImages?: CmsHeroImage[] | null;
   heroSlider?: CmsHeroSlider;
   homepageSections?: CmsContentSection[] | null;
@@ -300,6 +305,7 @@ export type HeroContent = {
   lead: string | null;
   ctaLabel: string | null;
   ctaHref: string | null;
+  textAlign: HeroTextAlign;
   /** One still is static. Two or more use the shared hero slider. */
   slides: HeroSlide[];
 };
@@ -352,6 +358,7 @@ export type ProjectEdition = {
   years: string | null;
   theme: string | null;
   summary: string | null;
+  heroTextAlign?: HeroTextAlign | null;
   body: PortableContent;
   gallery: SanityImage[] | null;
   partners: string[] | null;
@@ -365,6 +372,7 @@ export type ProjectDetail = {
   status: string | null;
   featured: boolean | null;
   summary: string | null;
+  heroTextAlign?: HeroTextAlign | null;
   editionsHeading: string | null;
   heroImages?: CmsHeroImage[] | null;
   cover: SanityImage | null;
@@ -401,6 +409,7 @@ export type PublicationRoute = {
 };
 
 export type PublicationDetail = PublicationListItem & {
+  heroTextAlign?: HeroTextAlign | null;
   body: PortableContent;
 };
 
@@ -409,6 +418,7 @@ export type LandingPage = {
   lead: string | null;
   ctaLabel: string | null;
   ctaHref: string | null;
+  heroTextAlign?: HeroTextAlign | null;
   heroImages?: CmsHeroImage[] | null;
   showCzytelnia?: boolean | null;
   /** Current-projects modules on `/projekty`. Empty keeps the automatic active row. */
@@ -442,6 +452,7 @@ export type AboutPage = {
   lead: string | null;
   ctaLabel: string | null;
   ctaHref: string | null;
+  heroTextAlign?: HeroTextAlign | null;
   heroImages?: CmsHeroImage[] | null;
   methods: {
     heading: string | null;
@@ -491,6 +502,7 @@ export type ResolvedAboutPage = {
   lead: string | null;
   ctaLabel: string | null;
   ctaHref: string | null;
+  heroTextAlign: HeroTextAlign;
   slides: HeroSlide[];
   methods: {
     heading: string | null;

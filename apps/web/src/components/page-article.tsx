@@ -20,6 +20,7 @@ export function PageArticle({
       <PageHero
         title={page.title}
         lead={page.heroLead}
+        textAlign={page.heroTextAlign}
         ctaLabel={page.heroCtaLabel}
         ctaHref={page.heroCtaHref}
         slides={resolveHeroSlides(page.heroImages, page.title)}

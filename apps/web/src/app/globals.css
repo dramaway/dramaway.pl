@@ -105,6 +105,8 @@
   --text-nav--line-height: 1.4;
   --text-small: 0.875rem;
   --text-small--line-height: 1.57;
+  --text-archive-label: 0.9375rem;
+  --text-archive-label--line-height: var(--text-small--line-height);
 
   --spacing-section: clamp(3rem, 8vw, 7.5rem);
   --spacing-mobile-rhythm: clamp(1.5rem, 4vw, 2rem);
@@ -710,7 +712,23 @@
   }
 
   .hero-copy {
-    margin-block-start: 2rem;
+    margin-block-start: 1.5rem;
+  }
+
+  [data-text-align="center"] {
+    text-align: center;
+  }
+
+  [data-text-align="right"] {
+    text-align: right;
+  }
+
+  [data-text-align="center"] .measure {
+    margin-inline: auto;
+  }
+
+  [data-text-align="right"] .measure {
+    margin-inline-start: auto;
   }
 
   .hero-copy .portable-body {
@@ -754,6 +772,14 @@
     width: 100%;
   }
 
+  .hero-stack[data-text-align="center"] > :is(.hero-heading, .hero-copy) {
+    margin-inline: auto;
+  }
+
+  .hero-stack[data-text-align="right"] > :is(.hero-heading, .hero-copy) {
+    margin-inline-start: auto;
+  }
+
   .hero-media-wrap {
     position: relative;
     isolation: isolate;
@@ -791,7 +817,7 @@
         "title"
         "media"
         "copy";
-      gap: clamp(1.5rem, 4vw, 2rem);
+      gap: 1.5rem;
       padding-inline: var(--page-pad);
       padding-block: var(--spacing-section);
     }
@@ -1895,15 +1921,23 @@
 
   /*
    * Archive pair on /projekty. Label is magenta sentence-case (Figma 73:1284,
-   * 15 px Medium → text-small 600). Two columns from lg, right column nudged
-   * down; excerpts clamp to ~3 lines. No sand blob — the frame has none.
+   * 15 px Medium). Below lg the label uses the section-title scale for
+   * visibility. Two columns from lg, right column nudged down; excerpts
+   * clamp to ~3 lines. No sand blob — the frame has none.
    */
   .blob-row-label {
     font-family: var(--font-display);
-    font-size: var(--text-small);
+    font-size: var(--text-archive-label);
     font-weight: 600;
-    line-height: var(--text-small--line-height);
+    line-height: var(--text-archive-label--line-height);
     color: var(--color-magenta);
+  }
+
+  @media (width < 64rem) {
+    .blob-row-label {
+      font-size: var(--text-h3);
+      line-height: var(--text-h3--line-height);
+    }
   }
 
   .blob-row-label + * {
