@@ -25,6 +25,8 @@ Dokument ma zakładki:
 
 **Hero** to duży nagłówek na górze strony: tytuł, krótki opis, przycisk i zdjęcia. Strona główna, listingi, **O fundacji**, zwykłe strony, projekty i aktualności mają go w formularzu. Puste pole oznacza, że tego elementu nie ma na stronie. Gdy puste jest wszystko, nagłówka nie ma wcale.
 
+W leadzie hero możesz nacisnąć **Enter**, żeby zacząć nową linię. Dotyczy to także pola **Summary** w dokumencie **Project**. Wpisz lead tak jak zwykle — podział linii zostanie zachowany na stronie.
+
 **Zdjęcia** (pole **Zdjęcia hero**):
 
 - Można dodać od zera do pięciu. Kolejność na liście to kolejność pokazu.

@@ -1,5 +1,6 @@
 import { CtaLink } from "@/components/visual/cta-link";
 import { HeroMedia } from "@/components/visual/hero-media";
+import { HeroLead } from "@/components/sections/hero-lead";
 import type { HeroContent } from "@/lib/sanity/types";
 
 /**
@@ -20,7 +21,9 @@ export function Hero({ hero }: { hero: HeroContent }) {
 
         {hero.lead || (hero.ctaLabel && hero.ctaHref) ? (
           <div className="hero-copy">
-            {hero.lead ? <p className="measure text-lead">{hero.lead}</p> : null}
+            {hero.lead ? (
+              <HeroLead className="measure text-lead">{hero.lead}</HeroLead>
+            ) : null}
 
             {hero.ctaLabel && hero.ctaHref ? (
               <CtaLink href={hero.ctaHref}>{hero.ctaLabel}</CtaLink>
