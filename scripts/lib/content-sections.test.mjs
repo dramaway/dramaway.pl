@@ -83,15 +83,38 @@ test("resolves a person reference and a path tile", () => {
     sections[0].tiles.map((tile) => ({
       key: tile.key,
       title: tile.title,
+      anchorId: tile.anchorId,
       href: tile.href,
       ctaLabel: tile.ctaLabel,
     })),
     [
-      { key: "p", title: "Ada", href: "/zespol/ada", ctaLabel: "zobacz" },
-      { key: "path", title: "Czytelnia", href: "/czytelnia", ctaLabel: "czytaj więcej" },
-      { key: "bad", title: "Nie", href: null, ctaLabel: null },
+      { key: "p", title: "Ada", anchorId: "ada", href: "/zespol/ada", ctaLabel: "zobacz" },
+      { key: "path", title: "Czytelnia", anchorId: "czytelnia", href: "/czytelnia", ctaLabel: "czytaj więcej" },
+      { key: "bad", title: "Nie", anchorId: "nie", href: null, ctaLabel: null },
     ],
   );
+});
+
+test("tile anchors use a stable, readable ID derived from the displayed title", () => {
+  const sections = resolveContentSections([
+    {
+      _key: "m",
+      _type: "contentModule",
+      tiles: [
+        {
+          _key: "syrena",
+          title: "Projekt Syrena",
+          target: "path",
+          href: "https://teatrsyrena.pl/hej_ty/",
+        },
+        { _key: "empty", title: "  ", excerpt: "No title", target: "path", href: "/kontakt" },
+      ],
+    },
+  ]);
+  assert.equal(sections[0].kind, "module");
+  if (sections[0].kind !== "module") return;
+  assert.equal(sections[0].tiles[0].anchorId, "projekt-syrena");
+  assert.equal(sections[0].tiles[1].anchorId, null);
 });
 
 test("project reference uses the project path and an excerpt override", () => {

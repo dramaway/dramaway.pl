@@ -63,6 +63,17 @@ function clip(text: string | null): string | null {
   return text.slice(0, EXCERPT_FALLBACK_MAX).trimEnd();
 }
 
+function anchorId(title: string | null): string | null {
+  if (!title) return null;
+  const id = title
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return id || null;
+}
+
 function hasAsset(image: CmsContentImage | null | undefined): image is CmsContentImage {
   if (!image || typeof image !== "object") return false;
   return "asset" in image && image.asset != null;
@@ -85,6 +96,7 @@ function resolveTile(tile: CmsContentTile): ResolvedTile | null {
   return {
     key: tile._key,
     title,
+    anchorId: anchorId(title),
     excerpt,
     href,
     ctaLabel: href ? cmsText(tile.ctaLabel) || defaultCta(page?._type) : null,

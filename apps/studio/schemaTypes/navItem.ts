@@ -118,7 +118,7 @@ function navLinkFields(): FieldDefinition[] {
       name: "href",
       title: "Adres",
       type: "string",
-      description: "Ścieżka od ukośnika (/projekty) albo adres https://.",
+      description: "Ścieżka od ukośnika (np. /projekty#slug) albo adres https://.",
       hidden: ({ parent }) => (parent as NavParent | undefined)?.target !== "path",
       validation: (rule) =>
         rule.custom((value, context) => {
