@@ -19,15 +19,25 @@ function headingText(value: unknown) {
     .trim();
 }
 
+function hasMailtoLink(value: unknown) {
+  if (!isPortableNode(value) || !Array.isArray(value.markDefs)) return false;
+  return value.markDefs.some(
+    (mark) =>
+      isPortableNode(mark) &&
+      typeof mark.href === "string" &&
+      mark.href.startsWith("mailto:"),
+  );
+}
+
 export function splitContactBody(value: PortableContent | null) {
-  if (!value) return { direct: null, address: null };
+  if (!value) return { direct: null, people: [], address: null };
 
   const blocks = Array.isArray(value) ? value : [value];
   const addressIndex = blocks.findIndex(
     (block) => headingText(block)?.toLocaleLowerCase("pl-PL") === "adres",
   );
 
-  if (addressIndex < 0) return { direct: value, address: null };
+  if (addressIndex < 0) return { direct: value, people: [], address: null };
 
   const direct = blocks.slice(0, addressIndex);
   const firstHeading = headingText(direct[0]);
@@ -35,8 +45,11 @@ export function splitContactBody(value: PortableContent | null) {
     direct.shift();
   }
 
+  const peopleIndex = direct.findIndex(hasMailtoLink);
+  const office = peopleIndex < 0 ? direct : direct.slice(0, peopleIndex);
   return {
-    direct: direct.length > 0 ? direct : null,
+    direct: office.length > 0 ? office : null,
+    people: peopleIndex < 0 ? [] : direct.slice(peopleIndex),
     address: blocks.slice(addressIndex),
   };
 }
