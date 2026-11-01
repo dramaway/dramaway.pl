@@ -122,7 +122,7 @@ export const siteSettings = defineType({
           title: "Kontakt i social media",
           type: "array",
           description:
-            "Pod adresem. Wpisy z tekstem (e-mail, telefon, wszystko z etykietą) stoją na liście, reszta jako rząd ikon. Kolejność jak tutaj. Linki zewnętrzne otwierają się w nowej karcie, na telefonie w aplikacji serwisu.",
+            "Pod adresem. Wpisy z tekstem (e-mail, telefon, wszystko z etykietą) stoją na liście, reszta jako rząd ikon. Kolejność jak tutaj. Linki otwierają się w tej samej karcie.",
           of: [defineArrayMember({ type: "footerLink" })],
           validation: (rule) => rule.max(12),
         }),

@@ -18,7 +18,7 @@ function TileAnchor({
   if (!safe) return <>{children}</>;
   if (safe.kind === "http") {
     return (
-      <a href={safe.href} className={className} target="_blank" rel="noreferrer">
+      <a href={safe.href} className={className}>
         {children}
       </a>
     );

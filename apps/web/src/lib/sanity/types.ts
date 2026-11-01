@@ -245,7 +245,7 @@ export type FooterLink = {
   /** Visible text. Null = icon-only button in the social row. */
   text: string | null;
   ariaLabel: string;
-  /** http(s) opens in a new tab; mailto/tel stay in place. */
+  /** External URL, distinguished from mailto/tel for labeling and rendering. */
   external: boolean;
   /** Uploaded icon of a custom link. */
   iconUrl: string | null;

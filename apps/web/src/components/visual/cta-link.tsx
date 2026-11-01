@@ -60,8 +60,6 @@ export function CtaLink({
     return (
       <a
         href={safe.href}
-        target="_blank"
-        rel="noreferrer"
         className={cn("cta", className)}
       >
         {body}
