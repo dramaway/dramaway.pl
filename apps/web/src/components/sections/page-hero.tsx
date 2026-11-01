@@ -1,5 +1,6 @@
 import { CtaLink } from "@/components/visual/cta-link";
 import { DotBand } from "@/components/visual/dot-band";
+import { HeroLead } from "@/components/sections/hero-lead";
 import { HeroMedia } from "@/components/visual/hero-media";
 import type { HeroSlide } from "@/lib/sanity/types";
 import Link from "next/link";
@@ -78,9 +79,11 @@ export function PageHero({
   const copy = hasCopy ? (
     <div className="hero-copy">
       {lead ? (
-        <p className={layout === "stack" ? "text-lead" : "measure text-lead"}>
+        <HeroLead
+          className={layout === "stack" ? "text-lead" : "measure text-lead"}
+        >
           {lead}
-        </p>
+        </HeroLead>
       ) : null}
       {children ? <div>{children}</div> : null}
       {ctaLabel && ctaHref ? (
