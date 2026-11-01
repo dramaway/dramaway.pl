@@ -1900,8 +1900,9 @@
 
   /*
    * Archive pair on /projekty. Label is magenta sentence-case (Figma 73:1284,
-   * 15 px Medium → text-small 600). Two columns from lg, right column nudged
-   * down; excerpts clamp to ~3 lines. No sand blob — the frame has none.
+   * 15 px Medium → text-small 600). Below lg the label uses the section-title
+   * scale for visibility. Two columns from lg, right column nudged down;
+   * excerpts clamp to ~3 lines. No sand blob — the frame has none.
    */
   .blob-row-label {
     font-family: var(--font-display);
@@ -1909,6 +1910,13 @@
     font-weight: 600;
     line-height: var(--text-small--line-height);
     color: var(--color-magenta);
+  }
+
+  @media (width < 64rem) {
+    .blob-row-label {
+      font-size: var(--text-h3);
+      line-height: var(--text-h3--line-height);
+    }
   }
 
   .blob-row-label + * {
