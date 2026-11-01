@@ -25,7 +25,7 @@ import {
   type RosterSpan,
 } from "@/lib/roster-line";
 import { safeHref } from "@/lib/safe-url";
-import type { PortableContent, SanityImage } from "@/lib/sanity/types";
+import type { CmsImage, PortableContent } from "@/lib/sanity/types";
 import { urlFor } from "@/lib/sanity/image";
 import { BodyReadMore } from "@/components/visual/body-read-more";
 import { YoutubeEmbed } from "@/components/visual/youtube-embed";
@@ -61,7 +61,7 @@ type ImageValue = {
 type YoutubeValue = {
   _type?: string;
   url?: string;
-  cover?: SanityImage | null;
+  cover?: CmsImage | null;
   size?: string;
   align?: string;
 };
@@ -150,7 +150,7 @@ function PortableImageGallery({
 }: PortableTextTypeComponentProps<ImageGalleryNode>) {
   const images = value.images ?? [];
   if (images.length === 0) return null;
-  return <ImageGallery images={images as SanityImage[]} alt="" />;
+  return <ImageGallery images={images} alt="" />;
 }
 
 function PortableYoutube({
@@ -176,13 +176,8 @@ function PortableLink({
 }: PortableTextMarkComponentProps<{ _type: string; href?: string }>) {
   const safe = safeHref(value?.href);
   if (!safe) return <>{children}</>;
-  const newTab = safe.kind === "http";
   return (
-    <a
-      href={safe.href}
-      className="underline underline-offset-2"
-      {...(newTab ? { target: "_blank", rel: "noreferrer" } : {})}
-    >
+    <a href={safe.href} className="underline underline-offset-2">
       {children}
     </a>
   );
@@ -259,13 +254,8 @@ function renderRosterSpan(span: RosterSpan, markDefs: readonly RosterMarkDef[]) 
   );
   const safe = safeHref(link?.href);
   if (!safe) return node;
-  const newTab = safe.kind === "http";
   return (
-    <a
-      href={safe.href}
-      className="underline underline-offset-2"
-      {...(newTab ? { target: "_blank", rel: "noreferrer" } : {})}
-    >
+    <a href={safe.href} className="underline underline-offset-2">
       {node}
     </a>
   );

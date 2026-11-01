@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
 import { heroSlidesField, heroTextAlignField } from "./heroMedia";
 
 export const project = defineType({
@@ -45,6 +45,14 @@ export const project = defineType({
         "Do 5 zdjęć, w kolejności pokazu. Jedno zdjęcie zostaje kadrem bez slidera. Dwa lub więcej uruchamiają slider. Tempo i autoodtwarzanie są wspólne: Site settings → Hero → Slider hero. Pusta lista zostawia kadr z galerii edycji albo z pierwszego obrazu w treści.",
     }),
     defineField({ name: "body", title: "Body", type: "blockContent" }),
+    defineField({
+      name: "sectionsBeforeEditions",
+      title: "Kafelki przed listą edycji",
+      type: "array",
+      description:
+        "Opcjonalne sekcje z kafelkami wyświetlane po treści projektu, bezpośrednio przed listą edycji.",
+      of: [defineArrayMember({ type: "contentModule" })],
+    }),
     defineField({
       name: "editionsHeading",
       title: "Nagłówek listy edycji",

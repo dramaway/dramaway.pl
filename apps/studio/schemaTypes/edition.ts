@@ -1,5 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { heroTextAlignField } from "./heroMedia";
+import { imageAltField } from "./imageAltField";
 
 export const edition = defineType({
   name: "edition",
@@ -51,7 +52,13 @@ export const edition = defineType({
       name: "gallery",
       title: "Gallery",
       type: "array",
-      of: [{ type: "image", options: { hotspot: true } }],
+      of: [
+        {
+          type: "image",
+          options: { hotspot: true },
+          fields: [imageAltField()],
+        },
+      ],
     }),
     defineField({
       name: "partners",

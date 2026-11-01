@@ -1,4 +1,5 @@
 import { BlobRow } from "@/components/sections/blob-row";
+import { ContentModules } from "@/components/sections/content-modules";
 import { PageHero } from "@/components/sections/page-hero";
 import { Section } from "@/components/layout/section";
 import { PortableBody, hasPortableContent } from "@/components/portable-body";
@@ -94,14 +95,21 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
     (edition) => edition.slug,
   );
   const isArtGeneracje = project.slug === "art-generacje";
+  const isTeatrCodzienny = project.slug === "teatr-codzienny";
+  const usesThumbnailListing = isArtGeneracje || isTeatrCodzienny;
   const rows = editions.map((edition) => ({
-    title: editionHeading(edition),
+    title: isTeatrCodzienny ? edition.title : editionHeading(edition),
     lead: edition.summary?.trim() || null,
     href: editionPath(project.slug, edition.slug),
     ctaLabel: SUBPAGE.artGeneracje.editionCta,
     image: isArtGeneracje
       ? (edition.gallery?.find((image) => hasHeroImage(image)) ?? null)
-      : null,
+      : isTeatrCodzienny
+        ? (edition.gallery?.find((image) => hasHeroImage(image)) ??
+          edition.outcomes?.find((outcome) => hasHeroImage(outcome.image))
+            ?.image ??
+          null)
+        : null,
   }));
   const { preamble, sections } = splitPortableByHeading(project.afterword);
   const foldItems = projectFoldItems(project, sections);
@@ -119,19 +127,35 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
         parent={{ href: "/projekty", label: "Projekty" }}
       />
       {hasPortableContent(project.body) ? (
-        <Section className={isArtGeneracje ? "project-article-copy" : undefined}>
+        <Section
+          className={
+            isArtGeneracje || isTeatrCodzienny
+              ? "project-article-copy"
+              : undefined
+          }
+        >
           <div className="article-body">
             <PortableBody value={project.body} />
           </div>
         </Section>
       ) : null}
+      <ContentModules
+        sections={project.sectionsBeforeEditions}
+        variant="page"
+      />
       {editions.length > 0 ? (
         <section id="edycje" aria-label={copy.editionsHeading}>
           <BlobRow
             width="wide"
-            heading={isArtGeneracje ? project.editionsHeading?.trim() : null}
+            heading={
+              isArtGeneracje
+                ? project.editionsHeading?.trim()
+                : isTeatrCodzienny
+                  ? copy.editionsListHeading
+                  : null
+            }
             items={rows}
-            variant={isArtGeneracje ? "thumbnail" : "blob"}
+            variant={usesThumbnailListing ? "thumbnail" : "blob"}
           />
         </section>
       ) : null}

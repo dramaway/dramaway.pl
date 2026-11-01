@@ -8,7 +8,7 @@ export type CzytelniaRowItem = {
   lead?: string | null;
   href: string;
   ctaLabel: string;
-  /** PDF opens in a new tab. The page row stays on this site. */
+  /** PDF destination; the row stays on this site. */
   external?: boolean;
   cover: SanityImage | null;
 };
@@ -45,8 +45,6 @@ export function CzytelniaStack({ items }: { items: CzytelniaRowItem[] }) {
                 {item.external ? (
                   <a
                     href={item.href}
-                    target="_blank"
-                    rel="noreferrer"
                     className="card-link"
                   >
                     {item.title}

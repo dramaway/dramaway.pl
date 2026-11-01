@@ -94,7 +94,7 @@ export default async function EditionPage({ params }: Props) {
                   {outcome.image ? (
                     <Media
                       image={outcome.image}
-                      alt={outcome.title}
+                      alt={outcome.image.alt?.trim() || outcome.title}
                       variant="inset"
                       ratio="landscape"
                       className="mt-6"

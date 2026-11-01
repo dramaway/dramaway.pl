@@ -8,19 +8,20 @@ import type { NewsDetail } from "@/lib/sanity/types";
 export function NewsArticle({ news }: { news: NewsDetail }) {
   const cta = newsCta(news);
   return (
-    <>
+    <div className="page-hero-spacing">
       <PageHero
         title={news.title}
         textAlign={news.heroTextAlign}
         slides={resolveHeroSlides(news.heroImages, news.title)}
         ctaLabel={cta.ctaHref ? cta.label : null}
         ctaHref={cta.ctaHref}
+        showBand={false}
       />
       <Section>
         <div className="article-body">
           <PortableBody value={news.body} />
         </div>
       </Section>
-    </>
+    </div>
   );
 }

@@ -22,6 +22,7 @@ export const SUBPAGE = {
     ctaLabel: "zobacz wszystkie edycje",
     ctaHref: "#edycje",
     editionsHeading: "Edycje",
+    editionsListHeading: "Zobacz wszystkie edycje",
     editionCta: "zobacz jak graliśmy",
   },
   czytelnia: {
@@ -46,7 +47,7 @@ export const SUBPAGE = {
     },
   },
   contact: {
-    directHeading: "Napisz bezpośrednio",
+    directHeading: "Lub napisz do nas bezpośrednio",
     form: {
       heading: "Formularz kontaktowy",
       lead: "Masz pytanie, pomysł na współpracę albo chcesz dołączyć do naszych działań? Napisz — odpowiadamy w ciągu kilku dni roboczych.",
@@ -96,7 +97,6 @@ export const SUBPAGE = {
     skipToContent: "Przejdź do treści",
     moreNav: "Więcej w menu",
     footerLinks: "Kontakt i media społecznościowe",
-    newTab: "(otwiera się w nowej karcie)",
   },
   notFound: {
     title: "Nie znaleziono strony",

@@ -26,11 +26,15 @@ Strony głównej nie dodajesz do menu: prowadzi na nią logo w nagłówku.
 ## Cel pozycji
 
 - **Strona z CMS**: wybierasz istniejący dokument. Może to być zwykła strona (w tym Baza wiedzy), aktualność, projekt, publikacja, osoba, listing (Projekty, Czytelnia, Zespół) albo O fundacji. Stare duplikaty projektów nie pokazują się na liście wyboru.
-- **Adres**: ścieżka od ukośnika (`/projekty`) albo pełny adres `https://…`. Ścieżka może zawierać kotwicę, np. `/projekty#syrena`; link do ścieżki otwiera się w tej samej karcie. Pełny adres `https://…` otwiera się w nowej karcie. W ten sposób dodaje się link poza stronę, na przykład do Centrum.
+- **Adres**: ścieżka od ukośnika (`/projekty`) albo pełny adres `https://…`. Ścieżka może zawierać kotwicę, np. `/projekty#syrena`. Każdy link otwiera się w tej samej karcie. W ten sposób dodaje się link poza stronę, na przykład do Centrum.
 
 ### Link do zajawki projektu
 
 Zajawki projektów na automatycznej liście mają kotwice odpowiadające slugom dokumentów typu **Project**. Kafelki tekstowe w sekcjach CMS na stronie **Projekty** mają kotwice tworzone z ich tytułów: tytuł „Projekt Syrena” ma adres `/projekty#projekt-syrena`. Aby pozycja menu prowadziła do tej zajawki, ustaw jej cel na **Adres** i wpisz `/projekty#projekt-syrena`. Otworzy to stronę Projekty w tej samej karcie i przewinie do kafelka.
+
+### Linki do Bazy wiedzy
+
+Esej o metodach ma kotwicę `/baza-wiedzy#metody`, a sekcja **Polecane** — `/baza-wiedzy#polecane`. Aby dodać do menu np. podpozycje „Metody” i „Polecane” pod pozycją Baza wiedzy, ustaw cel każdej z nich na **Adres**, wpisz odpowiedni adres i opublikuj menu.
 
 <!-- screen: menu-adres | Wiersz przełączony na Adres, z wpisanym https | Widać, że link zewnętrzny nie wymaga dokumentu w Studio -->
 

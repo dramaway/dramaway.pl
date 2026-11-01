@@ -293,6 +293,13 @@ function NavItemWithChildren({
     >
       <span className="site-nav-sizer" aria-hidden>
         {item.label}
+        <span className="site-nav-sizer-sub">
+          {children.map((child, index) => (
+            <span key={`${child.href}:${child.label}:${index}`}>
+              {child.label}
+            </span>
+          ))}
+        </span>
       </span>
       <div className="site-nav-flyout">
         <span className="site-nav-cloud" aria-hidden />
@@ -390,7 +397,7 @@ function NavLink({
   const className = cn("hover:text-magenta", currentBranch && "text-magenta");
   if (item.external || /^https?:\/\//i.test(item.href)) {
     return (
-      <a href={item.href} className={className} rel="noopener noreferrer" target="_blank">
+      <a href={item.href} className={className}>
         {children}
       </a>
     );
