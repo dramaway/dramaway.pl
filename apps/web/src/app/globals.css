@@ -4201,6 +4201,27 @@ h3:focus-within {
   margin-block-start: 0;
 }
 
+@media (width >= 64rem) {
+  .page-hero-spacing > [data-split-hero] > .hero.split > .split-text {
+    padding-block-start: calc(
+      var(--site-header-space) + var(--spacing-section) - 1.5rem
+    );
+    padding-block-end: 1.5rem;
+  }
+
+  .page-hero-spacing > .py-section:first-of-type {
+    padding-block-start: 0;
+  }
+}
+
+.page-hero-spacing > .py-section:first-of-type .portable-body {
+  margin-block-start: 0;
+}
+
+.page-hero-spacing > .py-section:first-of-type .portable-body > :first-child {
+  margin-block-start: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   h1,
   h2,
