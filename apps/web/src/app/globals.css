@@ -754,6 +754,10 @@
     width: 100%;
   }
 
+  .page-article-text-only > .hero-stack + .py-section {
+    padding-block-start: 0;
+  }
+
   .hero-media-wrap {
     position: relative;
     isolation: isolate;
