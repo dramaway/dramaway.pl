@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-01 — Odstęp między body projektu a nagłówkiem listy edycji Teatru Codziennego zostaje skrócony o połowę. Kontakt: odstęp hero–formularz odpowiada odstępowi między wysłaniem wiadomości a sekcją kontaktu. `biuro@dramaway.pl` pozostaje osobno, trzy pozostałe wpisy z Sanity są w trzech kolumnach, a adres i numer konta znajdują się pod nimi. Pasmo kropek pod hero pojedynczych aktualności jest wyłączone. Listing edycji Teatru Codziennego pokazuje nagłówek „Zobacz wszystkie edycje”, pełne tytuły i miniatury. Pozostałe decyzje i zmiany poniżej bez zmian. |
-| **Gałąź / HEAD** | `szaroale-pl-stunning-happiness` |
-| **Zmiana bieżąca** | 2026-11-01 — Odstęp między treścią (`body`) projektu Teatr Codzienny a nagłówkiem listy edycji zmniejszony o połowę. |
+| **Ostatnia aktualizacja** | 2026-11-01 — Kontakt wrócił do układu formularza nad dwiema kolumnami: kontakt bezpośredni i adres; na desktopie szerokość formularza jest dopasowana do końca wiersza z nazwą Fundacji. Odstępy pozostają rytmiczne i responsywne. Odstęp między body projektu a nagłówkiem listy edycji Teatru Codziennego jest skrócony o połowę. Pozostałe decyzje i zmiany poniżej bez zmian. |
+| **Gałąź / HEAD** | `szaroale-pl-remove-dots-spacing` |
+| **Zmiana bieżąca** | 2026-11-01 — Kontakt: formularz o ograniczonej szerokości na desktopie; kontakt bezpośredni i adres w dwóch kolumnach pod formularzem. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
 | **Netlify** | Projekt przeniesiony do teamu `admin@dramaway.pl`, adres bez zmian. Env: `NEXT_PUBLIC_SANITY_*`, `NEXT_PUBLIC_SITE_URL`, `SANITY_REVALIDATE_SECRET` (tylko Production). |
 | **Hasła** | Bitwarden Fundacji (bitwarden.eu): hasła i kody odzyskiwania kont. Fundacja dostaje master password. |
