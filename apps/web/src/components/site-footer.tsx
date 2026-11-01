@@ -3,11 +3,11 @@ import Link from "next/link";
 import { FooterLinks } from "@/components/footer-links";
 import { NewsletterForm } from "@/components/newsletter-form";
 import { urlFor } from "@/lib/sanity/image";
-import type { FooterLink, SanityImage } from "@/lib/sanity/types";
+import type { CmsImage, FooterLink } from "@/lib/sanity/types";
 
 type Props = {
   title: string;
-  logo: SanityImage | null;
+  logo: CmsImage | null;
   logoAlt: string;
   address: string | null;
   links: FooterLink[];

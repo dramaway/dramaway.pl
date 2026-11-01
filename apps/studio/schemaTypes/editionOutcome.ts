@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { imageAltField } from "./imageAltField";
 
 /** Generic result of an edition: spectacle, event, publication, etc. Shape may tighten with Figma. */
 export const editionOutcome = defineType({
@@ -19,6 +20,7 @@ export const editionOutcome = defineType({
       title: "Image",
       type: "image",
       options: { hotspot: true },
+      fields: [imageAltField()],
     }),
     defineField({ name: "description", title: "Description", type: "text" }),
   ],

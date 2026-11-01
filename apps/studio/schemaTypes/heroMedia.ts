@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField } from "sanity";
 import { HeroSlideInput } from "../components/hero-slide-input";
+import { imageAltField } from "./imageAltField";
 
 /** Shared cap for every hero still list (homepage and inner pages). */
 export const HERO_SLIDES_MAX = 5;
@@ -60,13 +61,7 @@ export function heroSlidesField(options: HeroSlidesFieldOptions = {}) {
           "Ustaw hotspot: kropka nawigatora przybliża ten obszar, żeby było widać, co jest na zdjęciu.",
         components: { input: HeroSlideInput },
         fields: [
-          defineField({
-            name: "alt",
-            title: "Alt",
-            type: "string",
-            description:
-              "Dla czytnika ekranu i gdy obraz się nie załaduje. Krótki opis treści zdjęcia. Może być taki sam jak podpis, gdy kadr jest zwykły, np. „Uczestnicy w kręgu na sali”. Gdy warto rozdzielić: „Cztery osoby na scenie w półmroku”.",
-          }),
+          imageAltField(),
           defineField({
             name: "caption",
             title: "Podpis",

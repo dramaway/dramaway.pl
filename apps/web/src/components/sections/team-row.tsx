@@ -3,13 +3,13 @@ import { Section } from "@/components/layout/section";
 import { CtaLink } from "@/components/visual/cta-link";
 import { Media } from "@/components/visual/media";
 import { publicPathForPersonSlug } from "@/lib/routes";
-import type { SanityImage } from "@/lib/sanity/types";
+import type { CmsImage } from "@/lib/sanity/types";
 
 export type TeamRowPerson = {
   name: string;
   slug: string;
   role?: string | null;
-  photo?: SanityImage | null;
+  photo?: CmsImage | null;
 };
 
 type TeamRowProps = {
@@ -50,7 +50,7 @@ export function TeamRow({
               >
                 <Media
                   image={person.photo ?? null}
-                  alt={person.name}
+                  alt={person.photo?.alt?.trim() || person.name}
                   variant="bleed"
                   ratio="portrait"
                   sizes="(min-width: 64rem) 15vw, 40vw"

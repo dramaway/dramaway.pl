@@ -29,7 +29,7 @@ export function PersonProfile({ person }: { person: PersonDetail }) {
         <div className="mt-6 w-48">
           <Media
             image={person.photo}
-            alt={person.name}
+            alt={person.photo.alt?.trim() || person.name}
             ratio="album"
             variant="inset"
             sizes="12rem"
