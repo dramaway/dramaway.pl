@@ -1595,6 +1595,10 @@
     gap: var(--spacing-section);
   }
 
+  .contact-main {
+    max-width: 86%;
+  }
+
   .contact-layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
@@ -1604,13 +1608,12 @@
   .contact-people {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: 2rem;
+    gap: 1.5rem;
     margin-block-start: 2rem;
   }
 
-  .contact-main {
-    display: flex;
-    flex-direction: column;
+  .contact-people li {
+    min-width: 0;
   }
 
   .contact-body {
@@ -1622,8 +1625,19 @@
   }
 
   @media (width >= 64rem) {
+    .contact-layout {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 4rem;
+    }
+
     .contact-people {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2rem;
+    }
+  }
+
+  @media (width < 64rem) {
+    .contact-main {
+      max-width: 100%;
     }
   }
 
