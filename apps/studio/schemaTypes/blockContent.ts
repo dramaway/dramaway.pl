@@ -90,6 +90,15 @@ export const youtube = defineType({
   components: { preview: YoutubePreview },
 });
 
+const textPaletteOptions = [
+  { title: "Zaufanie / Otwartość", value: "brand-1" },
+  { title: "Dialog / Energia", value: "brand-3" },
+  { title: "Twórczość", value: "brand-4" },
+  { title: "Głębia", value: "brand-5" },
+  { title: "Szacunek", value: "brand-6" },
+  { title: "Poszukiwanie", value: "brand-7" },
+];
+
 const blockMarks = {
   annotations: [
     {
@@ -106,6 +115,55 @@ const blockMarks = {
               allowRelative: true,
               scheme: ["http", "https", "mailto", "tel"],
             }),
+        }),
+      ],
+    },
+    {
+      name: "textColor",
+      type: "object",
+      title: "Kolor tekstu",
+      fields: [
+        defineField({
+          name: "color",
+          type: "string",
+          title: "Kolor",
+          options: {
+            layout: "dropdown",
+            list: textPaletteOptions,
+          },
+          validation: (rule) => rule.required(),
+        }),
+      ],
+    },
+    {
+      name: "softUnderline",
+      type: "object",
+      title: "Podkreślenie",
+      fields: [
+        defineField({
+          name: "style",
+          type: "string",
+          title: "Styl kreski",
+          options: {
+            layout: "radio",
+            direction: "horizontal",
+            list: [
+              { title: "Miękki ślad", value: "brush" },
+              { title: "Podwójna kreska", value: "double" },
+            ],
+          },
+          initialValue: "brush",
+          validation: (rule) => rule.required(),
+        }),
+        defineField({
+          name: "color",
+          type: "string",
+          title: "Kolor podkreślenia",
+          options: {
+            layout: "dropdown",
+            list: textPaletteOptions,
+          },
+          validation: (rule) => rule.required(),
         }),
       ],
     },

@@ -193,9 +193,61 @@ function PortableLink({
   const safe = safeHref(value?.href);
   if (!safe) return <>{children}</>;
   return (
-    <a href={safe.href} className="underline underline-offset-2">
-      {children}
+    <a href={safe.href} className="pt-link">
+      <span className="pt-link-label">{children}</span>
     </a>
+  );
+}
+
+type PaletteColor =
+  | "brand-1"
+  | "brand-3"
+  | "brand-4"
+  | "brand-5"
+  | "brand-6"
+  | "brand-7";
+
+const paletteColorClasses: Record<PaletteColor, string> = {
+  "brand-1": "pt-color-brand-1",
+  "brand-3": "pt-color-brand-3",
+  "brand-4": "pt-color-brand-4",
+  "brand-5": "pt-color-brand-5",
+  "brand-6": "pt-color-brand-6",
+  "brand-7": "pt-color-brand-7",
+};
+
+function isPaletteColor(color: unknown): color is PaletteColor {
+  return (
+    typeof color === "string" && Object.hasOwn(paletteColorClasses, color)
+  );
+}
+
+function PortableTextColor({
+  children,
+  value,
+}: PortableTextMarkComponentProps<{ _type: string; color?: string }>) {
+  if (!isPaletteColor(value?.color)) return <>{children}</>;
+  return (
+    <span className={paletteColorClasses[value.color]}>{children}</span>
+  );
+}
+
+function PortableSoftUnderline({
+  children,
+  value,
+}: PortableTextMarkComponentProps<{
+  _type: string;
+  color?: string;
+  style?: string;
+}>) {
+  if (!isPaletteColor(value?.color)) return <>{children}</>;
+  const style = value.style === "double" ? "double" : "brush";
+  return (
+    <span
+      className={`pt-soft-underline pt-soft-underline-${style} pt-underline-${value.color}`}
+    >
+      {children}
+    </span>
   );
 }
 
@@ -243,7 +295,13 @@ function PortableColumns({
   );
 }
 
-type RosterMarkDef = { _key?: string; _type?: string; href?: string };
+type RosterMarkDef = {
+  _key?: string;
+  _type?: string;
+  href?: string;
+  color?: string;
+  style?: string;
+};
 
 function RosterItem({
   value,
@@ -267,16 +325,35 @@ function RosterItem({
 function renderRosterSpan(span: RosterSpan, markDefs: readonly RosterMarkDef[]) {
   let node: ReactNode = span.text ?? "";
   const marks = span.marks ?? [];
+  const markDef = (type: string) =>
+    markDefs.find(
+      (def) => def._type === type && def._key && marks.includes(def._key),
+    );
+  const textColor = markDef("textColor");
+  if (isPaletteColor(textColor?.color)) {
+    node = (
+      <span className={paletteColorClasses[textColor.color]}>{node}</span>
+    );
+  }
+  const underline = markDef("softUnderline");
+  if (isPaletteColor(underline?.color)) {
+    const style = underline.style === "double" ? "double" : "brush";
+    node = (
+      <span
+        className={`pt-soft-underline pt-soft-underline-${style} pt-underline-${underline.color}`}
+      >
+        {node}
+      </span>
+    );
+  }
   if (marks.includes("em")) node = <em>{node}</em>;
   if (marks.includes("strong")) node = <strong>{node}</strong>;
-  const link = markDefs.find(
-    (def) => def._type === "link" && def._key && marks.includes(def._key),
-  );
+  const link = markDef("link");
   const safe = safeHref(link?.href);
   if (!safe) return node;
   return (
-    <a href={safe.href} className="underline underline-offset-2">
-      {node}
+    <a href={safe.href} className="pt-link">
+      <span className="pt-link-label">{node}</span>
     </a>
   );
 }
@@ -331,6 +408,8 @@ const components: PortableTextComponents = {
   },
   marks: {
     link: PortableLink,
+    textColor: PortableTextColor,
+    softUnderline: PortableSoftUnderline,
   },
   types: {
     image: PortableImage,

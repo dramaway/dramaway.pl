@@ -6,6 +6,14 @@ Zwykły akapit, nagłówek, cytat, lista i pogrubienie działają jak w edytorze
 
 Poniżej są tylko dodatki zrobione dla tej strony. Część z nich to **style i listy** na pasku edytora (Termin, Centered, Indent, Roles). Reszta to **bloki**, czyli osobne elementy wstawiane plusem między akapitami (Columns, Button, Wykaz twórców, YouTube).
 
+## Kolor tekstu i podkreślenie
+
+W każdym polu tekstu sformatowanego można zaznaczyć fragment i wybrać na pasku **Kolor tekstu** albo **Podkreślenie**. Kolor tekstu i kolor podkreślenia wybiera się osobno z palety wartości strony. Jasna zieleń jest zarezerwowana dla linków w tekście — pojawia się na nich automatycznie i nie ma jej na liście kolorów.
+
+Podkreślenie ma dwa warianty: **Miękki ślad** przypomina jedno pociągnięcie pędzla, a **Podwójna kreska** — dwie delikatnie nieregularne linie. Można je dodać do tekstu bez zmiany jego koloru. Tytuły, etykiety, zajawki i inne zwykłe pola tekstowe nie obsługują formatowania pojedynczych fragmentów.
+
+<!-- screen: tekst-kolor-podkreslenie | Zaznaczenie fragmentu tekstu, opcje Kolor tekstu i Podkreślenie oraz lista kolorów | Widać, że jasna zieleń nie jest dostępna do ręcznego wyboru -->
+
 ## Wyrównanie do środka
 
 Styl **Centered** wyrównuje tekst akapitu do środka jego kolumny. Zaznacz akapit i wybierz **Centered** na pasku stylów. To wyrównanie dotyczy tylko tego akapitu; pozostały tekst i nagłówki nie zmieniają położenia. Aby wrócić do zwykłego wyrównania, wybierz **Normal**.
