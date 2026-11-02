@@ -1384,7 +1384,7 @@
     z-index: 2;
   }
 
-  .site-footer {
+  .site-footer:has(> .footer-newsletter) {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
   }
@@ -1831,6 +1831,19 @@
   }
 
   @media (width >= 80rem) {
+    .site-footer {
+      grid-template-columns:
+        calc(
+          round(up, 50vw, var(--dot-size)) -
+            max(
+              var(--page-pad),
+              calc((100vw - var(--page-max)) / 2 + var(--page-pad))
+            ) -
+            3rem
+        )
+        minmax(0, 1fr);
+    }
+
     .site-footer > .footer-newsletter {
       margin-block-start: calc(
         (var(--spacing-section) + var(--dot-size) * 0.45) * -1
