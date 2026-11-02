@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-02 — Ostatnie pasmo kropek strony głównej nie ma już ujemnego marginesu nachodzącego na stopkę. |
+| **Ostatnia aktualizacja** | 2026-11-02 — Desktopowa siatka stopki: kolumny 640/540 px od 90 rem, CTA newslettera minimum 15 rem od 64 rem. |
 | **Gałąź / HEAD** | `szaroale-pl-fix-newsletter-dots` |
-| **Zmiana bieżąca** | 2026-11-02 — Diagnoza nakładania: końcowy `.dot-band` miał ujemny margines dojazdu do stopki; newsletter nadal wymaga potwierdzenia na nowym podglądzie. |
+| **Zmiana bieżąca** | 2026-11-02 — Końcowe pasmo kropek strony głównej nie przenosi ujemnego marginesu na stopkę; desktopowa siatka dopasowana do 640/540 px przy 90 rem+. |
 | **Poprzednia zmiana** | 2026-11-02 — Kontakt: rozmiar nagłówków „Adres” i „Numer konta” nadpisuje style Portable Text; treść edytuje się w polu Body dokumentu Kontakt w Studio. |
 | **Zmiana na Kontakt** | 2026-11-01 — Nagłówki „Adres” i „Numer konta” mają ten sam rozmiar co nagłówki sekcji formularza i kontaktu bezpośredniego; edycja treści odbywa się w polu Body dokumentu Kontakt w Studio. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |

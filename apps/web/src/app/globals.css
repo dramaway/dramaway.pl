@@ -1826,7 +1826,13 @@
 
     /* A length, so the shrink-wrapped row keeps the rule inside itself. */
     .footer-newsletter .cta {
-      min-width: 19rem;
+      min-width: 15rem;
+    }
+  }
+
+  @media (width >= 90rem) {
+    .site-footer:has(> .footer-newsletter) {
+      grid-template-columns: 640px 540px;
     }
   }
 
