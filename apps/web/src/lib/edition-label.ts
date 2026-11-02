@@ -12,3 +12,12 @@ export function editionHeading(edition: EditionName) {
   if (theme) return theme;
   return edition.title;
 }
+
+export function projectEditionHeading(
+  projectSlug: string,
+  edition: EditionName,
+) {
+  return projectSlug === "teatr-codzienny"
+    ? edition.title
+    : editionHeading(edition);
+}

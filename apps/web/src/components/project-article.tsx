@@ -3,7 +3,7 @@ import { PageHero } from "@/components/sections/page-hero";
 import { Section } from "@/components/layout/section";
 import { PortableBody, hasPortableContent } from "@/components/portable-body";
 import { FoldList, type FoldListItem } from "@/components/visual/fold-list";
-import { editionHeading } from "@/lib/edition-label";
+import { projectEditionHeading } from "@/lib/edition-label";
 import { sortEditionsNewestFirst } from "@/lib/edition-sort";
 import {
   splitPortableByHeading,
@@ -97,7 +97,7 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
   const isTeatrCodzienny = project.slug === "teatr-codzienny";
   const usesThumbnailListing = isArtGeneracje || isTeatrCodzienny;
   const rows = editions.map((edition) => ({
-    title: isTeatrCodzienny ? edition.title : editionHeading(edition),
+    title: projectEditionHeading(project.slug, edition),
     titleLanguage: edition.titleLanguage,
     lead: edition.summary?.trim() || null,
     href: editionPath(project.slug, edition.slug),
