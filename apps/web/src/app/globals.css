@@ -1835,6 +1835,14 @@
     }
   }
 
+  @media (width >= 80rem) {
+    .site-footer > .footer-newsletter {
+      margin-block-start: calc(
+        (var(--spacing-section) + var(--dot-size) * 0.45) * -1
+      );
+    }
+  }
+
   @media (width >= 48rem) and (width < 80rem) {
     .site-footer {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);

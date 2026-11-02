@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-02 — Newsletter w stopce nie nachodzi na pasmo kropek, także przy powiększeniu. Wcześniejsze decyzje poniżej bez zmian. |
+| **Ostatnia aktualizacja** | 2026-11-02 — Newsletter na szerokim desktopie jest wyrównany do pasma kropek; przy powiększeniu układa się pod nim, żeby nie nachodzić na koła. Wcześniejsze decyzje poniżej bez zmian. |
 | **Gałąź / HEAD** | `szaroale-pl-fix-newsletter-dots` |
-| **Zmiana bieżąca** | 2026-11-02 — Newsletter w stopce pozostaje w całości poniżej pasma kropek; zachowuje prawą kolumnę i wspólne wyrównanie leadu, pola oraz przycisku. |
+| **Zmiana bieżąca** | 2026-11-02 — Od 80 rem lead newslettera jest wyrównany z pasmem kropek; przy węższym widoku formularz pozostaje pod pasmem. |
 | **Poprzednia zmiana** | 2026-11-01 — Poprawki dostępności: etykiety filmów i język tytułów w Studio, obsługa klawiatury w menu i galerii, widoczny fokus, etykiety PDF i komunikaty newslettera; dodano kotwice na O fundacji i Bazie wiedzy oraz pola Tytuł filmu i Język tytułu w Studio. |
 | **Zmiana na Kontakt** | 2026-11-01 — Nagłówki „Adres” i „Numer konta” mają ten sam rozmiar co nagłówki sekcji formularza i kontaktu bezpośredniego; edycja treści odbywa się w polu Body dokumentu Kontakt w Studio. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
