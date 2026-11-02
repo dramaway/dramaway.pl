@@ -3,7 +3,10 @@ import { BlobRow } from "@/components/sections/blob-row";
 import { ContentModules } from "@/components/sections/content-modules";
 import { PageHero } from "@/components/sections/page-hero";
 import { DotBand } from "@/components/visual/dot-band";
-import { publicPathForProjectSlug } from "@/lib/routes";
+import {
+  PROJECTS_ARCHIVE_ANCHOR,
+  publicPathForProjectSlug,
+} from "@/lib/routes";
 import { getProjects } from "@/lib/sanity/fetch";
 import type { ProjectListItem } from "@/lib/sanity/types";
 import { getProjectsLanding } from "@/lib/landing-page";
@@ -70,6 +73,7 @@ export default async function ProjectsPage() {
       <DotBand />
       <BlobRow
         heading="Zakończone projekty"
+        headingId={PROJECTS_ARCHIVE_ANCHOR}
         items={archive.map(projectToRow)}
         density="compact"
         emptyMessage="Brak zakończonych projektów w CMS."

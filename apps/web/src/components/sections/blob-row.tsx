@@ -71,7 +71,9 @@ export function BlobRow({
         <h2
           id={labelId}
           className={
-            density === "compact"
+            headingId
+              ? "blob-row-label scroll-mt-24"
+              : density === "compact"
               ? "blob-row-label"
               : variant === "thumbnail"
                 ? "font-display text-h2 font-black"

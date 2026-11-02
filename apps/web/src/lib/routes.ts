@@ -25,6 +25,10 @@ export type NavItem = {
 /** Heading of the full library on the Baza wiedzy page. */
 export const LIBRARY_ANCHOR = "pelna-biblioteka";
 
+/** Heading of the completed projects archive on `/projekty`. */
+export const PROJECTS_ARCHIVE_ANCHOR = "zakonczone-projekty";
+export const PROJECTS_ARCHIVE_PATH = `/projekty#${PROJECTS_ARCHIVE_ANCHOR}`;
+
 export function knowledgeHubPath() {
   return "/baza-wiedzy";
 }
@@ -40,7 +44,11 @@ export function publicationPath(slug: string) {
 export function mainNav(): NavItem[] {
   return [
     { href: "/", label: "Strona główna" },
-    { href: "/projekty", label: "Projekty" },
+    {
+      href: "/projekty",
+      label: "Projekty",
+      children: [{ href: PROJECTS_ARCHIVE_PATH, label: "Zakończone projekty" }],
+    },
     {
       href: knowledgeHubPath(),
       label: "Baza wiedzy",

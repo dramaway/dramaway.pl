@@ -1,10 +1,17 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { resolveMainNav } from "../../apps/web/src/lib/navigation.ts";
+import { PROJECTS_ARCHIVE_PATH } from "../../apps/web/src/lib/routes.ts";
 
 const builtin = [
   { href: "/", label: "Strona główna" },
-  { href: "/projekty", label: "Projekty" },
+  {
+    href: "/projekty",
+    label: "Projekty",
+    children: [
+      { href: PROJECTS_ARCHIVE_PATH, label: "Zakończone projekty" },
+    ],
+  },
   {
     href: "/baza-wiedzy",
     label: "Baza wiedzy",
@@ -153,6 +160,51 @@ test("a single valid item replaces the built-in menu", () => {
   );
 });
 
+test("adds the completed-projects anchor to a CMS Projects menu item", () => {
+  assert.deepEqual(
+    resolveMainNav([
+      { label: "Projekty", target: "path", href: "/projekty" },
+    ]),
+    [
+      {
+        href: "/projekty",
+        label: "Projekty",
+        children: [
+          { href: PROJECTS_ARCHIVE_PATH, label: "Zakończone projekty" },
+        ],
+      },
+    ],
+  );
+});
+
+test("does not duplicate the completed-projects anchor already in CMS", () => {
+  assert.deepEqual(
+    resolveMainNav([
+      {
+        label: "Projekty",
+        target: "path",
+        href: "/projekty",
+        children: [
+          {
+            label: "Zakończone projekty",
+            target: "path",
+            href: PROJECTS_ARCHIVE_PATH,
+          },
+        ],
+      },
+    ]),
+    [
+      {
+        href: "/projekty",
+        label: "Projekty",
+        children: [
+          { href: PROJECTS_ARCHIVE_PATH, label: "Zakończone projekty" },
+        ],
+      },
+    ],
+  );
+});
+
 test("a path with an anchor stays an internal navigation link", () => {
   assert.deepEqual(
     resolveMainNav([
@@ -177,7 +229,13 @@ test("a CMS menu entry for the retired Czytelnia page is dropped", () => {
     },
   ]);
   assert.deepEqual(nav, [
-    { href: "/projekty", label: "Projekty" },
+    {
+      href: "/projekty",
+      label: "Projekty",
+      children: [
+        { href: PROJECTS_ARCHIVE_PATH, label: "Zakończone projekty" },
+      ],
+    },
     { href: "/baza-wiedzy", label: "Baza wiedzy" },
   ]);
 });
