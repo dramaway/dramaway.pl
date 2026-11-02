@@ -1842,7 +1842,9 @@
     }
 
     .site-shell:has([data-home]) .site-footer > .footer-newsletter {
-      --footer-newsletter-offset: calc(var(--module-center-inset) - 2rem);
+      --footer-newsletter-offset: calc(
+        var(--module-center-inset) - 2rem + var(--dot-size)
+      );
       width: calc(100% - var(--footer-newsletter-offset));
       max-width: 36rem;
       margin-inline-start: var(--footer-newsletter-offset);
@@ -1927,7 +1929,9 @@
 
   @media (width >= 64rem) and (width < 80rem) {
     .site-shell:has([data-home]) .site-footer > .footer-newsletter {
-      --footer-newsletter-offset: calc(var(--module-center-inset) - 1rem);
+      --footer-newsletter-offset: calc(
+        var(--module-center-inset) - 1rem + var(--dot-size)
+      );
     }
   }
 

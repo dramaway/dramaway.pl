@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-02 — Na stronie głównej newsletter wyrównuje się do tekstu i CTA ostatniej sekcji; przy szerokości 48–64 rem stopka zostaje jednokolumnowa. |
+| **Ostatnia aktualizacja** | 2026-11-02 — Na stronie głównej newsletter przesunięty o średnicę kropki w prawo, aby wyrównać go do osi tekstu i CTA ostatniej sekcji (zrzut przy 67%). |
 | **Gałąź / HEAD** | `szaroale-pl-fix-newsletter-dots` |
-| **Zmiana bieżąca** | 2026-11-02 — Na stronie głównej od 64 rem newsletter ma tę samą oś co tekst i CTA sekcji „Kim jesteśmy”; między 48 a 64 rem pozostaje z nimi w jednej kolumnie. |
+| **Zmiana bieżąca** | 2026-11-02 — Wyrównanie newslettera na stronie głównej dopasowane do zrzutu przy 67%; między 48 a 64 rem stopka pozostaje jednokolumnowa. |
 | **Poprzednia zmiana** | 2026-11-02 — Kontakt: rozmiar nagłówków „Adres” i „Numer konta” nadpisuje style Portable Text; treść edytuje się w polu Body dokumentu Kontakt w Studio. |
 | **Zmiana na Kontakt** | 2026-11-01 — Nagłówki „Adres” i „Numer konta” mają ten sam rozmiar co nagłówki sekcji formularza i kontaktu bezpośredniego; edycja treści odbywa się w polu Body dokumentu Kontakt w Studio. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
