@@ -106,6 +106,7 @@
   --text-small: 0.875rem;
   --text-small--line-height: 1.57;
   --text-archive-label: 0.9375rem;
+  --text-projects-archive-label: 1.0625rem;
   --text-archive-label--line-height: var(--text-small--line-height);
 
   --spacing-section: clamp(3rem, 8vw, 7.5rem);
@@ -1997,8 +1998,9 @@
 
   /*
    * Archive pair on /projekty. Label is magenta sentence-case (Figma 73:1284,
-   * 15 px Medium). Below lg the label uses the section-title scale for
-   * visibility. Two columns from lg, right column nudged down; excerpts
+   * 15 px Medium). The compact archive label is 17 px. Below lg the label
+   * uses the section-title scale for visibility. Two columns from lg, right
+   * column nudged down; excerpts
    * clamp to ~3 lines. No sand blob — the frame has none.
    */
   .blob-row-label {
@@ -2007,6 +2009,12 @@
     font-weight: 600;
     line-height: var(--text-archive-label--line-height);
     color: var(--color-magenta);
+  }
+
+  @media (width >= 64rem) {
+    .blob-row-label-compact {
+      font-size: var(--text-projects-archive-label);
+    }
   }
 
   @media (width < 64rem) {
