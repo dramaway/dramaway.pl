@@ -1826,7 +1826,7 @@
 
     /* A length, so the shrink-wrapped row keeps the rule inside itself. */
     .footer-newsletter .cta {
-      min-width: 15rem;
+      min-width: 19rem;
     }
   }
 
