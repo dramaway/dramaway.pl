@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-02 — Kolumnę newslettera odsunięto za rzeczywistą krawędź dolnego rzędu kropek, także przy powiększeniu i na stronach z własnym pasmem. |
-| **Gałąź / HEAD** | `szaroale-pl-fix-newsletter-dots` |
-| **Zmiana bieżąca** | 2026-11-02 — Od 80 rem szerokość pierwszej kolumny stopki wylicza się z rzeczywistej krawędzi kropek; newsletter pozostaje wyrównany z pasmem bez nachodzenia. |
+| **Ostatnia aktualizacja** | 2026-11-02 — Instrukcja i podpowiedź pola menu obejmują kotwice do sekcji strony. |
+| **Gałąź / HEAD** | `szaroale-pl-completed-projects-menu` |
+| **Zmiana bieżąca** | 2026-11-02 — Pole Adres menu podpowiada kotwice; instrukcja podaje adresy do sekcji Fundacji i Bazy wiedzy. |
 | **Poprzednia zmiana** | 2026-11-02 — Kontakt: rozmiar nagłówków „Adres” i „Numer konta” nadpisuje style Portable Text; treść edytuje się w polu Body dokumentu Kontakt w Studio. |
 | **Zmiana na Kontakt** | 2026-11-01 — Nagłówki „Adres” i „Numer konta” mają ten sam rozmiar co nagłówki sekcji formularza i kontaktu bezpośredniego; edycja treści odbywa się w polu Body dokumentu Kontakt w Studio. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
@@ -15,7 +15,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | **Hasła** | Bitwarden Fundacji (bitwarden.eu): hasła i kody odzyskiwania kont. Fundacja dostaje master password. |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ (`readingMethod` = Category; `publication.methods` = Categories; publiczne `publication.format`) |
-| **Working tree** | Poprawki WCAG są w kodzie; `pnpm test:web` (122 testy), `pnpm --filter web lint`, oba typechecki i produkcyjny build przechodzą. Build wymaga `NEXT_PUBLIC_SANITY_PROJECT_ID=tr2qdg9j` i `NEXT_PUBLIC_SANITY_DATASET=production`. Homepage ma już 5 zdjęć hero; `heroSlider.autoplay` jest pusty i domyślnie oznacza autoplay włączony. Po merge schemat Studio wdraża automatycznie workflow `.github/workflows/studio-deploy.yml`. Treść CMS do uzupełnienia: nazwy 26 filmów, języki angielskich tytułów, linki menu i prawna nazwa/adres stopki. Newsletter ma dostępne etykiety i komunikaty, ale endpoint zapisu nadal zwraca `501` (integracja nie jest skonfigurowana). Wymagają sprawdzenia w Deploy Preview: reflow przy powiększeniu 200%, klawiatura i obsługa galerii. Wcześniej O fundacji: galeria zdjęć między Społecznością a Historią; dodano pola tekstu alternatywnego do zdjęć redakcyjnych, także w galeriach. Nadal do potwierdzenia przez redakcję: kanał YouTube w stopce (`UCqnZ4VG2xTkiTYDbrOLMfEQ`) i adres e-mail. |
+| **Working tree** | Poprawki WCAG są w kodzie; `pnpm test:web` (124 testy), `pnpm --filter web lint`, oba typechecki i produkcyjny build przechodzą. Build wymaga `NEXT_PUBLIC_SANITY_PROJECT_ID=tr2qdg9j` i `NEXT_PUBLIC_SANITY_DATASET=production`. Homepage ma już 5 zdjęć hero; `heroSlider.autoplay` jest pusty i domyślnie oznacza autoplay włączony. Po merge schemat Studio wdraża automatycznie workflow `.github/workflows/studio-deploy.yml`. Treść CMS do uzupełnienia: nazwy 26 filmów, języki angielskich tytułów, linki menu i prawna nazwa/adres stopki. Newsletter ma dostępne etykiety i komunikaty, ale endpoint zapisu nadal zwraca `501` (integracja nie jest skonfigurowana). Wymagają sprawdzenia w Deploy Preview: reflow przy powiększeniu 200%, klawiatura i obsługa galerii. Wcześniej O fundacji: galeria zdjęć między Społecznością a Historią; dodano pola tekstu alternatywnego do zdjęć redakcyjnych, także w galeriach. Nadal do potwierdzenia przez redakcję: kanał YouTube w stopce (`UCqnZ4VG2xTkiTYDbrOLMfEQ`) i adres e-mail. |
 | **Owner Sanity** | Organizacja na `admin@dramaway.pl`, plan NGO. `admin@dramaway.pl` = project Admin; redakcja = Editor |
 
 ---

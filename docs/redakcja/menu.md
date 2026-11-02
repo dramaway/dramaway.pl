@@ -26,7 +26,7 @@ Strony głównej nie dodajesz do menu: prowadzi na nią logo w nagłówku.
 ## Cel pozycji
 
 - **Strona z CMS**: wybierasz istniejący dokument. Może to być zwykła strona (w tym Baza wiedzy), aktualność, projekt, publikacja, osoba, listing (Projekty, Czytelnia, Zespół) albo O fundacji. Stare duplikaty projektów nie pokazują się na liście wyboru.
-- **Adres**: ścieżka od ukośnika (`/projekty`) albo pełny adres `https://…`. Ścieżka może zawierać kotwicę, np. `/projekty#syrena`. Nie wklejaj adresu podglądu `dramaway.netlify.app` — linki do stron tego serwisu powinny być ścieżkami od `/`. Każdy link otwiera się w tej samej karcie. W ten sposób dodaje się link poza stronę, na przykład do Centrum.
+- **Adres**: ścieżka od ukośnika (`/projekty`) albo pełny adres `https://…`. Ścieżka może zawierać kotwicę, czyli `#` i identyfikator sekcji, np. `/fundacja#historia-fundacji`. Nie wklejaj adresu podglądu `dramaway.netlify.app` — linki do stron tego serwisu powinny być ścieżkami od `/`. Każdy link otwiera się w tej samej karcie. W ten sposób dodaje się link poza stronę, na przykład do Centrum.
 
 ### Link do zajawki projektu
 
@@ -34,14 +34,16 @@ Zajawki projektów na automatycznej liście mają kotwice odpowiadające slugom 
 
 ### Linki do Bazy wiedzy
 
-Esej o metodach ma kotwicę `/baza-wiedzy#metody`, a sekcja **Polecane** — `/baza-wiedzy#polecane`. Aby dodać do menu np. podpozycje „Metody” i „Polecane” pod pozycją Baza wiedzy, ustaw cel każdej z nich na **Adres**, wpisz odpowiedni adres i opublikuj menu.
+Esej o metodach (długi tekst pod hero) ma kotwicę `/baza-wiedzy#metody`, sekcja **Polecane publikacje** — `/baza-wiedzy#polecane`, a **Pełna biblioteka** — `/baza-wiedzy#pelna-biblioteka`. Aby dodać je do menu, ustaw cel każdej pozycji lub podpozycji na **Adres**, wpisz odpowiedni adres i opublikuj menu.
 
-Na stronie **O fundacji** możesz użyć adresów:
+Na stronie **O fundacji** możesz użyć adresów (kotwica „Zarząd” prowadzi do sekcji obejmującej Zarząd i Zespół):
 
 - `/fundacja#wartosci` — wartości
 - `/fundacja#ludzie` — Zarząd i Zespół
 - `/fundacja#historia-fundacji` — historia fundacji
 - `/fundacja#dokumenty` — dokumenty
+
+Każda pozycja menu z celem **Adres** może prowadzić do takiej sekcji — także podpozycja. Wpisz ścieżkę strony, `#` i identyfikator sekcji. Identyfikatory są przypisane do sekcji w serwisie; dla kafelków w sekcjach CMS na stronie Projekty są tworzone z tytułu, np. `/projekty#projekt-syrena`.
 
 <!-- screen: menu-adres | Wiersz przełączony na Adres, z wpisanym https | Widać, że link zewnętrzny nie wymaga dokumentu w Studio -->
 
