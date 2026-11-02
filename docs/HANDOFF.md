@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-03 — Teatr Codzienny: tytuł edycji z listy jest też nagłówkiem jej strony i tytułem karty przeglądarki. |
+| **Ostatnia aktualizacja** | 2026-11-03 — Lokalnie bundlowane fonty usuwają zależność builda od pobrania Google Fonts. |
 | **Gałąź / HEAD** | `szaroale-pl-teatr-codzienny-edition-titles` |
-| **Zmiana bieżąca** | 2026-11-03 — Tytuły edycji Teatru Codziennego są spójne między listą projektu a stronami edycji; inne projekty bez zmian. |
+| **Zmiana bieżąca** | 2026-11-03 — Spójne tytuły edycji Teatru Codziennego; fonty Alexandria i MuseoModerno z lokalnych plików, by build nie zależał od Google Fonts. |
 | **Poprzednia zmiana** | 2026-11-02 — Portable Text: wybór kolorów z czytelnymi nazwami; miękki ślad, podwójna kreska lub rulka CTA; linki automatycznie jasnozielone. |
 | **Zmiana na Kontakt** | 2026-11-01 — Nagłówki „Adres” i „Numer konta” mają ten sam rozmiar co nagłówki sekcji formularza i kontaktu bezpośredniego; edycja treści odbywa się w polu Body dokumentu Kontakt w Studio. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
