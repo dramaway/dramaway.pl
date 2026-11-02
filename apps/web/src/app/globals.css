@@ -2514,7 +2514,7 @@
     color: inherit;
   }
 
-  .card-hover:focus-within {
+  .card-hover:has(:focus-visible) {
     outline: 3px solid var(--color-green-ink);
     outline-offset: 4px;
   }
