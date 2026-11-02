@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-02 — Zdjęcia w tekście: desktopowe szerokości 30%, 50%, 70% i 100% kolumny. |
-| **Gałąź / HEAD** | `szaroale-pl-news-full-width-images` |
-| **Zmiana bieżąca** | 2026-11-02 — Zdjęcia Portable Text: Small 30%, Medium 50%, Wide 70%, Full width 100% kolumny tekstu na desktopie. |
+| **Ostatnia aktualizacja** | 2026-11-02 — Kolory fragmentów tekstu i kolorowe podkreślenia w polach Portable Text. |
+| **Gałąź / HEAD** | `szaroale-pl-rich-text-colors-underline` |
+| **Zmiana bieżąca** | 2026-11-02 — Portable Text: wybór kolorów palety dla fragmentów; miękkie pociągnięcie lub podwójna, nieregularna kreska; linki automatycznie jasnozielone. |
 | **Poprzednia zmiana** | 2026-11-02 — `/projekty`: powiększenie magentowego nagłówka archiwum z 15 do 17 px na desktopie; mobile bez zmian. |
 | **Zmiana na Kontakt** | 2026-11-01 — Nagłówki „Adres” i „Numer konta” mają ten sam rozmiar co nagłówki sekcji formularza i kontaktu bezpośredniego; edycja treści odbywa się w polu Body dokumentu Kontakt w Studio. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |

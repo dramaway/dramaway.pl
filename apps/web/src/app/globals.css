@@ -3103,6 +3103,105 @@
     overflow-wrap: anywhere;
   }
 
+  .portable-body .pt-link {
+    color: var(--color-brand-2);
+  }
+
+  .portable-body .pt-link-label {
+    text-decoration: underline;
+    text-decoration-color: currentColor;
+    text-underline-offset: 0.12em;
+  }
+
+  .portable-body .pt-link-label:has(.pt-soft-underline) {
+    text-decoration: none;
+  }
+
+  .pt-color-brand-1 {
+    color: var(--color-brand-1);
+  }
+
+  .pt-color-brand-3 {
+    color: var(--color-brand-3);
+  }
+
+  .pt-color-brand-4 {
+    color: var(--color-brand-4);
+  }
+
+  .pt-color-brand-5 {
+    color: var(--color-brand-5);
+  }
+
+  .pt-color-brand-6 {
+    color: var(--color-brand-6);
+  }
+
+  .pt-color-brand-7 {
+    color: var(--color-brand-7);
+  }
+
+  .portable-body .pt-link .pt-color-brand-1,
+  .portable-body .pt-link .pt-color-brand-3,
+  .portable-body .pt-link .pt-color-brand-4,
+  .portable-body .pt-link .pt-color-brand-5,
+  .portable-body .pt-link .pt-color-brand-6,
+  .portable-body .pt-link .pt-color-brand-7 {
+    color: var(--color-brand-2);
+  }
+
+  .pt-underline-brand-1 {
+    --pt-underline-color: var(--color-brand-1);
+  }
+
+  .pt-underline-brand-3 {
+    --pt-underline-color: var(--color-brand-3);
+  }
+
+  .pt-underline-brand-4 {
+    --pt-underline-color: var(--color-brand-4);
+  }
+
+  .pt-underline-brand-5 {
+    --pt-underline-color: var(--color-brand-5);
+  }
+
+  .pt-underline-brand-6 {
+    --pt-underline-color: var(--color-brand-6);
+  }
+
+  .pt-underline-brand-7 {
+    --pt-underline-color: var(--color-brand-7);
+  }
+
+  .pt-soft-underline {
+    --pt-underline-brush: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 32' preserveAspectRatio='none'%3E%3Cpath d='M3 25 C22 18 36 18 55 22 S86 29 107 22 S145 18 166 22 S202 29 222 22 S264 17 297 21' fill='none' stroke='white' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E");
+    --pt-underline-double: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 32' preserveAspectRatio='none'%3E%3Cpath d='M3 18 C24 14 39 15 58 17 S88 20 109 16 S145 14 166 16 S202 20 223 16 S265 13 297 15' fill='none' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M4 28 C24 24 40 25 59 27 S89 30 110 26 S146 24 167 26 S203 30 224 26 S266 23 297 25' fill='none' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    padding-block-end: 0.28em;
+    background-color: var(--pt-underline-color);
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    background-size: 100% 0.42em;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: left bottom;
+    mask-position: left bottom;
+    -webkit-mask-size: 100% 0.42em;
+    mask-size: 100% 0.42em;
+  }
+
+  .pt-soft-underline-brush {
+    -webkit-mask-image: var(--pt-underline-brush);
+    mask-image: var(--pt-underline-brush);
+  }
+
+  .pt-soft-underline-double {
+    -webkit-mask-image: var(--pt-underline-double);
+    mask-image: var(--pt-underline-double);
+  }
+
   /*
    * Dictionary headword in Portable Text (`term` style). Same sand Blob as
    * listing rows, but body font and weight — bold is opt-in via Strong.
