@@ -221,3 +221,34 @@ test("a CMS menu entry for the retired Czytelnia page is dropped", () => {
     { href: "/baza-wiedzy", label: "Baza wiedzy" },
   ]);
 });
+
+test("keeps an explicit link to the full library in the Baza wiedzy submenu", () => {
+  assert.deepEqual(
+    resolveMainNav([
+      {
+        label: "Baza wiedzy",
+        target: "path",
+        href: "/baza-wiedzy",
+        children: [
+          {
+            label: "Biblioteka",
+            target: "path",
+            href: "/baza-wiedzy#pelna-biblioteka",
+          },
+        ],
+      },
+    ]),
+    [
+      {
+        href: "/baza-wiedzy",
+        label: "Baza wiedzy",
+        children: [
+          {
+            href: "/baza-wiedzy#pelna-biblioteka",
+            label: "Biblioteka",
+          },
+        ],
+      },
+    ],
+  );
+});

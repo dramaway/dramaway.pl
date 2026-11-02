@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-02 — Menu nie dopisuje automatycznie podpozycji „Zakończone projekty”; kotwica wartości obejmuje tekst i kolorowe kropki. |
+| **Ostatnia aktualizacja** | 2026-11-02 — Menu zachowuje ręczną kotwicę pełnej biblioteki i nadal odrzuca stare odnośniki do `/czytelnia`. |
 | **Gałąź / HEAD** | `szaroale-pl-completed-projects-menu` |
-| **Zmiana bieżąca** | 2026-11-02 — Podpozycje menu są wyłącznie z Sanity; instrukcja wyjaśnia ręczne dodanie archiwum i link do wartości. |
+| **Zmiana bieżąca** | 2026-11-02 — Naprawa: `/baza-wiedzy#pelna-biblioteka` nie jest już traktowane jak wycofana strona Czytelnia. |
 | **Poprzednia zmiana** | 2026-11-02 — Kontakt: rozmiar nagłówków „Adres” i „Numer konta” nadpisuje style Portable Text; treść edytuje się w polu Body dokumentu Kontakt w Studio. |
 | **Zmiana na Kontakt** | 2026-11-01 — Nagłówki „Adres” i „Numer konta” mają ten sam rozmiar co nagłówki sekcji formularza i kontaktu bezpośredniego; edycja treści odbywa się w polu Body dokumentu Kontakt w Studio. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
