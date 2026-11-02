@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-02 — Zdjęcie Full width w aktualności zajmuje szerokość kolumny tekstu i ma zaokrąglone rogi jak inne zdjęcia. |
+| **Ostatnia aktualizacja** | 2026-11-02 — Zdjęcia w tekście: desktopowe szerokości 30%, 50%, 70% i 100% kolumny. |
 | **Gałąź / HEAD** | `szaroale-pl-news-full-width-images` |
-| **Zmiana bieżąca** | 2026-11-02 — News: Full width dopasowane do szerokości tekstu, ze standardowym zaokrągleniem rogów. |
+| **Zmiana bieżąca** | 2026-11-02 — Zdjęcia Portable Text: Small 30%, Medium 50%, Wide 70%, Full width 100% kolumny tekstu na desktopie. |
 | **Poprzednia zmiana** | 2026-11-02 — `/projekty`: powiększenie magentowego nagłówka archiwum z 15 do 17 px na desktopie; mobile bez zmian. |
 | **Zmiana na Kontakt** | 2026-11-01 — Nagłówki „Adres” i „Numer konta” mają ten sam rozmiar co nagłówki sekcji formularza i kontaktu bezpośredniego; edycja treści odbywa się w polu Body dokumentu Kontakt w Studio. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
@@ -22,7 +22,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 Aktualizacja 2026-11-02: na stronie Projekty magentowy nagłówek „Zakończone projekty” ma 17 px na desktopie i rozmiar nagłówka sekcji na mobile, żeby wyraźniej zaznaczyć początek archiwum.
 
-Aktualizacja 2026-11-02: zdjęcie **Full width** w aktualności zajmuje całą szerokość kolumny tekstu (nie viewportu) i zachowuje standardowe zaokrąglenie rogów.
+Aktualizacja 2026-11-02: na desktopie zdjęcia w tekście zajmują względem kolumny: **Small 30%, Medium 50%, Wide 70%, Full width 100%**. Mniejsze ekrany zachowują dotychczasowe rozmiary, wszystkie kadry mają standardowe zaokrąglenie rogów.
 
 Aktualizacja 2026-11-01: Aktualności mogą mieć własne zdjęcia hero (do pięciu, statyczny kadr albo slider), edytowane w Studio w polu **Zdjęcia hero**.
 

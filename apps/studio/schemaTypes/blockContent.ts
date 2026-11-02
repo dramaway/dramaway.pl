@@ -147,17 +147,17 @@ const imageBlockMember = defineArrayMember({
       type: "string",
       options: {
         list: [
-          { title: "Small", value: "small" },
-          { title: "Medium", value: "medium" },
-          { title: "Wide", value: "wide" },
-          { title: "Full width", value: "full" },
+          { title: "Small (30%)", value: "small" },
+          { title: "Medium (50%)", value: "medium" },
+          { title: "Wide (70%)", value: "wide" },
+          { title: "Full width (100%)", value: "full" },
         ],
         layout: "radio",
         direction: "horizontal",
       },
       initialValue: "medium",
       description:
-        "How large the image renders on the site. Small = inset (~24rem), Medium = text column (default), Wide = wider than the text, Full width = full text-column width. Wide and Full width always stay their own row. Publish after changing. Existing images without a value render as medium.",
+        "On desktop, the image takes 30% (Small), 50% (Medium, default), 70% (Wide) or 100% (Full width) of the text column. On smaller screens the existing responsive sizing is kept. Wide and Full width always stay their own row. Publish after changing. Existing images without a value render as medium.",
     }),
     defineField({
       name: "align",

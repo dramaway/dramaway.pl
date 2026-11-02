@@ -3649,6 +3649,38 @@
     }
   }
 
+  @media (width >= 64rem) {
+    .body-figure-small {
+      width: 30%;
+    }
+
+    .body-figure-medium {
+      width: 50%;
+    }
+
+    .body-figure-wide {
+      width: 70%;
+    }
+
+    .body-figure-full {
+      width: 100%;
+    }
+
+    .body-figure-small .body-image,
+    .body-figure-medium .body-image,
+    .body-figure-wide .body-image,
+    .body-figure-full .body-image {
+      width: 100%;
+    }
+
+    .body-figure-inline.body-figure-small,
+    .body-figure-inline.body-figure-medium,
+    .body-figure-inline.body-figure-wide,
+    .body-figure-inline.body-figure-full {
+      max-width: none;
+    }
+  }
+
   .portable-body > :is(
     h2,
     h3,
