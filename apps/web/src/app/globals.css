@@ -1834,6 +1834,11 @@
     .site-footer:has(> .footer-newsletter) {
       grid-template-columns: 640px 540px;
     }
+
+    .site-shell:has([data-home]) .site-footer > .footer-newsletter {
+      width: 100%;
+      margin-inline-start: 0;
+    }
   }
 
   @media (width >= 64rem) {
