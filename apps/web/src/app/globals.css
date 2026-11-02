@@ -1620,11 +1620,6 @@
     margin-block-start: 1.5rem;
   }
 
-  .contact-address .portable-body :is(h2, h3, h4) {
-    font-size: var(--text-h3);
-    line-height: var(--text-h3--line-height);
-  }
-
   .contact-person-body {
     margin-block-start: 0;
   }
@@ -4106,6 +4101,12 @@
   .team-copy .portable-body p + p {
     margin-top: 1.15em;
   }
+}
+
+/* Unlayered to override the Portable Text heading-size utilities. */
+.contact-address .portable-body :is(h2, h3, h4) {
+  font-size: var(--text-h3);
+  line-height: var(--text-h3--line-height);
 }
 
 /*
