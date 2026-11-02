@@ -1832,9 +1832,19 @@
 
   @media (width >= 64rem) {
     .site-footer {
+      /*
+       * The two dot rows can overlap around the centre. Start the newsletter
+       * after the furthest edge of either row, not just after the left row.
+       */
+      --footer-dots-end: max(
+        round(up, 50vw, var(--dot-size)),
+        calc(
+          100vw - round(up, 50vw, var(--dot-size)) + var(--dot-size)
+        )
+      );
       grid-template-columns:
         calc(
-          round(up, 50vw, var(--dot-size)) -
+          var(--footer-dots-end) -
             max(
               var(--page-pad),
               calc((100vw - var(--page-max)) / 2 + var(--page-pad))
