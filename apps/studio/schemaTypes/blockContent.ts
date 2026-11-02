@@ -91,12 +91,12 @@ export const youtube = defineType({
 });
 
 const textPaletteOptions = [
-  { title: "Zaufanie / Otwartość", value: "brand-1" },
-  { title: "Dialog / Energia", value: "brand-3" },
-  { title: "Twórczość", value: "brand-4" },
-  { title: "Głębia", value: "brand-5" },
-  { title: "Szacunek", value: "brand-6" },
-  { title: "Poszukiwanie", value: "brand-7" },
+  { title: "Magenta", value: "brand-1" },
+  { title: "Żółty", value: "brand-3" },
+  { title: "Różowy", value: "brand-4" },
+  { title: "Oliwkowa zieleń", value: "brand-5" },
+  { title: "Granat", value: "brand-6" },
+  { title: "Niebieskoszary", value: "brand-7" },
 ];
 
 const blockMarks = {
@@ -150,6 +150,7 @@ const blockMarks = {
             list: [
               { title: "Miękki ślad", value: "brush" },
               { title: "Podwójna kreska", value: "double" },
+              { title: "Rulka CTA", value: "cta" },
             ],
           },
           initialValue: "brush",
