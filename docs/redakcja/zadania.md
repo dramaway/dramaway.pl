@@ -13,7 +13,7 @@ Krótkie przepisy na rzeczy, które robi się najczęściej. Każdy kończy się
 1. Na liście **Content** wybierz typ **News** i utwórz nowy dokument (plus nad listą).
 2. Wpisz **Title**. Adres (**Slug**) powstanie z tytułu. Nie dopisuj do niego przedrostka `aktualnosc-`, Studio tego nie przyjmie.
 3. Opcjonalnie dodaj zdjęcia w polu **Zdjęcia hero**. Jedno zdjęcie będzie nieruchomym kadrem, a kilka pokaże się jako pokaz slajdów.
-4. Uzupełnij **Published at** (puste = data dodania), **Excerpt** (krótki opis na karcie; puste = początek treści) i **Body**.
+4. Uzupełnij **Published at** (puste = data dodania), **Excerpt** (krótki opis na karcie; puste = początek treści) i **Body**. W treści możesz wstawić zdjęcie i ustawić jego rozmiar na **Full width**, jeśli ma zajmować całą szerokość ekranu.
 5. Pole **CTA target** zostaw puste, jeśli przycisk „czytaj więcej” ma prowadzić do tej aktualności. Jeśli ma prowadzić gdzie indziej, wpisz adres i własny tekst przycisku w polu **CTA label**.
 6. Naciśnij **Publish**.
 
