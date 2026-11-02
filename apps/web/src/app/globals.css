@@ -1808,14 +1808,7 @@
     .site-footer > .footer-newsletter {
       grid-area: news;
       align-items: flex-start;
-      /*
-       * Clear the footer's own top padding, then sit the lead beside the
-       * sand dots. The logo column stays under the band. The lead, field,
-       * and submit share the column's left edge.
-       */
-      margin-block-start: calc(
-        (var(--spacing-section) + var(--dot-size) * 0.45) * -1
-      );
+      margin-block-start: 0;
     }
 
     .footer-newsletter-row {
@@ -1834,6 +1827,14 @@
     /* A length, so the shrink-wrapped row keeps the rule inside itself. */
     .footer-newsletter .cta {
       min-width: 19rem;
+    }
+  }
+
+  @media (width >= 80rem) {
+    .site-footer > .footer-newsletter {
+      margin-block-start: calc(
+        (var(--spacing-section) + var(--dot-size) * 0.45) * -1
+      );
     }
   }
 

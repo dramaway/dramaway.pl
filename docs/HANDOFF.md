@@ -5,10 +5,10 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-02 — Reguła rozmiaru nagłówków adresu i numeru konta na stronie Kontakt działa poza warstwami CSS, więc nadpisuje klasę rozmiaru Portable Text. Treści edytuje się w polu Body dokumentu Kontakt w Studio. |
-| **Gałąź / HEAD** | `szaroale-pl-kontakt-adres-konto-style` |
-| **Zmiana bieżąca** | 2026-11-02 — Kontakt: reguła rozmiaru nagłówków „Adres” i „Numer konta” jest poza warstwami CSS, żeby nadpisać utility Portable Text i zrównać je z „Lub napisz do nas bezpośrednio” i „Formularz kontaktowy”. Edycja adresu i numeru konta odbywa się w polu Body dokumentu Kontakt w Studio. Zachowano wcześniejsze zmiany: poprawki dostępności (etykiety i języki filmów, obsługa klawiatury, fokus, etykiety PDF i komunikaty newslettera), kotwice O fundacji i Bazy wiedzy, a także wyrównanie desktopowego submenu. |
-| **Poprzednia zmiana** | 2026-11-01 — Desktopowe podstrony w rozwijanym menu są wyrównane do lewej krawędzi rodzica i używają MuseoModerno SemiBold 14 px (mobile bez zmian). |
+| **Ostatnia aktualizacja** | 2026-11-02 — Newsletter na szerokim desktopie jest wyrównany do pasma kropek; przy powiększeniu układa się pod nim, żeby nie nachodzić na koła. Wcześniejsze decyzje poniżej bez zmian. |
+| **Gałąź / HEAD** | `szaroale-pl-fix-newsletter-dots` |
+| **Zmiana bieżąca** | 2026-11-02 — Od 80 rem lead newslettera jest wyrównany z pasmem kropek; przy węższym widoku formularz pozostaje pod pasmem. |
+| **Poprzednia zmiana** | 2026-11-02 — Kontakt: rozmiar nagłówków „Adres” i „Numer konta” nadpisuje style Portable Text; treść edytuje się w polu Body dokumentu Kontakt w Studio. |
 | **Zmiana na Kontakt** | 2026-11-01 — Nagłówki „Adres” i „Numer konta” mają ten sam rozmiar co nagłówki sekcji formularza i kontaktu bezpośredniego; edycja treści odbywa się w polu Body dokumentu Kontakt w Studio. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
 | **Netlify** | Projekt przeniesiony do teamu `admin@dramaway.pl`, adres bez zmian. Env: `NEXT_PUBLIC_SANITY_*`, `NEXT_PUBLIC_SITE_URL`, `SANITY_REVALIDATE_SECRET` (tylko Production). |
