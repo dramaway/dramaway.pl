@@ -2121,6 +2121,10 @@
     pointer-events: none;
   }
 
+  .site-shell main > [data-home] > .dot-band:last-child {
+    margin-block-end: 0;
+  }
+
   /*
    * Gradient stand-in until DotBand has measured the row. Same geometry as
    * the real circles, so the swap does not jump.
