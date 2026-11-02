@@ -72,12 +72,15 @@ export function BlobRow({
           id={labelId}
           className={
             headingId
-              ? "blob-row-label scroll-mt-24"
+              ? cn(
+                  "blob-row-label scroll-mt-24",
+                  density === "compact" && "blob-row-label-compact",
+                )
               : density === "compact"
-              ? "blob-row-label"
-              : variant === "thumbnail"
-                ? "font-display text-h2 font-black"
-                : "font-display text-h3 font-black"
+                ? "blob-row-label blob-row-label-compact"
+                : variant === "thumbnail"
+                  ? "font-display text-h2 font-black"
+                  : "font-display text-h3 font-black"
           }
         >
           {heading}

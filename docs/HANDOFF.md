@@ -5,10 +5,10 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-02 — Menu zachowuje ręczną kotwicę pełnej biblioteki i nadal odrzuca stare odnośniki do `/czytelnia`. |
-| **Gałąź / HEAD** | `szaroale-pl-completed-projects-menu` |
-| **Zmiana bieżąca** | 2026-11-02 — Naprawa: `/baza-wiedzy#pelna-biblioteka` nie jest już traktowane jak wycofana strona Czytelnia. |
-| **Poprzednia zmiana** | 2026-11-02 — Kontakt: rozmiar nagłówków „Adres” i „Numer konta” nadpisuje style Portable Text; treść edytuje się w polu Body dokumentu Kontakt w Studio. |
+| **Ostatnia aktualizacja** | 2026-11-02 — Magentowy nagłówek „Zakończone projekty” ma 17 px na desktopie; mobile bez zmian. |
+| **Gałąź / HEAD** | `szaroale-pl-increase-completed-projects-title` |
+| **Zmiana bieżąca** | 2026-11-02 — `/projekty`: powiększenie magentowego nagłówka archiwum z 15 do 17 px na desktopie; mobile bez zmian. |
+| **Poprzednia zmiana** | 2026-11-02 — Naprawa: `/baza-wiedzy#pelna-biblioteka` nie jest już traktowane jak wycofana strona Czytelnia. |
 | **Zmiana na Kontakt** | 2026-11-01 — Nagłówki „Adres” i „Numer konta” mają ten sam rozmiar co nagłówki sekcji formularza i kontaktu bezpośredniego; edycja treści odbywa się w polu Body dokumentu Kontakt w Studio. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
 | **Netlify** | Projekt przeniesiony do teamu `admin@dramaway.pl`, adres bez zmian. Env: `NEXT_PUBLIC_SANITY_*`, `NEXT_PUBLIC_SITE_URL`, `SANITY_REVALIDATE_SECRET` (tylko Production). |
@@ -20,7 +20,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 ---
 
-Aktualizacja 2026-11-01: na stronie Projekty magentowy nagłówek „Zakończone projekty” ma 15 px na desktopie i rozmiar nagłówka sekcji na mobile, żeby wyraźniej zaznaczyć początek archiwum. Aktualności mogą mieć własne zdjęcia hero (do pięciu, statyczny kadr albo slider), edytowane w Studio w polu **Zdjęcia hero**.
+Aktualizacja 2026-11-02: na stronie Projekty magentowy nagłówek „Zakończone projekty” ma 17 px na desktopie i rozmiar nagłówka sekcji na mobile, żeby wyraźniej zaznaczyć początek archiwum.
+
+Aktualizacja 2026-11-01: Aktualności mogą mieć własne zdjęcia hero (do pięciu, statyczny kadr albo slider), edytowane w Studio w polu **Zdjęcia hero**.
 
 Aktualizacja 2026-11-01: submenu w nawigacji desktopowej przesuwa kolejne pozycje menu razem z płynnie rozwijanym tłem, bez zmiany wysokości rzędu. Przesunięcie wydłużono do 0.6 s i zastosowano łagodniejszą krzywą. Font podstron zmniejszono o 2 px. Animacja respektuje `prefers-reduced-motion`.
 
