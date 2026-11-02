@@ -1830,7 +1830,7 @@
     }
   }
 
-  @media (width >= 80rem) {
+  @media (width >= 64rem) {
     .site-footer {
       grid-template-columns:
         calc(
@@ -1851,7 +1851,7 @@
     }
   }
 
-  @media (width >= 48rem) and (width < 80rem) {
+  @media (width >= 48rem) and (width < 64rem) {
     .site-footer {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       grid-template-areas:
