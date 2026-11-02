@@ -5,10 +5,10 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-02 — Magentowy nagłówek „Zakończone projekty” ma 17 px na desktopie; mobile bez zmian. |
-| **Gałąź / HEAD** | `szaroale-pl-increase-completed-projects-title` |
-| **Zmiana bieżąca** | 2026-11-02 — `/projekty`: powiększenie magentowego nagłówka archiwum z 15 do 17 px na desktopie; mobile bez zmian. |
-| **Poprzednia zmiana** | 2026-11-02 — Naprawa: `/baza-wiedzy#pelna-biblioteka` nie jest już traktowane jak wycofana strona Czytelnia. |
+| **Ostatnia aktualizacja** | 2026-11-02 — W treści aktualności można wstawiać zdjęcia Full width, od krawędzi do krawędzi ekranu. |
+| **Gałąź / HEAD** | `szaroale-pl-news-full-width-images` |
+| **Zmiana bieżąca** | 2026-11-02 — News: dodanie rozmiaru zdjęcia Full width w treści aktualności. |
+| **Poprzednia zmiana** | 2026-11-02 — `/projekty`: powiększenie magentowego nagłówka archiwum z 15 do 17 px na desktopie; mobile bez zmian. |
 | **Zmiana na Kontakt** | 2026-11-01 — Nagłówki „Adres” i „Numer konta” mają ten sam rozmiar co nagłówki sekcji formularza i kontaktu bezpośredniego; edycja treści odbywa się w polu Body dokumentu Kontakt w Studio. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
 | **Netlify** | Projekt przeniesiony do teamu `admin@dramaway.pl`, adres bez zmian. Env: `NEXT_PUBLIC_SANITY_*`, `NEXT_PUBLIC_SITE_URL`, `SANITY_REVALIDATE_SECRET` (tylko Production). |
@@ -21,6 +21,8 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 ---
 
 Aktualizacja 2026-11-02: na stronie Projekty magentowy nagłówek „Zakończone projekty” ma 17 px na desktopie i rozmiar nagłówka sekcji na mobile, żeby wyraźniej zaznaczyć początek archiwum.
+
+Aktualizacja 2026-11-02: w treści aktualności można ustawić rozmiar zdjęcia na **Full width**, aby rozciągnąć je od krawędzi do krawędzi ekranu.
 
 Aktualizacja 2026-11-01: Aktualności mogą mieć własne zdjęcia hero (do pięciu, statyczny kadr albo slider), edytowane w Studio w polu **Zdjęcia hero**.
 

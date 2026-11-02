@@ -3576,6 +3576,12 @@
     max-height: min(90vh, var(--body-image-wide));
   }
 
+  .body-figure-full .body-image {
+    width: 100%;
+    max-height: 90vh;
+    border-radius: 0;
+  }
+
   /*
    * Alignment is the figure's place in the column. Left is the default
    * when the CMS field is empty. Wide already fills the content width,
@@ -3591,6 +3597,12 @@
 
   .body-figure-right {
     margin-inline: auto 0;
+  }
+
+  .body-figure-full {
+    width: 100vw;
+    max-width: none;
+    margin-inline: calc(50% - 50vw);
   }
 
   .body-figure-left .body-image {

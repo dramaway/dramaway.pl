@@ -150,13 +150,14 @@ const imageBlockMember = defineArrayMember({
           { title: "Small", value: "small" },
           { title: "Medium", value: "medium" },
           { title: "Wide", value: "wide" },
+          { title: "Full width", value: "full" },
         ],
         layout: "radio",
         direction: "horizontal",
       },
       initialValue: "medium",
       description:
-        "How large the image renders on the site. Small = inset (~24rem), Medium = text column (default), Wide = wider than the text. Wide always stays its own row. Publish after changing. Existing images without a value render as medium.",
+        "How large the image renders on the site. Small = inset (~24rem), Medium = text column (default), Wide = wider than the text, Full width = edge to edge of the screen. Wide and Full width always stay their own row. Publish after changing. Existing images without a value render as medium.",
     }),
     defineField({
       name: "align",
@@ -197,8 +198,8 @@ const imageBlockMember = defineArrayMember({
             const parent = context.parent as
               | { align?: string; size?: string }
               | undefined;
-            if (parent?.size === "wide") {
-              return "Wide stays a block. Choose Small or Medium to wrap text.";
+            if (parent?.size === "wide" || parent?.size === "full") {
+              return "Wide and Full width stay blocks. Choose Small or Medium to wrap text.";
             }
             if (parent?.align === "center") {
               return "Centre stays a block. Choose Left or Right to wrap text.";

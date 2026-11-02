@@ -33,21 +33,23 @@ import { splitPortableAtReadMore } from "@/lib/portable-read-more";
 import { blockAlign, embedSize, type BlockAlign } from "@/lib/body-frame";
 import { cn } from "@/lib/utils";
 
-type BodyImageSize = "small" | "medium" | "wide";
+type BodyImageSize = "small" | "medium" | "wide" | "full";
 
 const BODY_IMAGE_CDN_WIDTH: Record<BodyImageSize, number> = {
   small: 800,
   medium: 1200,
   wide: 1600,
+  full: 2000,
 };
 
 const BODY_IMAGE_SIZES: Record<BodyImageSize, string> = {
   small: "(min-width: 24rem) 24rem, 100vw",
   medium: "(min-width: 48rem) 40rem, 100vw",
   wide: "(min-width: 75rem) 74rem, 100vw",
+  full: "100vw",
 };
 
-const BODY_IMAGE_SRCSET_WIDTHS = [400, 800, 1200, 1600] as const;
+const BODY_IMAGE_SRCSET_WIDTHS = [400, 800, 1200, 1600, 2000] as const;
 
 type ImageValue = {
   _type?: string;
@@ -79,7 +81,12 @@ type ColumnsValue = {
 };
 
 function bodyImageSize(value: string | undefined): BodyImageSize {
-  if (value === "small" || value === "medium" || value === "wide") {
+  if (
+    value === "small" ||
+    value === "medium" ||
+    value === "wide" ||
+    value === "full"
+  ) {
     return value;
   }
   return "medium";
@@ -91,7 +98,12 @@ function bodyImageWraps(
   size: BodyImageSize,
   align: BlockAlign,
 ): boolean {
-  return layout === "inline" && size !== "wide" && align !== "center";
+  return (
+    layout === "inline" &&
+    size !== "wide" &&
+    size !== "full" &&
+    align !== "center"
+  );
 }
 
 function bodyImageSrcSet(value: ImageValue, size: BodyImageSize): string {
