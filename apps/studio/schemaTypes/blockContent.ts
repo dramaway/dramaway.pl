@@ -157,7 +157,7 @@ const imageBlockMember = defineArrayMember({
       },
       initialValue: "medium",
       description:
-        "How large the image renders on the site. Small = inset (~24rem), Medium = text column (default), Wide = wider than the text, Full width = edge to edge of the screen. Wide and Full width always stay their own row. Publish after changing. Existing images without a value render as medium.",
+        "How large the image renders on the site. Small = inset (~24rem), Medium = text column (default), Wide = wider than the text, Full width = full text-column width. Wide and Full width always stay their own row. Publish after changing. Existing images without a value render as medium.",
     }),
     defineField({
       name: "align",
