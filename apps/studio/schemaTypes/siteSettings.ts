@@ -114,8 +114,9 @@ export const siteSettings = defineType({
           name: "address",
           title: "Address",
           type: "text",
+          description:
+            "Pod logo w stopce; podział wierszy jest zachowany. Użyj aktualnej nazwy prawnej organizacji i adresu.",
           rows: 4,
-          description: "Under the logo. Line breaks are kept.",
         }),
         defineField({
           name: "links",

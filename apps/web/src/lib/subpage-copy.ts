@@ -66,6 +66,7 @@ export const SUBPAGE = {
   gallery: {
     more: "+{n}",
     open: "Otwórz galerię",
+    dialog: "Galeria zdjęć",
     close: "Zamknij",
     next: "Następne zdjęcie",
     previous: "Poprzednie zdjęcie",
@@ -74,6 +75,7 @@ export const SUBPAGE = {
   },
   video: {
     play: "Odtwórz film",
+    fallbackTitle: "Film na YouTube",
   },
   hero: {
     slider: {
@@ -89,6 +91,7 @@ export const SUBPAGE = {
     placeholder: "wpisz swój e-mail",
     submit: "zapisz",
     pending: "Zapisuję…",
+    success: "Dziękujemy za zapisanie się do newslettera.",
     unconfigured: "Zapis do newslettera jeszcze nie jest podłączony.",
     invalid: "Podaj prawidłowy adres e-mail.",
     error: "Nie udało się zapisać. Spróbuj ponownie.",

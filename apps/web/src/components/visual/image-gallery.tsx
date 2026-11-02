@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Media } from "@/components/visual/media";
 import {
   formatGalleryMore,
@@ -83,6 +83,7 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
   );
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
+  const returnFocusRef = useRef<HTMLButtonElement>(null);
 
   const slides = useMemo(
     () => slideImages.map((image) => toSlide(image, imageAlt(image, alt))),
@@ -97,11 +98,20 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
   const mobileHidden = slides.length - mobileVisible;
   const trio = layout === "hero-trio" && tiles.length === 4;
 
-  function openAt(tileIndex: number) {
+  function openAt(
+    tileIndex: number,
+    trigger: HTMLButtonElement,
+  ) {
     const image = tiles[tileIndex];
     const slideIndex = slideImages.indexOf(image);
+    returnFocusRef.current = trigger;
     setIndex(slideIndex >= 0 ? slideIndex : tileIndex);
     setOpen(true);
+  }
+
+  function close() {
+    setOpen(false);
+    window.requestAnimationFrame(() => returnFocusRef.current?.focus());
   }
 
   return (
@@ -135,7 +145,7 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
               type="button"
               className="gallery-tile"
               aria-label={SUBPAGE.gallery.open}
-              onClick={() => openAt(tileIndex)}
+              onClick={(event) => openAt(tileIndex, event.currentTarget)}
             >
               <Media
                 image={image}
@@ -157,7 +167,7 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
         <GalleryLightbox
           index={index}
           slides={slides}
-          onClose={() => setOpen(false)}
+          onClose={close}
           onIndex={setIndex}
         />
       ) : null}

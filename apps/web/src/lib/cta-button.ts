@@ -1,4 +1,5 @@
 import { hrefForDocument } from "./navigation";
+import { pdfDescription } from "./file-description";
 import { safeHref } from "./safe-url";
 
 /**
@@ -21,7 +22,14 @@ export type CtaButtonInput = {
   hash?: string | null;
   query?: string | null;
   page?: CtaButtonDocument | null;
-  file?: { asset?: { url?: string | null } | null } | null;
+  file?: {
+    asset?: {
+      url?: string | null;
+      mimeType?: string | null;
+      originalFilename?: string | null;
+      size?: number | null;
+    } | null;
+  } | null;
 };
 
 /** Indent steps that match the Indent list. Anything else stays flush left. */
@@ -34,6 +42,7 @@ export function ctaIndentLevel(raw: number | string | null | undefined): 0 | 1 |
 export type ResolvedCtaButton = {
   href: string;
   label: string;
+  fileDescription?: string | null;
 };
 
 /** `#edycje` or `edycje`. Empty stays empty. Anything with whitespace or `?` is dropped. */
@@ -111,5 +120,11 @@ export function resolveCtaButton(
     return null;
   }
 
-  return { href: safe.href, label };
+  const fileDescription =
+    value.target === "file" ? pdfDescription(value.file?.asset) : null;
+  return {
+    href: safe.href,
+    label,
+    ...(fileDescription ? { fileDescription } : {}),
+  };
 }

@@ -5,6 +5,7 @@ import {
   legacyHeroImageField,
 } from "./heroMedia";
 import { imageAltField } from "./imageAltField";
+import { titleLanguageField } from "./titleLanguageField";
 
 export const aboutPage = defineType({
   name: "aboutPage",
@@ -26,6 +27,7 @@ export const aboutPage = defineType({
       group: "hero",
       description: "H1. Puste = nagłówek nie pojawia się na stronie.",
     }),
+    titleLanguageField("hero"),
     defineField({
       name: "lead",
       title: "Lead",

@@ -1,10 +1,12 @@
 import { Section } from "@/components/layout/section";
 import { CtaLink } from "@/components/visual/cta-link";
+import { withFileDescription } from "@/lib/file-description";
 
 export type FundacjaDocumentLink = {
   title: string;
   href: string;
   external?: boolean;
+  fileDescription?: string | null;
 };
 
 type FundacjaDocumentsProps = {
@@ -31,7 +33,7 @@ export function FundacjaDocuments({
           {items.map((item) => (
             <li key={`${item.href}-${item.title}`}>
               <CtaLink href={item.href} external={item.external}>
-                {item.title}
+                {withFileDescription(item.title, item.fileDescription)}
               </CtaLink>
             </li>
           ))}

@@ -21,6 +21,7 @@ export function PageArticle({
     <>
       <PageHero
         title={page.title}
+        titleLanguage={page.titleLanguage}
         lead={page.heroLead}
         textAlign={page.heroTextAlign}
         ctaLabel={page.heroCtaLabel}

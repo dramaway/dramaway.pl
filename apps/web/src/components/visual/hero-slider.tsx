@@ -95,6 +95,7 @@ export function HeroSlider({ slides, settings }: HeroSliderProps) {
       className="hero-slider"
       role="region"
       aria-label={copy.region}
+      aria-roledescription="karuzela"
       data-animate={animate ? "true" : "false"}
       data-autoplay={autoplay ? "true" : "false"}
       data-playing={playing ? "true" : "false"}

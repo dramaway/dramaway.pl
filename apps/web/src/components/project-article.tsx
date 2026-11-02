@@ -98,6 +98,7 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
   const usesThumbnailListing = isArtGeneracje || isTeatrCodzienny;
   const rows = editions.map((edition) => ({
     title: isTeatrCodzienny ? edition.title : editionHeading(edition),
+    titleLanguage: edition.titleLanguage,
     lead: edition.summary?.trim() || null,
     href: editionPath(project.slug, edition.slug),
     ctaLabel: SUBPAGE.artGeneracje.editionCta,
@@ -118,6 +119,7 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
     <>
       <PageHero
         title={project.title}
+        titleLanguage={project.titleLanguage}
         lead={project.summary?.trim() || null}
         textAlign={project.heroTextAlign}
         ctaLabel={editions.length > 0 ? copy.ctaLabel : null}

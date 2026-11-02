@@ -166,6 +166,10 @@ pokaże się na stronie jako nagłówek „Twórcy”, dwie grupy z cienką lini
 
 ## Film
 
-Obiekt **YouTube** przyjmuje adres filmu z YouTube. Działa w zwykłym tekście i w kolumnie. Opcjonalne pole **Cover image** pozwala wybrać własny kadr widoczny przed uruchomieniem filmu; jeśli zostanie puste, strona pobierze miniaturę z YouTube. Na stronie widać kadr i przycisk play; odtwarzacz włącza się po kliknięciu. Inne serwisy wideo zostają zwykłym linkiem w tekście, nie odtwarzaczem.
+Obiekt **YouTube** przyjmuje adres filmu z YouTube. Działa w zwykłym tekście i w kolumnie. Wymagane pole **Tytuł filmu** jest nazwą ramki dla czytników ekranu — wpisz krótki, rozpoznawalny tytuł, nie samą nazwę serwisu. W **Język tytułu** wybierz język samego tytułu: **Polski**, **English** albo **Português**. Opcjonalne pole **Cover image** pozwala wybrać własny kadr widoczny przed uruchomieniem filmu; jeśli zostanie puste, strona pobierze miniaturę z YouTube. Na stronie widać kadr i przycisk play; odtwarzacz włącza się po kliknięciu. Inne serwisy wideo zostają zwykłym linkiem w tekście, nie odtwarzaczem.
 
 **Rozmiar** to Medium albo pełna szerokość. Medium jest domyślne (także puste pole) i ma tę samą szerokość co zdjęcie Medium. Pełna szerokość bierze całą kolumnę tekstu. **Wyrównanie** to lewo, środek albo prawo; puste pole siada z lewej. Przy pełnej szerokości wyrównanie prawie nic nie zmienia, bo odtwarzacz i tak wypełnia kolumnę. Po zmianie trzeba opublikować dokument.
+
+## Język tytułu
+
+W dokumentach z polem **Język tytułu** pozostaw **Polski** dla tytułu polskiego. Przy tytule angielskim wybierz **English**, a portugalskim — **Português**. Strona oznaczy sam tytuł w wybranym języku, bez zmiany języka reszty dokumentu.

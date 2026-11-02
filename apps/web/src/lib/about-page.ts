@@ -1,5 +1,6 @@
 import { cache } from "react";
 import { cmsCta, cmsText } from "./cms-text";
+import { pdfDescription } from "./file-description";
 import { resolveHistoryLayout } from "./history-timeline";
 import { resolveHeroSlides, resolveHeroTextAlign } from "./hero-slides";
 import { safeHref } from "./safe-url";
@@ -26,7 +27,12 @@ function resolveDocument(item: AboutDocumentItem): ResolvedAboutDocument | null 
 
   if (fileUrl) {
     if (!title) return null;
-    return { title, href: fileUrl.href, external: fileUrl.kind === "http" };
+    return {
+      title,
+      href: fileUrl.href,
+      external: fileUrl.kind === "http",
+      fileDescription: pdfDescription(item.file?.asset),
+    };
   }
   if (pageSlug) {
     if (!title) return null;
@@ -112,6 +118,7 @@ export const getResolvedAboutPage = cache(
 
     return {
       title,
+      titleLanguage: cms?.titleLanguage,
       lead: cmsText(cms?.lead),
       ctaLabel: heroCta?.label ?? null,
       ctaHref: heroCta?.href ?? null,

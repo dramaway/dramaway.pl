@@ -11,6 +11,7 @@ export function NewsArticle({ news }: { news: NewsDetail }) {
     <div className="page-hero-spacing">
       <PageHero
         title={news.title}
+        titleLanguage={news.titleLanguage}
         textAlign={news.heroTextAlign}
         slides={resolveHeroSlides(news.heroImages, news.title)}
         ctaLabel={cta.ctaHref ? cta.label : null}

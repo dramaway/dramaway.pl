@@ -3,9 +3,9 @@ import { Section } from "@/components/layout/section";
 import { PortableBody } from "@/components/portable-body";
 import { CtaLink } from "@/components/visual/cta-link";
 import { knowledgeHubPath } from "@/lib/routes";
-import { SUBPAGE } from "@/lib/subpage-copy";
 import type { PublicationDetail } from "@/lib/sanity/types";
 import { cn } from "@/lib/utils";
+import { pdfDescription, withFileDescription } from "@/lib/file-description";
 
 function authorLine(authors: string[] | null | undefined) {
   return (authors ?? []).map((name) => name.trim()).filter(Boolean);
@@ -29,6 +29,7 @@ export function PublicationArticle({
   const authors = authorLine(publication.authors);
   const methods = methodLabels(publication.methods);
   const fileUrl = publication.file?.asset?.url?.trim() || null;
+  const fileInfo = pdfDescription(publication.file?.asset);
   const hasMeta = authors.length > 0 || methods.length > 0 || Boolean(fileUrl);
   const hasBody = Boolean(publication.body);
 
@@ -36,6 +37,7 @@ export function PublicationArticle({
     <>
       <PageHero
         title={publication.title}
+        titleLanguage={publication.titleLanguage}
         lead={publication.summary}
         textAlign={publication.heroTextAlign}
         parent={{ href: knowledgeHubPath(), label: "Baza wiedzy" }}
@@ -59,7 +61,7 @@ export function PublicationArticle({
                   (authors.length > 0 || methods.length > 0) && "mt-8",
                 )}
               >
-                {SUBPAGE.czytelnia.pdfCta}
+                {withFileDescription(publication.title, fileInfo || "PDF")}
               </CtaLink>
             ) : null}
             {hasBody ? (
