@@ -29,6 +29,7 @@ export async function HeroMedia({ slides, empty = "slot" }: HeroMediaProps) {
             variant="bleed"
             ratio="none"
             sizes="(min-width: 64rem) 34vw, 70vw"
+            maxWidth={2400}
             className="hero-media"
           />
         </>
@@ -48,6 +49,7 @@ export async function HeroMedia({ slides, empty = "slot" }: HeroMediaProps) {
           variant="bleed"
           ratio="none"
           sizes="(min-width: 64rem) 34vw, 70vw"
+          maxWidth={2400}
           priority
           className="hero-media"
         />

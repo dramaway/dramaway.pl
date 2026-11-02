@@ -5,10 +5,11 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-02 — Czytelne nazwy kolorów w Studio i wariant podkreślenia w stylu CTA. |
-| **Gałąź / HEAD** | `szaroale-pl-rich-text-colors-underline` |
-| **Zmiana bieżąca** | 2026-11-02 — Portable Text: wybór kolorów z czytelnymi nazwami; miękki ślad, podwójna kreska lub rulka CTA; linki automatycznie jasnozielone. |
-| **Poprzednia zmiana** | 2026-11-02 — `/projekty`: powiększenie magentowego nagłówka archiwum z 15 do 17 px na desktopie; mobile bez zmian. |
+| **Ostatnia aktualizacja** | 2026-11-03 — Wyższa jakość kompresji zdjęć oraz rozdzielczość hero do 2400 px. |
+| **Gałąź / HEAD** | `szaroale-pl-poprawa-jakosci-zdjec` |
+| **Zmiana bieżąca** | 2026-11-03 — Zdjęcia z Sanity są kompresowane z jakością 90; hero ma źródło do 2400 px zamiast 1600 px. |
+| **Poprzednia zmiana** | 2026-11-02 — Portable Text: wybór kolorów z czytelnymi nazwami; miękki ślad, podwójna kreska lub rulka CTA; linki automatycznie jasnozielone. |
+| **Starsza zmiana** | 2026-11-02 — `/projekty`: powiększenie magentowego nagłówka archiwum z 15 do 17 px na desktopie; mobile bez zmian. |
 | **Zmiana na Kontakt** | 2026-11-01 — Nagłówki „Adres” i „Numer konta” mają ten sam rozmiar co nagłówki sekcji formularza i kontaktu bezpośredniego; edycja treści odbywa się w polu Body dokumentu Kontakt w Studio. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
 | **Netlify** | Projekt przeniesiony do teamu `admin@dramaway.pl`, adres bez zmian. Env: `NEXT_PUBLIC_SANITY_*`, `NEXT_PUBLIC_SITE_URL`, `SANITY_REVALIDATE_SECRET` (tylko Production). |

@@ -28,7 +28,7 @@ function wrapIndex(index: number, count: number) {
 /** Square crop around the hotspot so a 1.75rem dot still reads. */
 function thumbSrc(image: SanityImage) {
   const rect = focalThumbRect(image);
-  const builder = urlFor(image).width(160).height(160).auto("format");
+  const builder = urlFor(image).width(160).height(160).quality(90).auto("format");
   if (!rect) return builder.fit("crop").url();
   return builder.rect(rect.left, rect.top, rect.width, rect.height).url();
 }
@@ -126,6 +126,7 @@ export function HeroSlider({ slides, settings }: HeroSliderProps) {
                 variant="bleed"
                 ratio="none"
                 sizes="(min-width: 64rem) 34vw, 70vw"
+                maxWidth={2400}
                 priority={slideIndex === 0}
                 className="hero-media"
               />
