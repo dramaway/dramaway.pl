@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-02 — Przywrócono układ stopki zaakceptowany w DP 62: poniżej 80 rem dwie równe kolumny i pionowy formularz newslettera. |
+| **Ostatnia aktualizacja** | 2026-11-02 — Przywrócono układ stopki z DP 62 poniżej 80 rem; od 80 rem prawa kolumna jest liczona względem krawędzi kropek, by zachować odstęp przy 100% i powiększeniu. |
 | **Gałąź / HEAD** | `szaroale-pl-fix-newsletter-dots` |
-| **Zmiana bieżąca** | 2026-11-02 — Przywrócono sprawdzony w DP 62 układ newslettera poniżej 80 rem; od 80 rem zostaje desktopowe wyrównanie do pasma kropek. |
+| **Zmiana bieżąca** | 2026-11-02 — Poniżej 80 rem działa układ zaakceptowany w DP 62; od 80 rem newsletter zachowuje 1 rem odstępu od dolnego rzędu kropek. |
 | **Poprzednia zmiana** | 2026-11-02 — Kontakt: rozmiar nagłówków „Adres” i „Numer konta” nadpisuje style Portable Text; treść edytuje się w polu Body dokumentu Kontakt w Studio. |
 | **Zmiana na Kontakt** | 2026-11-01 — Nagłówki „Adres” i „Numer konta” mają ten sam rozmiar co nagłówki sekcji formularza i kontaktu bezpośredniego; edycja treści odbywa się w polu Body dokumentu Kontakt w Studio. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
