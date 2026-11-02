@@ -8,9 +8,9 @@ Poniżej są tylko dodatki zrobione dla tej strony. Część z nich to **style i
 
 ## Kolor tekstu i podkreślenie
 
-W każdym polu tekstu sformatowanego można zaznaczyć fragment i wybrać na pasku **Kolor tekstu** albo **Podkreślenie**. Kolor tekstu i kolor podkreślenia wybiera się osobno z palety wartości strony. Jasna zieleń jest zarezerwowana dla linków w tekście — pojawia się na nich automatycznie i nie ma jej na liście kolorów.
+W każdym polu tekstu sformatowanego można zaznaczyć fragment i wybrać na pasku **Kolor tekstu** albo **Podkreślenie**. Kolor tekstu i kolor podkreślenia wybiera się osobno z palety strony, opisanej zwykłymi nazwami kolorów. Jasna zieleń jest zarezerwowana dla linków w tekście — pojawia się na nich automatycznie i nie ma jej na liście kolorów.
 
-Podkreślenie ma dwa warianty: **Miękki ślad** przypomina jedno pociągnięcie pędzla, a **Podwójna kreska** — dwie delikatnie nieregularne linie. Można je dodać do tekstu bez zmiany jego koloru. Tytuły, etykiety, zajawki i inne zwykłe pola tekstowe nie obsługują formatowania pojedynczych fragmentów.
+Podkreślenie ma trzy warianty: **Miękki ślad** przypomina jedno pociągnięcie pędzla, **Podwójna kreska** — dwie delikatnie nieregularne linie, a **Rulka CTA** — gładką, zaokrągloną linię z kropką na końcu, jak podkreślenie przycisku na stronie. Można je dodać do tekstu bez zmiany jego koloru. Tytuły, etykiety, zajawki i inne zwykłe pola tekstowe nie obsługują formatowania pojedynczych fragmentów.
 
 <!-- screen: tekst-kolor-podkreslenie | Zaznaczenie fragmentu tekstu, opcje Kolor tekstu i Podkreślenie oraz lista kolorów | Widać, że jasna zieleń nie jest dostępna do ręcznego wyboru -->
 

@@ -241,7 +241,8 @@ function PortableSoftUnderline({
   style?: string;
 }>) {
   if (!isPaletteColor(value?.color)) return <>{children}</>;
-  const style = value.style === "double" ? "double" : "brush";
+  const style =
+    value.style === "double" || value.style === "cta" ? value.style : "brush";
   return (
     <span
       className={`pt-soft-underline pt-soft-underline-${style} pt-underline-${value.color}`}
@@ -337,7 +338,10 @@ function renderRosterSpan(span: RosterSpan, markDefs: readonly RosterMarkDef[]) 
   }
   const underline = markDef("softUnderline");
   if (isPaletteColor(underline?.color)) {
-    const style = underline.style === "double" ? "double" : "brush";
+    const style =
+      underline.style === "double" || underline.style === "cta"
+        ? underline.style
+        : "brush";
     node = (
       <span
         className={`pt-soft-underline pt-soft-underline-${style} pt-underline-${underline.color}`}
