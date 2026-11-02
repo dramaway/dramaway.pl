@@ -36,14 +36,16 @@ Zajawki projektów na automatycznej liście mają kotwice odpowiadające slugom 
 
 Esej o metodach (długi tekst pod hero) ma kotwicę `/baza-wiedzy#metody`, sekcja **Polecane publikacje** — `/baza-wiedzy#polecane`, a **Pełna biblioteka** — `/baza-wiedzy#pelna-biblioteka`. Aby dodać je do menu, ustaw cel każdej pozycji lub podpozycji na **Adres**, wpisz odpowiedni adres i opublikuj menu.
 
-Na stronie **O fundacji** możesz użyć adresów (kotwica „Zarząd” prowadzi do sekcji obejmującej Zarząd i Zespół):
+Na stronie **O fundacji** możesz użyć adresów:
 
-- `/fundacja#wartosci` — wartości
+- `/fundacja#wartosci` — wartości: tekst „Tworzymy spektakle, prowadzimy warsztaty…” oraz rząd kolorowych kropek
 - `/fundacja#ludzie` — Zarząd i Zespół
 - `/fundacja#historia-fundacji` — historia fundacji
 - `/fundacja#dokumenty` — dokumenty
 
 Każda pozycja menu z celem **Adres** może prowadzić do takiej sekcji — także podpozycja. Wpisz ścieżkę strony, `#` i identyfikator sekcji. Identyfikatory są przypisane do sekcji w serwisie; dla kafelków w sekcjach CMS na stronie Projekty są tworzone z tytułu, np. `/projekty#projekt-syrena`.
+
+Pozycje takie jak **Zakończone projekty** dodaje się ręcznie w Nawigacji w Studio. Aby dodać ją pod Projekty, rozwiń wiersz „Projekty”, dodaj podpozycję z celem **Adres** i wpisz `/projekty#zakonczone-projekty`.
 
 <!-- screen: menu-adres | Wiersz przełączony na Adres, z wpisanym https | Widać, że link zewnętrzny nie wymaga dokumentu w Studio -->
 
