@@ -1843,7 +1843,7 @@
 
     .site-shell:has([data-home]) .site-footer > .footer-newsletter {
       --footer-newsletter-offset: calc(
-        var(--module-center-inset) - 2rem + var(--dot-size)
+        var(--module-center-inset) - 2rem + 3 * var(--dot-size)
       );
       width: calc(100% - var(--footer-newsletter-offset));
       max-width: 36rem;
@@ -1930,7 +1930,7 @@
   @media (width >= 64rem) and (width < 80rem) {
     .site-shell:has([data-home]) .site-footer > .footer-newsletter {
       --footer-newsletter-offset: calc(
-        var(--module-center-inset) - 1rem + var(--dot-size)
+        var(--module-center-inset) - 1rem + 3 * var(--dot-size)
       );
     }
   }
