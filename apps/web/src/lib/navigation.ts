@@ -5,7 +5,6 @@ import {
   mainNav,
   personPath,
   projectPath,
-  PROJECTS_ARCHIVE_PATH,
   publicPathForPage,
   publicationPath,
   type NavItem,
@@ -76,21 +75,6 @@ function resolveLink(item: SiteSettingsNavLink): NavItem | null {
   return dest.external ? { href: dest.href, label, external: true } : { href: dest.href, label };
 }
 
-function addProjectsArchiveLink(items: NavItem[]): NavItem[] {
-  return items.map((item) => {
-    if (item.href !== "/projekty") return item;
-    const children = item.children ?? [];
-    if (children.some((child) => child.href === PROJECTS_ARCHIVE_PATH)) return item;
-    return {
-      ...item,
-      children: [
-        ...children,
-        { href: PROJECTS_ARCHIVE_PATH, label: "Zakończone projekty" },
-      ],
-    };
-  });
-}
-
 /** Czytelnia no longer has its own page, so a menu entry for it is dropped. */
 function isRetiredLibraryLink(link: NavItem): boolean {
   const [path, hash] = link.href.split("#");
@@ -120,5 +104,5 @@ export function resolveMainNav(
     if (isRetiredLibraryLink(link)) continue;
     resolved.push(children.length > 0 ? { ...link, children } : link);
   }
-  return addProjectsArchiveLink(resolved.length > 0 ? resolved : mainNav());
+  return resolved.length > 0 ? resolved : mainNav();
 }

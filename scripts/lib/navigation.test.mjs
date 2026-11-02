@@ -1,17 +1,10 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { resolveMainNav } from "../../apps/web/src/lib/navigation.ts";
-import { PROJECTS_ARCHIVE_PATH } from "../../apps/web/src/lib/routes.ts";
 
 const builtin = [
   { href: "/", label: "Strona główna" },
-  {
-    href: "/projekty",
-    label: "Projekty",
-    children: [
-      { href: PROJECTS_ARCHIVE_PATH, label: "Zakończone projekty" },
-    ],
-  },
+  { href: "/projekty", label: "Projekty" },
   {
     href: "/baza-wiedzy",
     label: "Baza wiedzy",
@@ -160,24 +153,16 @@ test("a single valid item replaces the built-in menu", () => {
   );
 });
 
-test("adds the completed-projects anchor to a CMS Projects menu item", () => {
+test("does not add completed projects to the menu automatically", () => {
   assert.deepEqual(
     resolveMainNav([
       { label: "Projekty", target: "path", href: "/projekty" },
     ]),
-    [
-      {
-        href: "/projekty",
-        label: "Projekty",
-        children: [
-          { href: PROJECTS_ARCHIVE_PATH, label: "Zakończone projekty" },
-        ],
-      },
-    ],
+    [{ href: "/projekty", label: "Projekty" }],
   );
 });
 
-test("does not duplicate the completed-projects anchor already in CMS", () => {
+test("keeps a completed-projects menu item when it is added in CMS", () => {
   assert.deepEqual(
     resolveMainNav([
       {
@@ -188,7 +173,7 @@ test("does not duplicate the completed-projects anchor already in CMS", () => {
           {
             label: "Zakończone projekty",
             target: "path",
-            href: PROJECTS_ARCHIVE_PATH,
+            href: "/projekty#zakonczone-projekty",
           },
         ],
       },
@@ -198,7 +183,10 @@ test("does not duplicate the completed-projects anchor already in CMS", () => {
         href: "/projekty",
         label: "Projekty",
         children: [
-          { href: PROJECTS_ARCHIVE_PATH, label: "Zakończone projekty" },
+          {
+            href: "/projekty#zakonczone-projekty",
+            label: "Zakończone projekty",
+          },
         ],
       },
     ],
@@ -229,13 +217,7 @@ test("a CMS menu entry for the retired Czytelnia page is dropped", () => {
     },
   ]);
   assert.deepEqual(nav, [
-    {
-      href: "/projekty",
-      label: "Projekty",
-      children: [
-        { href: PROJECTS_ARCHIVE_PATH, label: "Zakończone projekty" },
-      ],
-    },
+    { href: "/projekty", label: "Projekty" },
     { href: "/baza-wiedzy", label: "Baza wiedzy" },
   ]);
 });
