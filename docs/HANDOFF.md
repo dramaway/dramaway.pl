@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-02 — Poprawka siatki desktopowej: newsletter wypełnia prawą kolumnę 540 px bez dawnego przesunięcia. |
+| **Ostatnia aktualizacja** | 2026-11-02 — Kolumnę newslettera odsunięto za rzeczywistą krawędź dolnego rzędu kropek, także przy powiększeniu i na stronach z własnym pasmem. |
 | **Gałąź / HEAD** | `szaroale-pl-fix-newsletter-dots` |
-| **Zmiana bieżąca** | 2026-11-02 — Końcowe pasmo kropek strony głównej nie przenosi ujemnego marginesu na stopkę; na szerokim desktopie newsletter nie dostaje dodatkowego przesunięcia poza siatką 640/540 px. |
+| **Zmiana bieżąca** | 2026-11-02 — Od 80 rem szerokość pierwszej kolumny stopki wylicza się z rzeczywistej krawędzi kropek; newsletter pozostaje wyrównany z pasmem bez nachodzenia. |
 | **Poprzednia zmiana** | 2026-11-02 — Kontakt: rozmiar nagłówków „Adres” i „Numer konta” nadpisuje style Portable Text; treść edytuje się w polu Body dokumentu Kontakt w Studio. |
 | **Zmiana na Kontakt** | 2026-11-01 — Nagłówki „Adres” i „Numer konta” mają ten sam rozmiar co nagłówki sekcji formularza i kontaktu bezpośredniego; edycja treści odbywa się w polu Body dokumentu Kontakt w Studio. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
