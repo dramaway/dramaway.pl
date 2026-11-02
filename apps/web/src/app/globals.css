@@ -1831,19 +1831,6 @@
   }
 
   @media (width >= 64rem) {
-    .site-footer {
-      grid-template-columns:
-        calc(
-          round(up, 50vw, var(--dot-size)) -
-            max(
-              var(--page-pad),
-              calc((100vw - var(--page-max)) / 2 + var(--page-pad))
-            ) -
-            3rem
-        )
-        minmax(0, 1fr);
-    }
-
     .site-footer > .footer-newsletter {
       margin-block-start: calc(
         (var(--spacing-section) + var(--dot-size) * 0.45) * -1
@@ -1851,18 +1838,9 @@
     }
   }
 
-  @media (width >= 48rem) and (width < 64rem) {
+  @media (width >= 48rem) and (width < 80rem) {
     .site-footer {
-      grid-template-columns:
-        calc(
-          round(up, 50vw, var(--dot-size)) -
-            max(
-              var(--page-pad),
-              calc((100vw - var(--page-max)) / 2 + var(--page-pad))
-            ) -
-            1rem
-        )
-        minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       grid-template-areas:
         "logo news"
         "address links";
