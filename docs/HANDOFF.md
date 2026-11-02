@@ -20,6 +20,8 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 ---
 
+Aktualizacja 2026-11-02: kliknięcie CTA nie obrysowuje już całego kafelka; obrys pozostaje dla fokusu klawiatury.
+
 Aktualizacja 2026-11-02: na stronie Projekty magentowy nagłówek „Zakończone projekty” ma 17 px na desktopie i rozmiar nagłówka sekcji na mobile, żeby wyraźniej zaznaczyć początek archiwum.
 
 Aktualizacja 2026-11-02: na desktopie zdjęcia w tekście zajmują względem kolumny: **Small 30%, Medium 50%, Wide 70%, Full width 100%**. Mniejsze ekrany zachowują dotychczasowe rozmiary, wszystkie kadry mają standardowe zaokrąglenie rogów.
