@@ -5,7 +5,7 @@ import { PageHero } from "@/components/sections/page-hero";
 import { Section } from "@/components/layout/section";
 import { PortableBody } from "@/components/portable-body";
 import { Media } from "@/components/visual/media";
-import { editionHeading } from "@/lib/edition-label";
+import { projectEditionHeading } from "@/lib/edition-label";
 import { editionPath, projectPath } from "@/lib/routes";
 import {
   getProjectBySlug,
@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const edition = project?.editions?.find((item) => item.slug === editionSlug);
   if (!project || !edition) return { title: "Edycja" };
   return {
-    title: `${editionHeading(edition)} — ${project.title}`,
+    title: `${projectEditionHeading(project.slug, edition)} — ${project.title}`,
     alternates: { canonical: editionPath(slug, editionSlug) },
   };
 }
@@ -45,7 +45,7 @@ export default async function EditionPage({ params }: Props) {
 
   const gallery = (edition.gallery ?? []).filter(Boolean);
   const outcomes = edition.outcomes ?? [];
-  const heading = editionHeading(edition);
+  const heading = projectEditionHeading(project.slug, edition);
   const lead = edition.summary?.trim() || null;
 
   return (

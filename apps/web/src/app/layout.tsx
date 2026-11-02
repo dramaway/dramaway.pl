@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
-import { Alexandria, MuseoModerno } from "next/font/google";
+import localFont from "next/font/local";
 import { brandMetadata } from "@/lib/brand";
 import { getSiteSettings } from "@/lib/sanity/fetch";
 import { siteIndexingEnabled, siteOrigin } from "@/lib/site-url";
 import "./globals.css";
 
-const museoModerno = MuseoModerno({
+const museoModerno = localFont({
+  src: "./fonts/museomoderno-latin-ext.woff2",
   variable: "--font-museomoderno",
-  subsets: ["latin-ext"],
-  weight: ["600", "800", "900"],
+  weight: "600 900",
   display: "swap",
 });
 
-const alexandria = Alexandria({
+const alexandria = localFont({
+  src: "./fonts/alexandria-latin-ext.woff2",
   variable: "--font-alexandria",
-  subsets: ["latin-ext"],
-  weight: ["300", "400", "600"],
+  weight: "300 600",
   display: "swap",
 });
 
