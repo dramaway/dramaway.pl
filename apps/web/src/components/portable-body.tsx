@@ -377,6 +377,9 @@ const components: PortableTextComponents = {
     h3: ({ children }) => (
       <h3 className="mt-6 font-display text-h3 font-black">{children}</h3>
     ),
+    h4: ({ children }) => (
+      <h4 className="mt-6 font-body text-h4 font-semibold">{children}</h4>
+    ),
     normal: ({ children }) => (
       <p className="whitespace-pre-wrap">{children}</p>
     ),
