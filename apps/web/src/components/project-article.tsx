@@ -3,6 +3,7 @@ import { PageHero } from "@/components/sections/page-hero";
 import { Section } from "@/components/layout/section";
 import { PortableBody, hasPortableContent } from "@/components/portable-body";
 import { FoldList, type FoldListItem } from "@/components/visual/fold-list";
+import { Blob } from "@/components/visual/blob";
 import { projectEditionHeading } from "@/lib/edition-label";
 import { sortEditionsNewestFirst } from "@/lib/edition-sort";
 import {
@@ -150,9 +151,16 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
               const text = section.text?.trim();
               if (!heading || !text) return null;
               return (
-                <section key={section._key}>
-                  <h2 className="blob-row-label">{heading}</h2>
-                  <p className="project-text-section-copy">{text}</p>
+                <section key={section._key} className="project-text-section">
+                  <Blob className="project-text-section-blob" />
+                  <div className="project-text-section-content">
+                    <h2
+                      className={`blob-row-label project-text-section-heading${section.headingColor === "black" ? " project-text-section-heading-black" : ""}`}
+                    >
+                      {heading}
+                    </h2>
+                    <p className="project-text-section-copy">{text}</p>
+                  </div>
                 </section>
               );
             })}

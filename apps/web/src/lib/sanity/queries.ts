@@ -250,7 +250,7 @@ export const projectBySlugQuery = `*[_type == "project" && slug.current == $slug
     body[_type == "image"][0]
   ),
   body[] ${portableBodyProjection},
-  sectionsBeforeEditions[] { _key, heading, text },
+  sectionsBeforeEditions[] { _key, heading, headingColor, text },
   editions[] ${editionProjection},
   afterword[] ${portableBodyProjection},
   partners,
