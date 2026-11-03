@@ -21,6 +21,7 @@ type MediaProps = {
    */
   ratio?: keyof typeof RATIO_CLASS | "none";
   sizes?: string;
+  maxWidth?: number;
   priority?: boolean;
   className?: string;
   /** Local asset used until an editor uploads the image to Sanity. */
@@ -37,12 +38,13 @@ export function Media({
   variant = "inset",
   ratio = "portrait",
   sizes = "100vw",
+  maxWidth = 1600,
   priority = false,
   className,
   fallbackSrc,
 }: MediaProps) {
   const src = image
-    ? urlFor(image).width(1600).fit("max").auto("format").url()
+    ? urlFor(image).width(maxWidth).quality(90).fit("max").auto("format").url()
     : (fallbackSrc ?? null);
   const objectPosition = objectPositionFromHotspot(image);
 
@@ -61,6 +63,7 @@ export function Media({
           alt={alt}
           fill
           sizes={sizes}
+          quality={90}
           priority={priority}
           className="object-cover"
           style={objectPosition ? { objectPosition } : undefined}
