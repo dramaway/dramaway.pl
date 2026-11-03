@@ -617,9 +617,9 @@
       height: 0;
       overflow: visible;
       padding-inline-end: 2.2em;
-      font-family: var(--font-display);
+      font-family: var(--font-body);
       font-size: calc(var(--text-nav) - 1px);
-      font-weight: 600;
+      font-weight: 300;
       line-height: var(--text-nav--line-height);
       text-transform: none;
       transition: max-width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
