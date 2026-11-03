@@ -3861,10 +3861,38 @@
     max-width: min(var(--body-image-inline-medium), 100%);
   }
 
+  .body-figure-inline-sized {
+    width: min(
+      var(--body-image-inline),
+      calc(var(--body-image-inline-max) * var(--body-image-aspect-ratio))
+    );
+  }
+
+  .body-figure-inline-sized.body-figure-medium {
+    width: min(
+      var(--body-image-inline-medium),
+      calc(var(--body-image-inline-max) * var(--body-image-aspect-ratio))
+    );
+  }
+
   .body-figure-inline .body-image {
     width: auto;
     max-width: 100%;
     max-height: var(--body-image-inline-max);
+  }
+
+  .body-figure-inline-sized .body-image {
+    width: min(
+      var(--body-image-inline),
+      calc(var(--body-image-inline-max) * var(--body-image-aspect-ratio))
+    );
+  }
+
+  .body-figure-inline-sized.body-figure-medium .body-image {
+    width: min(
+      var(--body-image-inline-medium),
+      calc(var(--body-image-inline-max) * var(--body-image-aspect-ratio))
+    );
   }
 
   @media (width >= 40rem) {
@@ -3914,15 +3942,6 @@
     .body-figure-inline.body-figure-full {
       max-width: none;
     }
-  }
-
-  .article-body .body-figure {
-    margin-inline: 0 auto;
-  }
-
-  .article-body .body-figure .body-image {
-    margin-inline: 0;
-    border-radius: var(--radius-media);
   }
 
   .portable-body > :is(
@@ -4335,6 +4354,18 @@
     margin-block-start: 0;
   }
 
+  .article-body .body-figure .body-image {
+    border-radius: var(--radius-media);
+  }
+
+  .article-body .body-figure-left .body-image {
+    margin-inline-start: 0;
+  }
+
+  .article-body .body-figure-right .body-image {
+    margin-inline-end: 0;
+  }
+
   @media (width >= 40rem) {
     .portable-body > .body-figure-inline.body-figure-left:not([hidden]):not([hidden]) {
       margin-inline: 0 1.25rem;
@@ -4344,8 +4375,7 @@
       margin-inline: 1.25rem 0;
     }
 
-    .article-body .portable-body > .body-figure-inline.body-figure-left:not([hidden]):not([hidden]),
-    .article-body .portable-body > .body-figure-inline.body-figure-right:not([hidden]):not([hidden]) {
+    .article-body .portable-body .body-figure-inline.body-figure-left {
       float: inline-start;
       margin-inline: 0 1.25rem;
     }

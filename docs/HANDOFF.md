@@ -6,10 +6,10 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | | |
 |--|--|
 | **Ostatnia aktualizacja** | 2026-11-03 — Bloki „Teksty przed listą edycji” mają piaskowe koło, pogrubiony nagłówek MuseoModerno i wybór koloru marki lub czarnego. |
-| **Gałąź / HEAD** | `szaroale-pl-art-generacje-content-layout` |
+| **Gałąź / HEAD** | `szaroale-pl-align-article-images` |
 | **Zmiana bieżąca** | 2026-11-03 — Bloki „Teksty przed listą edycji” mają piaskowe koło, pogrubiony nagłówek MuseoModerno i wybór koloru marki lub czarnego. |
 | **Poprzednia zmiana** | 2026-11-03 — W stopce link do deklaracji jest pod adresem (lewa kolumna), na dole wyrównany do social mediów po prawej. |
-| **Poprzednia zmiana** | 2026-11-03 — Zdjęcia w treści aktualności i stron są wyrównane do lewej i mają zaokrąglone rogi; zawijane tekstem pozostają po lewej z tekstem opływającym je z prawej. |
+| **Poprzednia zmiana** | 2026-11-03 — Zdjęcia w treści aktualności i stron mają zaokrąglone rogi oraz respektują wyrównanie z CMS; zawijane tekstem zachowują proporcje i opływanie. |
 | **Zmiana fontów** | 2026-11-03 — Pełne lokalne fonty MuseoModerno i Alexandria (poprzednie pliki miały tylko `latin-ext`, nagłówki szły fallbackiem). |
 | **Poprzednia zmiana** | 2026-11-02 — Portable Text: wybór kolorów z czytelnymi nazwami; miękki ślad, podwójna kreska lub rulka CTA; linki automatycznie jasnozielone. |
 | **Starsza zmiana** | 2026-11-03 — Spójne tytuły edycji Teatru Codziennego; fonty Alexandria i MuseoModerno z lokalnych plików, by build nie zależał od Google Fonts. |
