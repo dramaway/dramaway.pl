@@ -35,8 +35,37 @@ function isCurrentPage(item: NavItem, pathname: string): boolean {
   return item.href !== "/" && pathname.startsWith(`${item.href}/`);
 }
 
+function splitHref(href: string) {
+  const [rest, hash = ""] = href.split("#", 2);
+  return { path: rest.split("?", 1)[0], hash: hash ? `#${hash}` : "" };
+}
+
+function matchesLocation(href: string, pathname: string, hash: string) {
+  const target = splitHref(href);
+  if (target.path !== pathname) return false;
+  return !target.hash || target.hash === hash;
+}
+
+function overlayCurrent(
+  item: NavItem,
+  pathname: string,
+  hash: string,
+  parent?: NavItem,
+): boolean {
+  if (item.external || /^https?:\/\//i.test(item.href)) return false;
+  if (!matchesLocation(item.href, pathname, hash)) return false;
+  if (parent) return true;
+  const target = splitHref(item.href);
+  if (target.hash) return true;
+  return !item.children?.some((child) =>
+    overlayCurrent(child, pathname, hash, item),
+  );
+}
+
 export function SiteHeader({ title, items }: Props) {
   const pathname = usePathname();
+  const [hash, setHash] = useState("");
+  const home = items.find((item) => item.href === "/");
   const visible = items.filter((item) => item.href !== "/");
   const [open, setOpen] = useState(false);
   const navId = useId();
@@ -45,6 +74,13 @@ export function SiteHeader({ title, items }: Props) {
 
   useEffect(() => {
     setOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    const update = () => setHash(window.location.hash);
+    update();
+    window.addEventListener("hashchange", update);
+    return () => window.removeEventListener("hashchange", update);
   }, [pathname]);
 
   useEffect(() => {
@@ -150,16 +186,33 @@ export function SiteHeader({ title, items }: Props) {
         }}
       >
         <ul className="page site-nav-overlay-list">
+          <li>
+            <NavLink
+              item={home ?? { href: "/", label: "Strona główna" }}
+              pathname={pathname}
+              current={pathname === "/"}
+            >
+              {home?.label ?? "Strona główna"}
+            </NavLink>
+          </li>
           {visible.map((item, index) => (
             <li key={`${item.href}:${item.label}:${index}`}>
-              <NavLink item={item} pathname={pathname}>
+              <NavLink
+                item={item}
+                pathname={pathname}
+                current={overlayCurrent(item, pathname, hash)}
+              >
                 {item.label}
               </NavLink>
               {item.children?.length ? (
                 <ul className="site-nav-overlay-sub">
                   {item.children.map((child, childIndex) => (
                     <li key={`${child.href}:${child.label}:${childIndex}`}>
-                      <NavLink item={child} pathname={pathname}>
+                      <NavLink
+                        item={child}
+                        pathname={pathname}
+                        current={overlayCurrent(child, pathname, hash, item)}
+                      >
                         {child.label}
                       </NavLink>
                     </li>
@@ -403,13 +456,15 @@ function NavOverflow({
 function NavLink({
   item,
   pathname,
+  current,
   children,
 }: {
   item: NavItem;
   pathname: string;
+  current?: boolean;
   children: string;
 }) {
-  const currentPage = isCurrentPage(item, pathname);
+  const currentPage = current ?? isCurrentPage(item, pathname);
   const currentBranch = itemIsCurrent(item, pathname);
   const className = cn("hover:text-magenta", currentBranch && "text-magenta");
   if (item.external || /^https?:\/\//i.test(item.href)) {

@@ -435,10 +435,6 @@
     }
   }
 
-  .site-nav-overlay-list:has([data-branch]) a:not([data-branch]) {
-    color: color-mix(in srgb, var(--color-ink) 50%, transparent);
-  }
-
   .site-nav-overlay-list a[aria-current="page"]::before {
     content: "";
     flex: none;
