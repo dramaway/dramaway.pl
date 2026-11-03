@@ -500,17 +500,23 @@
   .site-nav-overlay-list > li:has(.site-nav-overlay-sub) {
     position: relative;
     isolation: isolate;
-    margin-block-end: 0.35rem;
   }
 
   .site-nav-overlay-item-row {
     display: flex;
     align-items: center;
+    min-height: var(--touch-target);
   }
 
   .site-nav-overlay-item-row > a {
     flex: 1;
     min-width: 0;
+  }
+
+  .site-nav-overlay-expand-spacer {
+    flex: none;
+    width: var(--touch-target);
+    height: var(--touch-target);
   }
 
   .site-nav-overlay-expand {
