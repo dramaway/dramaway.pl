@@ -43,20 +43,18 @@ export function SiteFooter({
             {address ? (
               <p className="footer-address text-body">{address}</p>
             ) : null}
-            <FooterLinks links={links} />
+            <Link
+              href="/deklaracja-dostepnosci"
+              className="footer-contact-link footer-accessibility-link"
+            >
+              <span className="footer-contact-text">
+                Deklaracja dostępności
+              </span>
+            </Link>
           </div>
         </div>
-        <div className="footer-actions">
-          {newsletterEnabled ? <NewsletterForm /> : null}
-          <Link
-            href="/deklaracja-dostepnosci"
-            className="footer-contact-link footer-accessibility-link"
-          >
-            <span className="footer-contact-text">
-              Deklaracja dostępności
-            </span>
-          </Link>
-        </div>
+        <FooterLinks links={links} />
+        {newsletterEnabled ? <NewsletterForm /> : null}
       </div>
     </footer>
   );
