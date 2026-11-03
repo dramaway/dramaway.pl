@@ -4398,7 +4398,7 @@
   }
 
   .cat-tile[aria-current="true"] .cat-tile-title {
-    font-weight: 900;
+    font-weight: 600;
   }
 
   [data-tone="1"] { --tone: var(--color-brand-1); }
@@ -4410,8 +4410,8 @@
   [data-tone="7"] { --tone: var(--color-brand-7); }
 
   .cat-tile-title {
-    font-family: var(--font-display);
-    font-weight: 600;
+    font-family: var(--font-body);
+    font-weight: 300;
     line-height: 1.25;
   }
 

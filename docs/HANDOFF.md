@@ -7,7 +7,8 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 |--|--|
 | **Ostatnia aktualizacja** | 2026-11-04 — Fokus CTA i treści na ekranach dotykowych nie rysuje zielonych ramek. |
 | **Gałąź / HEAD** | `fix-mobile-content-focus-outline` |
-| **Zmiana bieżąca** | 2026-11-04 — Ramka całej treści pojawia się tylko przy fokusie klawiatury; fokus CTA na dotyku nie obrysowuje kafelka. |
+| **Zmiana bieżąca** | 2026-11-04 — Etykiety kategorii biblioteki Czytelni używają Alexandrii jak teksty; aktywna kategoria ma SemiBold. |
+| **Poprzednia zmiana** | 2026-11-04 — Ramka całej treści pojawia się tylko przy fokusie klawiatury; fokus CTA na dotyku nie obrysowuje kafelka. |
 | **Poprzednia zmiana** | 2026-11-03 — Linki w tekstach Portable Text używają granatu `brand-6`, również gdy zawierają fragmenty z innym kolorem tekstu. |
 | **Poprzednia zmiana** | 2026-11-03 — Bloki „Teksty przed listą edycji” mają piaskowe koło, pogrubiony nagłówek MuseoModerno i wybór koloru marki lub czarnego. |
 | **Poprzednia zmiana** | 2026-11-03 — W stopce link do deklaracji jest pod adresem (lewa kolumna), na dole wyrównany do social mediów po prawej. |
