@@ -119,6 +119,7 @@ export function SiteHeader({ title, items }: Props) {
   const home = items.find((item) => item.href === "/");
   const visible = items.filter((item) => item.href !== "/");
   const [open, setOpen] = useState(false);
+  const activeSection = currentSectionHref(visible, pathname, hash);
   const [overlayRendered, setOverlayRendered] = useState(false);
   const [expandedSections, setExpandedSections] = useState<Set<string>>(
     () => new Set(),
@@ -344,6 +345,7 @@ export function SiteHeader({ title, items }: Props) {
                     <button
                       type="button"
                       className="site-nav-overlay-expand"
+                      data-current={activeSection === item.href ? "" : undefined}
                       aria-expanded={expanded}
                       aria-controls={submenuId}
                       aria-label={`${expanded ? "Ukryj" : "Pokaż"} ${children.length} pozycji: ${item.label}`}
@@ -356,7 +358,7 @@ export function SiteHeader({ title, items }: Props) {
                         })
                       }
                     >
-                      <ExpandIcon expanded={expanded} />
+                      <ExpandIcon />
                     </button>
                   ) : null}
                 </div>
@@ -692,23 +694,6 @@ function MenuIcon({ open }: { open: boolean }) {
   );
 }
 
-function ExpandIcon({
-  expanded,
-}: {
-  expanded: boolean;
-}) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      aria-hidden
-      className="site-nav-expand-icon"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d={expanded ? "m6 15 6-6 6 6" : "m6 9 6 6 6-6"} />
-    </svg>
-  );
+function ExpandIcon() {
+  return <span aria-hidden className="site-nav-expand-icon">⌄</span>;
 }

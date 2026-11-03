@@ -519,24 +519,27 @@
     height: var(--touch-target);
     width: var(--touch-target);
     place-items: center;
-    border-radius: 50%;
-    background-color: var(--color-sand);
-    color: var(--color-ink);
-    transition:
-      background-color 180ms ease,
-      color 180ms ease;
-  }
-
-  .site-nav-overlay-expand:hover,
-  .site-nav-overlay-expand:focus-visible {
-    background-color: color-mix(in srgb, var(--color-magenta) 12%, white);
+    background: transparent;
     color: var(--color-magenta);
   }
 
+  .site-nav-overlay-expand:focus-visible {
+    border-radius: 50%;
+    outline: 2px solid var(--color-magenta);
+    outline-offset: -2px;
+  }
+
   .site-nav-expand-icon {
-    width: 1.5rem;
-    height: 1.5rem;
-    transition: transform 220ms ease;
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1;
+    transition: transform 220ms ease, font-size 220ms ease;
+  }
+
+  .site-nav-overlay-expand[data-current] .site-nav-expand-icon {
+    font-size: 1.875rem;
   }
 
   .site-nav-overlay-expand[aria-expanded="true"] .site-nav-expand-icon {
@@ -566,7 +569,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .site-nav-overlay-expand,
     .site-nav-expand-icon {
       transition: none;
     }
