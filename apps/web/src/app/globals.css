@@ -3918,7 +3918,6 @@
   }
 
   .body-figure-full .body-image {
-    width: 100%;
     max-height: 90vh;
   }
 
@@ -3968,6 +3967,13 @@
   }
 
   .body-figure-inline-sized {
+    width: min(
+      var(--body-image-inline),
+      calc(var(--body-image-inline-max) * var(--body-image-aspect-ratio))
+    );
+  }
+
+  .body-figure-inline-sized.body-figure-small {
     width: min(
       var(--body-image-inline),
       calc(var(--body-image-inline-max) * var(--body-image-aspect-ratio))
@@ -4032,13 +4038,6 @@
     }
 
     .body-figure-full {
-      width: 100%;
-    }
-
-    .body-figure-small .body-image,
-    .body-figure-medium .body-image,
-    .body-figure-wide .body-image,
-    .body-figure-full .body-image {
       width: 100%;
     }
 
