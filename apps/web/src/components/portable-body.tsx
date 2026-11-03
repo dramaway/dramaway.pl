@@ -5,7 +5,7 @@ import {
   type PortableTextTypeComponentProps,
 } from "@portabletext/react";
 import Image from "next/image";
-import { Fragment, type ReactNode } from "react";
+import { Fragment, type CSSProperties, type ReactNode } from "react";
 import { ImageGallery } from "@/components/visual/image-gallery";
 import { Blob } from "@/components/visual/blob";
 import { CtaLink } from "@/components/visual/cta-link";
@@ -123,6 +123,12 @@ function PortableImage({ value }: PortableTextTypeComponentProps<ImageValue>) {
   const cdnWidth = BODY_IMAGE_CDN_WIDTH[size];
   const dims = parseSanityImageDimensions(sanityAssetRef(value));
   const alt = value.alt || "";
+  const imageStyle =
+    wraps && dims
+      ? ({
+          "--body-image-aspect-ratio": dims.width / dims.height,
+        } as CSSProperties)
+      : undefined;
 
   return (
     <figure
@@ -131,6 +137,7 @@ function PortableImage({ value }: PortableTextTypeComponentProps<ImageValue>) {
         `body-figure-${size}`,
         `body-figure-${align}`,
         wraps && "body-figure-inline",
+        wraps && dims && "body-figure-inline-sized",
       )}
     >
       {dims ? (
@@ -142,6 +149,7 @@ function PortableImage({ value }: PortableTextTypeComponentProps<ImageValue>) {
           sizes={BODY_IMAGE_SIZES[size]}
           quality={90}
           className="body-image"
+          style={imageStyle}
         />
       ) : (
         // Unknown aspect: keep intrinsic ratio; srcset still avoids a single huge file.
@@ -154,6 +162,7 @@ function PortableImage({ value }: PortableTextTypeComponentProps<ImageValue>) {
           loading="lazy"
           decoding="async"
           className="body-image"
+          style={imageStyle}
         />
       )}
     </figure>

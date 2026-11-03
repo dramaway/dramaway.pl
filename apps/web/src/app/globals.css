@@ -3771,10 +3771,38 @@
     max-width: min(var(--body-image-inline-medium), 100%);
   }
 
+  .body-figure-inline-sized {
+    width: min(
+      var(--body-image-inline),
+      calc(var(--body-image-inline-max) * var(--body-image-aspect-ratio))
+    );
+  }
+
+  .body-figure-inline-sized.body-figure-medium {
+    width: min(
+      var(--body-image-inline-medium),
+      calc(var(--body-image-inline-max) * var(--body-image-aspect-ratio))
+    );
+  }
+
   .body-figure-inline .body-image {
     width: auto;
     max-width: 100%;
     max-height: var(--body-image-inline-max);
+  }
+
+  .body-figure-inline-sized .body-image {
+    width: min(
+      var(--body-image-inline),
+      calc(var(--body-image-inline-max) * var(--body-image-aspect-ratio))
+    );
+  }
+
+  .body-figure-inline-sized.body-figure-medium .body-image {
+    width: min(
+      var(--body-image-inline-medium),
+      calc(var(--body-image-inline-max) * var(--body-image-aspect-ratio))
+    );
   }
 
   @media (width >= 40rem) {

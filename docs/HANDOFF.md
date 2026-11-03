@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-03 — Margines samego obrazu odpowiada wyrównaniu zapisanej ramki; zachowane są też środkowe i prawe ustawienia. |
+| **Ostatnia aktualizacja** | 2026-11-03 — Zdjęcia zawijane tekstem zachowują własne proporcje w ramce i respektują jej wyrównanie. |
 | **Gałąź / HEAD** | `szaroale-pl-align-article-images` |
-| **Zmiana bieżąca** | 2026-11-03 — W treści stron i aktualności sam obraz jest wyrównany zgodnie z ustawieniem ramki (lewo / środek / prawo); wszystkie zdjęcia mają wspólny promień rogów. |
+| **Zmiana bieżąca** | 2026-11-03 — W treści stron i aktualności zdjęcia zawijane tekstem nie mają pustych pasów w ramce; ich obraz, zaokrąglenie i wyrównanie lewo / środek / prawo pozostają spójne. |
 | **Zmiana fontów** | 2026-11-03 — Pełne lokalne fonty MuseoModerno i Alexandria (poprzednie pliki miały tylko `latin-ext`, nagłówki szły fallbackiem). |
 | **Poprzednia zmiana** | 2026-11-02 — Portable Text: wybór kolorów z czytelnymi nazwami; miękki ślad, podwójna kreska lub rulka CTA; linki automatycznie jasnozielone. |
 | **Starsza zmiana** | 2026-11-03 — Spójne tytuły edycji Teatru Codziennego; fonty Alexandria i MuseoModerno z lokalnych plików, by build nie zależał od Google Fonts. |
