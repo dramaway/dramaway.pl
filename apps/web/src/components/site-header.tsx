@@ -423,6 +423,7 @@ function NavLink({
     <Link
       href={item.href}
       aria-current={currentPage ? "page" : undefined}
+      data-branch={currentBranch ? "" : undefined}
       className={className}
     >
       {children}
