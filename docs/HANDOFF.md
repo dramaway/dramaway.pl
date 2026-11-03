@@ -5,9 +5,10 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-03 — Bloki „Teksty przed listą edycji” mają piaskowe koło, pogrubiony nagłówek MuseoModerno i wybór koloru marki lub czarnego. |
-| **Gałąź / HEAD** | `szaroale-pl-align-article-images` |
-| **Zmiana bieżąca** | 2026-11-03 — Bloki „Teksty przed listą edycji” mają piaskowe koło, pogrubiony nagłówek MuseoModerno i wybór koloru marki lub czarnego. |
+| **Ostatnia aktualizacja** | 2026-11-03 — Linki w tekstach Portable Text są granatowe. |
+| **Gałąź / HEAD** | `szaroale-pl-granat-links-tekstowe` |
+| **Zmiana bieżąca** | 2026-11-03 — Linki w tekstach Portable Text używają granatu `brand-6`, również gdy zawierają fragmenty z innym kolorem tekstu. |
+| **Poprzednia zmiana** | 2026-11-03 — Bloki „Teksty przed listą edycji” mają piaskowe koło, pogrubiony nagłówek MuseoModerno i wybór koloru marki lub czarnego. |
 | **Poprzednia zmiana** | 2026-11-03 — W stopce link do deklaracji jest pod adresem (lewa kolumna), na dole wyrównany do social mediów po prawej. |
 | **Poprzednia zmiana** | 2026-11-03 — Zdjęcia w treści aktualności i stron mają zaokrąglone rogi oraz respektują wyrównanie z CMS; zawijane tekstem zachowują proporcje i opływanie. |
 | **Zmiana fontów** | 2026-11-03 — Pełne lokalne fonty MuseoModerno i Alexandria (poprzednie pliki miały tylko `latin-ext`, nagłówki szły fallbackiem). |

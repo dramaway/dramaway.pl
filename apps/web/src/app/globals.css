@@ -3234,7 +3234,7 @@
   }
 
   .portable-body .pt-link {
-    color: var(--color-brand-2);
+    color: var(--color-brand-6);
   }
 
   .portable-body .pt-link-label {
@@ -3277,7 +3277,7 @@
   .portable-body .pt-link .pt-color-brand-5,
   .portable-body .pt-link .pt-color-brand-6,
   .portable-body .pt-link .pt-color-brand-7 {
-    color: var(--color-brand-2);
+    color: var(--color-brand-6);
   }
 
   .pt-underline-brand-1 {
