@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-04 — Fokus CTA na ekranach dotykowych nie rysuje zielonych ramek. |
-| **Gałąź / HEAD** | `szaroale-pl-remove-mobile-cta-outlines` |
-| **Zmiana bieżąca** | 2026-11-04 — Usunięto ramkę CTA i całego kafelka po dotknięciu; animacja rulki nadal sygnalizuje fokus klawiatury. |
+| **Ostatnia aktualizacja** | 2026-11-04 — Fokus CTA i treści na ekranach dotykowych nie rysuje zielonych ramek. |
+| **Gałąź / HEAD** | `fix-mobile-content-focus-outline` |
+| **Zmiana bieżąca** | 2026-11-04 — Ramka całej treści pojawia się tylko przy fokusie klawiatury; fokus CTA na dotyku nie obrysowuje kafelka. |
 | **Poprzednia zmiana** | 2026-11-03 — Linki w tekstach Portable Text używają granatu `brand-6`, również gdy zawierają fragmenty z innym kolorem tekstu. |
 | **Poprzednia zmiana** | 2026-11-03 — Bloki „Teksty przed listą edycji” mają piaskowe koło, pogrubiony nagłówek MuseoModerno i wybór koloru marki lub czarnego. |
 | **Poprzednia zmiana** | 2026-11-03 — W stopce link do deklaracji jest pod adresem (lewa kolumna), na dole wyrównany do social mediów po prawej. |
@@ -28,7 +28,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 Aktualizacja 2026-11-03: poprawki dostępności w kodzie: widoczny fokus `#main-content` po przejściu linkiem „Przejdź do treści”, opisowe nazwy przycisków galerii oraz identyfikatory HTML dla sekcji, danych i linków deklaracji dostępności. W Sanity redakcja uzupełniła teksty alternatywne obrazów treściowych na stronach Art Generacje, Teatr Codzienny i To mi gra; sprawdzono 8 obrazów. Zmiany kodowe oczekują na wdrożenie. To nie jest pełny audyt ani potwierdzenie zgodności z WCAG.
 
-Aktualizacja 2026-11-04: przy fokusie CTA na ekranie dotykowym nie pojawia się zielony obrys linku ani całego klikalnego kafelka. Obrysy pozostałych elementów pozostają bez zmian; animacja rulki sygnalizuje fokus klawiatury CTA.
+Aktualizacja 2026-11-04: ramka całego obszaru treści (`#main-content`) pojawia się tylko dla `:focus-visible`, więc kliknięcie CTA na telefonie jej nie wyświetla; fokus klawiatury po skip-linku pozostaje widoczny. CTA na ekranach dotykowych nie obrysowuje linku ani całego klikalnego kafelka; animacja rulki sygnalizuje fokus klawiatury CTA.
 
 Aktualizacja 2026-11-03: opcjonalne bloki `sectionsBeforeEditions` na projektach układają się w równe kolumny bez pionowego przesunięcia co drugiego bloku. Pogrubione nagłówki MuseoModerno mają piaskowe koło z istniejącego motywu Blob i wybór koloru marki lub czarnego w Studio; starsze bloki zachowują kolory marki. Tekst pozostaje w kroju treści. Build wymaga `NEXT_PUBLIC_SANITY_PROJECT_ID=tr2qdg9j` i `NEXT_PUBLIC_SANITY_DATASET=production`.
 
