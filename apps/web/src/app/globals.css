@@ -4240,6 +4240,14 @@
     border-radius: var(--radius-media);
   }
 
+  .article-body .body-figure-left .body-image {
+    margin-inline-start: 0;
+  }
+
+  .article-body .body-figure-right .body-image {
+    margin-inline-end: 0;
+  }
+
   @media (width >= 40rem) {
     .portable-body > .body-figure-inline.body-figure-left:not([hidden]):not([hidden]) {
       margin-inline: 0 1.25rem;
