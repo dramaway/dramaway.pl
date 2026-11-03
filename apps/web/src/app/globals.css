@@ -710,9 +710,9 @@
 
     .site-nav-sub-list:not(.site-nav-overflow-list) a,
     .site-nav-overflow-sub a {
-      font-family: var(--font-body);
+      font-family: var(--font-display);
       font-size: calc(var(--text-nav) - 1px);
-      font-weight: 300;
+      font-weight: 600;
       line-height: var(--text-nav--line-height);
       text-transform: none;
       opacity: 0;
