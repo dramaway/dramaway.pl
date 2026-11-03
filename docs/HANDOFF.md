@@ -6,7 +6,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | | |
 |--|--|
 | **Ostatnia aktualizacja** | 2026-11-03 — Wymuszone lewe wyrównanie i zaokrąglenie zdjęć w treści stron niezależnie od zapisanych ustawień obrazu. |
-| **Gałąź / HEAD** | `szaroale-pl-fix-news-image-alignment` |
+| **Gałąź / HEAD** | `szaroale-pl-align-article-images` |
 | **Zmiana bieżąca** | 2026-11-03 — Zdjęcia blokowe w treści stron zaczynają się przy lewej krawędzi tekstu; zawijane tekstem są floatowane w lewo z tekstem po prawej, wszystkie mają wspólny promień rogów. |
 | **Zmiana fontów** | 2026-11-03 — Pełne lokalne fonty MuseoModerno i Alexandria (poprzednie pliki miały tylko `latin-ext`, nagłówki szły fallbackiem). |
 | **Poprzednia zmiana** | 2026-11-02 — Portable Text: wybór kolorów z czytelnymi nazwami; miękki ślad, podwójna kreska lub rulka CTA; linki automatycznie jasnozielone. |
