@@ -701,30 +701,32 @@ function ExpandIcon({
 }) {
   return (
     <svg
-      viewBox="0 0 24 24"
+      viewBox="0 0 48 48"
       aria-hidden
       className="site-nav-expand-icon"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="1.8"
       strokeLinecap="round"
       strokeLinejoin="round"
     >
       {expanded ? (
-        <path d="M5 12h14" />
+        <path d="M18 18h12" />
       ) : (
         <>
-          <path d="M5 12h14" />
-          <path d="M12 5v14" />
+          <path d="M18 18h12" />
+          <path d="M24 12v12" />
         </>
       )}
+      <circle cx="37" cy="37" r="10.5" fill="var(--color-magenta)" stroke="none" />
       <text
-        x="12"
-        y="28"
+        x="37"
+        y="40.5"
         textAnchor="middle"
-        fill="currentColor"
+        fill="white"
         stroke="none"
-        fontSize="7"
+        fontSize="11"
+        fontWeight="600"
         fontFamily="var(--font-display), sans-serif"
       >
         {count}
