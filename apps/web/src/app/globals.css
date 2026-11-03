@@ -533,9 +533,13 @@
   }
 
   .site-nav-expand-icon {
-    width: 100%;
-    height: 100%;
-    transition: color 180ms ease;
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: transform 220ms ease;
+  }
+
+  .site-nav-overlay-expand[aria-expanded="true"] .site-nav-expand-icon {
+    transform: rotate(180deg);
   }
 
   .site-nav-overlay-submenu {

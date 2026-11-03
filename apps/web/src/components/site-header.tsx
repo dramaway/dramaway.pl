@@ -356,7 +356,7 @@ export function SiteHeader({ title, items }: Props) {
                         })
                       }
                     >
-                      <ExpandIcon expanded={expanded} count={children.length} />
+                      <ExpandIcon expanded={expanded} />
                     </button>
                   ) : null}
                 </div>
@@ -694,43 +694,21 @@ function MenuIcon({ open }: { open: boolean }) {
 
 function ExpandIcon({
   expanded,
-  count,
 }: {
   expanded: boolean;
-  count: number;
 }) {
   return (
     <svg
-      viewBox="0 0 48 48"
+      viewBox="0 0 24 24"
       aria-hidden
       className="site-nav-expand-icon"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.8"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      {expanded ? (
-        <path d="M18 18h12" />
-      ) : (
-        <>
-          <path d="M18 18h12" />
-          <path d="M24 12v12" />
-        </>
-      )}
-      <circle cx="37" cy="37" r="10.5" fill="var(--color-magenta)" stroke="none" />
-      <text
-        x="37"
-        y="40.5"
-        textAnchor="middle"
-        fill="white"
-        stroke="none"
-        fontSize="11"
-        fontWeight="600"
-        fontFamily="var(--font-display), sans-serif"
-      >
-        {count}
-      </text>
+      <path d={expanded ? "m6 15 6-6 6 6" : "m6 9 6 6 6-6"} />
     </svg>
   );
 }
