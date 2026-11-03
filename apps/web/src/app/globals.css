@@ -364,7 +364,8 @@
   }
 
   #main-content:focus {
-    outline: none;
+    outline: 3px solid var(--color-green-ink);
+    outline-offset: -3px;
   }
 
   #main-content {

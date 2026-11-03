@@ -65,7 +65,7 @@ export const SUBPAGE = {
   },
   gallery: {
     more: "+{n}",
-    open: "Otwórz galerię",
+    open: "Otwórz zdjęcie {n} z {total} w galerii: {alt}",
     dialog: "Galeria zdjęć",
     close: "Zamknij",
     next: "Następne zdjęcie",

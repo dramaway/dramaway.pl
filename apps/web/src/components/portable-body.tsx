@@ -32,6 +32,11 @@ import { YoutubeEmbed } from "@/components/visual/youtube-embed";
 import { splitPortableAtReadMore } from "@/lib/portable-read-more";
 import { blockAlign, embedSize, type BlockAlign } from "@/lib/body-frame";
 import { cn } from "@/lib/utils";
+import {
+  accessibilityDeclarationBlockId,
+  accessibilityDeclarationLinkIds,
+  isAccessibilityDeclarationIntroduction,
+} from "@/lib/accessibility-declaration";
 
 type BodyImageSize = "small" | "medium" | "wide" | "full";
 
@@ -209,6 +214,35 @@ function PortableLink({
   );
 }
 
+function DeclarationPortableLink({
+  children,
+  value,
+}: PortableTextMarkComponentProps<{ _type: string; href?: string }>) {
+  const safe = safeHref(value?.href);
+  if (!safe) return <>{children}</>;
+  const ids = accessibilityDeclarationLinkIds(safe.href);
+  const link = (
+    <a href={safe.href} id={ids.linkId} className="pt-link">
+      <span className="pt-link-label">{children}</span>
+    </a>
+  );
+  return ids.wrapperId ? <span id={ids.wrapperId}>{link}</span> : link;
+}
+
+function portableBlockText(value: unknown): string {
+  if (!value || typeof value !== "object" || !("children" in value)) return "";
+  const children = value.children;
+  if (!Array.isArray(children)) return "";
+  return children
+    .map((child) =>
+      child && typeof child === "object" && "text" in child &&
+      typeof child.text === "string"
+        ? child.text
+        : "",
+    )
+    .join("");
+}
+
 type PaletteColor =
   | "brand-1"
   | "brand-3"
@@ -378,35 +412,37 @@ function PortableCredits({
   return <CreditsList value={value} />;
 }
 
+const blockComponents = {
+  h2: ({ children }: { children?: ReactNode }) => (
+    <h2 className="mt-8 font-display text-h2 font-black">{children}</h2>
+  ),
+  h3: ({ children }: { children?: ReactNode }) => (
+    <h3 className="mt-6 font-display text-h3 font-black">{children}</h3>
+  ),
+  h4: ({ children }: { children?: ReactNode }) => (
+    <h4 className="mt-6 font-body text-h4 font-semibold">{children}</h4>
+  ),
+  normal: ({ children }: { children?: ReactNode }) => (
+    <p className="whitespace-pre-wrap">{children}</p>
+  ),
+  center: ({ children }: { children?: ReactNode }) => (
+    <p className="whitespace-pre-wrap text-center">{children}</p>
+  ),
+  blockquote: ({ children }: { children?: ReactNode }) => (
+    <blockquote className="border-l-2 pl-4 italic text-muted-foreground">
+      {children}
+    </blockquote>
+  ),
+  term: ({ children }: { children?: ReactNode }) => (
+    <p className="pt-term whitespace-pre-wrap">
+      <Blob />
+      {children}
+    </p>
+  ),
+};
+
 const components: PortableTextComponents = {
-  block: {
-    h2: ({ children }) => (
-      <h2 className="mt-8 font-display text-h2 font-black">{children}</h2>
-    ),
-    h3: ({ children }) => (
-      <h3 className="mt-6 font-display text-h3 font-black">{children}</h3>
-    ),
-    h4: ({ children }) => (
-      <h4 className="mt-6 font-body text-h4 font-semibold">{children}</h4>
-    ),
-    normal: ({ children }) => (
-      <p className="whitespace-pre-wrap">{children}</p>
-    ),
-    center: ({ children }) => (
-      <p className="whitespace-pre-wrap text-center">{children}</p>
-    ),
-    blockquote: ({ children }) => (
-      <blockquote className="border-l-2 pl-4 italic text-muted-foreground">
-        {children}
-      </blockquote>
-    ),
-    term: ({ children }) => (
-      <p className="pt-term whitespace-pre-wrap">
-        <Blob />
-        {children}
-      </p>
-    ),
-  },
+  block: blockComponents,
   list: {
     bullet: ({ children }) => (
       <ul className="list-disc space-y-1 pl-6">{children}</ul>
@@ -439,9 +475,84 @@ const components: PortableTextComponents = {
   },
 };
 
-function renderPortableBlocks(blocks: PortableNode[]) {
+const declarationComponents: PortableTextComponents = {
+  ...components,
+  block: {
+    ...blockComponents,
+    h2: ({ children, value }) => (
+      <h2
+        id={accessibilityDeclarationBlockId(
+          portableBlockText(value),
+          "h2",
+        ) ?? undefined}
+        className="mt-8 font-display text-h2 font-black"
+      >
+        {children}
+      </h2>
+    ),
+    normal: ({ children, value }) => {
+      const text = portableBlockText(value);
+      const id =
+        accessibilityDeclarationBlockId(text, "normal") ?? undefined;
+      const paragraph = (
+        <p id={id} className="whitespace-pre-wrap">
+          {children}
+        </p>
+      );
+      return isAccessibilityDeclarationIntroduction(text) ? (
+        <div id="a11y-wstep">{paragraph}</div>
+      ) : (
+        paragraph
+      );
+    },
+  },
+  listItem: {
+    bullet: ({ children, value }) => (
+      <li
+        id={
+          accessibilityDeclarationBlockId(
+            portableBlockText(value),
+            "normal",
+          ) ?? undefined
+        }
+      >
+        {children}
+      </li>
+    ),
+    number: ({ children, value }) => (
+      <li
+        id={
+          accessibilityDeclarationBlockId(
+            portableBlockText(value),
+            "normal",
+          ) ?? undefined
+        }
+      >
+        {children}
+      </li>
+    ),
+    indent: ({ children }) => (
+      <div className="pt-indent-item">{children}</div>
+    ),
+    roster: ({ value }) => <RosterItem value={value} />,
+  },
+  marks: {
+    ...components.marks,
+    link: DeclarationPortableLink,
+  },
+};
+
+function renderPortableBlocks(
+  blocks: PortableNode[],
+  accessibilityDeclaration = false,
+) {
   const grouped = groupPortableImageRuns(blocks);
-  return <PortableText value={grouped} components={components} />;
+  return (
+    <PortableText
+      value={grouped}
+      components={accessibilityDeclaration ? declarationComponents : components}
+    />
+  );
 }
 
 export function hasPortableContent(value: PortableContent | null | undefined) {
@@ -453,9 +564,11 @@ export function hasPortableContent(value: PortableContent | null | undefined) {
 export function PortableBody({
   value,
   className,
+  accessibilityDeclaration = false,
 }: {
   value: PortableContent;
   className?: string;
+  accessibilityDeclaration?: boolean;
 }) {
   if (!hasPortableContent(value)) return null;
   const raw = Array.isArray(value) ? value : [value];
@@ -466,16 +579,24 @@ export function PortableBody({
 
   if (!split) {
     return (
-      <div className={shell}>{renderPortableBlocks(raw as PortableNode[])}</div>
+      <div className={shell}>
+        {renderPortableBlocks(raw as PortableNode[], accessibilityDeclaration)}
+      </div>
     );
   }
 
   return (
     <div className={shell}>
       <BodyReadMore
-        before={renderPortableBlocks(split.before as PortableNode[])}
+        before={renderPortableBlocks(
+          split.before as PortableNode[],
+          accessibilityDeclaration,
+        )}
       >
-        {renderPortableBlocks(split.after as PortableNode[])}
+        {renderPortableBlocks(
+          split.after as PortableNode[],
+          accessibilityDeclaration,
+        )}
       </BodyReadMore>
     </div>
   );
