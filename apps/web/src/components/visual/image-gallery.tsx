@@ -144,7 +144,10 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
               key={sanityAssetRef(image) ?? tileIndex}
               type="button"
               className="gallery-tile"
-              aria-label={SUBPAGE.gallery.open}
+              aria-label={SUBPAGE.gallery.open
+                .replaceAll("{n}", String(slideImages.indexOf(image) + 1))
+                .replaceAll("{total}", String(slideImages.length))
+                .replaceAll("{alt}", imageAlt(image, alt) || "bez opisu")}
               onClick={(event) => openAt(tileIndex, event.currentTarget)}
             >
               <Media

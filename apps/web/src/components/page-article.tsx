@@ -33,7 +33,10 @@ export function PageArticle({
       <ContentModules sections={page.sections} variant="page" />
       <Section id={bodyId} className={bodyId ? "scroll-mt-24" : undefined}>
         <div className="article-body">
-          <PortableBody value={page.body} />
+          <PortableBody
+            value={page.body}
+            accessibilityDeclaration={page.slug === "deklaracja-dostepnosci"}
+          />
         </div>
       </Section>
       <ContentModules sections={page.sectionsAfterBody} variant="page" />
