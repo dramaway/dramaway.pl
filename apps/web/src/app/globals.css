@@ -2748,6 +2748,13 @@
     outline-offset: 4px;
   }
 
+  @media (hover: none) and (pointer: coarse) {
+    .cta:focus-visible,
+    .card-hover:has(.cta:focus-visible) {
+      outline: none;
+    }
+  }
+
   .card-link::after {
     content: "";
     position: absolute;
