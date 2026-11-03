@@ -111,7 +111,7 @@ function bodyImageSrcSet(value: ImageValue, size: BodyImageSize): string {
   return BODY_IMAGE_SRCSET_WIDTHS.filter(
     (width) => width <= max || width === BODY_IMAGE_SRCSET_WIDTHS[0],
   )
-    .map((width) => `${urlFor(value).width(width).auto("format").url()} ${width}w`)
+    .map((width) => `${urlFor(value).width(width).quality(90).auto("format").url()} ${width}w`)
     .join(", ");
 }
 
@@ -135,18 +135,19 @@ function PortableImage({ value }: PortableTextTypeComponentProps<ImageValue>) {
     >
       {dims ? (
         <Image
-          src={urlFor(value).width(cdnWidth).auto("format").url()}
+          src={urlFor(value).width(cdnWidth).quality(90).auto("format").url()}
           alt={alt}
           width={dims.width}
           height={dims.height}
           sizes={BODY_IMAGE_SIZES[size]}
+          quality={90}
           className="body-image"
         />
       ) : (
         // Unknown aspect: keep intrinsic ratio; srcset still avoids a single huge file.
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src={urlFor(value).width(cdnWidth).auto("format").url()}
+          src={urlFor(value).width(cdnWidth).quality(90).auto("format").url()}
           srcSet={bodyImageSrcSet(value, size)}
           sizes={BODY_IMAGE_SIZES[size]}
           alt={alt}

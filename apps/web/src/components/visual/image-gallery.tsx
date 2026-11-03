@@ -62,13 +62,13 @@ function toSlide(image: CmsImage, alt: string) {
   const srcSet = LIGHTBOX_WIDTHS.filter(
     (width) => width <= dims.width || width === LIGHTBOX_WIDTHS[0],
   ).map((width) => ({
-    src: urlFor(image).width(width).fit("max").auto("format").url(),
+    src: urlFor(image).width(width).quality(90).fit("max").auto("format").url(),
     width,
     height: Math.max(1, Math.round((dims.height / dims.width) * width)),
   }));
   const srcWidth = Math.min(2400, dims.width);
   return {
-    src: urlFor(image).width(srcWidth).fit("max").auto("format").url(),
+    src: urlFor(image).width(srcWidth).quality(90).fit("max").auto("format").url(),
     width: dims.width,
     height: dims.height,
     alt,
