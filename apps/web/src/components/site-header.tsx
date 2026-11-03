@@ -119,6 +119,7 @@ export function SiteHeader({ title, items }: Props) {
   const home = items.find((item) => item.href === "/");
   const visible = items.filter((item) => item.href !== "/");
   const [open, setOpen] = useState(false);
+  const [overlayRendered, setOverlayRendered] = useState(false);
   const [expandedSections, setExpandedSections] = useState<Set<string>>(
     () => new Set(),
   );
@@ -126,6 +127,19 @@ export function SiteHeader({ title, items }: Props) {
   const overlayRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const { navRef, measureRef, visibleCount } = useDesktopNavOverflow(visible);
+
+  useLayoutEffect(() => {
+    if (open) {
+      setOverlayRendered(true);
+      return;
+    }
+    if (!overlayRendered) return;
+    const delay = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? 0
+      : 320;
+    const timer = window.setTimeout(() => setOverlayRendered(false), delay);
+    return () => window.clearTimeout(timer);
+  }, [open, overlayRendered]);
 
   useLayoutEffect(() => {
     if (!open) return;
@@ -282,7 +296,9 @@ export function SiteHeader({ title, items }: Props) {
         id={navId}
         aria-label="Nawigacja główna"
         className="site-nav-overlay"
-        hidden={!open}
+        data-state={open ? "open" : "closing"}
+        hidden={!overlayRendered}
+        inert={!open}
         onClick={(event) => {
           const link = (event.target as HTMLElement).closest("a");
           if (!link) return;
