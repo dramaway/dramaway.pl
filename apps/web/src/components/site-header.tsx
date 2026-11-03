@@ -340,6 +340,7 @@ export function SiteHeader({ title, items }: Props) {
                         })
                       }
                     >
+                      <span>{expanded ? "Ukryj" : "Zobacz"}</span>
                       <ChevronIcon expanded={expanded} />
                     </button>
                   ) : null}

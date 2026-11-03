@@ -501,13 +501,22 @@
   }
 
   .site-nav-overlay-expand {
-    display: grid;
+    display: flex;
     flex: none;
-    width: var(--touch-target);
     height: var(--touch-target);
-    place-items: center;
-    border-radius: 50%;
-    color: var(--color-ink);
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding-inline: 0.75rem;
+    border-radius: 999px;
+    background-color: var(--color-sand);
+    color: #4c4c4c;
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
     transition:
       background-color 180ms ease,
       color 180ms ease;
@@ -515,7 +524,7 @@
 
   .site-nav-overlay-expand:hover,
   .site-nav-overlay-expand:focus-visible {
-    background-color: var(--color-sand);
+    background-color: color-mix(in srgb, var(--color-magenta) 12%, white);
     color: var(--color-magenta);
   }
 
