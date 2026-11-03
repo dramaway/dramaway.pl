@@ -12,6 +12,19 @@ export const projectTextSection = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "headingColor",
+      title: "Kolor nagłówka",
+      type: "string",
+      options: {
+        layout: "dropdown",
+        list: [
+          { title: "Kolory marki", value: "brand" },
+          { title: "Czarny", value: "black" },
+        ],
+      },
+      initialValue: "brand",
+    }),
+    defineField({
       name: "text",
       title: "Tekst",
       type: "text",

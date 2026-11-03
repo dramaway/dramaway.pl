@@ -5,9 +5,11 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-03 — Zdjęcia zawijane tekstem zachowują własne proporcje w ramce i respektują jej wyrównanie. |
+| **Ostatnia aktualizacja** | 2026-11-03 — Bloki „Teksty przed listą edycji” mają piaskowe koło, pogrubiony nagłówek MuseoModerno i wybór koloru marki lub czarnego. |
 | **Gałąź / HEAD** | `szaroale-pl-align-article-images` |
-| **Zmiana bieżąca** | 2026-11-03 — W treści stron i aktualności zdjęcia zawijane tekstem nie mają pustych pasów w ramce; ich obraz, zaokrąglenie i wyrównanie lewo / środek / prawo pozostają spójne. |
+| **Zmiana bieżąca** | 2026-11-03 — Bloki „Teksty przed listą edycji” mają piaskowe koło, pogrubiony nagłówek MuseoModerno i wybór koloru marki lub czarnego. |
+| **Poprzednia zmiana** | 2026-11-03 — W stopce link do deklaracji jest pod adresem (lewa kolumna), na dole wyrównany do social mediów po prawej. |
+| **Poprzednia zmiana** | 2026-11-03 — Zdjęcia w treści aktualności i stron mają zaokrąglone rogi oraz respektują wyrównanie z CMS; zawijane tekstem zachowują proporcje i opływanie. |
 | **Zmiana fontów** | 2026-11-03 — Pełne lokalne fonty MuseoModerno i Alexandria (poprzednie pliki miały tylko `latin-ext`, nagłówki szły fallbackiem). |
 | **Poprzednia zmiana** | 2026-11-02 — Portable Text: wybór kolorów z czytelnymi nazwami; miękki ślad, podwójna kreska lub rulka CTA; linki automatycznie jasnozielone. |
 | **Starsza zmiana** | 2026-11-03 — Spójne tytuły edycji Teatru Codziennego; fonty Alexandria i MuseoModerno z lokalnych plików, by build nie zależał od Google Fonts. |
@@ -22,7 +24,13 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 ---
 
+Aktualizacja 2026-11-03: opcjonalne bloki `sectionsBeforeEditions` na projektach układają się w równe kolumny bez pionowego przesunięcia co drugiego bloku. Pogrubione nagłówki MuseoModerno mają piaskowe koło z istniejącego motywu Blob i wybór koloru marki lub czarnego w Studio; starsze bloki zachowują kolory marki. Tekst pozostaje w kroju treści. Build wymaga `NEXT_PUBLIC_SANITY_PROJECT_ID=tr2qdg9j` i `NEXT_PUBLIC_SANITY_DATASET=production`.
+
+Aktualizacja 2026-11-03: stopka ma link do deklaracji dostępności `/deklaracja-dostepnosci` pod adresem, na dole wyrównany do rzędu social mediów w prawej kolumnie.
+
 Aktualizacja 2026-11-03: lokalne pliki z samym zakresem `latin-ext` pozostawiały zwykłe litery w kroju zastępczym. Layout ładuje teraz pełne fonty MuseoModerno i Alexandria.
+
+Aktualizacja 2026-11-03: nazwy podstron w rozwijanym menu desktopowym używają MuseoModerno SemiBold (600), zgodnie z przesłanym wzorem; menu „więcej” również.
 
 Aktualizacja 2026-11-02: kliknięcie CTA nie obrysowuje już całego kafelka; obrys pozostaje dla fokusu klawiatury.
 

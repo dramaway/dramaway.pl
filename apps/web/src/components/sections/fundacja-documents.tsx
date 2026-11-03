@@ -24,7 +24,7 @@ export function FundacjaDocuments({
   if (items.length === 0) return null;
 
   return (
-    <Section id="dokumenty" className="fundacja-flow scroll-mt-24">
+    <Section id="dokumenty" className="fundacja-flow">
       <div className="stack-narrow">
         {heading ? (
           <h2 className="font-display text-h3 font-black">{heading}</h2>

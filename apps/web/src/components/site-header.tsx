@@ -35,8 +35,73 @@ function isCurrentPage(item: NavItem, pathname: string): boolean {
   return item.href !== "/" && pathname.startsWith(`${item.href}/`);
 }
 
+function anchorTop(target: HTMLElement) {
+  const anchor =
+    target.tagName === "SECTION"
+      ? (target.querySelector<HTMLElement>("h2, h3") ?? target)
+      : target;
+  const header = document.querySelector<HTMLElement>(".site-header");
+  const offset = (header?.getBoundingClientRect().height ?? 0) + 16;
+  return Math.max(0, anchor.getBoundingClientRect().top + window.scrollY - offset);
+}
+
+/** Scrolls to the anchor's heading and re-aims while late layout shifts settle. */
+function scrollToAnchor(target: HTMLElement) {
+  const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let attempts = 0;
+  let lastY = window.scrollY;
+  let still = 0;
+
+  window.scrollTo({ top: anchorTop(target), behavior: smooth ? "smooth" : "auto" });
+
+  const tick = () => {
+    still = window.scrollY === lastY ? still + 1 : 0;
+    lastY = window.scrollY;
+    if (still < 8) {
+      requestAnimationFrame(tick);
+      return;
+    }
+    if (Math.abs(anchorTop(target) - window.scrollY) > 4 && attempts < 3) {
+      attempts += 1;
+      still = 0;
+      window.scrollTo({ top: anchorTop(target), behavior: smooth ? "smooth" : "auto" });
+      requestAnimationFrame(tick);
+    }
+  };
+  requestAnimationFrame(tick);
+}
+
+function splitHref(href: string) {
+  const [rest, hash = ""] = href.split("#", 2);
+  return { path: rest.split("?", 1)[0], hash: hash ? `#${hash}` : "" };
+}
+
+function matchesLocation(href: string, pathname: string, hash: string) {
+  const target = splitHref(href);
+  if (target.path !== pathname) return false;
+  return !target.hash || target.hash === hash;
+}
+
+function overlayCurrent(
+  item: NavItem,
+  pathname: string,
+  hash: string,
+  parent?: NavItem,
+): boolean {
+  if (item.external || /^https?:\/\//i.test(item.href)) return false;
+  if (!matchesLocation(item.href, pathname, hash)) return false;
+  if (parent) return true;
+  const target = splitHref(item.href);
+  if (target.hash) return true;
+  return !item.children?.some((child) =>
+    overlayCurrent(child, pathname, hash, item),
+  );
+}
+
 export function SiteHeader({ title, items }: Props) {
   const pathname = usePathname();
+  const [hash, setHash] = useState("");
+  const home = items.find((item) => item.href === "/");
   const visible = items.filter((item) => item.href !== "/");
   const [open, setOpen] = useState(false);
   const navId = useId();
@@ -45,6 +110,27 @@ export function SiteHeader({ title, items }: Props) {
 
   useEffect(() => {
     setOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!window.location.hash) return;
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    const timer = window.setTimeout(() => {
+      const target = document.getElementById(id);
+      if (target) scrollToAnchor(target);
+    }, 400);
+    return () => window.clearTimeout(timer);
+  }, [pathname]);
+
+  useEffect(() => {
+    const update = () => setHash(window.location.hash);
+    update();
+    window.addEventListener("hashchange", update);
+    window.addEventListener("popstate", update);
+    return () => {
+      window.removeEventListener("hashchange", update);
+      window.removeEventListener("popstate", update);
+    };
   }, [pathname]);
 
   useEffect(() => {
@@ -146,20 +232,50 @@ export function SiteHeader({ title, items }: Props) {
         className="site-nav-overlay"
         hidden={!open}
         onClick={(event) => {
-          if ((event.target as HTMLElement).closest("a")) setOpen(false);
+          const link = (event.target as HTMLElement).closest("a");
+          if (!link) return;
+          setOpen(false);
+          const url = new URL(link.href, window.location.href);
+          if (url.origin !== window.location.origin) return;
+          setHash(url.hash);
+          if (url.pathname !== window.location.pathname || !url.hash) return;
+          const target = document.getElementById(
+            decodeURIComponent(url.hash.slice(1)),
+          );
+          if (!target) return;
+          event.preventDefault();
+          window.history.pushState(null, "", url.pathname + url.search + url.hash);
+          window.setTimeout(() => scrollToAnchor(target), 60);
         }}
       >
         <ul className="page site-nav-overlay-list">
+          <li>
+            <NavLink
+              item={home ?? { href: "/", label: "Strona główna" }}
+              pathname={pathname}
+              current={pathname === "/"}
+            >
+              {home?.label ?? "Strona główna"}
+            </NavLink>
+          </li>
           {visible.map((item, index) => (
             <li key={`${item.href}:${item.label}:${index}`}>
-              <NavLink item={item} pathname={pathname}>
+              <NavLink
+                item={item}
+                pathname={pathname}
+                current={overlayCurrent(item, pathname, hash)}
+              >
                 {item.label}
               </NavLink>
               {item.children?.length ? (
                 <ul className="site-nav-overlay-sub">
                   {item.children.map((child, childIndex) => (
                     <li key={`${child.href}:${child.label}:${childIndex}`}>
-                      <NavLink item={child} pathname={pathname}>
+                      <NavLink
+                        item={child}
+                        pathname={pathname}
+                        current={overlayCurrent(child, pathname, hash, item)}
+                      >
                         {child.label}
                       </NavLink>
                     </li>
@@ -403,13 +519,15 @@ function NavOverflow({
 function NavLink({
   item,
   pathname,
+  current,
   children,
 }: {
   item: NavItem;
   pathname: string;
+  current?: boolean;
   children: string;
 }) {
-  const currentPage = isCurrentPage(item, pathname);
+  const currentPage = current ?? isCurrentPage(item, pathname);
   const currentBranch = itemIsCurrent(item, pathname);
   const className = cn("hover:text-magenta", currentBranch && "text-magenta");
   if (item.external || /^https?:\/\//i.test(item.href)) {
