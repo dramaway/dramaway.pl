@@ -80,7 +80,11 @@ export function SiteHeader({ title, items }: Props) {
     const update = () => setHash(window.location.hash);
     update();
     window.addEventListener("hashchange", update);
-    return () => window.removeEventListener("hashchange", update);
+    window.addEventListener("popstate", update);
+    return () => {
+      window.removeEventListener("hashchange", update);
+      window.removeEventListener("popstate", update);
+    };
   }, [pathname]);
 
   useEffect(() => {
@@ -182,7 +186,29 @@ export function SiteHeader({ title, items }: Props) {
         className="site-nav-overlay"
         hidden={!open}
         onClick={(event) => {
-          if ((event.target as HTMLElement).closest("a")) setOpen(false);
+          const link = (event.target as HTMLElement).closest("a");
+          if (!link) return;
+          setOpen(false);
+          const url = new URL(link.href, window.location.href);
+          if (url.origin !== window.location.origin) return;
+          setHash(url.hash);
+          if (url.pathname !== window.location.pathname || !url.hash) return;
+          const target = document.getElementById(
+            decodeURIComponent(url.hash.slice(1)),
+          );
+          if (!target) return;
+          event.preventDefault();
+          window.history.pushState(null, "", url.pathname + url.search + url.hash);
+          const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)")
+            .matches;
+          window.setTimeout(
+            () =>
+              target.scrollIntoView({
+                behavior: smooth ? "smooth" : "auto",
+                block: "start",
+              }),
+            60,
+          );
         }}
       >
         <ul className="page site-nav-overlay-list">

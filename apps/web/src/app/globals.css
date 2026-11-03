@@ -503,6 +503,21 @@
     list-style: none;
   }
 
+  .site-nav-overlay-list a {
+    transition: color 280ms ease;
+  }
+
+  .site-nav-overlay-list a[aria-current="page"]::before {
+    animation: site-nav-dot-in 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @keyframes site-nav-dot-in {
+    from {
+      opacity: 0;
+      transform: scale(0.2);
+    }
+  }
+
   .site-nav-overlay-sub a {
     font-family: var(--font-display);
     font-size: 0.8125rem;
@@ -518,6 +533,12 @@
   }
 
   @media (width < 64rem) {
+    html {
+      scroll-padding-block-start: calc(
+        57px + 1.5rem + max(0.75rem, env(safe-area-inset-top, 0px))
+      );
+    }
+
     .site-header {
       --site-header-bar: calc(
         57px + 0.75rem + max(0.75rem, env(safe-area-inset-top, 0px))
