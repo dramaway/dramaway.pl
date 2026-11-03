@@ -19,7 +19,7 @@ export function NewsArticle({ news }: { news: NewsDetail }) {
         showBand={false}
       />
       <Section>
-        <div className="article-body">
+        <div className="article-body news-article-body">
           <PortableBody value={news.body} />
         </div>
       </Section>
