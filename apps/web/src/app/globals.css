@@ -3966,6 +3966,13 @@
     );
   }
 
+  .body-figure-inline-sized.body-figure-small {
+    width: min(
+      var(--body-image-inline),
+      calc(var(--body-image-inline-max) * var(--body-image-aspect-ratio))
+    );
+  }
+
   .body-figure-inline-sized.body-figure-medium {
     width: min(
       var(--body-image-inline-medium),
