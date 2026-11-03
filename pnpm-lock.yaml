@@ -219,8 +219,8 @@ importers:
   .:
     dependencies:
       '@portabletext/block-tools':
-        specifier: ^6.0.3
-        version: 6.0.3(@types/react@19.3.0)
+        specifier: ^6.0.5
+        version: 6.0.5(@types/react@19.3.0)
       '@sanity/client':
         specifier: 'catalog:'
         version: 8.10.0
@@ -1917,8 +1917,8 @@ packages:
     resolution: {integrity: sha512-//0sR/cow/s4ICQaYoAobOl4aU8cjU6x/V24V7XkKotb9+O+3zySIYp146vpaobYHnxa4pZX8NkV54Z5AwbDKA==}
     engines: {node: '>=12'}
 
-  '@portabletext/block-tools@6.0.3':
-    resolution: {integrity: sha512-IFgsXFHWjMCaLBRdT67gmE59GDsCMjSAmA9GS0P0sfCZQ3w+ANL+OiruzkCm/EFKYbRob9c8cfOlkBxlqcBAPQ==}
+  '@portabletext/block-tools@6.0.5':
+    resolution: {integrity: sha512-XJxHimuKnBZyCyjzfVCTeJdYdaZa5d42t4QllaEiopL1OEQSalya9tUKoCm2FCuJQTn8TO8nIw9zgsyOanhjdg==}
     engines: {node: '>=22.12'}
 
   '@portabletext/editor@8.2.6':
@@ -1926,10 +1926,6 @@ packages:
     engines: {node: '>=22.12'}
     peerDependencies:
       react: ^19.3.1
-
-  '@portabletext/html@2.0.0':
-    resolution: {integrity: sha512-TYGEgArg2VA3FEDVKQr53Zf5fdwfTUjW2vs1nIVFzEOBV5/vUJu6k2wc3uqSG2KBmJ36QiH1Db++d0InqfEkhg==}
-    engines: {node: '>=22.12'}
 
   '@portabletext/html@2.0.2':
     resolution: {integrity: sha512-9s69Dd2F5QjSHeiM11w+vnuYSjSDatXK3W033rpVCOG5AItVglFUmZzKh7UqAFeV6T9sTSjCfaX7lo2UesK6Uw==}
@@ -2013,16 +2009,8 @@ packages:
     peerDependencies:
       react: ^19
 
-  '@portabletext/sanity-bridge@4.1.2':
-    resolution: {integrity: sha512-cUA4t2YO5nH5majXlS3rzkGrDmGcn3a8ZMyTEVAgSTmgyLxmJewqBjTgziw34/m2a4cnOCBMG/E9GTZyoLKZYg==}
-    engines: {node: '>=22.12'}
-
   '@portabletext/sanity-bridge@4.1.4':
     resolution: {integrity: sha512-4S3IZ9T5Eoe2lcrmrw3Yygu8fv50JhHE7+hOTyx+wxpaKvRvFvf2XJa2DM5mhVMzOhScyyc3H0FaCrZEzQ5BJQ==}
-    engines: {node: '>=22.12'}
-
-  '@portabletext/schema@3.0.0':
-    resolution: {integrity: sha512-mNv1YShl0e6XJZIntQYm7nr9UbLXCf3+JktfGp1OO8iPxpdMRnhaIq3iGSMVrO9fIBcB7TNQgFfOdqQCSfXFew==}
     engines: {node: '>=22.12'}
 
   '@portabletext/schema@3.1.0':
@@ -8596,12 +8584,12 @@ snapshots:
       '@pnpm/network.ca-file': 1.0.2
       config-chain: 1.1.13
 
-  '@portabletext/block-tools@6.0.3(@types/react@19.3.0)':
+  '@portabletext/block-tools@6.0.5(@types/react@19.3.0)':
     dependencies:
-      '@portabletext/html': 2.0.0
-      '@portabletext/sanity-bridge': 4.1.2(@types/react@19.3.0)
-      '@portabletext/schema': 3.0.0
-      '@sanity/types': 6.18.0(@types/react@19.3.0)
+      '@portabletext/html': 2.0.2
+      '@portabletext/sanity-bridge': 4.1.4(@types/react@19.3.0)
+      '@portabletext/schema': 3.1.0
+      '@sanity/types': 6.20.0(@types/react@19.3.0)
     transitivePeerDependencies:
       - '@types/react'
       - vitest
@@ -8621,11 +8609,6 @@ snapshots:
       xstate: 5.33.2
     transitivePeerDependencies:
       - '@types/react'
-
-  '@portabletext/html@2.0.0':
-    dependencies:
-      '@portabletext/schema': 3.0.0
-      '@vercel/stega': 1.1.0
 
   '@portabletext/html@2.0.2':
     dependencies:
@@ -8706,25 +8689,14 @@ snapshots:
       '@portabletext/types': 4.0.2
       react: 19.3.1
 
-  '@portabletext/sanity-bridge@4.1.2(@types/react@19.3.0)':
-    dependencies:
-      '@portabletext/schema': 3.0.0
-      '@sanity/schema': 6.20.0(@types/react@19.3.0)
-      '@sanity/types': 6.18.0(@types/react@19.3.0)
-    transitivePeerDependencies:
-      - '@types/react'
-      - vitest
-
   '@portabletext/sanity-bridge@4.1.4(@types/react@19.3.0)':
     dependencies:
       '@portabletext/schema': 3.1.0
-      '@sanity/schema': 6.20.0(@types/react@19.3.0)
-      '@sanity/types': 6.18.0(@types/react@19.3.0)
+      '@sanity/schema': 6.18.0(@types/react@19.3.0)
+      '@sanity/types': 6.20.0(@types/react@19.3.0)
     transitivePeerDependencies:
       - '@types/react'
       - vitest
-
-  '@portabletext/schema@3.0.0': {}
 
   '@portabletext/schema@3.1.0': {}
 

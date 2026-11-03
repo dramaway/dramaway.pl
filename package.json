@@ -46,7 +46,7 @@
   },
   "packageManager": "pnpm@12.9.1",
   "dependencies": {
-    "@portabletext/block-tools": "^6.0.3",
+    "@portabletext/block-tools": "^6.0.5",
     "@sanity/client": "catalog:",
     "@sanity/schema": "catalog:",
     "jsdom": "^30.1.3"
