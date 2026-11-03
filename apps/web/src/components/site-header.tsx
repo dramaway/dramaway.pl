@@ -318,13 +318,16 @@ export function SiteHeader({ title, items }: Props) {
       >
         <ul className="page site-nav-overlay-list">
           <li>
-            <NavLink
-              item={home ?? { href: "/", label: "Strona główna" }}
-              pathname={pathname}
-              current={pathname === "/"}
-            >
-              {home?.label ?? "Strona główna"}
-            </NavLink>
+            <div className="site-nav-overlay-item-row">
+              <NavLink
+                item={home ?? { href: "/", label: "Strona główna" }}
+                pathname={pathname}
+                current={pathname === "/"}
+              >
+                {home?.label ?? "Strona główna"}
+              </NavLink>
+              <span className="site-nav-overlay-expand-spacer" aria-hidden />
+            </div>
           </li>
           {visible.map((item, index) => {
             const children = item.children ?? [];
@@ -358,7 +361,9 @@ export function SiteHeader({ title, items }: Props) {
                     >
                       <ExpandIcon expanded={expanded} />
                     </button>
-                  ) : null}
+                  ) : (
+                    <span className="site-nav-overlay-expand-spacer" aria-hidden />
+                  )}
                 </div>
                 {children.length ? (
                   <div
