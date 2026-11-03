@@ -6,14 +6,14 @@ import { siteIndexingEnabled, siteOrigin } from "@/lib/site-url";
 import "./globals.css";
 
 const museoModerno = localFont({
-  src: "./fonts/museomoderno-latin-ext.woff2",
+  src: "./fonts/museomoderno-variable.ttf",
   variable: "--font-museomoderno",
   weight: "600 900",
   display: "swap",
 });
 
 const alexandria = localFont({
-  src: "./fonts/alexandria-latin-ext.woff2",
+  src: "./fonts/alexandria-variable.ttf",
   variable: "--font-alexandria",
   weight: "300 600",
   display: "swap",

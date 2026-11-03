@@ -8,6 +8,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | **Ostatnia aktualizacja** | 2026-11-03 — Wyższa jakość kompresji zdjęć oraz rozdzielczość hero do 2400 px. |
 | **Gałąź / HEAD** | `szaroale-pl-poprawa-jakosci-zdjec` |
 | **Zmiana bieżąca** | 2026-11-03 — Zdjęcia z Sanity są kompresowane z jakością 90; hero ma źródło do 2400 px zamiast 1600 px. |
+| **Zmiana fontów** | 2026-11-03 — Pełne lokalne fonty MuseoModerno i Alexandria (poprzednie pliki miały tylko `latin-ext`, nagłówki szły fallbackiem). |
 | **Poprzednia zmiana** | 2026-11-02 — Portable Text: wybór kolorów z czytelnymi nazwami; miękki ślad, podwójna kreska lub rulka CTA; linki automatycznie jasnozielone. |
 | **Starsza zmiana** | 2026-11-03 — Spójne tytuły edycji Teatru Codziennego; fonty Alexandria i MuseoModerno z lokalnych plików, by build nie zależał od Google Fonts. |
 | **Zmiana na Kontakt** | 2026-11-01 — Nagłówki „Adres” i „Numer konta” mają ten sam rozmiar co nagłówki sekcji formularza i kontaktu bezpośredniego; edycja treści odbywa się w polu Body dokumentu Kontakt w Studio. |
@@ -20,6 +21,8 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | **Owner Sanity** | Organizacja na `admin@dramaway.pl`, plan NGO. `admin@dramaway.pl` = project Admin; redakcja = Editor |
 
 ---
+
+Aktualizacja 2026-11-03: lokalne pliki z samym zakresem `latin-ext` pozostawiały zwykłe litery w kroju zastępczym. Layout ładuje teraz pełne fonty MuseoModerno i Alexandria.
 
 Aktualizacja 2026-11-02: kliknięcie CTA nie obrysowuje już całego kafelka; obrys pozostaje dla fokusu klawiatury.
 
