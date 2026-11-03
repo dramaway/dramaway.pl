@@ -4236,17 +4236,8 @@
     margin-block-start: 0;
   }
 
-  .article-body .body-figure {
-    margin-inline-start: 0;
-  }
-
   .article-body .body-figure .body-image {
-    margin-inline-start: 0;
     border-radius: var(--radius-media);
-  }
-
-  .article-body .body-figure-inline .body-image {
-    width: 100%;
   }
 
   @media (width >= 40rem) {
@@ -4258,7 +4249,7 @@
       margin-inline: 1.25rem 0;
     }
 
-    .article-body .portable-body .body-figure-inline {
+    .article-body .portable-body .body-figure-inline.body-figure-left {
       float: inline-start;
       margin-inline: 0 1.25rem;
     }
