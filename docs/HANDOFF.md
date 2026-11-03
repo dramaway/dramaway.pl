@@ -5,9 +5,10 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-03 — Linki w tekstach Portable Text są granatowe. |
-| **Gałąź / HEAD** | `szaroale-pl-granat-links-tekstowe` |
-| **Zmiana bieżąca** | 2026-11-03 — Linki w tekstach Portable Text używają granatu `brand-6`, również gdy zawierają fragmenty z innym kolorem tekstu. |
+| **Ostatnia aktualizacja** | 2026-11-03 — Dostępność: fokus po skip-linku, opisy przycisków galerii i identyfikatory deklaracji. |
+| **Gałąź / HEAD** | `szaroale-pl-audyt-deklaracji-dostepnosci` |
+| **Zmiana bieżąca** | 2026-11-03 — Poprawki dostępności strony przygotowane do wdrożenia; opisy zdjęć treściowych uzupełnione w Sanity. |
+| **Poprzednia zmiana** | 2026-11-03 — Linki w tekstach Portable Text używają granatu `brand-6`, również gdy zawierają fragmenty z innym kolorem tekstu. |
 | **Poprzednia zmiana** | 2026-11-03 — Bloki „Teksty przed listą edycji” mają piaskowe koło, pogrubiony nagłówek MuseoModerno i wybór koloru marki lub czarnego. |
 | **Poprzednia zmiana** | 2026-11-03 — W stopce link do deklaracji jest pod adresem (lewa kolumna), na dole wyrównany do social mediów po prawej. |
 | **Poprzednia zmiana** | 2026-11-03 — Zdjęcia w treści aktualności i stron mają zaokrąglone rogi oraz respektują wyrównanie z CMS; zawijane tekstem zachowują proporcje i opływanie. |
@@ -20,10 +21,12 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | **Hasła** | Bitwarden Fundacji (bitwarden.eu): hasła i kody odzyskiwania kont. Fundacja dostaje master password. |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ (`readingMethod` = Category; `publication.methods` = Categories; publiczne `publication.format`) |
-| **Working tree** | Poprawki WCAG są w kodzie; `pnpm test:web` (124 testy), `pnpm --filter web lint`, oba typechecki i produkcyjny build przechodzą. Build wymaga `NEXT_PUBLIC_SANITY_PROJECT_ID=tr2qdg9j` i `NEXT_PUBLIC_SANITY_DATASET=production`. Homepage ma już 5 zdjęć hero; `heroSlider.autoplay` jest pusty i domyślnie oznacza autoplay włączony. Po merge schemat Studio wdraża automatycznie workflow `.github/workflows/studio-deploy.yml`. Treść CMS do uzupełnienia: nazwy 26 filmów, języki angielskich tytułów, linki menu i prawna nazwa/adres stopki. Newsletter ma dostępne etykiety i komunikaty, ale endpoint zapisu nadal zwraca `501` (integracja nie jest skonfigurowana). Wymagają sprawdzenia w Deploy Preview: reflow przy powiększeniu 200%, klawiatura i obsługa galerii. Wcześniej O fundacji: galeria zdjęć między Społecznością a Historią; dodano pola tekstu alternatywnego do zdjęć redakcyjnych, także w galeriach. Nadal do potwierdzenia przez redakcję: kanał YouTube w stopce (`UCqnZ4VG2xTkiTYDbrOLMfEQ`) i adres e-mail. |
+| **Working tree** | Poprawki dostępności są w kodzie; `pnpm test:web` (130 testów), `pnpm --filter web lint` i produkcyjny build przechodzą. Build wymaga `NEXT_PUBLIC_SANITY_PROJECT_ID=tr2qdg9j` i `NEXT_PUBLIC_SANITY_DATASET=production`. Po merge schemat Studio wdraża automatycznie workflow `.github/workflows/studio-deploy.yml`. Treść CMS do uzupełnienia: nazwy 26 filmów, języki angielskich tytułów, linki menu i prawna nazwa/adres stopki. Newsletter ma dostępne etykiety i komunikaty, ale endpoint zapisu nadal zwraca `501` (integracja nie jest skonfigurowana). Nadal wymagają sprawdzenia: reflow przy powiększeniu 200%, klawiatura i obsługa galerii. Wcześniej O fundacji: galeria zdjęć między Społecznością a Historią; dodano pola tekstu alternatywnego do zdjęć redakcyjnych, także w galeriach. Nadal do potwierdzenia przez redakcję: kanał YouTube w stopce (`UCqnZ4VG2xTkiTYDbrOLMfEQ`) i adres e-mail. |
 | **Owner Sanity** | Organizacja na `admin@dramaway.pl`, plan NGO. `admin@dramaway.pl` = project Admin; redakcja = Editor |
 
 ---
+
+Aktualizacja 2026-11-03: poprawki dostępności w kodzie: widoczny fokus `#main-content` po przejściu linkiem „Przejdź do treści”, opisowe nazwy przycisków galerii oraz identyfikatory HTML dla sekcji, danych i linków deklaracji dostępności. W Sanity redakcja uzupełniła teksty alternatywne obrazów treściowych na stronach Art Generacje, Teatr Codzienny i To mi gra; sprawdzono 8 obrazów. Zmiany kodowe oczekują na wdrożenie. To nie jest pełny audyt ani potwierdzenie zgodności z WCAG.
 
 Aktualizacja 2026-11-03: opcjonalne bloki `sectionsBeforeEditions` na projektach układają się w równe kolumny bez pionowego przesunięcia co drugiego bloku. Pogrubione nagłówki MuseoModerno mają piaskowe koło z istniejącego motywu Blob i wybór koloru marki lub czarnego w Studio; starsze bloki zachowują kolory marki. Tekst pozostaje w kroju treści. Build wymaga `NEXT_PUBLIC_SANITY_PROJECT_ID=tr2qdg9j` i `NEXT_PUBLIC_SANITY_DATASET=production`.
 
