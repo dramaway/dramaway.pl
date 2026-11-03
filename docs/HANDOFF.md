@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-03 — Lokalnie bundlowane fonty usuwają zależność builda od pobrania Google Fonts. |
+| **Ostatnia aktualizacja** | 2026-11-03 — Pełne lokalne fonty przywracają MuseoModerno dla zwykłych liter nagłówków. |
 | **Gałąź / HEAD** | `szaroale-pl-teatr-codzienny-edition-titles` |
-| **Zmiana bieżąca** | 2026-11-03 — Spójne tytuły edycji Teatru Codziennego; fonty Alexandria i MuseoModerno z lokalnych plików, by build nie zależał od Google Fonts. |
+| **Zmiana bieżąca** | 2026-11-03 — Spójne tytuły edycji Teatru Codziennego; lokalne fonty MuseoModerno i Alexandria zawierają teraz pełny zestaw znaków, bez zależności builda od Google Fonts. |
 | **Poprzednia zmiana** | 2026-11-02 — Portable Text: wybór kolorów z czytelnymi nazwami; miękki ślad, podwójna kreska lub rulka CTA; linki automatycznie jasnozielone. |
 | **Zmiana na Kontakt** | 2026-11-01 — Nagłówki „Adres” i „Numer konta” mają ten sam rozmiar co nagłówki sekcji formularza i kontaktu bezpośredniego; edycja treści odbywa się w polu Body dokumentu Kontakt w Studio. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
@@ -19,6 +19,8 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | **Owner Sanity** | Organizacja na `admin@dramaway.pl`, plan NGO. `admin@dramaway.pl` = project Admin; redakcja = Editor |
 
 ---
+
+Aktualizacja 2026-11-03: lokalne pliki z samym zakresem `latin-ext` pozostawiały zwykłe litery w kroju zastępczym. Layout ładuje teraz pełne fonty MuseoModerno i Alexandria.
 
 Aktualizacja 2026-11-02: kliknięcie CTA nie obrysowuje już całego kafelka; obrys pozostaje dla fokusu klawiatury.
 
