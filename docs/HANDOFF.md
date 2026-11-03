@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-03 — Nazwy podstron w menu desktopowym używają MuseoModerno SemiBold, zgodnie z przesłanym wzorem. |
-| **Gałąź / HEAD** | `szaroale-pl-desktop-menu-font` |
-| **Zmiana bieżąca** | 2026-11-03 — Nazwy podstron w menu desktopowym używają MuseoModerno SemiBold, zgodnie z przesłanym wzorem. |
+| **Ostatnia aktualizacja** | 2026-11-03 — W stopce link do deklaracji jest pod adresem (lewa kolumna), na dole wyrównany do social mediów po prawej. |
+| **Gałąź / HEAD** | `szaroale-pl-footer-accessibility-declaration` |
+| **Zmiana bieżąca** | 2026-11-03 — W stopce link do deklaracji jest pod adresem (lewa kolumna), na dole wyrównany do social mediów po prawej. |
 | **Poprzednia zmiana** | 2026-11-03 — Zdjęcia w treści aktualności i stron są wyrównane do lewej i mają zaokrąglone rogi; zawijane tekstem pozostają po lewej z tekstem opływającym je z prawej. |
 | **Zmiana fontów** | 2026-11-03 — Pełne lokalne fonty MuseoModerno i Alexandria (poprzednie pliki miały tylko `latin-ext`, nagłówki szły fallbackiem). |
 | **Poprzednia zmiana** | 2026-11-02 — Portable Text: wybór kolorów z czytelnymi nazwami; miękki ślad, podwójna kreska lub rulka CTA; linki automatycznie jasnozielone. |
@@ -22,6 +22,8 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | **Owner Sanity** | Organizacja na `admin@dramaway.pl`, plan NGO. `admin@dramaway.pl` = project Admin; redakcja = Editor |
 
 ---
+
+Aktualizacja 2026-11-03: stopka ma link do deklaracji dostępności `/deklaracja-dostepnosci` pod adresem, na dole wyrównany do rzędu social mediów w prawej kolumnie.
 
 Aktualizacja 2026-11-03: lokalne pliki z samym zakresem `latin-ext` pozostawiały zwykłe litery w kroju zastępczym. Layout ładuje teraz pełne fonty MuseoModerno i Alexandria.
 

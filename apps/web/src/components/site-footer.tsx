@@ -39,9 +39,19 @@ export function SiteFooter({
               className="footer-logo"
             />
           </Link>
-          {address ? (
-            <p className="footer-address text-body">{address}</p>
-          ) : null}
+          <div className="footer-address-group">
+            {address ? (
+              <p className="footer-address text-body">{address}</p>
+            ) : null}
+            <Link
+              href="/deklaracja-dostepnosci"
+              className="footer-contact-link footer-accessibility-link"
+            >
+              <span className="footer-contact-text">
+                Deklaracja dostępności
+              </span>
+            </Link>
+          </div>
         </div>
         <FooterLinks links={links} />
         {newsletterEnabled ? <NewsletterForm /> : null}
