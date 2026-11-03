@@ -448,12 +448,6 @@
     background-color: color-mix(in srgb, white 58%, transparent);
   }
 
-  .site-nav-overlay-list a[aria-current="page"] {
-    text-decoration: underline;
-    text-decoration-thickness: 0.12em;
-    text-underline-offset: 0.25em;
-  }
-
   .site-nav-overlay-sub {
     display: flex;
     flex-direction: column;
