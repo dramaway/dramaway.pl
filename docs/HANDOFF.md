@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-03 — Zdjęcia w aktualnościach, także zawijane tekstem, są wyrównane do lewej i mają zaokrąglone rogi. |
+| **Ostatnia aktualizacja** | 2026-11-03 — Zdjęcia w treści aktualności i stron (w tym Wydawnictwa), także zawijane tekstem, są wyrównane do lewej i mają zaokrąglone rogi. |
 | **Gałąź / HEAD** | `szaroale-pl-fix-news-image-alignment` |
-| **Zmiana bieżąca** | 2026-11-03 — Zdjęcia w aktualnościach są wyrównane do lewej i mają zaokrąglone rogi; zawijane tekstem pozostają po lewej z tekstem opływającym je z prawej. |
+| **Zmiana bieżąca** | 2026-11-03 — Zdjęcia w treści aktualności i stron są wyrównane do lewej i mają zaokrąglone rogi; zawijane tekstem pozostają po lewej z tekstem opływającym je z prawej. |
 | **Zmiana fontów** | 2026-11-03 — Pełne lokalne fonty MuseoModerno i Alexandria (poprzednie pliki miały tylko `latin-ext`, nagłówki szły fallbackiem). |
 | **Poprzednia zmiana** | 2026-11-02 — Portable Text: wybór kolorów z czytelnymi nazwami; miękki ślad, podwójna kreska lub rulka CTA; linki automatycznie jasnozielone. |
 | **Starsza zmiana** | 2026-11-03 — Spójne tytuły edycji Teatru Codziennego; fonty Alexandria i MuseoModerno z lokalnych plików, by build nie zależał od Google Fonts. |
