@@ -4245,6 +4245,10 @@
     border-radius: var(--radius-media);
   }
 
+  .article-body .body-figure-inline .body-image {
+    width: 100%;
+  }
+
   @media (width >= 40rem) {
     .portable-body > .body-figure-inline.body-figure-left:not([hidden]):not([hidden]) {
       margin-inline: 0 1.25rem;
