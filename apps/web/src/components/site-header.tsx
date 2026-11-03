@@ -330,7 +330,7 @@ export function SiteHeader({ title, items }: Props) {
                       className="site-nav-overlay-expand"
                       aria-expanded={expanded}
                       aria-controls={submenuId}
-                      aria-label={`${expanded ? "Zwiń" : "Rozwiń"} podstrony: ${item.label}`}
+                      aria-label={`${expanded ? "Ukryj" : "Pokaż"} pozycje: ${item.label}`}
                       onClick={() =>
                         setExpandedSections((current) => {
                           const next = new Set(current);
@@ -340,29 +340,31 @@ export function SiteHeader({ title, items }: Props) {
                         })
                       }
                     >
-                      <span>{expanded ? "Ukryj" : "Zobacz"}</span>
-                      <ChevronIcon expanded={expanded} />
+                      <ChevronIcon />
                     </button>
                   ) : null}
                 </div>
                 {children.length ? (
-                  <ul
+                  <div
                     id={submenuId}
-                    className="site-nav-overlay-sub"
-                    hidden={!expanded}
+                    className="site-nav-overlay-submenu"
+                    aria-hidden={!expanded}
+                    inert={!expanded}
                   >
-                    {children.map((child, childIndex) => (
-                      <li key={`${child.href}:${child.label}:${childIndex}`}>
-                        <NavLink
-                          item={child}
-                          pathname={pathname}
-                          current={overlayCurrent(child, pathname, hash, item)}
-                        >
-                          {child.label}
-                        </NavLink>
-                      </li>
-                    ))}
-                  </ul>
+                    <ul className="site-nav-overlay-sub">
+                      {children.map((child, childIndex) => (
+                        <li key={`${child.href}:${child.label}:${childIndex}`}>
+                          <NavLink
+                            item={child}
+                            pathname={pathname}
+                            current={overlayCurrent(child, pathname, hash, item)}
+                          >
+                            {child.label}
+                          </NavLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 ) : null}
               </li>
             );
@@ -674,7 +676,7 @@ function MenuIcon({ open }: { open: boolean }) {
   );
 }
 
-function ChevronIcon({ expanded }: { expanded: boolean }) {
+function ChevronIcon() {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -686,7 +688,7 @@ function ChevronIcon({ expanded }: { expanded: boolean }) {
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d={expanded ? "m6 15 6-6 6 6" : "m6 9 6 6 6-6"} />
+      <path d="m6 9 6 6 6-6" />
     </svg>
   );
 }
