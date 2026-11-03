@@ -454,16 +454,12 @@
     }
   }
 
-  .site-nav-overlay-list a[aria-current="page"] {
-    position: relative;
-  }
-
   .site-nav-overlay-list a[aria-current="page"]::before {
     content: "";
-    position: absolute;
-    inset-inline-start: -0.9rem;
+    flex: none;
     width: 0.5rem;
     height: 0.5rem;
+    margin-inline-end: 0.5rem;
     border-radius: 50%;
     background-color: var(--color-magenta);
   }
