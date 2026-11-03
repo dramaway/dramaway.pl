@@ -330,7 +330,7 @@ export function SiteHeader({ title, items }: Props) {
                       className="site-nav-overlay-expand"
                       aria-expanded={expanded}
                       aria-controls={submenuId}
-                      aria-label={`${expanded ? "Ukryj" : "Pokaż"} pozycje: ${item.label}`}
+                      aria-label={`${expanded ? "Ukryj" : "Pokaż"} ${children.length} pozycji: ${item.label}`}
                       onClick={() =>
                         setExpandedSections((current) => {
                           const next = new Set(current);
@@ -340,7 +340,7 @@ export function SiteHeader({ title, items }: Props) {
                         })
                       }
                     >
-                      <ChevronIcon />
+                      <ExpandIcon expanded={expanded} count={children.length} />
                     </button>
                   ) : null}
                 </div>
@@ -637,7 +637,7 @@ function NavLink({
 function MoreIcon() {
   return (
     <svg
-      viewBox="0 0 24 24"
+      viewBox="0 0 24 30"
       aria-hidden
       className="site-nav-more-icon"
       fill="currentColor"
@@ -676,7 +676,13 @@ function MenuIcon({ open }: { open: boolean }) {
   );
 }
 
-function ChevronIcon() {
+function ExpandIcon({
+  expanded,
+  count,
+}: {
+  expanded: boolean;
+  count: number;
+}) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -688,7 +694,25 @@ function ChevronIcon() {
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d="m6 9 6 6 6-6" />
+      {expanded ? (
+        <path d="M5 12h14" />
+      ) : (
+        <>
+          <path d="M5 12h14" />
+          <path d="M12 5v14" />
+        </>
+      )}
+      <text
+        x="12"
+        y="28"
+        textAnchor="middle"
+        fill="currentColor"
+        stroke="none"
+        fontSize="7"
+        fontFamily="var(--font-display), sans-serif"
+      >
+        {count}
+      </text>
     </svg>
   );
 }
