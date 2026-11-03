@@ -35,6 +35,42 @@ function isCurrentPage(item: NavItem, pathname: string): boolean {
   return item.href !== "/" && pathname.startsWith(`${item.href}/`);
 }
 
+function anchorTop(target: HTMLElement) {
+  const anchor =
+    target.tagName === "SECTION"
+      ? (target.querySelector<HTMLElement>("h2, h3") ?? target)
+      : target;
+  const header = document.querySelector<HTMLElement>(".site-header");
+  const offset = (header?.getBoundingClientRect().height ?? 0) + 16;
+  return Math.max(0, anchor.getBoundingClientRect().top + window.scrollY - offset);
+}
+
+/** Scrolls to the anchor's heading and re-aims while late layout shifts settle. */
+function scrollToAnchor(target: HTMLElement) {
+  const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let attempts = 0;
+  let lastY = window.scrollY;
+  let still = 0;
+
+  window.scrollTo({ top: anchorTop(target), behavior: smooth ? "smooth" : "auto" });
+
+  const tick = () => {
+    still = window.scrollY === lastY ? still + 1 : 0;
+    lastY = window.scrollY;
+    if (still < 8) {
+      requestAnimationFrame(tick);
+      return;
+    }
+    if (Math.abs(anchorTop(target) - window.scrollY) > 4 && attempts < 3) {
+      attempts += 1;
+      still = 0;
+      window.scrollTo({ top: anchorTop(target), behavior: smooth ? "smooth" : "auto" });
+      requestAnimationFrame(tick);
+    }
+  };
+  requestAnimationFrame(tick);
+}
+
 function splitHref(href: string) {
   const [rest, hash = ""] = href.split("#", 2);
   return { path: rest.split("?", 1)[0], hash: hash ? `#${hash}` : "" };
@@ -74,6 +110,16 @@ export function SiteHeader({ title, items }: Props) {
 
   useEffect(() => {
     setOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!window.location.hash) return;
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    const timer = window.setTimeout(() => {
+      const target = document.getElementById(id);
+      if (target) scrollToAnchor(target);
+    }, 400);
+    return () => window.clearTimeout(timer);
   }, [pathname]);
 
   useEffect(() => {
@@ -199,16 +245,7 @@ export function SiteHeader({ title, items }: Props) {
           if (!target) return;
           event.preventDefault();
           window.history.pushState(null, "", url.pathname + url.search + url.hash);
-          const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)")
-            .matches;
-          window.setTimeout(
-            () =>
-              target.scrollIntoView({
-                behavior: smooth ? "smooth" : "auto",
-                block: "start",
-              }),
-            60,
-          );
+          window.setTimeout(() => scrollToAnchor(target), 60);
         }}
       >
         <ul className="page site-nav-overlay-list">
