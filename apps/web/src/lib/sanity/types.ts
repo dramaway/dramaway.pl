@@ -380,6 +380,7 @@ export type ProjectEdition = {
 export type ProjectTextSection = {
   _key: string;
   heading: string | null;
+  headingColor?: "brand" | "black" | null;
   text: string | null;
 };
 
