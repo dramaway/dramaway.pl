@@ -3911,7 +3911,6 @@
   }
 
   .body-figure-full .body-image {
-    width: 100%;
     max-height: 90vh;
   }
 
@@ -4025,13 +4024,6 @@
     }
 
     .body-figure-full {
-      width: 100%;
-    }
-
-    .body-figure-small .body-image,
-    .body-figure-medium .body-image,
-    .body-figure-wide .body-image,
-    .body-figure-full .body-image {
       width: 100%;
     }
 
