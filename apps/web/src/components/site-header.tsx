@@ -145,6 +145,9 @@ export function SiteHeader({ title, items }: Props) {
         aria-label="Nawigacja główna"
         className="site-nav-overlay"
         hidden={!open}
+        onClick={(event) => {
+          if ((event.target as HTMLElement).closest("a")) setOpen(false);
+        }}
       >
         <ul className="page site-nav-overlay-list">
           {visible.map((item, index) => (
