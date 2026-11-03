@@ -1560,6 +1560,10 @@
     transition: text-decoration-color 0.15s ease;
   }
 
+  .footer-accessibility-link .footer-contact-text {
+    text-decoration-color: currentColor;
+  }
+
   .footer-contact-link:hover .footer-contact-text,
   .footer-contact-link:focus-visible .footer-contact-text {
     text-decoration-color: currentColor;
