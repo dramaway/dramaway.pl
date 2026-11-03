@@ -1450,16 +1450,15 @@
   }
 
   /*
-   * Footer: logo + address on the left; newsletter, then contact and
-   * social on the right. Below lg one column: contact sits right under
-   * the address, the newsletter a section lower.
+   * Footer: address and contact on the left; newsletter and accessibility
+   * link on the right. Below lg the columns stack in document order.
    */
   .site-footer-wrap {
     position: relative;
     z-index: 2;
   }
 
-  .site-footer:has(> .footer-newsletter) {
+  .site-footer:has(.footer-actions) {
     display: grid;
 
     @media (min-width: 1280px) {
@@ -1467,18 +1466,16 @@
     }
   }
 
-  .site-footer > .footer-links {
+  .footer-address-group > .footer-links {
     margin-block-start: 1.25rem;
-    @media (min-width: 1280px) {
-      margin-left: calc(var(--dot-size) / 2 + 1rem);
-    }
   }
 
-  .site-footer > .footer-newsletter {
+  .site-footer > .footer-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
     margin-block-start: var(--spacing-section);
-    @media (min-width: 1280px) {
-      margin-left: calc(var(--dot-size) / 2 + 1rem);
-    }
   }
 
   .footer-brand {
@@ -1498,6 +1495,13 @@
   .footer-address {
     margin: 0;
     white-space: pre-wrap;
+  }
+
+  .footer-address-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
   }
 
   /*
@@ -1846,27 +1850,17 @@
   }
 
   @media (width >= 64rem) {
-    /*
-     * Right column is as wide as the newsletter; contact and social share
-     * its left edge. The brand block opens into the grid so the contact
-     * row starts on the address's first line. Without the newsletter the
-     * links start level with the logo.
-     */
+    /* Contact stays under the address; newsletter and declaration share
+     * the right column and its left edge. */
     .site-footer {
       grid-template-columns: minmax(0, 1fr) auto;
       grid-template-rows: auto 1fr;
       grid-template-areas:
-        "logo news"
-        "address links";
+        "logo actions"
+        "address actions";
       column-gap: 4rem;
       row-gap: 1.25rem;
       align-items: start;
-    }
-
-    .site-footer:not(:has(> .footer-newsletter)) {
-      grid-template-areas:
-        "logo links"
-        "address links";
     }
 
     .footer-brand {
@@ -1878,19 +1872,18 @@
       align-self: end;
     }
 
-    .footer-address {
+    .footer-address-group {
       grid-area: address;
       max-width: 24rem;
     }
 
-    /* Centre the first 44 px row on the address's first line. */
-    .site-footer > .footer-links {
-      grid-area: links;
-      margin-block-start: calc((1lh - 2.75rem) / 2);
+    .site-footer > .footer-actions {
+      grid-area: actions;
+      margin-block-start: 0;
+      margin-left: calc(var(--dot-size) / 2 + 1rem);
     }
 
-    .site-footer > .footer-newsletter {
-      grid-area: news;
+    .footer-actions > .footer-newsletter {
       align-items: flex-start;
       margin-block-start: 0;
     }
@@ -1928,7 +1921,7 @@
         minmax(0, 1fr);
     }
 
-    .site-footer > .footer-newsletter {
+    .footer-actions > .footer-newsletter {
       margin-block-start: calc(
         (var(--spacing-section) + var(--dot-size) * 0.45) * -1
       );
@@ -1939,8 +1932,8 @@
     .site-footer {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       grid-template-areas:
-        "logo news"
-        "address links";
+        "logo actions"
+        "address actions";
       column-gap: 2rem;
     }
 
@@ -1952,16 +1945,17 @@
       grid-area: logo;
     }
 
-    .footer-address {
+    .footer-address-group {
       grid-area: address;
     }
 
-    .site-footer > .footer-links {
-      grid-area: links;
+    .site-footer > .footer-actions {
+      grid-area: actions;
+      margin-block-start: 0;
+      margin-left: 0;
     }
 
-    .site-footer > .footer-newsletter {
-      grid-area: news;
+    .footer-actions > .footer-newsletter {
       width: 100%;
       margin-block-start: 0;
     }
