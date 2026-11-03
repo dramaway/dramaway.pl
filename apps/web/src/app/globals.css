@@ -363,7 +363,7 @@
     outline-offset: 2px;
   }
 
-  #main-content:focus {
+  #main-content:focus-visible {
     outline: 3px solid var(--color-green-ink);
     outline-offset: -3px;
   }
