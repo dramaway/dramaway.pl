@@ -98,15 +98,66 @@ function overlayCurrent(
   );
 }
 
+function currentSectionHref(
+  items: NavItem[],
+  pathname: string,
+  hash: string,
+): string | undefined {
+  return items.find(
+    (item) =>
+      item.children?.length &&
+      (overlayCurrent(item, pathname, hash) ||
+        item.children.some((child) =>
+          overlayCurrent(child, pathname, hash, item),
+        )),
+  )?.href;
+}
+
 export function SiteHeader({ title, items }: Props) {
   const pathname = usePathname();
   const [hash, setHash] = useState("");
   const home = items.find((item) => item.href === "/");
   const visible = items.filter((item) => item.href !== "/");
   const [open, setOpen] = useState(false);
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(
+    () => new Set(),
+  );
   const navId = useId();
+  const overlayRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const { navRef, measureRef, visibleCount } = useDesktopNavOverflow(visible);
+
+  useLayoutEffect(() => {
+    if (!open) return;
+    const activeSection = currentSectionHref(items, pathname, hash);
+    setExpandedSections(activeSection ? new Set([activeSection]) : new Set());
+  }, [open, items, pathname, hash]);
+
+  useLayoutEffect(() => {
+    if (!open) return;
+    const overlay = overlayRef.current;
+    if (!overlay) return;
+    const frame = window.requestAnimationFrame(() => {
+      const active = overlay.querySelector<HTMLElement>(
+        'a[aria-current="page"]',
+      );
+      if (!active) return;
+      const overlayRect = overlay.getBoundingClientRect();
+      const activeRect = active.getBoundingClientRect();
+      const targetTop =
+        overlay.scrollTop +
+        activeRect.top -
+        overlayRect.top -
+        (overlay.clientHeight - activeRect.height) / 2;
+      overlay.scrollTo({
+        top: Math.max(0, targetTop),
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
+      });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [open, pathname, hash, expandedSections]);
 
   useEffect(() => {
     setOpen(false);
@@ -227,6 +278,7 @@ export function SiteHeader({ title, items }: Props) {
       </button>
 
       <nav
+        ref={overlayRef}
         id={navId}
         aria-label="Nawigacja główna"
         className="site-nav-overlay"
@@ -258,32 +310,62 @@ export function SiteHeader({ title, items }: Props) {
               {home?.label ?? "Strona główna"}
             </NavLink>
           </li>
-          {visible.map((item, index) => (
-            <li key={`${item.href}:${item.label}:${index}`}>
-              <NavLink
-                item={item}
-                pathname={pathname}
-                current={overlayCurrent(item, pathname, hash)}
-              >
-                {item.label}
-              </NavLink>
-              {item.children?.length ? (
-                <ul className="site-nav-overlay-sub">
-                  {item.children.map((child, childIndex) => (
-                    <li key={`${child.href}:${child.label}:${childIndex}`}>
-                      <NavLink
-                        item={child}
-                        pathname={pathname}
-                        current={overlayCurrent(child, pathname, hash, item)}
-                      >
-                        {child.label}
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
-            </li>
-          ))}
+          {visible.map((item, index) => {
+            const children = item.children ?? [];
+            const expanded = expandedSections.has(item.href);
+            const submenuId = `${navId}-group-${index}`;
+            return (
+              <li key={`${item.href}:${item.label}:${index}`}>
+                <div className="site-nav-overlay-item-row">
+                  <NavLink
+                    item={item}
+                    pathname={pathname}
+                    current={overlayCurrent(item, pathname, hash)}
+                  >
+                    {item.label}
+                  </NavLink>
+                  {children.length ? (
+                    <button
+                      type="button"
+                      className="site-nav-overlay-expand"
+                      aria-expanded={expanded}
+                      aria-controls={submenuId}
+                      aria-label={`${expanded ? "Zwiń" : "Rozwiń"} podstrony: ${item.label}`}
+                      onClick={() =>
+                        setExpandedSections((current) => {
+                          const next = new Set(current);
+                          if (next.has(item.href)) next.delete(item.href);
+                          else next.add(item.href);
+                          return next;
+                        })
+                      }
+                    >
+                      <ChevronIcon expanded={expanded} />
+                    </button>
+                  ) : null}
+                </div>
+                {children.length ? (
+                  <ul
+                    id={submenuId}
+                    className="site-nav-overlay-sub"
+                    hidden={!expanded}
+                  >
+                    {children.map((child, childIndex) => (
+                      <li key={`${child.href}:${child.label}:${childIndex}`}>
+                        <NavLink
+                          item={child}
+                          pathname={pathname}
+                          current={overlayCurrent(child, pathname, hash, item)}
+                        >
+                          {child.label}
+                        </NavLink>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+              </li>
+            );
+          })}
         </ul>
       </nav>
     </header>
@@ -587,6 +669,23 @@ function MenuIcon({ open }: { open: boolean }) {
           <path d="M4 17h16" />
         </>
       )}
+    </svg>
+  );
+}
+
+function ChevronIcon({ expanded }: { expanded: boolean }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden
+      className="site-nav-expand-icon"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d={expanded ? "m6 15 6-6 6 6" : "m6 9 6 6 6-6"} />
     </svg>
   );
 }
