@@ -136,7 +136,7 @@ export function SiteHeader({ title, items }: Props) {
     if (!overlayRendered) return;
     const delay = window.matchMedia("(prefers-reduced-motion: reduce)").matches
       ? 0
-      : 520;
+      : 320;
     const timer = window.setTimeout(() => setOverlayRendered(false), delay);
     return () => window.clearTimeout(timer);
   }, [open, overlayRendered]);
