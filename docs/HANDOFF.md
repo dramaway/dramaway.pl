@@ -7,7 +7,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 |--|--|
 | **Ostatnia aktualizacja** | 2026-11-04 — Kategorie biblioteki mają ręcznie rysowane podkreślenie jak CTA. |
 | **Gałąź / HEAD** | `szaroale-pl-czcionka-kategorii-biblioteki` |
-| **Zmiana bieżąca** | 2026-11-04 — Kategorie biblioteki mają ręcznie rysowane zielone podkreślenie jak CTA, widoczne na aktywnej kategorii i animowane przy hover/fokus. Wszystkie H2 używają MuseoModerno 24 px; H3/H4 na podstronach — Alexandria SemiBold; hero, menu i H1 bez zmian. Pozostałe zmiany CTA, kategorii i odstępów listingów pozostają opisane niżej/wyżej w PR; filtry biblioteki są lekkimi zakładkami z ruchomym wskaźnikiem. |
+| **Zmiana bieżąca** | 2026-11-04 — Kreski CTA są nieco krótsze od etykiet; ręcznie rysowane zielone podkreślenie kategorii biblioteki pozostaje w dopasowanym stylu. Wszystkie H2 używają MuseoModerno 24 px; H3/H4 na podstronach — Alexandria SemiBold; hero, menu i H1 bez zmian. Pozostałe zmiany CTA, kategorii i odstępów listingów pozostają opisane niżej/wyżej w PR; filtry biblioteki są lekkimi zakładkami z ruchomym wskaźnikiem. |
 | **Poprzednia zmiana** | 2026-11-04 — Ramka całej treści pojawia się tylko przy fokusie klawiatury; fokus CTA na dotyku nie obrysowuje kafelka. |
 | **Poprzednia zmiana** | 2026-11-03 — Linki w tekstach Portable Text używają granatu `brand-6`, również gdy zawierają fragmenty z innym kolorem tekstu. |
 | **Poprzednia zmiana** | 2026-11-03 — Bloki „Teksty przed listą edycji” mają piaskowe koło, pogrubiony nagłówek MuseoModerno i wybór koloru marki lub czarnego. |
