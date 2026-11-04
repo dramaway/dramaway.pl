@@ -20,7 +20,7 @@ Styl **Centered** wyrównuje tekst akapitu do środka jego kolumny. Zaznacz akap
 
 ## Termin
 
-Styl **Termin** to hasło w tekście (wyróżniona plama i zwykły krój tekstu). To nie jest cytat. Cytat zostaje stylem **Quote**.
+Styl **Termin** to hasło w tekście (wyróżniona plama oraz MuseoModerno SemiBold 18 px w kolorze `#282828`). To nie jest cytat. Cytat zostaje stylem **Quote**.
 
 Zaznacz akapit i wybierz Termin. Pogrubienie można dołożyć, ale nie jest wymagane.
 

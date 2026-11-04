@@ -70,7 +70,7 @@ export function BlobStack({
             <h3
               className={
                 listingTypography
-                  ? "font-display text-listing-title font-semibold text-ink listing-spec-title"
+                  ? "font-display text-listing-title font-semibold text-ink normal-case listing-spec-title"
                   : thumbnails
                     ? "blob-row-title font-body text-listing-title font-semibold normal-case"
                     : "font-display text-listing-title font-black"

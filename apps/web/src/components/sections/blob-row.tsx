@@ -23,7 +23,7 @@ type BlobRowProps = {
   density?: "default" | "compact";
   /** Replace decorative blobs with optional image thumbnails. */
   variant?: "blob" | "thumbnail";
-  /** Apply the requested listing typography on the projects page. */
+  /** Apply the requested listing typography on the projects page and edition listings. */
   listingTypography?: boolean;
   emptyMessage?: string;
   className?: string;
