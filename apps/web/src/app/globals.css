@@ -2716,6 +2716,7 @@
   }
 
   .cta-rule {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 14' preserveAspectRatio='none'%3E%3Cpath d='M3 8 C42 4 75 10 112 7 S184 9 225 5' fill='none' stroke='%23369125' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     display: block;
     width: 110%;
     height: 0.75rem;
@@ -4278,7 +4279,6 @@
     display: inline-flex;
     flex-direction: row;
     align-items: center;
-    gap: 0.6rem;
     min-height: var(--touch-target);
     min-width: 0;
     width: auto;
@@ -4296,57 +4296,9 @@
     display: none;
   }
 
-  .filter-row-switches .cta::before {
-    display: block;
-    flex: 0 0 1rem;
-    width: 1rem;
-    height: 1rem;
-    border-radius: 50%;
-    background-color: var(--color-magenta);
-    opacity: 0;
-    transform: scale(0.65);
-    transition:
-      opacity 160ms ease,
-      transform 220ms ease;
-    content: "";
-  }
-
-  .filter-row-switches .cta[aria-current="true"]::before {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  .filter-row-switches .cta::after {
-    position: absolute;
-    inset-inline: 0;
-    inset-inline-end: -0.35rem;
-    inset-block-end: 0;
-    height: 0.5rem;
-    background-color: var(--color-magenta);
-    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 14' preserveAspectRatio='none'%3E%3Cpath d='M3 8 C42 4 75 10 112 7 S184 9 225 5' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
-      left center / 100% 100% no-repeat;
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 14' preserveAspectRatio='none'%3E%3Cpath d='M3 8 C42 4 75 10 112 7 S184 9 225 5' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
-      left center / 100% 100% no-repeat;
-    clip-path: inset(0 100% 0 0);
-    transition: clip-path 350ms ease;
-    content: "";
-  }
-
-  .filter-row-switches .cta:not([aria-current="true"]):hover::after,
-  .filter-row-switches .cta:not([aria-current="true"]):focus-visible::after {
-    clip-path: inset(0 4% 0 0);
-  }
-
   .filter-row-switches .cta[aria-current="true"] {
     color: var(--color-magenta);
     font-weight: 600;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .filter-row-switches .cta::before,
-    .filter-row-switches .cta::after {
-      transition: none;
-    }
   }
 
   /*
