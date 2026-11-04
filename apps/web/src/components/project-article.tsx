@@ -153,16 +153,16 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
                     >
                       <h2 className="project-art-generacje-term-heading">
                         {part.title}
-                        <span
-                          className="project-text-section-dots"
-                          aria-hidden="true"
-                        >
-                          <i />
-                          <i />
-                          <i />
-                          <i />
-                        </span>
                       </h2>
+                      <span
+                        className="project-text-section-dots"
+                        aria-hidden="true"
+                      >
+                        <i />
+                        <i />
+                        <i />
+                        <i />
+                      </span>
                       {part.blocks.length > 0 ? (
                         <div className="project-art-generacje-term-copy">
                           <PortableBody value={part.blocks} />
@@ -204,18 +204,18 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
                       className={`blob-row-label project-text-section-heading${section.headingColor === "black" ? " project-text-section-heading-black" : ""}`}
                     >
                       {heading}
-                      {isArtGeneracje ? (
-                        <span
-                          className="project-text-section-dots"
-                          aria-hidden="true"
-                        >
-                          <i />
-                          <i />
-                          <i />
-                          <i />
-                        </span>
-                      ) : null}
                     </h2>
+                    {isArtGeneracje ? (
+                      <span
+                        className="project-text-section-dots"
+                        aria-hidden="true"
+                      >
+                        <i />
+                        <i />
+                        <i />
+                        <i />
+                      </span>
+                    ) : null}
                     <p className="project-text-section-copy">{text}</p>
                   </div>
                 </section>

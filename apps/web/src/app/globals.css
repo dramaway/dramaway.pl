@@ -2277,27 +2277,31 @@
     display: grid;
     grid-template-columns: minmax(130px, 0.36fr) minmax(0, 1fr);
     column-gap: clamp(1.5rem, 4vw, 2.75rem);
+    row-gap: 1.25rem;
     align-items: start;
   }
 
   .project-art-generacje-term-heading {
     grid-column: 1;
     grid-row: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
     margin: 0;
     font-family: var(--font-display);
     font-size: 18px;
     font-weight: 700;
     line-height: 1.35;
-    text-align: right;
+    text-align: left;
     text-transform: uppercase;
+  }
+
+  .project-art-generacje-editorial-section > .project-text-section-dots {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
   }
 
   .project-art-generacje-term-copy {
     grid-column: 2;
-    grid-row: 1;
+    grid-row: 2;
     min-width: 0;
   }
 
@@ -2333,8 +2337,12 @@
     > section:nth-of-type(even)
     .project-art-generacje-term-heading {
     grid-column: 2;
-    align-items: flex-start;
-    text-align: left;
+  }
+
+  .project-art-generacje-body-flow
+    > section:nth-of-type(even)
+    > .project-text-section-dots {
+    grid-column: 1;
   }
 
   .project-art-generacje-body-flow
@@ -2345,8 +2353,10 @@
 
   .project-text-section-dots {
     display: flex;
+    width: 100%;
     gap: 2px;
-    margin-block-start: 0.7rem;
+    justify-content: space-between;
+    margin-block: 0 1.25rem;
   }
 
   .project-text-section-dots i {
@@ -2366,6 +2376,7 @@
     display: grid;
     grid-template-columns: minmax(130px, 0.36fr) minmax(0, 1fr);
     column-gap: clamp(1.5rem, 4vw, 2.75rem);
+    row-gap: 1.25rem;
     align-items: start;
   }
 
@@ -2380,16 +2391,19 @@
   .project-text-sections-art-generacje .project-text-section-heading {
     grid-column: 1;
     grid-row: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
     margin: 0;
     font-family: var(--font-display);
     font-size: 18px;
     font-weight: 700;
     line-height: 1.35;
-    text-align: right;
+    text-align: left;
     text-transform: uppercase;
+  }
+
+  .project-text-sections-art-generacje .project-text-section-dots {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
   }
 
   .project-text-sections-art-generacje
@@ -2422,7 +2436,7 @@
 
   .project-text-sections-art-generacje .project-text-section-copy {
     grid-column: 2;
-    grid-row: 1;
+    grid-row: 2;
     margin-block-start: 0;
     text-align: left;
   }
@@ -2435,8 +2449,12 @@
     > :nth-child(even)
     .project-text-section-heading {
     grid-column: 2;
-    align-items: flex-start;
-    text-align: left;
+  }
+
+  .project-text-sections-art-generacje
+    > :nth-child(even)
+    .project-text-section-dots {
+    grid-column: 1;
   }
 
   .project-text-sections-art-generacje
@@ -2508,17 +2526,23 @@
   @media (width < 64rem) {
     .project-art-generacje-editorial-section {
       grid-template-columns: minmax(0, 1fr);
+      row-gap: 0;
     }
 
     .project-art-generacje-editorial-section .project-art-generacje-term-heading {
       grid-column: 1;
-      align-items: flex-start;
       text-align: left;
+    }
+
+    .project-art-generacje-editorial-section > .project-text-section-dots {
+      grid-column: 1;
+      grid-row: 2;
+      margin-block: 1rem 0;
     }
 
     .project-art-generacje-editorial-section .project-art-generacje-term-copy {
       grid-column: 1;
-      grid-row: 2;
+      grid-row: 3;
       margin-block-start: 1.25rem;
     }
 
@@ -2530,33 +2554,45 @@
       > section:nth-of-type(even)
       .project-art-generacje-term-heading {
       grid-column: 1;
-      align-items: flex-start;
       text-align: left;
+    }
+
+    .project-art-generacje-body-flow
+      > section:nth-of-type(even)
+      > .project-text-section-dots {
+      grid-column: 1;
+      grid-row: 2;
     }
 
     .project-art-generacje-body-flow
       > section:nth-of-type(even)
       .project-art-generacje-term-copy {
       grid-column: 1;
-      grid-row: 2;
+      grid-row: 3;
       margin-block-start: 1.25rem;
     }
 
     .project-text-sections-art-generacje .project-text-section {
       grid-template-columns: minmax(0, 1fr);
+      row-gap: 0;
     }
 
     .project-text-sections-art-generacje .project-text-section-heading,
     .project-text-sections-art-generacje > :nth-child(even) .project-text-section-heading {
       grid-column: 1;
-      align-items: flex-start;
       text-align: left;
+    }
+
+    .project-text-sections-art-generacje .project-text-section-dots {
+      grid-column: 1;
+      grid-row: 2;
+      margin-block: 1rem 0;
     }
 
     .project-text-sections-art-generacje .project-text-section-copy,
     .project-text-sections-art-generacje > :nth-child(even) .project-text-section-copy {
       grid-column: 1;
-      grid-row: auto;
+      grid-row: 3;
       margin-block-start: 1.25rem;
     }
   }
