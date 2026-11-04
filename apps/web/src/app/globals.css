@@ -4343,7 +4343,6 @@
     margin: 0;
     padding: 0;
     list-style: none;
-    border-block-end: 1px solid color-mix(in srgb, var(--color-ink) 18%, transparent);
   }
 
   .filter-row-switches .cta {
