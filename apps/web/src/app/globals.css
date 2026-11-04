@@ -4821,6 +4821,14 @@ body:not(:has([data-home]))
   font-weight: 600;
 }
 
+body:not(:has([data-home]))
+  :is(h3, .text-h3)
+  :not(.fixed-section-heading)
+  :not(:where(.hero *))
+  :not(:where(.site-header *)) {
+  text-transform: none;
+}
+
 h2 {
   font-family: var(--font-display);
   font-size: 1.5rem;

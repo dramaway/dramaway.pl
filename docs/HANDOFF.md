@@ -5,10 +5,11 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-04 — Dodano pole dodatkowej treści projektu po blokach „Teksty przed listą edycji”; tytuły bloków są Alexandrią, a CTA w MuseoModerno z dłuższą kreską. |
-| **Gałąź / HEAD** | `szaroale-pl-czcionka-kategorii-biblioteki` |
-| **Zmiana bieżąca** | 2026-11-04 — Dodano pole dodatkowej treści projektu po blokach „Teksty przed listą edycji”; nagłówki tych bloków używają Alexandrii SemiBold 18 px. Wszystkie CTA używają MuseoModerno SemiBold i mają dłuższe, ręcznie rysowane podkreślenie. Pozostałe zmiany: linki kategorii biblioteki mają taki sam rozmiar jak filtry formatu i są zapisane małymi literami; wybrana kategoria używa lżejszej Alexandrii Regular 400; aktywny format wyróżnia magentowa kropka pasująca do kategorii. Odstęp pod hero edycji projektu do galerii lub body zmniejszono o połowę. Kategorie nie mają podkreśleń; aktywny filtr formatu ma magentową kropkę, a nieaktywne filtry pokazują kreskę przy hoverze i fokusie. Przed pierwszą publikacją w książkach, multimediach i scenariuszach dodano odstęp; artykuły i publikacje bez zmian. „Czytaj więcej” i natywne szufladki używają Alexandrii SemiBold bez wersalików oraz zielonego podkreślenia jak CTA. Wszystkie H2 używają MuseoModerno 24 px; H3/H4 na podstronach — Alexandria SemiBold; hero, menu i H1 bez zmian. |
-| **Poprzednia zmiana** | 2026-11-04 — Ramka całej treści pojawia się tylko przy fokusie klawiatury; fokus CTA na dotyku nie obrysowuje kafelka. |
+| **Ostatnia aktualizacja** | 2026-11-04 — H3 na podstronach używają zapisu zdaniowego, tak jak tytuły listingów; zachowują Alexandrię SemiBold i rozmiar wynikający z rangi. |
+| **Gałąź / HEAD** | `h3-tytuly-jak-w-listingu` |
+| **Zmiana bieżąca** | 2026-11-04 — H3 na podstronach zapisane zdaniowo jak tytuły listingów; Alexandria SemiBold i rozmiar wynikający z rangi pozostają bez zmian. |
+| **Poprzednia zmiana** | 2026-11-04 — Dodano pole dodatkowej treści projektu po blokach „Teksty przed listą edycji”; tytuły bloków są Alexandrią, a CTA w MuseoModerno z dłuższą kreską. |
+| **Wcześniejsza zmiana** | 2026-11-04 — Ramka całej treści pojawia się tylko przy fokusie klawiatury; fokus CTA na dotyku nie obrysowuje kafelka. |
 | **Poprzednia zmiana** | 2026-11-03 — Linki w tekstach Portable Text używają granatu `brand-6`, również gdy zawierają fragmenty z innym kolorem tekstu. |
 | **Poprzednia zmiana** | 2026-11-03 — Bloki „Teksty przed listą edycji” mają piaskowe koło, pogrubiony nagłówek MuseoModerno i wybór koloru marki lub czarnego. |
 | **Poprzednia zmiana** | 2026-11-03 — W stopce link do deklaracji jest pod adresem (lewa kolumna), na dole wyrównany do social mediów po prawej. |
