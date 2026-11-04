@@ -43,7 +43,7 @@ export function CzytelniaStack({ items }: { items: CzytelniaRowItem[] }) {
               ) : null}
             </span>
             <div className="pub-row-copy">
-              <h3 className="pub-row-title font-body text-listing-title font-semibold normal-case">
+              <h3 className="pub-row-title font-display text-listing-title font-semibold text-ink normal-case listing-spec-title">
                 {item.external ? (
                   <a
                     href={item.href}
@@ -69,7 +69,9 @@ export function CzytelniaStack({ items }: { items: CzytelniaRowItem[] }) {
                 )}
               </h3>
               {item.lead ? (
-                <p className="mt-5 text-body">{item.lead}</p>
+                <p className="mt-5 font-body text-listing-description font-light text-ink listing-spec-description">
+                  {item.lead}
+                </p>
               ) : null}
               <CtaLink href={item.href} presentational className="mt-8">
                 {item.fileDescription

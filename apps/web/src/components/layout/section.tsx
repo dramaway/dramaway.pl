@@ -8,6 +8,7 @@ type SectionProps = {
   className?: string;
   id?: string;
   "aria-labelledby"?: string;
+  "aria-label"?: string;
 };
 
 export function Section({

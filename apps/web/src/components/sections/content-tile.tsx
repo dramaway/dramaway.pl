@@ -38,17 +38,23 @@ export function ContentTile({
   tile,
   heading = "h2",
   layout = "stack",
+  listingTypography = false,
 }: {
   tile: ResolvedTile;
   heading?: "h2" | "h3";
   /** `card` aligns the CTA with neighbouring grid tiles. */
   layout?: "stack" | "card";
+  listingTypography?: boolean;
 }) {
   const Title = heading;
   const titleClass =
-    layout === "card"
-      ? "news-card-title mt-2 font-display text-listing-title font-black"
-      : "font-display text-listing-title font-black";
+    listingTypography
+      ? layout === "card"
+        ? "news-card-title mt-2 font-display text-listing-title font-semibold text-ink listing-spec-title"
+        : "font-display text-listing-title font-semibold text-ink listing-spec-title"
+      : layout === "card"
+        ? "news-card-title mt-2 font-display text-listing-title font-black"
+        : "font-display text-listing-title font-black";
   const title = tile.title ? (
     <Title className={titleClass}>
       {tile.href ? (
@@ -61,7 +67,15 @@ export function ContentTile({
     </Title>
   ) : null;
   const excerpt = tile.excerpt ? (
-    <p className="mt-5 text-body">{tile.excerpt}</p>
+    <p
+      className={
+        listingTypography
+          ? "mt-5 font-body text-listing-description font-light text-ink listing-spec-description"
+          : "mt-5 text-body"
+      }
+    >
+      {tile.excerpt}
+    </p>
   ) : null;
   const cta =
     tile.href && tile.ctaLabel ? (

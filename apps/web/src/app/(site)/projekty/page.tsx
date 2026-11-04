@@ -62,11 +62,17 @@ export default async function ProjectsPage() {
         slides={landing.slides}
       />
       {landing.sections.length > 0 ? (
-        <ContentModules sections={landing.sections} variant="page" anchorTiles />
+        <ContentModules
+          sections={landing.sections}
+          variant="page"
+          anchorTiles
+          listingTypography
+        />
       ) : (
         <BlobRow
           width="wide"
           items={activeItems}
+          listingTypography
           emptyMessage="Brak aktywnych projektów w CMS."
         />
       )}
@@ -76,6 +82,7 @@ export default async function ProjectsPage() {
         headingId={PROJECTS_ARCHIVE_ANCHOR}
         items={archive.map(projectToRow)}
         density="compact"
+        listingTypography
         emptyMessage="Brak zakończonych projektów w CMS."
       />
     </>
