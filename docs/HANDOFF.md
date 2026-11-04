@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-04 — Nagłówki publikacji i edycji są lżejsze; CTA mają krótką, ręcznie rysowaną kreskę z animacją. |
+| **Ostatnia aktualizacja** | 2026-11-04 — CTA mają lżejszy, mniejszy tekst i dłuższą, ręcznie rysowaną kreskę z animacją. |
 | **Gałąź / HEAD** | `szaroale-pl-czcionka-kategorii-biblioteki` |
-| **Zmiana bieżąca** | 2026-11-04 — Kategorie oraz nagłówki listingów Czytelni i edycji używają Alexandrii SemiBold; CTA w serwisie mają krótkie, ręcznie rysowane podkreślenie rozszerzane na hover/fokus. Filtry biblioteki zostają lekkimi zakładkami z ruchomym wskaźnikiem. |
+| **Zmiana bieżąca** | 2026-11-04 — Kategorie oraz nagłówki listingów Czytelni i edycji używają Alexandrii SemiBold; CTA w serwisie mają mniejszy tekst Alexandria Regular i dłuższe, ręcznie rysowane podkreślenie rozszerzane na hover/fokus. Filtry biblioteki zostają lekkimi zakładkami z ruchomym wskaźnikiem. |
 | **Poprzednia zmiana** | 2026-11-04 — Ramka całej treści pojawia się tylko przy fokusie klawiatury; fokus CTA na dotyku nie obrysowuje kafelka. |
 | **Poprzednia zmiana** | 2026-11-03 — Linki w tekstach Portable Text używają granatu `brand-6`, również gdy zawierają fragmenty z innym kolorem tekstu. |
 | **Poprzednia zmiana** | 2026-11-03 — Bloki „Teksty przed listą edycji” mają piaskowe koło, pogrubiony nagłówek MuseoModerno i wybór koloru marki lub czarnego. |
