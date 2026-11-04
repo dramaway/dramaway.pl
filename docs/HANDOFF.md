@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-04 — Typy publikacji nie mają kropki ani podkreślenia przy hoverze; podkreślenie CTA jest grubsze i wyraźniejsze. |
+| **Ostatnia aktualizacja** | 2026-11-04 — Przywrócono wcześniejszą, cieńszą kreskę CTA; typy publikacji pozostają bez kropki i podkreślenia przy hoverze. |
 | **Gałąź / HEAD** | `typy-publikacji-bez-kropki` |
-| **Zmiana bieżąca** | 2026-11-04 — Typy publikacji nie mają kropki ani podkreślenia przy hoverze/fokusie; aktywny typ wyróżnia magentowy tekst. Podkreślenie CTA pogrubiono, pozostawiając zielony, ręcznie rysowany kształt. |
+| **Zmiana bieżąca** | 2026-11-04 — Przywrócono poprzednią grubość podkreślenia CTA. Typy publikacji nadal nie mają kropki ani podkreślenia przy hoverze/fokusie; aktywny typ wyróżnia magentowy tekst. |
 | **Poprzednia zmiana** | 2026-11-04 — H3 na podstronach zapisane zdaniowo jak tytuły listingów; Alexandria SemiBold i rozmiar wynikający z rangi pozostają bez zmian. |
 | **Poprzednia zmiana** | 2026-11-04 — Dodano pole dodatkowej treści projektu po blokach „Teksty przed listą edycji”; tytuły bloków są Alexandrią, a CTA w MuseoModerno z dłuższą kreską. |
 | **Wcześniejsza zmiana** | 2026-11-04 — Ramka całej treści pojawia się tylko przy fokusie klawiatury; fokus CTA na dotyku nie obrysowuje kafelka. |
