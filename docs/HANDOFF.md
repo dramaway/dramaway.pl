@@ -31,13 +31,15 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 Aktualizacja 2026-11-04: dodano pole Portable Text „Treść po tekstach przed listą edycji”, widoczne po blokach i przed listą edycji projektu. Tytuły bloków „Teksty przed listą edycji” mają 18 px w Alexandrii SemiBold, bez wersalików. CTA na całej stronie używają MuseoModerno SemiBold i dłuższej kreski.
 
-Aktualizacja 2026-11-04: nagłówki Portable Text: H2 MuseoModerno Black 24 px i wersaliki; H3 MuseoModerno SemiBold 20 px bez wersalików; H4 Alexandria SemiBold 18 px. CTA zmniejszone o kolejny 1 px — teraz 2 px poniżej `text-body`.
+Aktualizacja 2026-11-04: nagłówki Portable Text: H2 MuseoModerno Black 24 px i wersaliki; H3 MuseoModerno SemiBold 18 px w kolorze `#282828`, bez wersalików; H4 Alexandria SemiBold 18 px. CTA zmniejszone o kolejny 1 px — teraz 2 px poniżej `text-body`.
 
 Aktualizacja 2026-11-04: tytuły poszczególnych pozycji we wszystkich listingach mają stałe 18 px; nagłówki sekcji listingów bez zmian.
 
 Aktualizacja 2026-11-04: tylko na listingach `/baza-wiedzy` i `/projekty` tytuły używają MuseoModerno SemiBold 18 px w kolorze `#282828` (także przy hover/fokus), a krótkie opisy Alexandrii Light 18 px w tym samym kolorze. Pozostałe listingi zachowują dotychczasową typografię.
 
 Aktualizacja 2026-11-04: usunięto widoczny nagłówek „Aktualności”; karty zaczynają się na początku obszaru treści sekcji, bez pozostawionego odstępu po nagłówku.
+
+Aktualizacja 2026-11-04: styl Portable Text „Termin” używa MuseoModerno SemiBold 18 px w kolorze `#282828`.
 
 Aktualizacja 2026-11-04: tytuły sekcji „Teksty przed listą edycji” na stronach projektów zmniejszone do 18 px.
 

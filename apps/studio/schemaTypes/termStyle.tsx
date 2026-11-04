@@ -6,8 +6,12 @@ type TermStyleProps = {
 
 const wrap: CSSProperties = {
   position: "relative",
-  fontWeight: "inherit",
+  fontFamily:
+    '"MuseoModerno", "MuseoModerno Fallback", ui-sans-serif, system-ui, sans-serif',
+  fontSize: 18,
+  fontWeight: 600,
   lineHeight: 1.55,
+  color: "#282828",
 };
 
 const blob: CSSProperties = {

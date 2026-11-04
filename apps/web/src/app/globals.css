@@ -95,7 +95,7 @@
   --text-h2--line-height: 1.25;
   --text-h3: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
   --text-h3--line-height: 1.25;
-  --text-pt-h3: 1.25rem;
+  --text-pt-h3: 1.125rem;
   --text-pt-h3--line-height: var(--text-h3--line-height);
   --text-pt-h4: 1.125rem;
   --text-pt-h4--line-height: var(--text-h4--line-height);
@@ -3459,16 +3459,18 @@
   }
 
   /*
-   * Dictionary headword in Portable Text (`term` style). Same sand Blob as
-   * listing rows, but body font and weight — bold is opt-in via Strong.
+   * Dictionary headword in Portable Text (`term` style), styled like a
+   * listing title with the same sand Blob.
    * No isolation here: the circle overflows, and `.portable-body` is the
    * stacking context so neighbouring paragraphs paint on top of it.
    * Vertical rhythm lives in `@layer utilities` so it beats `.space-y-4`.
    */
   .pt-term {
     position: relative;
-    font-family: var(--font-body);
-    font-weight: 300;
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-ink);
     text-transform: none;
   }
 
@@ -4717,15 +4719,20 @@ h3 {
 @media (hover: hover) {
   h1:hover,
   h2:hover,
-  h3:hover:not(.listing-spec-title) {
+  h3:hover:not(.listing-spec-title):not(.portable-heading-display) {
     color: var(--color-brand-1);
   }
 }
 
 h1:focus-within,
 h2:focus-within,
-h3:focus-within:not(.listing-spec-title) {
+h3:focus-within:not(.listing-spec-title):not(.portable-heading-display) {
   color: var(--color-brand-1);
+}
+
+.portable-heading-display:hover,
+.portable-heading-display:focus-within {
+  color: var(--color-ink);
 }
 
 .listing-spec-title:hover,
