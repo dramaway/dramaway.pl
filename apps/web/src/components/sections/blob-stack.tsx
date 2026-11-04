@@ -68,7 +68,7 @@ export function BlobStack({
             <h3
               className={
                 thumbnails
-                  ? "blob-row-title font-body text-h4 font-semibold"
+                  ? "blob-row-title font-body text-h4 font-semibold normal-case"
                   : "font-display text-h3 font-black"
               }
             >

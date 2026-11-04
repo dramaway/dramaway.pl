@@ -43,7 +43,7 @@ export function CzytelniaStack({ items }: { items: CzytelniaRowItem[] }) {
               ) : null}
             </span>
             <div className="pub-row-copy">
-              <h3 className="pub-row-title font-body text-h4 font-semibold">
+              <h3 className="pub-row-title font-body text-h4 font-semibold normal-case">
                 {item.external ? (
                   <a
                     href={item.href}
