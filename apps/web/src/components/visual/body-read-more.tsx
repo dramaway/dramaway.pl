@@ -38,7 +38,6 @@ export function BodyReadMore({ before, children, className }: BodyReadMoreProps)
           <span className="pt-readmore-label">{copy.expand}</span>
           <span aria-hidden className="pt-readmore-rule">
             <span className="pt-readmore-line" />
-            <span className="pt-readmore-dot" />
           </span>
         </button>
       ) : null}
@@ -56,7 +55,6 @@ export function BodyReadMore({ before, children, className }: BodyReadMoreProps)
           <span className="pt-readmore-label">{copy.collapse}</span>
           <span aria-hidden className="pt-readmore-rule">
             <span className="pt-readmore-line" />
-            <span className="pt-readmore-dot" />
           </span>
         </button>
       ) : null}

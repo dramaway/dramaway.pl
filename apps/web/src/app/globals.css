@@ -77,7 +77,7 @@
    * Desktop targets (Figma @ 1440, clamp down on smaller screens).
    * Size tokens are visual, not HTML rank — see system.md.
    *   display / h1  48  — hero title and page titles
-   *   h2            32  — band labels (AKTUALNOŚCI)
+   *   h2            24  — section and band headings
    *   h3            24  — section titles (Kim, Metody, teasers)
    *   h4            20  — card titles (news)
    *   lead          20  — hero description and written/prose blocks
@@ -91,8 +91,8 @@
   --text-display--line-height: 1.1;
   --text-h1: var(--text-display);
   --text-h1--line-height: var(--text-display--line-height);
-  --text-h2: clamp(1.5rem, 1.25rem + 0.9vw, 2rem);
-  --text-h2--line-height: 1.2;
+  --text-h2: 1.5rem;
+  --text-h2--line-height: 1.25;
   --text-h3: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
   --text-h3--line-height: 1.25;
   --text-h4: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
@@ -972,6 +972,10 @@
     margin-inline: auto;
     padding-inline: var(--page-pad);
     padding-block: var(--spacing-section);
+  }
+
+  .hero-stack:has(+ .edition-follow) {
+    padding-block-end: calc(var(--spacing-section) / 2);
   }
 
   .hero-stack .hero-heading,
@@ -2135,6 +2139,10 @@
     margin-block-start: auto;
   }
 
+  .news-card .cta {
+    align-self: flex-start;
+  }
+
   /* Vertical list whose items carry a Blob behind the heading.
    * Isolate here, not on `.stack-item`, so overflowing circles stay
    * behind neighbouring rows' text instead of covering it. */
@@ -2251,7 +2259,9 @@
 
   .project-text-section-heading {
     font-family: var(--font-display);
+    font-size: 18px;
     font-weight: 900;
+    text-transform: none;
   }
 
   .project-text-section {
@@ -2686,51 +2696,42 @@
   .cta {
     display: inline-flex;
     flex-direction: column;
-    gap: 0.6rem;
-    align-items: stretch;
-    /* Figma draws every instance of this link 301px wide. */
-    min-width: min(19rem, 100%);
-    font-family: var(--font-display);
-    font-size: var(--text-body);
+    gap: 0.15rem;
+    align-items: flex-start;
+    width: max-content;
+    max-width: 100%;
+    min-width: 0;
+    font-family: var(--font-body);
+    font-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1.0625rem);
     font-weight: 600;
     line-height: 1.2;
     color: var(--color-green-ink);
   }
 
-  .cta-rule {
-    position: relative;
-    display: block;
-    height: 4px;
-    border-radius: 999px;
-    background-color: var(--color-green);
-    transition: transform 200ms ease;
-    transform-origin: left center;
+  .cta-rule,
+  .fold-rule,
+  .pt-readmore-line {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 14' preserveAspectRatio='none'%3E%3Cpath d='M3 8 C42 4 75 10 112 7 S184 9 225 5' fill='none' stroke='%23369125' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+      left center / 100% 100% no-repeat;
   }
 
-  .cta-rule::after {
-    content: "";
-    position: absolute;
-    inset-inline-end: -5px;
-    inset-block-start: 50%;
-    translate: 0 -50%;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background-color: var(--color-green);
+  .cta-rule {
+    display: block;
+    width: 100%;
+    height: 0.75rem;
+    clip-path: inset(0 8% 0 0);
+    transition: clip-path 350ms ease;
   }
 
   .cta:hover .cta-rule,
-  .cta:focus-visible .cta-rule {
-    transform: scaleX(0.88);
+  .cta:focus-visible .cta-rule,
+  .card-hover:hover .cta-rule,
+  .card-hover:focus-within .cta-rule {
+    clip-path: inset(0);
   }
 
   .cta[aria-current="true"] {
     color: var(--color-magenta);
-  }
-
-  .cta[aria-current="true"] .cta-rule,
-  .cta[aria-current="true"] .cta-rule::after {
-    background-color: var(--color-magenta);
   }
 
   /*
@@ -2766,12 +2767,6 @@
   .cta-over {
     position: relative;
     z-index: 2;
-  }
-
-  /* Tile whose CTA only repeats the card link: animate the rule on card hover. */
-  .card-hover:hover .cta-rule,
-  .card-hover:focus-within .cta-rule {
-    transform: scaleX(0.88);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -3270,11 +3265,6 @@
   .team-bio-copy {
     flex: 1 1 0;
     min-width: 0;
-  }
-
-  /* Figma's 301 px rule; in a card the rule takes the copy column instead. */
-  .team-bio .cta {
-    min-width: 100%;
   }
 
   .team-bio-name {
@@ -4097,14 +4087,26 @@
   .fold-summary {
     display: flex;
     flex-direction: column;
-    align-items: stretch;
+    align-items: flex-start;
     gap: 0.6rem;
     width: 100%;
     min-height: var(--touch-target);
     cursor: pointer;
     list-style: none;
-    text-transform: uppercase;
+    font-family: var(--font-body);
+    font-size: var(--text-h3);
+    font-weight: 600;
+    line-height: 1.2;
     color: var(--color-ink);
+  }
+
+  .fold-heading {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: max-content;
+    max-width: 100%;
+    gap: 0.15rem;
   }
 
   .fold-summary::-webkit-details-marker,
@@ -4123,31 +4125,17 @@
   }
 
   .fold-rule {
-    position: relative;
     display: block;
-    height: 4px;
-    border-radius: 999px;
-    background-color: var(--color-green);
-    transition: transform 200ms ease;
-    transform-origin: left center;
-  }
-
-  .fold-rule::after {
-    content: "";
-    position: absolute;
-    inset-inline-end: -5px;
-    inset-block-start: 50%;
-    translate: 0 -50%;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background-color: var(--color-green);
+    width: 100%;
+    height: 0.75rem;
+    clip-path: inset(0 8% 0 0);
+    transition: clip-path 350ms ease;
   }
 
   .fold-item[open] > .fold-summary .fold-rule,
   .fold-summary:hover .fold-rule,
   .fold-summary:focus-visible .fold-rule {
-    transform: scaleX(0.88);
+    clip-path: inset(0);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -4158,7 +4146,7 @@
 
   /*
    * Body read-more — do not edit fold/body-image blocks
-   * Line scales from the left; dot slides along it (expand → right, collapse → left).
+   * Uses the same hand-drawn underline and label treatment as CTAs.
    */
   .pt-readmore {
     display: flex;
@@ -4191,7 +4179,7 @@
   .pt-readmore-trigger {
     display: inline-flex;
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
     align-self: center;
     gap: 0.35rem;
     margin: 0;
@@ -4199,12 +4187,12 @@
     border: 0;
     background: none;
     cursor: pointer;
+    width: max-content;
     max-width: 100%;
-    font-family: var(--font-display);
-    font-size: var(--text-small);
+    font-family: var(--font-body);
+    font-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1.0625rem);
     font-weight: 600;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
+    line-height: 1.2;
     color: var(--color-green-ink);
     text-align: center;
   }
@@ -4223,86 +4211,28 @@
   }
 
   .pt-readmore-rule {
-    --pt-readmore-line-long: 1.42;
-    --pt-readmore-dot: 11px;
-    --pt-readmore-line: 3px;
-    --pt-readmore-overhang: 2px;
-
-    position: relative;
     display: block;
     width: 100%;
-    height: var(--pt-readmore-dot);
-    overflow: visible;
+    height: 0.75rem;
   }
 
   .pt-readmore-line {
-    position: absolute;
-    inset-block-start: calc(50% - var(--pt-readmore-line) / 2);
-    inset-inline: 0;
+    display: block;
     width: 100%;
-    height: var(--pt-readmore-line);
-    border-radius: 999px;
-    background-color: var(--color-green);
-    transform: scaleX(1);
-    transform-origin: left center;
-    transition: transform 220ms ease;
-  }
-
-  .pt-readmore-dot {
-    position: absolute;
-    inset-block-start: 0;
-    inset-inline-start: calc(-1 * var(--pt-readmore-overhang));
-    width: var(--pt-readmore-dot);
-    height: var(--pt-readmore-dot);
-    border-radius: 50%;
-    background-color: var(--color-green);
-    transition: inset-inline-start 220ms ease;
+    height: 100%;
+    clip-path: inset(0 8% 0 0);
+    transition: clip-path 350ms ease;
   }
 
   .pt-readmore-trigger-expand {
     margin-block-start: -2em;
   }
 
-  .pt-readmore-trigger-expand .pt-readmore-line {
-    transform: scaleX(1);
-  }
-
-  .pt-readmore-trigger-expand .pt-readmore-dot {
-    inset-inline-start: calc(-1 * var(--pt-readmore-overhang));
-  }
-
   .pt-readmore-trigger-expand:hover .pt-readmore-line,
-  .pt-readmore-trigger-expand:focus-visible .pt-readmore-line {
-    transform: scaleX(var(--pt-readmore-line-long));
-  }
-
-  .pt-readmore-trigger-expand:hover .pt-readmore-dot,
-  .pt-readmore-trigger-expand:focus-visible .pt-readmore-dot {
-    inset-inline-start: calc(
-      100% * var(--pt-readmore-line-long) - var(--pt-readmore-dot) +
-        var(--pt-readmore-overhang)
-    );
-  }
-
-  .pt-readmore-trigger-collapse .pt-readmore-line {
-    transform: scaleX(var(--pt-readmore-line-long));
-  }
-
-  .pt-readmore-trigger-collapse .pt-readmore-dot {
-    inset-inline-start: calc(
-      100% * var(--pt-readmore-line-long) - var(--pt-readmore-dot) +
-        var(--pt-readmore-overhang)
-    );
-  }
-
+  .pt-readmore-trigger-expand:focus-visible .pt-readmore-line,
   .pt-readmore-trigger-collapse:hover .pt-readmore-line,
   .pt-readmore-trigger-collapse:focus-visible .pt-readmore-line {
-    transform: scaleX(1);
-  }
-
-  .pt-readmore-trigger-collapse:hover .pt-readmore-dot,
-  .pt-readmore-trigger-collapse:focus-visible .pt-readmore-dot {
-    inset-inline-start: calc(-1 * var(--pt-readmore-overhang));
+    clip-path: inset(0);
   }
 
   .pt-readmore-rest:not([hidden]) {
@@ -4312,49 +4242,133 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .pt-readmore-line,
-    .pt-readmore-dot {
+    .pt-readmore-line {
       transition: none;
     }
 
     .pt-readmore-trigger-expand:hover .pt-readmore-line,
     .pt-readmore-trigger-expand:focus-visible .pt-readmore-line {
-      transform: scaleX(var(--pt-readmore-line-long));
-    }
-
-    .pt-readmore-trigger-collapse .pt-readmore-line {
-      transform: scaleX(var(--pt-readmore-line-long));
-    }
-
-    .pt-readmore-trigger-collapse:hover .pt-readmore-line,
-    .pt-readmore-trigger-collapse:focus-visible .pt-readmore-line {
-      transform: scaleX(1);
+      clip-path: inset(0);
     }
   }
 
   /*
    * Czytelnia filters — do not edit fold/body-image blocks
-   * Format: Figma CTA switches, only drawers that have listed items.
+   * Format: lightweight tabs, only drawers that have listed items.
    * Hidden when fewer than two drawers have anything to show.
    */
   .filter-row-switches {
     margin-block-start: 1.5rem;
-    margin-block-end: var(--spacing-section);
+    margin-block-end: 1rem;
   }
 
   .filter-row-switches ul {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
-    gap: 1.5rem clamp(1rem, 3vw, 2.5rem);
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: clamp(1rem, 3vw, 2.5rem);
     width: 100%;
     margin: 0;
     padding: 0;
     list-style: none;
+    position: relative;
   }
 
   .filter-row-switches .cta {
+    position: relative;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: var(--touch-target);
     min-width: 0;
-    width: 100%;
+    width: auto;
+    padding-block: 0.6rem 0.75rem;
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    font-weight: 400;
+    line-height: 1.2;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .filter-row-switches .cta-rule {
+    display: none;
+  }
+
+  .filter-row-switches .cta::after {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    height: 0.5rem;
+    background-color: var(--color-magenta);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 14' preserveAspectRatio='none'%3E%3Cpath d='M3 8 C42 4 75 10 112 7 S184 9 225 5' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+      left center / 100% 100% no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 14' preserveAspectRatio='none'%3E%3Cpath d='M3 8 C42 4 75 10 112 7 S184 9 225 5' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+      left center / 100% 100% no-repeat;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 350ms ease;
+    content: "";
+  }
+
+  .filter-row-switches .cta:hover::after,
+  .filter-row-switches .cta:focus-visible::after,
+  .filter-row-switches .cta[aria-current="true"]::after {
+    clip-path: inset(0 8% 0 0);
+  }
+
+  .filter-row-switches .cta[aria-current="true"] {
+    color: var(--color-magenta);
+    font-weight: 600;
+  }
+
+  .filter-row-switches .cta[aria-current="true"]:hover::after,
+  .filter-row-switches .cta[aria-current="true"]:focus-visible::after {
+    clip-path: inset(0);
+  }
+
+  .filter-row-switches.is-enhanced .cta[aria-current="true"]::after {
+    display: none;
+  }
+
+  .filter-row-indicator-slot {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 0;
+    height: 0;
+    list-style: none;
+  }
+
+  .filter-row-indicator {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    display: block;
+    width: 0;
+    height: 0.5rem;
+    background-color: var(--color-magenta);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 14' preserveAspectRatio='none'%3E%3Cpath d='M3 8 C42 4 75 10 112 7 S184 9 225 5' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+      left center / 100% 100% no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 14' preserveAspectRatio='none'%3E%3Cpath d='M3 8 C42 4 75 10 112 7 S184 9 225 5' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+      left center / 100% 100% no-repeat;
+    clip-path: inset(0 8% 0 0);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      transform 350ms ease,
+      width 350ms ease,
+      clip-path 250ms ease,
+      opacity 120ms ease;
+  }
+
+  .filter-row-switches.is-enhanced .filter-row-indicator {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .filter-row-indicator,
+    .filter-row-switches .cta::after {
+      transition: none;
+    }
   }
 
   /*
@@ -4393,10 +4407,8 @@
     background-color: var(--tone, var(--color-sand));
   }
 
-  .cat-tile:hover .cat-tile-title,
-  .cat-tile:focus-visible .cat-tile-title {
-    text-decoration: underline;
-    text-underline-offset: 0.3em;
+  .cat-tile-title {
+    display: inline-block;
   }
 
   .cat-tile:focus-visible {
@@ -4405,7 +4417,7 @@
   }
 
   .cat-tile[aria-current="true"] .cat-tile-title {
-    font-weight: 900;
+    font-weight: 600;
   }
 
   [data-tone="1"] { --tone: var(--color-brand-1); }
@@ -4417,9 +4429,11 @@
   [data-tone="7"] { --tone: var(--color-brand-7); }
 
   .cat-tile-title {
-    font-family: var(--font-display);
-    font-weight: 600;
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    font-weight: 300;
     line-height: 1.25;
+    text-transform: lowercase;
   }
 
   .cat-tile-count {
@@ -4440,6 +4454,23 @@
   .pub-cat-list {
     padding-block-start: 4rem;
     padding-block-end: 1.25rem;
+  }
+
+  .library-section-books .filter-row-switches + .stack-wide,
+  .library-section-scripts .filter-row-switches + .stack-wide,
+  .library-section-multimedia .filter-row-switches + .stack-wide {
+    margin-block-start: 2.5rem;
+  }
+
+  .library-section-books .cat-tiles + .pub-cat .pub-cat-list,
+  .library-section-scripts .cat-tiles + .pub-cat .pub-cat-list,
+  .library-section-multimedia .cat-tiles + .pub-cat .pub-cat-list {
+    padding-block-start: 5rem;
+  }
+
+  .pub-row-title,
+  .blob-row-title {
+    text-transform: none;
   }
 }
 
@@ -4709,6 +4740,20 @@
 }
 
 @media (width >= 64rem) {
+  .stack,
+  .blob-row-thumbnails {
+    gap: calc(var(--spacing-section) / 2);
+  }
+
+  .blob-row-compact {
+    row-gap: calc(var(--archive-gap) / 2);
+  }
+
+  .pub-cat + .pub-cat {
+    margin-block-start: 0.875rem;
+    padding-block-start: 0.875rem;
+  }
+
   .team-row-name {
     margin-block-start: 1rem;
   }
@@ -4787,4 +4832,19 @@ h3:focus-within {
   h3 {
     transition: none;
   }
+}
+
+body:not(:has([data-home]))
+  :is(h3, h4, .text-h3, .text-h4)
+  :not(.fixed-section-heading)
+  :not(:where(.hero *))
+  :not(:where(.site-header *)) {
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1.25;
 }

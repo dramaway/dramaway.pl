@@ -140,7 +140,10 @@ export default async function KnowledgeHubPage({
           <DotBand className="library-dot-band" />
         </>
       ) : null}
-      <Section id="pelna-biblioteka" className="library-section scroll-mt-24">
+      <Section
+        id="pelna-biblioteka"
+        className={`library-section library-section-${rodzaj} scroll-mt-24`}
+      >
         <h2 className="font-display text-h2 font-black">
           {copy.heading}
         </h2>

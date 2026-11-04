@@ -5,9 +5,10 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-04 — Fokus CTA i treści na ekranach dotykowych nie rysuje zielonych ramek. |
-| **Gałąź / HEAD** | `fix-mobile-content-focus-outline` |
-| **Zmiana bieżąca** | 2026-11-04 — Ramka całej treści pojawia się tylko przy fokusie klawiatury; fokus CTA na dotyku nie obrysowuje kafelka. |
+| **Ostatnia aktualizacja** | 2026-11-04 — Kategorie biblioteki mają rozmiar filtrów formatu i są zapisane małymi literami. |
+| **Gałąź / HEAD** | `szaroale-pl-czcionka-kategorii-biblioteki` |
+| **Zmiana bieżąca** | 2026-11-04 — Tytuły „Teksty przed listą edycji” w projektach mają 18 px i nie są wersalikami. Linki kategorii biblioteki mają taki sam rozmiar jak filtry formatu i są zapisane małymi literami; kreska formatów ma grubość jak CTA. Odstęp pod hero edycji projektu do galerii lub body zmniejszono o połowę. Kategorie nie mają podkreśleń; podkreślenie filtrów formatu animuje się przy zmianie, hoverze i fokusie. Przed pierwszą publikacją w książkach, multimediach i scenariuszach dodano odstęp; artykuły i publikacje bez zmian. „Czytaj więcej” i natywne szufladki używają Alexandrii SemiBold bez wersalików oraz zielonego podkreślenia jak CTA. Kreski CTA są nieco krótsze od etykiet. Wszystkie H2 używają MuseoModerno 24 px; H3/H4 na podstronach — Alexandria SemiBold; hero, menu i H1 bez zmian. |
+| **Poprzednia zmiana** | 2026-11-04 — Ramka całej treści pojawia się tylko przy fokusie klawiatury; fokus CTA na dotyku nie obrysowuje kafelka. |
 | **Poprzednia zmiana** | 2026-11-03 — Linki w tekstach Portable Text używają granatu `brand-6`, również gdy zawierają fragmenty z innym kolorem tekstu. |
 | **Poprzednia zmiana** | 2026-11-03 — Bloki „Teksty przed listą edycji” mają piaskowe koło, pogrubiony nagłówek MuseoModerno i wybór koloru marki lub czarnego. |
 | **Poprzednia zmiana** | 2026-11-03 — W stopce link do deklaracji jest pod adresem (lewa kolumna), na dole wyrównany do social mediów po prawej. |
@@ -25,6 +26,18 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | **Owner Sanity** | Organizacja na `admin@dramaway.pl`, plan NGO. `admin@dramaway.pl` = project Admin; redakcja = Editor |
 
 ---
+
+Aktualizacja 2026-11-04: tytuły sekcji „Teksty przed listą edycji” zachowują 18 px i wyświetlają tekst bez wersalików.
+
+Aktualizacja 2026-11-04: tytuły sekcji „Teksty przed listą edycji” na stronach projektów zmniejszone do 18 px.
+
+Aktualizacja 2026-11-04: linki kategorii biblioteki zmniejszone o 2 px względem filtrów formatu; kreska filtrów pogrubiona do tej samej grubości co CTA.
+
+Aktualizacja 2026-11-04: odstęp między hero edycji projektu a następującą galerią lub treścią zmniejszony o połowę.
+
+Aktualizacja 2026-11-04: na `/baza-wiedzy` usunięto podkreślenia z linków kategorii. Zakładki rodzaju mają lekką, ręcznie rysowaną magentową kreskę, która płynnie przesuwa się między aktywnymi pozycjami; hover/fokus też pokazują kreskę. Przed pierwszą publikacją w formatach książki, multimedia i scenariusze dodano oddech; artykuły i publikacje pozostają bez zmian.
+
+Aktualizacja 2026-11-04: kontrolki „Czytaj więcej” i szufladki dopasowano do CTA — Alexandria SemiBold bez wersalików oraz krótsza ręcznie rysowana zielona kreska, która odsłania się przy hover/fokus. Szufladki zachowują natywne `details/summary` i niezależne otwieranie paneli.
 
 Aktualizacja 2026-11-03: poprawki dostępności w kodzie: widoczny fokus `#main-content` po przejściu linkiem „Przejdź do treści”, opisowe nazwy przycisków galerii oraz identyfikatory HTML dla sekcji, danych i linków deklaracji dostępności. W Sanity redakcja uzupełniła teksty alternatywne obrazów treściowych na stronach Art Generacje, Teatr Codzienny i To mi gra; sprawdzono 8 obrazów. Zmiany kodowe oczekują na wdrożenie. To nie jest pełny audyt ani potwierdzenie zgodności z WCAG.
 
