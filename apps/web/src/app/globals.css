@@ -4857,3 +4857,19 @@ h3:focus-within {
     transition: none;
   }
 }
+
+body:not(:has([data-home]))
+  :is(h3, h4, .text-h3, .text-h4)
+  :not(.fixed-section-heading)
+  :not(:where(.hero *))
+  :not(:where(.site-header *)) {
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+
+@media (width >= 64rem) {
+  .fixed-section-heading {
+    font-size: 1.5rem;
+    line-height: 1.25;
+  }
+}

@@ -178,6 +178,9 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
                   ? copy.editionsListHeading
                   : null
             }
+            headingClassName={
+              isTeatrCodzienny ? "fixed-section-heading" : undefined
+            }
             items={rows}
             variant={usesThumbnailListing ? "thumbnail" : "blob"}
           />

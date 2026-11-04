@@ -130,7 +130,7 @@ export default async function KnowledgeHubPage({
         <>
           <DotBand className="library-dot-band" />
           <Section id="polecane" className="library-section scroll-mt-24">
-            <h2 className="font-display text-h2 font-black">
+            <h2 className="fixed-section-heading font-display text-h2 font-black">
               {copy.featuredHeading}
             </h2>
             <div className="stack-wide mt-5">

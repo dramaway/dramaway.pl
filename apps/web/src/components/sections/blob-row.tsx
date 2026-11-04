@@ -11,6 +11,7 @@ type BlobRowProps = {
   items: BlobRowItem[];
   heading?: string | null;
   headingId?: string;
+  headingClassName?: string;
   /**
    * Column width for heading + rows. `wide` is the 62ch reading column,
    * `narrow` caps at `--content-narrow`; both sit on the left edge of
@@ -46,6 +47,7 @@ export function BlobRow({
   items,
   heading,
   headingId,
+  headingClassName,
   width = "page",
   density = "default",
   variant = "blob",
@@ -70,18 +72,18 @@ export function BlobRow({
       {heading ? (
         <h2
           id={labelId}
-          className={
+          className={cn(
             headingId
-              ? cn(
-                  "blob-row-label scroll-mt-24",
-                  density === "compact" && "blob-row-label-compact",
-                )
+              ? "blob-row-label scroll-mt-24"
               : density === "compact"
-                ? "blob-row-label blob-row-label-compact"
+                ? "blob-row-label"
                 : variant === "thumbnail"
                   ? "font-display text-h2 font-black"
-                  : "font-display text-h3 font-black"
-          }
+                  : "font-display text-h3 font-black",
+            headingId && density === "compact" && "blob-row-label-compact",
+            density === "compact" && !headingId && "blob-row-label-compact",
+            headingClassName,
+          )}
         >
           {heading}
         </h2>

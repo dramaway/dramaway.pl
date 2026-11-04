@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-04 — CTA wróciły do kolorów green-ink i green; dłuższa kreska pozostaje. |
+| **Ostatnia aktualizacja** | 2026-11-04 — Nagłówki wizualnych rang H3/H4 na podstronach używają Alexandrii SemiBold. |
 | **Gałąź / HEAD** | `szaroale-pl-czcionka-kategorii-biblioteki` |
-| **Zmiana bieżąca** | 2026-11-04 — Kategorie oraz nagłówki listingów Czytelni i edycji używają Alexandrii SemiBold; CTA w serwisie mają mniejszy półgruby tekst w kolorze green-ink i dłuższe, ręcznie rysowane podkreślenie w kolorze green, rozszerzane na hover/fokus. Odstępy między pozycjami listingów są o połowę mniejsze na desktopie, bez zmian na mobile. Filtry biblioteki zostają lekkimi zakładkami z ruchomym wskaźnikiem. |
+| **Zmiana bieżąca** | 2026-11-04 — Nagłówki wizualnych rang H3/H4 na podstronach używają Alexandrii SemiBold; strona główna, hero, menu i H1 bez zmian. „Polecane” i „Zobacz wszystkie edycje” pozostają w MuseoModerno i mają 24 px na desktopie. Kategorie oraz nagłówki listingów Czytelni i edycji, CTA i odstępy desktopowych listingów zgodnie z wcześniejszymi ustaleniami; filtry biblioteki pozostają lekkimi zakładkami z ruchomym wskaźnikiem. |
 | **Poprzednia zmiana** | 2026-11-04 — Ramka całej treści pojawia się tylko przy fokusie klawiatury; fokus CTA na dotyku nie obrysowuje kafelka. |
 | **Poprzednia zmiana** | 2026-11-03 — Linki w tekstach Portable Text używają granatu `brand-6`, również gdy zawierają fragmenty z innym kolorem tekstu. |
 | **Poprzednia zmiana** | 2026-11-03 — Bloki „Teksty przed listą edycji” mają piaskowe koło, pogrubiony nagłówek MuseoModerno i wybór koloru marki lub czarnego. |
