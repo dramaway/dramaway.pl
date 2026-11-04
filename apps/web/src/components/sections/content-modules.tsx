@@ -17,6 +17,7 @@ type ContentModulesProps = {
   variant: "home" | "page";
   /** Add title-based anchor targets to tiles, for links from the site navigation. */
   anchorTiles?: boolean;
+  listingTypography?: boolean;
 };
 
 type PlacedModule = Extract<ResolvedSection, { kind: "module" }> & {
@@ -45,10 +46,12 @@ function ModuleView({
   section,
   feed,
   anchorTiles,
+  listingTypography,
 }: {
   section: PlacedSection;
   feed: FeedCandidate[];
   anchorTiles: boolean;
+  listingTypography: boolean;
 }) {
   if (section.kind === "news") {
     const items = selectFeedItems(feed, section).map((item) => ({
@@ -95,7 +98,7 @@ function ModuleView({
                   anchorTiles && tile.anchorId && "scroll-mt-24",
                 )}
               >
-                <ContentTile tile={tile} />
+                <ContentTile tile={tile} listingTypography={listingTypography} />
               </div>
             ))}
           </div>
@@ -126,7 +129,7 @@ function ModuleView({
                 anchorTiles && tile.anchorId && "scroll-mt-24",
               )}
             >
-              <ContentTile tile={tile} />
+              <ContentTile tile={tile} listingTypography={listingTypography} />
             </div>
           ))}
         </div>
@@ -147,7 +150,12 @@ function ModuleView({
               anchorTiles && tile.anchorId && "scroll-mt-24",
             )}
           >
-            <ContentTile tile={tile} heading="h3" layout="card" />
+            <ContentTile
+              tile={tile}
+              heading="h3"
+              layout="card"
+              listingTypography={listingTypography}
+            />
           </li>
         ))}
       </ul>
@@ -158,9 +166,11 @@ function ModuleView({
 function HomeRhythm({
   sections,
   feed,
+  listingTypography,
 }: {
   sections: ResolvedSection[];
   feed: FeedCandidate[];
+  listingTypography: boolean;
 }) {
   const placed = place(sections);
   const blocks: ReactNode[] = [<DotBand key="after-hero" />];
@@ -182,6 +192,7 @@ function HomeRhythm({
         section={section}
         feed={feed}
         anchorTiles={false}
+        listingTypography={listingTypography}
       />,
     );
 
@@ -203,10 +214,12 @@ function PageRhythm({
   sections,
   feed,
   anchorTiles,
+  listingTypography,
 }: {
   sections: ResolvedSection[];
   feed: FeedCandidate[];
   anchorTiles: boolean;
+  listingTypography: boolean;
 }) {
   const placed = place(sections);
   return placed.map((section, index) => {
@@ -214,7 +227,12 @@ function PageRhythm({
     const hasImage = section.kind === "module" && Boolean(section.image);
     return (
       <Fragment key={section.key}>
-        <ModuleView section={section} feed={feed} anchorTiles={anchorTiles} />
+        <ModuleView
+          section={section}
+          feed={feed}
+          anchorTiles={anchorTiles}
+          listingTypography={listingTypography}
+        />
         {next && hasImage ? <DotBand /> : null}
       </Fragment>
     );
@@ -225,10 +243,26 @@ export async function ContentModules({
   sections,
   variant,
   anchorTiles = false,
+  listingTypography = false,
 }: ContentModulesProps) {
   if (variant === "page" && sections.length === 0) return null;
   const needsFeed = sections.some((section) => section.kind === "news");
   const feed = needsFeed ? toFeedCandidates(await getContentFeed()) : [];
-  if (variant === "home") return <HomeRhythm sections={sections} feed={feed} />;
-  return <PageRhythm sections={sections} feed={feed} anchorTiles={anchorTiles} />;
+  if (variant === "home") {
+    return (
+      <HomeRhythm
+        sections={sections}
+        feed={feed}
+        listingTypography={listingTypography}
+      />
+    );
+  }
+  return (
+    <PageRhythm
+      sections={sections}
+      feed={feed}
+      anchorTiles={anchorTiles}
+      listingTypography={listingTypography}
+    />
+  );
 }

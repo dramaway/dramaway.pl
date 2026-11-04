@@ -23,6 +23,8 @@ type BlobRowProps = {
   density?: "default" | "compact";
   /** Replace decorative blobs with optional image thumbnails. */
   variant?: "blob" | "thumbnail";
+  /** Apply the requested listing typography on the projects page. */
+  listingTypography?: boolean;
   emptyMessage?: string;
   className?: string;
 };
@@ -49,6 +51,7 @@ export function BlobRow({
   width = "page",
   density = "default",
   variant = "blob",
+  listingTypography = false,
   emptyMessage = DEFAULT_EMPTY,
   className,
 }: BlobRowProps) {
@@ -93,7 +96,12 @@ export function BlobRow({
         </p>
       ) : (
         <div className={cn(heading && density !== "compact" && "mt-8")}>
-          <BlobStack items={items} density={density} variant={variant} />
+          <BlobStack
+            items={items}
+            density={density}
+            variant={variant}
+            listingTypography={listingTypography}
+          />
         </div>
       )}
     </>

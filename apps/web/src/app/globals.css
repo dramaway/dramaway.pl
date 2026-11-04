@@ -3065,7 +3065,6 @@
     font-size: var(--text-listing-title);
     font-weight: 600;
     line-height: var(--text-listing-title--line-height);
-    color: var(--color-ink);
   }
 
   .history-all {
@@ -4718,15 +4717,20 @@ h3 {
 @media (hover: hover) {
   h1:hover,
   h2:hover,
-  h3:hover:not(.text-listing-title) {
+  h3:hover:not(.listing-spec-title) {
     color: var(--color-brand-1);
   }
 }
 
 h1:focus-within,
 h2:focus-within,
-h3:focus-within:not(.text-listing-title) {
+h3:focus-within:not(.listing-spec-title) {
   color: var(--color-brand-1);
+}
+
+.listing-spec-title:hover,
+.listing-spec-title:focus-within {
+  color: var(--color-ink);
 }
 
 .page-article-text-only > .hero-stack {
@@ -4786,7 +4790,6 @@ h3:focus-within:not(.text-listing-title) {
 
 body:not(:has([data-home]))
   :is(h3, h4, .text-h3, .text-h4)
-  :not(.text-listing-title)
   :not(.fixed-section-heading)
   :not(:where(.hero *))
   :not(:where(.portable-heading-display *))

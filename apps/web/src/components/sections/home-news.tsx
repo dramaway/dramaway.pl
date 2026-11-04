@@ -63,7 +63,10 @@ export function HomeNews({
               ) : null}
               {item.title ? (
                 <h3
-                  className="news-card-title mt-2 font-display text-listing-title font-semibold text-ink"
+                  className={cn(
+                    "news-card-title mt-2 font-display text-listing-title font-black",
+                    titleColor,
+                  )}
                 >
                   {item.href ? (
                     <Link href={item.href} className="card-link">
@@ -80,9 +83,7 @@ export function HomeNews({
               ) : null}
               <div className="news-card-body">
                 {item.excerpt ? (
-                  <p className="mt-5 font-body text-listing-description font-light text-ink">
-                    {item.excerpt}
-                  </p>
+                  <p className="mt-5 text-body">{item.excerpt}</p>
                 ) : null}
               </div>
               {item.ctaHref ? (

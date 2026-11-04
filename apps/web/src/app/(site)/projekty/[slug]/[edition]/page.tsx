@@ -79,7 +79,7 @@ export default async function EditionPage({ params }: Props) {
             <ul className="mt-8 stack">
               {outcomes.map((outcome) => (
                 <li key={outcome.title} className="stack-item">
-                  <h3 className="font-display text-listing-title font-semibold text-ink">
+                  <h3 className="font-display text-listing-title font-black">
                     {outcome.title}
                   </h3>
                   {outcome.subtitle || outcome.date ? (
@@ -90,9 +90,7 @@ export default async function EditionPage({ params }: Props) {
                     </p>
                   ) : null}
                   {outcome.description ? (
-                    <p className="mt-4 font-body text-listing-description font-light text-ink">
-                      {outcome.description}
-                    </p>
+                    <p className="mt-4 text-body">{outcome.description}</p>
                   ) : null}
                   {outcome.image ? (
                     <Media

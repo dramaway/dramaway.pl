@@ -23,10 +23,12 @@ export function BlobStack({
   items,
   density = "default",
   variant = "blob",
+  listingTypography = false,
 }: {
   items: BlobRowItem[];
   density?: "default" | "compact";
   variant?: "blob" | "thumbnail";
+  listingTypography?: boolean;
 }) {
   if (items.length === 0) return null;
 
@@ -67,9 +69,11 @@ export function BlobStack({
           <div className={thumbnails ? "blob-row-thumbnail-copy" : undefined}>
             <h3
               className={
-                thumbnails
-                  ? "blob-row-title font-display text-listing-title font-semibold text-ink normal-case"
-                  : "font-display text-listing-title font-semibold text-ink"
+                listingTypography
+                  ? "font-display text-listing-title font-semibold text-ink listing-spec-title"
+                  : thumbnails
+                    ? "blob-row-title font-body text-listing-title font-semibold normal-case"
+                    : "font-display text-listing-title font-black"
               }
             >
               <Link href={item.href} className="card-link">
@@ -79,7 +83,10 @@ export function BlobStack({
             {item.lead ? (
               <p
                 className={cn(
-                  "font-body text-listing-description font-light text-ink",
+                  listingTypography
+                    ? "font-body text-listing-description font-light text-ink"
+                    : "text-body",
+                  listingTypography && "listing-spec-description",
                   compact ? "blob-row-lead" : "mt-5",
                 )}
               >
