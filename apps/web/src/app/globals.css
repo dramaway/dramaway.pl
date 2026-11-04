@@ -4332,7 +4332,7 @@
    */
   .filter-row-switches {
     margin-block-start: 1.5rem;
-    margin-block-end: var(--spacing-section);
+    margin-block-end: 1rem;
   }
 
   .filter-row-switches ul {
@@ -4343,6 +4343,7 @@
     margin: 0;
     padding: 0;
     list-style: none;
+    position: relative;
   }
 
   .filter-row-switches .cta {
@@ -4386,6 +4387,45 @@
     border-radius: 999px;
     background-color: var(--color-magenta);
     content: "";
+  }
+
+  .filter-row-switches.is-enhanced .cta[aria-current="true"]::after {
+    display: none;
+  }
+
+  .filter-row-indicator-slot {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 0;
+    height: 0;
+    list-style: none;
+  }
+
+  .filter-row-indicator {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    display: block;
+    width: 0;
+    height: 3px;
+    border-radius: 999px;
+    background-color: var(--color-magenta);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      transform 350ms ease,
+      width 350ms ease,
+      opacity 120ms ease;
+  }
+
+  .filter-row-switches.is-enhanced .filter-row-indicator {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .filter-row-indicator {
+      transition: none;
+    }
   }
 
   /*
