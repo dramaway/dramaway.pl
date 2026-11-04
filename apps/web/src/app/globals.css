@@ -2263,6 +2263,168 @@
     white-space: pre-line;
   }
 
+  .project-art-generacje-body-flow {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 4vw, 3rem);
+  }
+
+  .project-art-generacje-body-flow .portable-body {
+    margin-block-start: 0;
+  }
+
+  .project-art-generacje-term-copy .portable-body > :first-child {
+    margin-block-start: 0;
+  }
+
+  .project-art-generacje-editorial-section {
+    display: grid;
+    grid-template-columns: minmax(130px, 0.36fr) minmax(0, 1fr);
+    column-gap: clamp(1.5rem, 4vw, 2.75rem);
+    align-items: start;
+  }
+
+  .project-art-generacje-term-heading {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.35;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  .project-art-generacje-editorial-section > .project-text-section-dots {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+  }
+
+  .project-art-generacje-term-copy {
+    grid-column: 2;
+    grid-row: 2;
+    min-width: 0;
+  }
+
+  .project-art-generacje-editorial-section:hover .project-text-section-dots,
+  .project-text-sections-art-generacje
+    .project-text-section:hover
+    .project-text-section-dots {
+    background-image:
+      radial-gradient(circle, var(--color-brand-1) 3.5px, transparent 3.6px),
+      radial-gradient(circle, var(--color-brand-6) 3.5px, transparent 3.6px),
+      radial-gradient(circle, var(--color-brand-3) 3.5px, transparent 3.6px),
+      radial-gradient(circle, var(--color-brand-2) 3.5px, transparent 3.6px);
+    background-position:
+      0 50%,
+      7px 50%,
+      14px 50%,
+      21px 50%;
+    background-size: 28px 7px;
+  }
+
+  .project-art-generacje-body-flow > section:nth-of-type(even) {
+    grid-template-columns: minmax(0, 1fr) minmax(130px, 0.36fr);
+  }
+
+  .project-art-generacje-body-flow
+    > section:nth-of-type(even)
+    .project-art-generacje-term-heading {
+    grid-column: 2;
+  }
+
+  .project-art-generacje-body-flow
+    > section:nth-of-type(even)
+    > .project-text-section-dots {
+    grid-column: 1;
+  }
+
+  .project-art-generacje-body-flow
+    > section:nth-of-type(even)
+    .project-art-generacje-term-copy {
+    grid-column: 1;
+  }
+
+  .project-text-section-dots {
+    display: flex;
+    width: 100%;
+    height: 1.35em;
+    margin: 0;
+    background-image: radial-gradient(circle, #d7d6d2 3.5px, transparent 3.6px);
+    background-position: left center;
+    background-repeat: repeat-x;
+    background-size: 7px 7px;
+    transition: background-image 200ms ease;
+  }
+
+  .project-text-sections-art-generacje {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .project-text-sections-art-generacje .project-text-section {
+    display: grid;
+    grid-template-columns: minmax(130px, 0.36fr) minmax(0, 1fr);
+    column-gap: clamp(1.5rem, 4vw, 2.75rem);
+    align-items: start;
+  }
+
+  .project-text-sections-art-generacje .project-text-section-blob {
+    display: none;
+  }
+
+  .project-text-sections-art-generacje .project-text-section-content {
+    display: contents;
+  }
+
+  .project-text-sections-art-generacje .project-text-section-heading {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.35;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  .project-text-sections-art-generacje .project-text-section-dots {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+  }
+
+  .project-text-sections-art-generacje .project-text-section-copy {
+    grid-column: 2;
+    grid-row: 2;
+    margin-block-start: 0;
+    text-align: left;
+  }
+
+  .project-text-sections-art-generacje > :nth-child(even) {
+    grid-template-columns: minmax(0, 1fr) minmax(130px, 0.36fr);
+  }
+
+  .project-text-sections-art-generacje
+    > :nth-child(even)
+    .project-text-section-heading {
+    grid-column: 2;
+  }
+
+  .project-text-sections-art-generacje
+    > :nth-child(even)
+    .project-text-section-dots {
+    grid-column: 1;
+  }
+
+  .project-text-sections-art-generacje
+    > :nth-child(even)
+    .project-text-section-copy {
+    grid-column: 1;
+  }
+
   .project-text-section-heading {
     font-family: var(--font-body);
     font-size: 18px;
@@ -2316,6 +2478,84 @@
     .project-text-sections {
       grid-template-columns: 1fr 1fr;
       column-gap: clamp(2rem, 4vw, 4rem);
+    }
+
+    .project-text-sections-art-generacje {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (width < 64rem) {
+    .project-art-generacje-editorial-section {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 0;
+    }
+
+    .project-art-generacje-editorial-section .project-art-generacje-term-heading {
+      grid-column: 1;
+      text-align: left;
+    }
+
+    .project-art-generacje-editorial-section > .project-text-section-dots {
+      grid-column: 1;
+      grid-row: 2;
+      margin-block: 1rem 0;
+    }
+
+    .project-art-generacje-editorial-section .project-art-generacje-term-copy {
+      grid-column: 1;
+      grid-row: 3;
+      margin-block-start: 0;
+    }
+
+    .project-art-generacje-body-flow > section:nth-of-type(even) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .project-art-generacje-body-flow
+      > section:nth-of-type(even)
+      .project-art-generacje-term-heading {
+      grid-column: 1;
+      text-align: left;
+    }
+
+    .project-art-generacje-body-flow
+      > section:nth-of-type(even)
+      > .project-text-section-dots {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .project-art-generacje-body-flow
+      > section:nth-of-type(even)
+      .project-art-generacje-term-copy {
+      grid-column: 1;
+      grid-row: 3;
+      margin-block-start: 0;
+    }
+
+    .project-text-sections-art-generacje .project-text-section {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 0;
+    }
+
+    .project-text-sections-art-generacje .project-text-section-heading,
+    .project-text-sections-art-generacje > :nth-child(even) .project-text-section-heading {
+      grid-column: 1;
+      text-align: left;
+    }
+
+    .project-text-sections-art-generacje .project-text-section-dots {
+      grid-column: 1;
+      grid-row: 2;
+      margin-block: 1rem 0;
+    }
+
+    .project-text-sections-art-generacje .project-text-section-copy,
+    .project-text-sections-art-generacje > :nth-child(even) .project-text-section-copy {
+      grid-column: 1;
+      grid-row: 3;
+      margin-block-start: 0;
     }
   }
 

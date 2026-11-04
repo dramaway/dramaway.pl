@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-04 — CTA zmniejszono o 1 px; poprzedni styl kreski i poprawki biblioteki pozostają bez zmian. |
-| **Gałąź / HEAD** | `typy-publikacji-bez-kropki` |
-| **Zmiana bieżąca** | 2026-11-04 — CTA zmniejszono o 1 px względem `text-body`; przywrócona zielona linia 4 px z pełnym kółkiem, kolumna o minimalnej szerokości 19 rem i lekkie skrócenie przy hover/fokus pozostają. Zmiany filtrów biblioteki bez zmian. |
+| **Ostatnia aktualizacja** | 2026-11-04 — W sekcjach Art Generacji kropki przylegają do siebie, wypełniają szerokość kolumny i zajmują wysokość pierwszego wersu nagłówka; tekst jest bezpośrednio pod nimi. |
+| **Gałąź / HEAD** | `art-generacje-editorial-layout` |
+| **Zmiana bieżąca** | 2026-11-04 — Bloki Portable Text w stylu `term` na stronie Art Generacji są sekcjami redakcyjnymi: nagłówki i tekst są wyrównane do lewej, a rząd przylegających kropek wypełnia kolumnę, ma wysokość pierwszego wersu nagłówka i bezpośrednio poprzedza tekst. Na mobile układ jest pionowy. Tytuł listy edycji i film bez zmian. |
 | **Poprzednia zmiana** | 2026-11-04 — H3 na podstronach zapisane zdaniowo jak tytuły listingów; Alexandria SemiBold i rozmiar wynikający z rangi pozostają bez zmian. |
 | **Poprzednia zmiana** | 2026-11-04 — Dodano pole dodatkowej treści projektu po blokach „Teksty przed listą edycji”; tytuły bloków są Alexandrią, a CTA w MuseoModerno z dłuższą kreską. |
 | **Wcześniejsza zmiana** | 2026-11-04 — Ramka całej treści pojawia się tylko przy fokusie klawiatury; fokus CTA na dotyku nie obrysowuje kafelka. |
@@ -30,6 +30,8 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 ---
 
 Aktualizacja 2026-11-04: dodano pole Portable Text „Treść po tekstach przed listą edycji”, widoczne po blokach i przed listą edycji projektu. Tytuły bloków „Teksty przed listą edycji” mają 18 px w Alexandrii SemiBold, bez wersalików. CTA na całej stronie używają MuseoModerno SemiBold i dłuższej kreski.
+
+Aktualizacja 2026-11-04: na Art Generacjach bloki Portable Text w stylu `term` są prezentowane jako sekcje redakcyjne z nagłówkami i tekstem wyrównanymi do lewej. Rząd przylegających kropek wypełnia szerokość kolumny, ma wysokość pierwszego wersu nagłówka i bezpośrednio poprzedza tekst; po najechaniu kropki zmieniają kolor z szarego na kolory marki. Na mobile układ jest pionowy. Lista edycji i film pozostają bez dodatkowych zmian.
 
 Aktualizacja 2026-11-04: nagłówki Portable Text: H2 MuseoModerno Black 24 px i wersaliki; H3 MuseoModerno SemiBold 20 px bez wersalików; H4 Alexandria SemiBold 18 px. CTA zmniejszone o kolejny 1 px — teraz 2 px poniżej `text-body`.
 

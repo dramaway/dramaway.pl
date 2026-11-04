@@ -8,6 +8,7 @@ import { projectEditionHeading } from "@/lib/edition-label";
 import { sortEditionsNewestFirst } from "@/lib/edition-sort";
 import {
   splitPortableByHeading,
+  splitPortableByTerm,
   type PortableHeadingSection,
 } from "@/lib/portable-split";
 import { resolveHeroSlides } from "@/lib/hero-slides";
@@ -97,6 +98,9 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
   const isArtGeneracje = project.slug === "art-generacje";
   const isTeatrCodzienny = project.slug === "teatr-codzienny";
   const usesThumbnailListing = isArtGeneracje || isTeatrCodzienny;
+  const projectBodyParts = isArtGeneracje
+    ? splitPortableByTerm(project.body)
+    : null;
   const rows = editions.map((edition) => ({
     title: projectEditionHeading(project.slug, edition),
     titleLanguage: edition.titleLanguage,
@@ -131,13 +135,48 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
       {hasPortableContent(project.body) ? (
         <Section
           className={
-            isArtGeneracje || isTeatrCodzienny
+            isArtGeneracje
+              ? "project-article-copy project-article-copy-art-generacje"
+              : isTeatrCodzienny
               ? "project-article-copy"
               : undefined
           }
         >
           <div className="article-body">
-            <PortableBody value={project.body} />
+            {projectBodyParts ? (
+              <div className="project-art-generacje-body-flow">
+                {projectBodyParts.map((part, index) =>
+                  part.kind === "term" ? (
+                    <section
+                      key={`term-${index}`}
+                      className="project-art-generacje-editorial-section"
+                    >
+                      <h2 className="project-art-generacje-term-heading">
+                        {part.title}
+                      </h2>
+                      <span
+                        className="project-text-section-dots"
+                        aria-hidden="true"
+                      />
+                      {part.blocks.length > 0 ? (
+                        <div className="project-art-generacje-term-copy">
+                          <PortableBody value={part.blocks} />
+                        </div>
+                      ) : null}
+                    </section>
+                  ) : (
+                    <div
+                      key={`blocks-${index}`}
+                      className="project-art-generacje-body-block"
+                    >
+                      <PortableBody value={part.blocks} />
+                    </div>
+                  ),
+                )}
+              </div>
+            ) : (
+              <PortableBody value={project.body} />
+            )}
           </div>
         </Section>
       ) : null}
@@ -145,7 +184,9 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
         (section) => section.heading?.trim() && section.text?.trim(),
       ) ? (
         <Section>
-          <div className="project-text-sections">
+          <div
+            className={`project-text-sections${isArtGeneracje ? " project-text-sections-art-generacje" : ""}`}
+          >
             {project.sectionsBeforeEditions.map((section) => {
               const heading = section.heading?.trim();
               const text = section.text?.trim();
@@ -159,6 +200,12 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
                     >
                       {heading}
                     </h2>
+                    {isArtGeneracje ? (
+                      <span
+                        className="project-text-section-dots"
+                        aria-hidden="true"
+                      />
+                    ) : null}
                     <p className="project-text-section-copy">{text}</p>
                   </div>
                 </section>
