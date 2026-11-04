@@ -2350,8 +2350,9 @@
   .project-text-section-dots {
     display: flex;
     width: 100%;
-    height: 1.35em;
-    margin: 0;
+    height: 1lh;
+    font-size: var(--text-h2);
+    line-height: var(--text-h2--line-height);
     background-image: radial-gradient(circle, #d7d6d2 3.5px, transparent 3.6px);
     background-position: left center;
     background-repeat: repeat-x;
@@ -2393,6 +2394,7 @@
   .project-text-sections-art-generacje .project-text-section-dots {
     grid-column: 2;
     grid-row: 1;
+    margin: 0;
     margin: 0;
   }
 
@@ -2499,7 +2501,7 @@
     .project-art-generacje-editorial-section > .project-text-section-dots {
       grid-column: 1;
       grid-row: 2;
-      margin-block: 1rem 0;
+      margin: 0;
     }
 
     .project-art-generacje-editorial-section .project-art-generacje-term-copy {
@@ -2548,7 +2550,7 @@
     .project-text-sections-art-generacje .project-text-section-dots {
       grid-column: 1;
       grid-row: 2;
-      margin-block: 1rem 0;
+      margin: 0;
     }
 
     .project-text-sections-art-generacje .project-text-section-copy,
