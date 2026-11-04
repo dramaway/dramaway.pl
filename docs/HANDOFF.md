@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-04 — „Czytaj więcej” i nagłówki szufladek dopasowane do stylu CTA. |
+| **Ostatnia aktualizacja** | 2026-11-04 — Podkreślenia kategorii biblioteki usunięte; filtry formatu mają animowaną kreskę. |
 | **Gałąź / HEAD** | `szaroale-pl-czcionka-kategorii-biblioteki` |
-| **Zmiana bieżąca** | 2026-11-04 — „Czytaj więcej” i natywne szufladki używają Alexandrii SemiBold bez wersalików oraz ręcznie rysowanego zielonego podkreślenia jak CTA. Kreski CTA są nieco krótsze od etykiet; ręcznie rysowane podkreślenie kategorii biblioteki pozostaje w dopasowanym stylu. Wszystkie H2 używają MuseoModerno 24 px; H3/H4 na podstronach — Alexandria SemiBold; hero, menu i H1 bez zmian. Pozostałe zmiany CTA, kategorii i odstępów listingów pozostają opisane niżej/wyżej w PR; filtry biblioteki są lekkimi zakładkami z ruchomym wskaźnikiem. |
+| **Zmiana bieżąca** | 2026-11-04 — Kategorie w bibliotece nie mają podkreśleń; lekkie, ręcznie rysowane podkreślenie w filtrach formatu animuje się przy zmianie, hoverze i fokusie. Przed pierwszą publikacją w książkach, multimediach i scenariuszach dodano odstęp; artykuły i publikacje bez zmian. „Czytaj więcej” i natywne szufladki używają Alexandrii SemiBold bez wersalików oraz zielonego podkreślenia jak CTA. Kreski CTA są nieco krótsze od etykiet. Wszystkie H2 używają MuseoModerno 24 px; H3/H4 na podstronach — Alexandria SemiBold; hero, menu i H1 bez zmian. |
 | **Poprzednia zmiana** | 2026-11-04 — Ramka całej treści pojawia się tylko przy fokusie klawiatury; fokus CTA na dotyku nie obrysowuje kafelka. |
 | **Poprzednia zmiana** | 2026-11-03 — Linki w tekstach Portable Text używają granatu `brand-6`, również gdy zawierają fragmenty z innym kolorem tekstu. |
 | **Poprzednia zmiana** | 2026-11-03 — Bloki „Teksty przed listą edycji” mają piaskowe koło, pogrubiony nagłówek MuseoModerno i wybór koloru marki lub czarnego. |
@@ -26,6 +26,8 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | **Owner Sanity** | Organizacja na `admin@dramaway.pl`, plan NGO. `admin@dramaway.pl` = project Admin; redakcja = Editor |
 
 ---
+
+Aktualizacja 2026-11-04: na `/baza-wiedzy` usunięto podkreślenia z linków kategorii. Zakładki rodzaju mają lekką, ręcznie rysowaną magentową kreskę, która płynnie przesuwa się między aktywnymi pozycjami; hover/fokus też pokazują kreskę. Przed pierwszą publikacją w formatach książki, multimedia i scenariusze dodano oddech; artykuły i publikacje pozostają bez zmian.
 
 Aktualizacja 2026-11-04: kontrolki „Czytaj więcej” i szufladki dopasowano do CTA — Alexandria SemiBold bez wersalików oraz krótsza ręcznie rysowana zielona kreska, która odsłania się przy hover/fokus. Szufladki zachowują natywne `details/summary` i niezależne otwieranie paneli.
 
