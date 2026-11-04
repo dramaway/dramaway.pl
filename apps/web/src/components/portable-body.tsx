@@ -417,12 +417,12 @@ const blockComponents = {
     <h2 className="mt-8 font-display text-h2 font-black">{children}</h2>
   ),
   h3: ({ children }: { children?: ReactNode }) => (
-    <h3 className="mt-6 font-display text-pt-heading font-semibold normal-case">
+    <h3 className="portable-heading-display mt-6 font-display text-pt-h3 font-semibold normal-case">
       {children}
     </h3>
   ),
   h4: ({ children }: { children?: ReactNode }) => (
-    <h4 className="mt-6 font-body text-h4 font-semibold">{children}</h4>
+    <h4 className="mt-6 font-body text-pt-h4 font-semibold">{children}</h4>
   ),
   normal: ({ children }: { children?: ReactNode }) => (
     <p className="whitespace-pre-wrap">{children}</p>
