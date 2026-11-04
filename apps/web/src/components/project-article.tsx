@@ -167,6 +167,19 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
           </div>
         </Section>
       ) : null}
+      {hasPortableContent(project.bodyAfterTextSections) ? (
+        <Section
+          className={
+            isArtGeneracje || isTeatrCodzienny
+              ? "project-article-copy"
+              : undefined
+          }
+        >
+          <div className="article-body">
+            <PortableBody value={project.bodyAfterTextSections} />
+          </div>
+        </Section>
+      ) : null}
       {editions.length > 0 ? (
         <section id="edycje" aria-label={copy.editionsHeading}>
           <BlobRow

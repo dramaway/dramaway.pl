@@ -56,6 +56,13 @@ export const project = defineType({
       of: [defineArrayMember({ type: "projectTextSection" })],
     }),
     defineField({
+      name: "bodyAfterTextSections",
+      title: "Treść po tekstach przed listą edycji",
+      type: "blockContent",
+      description:
+        "Opcjonalna treść wyświetlana po blokach „Teksty przed listą edycji”, bezpośrednio przed listą edycji.",
+    }),
+    defineField({
       name: "editionsHeading",
       title: "Nagłówek listy edycji",
       type: "string",

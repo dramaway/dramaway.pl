@@ -20,7 +20,7 @@ type CtaLinkProps = {
   className?: string;
 };
 
-/** Green Alexandria label with a hand-drawn underline. */
+/** Green MuseoModerno label with a hand-drawn underline. */
 export function CtaLink({
   href,
   children,
