@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-04 — skrócono odstępy między filtrami, kategoriami i listą publikacji w Bibliotece. |
+| **Ostatnia aktualizacja** | 2026-11-04 — CTA zmniejszono o 1 px; poprzedni styl kreski i poprawki biblioteki pozostają bez zmian. |
 | **Gałąź / HEAD** | `typy-publikacji-bez-kropki` |
-| **Zmiana bieżąca** | 2026-11-04 — w Bibliotece odstępy między filtrami, kategoriami i listą publikacji dopasowano do rytmu 1.5 rem. |
+| **Zmiana bieżąca** | 2026-11-04 — CTA zmniejszono o 1 px względem `text-body`; przywrócona zielona linia 4 px z pełnym kółkiem, kolumna o minimalnej szerokości 19 rem i lekkie skrócenie przy hover/fokus pozostają. Zmiany filtrów biblioteki bez zmian. |
 | **Poprzednia zmiana** | 2026-11-04 — H3 na podstronach zapisane zdaniowo jak tytuły listingów; Alexandria SemiBold i rozmiar wynikający z rangi pozostają bez zmian. |
 | **Poprzednia zmiana** | 2026-11-04 — Dodano pole dodatkowej treści projektu po blokach „Teksty przed listą edycji”; tytuły bloków są Alexandrią, a CTA w MuseoModerno z dłuższą kreską. |
 | **Wcześniejsza zmiana** | 2026-11-04 — Ramka całej treści pojawia się tylko przy fokusie klawiatury; fokus CTA na dotyku nie obrysowuje kafelka. |
@@ -28,8 +28,6 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | **Owner Sanity** | Organizacja na `admin@dramaway.pl`, plan NGO. `admin@dramaway.pl` = project Admin; redakcja = Editor |
 
 ---
-
-Aktualizacja 2026-11-04: na `/baza-wiedzy` odstęp od filtrów do listy publikacji oraz od kategorii do publikacji wyrównano do rytmu 1.5 rem; usunięto nadmiarowe odstępy 2.5–5 rem.
 
 Aktualizacja 2026-11-04: dodano pole Portable Text „Treść po tekstach przed listą edycji”, widoczne po blokach i przed listą edycji projektu. Tytuły bloków „Teksty przed listą edycji” mają 18 px w Alexandrii SemiBold, bez wersalików. CTA na całej stronie używają MuseoModerno SemiBold i dłuższej kreski.
 

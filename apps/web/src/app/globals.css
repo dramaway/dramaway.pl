@@ -4331,7 +4331,7 @@
    * category with its count. `?kategoria=` shows only that category.
    */
   .cat-tiles {
-    margin-block-end: 1.5rem;
+    margin-block-end: 2.5rem;
   }
 
   .cat-tiles ul {
@@ -4407,14 +4407,20 @@
   }
 
   .pub-cat-list {
-    padding-block-start: 0;
+    padding-block-start: 4rem;
     padding-block-end: 1.25rem;
   }
 
   .library-section-books .filter-row-switches + .stack-wide,
   .library-section-scripts .filter-row-switches + .stack-wide,
   .library-section-multimedia .filter-row-switches + .stack-wide {
-    margin-block-start: 1.5rem;
+    margin-block-start: 2.5rem;
+  }
+
+  .library-section-books .cat-tiles + .pub-cat .pub-cat-list,
+  .library-section-scripts .cat-tiles + .pub-cat .pub-cat-list,
+  .library-section-multimedia .cat-tiles + .pub-cat .pub-cat-list {
+    padding-block-start: 5rem;
   }
 
   .pub-row-title,
