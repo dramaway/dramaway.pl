@@ -417,7 +417,9 @@ const blockComponents = {
     <h2 className="mt-8 font-display text-h2 font-black">{children}</h2>
   ),
   h3: ({ children }: { children?: ReactNode }) => (
-    <h3 className="mt-6 font-display text-h3 font-black">{children}</h3>
+    <h3 className="mt-6 font-display text-pt-heading font-semibold normal-case">
+      {children}
+    </h3>
   ),
   h4: ({ children }: { children?: ReactNode }) => (
     <h4 className="mt-6 font-body text-h4 font-semibold">{children}</h4>
