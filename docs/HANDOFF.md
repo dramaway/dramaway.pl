@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-04 — Fokus CTA i treści na ekranach dotykowych nie rysuje zielonych ramek. |
-| **Gałąź / HEAD** | `fix-mobile-content-focus-outline` |
-| **Zmiana bieżąca** | 2026-11-04 — Etykiety kategorii biblioteki Czytelni używają Alexandrii jak teksty; aktywna kategoria ma SemiBold. |
+| **Ostatnia aktualizacja** | 2026-11-04 — Filtry formatu biblioteki mają lekką nawigację zakładkową z magentowym wskaźnikiem aktywnego wyboru. |
+| **Gałąź / HEAD** | `szaroale-pl-czcionka-kategorii-biblioteki` |
+| **Zmiana bieżąca** | 2026-11-04 — Filtry formatu biblioteki mają lekką nawigację zakładkową; etykiety kategorii biblioteki używają Alexandrii. |
 | **Poprzednia zmiana** | 2026-11-04 — Ramka całej treści pojawia się tylko przy fokusie klawiatury; fokus CTA na dotyku nie obrysowuje kafelka. |
 | **Poprzednia zmiana** | 2026-11-03 — Linki w tekstach Portable Text używają granatu `brand-6`, również gdy zawierają fragmenty z innym kolorem tekstu. |
 | **Poprzednia zmiana** | 2026-11-03 — Bloki „Teksty przed listą edycji” mają piaskowe koło, pogrubiony nagłówek MuseoModerno i wybór koloru marki lub czarnego. |
