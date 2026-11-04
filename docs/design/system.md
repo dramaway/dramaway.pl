@@ -76,6 +76,8 @@ Poniżej `lg` odstęp `--spacing-mobile-rhythm` (1.5–2 rem) ustawia przerwę m
 | `.blob-row-label` / `.blob-row-compact` / `.blob-row-lead` | Archiwum na `/projekty` (`density="compact"`): etykieta magenta zdaniowa; dwie kolumny od `lg` z lekkim offsetem prawej (`--archive-stagger`); pełna zajawka; bez plamy za tytułem |
 | `.blob-row-thumbnails` | Listing edycji projektów pokazuje pełne pole `Edition title` z Sanity, miniaturę z pierwszego dostępnego zdjęcia galerii lub rezultatu oraz tytuł Alexandria SemiBold bez uppercase |
 
+Na stronach edycji projektu (`.hero-stack` bezpośrednio przed `.edition-follow`) dolny padding hero jest równy połowie tokenu `--spacing-section`, aby skrócić odstęp do galerii lub treści. Pozostałe hero zachowują pełny rytm.
+
 ## Prymitywy
 
 W `apps/web/src/components/`:

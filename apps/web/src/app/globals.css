@@ -974,6 +974,10 @@
     padding-block: var(--spacing-section);
   }
 
+  .hero-stack:has(+ .edition-follow) {
+    padding-block-end: calc(var(--spacing-section) / 2);
+  }
+
   .hero-stack .hero-heading,
   .hero-stack .hero-copy {
     max-width: 62ch;
