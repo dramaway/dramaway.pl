@@ -4764,6 +4764,20 @@
 }
 
 @media (width >= 64rem) {
+  .stack,
+  .blob-row-thumbnails {
+    gap: calc(var(--spacing-section) / 2);
+  }
+
+  .blob-row-compact {
+    row-gap: calc(var(--archive-gap) / 2);
+  }
+
+  .pub-cat + .pub-cat {
+    margin-block-start: 0.875rem;
+    padding-block-start: 0.875rem;
+  }
+
   .team-row-name {
     margin-block-start: 1rem;
   }
