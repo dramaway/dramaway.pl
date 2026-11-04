@@ -2700,7 +2700,7 @@
     align-items: stretch;
     min-width: min(19rem, 100%);
     font-family: var(--font-display);
-    font-size: var(--text-body);
+    font-size: calc(var(--text-body) - 1px);
     font-weight: 600;
     line-height: 1.2;
     color: var(--color-green-ink);
