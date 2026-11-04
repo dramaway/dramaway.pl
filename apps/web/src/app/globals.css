@@ -4031,6 +4031,13 @@
       width: 100%;
     }
 
+    /* Obraz wypełnia ramkę (30/50/70/100%), wysokość wynika z proporcji pliku */
+    .body-figure:not(.body-figure-inline) .body-image {
+      width: 100%;
+      height: auto;
+      max-height: none;
+    }
+
     .body-figure-inline.body-figure-small,
     .body-figure-inline.body-figure-medium,
     .body-figure-inline.body-figure-wide,
