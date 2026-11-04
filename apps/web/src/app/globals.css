@@ -2696,19 +2696,16 @@
   .cta {
     display: inline-flex;
     flex-direction: column;
-    gap: 0.15rem;
-    align-items: flex-start;
-    width: max-content;
-    max-width: 100%;
-    min-width: 0;
+    gap: 0.6rem;
+    align-items: stretch;
+    min-width: min(19rem, 100%);
     font-family: var(--font-display);
-    font-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1.0625rem);
+    font-size: var(--text-body);
     font-weight: 600;
     line-height: 1.2;
     color: var(--color-green-ink);
   }
 
-  .cta-rule,
   .fold-rule,
   .pt-readmore-line {
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 14' preserveAspectRatio='none'%3E%3Cpath d='M3 8 C42 4 75 10 112 7 S184 9 225 5' fill='none' stroke='%23369125' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
@@ -2716,23 +2713,41 @@
   }
 
   .cta-rule {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 14' preserveAspectRatio='none'%3E%3Cpath d='M3 7 H226' fill='none' stroke='%23369125' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='232' cy='7' r='7' fill='%23369125'/%3E%3C/svg%3E");
+    position: relative;
     display: block;
-    width: 110%;
-    height: 0.75rem;
-    clip-path: inset(0 4% 0 0);
-    transition: clip-path 350ms ease;
+    height: 4px;
+    border-radius: 999px;
+    background-color: var(--color-green);
+    transition: transform 200ms ease;
+    transform-origin: left center;
+  }
+
+  .cta-rule::after {
+    content: "";
+    position: absolute;
+    inset-inline-end: -5px;
+    inset-block-start: 50%;
+    translate: 0 -50%;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: var(--color-green);
   }
 
   .cta:hover .cta-rule,
   .cta:focus-visible .cta-rule,
   .card-hover:hover .cta-rule,
   .card-hover:focus-within .cta-rule {
-    clip-path: inset(0);
+    transform: scaleX(0.88);
   }
 
   .cta[aria-current="true"] {
     color: var(--color-magenta);
+  }
+
+  .cta[aria-current="true"] .cta-rule,
+  .cta[aria-current="true"] .cta-rule::after {
+    background-color: var(--color-magenta);
   }
 
   /*
