@@ -5,9 +5,10 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-04 — H3 na podstronach używają zapisu zdaniowego, tak jak tytuły listingów; zachowują Alexandrię SemiBold i rozmiar wynikający z rangi. |
-| **Gałąź / HEAD** | `h3-tytuly-jak-w-listingu` |
-| **Zmiana bieżąca** | 2026-11-04 — H3 na podstronach zapisane zdaniowo jak tytuły listingów; Alexandria SemiBold i rozmiar wynikający z rangi pozostają bez zmian. |
+| **Ostatnia aktualizacja** | 2026-11-04 — CTA zmniejszono o 1 px; poprzedni styl kreski i poprawki biblioteki pozostają bez zmian. |
+| **Gałąź / HEAD** | `typy-publikacji-bez-kropki` |
+| **Zmiana bieżąca** | 2026-11-04 — CTA zmniejszono o 1 px względem `text-body`; przywrócona zielona linia 4 px z pełnym kółkiem, kolumna o minimalnej szerokości 19 rem i lekkie skrócenie przy hover/fokus pozostają. Zmiany filtrów biblioteki bez zmian. |
+| **Poprzednia zmiana** | 2026-11-04 — H3 na podstronach zapisane zdaniowo jak tytuły listingów; Alexandria SemiBold i rozmiar wynikający z rangi pozostają bez zmian. |
 | **Poprzednia zmiana** | 2026-11-04 — Dodano pole dodatkowej treści projektu po blokach „Teksty przed listą edycji”; tytuły bloków są Alexandrią, a CTA w MuseoModerno z dłuższą kreską. |
 | **Wcześniejsza zmiana** | 2026-11-04 — Ramka całej treści pojawia się tylko przy fokusie klawiatury; fokus CTA na dotyku nie obrysowuje kafelka. |
 | **Poprzednia zmiana** | 2026-11-03 — Linki w tekstach Portable Text używają granatu `brand-6`, również gdy zawierają fragmenty z innym kolorem tekstu. |
