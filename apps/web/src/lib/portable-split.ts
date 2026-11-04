@@ -35,6 +35,10 @@ export type PortableHeadingSection = {
   blocks: PortableBlockList;
 };
 
+export type PortableTermPart =
+  | { kind: "blocks"; blocks: PortableBlockList }
+  | { kind: "term"; title: string; blocks: PortableBlockList };
+
 /**
  * Split Portable Text into an optional preamble (blocks before the first h2)
  * and titled sections. The h2 itself becomes `title` and is omitted from
@@ -69,4 +73,53 @@ export function splitPortableByHeading(
     preamble: preamble.length > 0 ? preamble : null,
     sections,
   };
+}
+
+/**
+ * Keep ordinary Portable Text blocks in order while grouping each `term`
+ * block with the following text blocks up to the next term or embedded item.
+ */
+export function splitPortableByTerm(
+  value: PortableContent | null | undefined,
+): PortableTermPart[] {
+  const parts: PortableTermPart[] = [];
+  let looseBlocks: PortableBlockList = [];
+  let currentTerm: Extract<PortableTermPart, { kind: "term" }> | null = null;
+
+  const flushLooseBlocks = () => {
+    if (looseBlocks.length > 0) {
+      parts.push({ kind: "blocks", blocks: looseBlocks });
+      looseBlocks = [];
+    }
+  };
+  const flushTerm = () => {
+    if (currentTerm) {
+      parts.push(currentTerm);
+      currentTerm = null;
+    }
+  };
+
+  for (const block of nodes(value)) {
+    const node = asNode(block);
+    if (node?._type === "block" && node.style === "term") {
+      flushLooseBlocks();
+      flushTerm();
+      const title = portableBlockText(block).replace(/\s+/g, " ").trim();
+      if (title) currentTerm = { kind: "term", title, blocks: [] };
+      else looseBlocks.push(block);
+      continue;
+    }
+
+    if (currentTerm && node?._type === "block") {
+      currentTerm.blocks.push(block);
+      continue;
+    }
+
+    flushTerm();
+    looseBlocks.push(block);
+  }
+
+  flushLooseBlocks();
+  flushTerm();
+  return parts;
 }
