@@ -2135,6 +2135,10 @@
     margin-block-start: auto;
   }
 
+  .news-card .cta {
+    align-self: flex-start;
+  }
+
   /* Vertical list whose items carry a Blob behind the heading.
    * Isolate here, not on `.stack-item`, so overflowing circles stay
    * behind neighbouring rows' text instead of covering it. */
@@ -2686,11 +2690,12 @@
   .cta {
     display: inline-flex;
     flex-direction: column;
-    gap: 0.6rem;
-    align-items: stretch;
-    /* Figma draws every instance of this link 301px wide. */
-    min-width: min(19rem, 100%);
-    font-family: var(--font-display);
+    gap: 0.15rem;
+    align-items: flex-start;
+    width: max-content;
+    max-width: 100%;
+    min-width: 0;
+    font-family: var(--font-body);
     font-size: var(--text-body);
     font-weight: 600;
     line-height: 1.2;
@@ -2698,39 +2703,24 @@
   }
 
   .cta-rule {
-    position: relative;
     display: block;
-    height: 4px;
-    border-radius: 999px;
-    background-color: var(--color-green);
-    transition: transform 200ms ease;
-    transform-origin: left center;
-  }
-
-  .cta-rule::after {
-    content: "";
-    position: absolute;
-    inset-inline-end: -5px;
-    inset-block-start: 50%;
-    translate: 0 -50%;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background-color: var(--color-green);
+    width: 100%;
+    height: 0.75rem;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 14' preserveAspectRatio='none'%3E%3Cpath d='M3 8 C42 4 75 10 112 7 S184 9 237 5' fill='none' stroke='%23369125' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+      left center / 100% 100% no-repeat;
+    clip-path: inset(0 18% 0 0);
+    transition: clip-path 350ms ease;
   }
 
   .cta:hover .cta-rule,
-  .cta:focus-visible .cta-rule {
-    transform: scaleX(0.88);
+  .cta:focus-visible .cta-rule,
+  .card-hover:hover .cta-rule,
+  .card-hover:focus-within .cta-rule {
+    clip-path: inset(0);
   }
 
   .cta[aria-current="true"] {
     color: var(--color-magenta);
-  }
-
-  .cta[aria-current="true"] .cta-rule,
-  .cta[aria-current="true"] .cta-rule::after {
-    background-color: var(--color-magenta);
   }
 
   /*
@@ -2766,12 +2756,6 @@
   .cta-over {
     position: relative;
     z-index: 2;
-  }
-
-  /* Tile whose CTA only repeats the card link: animate the rule on card hover. */
-  .card-hover:hover .cta-rule,
-  .card-hover:focus-within .cta-rule {
-    transform: scaleX(0.88);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -3270,11 +3254,6 @@
   .team-bio-copy {
     flex: 1 1 0;
     min-width: 0;
-  }
-
-  /* Figma's 301 px rule; in a card the rule takes the copy column instead. */
-  .team-bio .cta {
-    min-width: 100%;
   }
 
   .team-bio-name {
@@ -4511,6 +4490,11 @@
   .pub-cat-list {
     padding-block-start: 4rem;
     padding-block-end: 1.25rem;
+  }
+
+  .pub-row-title,
+  .blob-row-title {
+    text-transform: none;
   }
 }
 

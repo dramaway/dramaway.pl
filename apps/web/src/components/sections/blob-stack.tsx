@@ -65,7 +65,13 @@ export function BlobStack({
             <Blob />
           )}
           <div className={thumbnails ? "blob-row-thumbnail-copy" : undefined}>
-            <h3 className="font-display text-h3 font-black">
+            <h3
+              className={
+                thumbnails
+                  ? "blob-row-title font-body text-h4 font-semibold"
+                  : "font-display text-h3 font-black"
+              }
+            >
               <Link href={item.href} className="card-link">
                 <span lang={item.titleLanguage ?? undefined}>{item.title}</span>
               </Link>

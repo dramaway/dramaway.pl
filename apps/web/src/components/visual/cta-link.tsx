@@ -20,7 +20,7 @@ type CtaLinkProps = {
   className?: string;
 };
 
-/** Green label over a thick rule ending in a dot — the Figma file's default link. */
+/** Green Alexandria label with a hand-drawn underline. */
 export function CtaLink({
   href,
   children,
