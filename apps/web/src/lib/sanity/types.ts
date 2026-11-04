@@ -398,6 +398,7 @@ export type ProjectDetail = {
   cover: CmsImage | null;
   body: PortableContent;
   sectionsBeforeEditions: ProjectTextSection[] | null;
+  bodyAfterTextSections: PortableContent;
   editions: ProjectEdition[] | null;
   afterword: PortableContent;
   partners: string[] | null;

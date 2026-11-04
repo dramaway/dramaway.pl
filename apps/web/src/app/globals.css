@@ -2258,9 +2258,9 @@
   }
 
   .project-text-section-heading {
-    font-family: var(--font-display);
+    font-family: var(--font-body);
     font-size: 18px;
-    font-weight: 900;
+    font-weight: 600;
     text-transform: none;
   }
 
@@ -2701,7 +2701,7 @@
     width: max-content;
     max-width: 100%;
     min-width: 0;
-    font-family: var(--font-body);
+    font-family: var(--font-display);
     font-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1.0625rem);
     font-weight: 600;
     line-height: 1.2;
@@ -2717,9 +2717,9 @@
 
   .cta-rule {
     display: block;
-    width: 100%;
+    width: 110%;
     height: 0.75rem;
-    clip-path: inset(0 8% 0 0);
+    clip-path: inset(0 4% 0 0);
     transition: clip-path 350ms ease;
   }
 
@@ -4278,14 +4278,15 @@
     display: inline-flex;
     flex-direction: row;
     align-items: center;
+    gap: 0.6rem;
     min-height: var(--touch-target);
     min-width: 0;
     width: auto;
     padding-block: 0.6rem 0.75rem;
     color: var(--color-ink);
-    font-family: var(--font-body);
+    font-family: var(--font-display);
     font-size: var(--text-body);
-    font-weight: 400;
+    font-weight: 600;
     line-height: 1.2;
     text-decoration: none;
     white-space: nowrap;
@@ -4295,9 +4296,30 @@
     display: none;
   }
 
+  .filter-row-switches .cta::before {
+    display: block;
+    flex: 0 0 1rem;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background-color: var(--color-magenta);
+    opacity: 0;
+    transform: scale(0.65);
+    transition:
+      opacity 160ms ease,
+      transform 220ms ease;
+    content: "";
+  }
+
+  .filter-row-switches .cta[aria-current="true"]::before {
+    opacity: 1;
+    transform: scale(1);
+  }
+
   .filter-row-switches .cta::after {
     position: absolute;
     inset-inline: 0;
+    inset-inline-end: -0.35rem;
     inset-block-end: 0;
     height: 0.5rem;
     background-color: var(--color-magenta);
@@ -4310,10 +4332,9 @@
     content: "";
   }
 
-  .filter-row-switches .cta:hover::after,
-  .filter-row-switches .cta:focus-visible::after,
-  .filter-row-switches .cta[aria-current="true"]::after {
-    clip-path: inset(0 8% 0 0);
+  .filter-row-switches .cta:not([aria-current="true"]):hover::after,
+  .filter-row-switches .cta:not([aria-current="true"]):focus-visible::after {
+    clip-path: inset(0 4% 0 0);
   }
 
   .filter-row-switches .cta[aria-current="true"] {
@@ -4321,51 +4342,8 @@
     font-weight: 600;
   }
 
-  .filter-row-switches .cta[aria-current="true"]:hover::after,
-  .filter-row-switches .cta[aria-current="true"]:focus-visible::after {
-    clip-path: inset(0);
-  }
-
-  .filter-row-switches.is-enhanced .cta[aria-current="true"]::after {
-    display: none;
-  }
-
-  .filter-row-indicator-slot {
-    position: absolute;
-    inset: 0 auto auto 0;
-    width: 0;
-    height: 0;
-    list-style: none;
-  }
-
-  .filter-row-indicator {
-    position: absolute;
-    inset-block-start: 0;
-    inset-inline-start: 0;
-    display: block;
-    width: 0;
-    height: 0.5rem;
-    background-color: var(--color-magenta);
-    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 14' preserveAspectRatio='none'%3E%3Cpath d='M3 8 C42 4 75 10 112 7 S184 9 225 5' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
-      left center / 100% 100% no-repeat;
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 14' preserveAspectRatio='none'%3E%3Cpath d='M3 8 C42 4 75 10 112 7 S184 9 225 5' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
-      left center / 100% 100% no-repeat;
-    clip-path: inset(0 8% 0 0);
-    opacity: 0;
-    pointer-events: none;
-    transition:
-      transform 350ms ease,
-      width 350ms ease,
-      clip-path 250ms ease,
-      opacity 120ms ease;
-  }
-
-  .filter-row-switches.is-enhanced .filter-row-indicator {
-    opacity: 1;
-  }
-
   @media (prefers-reduced-motion: reduce) {
-    .filter-row-indicator,
+    .filter-row-switches .cta::before,
     .filter-row-switches .cta::after {
       transition: none;
     }
@@ -4417,7 +4395,7 @@
   }
 
   .cat-tile[aria-current="true"] .cat-tile-title {
-    font-weight: 600;
+    font-weight: 400;
   }
 
   [data-tone="1"] { --tone: var(--color-brand-1); }

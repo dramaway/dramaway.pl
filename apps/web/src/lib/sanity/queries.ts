@@ -251,6 +251,7 @@ export const projectBySlugQuery = `*[_type == "project" && slug.current == $slug
   ),
   body[] ${portableBodyProjection},
   sectionsBeforeEditions[] { _key, heading, headingColor, text },
+  bodyAfterTextSections[] ${portableBodyProjection},
   editions[] ${editionProjection},
   afterword[] ${portableBodyProjection},
   partners,
