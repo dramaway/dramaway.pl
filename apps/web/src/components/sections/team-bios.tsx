@@ -64,7 +64,7 @@ export function TeamBios({ people, heading, ctaLabel, body }: TeamBiosProps) {
                   className="team-photo"
                 />
                 <div className="team-bio-copy">
-                  <h3 className="team-bio-name text-h4 font-semibold">
+                  <h3 className="team-bio-name text-listing-title font-semibold">
                     {person.name}
                   </h3>
                   {blurb ? (
