@@ -2259,6 +2259,7 @@
 
   .project-text-section-heading {
     font-family: var(--font-display);
+    font-size: 18px;
     font-weight: 900;
   }
 
