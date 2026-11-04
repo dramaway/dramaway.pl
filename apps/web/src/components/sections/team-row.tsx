@@ -56,7 +56,7 @@ export function TeamRow({
                   sizes="(min-width: 64rem) 15vw, 40vw"
                   className="team-photo"
                 />
-                <p className="team-row-name font-display text-listing-title font-black">
+                <p className="team-row-name font-display text-listing-title font-semibold text-ink">
                   {person.name}
                 </p>
               </Link>

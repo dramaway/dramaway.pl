@@ -35,6 +35,8 @@ Aktualizacja 2026-11-04: nagłówki Portable Text: H2 MuseoModerno Black 24 px i
 
 Aktualizacja 2026-11-04: tytuły poszczególnych pozycji we wszystkich listingach mają stałe 18 px; nagłówki sekcji listingów bez zmian.
 
+Aktualizacja 2026-11-04: tytuły listingów używają MuseoModerno SemiBold 18 px w kolorze `#282828` (także przy hover/fokus), a krótkie opisy Alexandrii Light 18 px w tym samym kolorze.
+
 Aktualizacja 2026-11-04: tytuły sekcji „Teksty przed listą edycji” na stronach projektów zmniejszone do 18 px.
 
 Aktualizacja 2026-11-04: linki kategorii biblioteki zmniejszone o 2 px względem filtrów formatu; kreska filtrów pogrubiona do tej samej grubości co CTA.

@@ -68,8 +68,8 @@ export function BlobStack({
             <h3
               className={
                 thumbnails
-                  ? "blob-row-title font-body text-listing-title font-semibold normal-case"
-                  : "font-display text-listing-title font-black"
+                  ? "blob-row-title font-display text-listing-title font-semibold text-ink normal-case"
+                  : "font-display text-listing-title font-semibold text-ink"
               }
             >
               <Link href={item.href} className="card-link">
@@ -78,7 +78,10 @@ export function BlobStack({
             </h3>
             {item.lead ? (
               <p
-                className={cn("text-body", compact ? "blob-row-lead" : "mt-5")}
+                className={cn(
+                  "font-body text-listing-description font-light text-ink",
+                  compact ? "blob-row-lead" : "mt-5",
+                )}
               >
                 {item.lead}
               </p>

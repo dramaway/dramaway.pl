@@ -101,6 +101,8 @@
   --text-pt-h4--line-height: var(--text-h4--line-height);
   --text-listing-title: 1.125rem;
   --text-listing-title--line-height: 1.25;
+  --text-listing-description: 1.125rem;
+  --text-listing-description--line-height: var(--text-body--line-height);
   --text-h4: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
   --text-h4--line-height: 1.25;
   --text-lead: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
@@ -3063,6 +3065,7 @@
     font-size: var(--text-listing-title);
     font-weight: 600;
     line-height: var(--text-listing-title--line-height);
+    color: var(--color-ink);
   }
 
   .history-all {
@@ -4719,14 +4722,14 @@ h3 {
 @media (hover: hover) {
   h1:hover,
   h2:hover,
-  h3:hover {
+  h3:hover:not(.text-listing-title) {
     color: var(--color-brand-1);
   }
 }
 
 h1:focus-within,
 h2:focus-within,
-h3:focus-within {
+h3:focus-within:not(.text-listing-title) {
   color: var(--color-brand-1);
 }
 
@@ -4787,6 +4790,7 @@ h3:focus-within {
 
 body:not(:has([data-home]))
   :is(h3, h4, .text-h3, .text-h4)
+  :not(.text-listing-title)
   :not(.fixed-section-heading)
   :not(:where(.hero *))
   :not(:where(.portable-heading-display *))

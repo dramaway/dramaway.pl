@@ -47,8 +47,8 @@ export function ContentTile({
   const Title = heading;
   const titleClass =
     layout === "card"
-      ? "news-card-title mt-2 font-display text-listing-title font-black"
-      : "font-display text-listing-title font-black";
+      ? "news-card-title mt-2 font-display text-listing-title font-semibold text-ink"
+      : "font-display text-listing-title font-semibold text-ink";
   const title = tile.title ? (
     <Title className={titleClass}>
       {tile.href ? (
@@ -61,7 +61,9 @@ export function ContentTile({
     </Title>
   ) : null;
   const excerpt = tile.excerpt ? (
-    <p className="mt-5 text-body">{tile.excerpt}</p>
+    <p className="mt-5 font-body text-listing-description font-light text-ink">
+      {tile.excerpt}
+    </p>
   ) : null;
   const cta =
     tile.href && tile.ctaLabel ? (

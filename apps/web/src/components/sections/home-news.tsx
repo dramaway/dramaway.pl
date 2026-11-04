@@ -55,7 +55,7 @@ export function HomeNews({
           const date = item.publishedAt
             ? formatPolishMonthYear(item.publishedAt)
             : null;
-          // Alternate magenta / navy for both date and title, card by card.
+          // Alternate magenta / navy for dates, card by card.
           const titleColor = index % 2 === 0 ? "text-magenta" : "text-navy";
 
           return (
@@ -71,10 +71,7 @@ export function HomeNews({
               ) : null}
               {item.title ? (
                 <h3
-                  className={cn(
-                    "news-card-title mt-2 font-display text-listing-title font-black",
-                    titleColor,
-                  )}
+                  className="news-card-title mt-2 font-display text-listing-title font-semibold text-ink"
                 >
                   {item.href ? (
                     <Link href={item.href} className="card-link">
@@ -91,7 +88,9 @@ export function HomeNews({
               ) : null}
               <div className="news-card-body">
                 {item.excerpt ? (
-                  <p className="mt-5 text-body">{item.excerpt}</p>
+                  <p className="mt-5 font-body text-listing-description font-light text-ink">
+                    {item.excerpt}
+                  </p>
                 ) : null}
               </div>
               {item.ctaHref ? (
