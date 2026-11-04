@@ -2273,11 +2273,14 @@
     margin-block-start: 0;
   }
 
+  .project-art-generacje-term-copy .portable-body > :first-child {
+    margin-block-start: 0;
+  }
+
   .project-art-generacje-editorial-section {
     display: grid;
     grid-template-columns: minmax(130px, 0.36fr) minmax(0, 1fr);
     column-gap: clamp(1.5rem, 4vw, 2.75rem);
-    row-gap: 1.25rem;
     align-items: start;
   }
 
@@ -2305,28 +2308,21 @@
     min-width: 0;
   }
 
-  .project-art-generacje-editorial-section:hover
-    .project-text-section-dots
-    i:nth-child(1) {
-    background: var(--color-brand-1);
-  }
-
-  .project-art-generacje-editorial-section:hover
-    .project-text-section-dots
-    i:nth-child(2) {
-    background: var(--color-brand-6);
-  }
-
-  .project-art-generacje-editorial-section:hover
-    .project-text-section-dots
-    i:nth-child(3) {
-    background: var(--color-brand-3);
-  }
-
-  .project-art-generacje-editorial-section:hover
-    .project-text-section-dots
-    i:nth-child(4) {
-    background: var(--color-brand-2);
+  .project-art-generacje-editorial-section:hover .project-text-section-dots,
+  .project-text-sections-art-generacje
+    .project-text-section:hover
+    .project-text-section-dots {
+    background-image:
+      radial-gradient(circle, var(--color-brand-1) 3.5px, transparent 3.6px),
+      radial-gradient(circle, var(--color-brand-6) 3.5px, transparent 3.6px),
+      radial-gradient(circle, var(--color-brand-3) 3.5px, transparent 3.6px),
+      radial-gradient(circle, var(--color-brand-2) 3.5px, transparent 3.6px);
+    background-position:
+      0 50%,
+      7px 50%,
+      14px 50%,
+      21px 50%;
+    background-size: 28px 7px;
   }
 
   .project-art-generacje-body-flow > section:nth-of-type(even) {
@@ -2354,18 +2350,13 @@
   .project-text-section-dots {
     display: flex;
     width: 100%;
-    gap: 2px;
-    justify-content: space-between;
-    margin-block: 0 1.25rem;
-  }
-
-  .project-text-section-dots i {
-    width: 7px;
-    height: 7px;
-    flex: none;
-    border-radius: 50%;
-    background: #d7d6d2;
-    transition: background-color 200ms ease;
+    height: 1.35em;
+    margin: 0;
+    background-image: radial-gradient(circle, #d7d6d2 3.5px, transparent 3.6px);
+    background-position: left center;
+    background-repeat: repeat-x;
+    background-size: 7px 7px;
+    transition: background-image 200ms ease;
   }
 
   .project-text-sections-art-generacje {
@@ -2376,7 +2367,6 @@
     display: grid;
     grid-template-columns: minmax(130px, 0.36fr) minmax(0, 1fr);
     column-gap: clamp(1.5rem, 4vw, 2.75rem);
-    row-gap: 1.25rem;
     align-items: start;
   }
 
@@ -2404,34 +2394,6 @@
     grid-column: 2;
     grid-row: 1;
     margin: 0;
-  }
-
-  .project-text-sections-art-generacje
-    .project-text-section:hover
-    .project-text-section-dots
-    i:nth-child(1) {
-    background: var(--color-brand-1);
-  }
-
-  .project-text-sections-art-generacje
-    .project-text-section:hover
-    .project-text-section-dots
-    i:nth-child(2) {
-    background: var(--color-brand-6);
-  }
-
-  .project-text-sections-art-generacje
-    .project-text-section:hover
-    .project-text-section-dots
-    i:nth-child(3) {
-    background: var(--color-brand-3);
-  }
-
-  .project-text-sections-art-generacje
-    .project-text-section:hover
-    .project-text-section-dots
-    i:nth-child(4) {
-    background: var(--color-brand-2);
   }
 
   .project-text-sections-art-generacje .project-text-section-copy {
@@ -2543,7 +2505,7 @@
     .project-art-generacje-editorial-section .project-art-generacje-term-copy {
       grid-column: 1;
       grid-row: 3;
-      margin-block-start: 1.25rem;
+      margin-block-start: 0;
     }
 
     .project-art-generacje-body-flow > section:nth-of-type(even) {
@@ -2569,7 +2531,7 @@
       .project-art-generacje-term-copy {
       grid-column: 1;
       grid-row: 3;
-      margin-block-start: 1.25rem;
+      margin-block-start: 0;
     }
 
     .project-text-sections-art-generacje .project-text-section {
@@ -2593,7 +2555,7 @@
     .project-text-sections-art-generacje > :nth-child(even) .project-text-section-copy {
       grid-column: 1;
       grid-row: 3;
-      margin-block-start: 1.25rem;
+      margin-block-start: 0;
     }
   }
 

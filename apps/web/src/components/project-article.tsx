@@ -157,12 +157,7 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
                       <span
                         className="project-text-section-dots"
                         aria-hidden="true"
-                      >
-                        <i />
-                        <i />
-                        <i />
-                        <i />
-                      </span>
+                      />
                       {part.blocks.length > 0 ? (
                         <div className="project-art-generacje-term-copy">
                           <PortableBody value={part.blocks} />
@@ -209,12 +204,7 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
                       <span
                         className="project-text-section-dots"
                         aria-hidden="true"
-                      >
-                        <i />
-                        <i />
-                        <i />
-                        <i />
-                      </span>
+                      />
                     ) : null}
                     <p className="project-text-section-copy">{text}</p>
                   </div>
