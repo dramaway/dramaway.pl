@@ -4430,9 +4430,10 @@
 
   .cat-tile-title {
     font-family: var(--font-body);
-    font-size: calc(var(--text-body) - 2px);
+    font-size: var(--text-body);
     font-weight: 300;
     line-height: 1.25;
+    text-transform: lowercase;
   }
 
   .cat-tile-count {
