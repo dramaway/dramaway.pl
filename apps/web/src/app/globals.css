@@ -101,7 +101,7 @@
   --text-pt-h4--line-height: var(--text-h4--line-height);
   --text-listing-title: 1.125rem;
   --text-listing-title--line-height: 1.25;
-  --text-listing-description: 1.125rem;
+  --text-listing-description: var(--text-body);
   --text-listing-description--line-height: var(--text-body--line-height);
   --text-h4: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
   --text-h4--line-height: 1.25;

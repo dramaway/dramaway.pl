@@ -26,6 +26,8 @@ Nagłówki H1–H3 na wszystkich stronach zmieniają kolor na `brand-1` przy naj
 
 Poniżej `lg` odstęp `--spacing-mobile-rhythm` (1.5–2 rem) ustawia przerwę między pasmami kropek a nagłówkami oraz rytm list, zdjęć i bloków `/fundacja`. Kółko pod nagłówkiem „Aktualności” zaczyna kolejny odstęp tego samego rozmiaru. Gdy pasmo poprzedza moduł tekstowy, beżowe koło wyznacza początek odstępu, a lewostronnie wyrównany tytuł wchodzi nieco powyżej środka koła; przerwa od rzędu kropek do koła została zmniejszona o połowę na mobile. Pasmo ma dolny odstęp w paddingu kolejnej sekcji, nie w obu elementach naraz. Sekcja wartości na `/fundacja` zachowuje swój specjalny odstęp pod pasmem hero. Desktop zachowuje dotychczasowe wartości.
 
+Wyjątek dla list tytułów z MuseoModerno SemiBold 18 px i kolorem `#282828`: `/baza-wiedzy`, `/projekty` oraz wszystkie listy edycji na stronach projektów, niezależnie od projektu. Na pozostałych listingach `.pub-row-title` i `.blob-row-title` zachowują domyślną Alexandrię SemiBold.
+
 ## Klasy kompozycyjne
 
 | Klasa | Do czego |
@@ -159,7 +161,7 @@ Hero homepage jest w `siteSettings` (heading, lead, CTA, lista `heroImages`). Re
 
 ## Stan na teraz
 
-Tylko na listingach `/baza-wiedzy` i `/projekty` tytuły pozycji mają MuseoModerno SemiBold 18 px i kolor `#282828` również przy hoverze i fokusie. Krótkie opisy mają Alexandria Light 18 px w kolorze `#282828`. Pozostałe listingi zachowują dotychczasową typografię; dłuższy tekst redakcyjny używa `text-body`.
+Na listingach `/baza-wiedzy` i `/projekty` oraz we wszystkich spisach edycji na stronach projektów tytuły pozycji mają MuseoModerno SemiBold 18 px i kolor `#282828` również przy hoverze i fokusie. Krótkie opisy mają Alexandria Light 18 px na desktopie, a na mobile rozmiar `text-body`, w kolorze `#282828`. Pozostałe listingi zachowują dotychczasową typografię.
 
 Na `/kontakt` formularz ma ograniczoną szerokość na desktopie, a poniżej układ dwóch kolumn pokazuje kontakt bezpośredni i adres. Na węższych ekranach formularz zajmuje całą szerokość, a kolumny układają się jedna pod drugą. Odstęp hero–formularz odpowiada odstępowi po przycisku wysłania; treść kontaktowa pochodzi z Sanity.
 

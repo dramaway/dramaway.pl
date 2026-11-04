@@ -35,7 +35,7 @@ Aktualizacja 2026-11-04: nagłówki Portable Text: H2 MuseoModerno Black 24 px i
 
 Aktualizacja 2026-11-04: tytuły poszczególnych pozycji we wszystkich listingach mają stałe 18 px; nagłówki sekcji listingów bez zmian.
 
-Aktualizacja 2026-11-04: tylko na listingach `/baza-wiedzy` i `/projekty` tytuły używają MuseoModerno SemiBold 18 px w kolorze `#282828` (także przy hover/fokus), a krótkie opisy Alexandrii Light 18 px w tym samym kolorze. Pozostałe listingi zachowują dotychczasową typografię.
+Aktualizacja 2026-11-04: na listingach `/baza-wiedzy` i `/projekty` oraz we wszystkich spisach edycji na stronach projektów tytuły używają MuseoModerno SemiBold 18 px w kolorze `#282828` (także przy hover/fokus). Krótkie opisy mają Alexandria Light 18 px na desktopie oraz rozmiar `text-body` na mobile. Pozostałe listingi zachowują dotychczasową typografię.
 
 Aktualizacja 2026-11-04: usunięto widoczny nagłówek „Aktualności”; karty zaczynają się na początku obszaru treści sekcji, bez pozostawionego odstępu po nagłówku.
 

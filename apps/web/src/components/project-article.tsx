@@ -193,6 +193,7 @@ export function ProjectArticle({ project }: { project: ProjectDetail }) {
             }
             items={rows}
             variant={usesThumbnailListing ? "thumbnail" : "blob"}
+            listingTypography
           />
         </section>
       ) : null}
