@@ -33,24 +33,16 @@ function formatPolishMonthYear(iso: string): string | null {
 export function HomeNews({
   items,
   heading,
-  headingId = "home-news-heading",
 }: {
   items: HomeNewsItem[];
   heading?: string | null;
-  headingId?: string;
 }) {
   const cards = items.slice(0, 3);
   const title = heading?.trim() || NEWS_SECTION_HEADING;
 
   return (
-    <Section aria-labelledby={headingId}>
-      <h2
-        id={headingId}
-        className="font-display text-h2 font-black"
-      >
-        {title}
-      </h2>
-      <ul className="home-news-cards cols-3 mt-12">
+    <Section aria-label={title}>
+      <ul className="home-news-cards cols-3">
         {cards.map((item, index) => {
           const date = item.publishedAt
             ? formatPolishMonthYear(item.publishedAt)

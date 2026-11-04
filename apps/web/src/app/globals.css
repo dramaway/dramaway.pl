@@ -4633,10 +4633,6 @@
     margin-block-start: calc(var(--blob-size) * 0.4);
   }
 
-  .home-news-cards {
-    margin-block-start: calc(var(--spacing-mobile-rhythm) + 1.8rem);
-  }
-
   .content-split > .split-text {
     padding-block-end: 0;
   }

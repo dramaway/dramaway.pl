@@ -65,7 +65,6 @@ function ModuleView({
       <HomeNews
         items={items}
         heading={section.heading}
-        headingId={`news-${section.key}`}
       />
     );
   }
