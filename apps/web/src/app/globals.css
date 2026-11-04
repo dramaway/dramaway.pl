@@ -2702,12 +2702,17 @@
     color: var(--color-green-ink);
   }
 
+  .cta-rule,
+  .fold-rule,
+  .pt-readmore-line {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 14' preserveAspectRatio='none'%3E%3Cpath d='M3 8 C42 4 75 10 112 7 S184 9 225 5' fill='none' stroke='%23369125' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+      left center / 100% 100% no-repeat;
+  }
+
   .cta-rule {
     display: block;
     width: 100%;
     height: 0.75rem;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 14' preserveAspectRatio='none'%3E%3Cpath d='M3 8 C42 4 75 10 112 7 S184 9 225 5' fill='none' stroke='%23369125' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
-      left center / 100% 100% no-repeat;
     clip-path: inset(0 8% 0 0);
     transition: clip-path 350ms ease;
   }
@@ -4069,14 +4074,26 @@
   .fold-summary {
     display: flex;
     flex-direction: column;
-    align-items: stretch;
+    align-items: flex-start;
     gap: 0.6rem;
     width: 100%;
     min-height: var(--touch-target);
     cursor: pointer;
     list-style: none;
-    text-transform: uppercase;
+    font-family: var(--font-body);
+    font-size: var(--text-h3);
+    font-weight: 600;
+    line-height: 1.2;
     color: var(--color-ink);
+  }
+
+  .fold-heading {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: max-content;
+    max-width: 100%;
+    gap: 0.15rem;
   }
 
   .fold-summary::-webkit-details-marker,
@@ -4095,31 +4112,17 @@
   }
 
   .fold-rule {
-    position: relative;
     display: block;
-    height: 4px;
-    border-radius: 999px;
-    background-color: var(--color-green);
-    transition: transform 200ms ease;
-    transform-origin: left center;
-  }
-
-  .fold-rule::after {
-    content: "";
-    position: absolute;
-    inset-inline-end: -5px;
-    inset-block-start: 50%;
-    translate: 0 -50%;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background-color: var(--color-green);
+    width: 100%;
+    height: 0.75rem;
+    clip-path: inset(0 8% 0 0);
+    transition: clip-path 350ms ease;
   }
 
   .fold-item[open] > .fold-summary .fold-rule,
   .fold-summary:hover .fold-rule,
   .fold-summary:focus-visible .fold-rule {
-    transform: scaleX(0.88);
+    clip-path: inset(0);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -4130,7 +4133,7 @@
 
   /*
    * Body read-more — do not edit fold/body-image blocks
-   * Line scales from the left; dot slides along it (expand → right, collapse → left).
+   * Uses the same hand-drawn underline and label treatment as CTAs.
    */
   .pt-readmore {
     display: flex;
@@ -4163,7 +4166,7 @@
   .pt-readmore-trigger {
     display: inline-flex;
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
     align-self: center;
     gap: 0.35rem;
     margin: 0;
@@ -4171,12 +4174,12 @@
     border: 0;
     background: none;
     cursor: pointer;
+    width: max-content;
     max-width: 100%;
-    font-family: var(--font-display);
-    font-size: var(--text-small);
+    font-family: var(--font-body);
+    font-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1.0625rem);
     font-weight: 600;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
+    line-height: 1.2;
     color: var(--color-green-ink);
     text-align: center;
   }
@@ -4195,86 +4198,28 @@
   }
 
   .pt-readmore-rule {
-    --pt-readmore-line-long: 1.42;
-    --pt-readmore-dot: 11px;
-    --pt-readmore-line: 3px;
-    --pt-readmore-overhang: 2px;
-
-    position: relative;
     display: block;
     width: 100%;
-    height: var(--pt-readmore-dot);
-    overflow: visible;
+    height: 0.75rem;
   }
 
   .pt-readmore-line {
-    position: absolute;
-    inset-block-start: calc(50% - var(--pt-readmore-line) / 2);
-    inset-inline: 0;
+    display: block;
     width: 100%;
-    height: var(--pt-readmore-line);
-    border-radius: 999px;
-    background-color: var(--color-green);
-    transform: scaleX(1);
-    transform-origin: left center;
-    transition: transform 220ms ease;
-  }
-
-  .pt-readmore-dot {
-    position: absolute;
-    inset-block-start: 0;
-    inset-inline-start: calc(-1 * var(--pt-readmore-overhang));
-    width: var(--pt-readmore-dot);
-    height: var(--pt-readmore-dot);
-    border-radius: 50%;
-    background-color: var(--color-green);
-    transition: inset-inline-start 220ms ease;
+    height: 100%;
+    clip-path: inset(0 8% 0 0);
+    transition: clip-path 350ms ease;
   }
 
   .pt-readmore-trigger-expand {
     margin-block-start: -2em;
   }
 
-  .pt-readmore-trigger-expand .pt-readmore-line {
-    transform: scaleX(1);
-  }
-
-  .pt-readmore-trigger-expand .pt-readmore-dot {
-    inset-inline-start: calc(-1 * var(--pt-readmore-overhang));
-  }
-
   .pt-readmore-trigger-expand:hover .pt-readmore-line,
-  .pt-readmore-trigger-expand:focus-visible .pt-readmore-line {
-    transform: scaleX(var(--pt-readmore-line-long));
-  }
-
-  .pt-readmore-trigger-expand:hover .pt-readmore-dot,
-  .pt-readmore-trigger-expand:focus-visible .pt-readmore-dot {
-    inset-inline-start: calc(
-      100% * var(--pt-readmore-line-long) - var(--pt-readmore-dot) +
-        var(--pt-readmore-overhang)
-    );
-  }
-
-  .pt-readmore-trigger-collapse .pt-readmore-line {
-    transform: scaleX(var(--pt-readmore-line-long));
-  }
-
-  .pt-readmore-trigger-collapse .pt-readmore-dot {
-    inset-inline-start: calc(
-      100% * var(--pt-readmore-line-long) - var(--pt-readmore-dot) +
-        var(--pt-readmore-overhang)
-    );
-  }
-
+  .pt-readmore-trigger-expand:focus-visible .pt-readmore-line,
   .pt-readmore-trigger-collapse:hover .pt-readmore-line,
   .pt-readmore-trigger-collapse:focus-visible .pt-readmore-line {
-    transform: scaleX(1);
-  }
-
-  .pt-readmore-trigger-collapse:hover .pt-readmore-dot,
-  .pt-readmore-trigger-collapse:focus-visible .pt-readmore-dot {
-    inset-inline-start: calc(-1 * var(--pt-readmore-overhang));
+    clip-path: inset(0);
   }
 
   .pt-readmore-rest:not([hidden]) {
@@ -4284,23 +4229,13 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .pt-readmore-line,
-    .pt-readmore-dot {
+    .pt-readmore-line {
       transition: none;
     }
 
     .pt-readmore-trigger-expand:hover .pt-readmore-line,
     .pt-readmore-trigger-expand:focus-visible .pt-readmore-line {
-      transform: scaleX(var(--pt-readmore-line-long));
-    }
-
-    .pt-readmore-trigger-collapse .pt-readmore-line {
-      transform: scaleX(var(--pt-readmore-line-long));
-    }
-
-    .pt-readmore-trigger-collapse:hover .pt-readmore-line,
-    .pt-readmore-trigger-collapse:focus-visible .pt-readmore-line {
-      transform: scaleX(1);
+      clip-path: inset(0);
     }
   }
 

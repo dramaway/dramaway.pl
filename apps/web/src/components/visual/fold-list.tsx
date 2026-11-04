@@ -16,9 +16,11 @@ export function FoldList({ items }: { items: FoldListItem[] }) {
     <div className="fold">
       {items.map((item, index) => (
         <details key={`${item.title}-${index}`} className="fold-item">
-          <summary className="fold-summary font-display text-h3 font-black">
-            <span>{item.title}</span>
-            <span aria-hidden className="fold-rule" />
+          <summary className="fold-summary">
+            <span className="fold-heading">
+              <span>{item.title}</span>
+              <span aria-hidden className="fold-rule" />
+            </span>
           </summary>
           <div className="fold-panel">{item.children}</div>
         </details>
