@@ -33,6 +33,8 @@ Aktualizacja 2026-11-04: dodano pole Portable Text „Treść po tekstach przed 
 
 Aktualizacja 2026-11-04: nagłówki Portable Text: H2 MuseoModerno Black 24 px i wersaliki; H3 MuseoModerno SemiBold 20 px bez wersalików; H4 Alexandria SemiBold 18 px. CTA zmniejszone o kolejny 1 px — teraz 2 px poniżej `text-body`.
 
+Aktualizacja 2026-11-04: tytuły poszczególnych pozycji we wszystkich listingach mają stałe 18 px; nagłówki sekcji listingów bez zmian.
+
 Aktualizacja 2026-11-04: tytuły sekcji „Teksty przed listą edycji” na stronach projektów zmniejszone do 18 px.
 
 Aktualizacja 2026-11-04: linki kategorii biblioteki zmniejszone o 2 px względem filtrów formatu; kreska filtrów pogrubiona do tej samej grubości co CTA.

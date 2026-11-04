@@ -72,7 +72,7 @@ export function HomeNews({
               {item.title ? (
                 <h3
                   className={cn(
-                    "news-card-title mt-2 font-display text-h4 font-black",
+                    "news-card-title mt-2 font-display text-listing-title font-black",
                     titleColor,
                   )}
                 >

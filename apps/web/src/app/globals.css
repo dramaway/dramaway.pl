@@ -99,6 +99,8 @@
   --text-pt-h3--line-height: var(--text-h3--line-height);
   --text-pt-h4: 1.125rem;
   --text-pt-h4--line-height: var(--text-h4--line-height);
+  --text-listing-title: 1.125rem;
+  --text-listing-title--line-height: 1.25;
   --text-h4: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
   --text-h4--line-height: 1.25;
   --text-lead: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
@@ -2132,7 +2134,7 @@
   }
 
   .news-card-title {
-    min-height: calc(2 * var(--text-h4--line-height) * 1em);
+    min-height: calc(2 * var(--text-listing-title--line-height) * 1em);
   }
 
   .news-card-body {
@@ -3058,9 +3060,9 @@
     min-width: 0;
     margin: 0;
     font-family: var(--font-display);
-    font-size: var(--text-h4);
+    font-size: var(--text-listing-title);
     font-weight: 600;
-    line-height: var(--text-h4--line-height);
+    line-height: var(--text-listing-title--line-height);
   }
 
   .history-all {

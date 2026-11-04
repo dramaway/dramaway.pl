@@ -47,8 +47,8 @@ export function ContentTile({
   const Title = heading;
   const titleClass =
     layout === "card"
-      ? "news-card-title mt-2 font-display text-h4 font-black"
-      : "font-display text-h3 font-black";
+      ? "news-card-title mt-2 font-display text-listing-title font-black"
+      : "font-display text-listing-title font-black";
   const title = tile.title ? (
     <Title className={titleClass}>
       {tile.href ? (
