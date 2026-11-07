@@ -4730,6 +4730,14 @@ h3:focus-within:not(.listing-spec-title):not(.portable-heading-display) {
   color: var(--color-brand-1);
 }
 
+.portable-heading-display {
+  font-family: var(--font-display);
+  font-size: var(--text-pt-h3);
+  font-weight: 600;
+  color: var(--color-ink);
+  text-transform: none;
+}
+
 .portable-heading-display:hover,
 .portable-heading-display:focus-within {
   color: var(--color-ink);
