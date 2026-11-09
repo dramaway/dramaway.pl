@@ -3,7 +3,10 @@ import { COVER_QUERY_PARAM, COVER_VARIANTS } from "../components/cover/cover-cop
 /** Cookie that unlocks the real site while the cover gate is on. */
 export const PREVIEW_COOKIE = "dw_preview";
 
-/** `?podglad=` sets the preview cookie. The value is the secret. */
+/**
+ * `?podglad=<secret>` sets the preview cookie.
+ * An empty or wrong value clears it and returns to the cover.
+ */
 export const PREVIEW_PARAM = "podglad";
 
 /** Internal route. Public traffic never stays on this path while the gate is on. */
@@ -31,6 +34,7 @@ export type CoverDecision =
       pathname: string;
       search: string;
       setCookie: boolean;
+      clearCookie: boolean;
     };
 
 type Input = {
@@ -84,9 +88,23 @@ function withoutPreviewParam(params: URLSearchParams): string {
   return next.toString();
 }
 
+function homeRedirect(
+  params: URLSearchParams,
+  clearCookie: boolean,
+): CoverDecision {
+  return {
+    action: "redirect",
+    pathname: "/",
+    search: variantSearch(params),
+    setCookie: false,
+    clearCookie,
+  };
+}
+
 /**
  * Public visitors land on `/` (rewrite) or are sent there (302).
- * A matching preview cookie or `?podglad=` keeps the real URL.
+ * A matching `?podglad=` sets the preview cookie. An empty or wrong value
+ * clears it, even when a valid cookie is already stored.
  */
 export function decideCover(input: Input): CoverDecision {
   if (!input.coverMode) return { action: "next", noStore: false };
@@ -99,43 +117,29 @@ export function decideCover(input: Input): CoverDecision {
     return { action: "next", noStore: true };
   }
 
-  const preview = secretsMatch(input.previewCookie, input.secret);
-  const queryUnlock = secretsMatch(
-    input.searchParams.get(PREVIEW_PARAM) ?? "",
-    input.secret,
-  );
-
-  if (queryUnlock) {
-    const pathname =
-      input.pathname === COVER_ROUTE || input.pathname === `${COVER_ROUTE}/`
-        ? "/"
-        : input.pathname;
-    return {
-      action: "redirect",
-      pathname,
-      search: withoutPreviewParam(input.searchParams),
-      setCookie: true,
-    };
-  }
-
-  if (preview) return { action: "next", noStore: true };
-
-  if (input.pathname === "/") {
-    if (input.searchParams.has(PREVIEW_PARAM)) {
+  if (input.searchParams.has(PREVIEW_PARAM)) {
+    const given = (input.searchParams.get(PREVIEW_PARAM) ?? "").trim();
+    if (secretsMatch(given, input.secret)) {
+      const pathname =
+        input.pathname === COVER_ROUTE || input.pathname === `${COVER_ROUTE}/`
+          ? "/"
+          : input.pathname;
       return {
         action: "redirect",
-        pathname: "/",
-        search: variantSearch(input.searchParams),
-        setCookie: false,
+        pathname,
+        search: withoutPreviewParam(input.searchParams),
+        setCookie: true,
+        clearCookie: false,
       };
     }
-    return { action: "rewrite", noStore: true };
+    return homeRedirect(input.searchParams, true);
   }
 
-  return {
-    action: "redirect",
-    pathname: "/",
-    search: variantSearch(input.searchParams),
-    setCookie: false,
-  };
+  if (secretsMatch(input.previewCookie, input.secret)) {
+    return { action: "next", noStore: true };
+  }
+
+  if (input.pathname === "/") return { action: "rewrite", noStore: true };
+
+  return homeRedirect(input.searchParams, false);
 }
