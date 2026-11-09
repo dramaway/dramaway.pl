@@ -4826,3 +4826,657 @@ h2 {
   font-size: 1.5rem;
   line-height: 1.25;
 }
+
+/*
+ * Pre-launch cover (/zajawka). One screen, never scrolls: logo, slogan and
+ * contact; the new site as a skeleton inside a device frame (browser from lg,
+ * tablet from md, phone below); the sand band split into two rows — one in
+ * the top-right corner above the frame, one at the foot on the left.
+ * Three slogans rotate; the wrapper's data-cover picks the visible one.
+ */
+@layer components {
+  .cover {
+    --cover-gap: clamp(1.25rem, 3vh, 2.5rem);
+    --cover-foot: clamp(0.75rem, 2.5vh, 1.75rem);
+    --cover-mark: clamp(1.375rem, 2.2vw, 2rem);
+    --cover-logo: clamp(2.5rem, 6vh, 57px);
+    --cover-frame-bar: 2rem;
+    /*
+     * The band is a corner accent here, not a section divider: small
+     * circles unless the screen is large. Stepped like the global token
+     * (DotBand reads a plain length).
+     */
+    --dot-size: 48px;
+    /* Phone frame by default; md and lg override below. */
+    --emu: 390;
+    --screen-ratio: 390 / 844;
+    --bezel: 0.4rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100svh;
+    overflow: hidden;
+    background-color: var(--background);
+  }
+
+  .cover-stage {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template:
+      "logo" auto
+      "copy" auto
+      "media" minmax(0, 1fr)
+      / minmax(0, 1fr);
+    gap: var(--cover-gap);
+    width: 100%;
+    max-width: var(--page-max);
+    margin-inline: auto;
+    padding: var(--cover-gap) var(--page-pad) 0;
+  }
+
+  .cover-logo {
+    grid-area: logo;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cover-logo img {
+    width: auto;
+    height: var(--cover-logo);
+  }
+
+  .cover-copy {
+    grid-area: copy;
+    align-self: center;
+  }
+
+  /* Version 1 without JS; the script switches data-cover before paint. */
+  .cover [data-cover-v] {
+    display: none;
+  }
+
+  .cover[data-cover="1"] [data-cover-v="1"],
+  .cover[data-cover="2"] [data-cover-v="2"],
+  .cover[data-cover="3"] [data-cover-v="3"] {
+    display: block;
+  }
+
+  .cover-title {
+    font-size: clamp(2.25rem, 1.4rem + 2.6vw, 3.75rem);
+    font-weight: 800;
+    line-height: 1.05;
+    text-transform: none;
+    text-wrap: balance;
+  }
+
+  .cover-lead {
+    max-width: 30ch;
+    margin-block-start: clamp(0.75rem, 2vh, 1.5rem);
+    font-size: var(--text-lead);
+    line-height: var(--text-lead--line-height);
+  }
+
+  .cover-date {
+    color: var(--color-magenta);
+    white-space: nowrap;
+  }
+
+  .cover-lead .cover-date {
+    font-weight: 600;
+  }
+
+  .cover-contact {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1.25rem;
+    margin-block-start: clamp(1rem, 3vh, 2rem);
+  }
+
+  /* Size container: the frame fits both its width and its height. */
+  .cover-media {
+    grid-area: media;
+    min-height: 0;
+    container-type: size;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ---------- Device frame ---------- */
+
+  .cover-frame {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    /* Phone: fit (height − bezels) at the screen ratio, or the full width. */
+    width: min(
+      100cqw,
+      calc((100cqh - 2 * var(--bezel) - 2px) * var(--screen-ratio) + 2 * var(--bezel) + 2px)
+    );
+    padding: var(--bezel);
+    border: 1px solid var(--rule-color);
+    border-radius: 1.75rem;
+    background-color: var(--color-sand);
+    box-shadow: 0 1.5rem 3rem -1.5rem color-mix(in srgb, var(--color-ink) 22%, transparent);
+  }
+
+  /* Phone: a pill over the screen's top edge. */
+  .cover-frame::after {
+    content: "";
+    position: absolute;
+    inset-block-start: calc(var(--bezel) + 0.4rem);
+    inset-inline-start: 50%;
+    z-index: 3;
+    width: 28%;
+    height: 0.8rem;
+    border-radius: 999px;
+    background-color: var(--color-ink);
+    translate: -50% 0;
+  }
+
+  .cover-frame-bar {
+    display: none;
+  }
+
+  .cover-frame-dots {
+    display: flex;
+    gap: 0.375rem;
+  }
+
+  .cover-frame-dots > span {
+    width: 0.625rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: var(--color-brand-1);
+  }
+
+  .cover-frame-dots > span:nth-child(2) {
+    background-color: var(--color-brand-3);
+  }
+
+  .cover-frame-dots > span:nth-child(3) {
+    background-color: var(--color-brand-2);
+  }
+
+  .cover-frame-address {
+    justify-self: center;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 0.125rem 1rem;
+    border-radius: 999px;
+    background-color: var(--background);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text-secondary);
+  }
+
+  .cover-frame-view {
+    position: relative;
+    width: 100%;
+    aspect-ratio: var(--screen-ratio);
+    overflow: hidden;
+    border-radius: 1.4rem;
+    background-color: var(--background);
+    container-type: inline-size;
+  }
+
+  @media (width >= 48rem) {
+    .cover {
+      --emu: 768;
+      --screen-ratio: 3 / 4;
+      --bezel: 0.75rem;
+    }
+
+    .cover-frame {
+      border-radius: 1.5rem;
+    }
+
+    /* Tablet: a camera dot in the top bezel. */
+    .cover-frame::after {
+      inset-block-start: calc(var(--bezel) / 2 - 0.15rem);
+      width: 0.3rem;
+      height: 0.3rem;
+      background-color: color-mix(in srgb, var(--color-ink) 35%, transparent);
+    }
+
+    .cover-frame-view {
+      border-radius: 0.75rem;
+    }
+  }
+
+  /* ---------- Mini site (skeleton of the /projekty hero) ---------- */
+
+  /*
+   * Drawn in "emulated pixels" (--u) of a --emu-wide page, so it scales with
+   * the frame like a real page would. Phone and tablet: the stacked hero
+   * (bar, H1, square photo, lead). Desktop: the split hero.
+   */
+  .mini {
+    --u: calc(100cqi / var(--emu));
+    --mini-pad: calc(24 * var(--u));
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    padding-inline: var(--mini-pad);
+    color: var(--color-ink);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .mini-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 0 0 auto;
+    height: calc(81 * var(--u));
+  }
+
+  /* Logo stand-in: the first bar, near-black, logo-wide, a little thicker. */
+  .mini-logo {
+    width: calc(100 * var(--u));
+    height: calc(14 * var(--u));
+    border-radius: 999px;
+    background-color: color-mix(in srgb, var(--color-ink) 88%, transparent);
+  }
+
+  .mini-nav {
+    display: none;
+  }
+
+  .mini-nav > i {
+    height: calc(13 * var(--u));
+    border-radius: 999px;
+    background-color: color-mix(in srgb, var(--color-ink) 16%, transparent);
+  }
+
+  .mini-nav > i:nth-child(1) {
+    width: calc(95 * var(--u));
+  }
+  .mini-nav > i:nth-child(2) { width: calc(133 * var(--u)); }
+  .mini-nav > i:nth-child(3) { width: calc(160 * var(--u)); }
+  .mini-nav > i:nth-child(4) { width: calc(112 * var(--u)); }
+  .mini-nav > i:nth-child(5) { width: calc(90 * var(--u)); }
+
+  .mini-burger {
+    display: grid;
+    gap: calc(6 * var(--u));
+  }
+
+  .mini-burger > i {
+    width: calc(26 * var(--u));
+    height: calc(3 * var(--u));
+    border-radius: 999px;
+    background-color: color-mix(in srgb, var(--color-ink) 28%, transparent);
+  }
+
+  .mini-title {
+    margin-block-start: calc(24 * var(--u));
+    font-family: var(--font-display);
+    font-size: calc(32 * var(--u));
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .mini-photo {
+    flex: 0 0 auto;
+    margin-block-start: calc(24 * var(--u));
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: calc(16 * var(--u));
+  }
+
+  .mini-photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 48% 40%;
+  }
+
+
+
+
+  .mini-lead {
+    margin-block-start: calc(24 * var(--u));
+    font-size: calc(17 * var(--u));
+    font-weight: 300;
+    line-height: 1.55;
+  }
+
+  .mini-lead > span {
+    display: block;
+  }
+
+  /* The stepped band's upper row: tangent sand circles from the middle. */
+  .mini-band {
+    --mini-dot: calc(48 * var(--u));
+    flex: 0 0 auto;
+    align-self: flex-end;
+    width: calc(50% + var(--mini-pad));
+    height: var(--mini-dot);
+    margin-block-start: calc(24 * var(--u));
+    margin-inline-end: calc(var(--mini-pad) * -1);
+    background-image: radial-gradient(
+      circle closest-side,
+      var(--color-sand) 99%,
+      transparent 100%
+    );
+    background-size: var(--mini-dot) var(--mini-dot);
+    background-repeat: repeat-x;
+    background-position: right;
+  }
+
+  @media (width >= 48rem) {
+    .mini {
+      --mini-pad: calc(48 * var(--u));
+    }
+
+    .mini-logo {
+      width: calc(117 * var(--u));
+      height: calc(16 * var(--u));
+    }
+
+    .mini-title {
+      font-size: calc(40 * var(--u));
+    }
+
+    .mini-lead {
+      font-size: calc(19 * var(--u));
+    }
+  }
+
+  /* 3 — sand curtain with a scalloped hem; rises and stays as a valance. */
+  .cover-curtain {
+    --hem: calc(var(--dot-size) / 2);
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 2;
+    height: 100%;
+    background-color: var(--color-sand);
+    translate: 0 calc(-100% + var(--hem) * 0.1);
+    animation: cover-curtain 1.8s cubic-bezier(0.65, 0, 0.35, 1) 0.35s both;
+  }
+
+  .cover-curtain::after {
+    content: "";
+    position: absolute;
+    inset: 100% 0 auto;
+    height: calc(var(--hem) / 2);
+    background-image: radial-gradient(
+      circle at 50% 0,
+      var(--color-sand) calc(var(--hem) / 2 - 0.5px),
+      transparent calc(var(--hem) / 2)
+    );
+    background-size: var(--hem) calc(var(--hem) / 2);
+    background-repeat: repeat-x;
+  }
+
+  .cover:not([data-cover="3"]) .cover-curtain {
+    display: none;
+  }
+
+  /* ---------- Marks ---------- */
+
+  .cover-mark {
+    display: flex;
+    margin-block-end: clamp(1rem, 3vh, 2rem);
+  }
+
+  .cover-mark > span {
+    flex: 0 0 var(--cover-mark);
+    width: var(--cover-mark);
+    aspect-ratio: 1;
+    border-radius: 50%;
+  }
+
+  /* 1 — palette row (tangent, like .palette-row); the last one still rehearses. */
+  .cover-mark-rehearsal > span:nth-child(1) { background-color: var(--color-brand-1); }
+  .cover-mark-rehearsal > span:nth-child(2) { background-color: var(--color-brand-4); }
+  .cover-mark-rehearsal > span:nth-child(3) { background-color: var(--color-brand-7); }
+  .cover-mark-rehearsal > span:nth-child(4) { background-color: var(--color-brand-3); }
+  .cover-mark-rehearsal > span:nth-child(5) { background-color: var(--color-brand-6); }
+  .cover-mark-rehearsal > span:nth-child(6) { background-color: var(--color-brand-2); }
+
+  .cover-mark-rehearsal > span:nth-child(7) {
+    border: 2px dashed var(--color-brand-5);
+    animation: cover-rehearse 16s linear infinite;
+  }
+
+  /* 2 — two bells rang (outlines), the third rings now. */
+  .cover-mark-bells {
+    gap: calc(var(--cover-mark) * 0.5);
+  }
+
+  .cover-mark-bells > span {
+    border: 2px solid var(--color-ink);
+  }
+
+  .cover-mark-bells > span:nth-child(3) {
+    position: relative;
+    border-color: var(--color-magenta);
+    background-color: var(--color-magenta);
+  }
+
+  .cover-mark-bells > span:nth-child(3)::before,
+  .cover-mark-bells > span:nth-child(3)::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border: 2px solid var(--color-magenta);
+    border-radius: 50%;
+    opacity: 0;
+    animation: cover-ring 2.8s ease-out infinite;
+  }
+
+  .cover-mark-bells > span:nth-child(3)::after {
+    animation-delay: 0.7s;
+  }
+
+  /* ---------- Desktop: split like the hero, browser window ---------- */
+
+  @media (width >= 64rem) {
+    .cover {
+      --emu: 1440;
+      --screen-ratio: 16 / 10;
+      --bezel: 0px;
+    }
+
+    .cover-stage {
+      grid-template:
+        "logo ." auto
+        "copy media" minmax(0, 1fr)
+        / minmax(0, 9fr) minmax(0, 14fr);
+      column-gap: clamp(2rem, 3.5vw, 4rem);
+      /* The frame may use half of the right page margin. */
+      padding-inline-end: calc(var(--page-pad) / 2);
+    }
+
+    .cover-media {
+      justify-content: flex-end;
+    }
+
+    .cover-frame {
+      width: min(
+        100cqw,
+        calc((100cqh - var(--cover-frame-bar) - 2px) * var(--screen-ratio))
+      );
+      border-radius: var(--radius-media);
+      background-color: var(--background);
+      overflow: hidden;
+    }
+
+    .cover-frame::after {
+      content: none;
+    }
+
+    .cover-frame-bar {
+      flex: 0 0 var(--cover-frame-bar);
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 0.75rem;
+      padding-inline: 0.75rem;
+      background-color: var(--color-sand);
+    }
+
+    .cover-frame-view {
+      border-radius: 0;
+    }
+
+    /* Split hero at 1440 × 900, absolutely placed like the real one. */
+    .mini {
+      display: block;
+      padding: 0;
+    }
+
+    .mini > * {
+      position: absolute;
+    }
+
+    .mini-header {
+      inset-block-start: calc(32 * var(--u));
+      inset-inline-start: calc(143 * var(--u));
+      justify-content: flex-start;
+      gap: calc(30 * var(--u));
+      height: auto;
+    }
+
+    .mini-logo {
+      width: calc(96 * var(--u));
+      height: calc(15 * var(--u));
+    }
+
+    .mini-nav {
+      display: flex;
+      gap: calc(23 * var(--u));
+    }
+
+    .mini-nav > i {
+      height: calc(11 * var(--u));
+    }
+
+    .mini-nav > i:nth-child(1) { width: calc(71 * var(--u)); }
+    .mini-nav > i:nth-child(2) { width: calc(100 * var(--u)); }
+    .mini-nav > i:nth-child(3) { width: calc(120 * var(--u)); }
+    .mini-nav > i:nth-child(4) { width: calc(84 * var(--u)); }
+    .mini-nav > i:nth-child(5) { width: calc(67 * var(--u)); }
+
+    .mini-burger {
+      display: none;
+    }
+
+    .mini-title {
+      inset-block-start: calc(330 * var(--u));
+      inset-inline-start: calc(136 * var(--u));
+      margin: 0;
+      font-size: calc(48 * var(--u));
+    }
+
+    .mini-lead {
+      inset-block-start: calc(412 * var(--u));
+      inset-inline-start: calc(136 * var(--u));
+      margin: 0;
+      font-size: calc(20 * var(--u));
+      line-height: calc(31 * var(--u));
+    }
+
+    /* Bottom edge on the band's axis, as on the site: nothing below the dots. */
+    .mini-photo {
+      inset: 0 0 calc(900 * var(--u) - 833 * var(--u)) calc(948 * var(--u));
+      margin: 0;
+      aspect-ratio: auto;
+      border-radius: 0;
+    }
+
+
+
+    .mini-band {
+      --mini-dot: calc(82 * var(--u));
+      inset-block-start: calc(792 * var(--u));
+      inset-inline: calc(672 * var(--u)) 0;
+      width: auto;
+      margin: 0;
+      background-position: left;
+    }
+  }
+
+  @media (width >= 64rem) and (height >= 60rem) {
+    .cover {
+      --dot-size: 82px;
+    }
+  }
+
+  /* Landscape phones: no room for the frame — slogan and contact only. */
+  @media (height < 30rem) and (width < 64rem) {
+    .cover-media {
+      display: none;
+    }
+  }
+}
+
+/*
+ * Band rows. Unlayered: the mobile `.dot-band` margin rule above is unlayered
+ * too. Each DotBand keeps one of its two rows.
+ */
+.cover-band.dot-band {
+  flex: 0 0 auto;
+  height: var(--dot-size);
+  margin: 0;
+}
+
+/* Upper row, top-right corner, level with the logo. */
+.cover-band-top.dot-band {
+  position: absolute;
+  inset-block-start: calc(var(--cover-gap) + (var(--cover-logo) - var(--dot-size)) / 2);
+  inset-inline: 0;
+}
+
+.cover-band-top.dot-band::before,
+.cover-band-top .dot-row-left,
+.cover-band-bottom.dot-band::after,
+.cover-band-bottom .dot-row-right {
+  display: none;
+}
+
+/* Lower row, bottom-left, with a little light under it. */
+.cover-band-bottom.dot-band {
+  margin-block: var(--cover-gap) var(--cover-foot);
+}
+
+@keyframes cover-rehearse {
+  to {
+    rotate: 1turn;
+  }
+}
+
+@keyframes cover-ring {
+  0% {
+    opacity: 0.7;
+    scale: 1;
+  }
+  100% {
+    opacity: 0;
+    scale: 2.1;
+  }
+}
+
+@keyframes cover-curtain {
+  from {
+    translate: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cover-mark-rehearsal > span:nth-child(7),
+  .cover-mark-bells > span:nth-child(3)::before,
+  .cover-mark-bells > span:nth-child(3)::after,
+  .cover-curtain {
+    animation: none;
+  }
+}
