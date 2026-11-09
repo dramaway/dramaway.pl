@@ -77,6 +77,7 @@ Wyjątek dla list tytułów z MuseoModerno SemiBold 18 px i kolorem `#282828`: `
 | `.pub-row` / `.pub-mark` / `-photo` / `.pub-row-copy` | `/czytelnia`: wiersz spisu z poziomą okładką 4:3 z zaokrąglonymi rogami po lewej i tekstem po prawej. Nagłówek „Pełna biblioteka” ma rozmiar `text-h2`. Okładka = pierwszy obrazek w `body`, kadr `object-cover` z hotspotem. Bez obrazka zostaje piaskowy prostokąt. Lead wyświetla całą treść. |
 | `.blob-row-label` / `.blob-row-compact` / `.blob-row-lead` | Archiwum na `/projekty` (`density="compact"`): etykieta magenta zdaniowa; dwie kolumny od `lg` z lekkim offsetem prawej (`--archive-stagger`); pełna zajawka; bez plamy za tytułem |
 | `.blob-row-thumbnails` | Listing edycji projektów pokazuje pełne pole `Edition title` z Sanity, miniaturę z pierwszego dostępnego zdjęcia galerii lub rezultatu oraz tytuł Alexandria SemiBold bez uppercase |
+| `.cover-*` / `.mini-*` | Zajawka przed premierą. Przy wyłączonej bramce trasa to `/zajawka`, przy włączonej publiczny adres to `/`. Jednoekranowy układ, poza resztą serwisu. Opis: [zajawka-premiera.md](../guides/zajawka-premiera.md). |
 
 Na stronach edycji projektu (`.hero-stack` bezpośrednio przed `.edition-follow`) dolny padding hero jest równy połowie tokenu `--spacing-section`, aby skrócić odstęp do galerii lub treści. Pozostałe hero zachowują pełny rytm.
 

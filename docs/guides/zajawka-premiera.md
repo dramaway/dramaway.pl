@@ -4,7 +4,7 @@ Stan na 2026-11-09 (wieczór). Premiera: **niedziela, 15 listopada 2026**. Kilka
 
 ## Co już jest (etap 1: wizualny)
 
-Podgląd: `pnpm dev`, potem `http://localhost:3000/zajawka`. Parametr `?wersja=1|2|3` wymusza konkretną wersję.
+Podgląd layoutu, gdy bramka jest wyłączona: `pnpm dev`, potem `http://localhost:3000/zajawka`. Parametr `?wersja=1|2|3` wymusza konkretną wersję. Przy `COVER_MODE=on` ten sam ekran jest pod `/`, a `/zajawka` przekierowuje na `/`.
 
 | Plik | Rola |
 |------|------|
@@ -34,23 +34,22 @@ Zasady układu:
 
 Typografia polska: twarde spacje po jednoliterowych spójnikach i przyimkach („w niedzielę”, „w górę”) i przed półpauzą. Przy `prefers-reduced-motion` znaki stoją w stanie końcowym.
 
-## Do zrobienia (etap 2): prompt dla nowego czatu
+## Etap 2 — bramka
 
-> Przeczytaj `docs/HANDOFF.md`, `docs/design/system.md` i ten plik. Zajawka (`/zajawka`) jest wizualnie zaakceptowana. Nie zmieniaj jej wyglądu bez pytania. Zadania:
->
-> 0. **Commit etapu 1:** najpierw zacommituj to, co już jest (instrukcja niżej, sekcja „Jak commitować”).
-> 1. **Bramka:** dodaj `apps/web/src/middleware.ts`. Gdy env `COVER_MODE=on`, każde żądanie poza `/_next`, `/api`, plikami statycznymi (`/cover/*`, favicon, fonty, `logo-dramaway.png`, `/brand/*`) i samym `/zajawka` ma być przepisane (rewrite, adres w pasku zostaje) na `/zajawka`. Wyjątek: ciasteczko `dw_preview` równe `COVER_SECRET`. Wejście z `?podglad=<COVER_SECRET>` ustawia to ciasteczko (httpOnly, Secure, SameSite=Lax, 30 dni) i robi redirect 302 na tę samą ścieżkę bez parametru. Webhook `POST /api/revalidate` musi zostać dostępny. Strona zajawki dostaje `Cache-Control: no-store` albo inne rozwiązanie, które nie podaje pełnej strony z cache osobie bez ciasteczka (sprawdź zachowanie Netlify Next runtime i ISR).
-> 2. **Env:** `COVER_MODE` i `COVER_SECRET` tylko w kontekście Production na Netlify. Sekret w Bitwardenie, nigdy w repo ani w docs. Wpisz zmienne do `.env.example` bez wartości.
-> 3. **Metadane zajawki:** `<title>` „Premiera 15 listopada” (szablon z layoutu dopisze nazwę), opis, obraz OG (np. `public/cover/stage.webp` przycięte do 1200×630), `noindex` (zostaje do dnia premiery).
-> 4. **Dzień premiery:** opisz w `docs/guides/cutover.md` włączenie (env + redeploy), link podglądu dla klienta i wyłączenie (`COVER_MODE` usunięte + redeploy, potem `NEXT_PUBLIC_SITE_INDEX=true`). Dopisz klasy `.cover-*` do tabeli w `docs/design/system.md`, a stan do `docs/HANDOFF.md`.
-> 5. **Weryfikacja:**
->    - `COVER_MODE=on` lokalnie: `/`, `/projekty` i stara ścieżka Drupala pokazują zajawkę; `?podglad=` odsłania stronę; po usunięciu ciasteczka wraca zajawka.
->    - Brak scrolla na 375×667, 390×844, 768×1024, 1280×720, 1440×900, 1920×1080 i telefonie w poziomie.
->    - Tryb prywatny (bez `localStorage`) i `prefers-reduced-motion`.
->    - Kontrast AA.
->    - Deploy Preview na Netlify przed przepięciem DNS.
->
-> Etap 2 commituj według sekcji „Jak commitować”. Push i PR dopiero, gdy Jan obejrzy wynik.
+Zrobione na `feat/prelaunch-cover`. Wygląd się nie zmienił.
+
+`COVER_MODE=on` zamyka stronę także wtedy, gdy `COVER_SECRET` jest pusty albo źle wpisany. Podgląd działa dopiero, gdy obie zmienne są ustawione i sekret się zgadza.
+
+- `/` jest wewnętrznym rewrite na tę trasę. Pasek zostaje `/`. Canonical i obraz OG wskazują `/`.
+- Każda inna ścieżka bez rozszerzenia, także `/zajawka` i stary adres Drupala, dostaje 302 na `/`. `?wersja=1|2|3` przechodzi na główny adres.
+- Przepuszczane: `/_next`, `/api` (w tym `POST /api/revalidate`) i każda ścieżka z rozszerzeniem (`robots.txt`, `__forms.html`, zdjęcia, fonty).
+- `?podglad=` równe sekretowi ustawia ciasteczko `dw_preview` (httpOnly, Secure, SameSite=Lax, 30 dni) i wraca na ten sam adres bez parametru. Wejście z `/zajawka` idzie na `/`.
+- Zgodne ciasteczko puszcza pełną stronę pod jej adresem.
+- `Cache-Control: private, no-store` i `Netlify-CDN-Cache-Control: no-store` ustawia odpowiedź middleware, nie `next.config.ts`. Czy anonimowa osoba nie dostaje z cache pełnej strony, sprawdza się na `dramaway.netlify.app` po włączeniu zmiennych.
+
+Kolejność włączenia, testu na produkcji i zdjęcia zajawki: [cutover.md](cutover.md), sekcja „Zajawka przed dniem domeny”. Sekretu nie wpisuj do repo. Po premierze go nie używaj ponownie.
+
+Push i PR dopiero, gdy Jan obejrzy wynik.
 
 ## Jak commitować
 

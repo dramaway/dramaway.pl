@@ -5,10 +5,10 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-07 — styl H3 w treściach Portable Text jest jawnie określony jako MuseoModerno SemiBold 18 px i kolor `#282828`. |
-| **Gałąź / HEAD** | `szaroale-pl-h3-typography` |
-| **Zmiana bieżąca** | 2026-11-07 — H3 w tekstach Portable Text mają jawny styl MuseoModerno SemiBold 18 px, kolor `#282828` i zapis bez wersalików. |
-| **Poprzednia zmiana** | 2026-11-04 — H3 na podstronach zapisane zdaniowo jak tytuły listingów; Alexandria SemiBold i rozmiar wynikający z rangi pozostają bez zmian. |
+| **Ostatnia aktualizacja** | 2026-11-09 — zajawka przed premierą na `feat/prelaunch-cover`. Publiczny adres przy włączonej bramce to `/`. `COVER_MODE` i `COVER_SECRET` ustawia Fundacja w Production dopiero przed DNS. |
+| **Gałąź / HEAD** | `feat/prelaunch-cover` |
+| **Zmiana bieżąca** | 2026-11-09 — zajawka: ruch publiczny ląduje na `/`, podgląd przez `?podglad=` i ciasteczko. Indeksowanie dopiero po zdjęciu zajawki. |
+| **Poprzednia zmiana** | 2026-11-07 — H3 w tekstach Portable Text mają jawny styl MuseoModerno SemiBold 18 px, kolor `#282828` i zapis bez wersalików. |
 | **Poprzednia zmiana** | 2026-11-04 — Dodano pole dodatkowej treści projektu po blokach „Teksty przed listą edycji”; tytuły bloków są Alexandrią, a CTA w MuseoModerno z dłuższą kreską. |
 | **Wcześniejsza zmiana** | 2026-11-04 — Ramka całej treści pojawia się tylko przy fokusie klawiatury; fokus CTA na dotyku nie obrysowuje kafelka. |
 | **Poprzednia zmiana** | 2026-11-03 — Linki w tekstach Portable Text używają granatu `brand-6`, również gdy zawierają fragmenty z innym kolorem tekstu. |
@@ -20,7 +20,7 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | **Starsza zmiana** | 2026-11-03 — Spójne tytuły edycji Teatru Codziennego; fonty Alexandria i MuseoModerno z lokalnych plików, by build nie zależał od Google Fonts. |
 | **Zmiana na Kontakt** | 2026-11-01 — Nagłówki „Adres” i „Numer konta” mają ten sam rozmiar co nagłówki sekcji formularza i kontaktu bezpośredniego; edycja treści odbywa się w polu Body dokumentu Kontakt w Studio. |
 | **Remote** | `origin` = `git@github.com:dramaway/dramaway.pl.git` (publiczne repo na koncie Fundacji; ruleset „Ochrona main”: tylko PR z zielonym `check`). Stary fork wykonawcy zarchiwizowany. |
-| **Netlify** | Projekt przeniesiony do teamu `admin@dramaway.pl`, adres bez zmian. Env: `NEXT_PUBLIC_SANITY_*`, `NEXT_PUBLIC_SITE_URL`, `SANITY_REVALIDATE_SECRET` (tylko Production). |
+| **Netlify** | Projekt przeniesiony do teamu `admin@dramaway.pl`, adres bez zmian. Env: `NEXT_PUBLIC_SANITY_*`, `NEXT_PUBLIC_SITE_URL`, `SANITY_REVALIDATE_SECRET` (tylko Production). `COVER_MODE` i `COVER_SECRET` dochodzą w Production (`dramaway.netlify.app`) dopiero przed DNS, nie wcześniej. |
 | **Hasła** | Bitwarden Fundacji (bitwarden.eu): hasła i kody odzyskiwania kont. Fundacja dostaje master password. |
 | **Preview** | https://dramaway.netlify.app/ |
 | **Studio** | https://dramaway.sanity.studio/ (`readingMethod` = Category; `publication.methods` = Categories; publiczne `publication.format`) |
@@ -28,6 +28,8 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | **Owner Sanity** | Organizacja na `admin@dramaway.pl`, plan NGO. `admin@dramaway.pl` = project Admin; redakcja = Editor |
 
 ---
+
+Aktualizacja 2026-11-09: zajawka przed premierą jest na `feat/prelaunch-cover`. Przy `COVER_MODE=on` publiczny adres to `/`, a inne ścieżki HTML dostają 302 na `/`. `/zajawka` zostaje trasą layoutu, gdy bramka jest wyłączona. Do podglądu potrzebne są obie zmienne; brak sekretu zostawia zajawkę dla wszystkich. Env ustawia Fundacja w Production tuż przed DNS. Po premierze sekretu nie używać ponownie. Kolejność: [guides/cutover.md](guides/cutover.md).
 
 Aktualizacja 2026-11-04: dodano pole Portable Text „Treść po tekstach przed listą edycji”, widoczne po blokach i przed listą edycji projektu. Tytuły bloków „Teksty przed listą edycji” mają 18 px w Alexandrii SemiBold, bez wersalików. CTA na całej stronie używają MuseoModerno SemiBold i dłuższej kreski.
 
@@ -113,12 +115,13 @@ Pełny kanon migracji: [fundacja-status.md](migration/fundacja-status.md). Role 
 
 Pełna kolejność (skrzynka, GitHub, Netlify, Sanity/NGO, legal, DNS): [guides/cutover.md](guides/cutover.md).
 
-Preview (`dramaway.netlify.app`) **zostaje noindex** (`metadata.robots`, `X-Robots-Tag`, `robots.ts` Disallow `/`, `netlify.toml`). Indeksacji nie włączamy, dopóki domena nie jest docelowa.
+Preview (`dramaway.netlify.app`) **zostaje noindex** (`metadata.robots`, `X-Robots-Tag`, `robots.ts` Disallow `/`, `netlify.toml`). Indeksacji nie włączamy, dopóki domena nie jest docelowa i dopóki wisi zajawka.
 
 Przy przejęciu `fundacja.dramaway.pl`:
 
+- **Zajawka** — przed DNS włącz `COVER_MODE` i `COVER_SECRET` na produkcji i sprawdź `dramaway.netlify.app`. Indeksowanie zostaje wyłączone. Kolejność: [guides/cutover.md](guides/cutover.md).
 - **301** — stary Drupal (`node/N`, aliasy `teatrzaangazowany…`, landingi edycji) → trasy z `apps/web/src/lib/routes.ts` / [ia.md](concept/ia.md). Mapa = osobne zadanie; nie zgadywać z palca. Sitemap indeksujący = ta sama fala (teraz `robots.ts` celowo nie wskazuje sitemapy).
-- **Zdjąć noindex** — Netlify env `NEXT_PUBLIC_SITE_INDEX=true` + `NEXT_PUBLIC_SITE_URL=https://fundacja.dramaway.pl` (przebudowa). Potem `robots.ts` wpuszcza crawlera i wskazuje sitemap; `layout.tsx` / `next.config.ts` / `netlify.toml` `[[headers]]`. Świadomie, nie „przy okazji”.
+- **Zdjąć noindex** — dopiero po usunięciu `COVER_MODE` w dniu premiery. Netlify env `NEXT_PUBLIC_SITE_INDEX=true` + `NEXT_PUBLIC_SITE_URL=https://fundacja.dramaway.pl` (przebudowa). Potem `robots.ts` wpuszcza crawlera i wskazuje sitemap; `layout.tsx` / `next.config.ts` / `netlify.toml` `[[headers]]`. Świadomie, nie „przy okazji”.
 - **Legal / RODO** — [guides/cutover-foundation.md](guides/cutover-foundation.md) (mail + checklista). Treści pisze Fundacja.
 - **Treść** — `news-syrena` → draft; puste hero/cover.
 - **Studio** — `pnpm --filter studio run deploy` po ostatniej zmianie schematu.

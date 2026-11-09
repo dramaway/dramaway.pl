@@ -75,14 +75,30 @@ Treści prawnych nie piszemy za Fundację. Gotowy mail i checklista: [cutover-fo
 - [ ] Mapa 301, tuż przed DNS: stare `node/N`, aliasy portalu, landingi edycji. Nie zgadywać z palca.
 - [ ] `news-syrena` do szkicu.
 
+## Zajawka przed dniem domeny
+
+Kilka dni przed premierą (niedziela, 15 listopada 2026) pod domeną wisi jednoekranowa zajawka, nie pełna strona. Kod jest na gałęzi `feat/prelaunch-cover`. Opis layoutu: [zajawka-premiera.md](zajawka-premiera.md).
+
+Dopóki w Netlify nie ma `COVER_MODE=on`, produkcja (`dramaway.netlify.app`) zostaje pełną stroną. Layout zajawki widać wtedy pod `/zajawka`.
+
+Sekretu nie wpisuj tutaj. Wartość jest w Bitwardenie. Do podglądu potrzebne są obie zmienne. Samo `COVER_MODE=on` bez sekretu, albo sekret z literówką, zostawia zajawkę dla wszystkich i nie otwiera strony.
+
+1. Merge na `main`. Zmienne jeszcze puste.
+2. Przed DNS, kontekst Production: ustaw `COVER_MODE=on` i `COVER_SECRET`, potem przebudowa. Production to dziś `dramaway.netlify.app`, więc od tej chwili zajawkę widzi tam każdy, także klient. Link `?podglad=` plus sekret z Bitwardena trzeba przekazać w tym momencie. Wystarczy raz na przeglądarkę (ciasteczko na 30 dni).
+3. Sprawdzenie na `dramaway.netlify.app`: `/` to zajawka i pasek zostaje `/`. Inna ścieżka, także `/zajawka` i stary adres Drupala, wraca na `/` (302). Link podglądu otwiera pełną stronę pod jej adresem. Okno prywatne po wizycie redaktora nadal dostaje zajawkę, nie HTML pełnej strony.
+4. DNS na `fundacja.dramaway.pl`, TLS. `NEXT_PUBLIC_SITE_INDEX` zostaje wyłączone. Domena główna to apex, bez `www`.
+5. Premiera: usuń `COVER_MODE` i `COVER_SECRET`, przebudowa, dopiero potem `NEXT_PUBLIC_SITE_INDEX=true` i `NEXT_PUBLIC_SITE_URL=https://fundacja.dramaway.pl`. Sekret był w linku, historii przeglądarki i logach Netlify. Po premierze go nie używaj ponownie i wyjmij z Netlify.
+
+`COVER_MODE=on` kieruje ruch publiczny na `/`. Inne ścieżki HTML dostają 302. Przechodzą `/_next`, `/api` (w tym webhook) i każda ścieżka z rozszerzeniem pliku. Nagłówki cache ustawia middleware, nie `next.config.ts`.
+
 ## Faza C — dzień domeny
 
 Kto: osoba z dostępem do DNS `dramaway.pl` i do Netlify Fundacji.
 
 Do tego dnia `dramaway.netlify.app` zostaje noindex.
 
-- [ ] `fundacja.dramaway.pl` na Netlify, TLS.
-- [ ] Env: `NEXT_PUBLIC_SITE_URL=https://fundacja.dramaway.pl` i `NEXT_PUBLIC_SITE_INDEX=true`, przebudowa.
+- [ ] `fundacja.dramaway.pl` na Netlify, TLS. Zajawka z sekcji wyżej jest już włączona.
+- [ ] Env: `NEXT_PUBLIC_SITE_URL=https://fundacja.dramaway.pl`. `NEXT_PUBLIC_SITE_INDEX` zostaje wyłączone, dopóki zajawka wisi.
 - [ ] Wgrać `_redirects` z mapy 301.
 - [ ] CORS Studio: origin produkcji w Sanity Manage.
 - [ ] Smoke, Search Console.
