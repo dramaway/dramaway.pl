@@ -43,7 +43,7 @@ Zrobione na `feat/prelaunch-cover`. Wygląd się nie zmienił.
 - `/` jest wewnętrznym rewrite na tę trasę. Pasek zostaje `/`. Canonical i obraz OG wskazują `/`.
 - Każda inna ścieżka bez rozszerzenia, także `/zajawka` i stary adres Drupala, dostaje 302 na `/`. `?wersja=1|2|3` przechodzi na główny adres.
 - Przepuszczane: `/_next`, `/api` (w tym `POST /api/revalidate`) i każda ścieżka z rozszerzeniem (`robots.txt`, `__forms.html`, zdjęcia, fonty).
-- `?podglad=` równe sekretowi ustawia ciasteczko `dw_preview` (httpOnly, Secure, SameSite=Lax, 30 dni) i wraca na ten sam adres bez parametru. Wejście z `/zajawka` idzie na `/`.
+- `?podglad=` równe sekretowi ustawia ciasteczko `dw_preview` (httpOnly, Secure, SameSite=Lax, 30 dni) i wraca na ten sam adres bez parametru. Wejście z `/zajawka` idzie na `/`. Pusty `?podglad` albo zła wartość kasuje to ciasteczko i wraca na zajawkę, także gdy podgląd był już włączony.
 - Zgodne ciasteczko puszcza pełną stronę pod jej adresem.
 - `Cache-Control: private, no-store` i `Netlify-CDN-Cache-Control: no-store` ustawia odpowiedź middleware, nie `next.config.ts`. Czy anonimowa osoba nie dostaje z cache pełnej strony, sprawdza się na `dramaway.netlify.app` po włączeniu zmiennych.
 

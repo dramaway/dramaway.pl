@@ -33,7 +33,13 @@ test("a missing secret still closes the site and rejects preview", () => {
   });
   assert.deepEqual(
     decide({ pathname: "/projekty", secret: "", search: "podglad=anything" }),
-    { action: "redirect", pathname: "/", search: "", setCookie: false },
+    {
+      action: "redirect",
+      pathname: "/",
+      search: "",
+      setCookie: false,
+      clearCookie: true,
+    },
   );
   assert.equal(secretsMatch("anything", ""), false);
 });
@@ -48,31 +54,41 @@ test("the homepage rewrites to the cover and other paths bounce home", () => {
     pathname: "/",
     search: "",
     setCookie: false,
+    clearCookie: false,
   });
   assert.deepEqual(decide({ pathname: "/zajawka" }), {
     action: "redirect",
     pathname: "/",
     search: "",
     setCookie: false,
+    clearCookie: false,
   });
   assert.deepEqual(decide({ pathname: "/node/42" }), {
     action: "redirect",
     pathname: "/",
     search: "",
     setCookie: false,
+    clearCookie: false,
   });
 });
 
 test("a forced cover variant survives the redirect and nothing else does", () => {
   assert.deepEqual(
     decide({ pathname: "/projekty", search: "wersja=2&utm=mail" }),
-    { action: "redirect", pathname: "/", search: "wersja=2", setCookie: false },
+    {
+      action: "redirect",
+      pathname: "/",
+      search: "wersja=2",
+      setCookie: false,
+      clearCookie: false,
+    },
   );
   assert.deepEqual(decide({ pathname: "/projekty", search: "wersja=9" }), {
     action: "redirect",
     pathname: "/",
     search: "",
     setCookie: false,
+    clearCookie: false,
   });
   assert.deepEqual(decide({ pathname: "/", search: "wersja=3" }), {
     action: "rewrite",
@@ -97,24 +113,60 @@ test("files, Next internals and API routes are not redirected", () => {
 test("a matching preview link sets the cookie and drops the secret from the url", () => {
   assert.deepEqual(
     decide({ pathname: "/projekty", search: `podglad=${SECRET}` }),
-    { action: "redirect", pathname: "/projekty", search: "", setCookie: true },
+    {
+      action: "redirect",
+      pathname: "/projekty",
+      search: "",
+      setCookie: true,
+      clearCookie: false,
+    },
   );
   assert.deepEqual(
     decide({ pathname: "/zajawka", search: `podglad=${SECRET}&wersja=1` }),
-    { action: "redirect", pathname: "/", search: "wersja=1", setCookie: true },
+    {
+      action: "redirect",
+      pathname: "/",
+      search: "wersja=1",
+      setCookie: true,
+      clearCookie: false,
+    },
   );
 });
 
-test("a wrong preview link returns to the cover without a cookie", () => {
-  assert.deepEqual(decide({ pathname: "/", search: "podglad=nope" }), {
+test("an empty or wrong preview value clears an existing cookie", () => {
+  const cleared = {
     action: "redirect",
     pathname: "/",
     search: "",
     setCookie: false,
-  });
+    clearCookie: true,
+  };
+  assert.deepEqual(decide({ pathname: "/", search: "podglad=nope" }), cleared);
+  assert.deepEqual(
+    decide({
+      pathname: "/projekty",
+      search: "podglad=nope",
+      previewCookie: SECRET,
+    }),
+    cleared,
+  );
+  assert.deepEqual(
+    decide({ pathname: "/projekty", search: "podglad=", previewCookie: SECRET }),
+    cleared,
+  );
+  assert.deepEqual(
+    decide({ pathname: "/", search: "podglad", previewCookie: SECRET }),
+    cleared,
+  );
   assert.deepEqual(
     decide({ pathname: "/projekty", search: "podglad=nope&wersja=1" }),
-    { action: "redirect", pathname: "/", search: "wersja=1", setCookie: false },
+    {
+      action: "redirect",
+      pathname: "/",
+      search: "wersja=1",
+      setCookie: false,
+      clearCookie: true,
+    },
   );
 });
 
@@ -139,6 +191,12 @@ test("the internal rewrite of the cover route is not bounced", () => {
   );
   assert.deepEqual(
     decide({ pathname: "/projekty", internalCover: true }),
-    { action: "redirect", pathname: "/", search: "", setCookie: false },
+    {
+      action: "redirect",
+      pathname: "/",
+      search: "",
+      setCookie: false,
+      clearCookie: false,
+    },
   );
 });

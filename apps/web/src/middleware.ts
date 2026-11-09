@@ -49,6 +49,16 @@ export function middleware(request: NextRequest) {
         path: "/",
         maxAge: PREVIEW_MAX_AGE,
       });
+    } else if (decision.clearCookie) {
+      response.cookies.set({
+        name: PREVIEW_COOKIE,
+        value: "",
+        httpOnly: true,
+        secure: true,
+        sameSite: "lax",
+        path: "/",
+        maxAge: 0,
+      });
     }
     return response;
   }
