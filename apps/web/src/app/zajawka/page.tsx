@@ -3,7 +3,7 @@ import { CoverScreen } from "@/components/cover/cover-screen";
 import { COVER_SITE_LABEL, PREMIERE } from "@/components/cover/cover-copy";
 import { getResolvedSite } from "@/lib/site";
 
-const description = `${COVER_SITE_LABEL} – premiera w niedzielę, ${PREMIERE.date}.`;
+const description = `${COVER_SITE_LABEL} – premiera ${PREMIERE.weekday}, ${PREMIERE.date}.`;
 
 export const metadata: Metadata = {
   title: `Premiera ${PREMIERE.date}`,
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     url: "/",
     images: [
       {
-        url: "/cover/og.webp",
+        url: "/cover/og.jpg",
         width: 1200,
         height: 630,
         alt: COVER_SITE_LABEL,
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     description,
-    images: ["/cover/og.webp"],
+    images: ["/cover/og.jpg"],
   },
 };
 
