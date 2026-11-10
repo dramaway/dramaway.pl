@@ -28,6 +28,7 @@ Szukasz konkretnej czynności, na przykład „dodać aktualność” albo „zm
 | [Tekst](tekst.md) | Akapity, nagłówki, przycisk, kolumny, wykaz twórców, linki zaawansowane |
 | [Czytelnia i O fundacji](czytelnia-i-fundacja.md) | Spis publikacji oraz wartości, zespół, historia, dokumenty |
 | [Zmiany w kodzie](zmiany-w-kodzie.md) | Wygląd i działanie strony, czyli to, czego nie da się zmienić w Studio. Z pomocą Copilota na GitHubie |
+| [Statystyki](statystyki.md) | Studio → Statystyki: zbiorcze odwiedziny i blokery reklam |
 
 ## Słowniczek
 

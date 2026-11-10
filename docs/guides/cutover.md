@@ -64,14 +64,14 @@ Treści prawnych nie piszemy za Fundację. Gotowy mail i checklista: [cutover-fo
 
 ### Fundacja
 
-- [ ] Tekst polityki prywatności (maile zespołu, zdjęcia, Sanity, Netlify, YouTube) i ewentualnie cookies.
+- [ ] Tekst polityki prywatności (maile zespołu, zdjęcia, Sanity, Netlify, YouTube) oraz zatwierdzony akapit o Umami.
 - [ ] Potwierdzenie, że osoby ze zdjęciem i mailem godzą się na publikację.
-- [ ] Decyzja: statystyki nie / później / Plausible albo Fathom. GA4 tylko jeśli ktoś będzie czytał raporty i przyjmie baner cookies.
+- [x] Decyzja: Umami Cloud Hobby, region UE, konto `admin@dramaway.pl`. Szczegóły: [cutover-foundation.md](cutover-foundation.md).
 
 ### Wdrożenie (zgłoszenia „Zmiana na stronie” albo zlecony wykonawca)
 
-- [ ] Podstrona polityki w Sanity (Studio) i link w stopce.
-- [ ] Analityka tylko jeśli ją wybiorą, plus dopisek w CSP.
+- [ ] Podstrona polityki w Sanity (Studio) i link w stopce — po zatwierdzeniu tekstu, nie ze szkicu.
+- [x] Skrypt Umami i CSP są w kodzie. Pomiar rusza dopiero ze zmienną w Netlify. Zakładka Studio → Statystyki rusza z linkiem udostępniania poza repozytorium.
 - [ ] Mapa 301, tuż przed DNS: stare `node/N`, aliasy portalu, landingi edycji. Nie zgadywać z palca.
 - [ ] `news-syrena` do szkicu.
 

@@ -5,9 +5,10 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-09 — zajawka przed premierą na `feat/prelaunch-cover`. Publiczny adres przy włączonej bramce to `/`. `COVER_MODE` i `COVER_SECRET` ustawia Fundacja w Production dopiero przed DNS. |
-| **Gałąź / HEAD** | `feat/prelaunch-cover` |
-| **Zmiana bieżąca** | 2026-11-09 — zajawka: ruch publiczny ląduje na `/`, podgląd przez `?podglad=` i ciasteczko. Indeksowanie dopiero po zdjęciu zajawki. |
+| **Ostatnia aktualizacja** | 2026-11-10 — statystyki Umami Cloud (Hobby, region UE) na `feat/umami-analytics`. Skrypt i zakładka Studio są w kodzie, wyłączone bez zmiennych. ID i link udostępniania nie wchodzą do repo. |
+| **Gałąź / HEAD** | `feat/umami-analytics` |
+| **Zmiana bieżąca** | 2026-11-10 — Umami za flagą `NEXT_PUBLIC_UMAMI_WEBSITE_ID`. Studio: narzędzie Statystyki, gdy jest `SANITY_STUDIO_UMAMI_SHARE_URL`. Szkic akapitu polityki czeka na Fundację. |
+| **Poprzednia zmiana** | 2026-11-09 — zajawka: ruch publiczny ląduje na `/`, podgląd przez `?podglad=` i ciasteczko. Indeksowanie dopiero po zdjęciu zajawki. |
 | **Poprzednia zmiana** | 2026-11-07 — H3 w tekstach Portable Text mają jawny styl MuseoModerno SemiBold 18 px, kolor `#282828` i zapis bez wersalików. |
 | **Poprzednia zmiana** | 2026-11-04 — Dodano pole dodatkowej treści projektu po blokach „Teksty przed listą edycji”; tytuły bloków są Alexandrią, a CTA w MuseoModerno z dłuższą kreską. |
 | **Wcześniejsza zmiana** | 2026-11-04 — Ramka całej treści pojawia się tylko przy fokusie klawiatury; fokus CTA na dotyku nie obrysowuje kafelka. |
@@ -28,6 +29,8 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | **Owner Sanity** | Organizacja na `admin@dramaway.pl`, plan NGO. `admin@dramaway.pl` = project Admin; redakcja = Editor |
 
 ---
+
+Aktualizacja 2026-11-10: statystyki to Umami Cloud Hobby, region UE, konto `admin@dramaway.pl`, DPA na https://umami.is/dpa. Skrypt w layoutcie jest wyłączony bez `NEXT_PUBLIC_UMAMI_WEBSITE_ID` (liczy tylko `fundacja.dramaway.pl`). CSP bierze jeden host z `NEXT_PUBLIC_UMAMI_SCRIPT_URL`. Studio ma zakładkę Statystyki, gdy sekret `SANITY_STUDIO_UMAMI_SHARE_URL` jest ustawiony poza repo. Szkic akapitu polityki nie idzie do Sanity: [guides/polityka-prywatnosci-analityka-szkic.md](guides/polityka-prywatnosci-analityka-szkic.md). Wtyczka `sanity-plugin-umami-analytics-tool` odpada (Sanity ^3).
 
 Aktualizacja 2026-11-09: zajawka przed premierą jest na `feat/prelaunch-cover`. Przy `COVER_MODE=on` publiczny adres to `/`, a inne ścieżki HTML dostają 302 na `/`. `/zajawka` zostaje trasą layoutu, gdy bramka jest wyłączona. Do podglądu potrzebne są obie zmienne; brak sekretu zostawia zajawkę dla wszystkich. Env ustawia Fundacja w Production tuż przed DNS. Po premierze sekretu nie używać ponownie. Kolejność: [guides/cutover.md](guides/cutover.md).
 
