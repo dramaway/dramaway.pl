@@ -81,10 +81,11 @@ Wartości ID i linku udostępniania nie wchodzą do repozytorium.
 | Zmienna | Gdzie | Co robi |
 |---------|--------|---------|
 | `NEXT_PUBLIC_UMAMI_WEBSITE_ID` | Netlify, kontekst, w którym pomiar ma działać | Puste = skrypt się nie ładuje (lokalnie, Deploy Preview i do czasu decyzji o włączeniu) |
-| `NEXT_PUBLIC_UMAMI_SCRIPT_URL` | Netlify, opcjonalnie | Puste = `https://cloud.umami.is/script.js`. Inny host z panelu (region EU), jeśli panel go poda |
+| `NEXT_PUBLIC_UMAMI_SCRIPT_URL` | Netlify, opcjonalnie | Puste = `https://cloud.umami.is/script.js`. Ten origin trafia do CSP `script-src`. Inny host z panelu (region EU), jeśli panel go poda |
+| `NEXT_PUBLIC_UMAMI_HOST_URL` | Netlify, opcjonalnie | Puste = brak `data-host-url`, wysyłka na `https://gateway.umami.is/api/send` (CSP `connect-src`). Ustawiona wartość zastępuje ten gateway i staje się `data-host-url` |
 | `SANITY_STUDIO_UMAMI_SHARE_URL` | `apps/studio/.env` (gitignore) oraz sekret GitHub Actions o tej samej nazwie, czytany przez `.github/workflows/studio-deploy.yml` | Puste = zakładka Statystyki się nie pokazuje. To link udostępniania z panelu, nie hasło |
 
-Skrypt na stronie liczy tylko `fundacja.dramaway.pl` (`data-domains`), więc `netlify.app` i localhost nie wchodzą do liczb. `data-do-not-track="true"` szanuje sygnał przeglądarki. Chmurowy `script.js` domyślnie wysyła pomiary na `gateway.umami.is`. Ustawiamy `data-host-url` na origin adresu skryptu, więc CSP dopisuje ten jeden host do `script-src` i do `connect-src`, bez drugiej, sztywnej domeny.
+Skrypt na stronie liczy tylko `fundacja.dramaway.pl` (`data-domains`), więc `netlify.app` i localhost nie wchodzą do liczb. `data-do-not-track="true"` szanuje sygnał przeglądarki. Tag jest jak oficjalny snippet z panelu: bez `data-host-url` wysyła na `https://gateway.umami.is/api/send`. CSP, gdy jest ID witryny, wpuszcza origin skryptu w `script-src` i `https://gateway.umami.is` w `connect-src`. `NEXT_PUBLIC_UMAMI_HOST_URL` jest na własny kolektor w przyszłości.
 
 Zajawka (`/zajawka`, `COVER_MODE`) korzysta ze wspólnego layoutu, więc dostaje ten sam skrypt, gdy zmienna jest ustawiona.
 

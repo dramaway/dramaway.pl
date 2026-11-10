@@ -8,13 +8,15 @@ import { contentSecurityPolicy } from "./src/lib/content-security-policy";
  *
  * Own + vendor origins we embed or fetch:
  * Sanity CDN, Netlify, dramaway.pl (legacy files / centrum), YouTube nocookie.
- * Umami, when NEXT_PUBLIC_UMAMI_WEBSITE_ID is set, adds one host taken from
- * NEXT_PUBLIC_UMAMI_SCRIPT_URL to script-src and connect-src.
+ * Umami, when NEXT_PUBLIC_UMAMI_WEBSITE_ID is set, adds the script origin to
+ * script-src and https://gateway.umami.is to connect-src. A set
+ * NEXT_PUBLIC_UMAMI_HOST_URL replaces that gateway.
  */
 const ContentSecurityPolicy = contentSecurityPolicy({
   nodeEnv: process.env.NODE_ENV,
   websiteId: process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID,
   scriptUrl: process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL,
+  hostUrl: process.env.NEXT_PUBLIC_UMAMI_HOST_URL,
 });
 
 const PermissionsPolicy = [

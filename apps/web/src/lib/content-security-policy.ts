@@ -1,4 +1,8 @@
-import { umamiCollectOrigin, type UmamiSettings } from "./umami";
+import {
+  umamiCollectOrigin,
+  umamiScriptOrigin,
+  type UmamiSettings,
+} from "./umami";
 
 export type ContentSecurityPolicyEnv = UmamiSettings & {
   nodeEnv?: string;
@@ -9,14 +13,15 @@ function sources(directive: string, values: Array<string | null>): string {
 }
 
 /**
- * CSP for the public site. The Umami origin is added to script-src and
- * connect-src only when a website id is set, and only as that one origin.
+ * CSP for the public site. Umami hosts are added only when a website id is
+ * set: the script origin on script-src, and the collect origin on connect-src.
  */
 export function contentSecurityPolicy(env: ContentSecurityPolicyEnv): string {
-  const umamiOrigin = umamiCollectOrigin(env);
+  const scriptOrigin = umamiScriptOrigin(env);
+  const collectOrigin = umamiCollectOrigin(env);
   const directives = [
     "default-src 'self'",
-    sources("script-src", ["'self'", "'unsafe-inline'", "'unsafe-eval'", umamiOrigin]),
+    sources("script-src", ["'self'", "'unsafe-inline'", "'unsafe-eval'", scriptOrigin]),
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob: https://cdn.sanity.io https://*.sanity.io https://i.ytimg.com https://*.ytimg.com https://*.netlify.app https://*.dramaway.pl https://*.fundacja.dramaway.pl https://dramaway.pl https://fundacja.dramaway.pl https://www.fundacja.dramaway.pl https://centrum.dramaway.pl",
     "media-src 'self' blob: https://cdn.sanity.io https://*.sanity.io https://*.dramaway.pl https://dramaway.pl https://fundacja.dramaway.pl https://www.fundacja.dramaway.pl",
@@ -32,7 +37,7 @@ export function contentSecurityPolicy(env: ContentSecurityPolicyEnv): string {
       "https://dramaway.pl",
       "https://fundacja.dramaway.pl",
       "https://centrum.dramaway.pl",
-      umamiOrigin,
+      collectOrigin,
     ]),
     "frame-src https://www.youtube-nocookie.com",
     "frame-ancestors 'none'",
