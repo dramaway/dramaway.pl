@@ -4,13 +4,48 @@ import type { NextRequest } from "next/server";
 import {
   COVER_REWRITE_HEADER,
   COVER_ROUTE,
+  canonicalHostRedirect,
   decideCover,
   coverNoStoreHeaders,
   PREVIEW_COOKIE,
   PREVIEW_MAX_AGE,
 } from "@/lib/cover-gate";
 
+function firstHeaderValue(value: string | null): string {
+  if (!value) return "";
+  return value.split(",")[0]?.trim() ?? "";
+}
+
+/**
+ * `request.nextUrl` is the server host (localhost in dev, sometimes an
+ * internal name on Netlify). The visitor host is `host`. When that header
+ * has been rewritten, Netlify puts the original host in `x-forwarded-host`.
+ */
+function visitorUrls(request: NextRequest): URL[] {
+  const names = [
+    firstHeaderValue(request.headers.get("host")),
+    firstHeaderValue(request.headers.get("x-forwarded-host")),
+  ];
+  const urls: URL[] = [];
+  for (const name of names) {
+    if (!name) continue;
+    try {
+      const url = request.nextUrl.clone();
+      url.host = name;
+      urls.push(url);
+    } catch {
+      // A malformed host must not block the request.
+    }
+  }
+  return urls;
+}
+
 export function middleware(request: NextRequest) {
+  for (const url of visitorUrls(request)) {
+    const canonical = canonicalHostRedirect(url);
+    if (canonical) return NextResponse.redirect(canonical, 301);
+  }
+
   const secret = process.env.COVER_SECRET?.trim() ?? "";
   const decision = decideCover({
     pathname: request.nextUrl.pathname,
