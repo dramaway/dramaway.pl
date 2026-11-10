@@ -6,6 +6,9 @@ export type UmamiStatisticsOptions = {
   shareUrl: string;
 };
 
+/** Umami Cloud login. The share link stays out of the repo; this URL does not. */
+const UMAMI_DASHBOARD_URL = "https://cloud.umami.is/";
+
 /**
  * Umami Cloud share pages send frame-ancestors * (Chrome embeds them)
  * and also X-Frame-Options: SAMEORIGIN. The iframe is the dashboard.
@@ -42,6 +45,19 @@ export function UmamiStatistics(props: {
             text="Otwórz statystyki"
             data-testid="umami-open-statistics"
           />
+          <Button
+            as="a"
+            href={UMAMI_DASHBOARD_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            mode="bleed"
+            text="Pełny panel Umami (wymaga logowania)"
+            data-testid="umami-open-dashboard"
+          />
+          <Text size={1}>
+            Tu widać tylko podstawowe liczby. Pełny panel (więcej raportów i
+            ustawienia) jest na koncie Umami Fundacji: admin@dramaway.pl.
+          </Text>
         </Stack>
       </Box>
       <iframe
