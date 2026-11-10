@@ -5,6 +5,8 @@ import { media, mediaAssetSource } from "sanity-plugin-media";
 import { schemaTypes } from "./schemaTypes";
 import { SINGLETON_SCHEMA_TYPES } from "./singletons";
 import { structure } from "./structure";
+import { studioToolsWithStatistics } from "./umami-share";
+import { umamiStatisticsTool } from "./umami-statistics";
 
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || "your-project-id";
 const dataset = process.env.SANITY_STUDIO_DATASET || "production";
@@ -32,6 +34,12 @@ export default defineConfig({
         previous.filter((source) => source !== mediaAssetSource),
     },
   },
+  tools: (prev) =>
+    studioToolsWithStatistics(
+      prev,
+      process.env.SANITY_STUDIO_UMAMI_SHARE_URL,
+      umamiStatisticsTool,
+    ),
   schema: {
     types: schemaTypes,
     templates: (templates) =>
