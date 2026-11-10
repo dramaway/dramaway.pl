@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-09 — zajawka przed premierą na `feat/prelaunch-cover`. Publiczny adres przy włączonej bramce to `/`. `COVER_MODE` i `COVER_SECRET` ustawia Fundacja w Production dopiero przed DNS. |
-| **Gałąź / HEAD** | `feat/prelaunch-cover` |
-| **Zmiana bieżąca** | 2026-11-09 — zajawka: ruch publiczny ląduje na `/`, podgląd przez `?podglad=` i ciasteczko. Indeksowanie dopiero po zdjęciu zajawki. |
+| **Ostatnia aktualizacja** | 2026-11-10 — `www.fundacja.dramaway.pl` dostaje 301 na apex w middleware. `X-Robots-Tag` nie jest już na sztywno w `netlify.toml`. |
+| **Gałąź / HEAD** | `fix/www-redirect-and-indexing` |
+| **Zmiana bieżąca** | 2026-11-10 — przekierowanie www oraz `noindex` tylko gdy `NEXT_PUBLIC_SITE_INDEX` nie jest `true`. W premierę dochodzi sama ta flaga. |
 | **Poprzednia zmiana** | 2026-11-07 — H3 w tekstach Portable Text mają jawny styl MuseoModerno SemiBold 18 px, kolor `#282828` i zapis bez wersalików. |
 | **Poprzednia zmiana** | 2026-11-04 — Dodano pole dodatkowej treści projektu po blokach „Teksty przed listą edycji”; tytuły bloków są Alexandrią, a CTA w MuseoModerno z dłuższą kreską. |
 | **Wcześniejsza zmiana** | 2026-11-04 — Ramka całej treści pojawia się tylko przy fokusie klawiatury; fokus CTA na dotyku nie obrysowuje kafelka. |
@@ -28,6 +28,8 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | **Owner Sanity** | Organizacja na `admin@dramaway.pl`, plan NGO. `admin@dramaway.pl` = project Admin; redakcja = Editor |
 
 ---
+
+Aktualizacja 2026-11-10: middleware odpowiada 301 z `www.fundacja.dramaway.pl` na apex (ta sama ścieżka i zapytanie, także `?podglad=` i `?wersja=`), przed bramką zajawki i także po premierze. Netlify tego nie przekierowuje — apex jest domeną główną, www aliasem. `X-Robots-Tag: noindex, nofollow` zniknął z `netlify.toml`. Ustawia go `headers()` w `next.config.ts`, tylko gdy `siteIndexingEnabled()` zwraca false, więc po `NEXT_PUBLIC_SITE_INDEX=true` i przebudowie nagłówek schodzi. `NEXT_PUBLIC_SITE_URL` jest już apexem; ustawia się je w dniu domeny, nie w premierę.
 
 Aktualizacja 2026-11-09: zajawka przed premierą jest na `feat/prelaunch-cover`. Przy `COVER_MODE=on` publiczny adres to `/`, a inne ścieżki HTML dostają 302 na `/`. `/zajawka` zostaje trasą layoutu, gdy bramka jest wyłączona. Do podglądu potrzebne są obie zmienne; brak sekretu zostawia zajawkę dla wszystkich. Env ustawia Fundacja w Production tuż przed DNS. Po premierze sekretu nie używać ponownie. Kolejność: [guides/cutover.md](guides/cutover.md).
 
@@ -101,8 +103,8 @@ Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona głów
 - Studio: plugin **Media** (`sanity-plugin-media`) — zakładka w menu + źródło przy polach **`image`**. Pola **`file`** (ICO) zostają na wbudowanym pickerze Sanity: Media w trybie plików pokazuje tylko `sanity.fileAsset`, a tych jest zero. Typy `media.tag` / `media.folder` ukryte w desk. Credit line włączony. **Content (góra):** Strona główna zostaje na stałe (`siteSettings`). Dalej skróty z `siteSettings.navigation` (ta sama lista co menu witryny, z jednym poziomem dzieci). Pusta lista = dotychczasowe skróty: Projekty / Czytelnia / Zespół (`landingPage`), Art Generacje (`project`), Baza wiedzy / Kontakt (`page`), O fundacji (`aboutPage`). Lista Page ukrywa strony, które są już skrótem. Site settings nadal na dole (ten sam dokument co Strona główna). Portable Text: styl **Termin** (`term`) — blob + krój body, Strong opcjonalnie; lista **Indent** (Tab = głębsze wcięcie); lista **Roles** (`roster`) — wiersze `rola: imiona`, render jako `.roster` (hairline’y, bez karty); obiekt **Wykaz twórców** (`credits`) — grupy (Autorstwo / Obsada / Realizacja / Produkcja / Partnerzy) z wierszami `rola` + opcjonalny `dopisek` + `osoby`, blok **Lista bez ról** dla obsady i opcjonalna notka końcowa; ten sam `.roster` co Roles; obiekt **Columns** (2 albo 3, stack poniżej `lg`); obiekt **Button** (`ctaButton`) — zielone CTA w osobnym wierszu, do lewej, z wcięciem 0–3 stopnie jak lista Indent; cel to dokument, plik albo adres, a `#` i `?` są w zwiniętym Zaawansowane; separator **Czytaj więcej** (`readMoreBreak`) — max jeden w głównym `body`, tylko w środku (nie na początku/końcu), treść poniżej zwinięta na stronie (copy: „Czytaj więcej” / „Zwiń”); nie w kolumnach. Quote bez zmian. Nie zgadywać listy ról z dwukropków w prozie **w runtime** — redaktor zaznacza Roles / Wykaz twórców w toolbarze. Jednorazowy wyjątek offline: `pnpm patch:project-credits` (parser → ręcznie przejrzany `scripts/project-credits.json` → zapis), odpalony 2026-10-07. Deploy: `pnpm --filter studio run deploy` → https://dramaway.sanity.studio/.
 - **Publikacja w Studio:** Next trzyma HTML do 60 s (ISR). Żeby nie czekać: webhook Sanity → `POST /api/revalidate` (`revalidateTag` + `revalidatePath`). Koszt ≈ 0 (webhook Sanity darmowy, kilka wywołań Netlify dziennie). **Skonfigurowane 2026-10-23:** sekret w Netlify (`SANITY_REVALIDATE_SECRET`, kontekst Production, oznaczony jako secret) i webhook w Sanity Manage → API → Webhooks (`https://dramaway.netlify.app/api/revalidate`, header `Authorization: Bearer <sekret>`, dataset `production`, create/update/delete, bez draftów, pole „Secret” puste). Sekret w Bitwardenie. Po cutoverze URL hooka na docelową domenę. Test: `POST` bez sekretu → 401 (503 = zmienna nie dotarła, trzeba redeploy).
   Fallback 60 s zostaje, gdy hook nie dojdzie.
-- Netlify: `netlify.toml` w repo (`pnpm --filter web build`, `X-Robots-Tag: noindex` na static). Preview: https://dramaway.netlify.app/. Next: `metadata.robots` + `headers()` (CSP, noindex dopóki `NEXT_PUBLIC_SITE_INDEX` nie jest `true`).
-- **Indeksacja (cutover):** w Netlify `NEXT_PUBLIC_SITE_URL=https://fundacja.dramaway.pl` i `NEXT_PUBLIC_SITE_INDEX=true` — wtedy robots/sitemap/canonical żyją. Do tego czasu Google ma nie indeksować roboczego netlify.app.
+- Netlify: `netlify.toml` w repo (`pnpm --filter web build`). Preview: https://dramaway.netlify.app/. Next: `metadata.robots` + `headers()` (CSP, `X-Robots-Tag: noindex` dopóki `NEXT_PUBLIC_SITE_INDEX` nie jest `true`).
+- **Indeksacja (cutover):** `NEXT_PUBLIC_SITE_URL` jest już `https://fundacja.dramaway.pl` (dzień domeny). W premierę, po zdjęciu zajawki, samo `NEXT_PUBLIC_SITE_INDEX=true` i przebudowa. Do tego czasu Google ma nie indeksować.
 - CI: `.github/workflows/ci.yml` — `pnpm install`, lint, `web` build, `test:repair` / `test:archive-projects` / `test:web`.
 - Studio deploy: `.github/workflows/studio-deploy.yml` po merge'u zmian w `apps/studio/**` do `main` (sekret repo `SANITY_AUTH_TOKEN`, token „Deploy Studio”).
 - Zmiany w kodzie po przekazaniu: Copilot coding agent (zgłoszenie „Zmiana na stronie” → PR → Netlify Deploy Preview → merge). Środowisko agenta: `.github/workflows/copilot-setup-steps.yml`, zasady: `AGENTS.md`, instrukcja: [redakcja/zmiany-w-kodzie.md](redakcja/zmiany-w-kodzie.md).
@@ -115,13 +117,13 @@ Pełny kanon migracji: [fundacja-status.md](migration/fundacja-status.md). Role 
 
 Pełna kolejność (skrzynka, GitHub, Netlify, Sanity/NGO, legal, DNS): [guides/cutover.md](guides/cutover.md).
 
-Preview (`dramaway.netlify.app`) **zostaje noindex** (`metadata.robots`, `X-Robots-Tag`, `robots.ts` Disallow `/`, `netlify.toml`). Indeksacji nie włączamy, dopóki domena nie jest docelowa i dopóki wisi zajawka.
+Preview (`dramaway.netlify.app`) **zostaje noindex** (`metadata.robots`, `X-Robots-Tag` z `headers()`, `robots.ts` Disallow `/`). Indeksacji nie włączamy, dopóki wisi zajawka.
 
 Przy przejęciu `fundacja.dramaway.pl`:
 
 - **Zajawka** — przed DNS włącz `COVER_MODE` i `COVER_SECRET` na produkcji i sprawdź `dramaway.netlify.app`. Indeksowanie zostaje wyłączone. Kolejność: [guides/cutover.md](guides/cutover.md).
 - **301** — stary Drupal (`node/N`, aliasy `teatrzaangazowany…`, landingi edycji) → trasy z `apps/web/src/lib/routes.ts` / [ia.md](concept/ia.md). Mapa = osobne zadanie; nie zgadywać z palca. Sitemap indeksujący = ta sama fala (teraz `robots.ts` celowo nie wskazuje sitemapy).
-- **Zdjąć noindex** — dopiero po usunięciu `COVER_MODE` w dniu premiery. Netlify env `NEXT_PUBLIC_SITE_INDEX=true` + `NEXT_PUBLIC_SITE_URL=https://fundacja.dramaway.pl` (przebudowa). Potem `robots.ts` wpuszcza crawlera i wskazuje sitemap; `layout.tsx` / `next.config.ts` / `netlify.toml` `[[headers]]`. Świadomie, nie „przy okazji”.
+- **Zdjąć noindex** — dopiero po usunięciu `COVER_MODE` w dniu premiery. Netlify env `NEXT_PUBLIC_SITE_INDEX=true` (przebudowa). `NEXT_PUBLIC_SITE_URL` zostaje adresem z dnia domeny. Potem `robots.ts` wpuszcza crawlera i wskazuje sitemap; `layout.tsx` ustawia `index, follow`, a `next.config.ts` przestaje wysyłać `X-Robots-Tag`. Świadomie, nie „przy okazji”.
 - **Legal / RODO** — [guides/cutover-foundation.md](guides/cutover-foundation.md) (mail + checklista). Treści pisze Fundacja.
 - **Treść** — `news-syrena` → draft; puste hero/cover.
 - **Studio** — `pnpm --filter studio run deploy` po ostatniej zmianie schematu.
