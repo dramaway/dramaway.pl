@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import path from "path";
+import { contentSecurityPolicy } from "./src/lib/content-security-policy";
 
 /**
  * CSP limits what the *page* may load (scripts, images, iframes).
@@ -7,23 +8,14 @@ import path from "path";
  *
  * Own + vendor origins we embed or fetch:
  * Sanity CDN, Netlify, dramaway.pl (legacy files / centrum), YouTube nocookie.
- * Adding analytics later means extending script-src / connect-src.
+ * Umami, when NEXT_PUBLIC_UMAMI_WEBSITE_ID is set, adds one host taken from
+ * NEXT_PUBLIC_UMAMI_SCRIPT_URL to script-src and connect-src.
  */
-const ContentSecurityPolicy = [
-  "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
-  "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://cdn.sanity.io https://*.sanity.io https://i.ytimg.com https://*.ytimg.com https://*.netlify.app https://*.dramaway.pl https://*.fundacja.dramaway.pl https://dramaway.pl https://fundacja.dramaway.pl https://www.fundacja.dramaway.pl https://centrum.dramaway.pl",
-  "media-src 'self' blob: https://cdn.sanity.io https://*.sanity.io https://*.dramaway.pl https://dramaway.pl https://fundacja.dramaway.pl https://www.fundacja.dramaway.pl",
-  "font-src 'self'",
-  "connect-src 'self' ws: wss: https://cdn.sanity.io https://*.sanity.io https://*.netlify.app https://*.dramaway.pl https://dramaway.pl https://fundacja.dramaway.pl https://centrum.dramaway.pl",
-  "frame-src https://www.youtube-nocookie.com",
-  "frame-ancestors 'none'",
-  "object-src 'none'",
-  "base-uri 'self'",
-  "form-action 'self'",
-  ...(process.env.NODE_ENV === "production" ? ["upgrade-insecure-requests"] : []),
-].join("; ");
+const ContentSecurityPolicy = contentSecurityPolicy({
+  nodeEnv: process.env.NODE_ENV,
+  websiteId: process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID,
+  scriptUrl: process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL,
+});
 
 const PermissionsPolicy = [
   "camera=()",
