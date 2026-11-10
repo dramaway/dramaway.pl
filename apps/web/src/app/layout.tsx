@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { UmamiAnalytics } from "@/components/umami-analytics";
 import { brandMetadata } from "@/lib/brand";
 import { getSiteSettings } from "@/lib/sanity/fetch";
 import { siteIndexingEnabled, siteOrigin } from "@/lib/site-url";
@@ -47,7 +48,10 @@ export default function RootLayout({
       lang="pl"
       className={`${museoModerno.variable} ${alexandria.variable}`}
     >
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <UmamiAnalytics />
+        {children}
+      </body>
     </html>
   );
 }

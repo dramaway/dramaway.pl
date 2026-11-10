@@ -47,7 +47,8 @@ Mapa dokumentów projektu. Treść po polsku; nazwy plików ADR i ścieżek kodu
 |------|------|
 | [guides/sanity-roles.md](guides/sanity-roles.md) | Role Sanity przy przekazaniu (org vs projekt, Editor vs Admin) |
 | [guides/cutover.md](guides/cutover.md) | Przekazanie kont (skrzynka, GitHub, Netlify, Sanity/NGO) i dzień domeny |
-| [guides/cutover-foundation.md](guides/cutover-foundation.md) | Mail i checklista RODO / analityki dla Fundacji przed cutoverem |
+| [guides/cutover-foundation.md](guides/cutover-foundation.md) | Mail i checklista RODO / analityki dla Fundacji przed cutoverem. Decyzja: Umami Cloud Hobby, region UE |
+| [guides/polityka-prywatnosci-analityka-szkic.md](guides/polityka-prywatnosci-analityka-szkic.md) | Szkic akapitu o statystykach. Do zatwierdzenia przez Fundację, nie publikować w Sanity |
 | [guides/dependencies.md](guides/dependencies.md) | Aktualizacja deps: catalog pnpm, Dependabot, skrypty |
 
 ## Redakcja
@@ -64,6 +65,7 @@ Instrukcja dla osób uzupełniających treść. Część zrzutów jest już w te
 | [redakcja/menu.md](redakcja/menu.md) | Menu witryny i skróty po lewej w Studio |
 | [redakcja/tekst.md](redakcja/tekst.md) | Termin, wcięcie, Roles, kolumny, Button, Wykaz twórców, film |
 | [redakcja/czytelnia-i-fundacja.md](redakcja/czytelnia-i-fundacja.md) | Spis Czytelni oraz O fundacji i Kontakt |
+| [redakcja/statystyki.md](redakcja/statystyki.md) | Studio → Statystyki: co widać i że blokery reklam zaniżają liczby |
 
 ## Źródło konceptu
 

@@ -5,9 +5,11 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-10 — `www.fundacja.dramaway.pl` dostaje 301 na apex w middleware. `X-Robots-Tag` nie jest już na sztywno w `netlify.toml`. |
-| **Gałąź / HEAD** | `fix/www-redirect-and-indexing` |
-| **Zmiana bieżąca** | 2026-11-10 — przekierowanie www oraz `noindex` tylko gdy `NEXT_PUBLIC_SITE_INDEX` nie jest `true`. W premierę dochodzi sama ta flaga. |
+| **Ostatnia aktualizacja** | 2026-11-10 — statystyki Umami Cloud (Hobby, region UE) na `feat/umami-analytics`. Skrypt i zakładka Studio są w kodzie, wyłączone bez zmiennych. ID i link udostępniania nie wchodzą do repo. Z `main` doszło przekierowanie `www` na apex. |
+| **Gałąź / HEAD** | `feat/umami-analytics` |
+| **Zmiana bieżąca** | 2026-11-10 — Umami za flagą `NEXT_PUBLIC_UMAMI_WEBSITE_ID`. Studio: narzędzie Statystyki, gdy jest `SANITY_STUDIO_UMAMI_SHARE_URL`. Szkic akapitu polityki czeka na Fundację. |
+| **Poprzednia zmiana** | 2026-11-10 — `www.fundacja.dramaway.pl` dostaje 301 na apex w middleware. `X-Robots-Tag` nie jest już na sztywno w `netlify.toml`. |
+| **Poprzednia zmiana** | 2026-11-09 — zajawka: ruch publiczny ląduje na `/`, podgląd przez `?podglad=` i ciasteczko. Indeksowanie dopiero po zdjęciu zajawki. |
 | **Poprzednia zmiana** | 2026-11-07 — H3 w tekstach Portable Text mają jawny styl MuseoModerno SemiBold 18 px, kolor `#282828` i zapis bez wersalików. |
 | **Poprzednia zmiana** | 2026-11-04 — Dodano pole dodatkowej treści projektu po blokach „Teksty przed listą edycji”; tytuły bloków są Alexandrią, a CTA w MuseoModerno z dłuższą kreską. |
 | **Wcześniejsza zmiana** | 2026-11-04 — Ramka całej treści pojawia się tylko przy fokusie klawiatury; fokus CTA na dotyku nie obrysowuje kafelka. |
@@ -28,6 +30,8 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | **Owner Sanity** | Organizacja na `admin@dramaway.pl`, plan NGO. `admin@dramaway.pl` = project Admin; redakcja = Editor |
 
 ---
+
+Aktualizacja 2026-11-10: statystyki to Umami Cloud Hobby, region UE, konto `admin@dramaway.pl`, DPA na https://umami.is/dpa. Skrypt w layoutcie jest wyłączony bez `NEXT_PUBLIC_UMAMI_WEBSITE_ID` (liczy tylko `fundacja.dramaway.pl`) i wysyła na `https://gateway.umami.is/api/send`. CSP: origin skryptu w `script-src`, gateway w `connect-src`, chyba że ustawione jest `NEXT_PUBLIC_UMAMI_HOST_URL`. Studio ma zakładkę Statystyki, gdy sekret `SANITY_STUDIO_UMAMI_SHARE_URL` jest ustawiony poza repo. Szkic akapitu polityki nie idzie do Sanity: [guides/polityka-prywatnosci-analityka-szkic.md](guides/polityka-prywatnosci-analityka-szkic.md). Wtyczka `sanity-plugin-umami-analytics-tool` odpada (Sanity ^3).
 
 Aktualizacja 2026-11-10: middleware odpowiada 301 z `www.fundacja.dramaway.pl` na apex (ta sama ścieżka i zapytanie, także `?podglad=` i `?wersja=`), przed bramką zajawki i także po premierze. Netlify tego nie przekierowuje — apex jest domeną główną, www aliasem. `X-Robots-Tag: noindex, nofollow` zniknął z `netlify.toml`. Ustawia go `headers()` w `next.config.ts`, tylko gdy `siteIndexingEnabled()` zwraca false, więc po `NEXT_PUBLIC_SITE_INDEX=true` i przebudowie nagłówek schodzi. `NEXT_PUBLIC_SITE_URL` jest już apexem; ustawia się je w dniu domeny, nie w premierę.
 
