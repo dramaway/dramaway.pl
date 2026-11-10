@@ -86,10 +86,10 @@ Sekretu nie wpisuj tutaj. Wartość jest w Bitwardenie. Do podglądu potrzebne s
 1. Merge na `main`. Zmienne jeszcze puste.
 2. Przed DNS, kontekst Production: ustaw `COVER_MODE=on` i `COVER_SECRET`, potem przebudowa. Obie zmienne muszą mieć zakres „All scopes” (albo co najmniej Builds oraz Functions/Runtime): bramka czyta je w czasie działania, nie tylko przy budowaniu. Production to dziś `dramaway.netlify.app`, więc od tej chwili zajawkę widzi tam każdy, także klient. Link `?podglad=` plus sekret z Bitwardena trzeba przekazać w tym momencie. Wystarczy raz na przeglądarkę (ciasteczko na 30 dni).
 3. Sprawdzenie na `dramaway.netlify.app`: `/` to zajawka i pasek zostaje `/`. Inna ścieżka, także `/zajawka` i stary adres Drupala, wraca na `/` (302). Link podglądu otwiera pełną stronę pod jej adresem. Pusty `?podglad` albo zła wartość kasuje ciasteczko i wraca na zajawkę. Okno prywatne po wizycie redaktora nadal dostaje zajawkę, nie HTML pełnej strony.
-4. DNS na `fundacja.dramaway.pl`, TLS. `NEXT_PUBLIC_SITE_INDEX` zostaje wyłączone. Domena główna to apex, bez `www`.
-5. Premiera: usuń `COVER_MODE` i `COVER_SECRET`, przebudowa, dopiero potem `NEXT_PUBLIC_SITE_INDEX=true` i `NEXT_PUBLIC_SITE_URL=https://fundacja.dramaway.pl`. Sekret był w linku, historii przeglądarki i logach Netlify. Po premierze go nie używaj ponownie i wyjmij z Netlify.
+4. DNS na `fundacja.dramaway.pl`, TLS. `NEXT_PUBLIC_SITE_INDEX` zostaje wyłączone. Domena główna to apex, `www` jest aliasem. Przekierowanie `www` → apex (301, ta sama ścieżka i zapytanie) robi middleware, nie Netlify.
+5. Premiera: usuń `COVER_MODE` i `COVER_SECRET`, przebudowa, dopiero potem `NEXT_PUBLIC_SITE_INDEX=true`. `NEXT_PUBLIC_SITE_URL` ustawiasz w dniu domeny (Faza C), nie w dniu premiery. Sekret był w linku, historii przeglądarki i logach Netlify. Po premierze go nie używaj ponownie i wyjmij z Netlify.
 
-`COVER_MODE=on` kieruje ruch publiczny na `/`. Inne ścieżki HTML dostają 302. Przechodzą `/_next`, `/api` (w tym webhook) i każda ścieżka z rozszerzeniem pliku. Nagłówki cache ustawia middleware, nie `next.config.ts`.
+`COVER_MODE=on` kieruje ruch publiczny na `/`. Inne ścieżki HTML dostają 302. Przechodzą `/_next`, `/api` (w tym webhook) i każda ścieżka z rozszerzeniem pliku. Nagłówki cache ustawia middleware, nie `next.config.ts`. Przekierowanie www działa przed tą bramką, niezależnie od `COVER_MODE`, i zostaje po premierze. Netlify nie dokłada własnej reguły: apex jest domeną główną, www aliasem.
 
 ## Faza C — dzień domeny
 
@@ -99,6 +99,7 @@ Do tego dnia `dramaway.netlify.app` zostaje noindex.
 
 - [ ] `fundacja.dramaway.pl` na Netlify, TLS. Zajawka z sekcji wyżej jest już włączona.
 - [ ] Env: `NEXT_PUBLIC_SITE_URL=https://fundacja.dramaway.pl`. `NEXT_PUBLIC_SITE_INDEX` zostaje wyłączone, dopóki zajawka wisi.
+- [ ] Apex zostaje domeną główną, `www` aliasem. Przekierowanie na apex robi middleware, nie reguła w Netlify.
 - [ ] Wgrać `_redirects` z mapy 301.
 - [ ] CORS Studio: origin produkcji w Sanity Manage.
 - [ ] Smoke, Search Console.

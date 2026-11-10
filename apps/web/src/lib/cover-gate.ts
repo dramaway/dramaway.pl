@@ -17,6 +17,32 @@ export const COVER_REWRITE_HEADER = "x-dw-cover";
 
 export const PREVIEW_MAX_AGE = 60 * 60 * 24 * 30;
 
+/** Alias that Netlify serves as its own copy of the apex. */
+const CANONICAL_WWW_HOST = "www.fundacja.dramaway.pl";
+
+const CANONICAL_APEX_HOST = "fundacja.dramaway.pl";
+
+/**
+ * `www.fundacja.dramaway.pl` is a Netlify alias, not a redirect, so the
+ * preview cookie would otherwise live on a second host. Every other host
+ * stays put: the apex, `*.netlify.app` (including deploy previews) and localhost.
+ * ACME challenges are left alone; Netlify answers them before this runs.
+ */
+export function canonicalHostRedirect(url: URL): URL | null {
+  if (url.hostname !== CANONICAL_WWW_HOST) return null;
+  if (
+    url.pathname === "/.well-known/acme-challenge" ||
+    url.pathname.startsWith("/.well-known/acme-challenge/")
+  ) {
+    return null;
+  }
+  const target = new URL(url.href);
+  target.protocol = "https:";
+  target.hostname = CANONICAL_APEX_HOST;
+  target.port = "";
+  return target;
+}
+
 const NO_STORE_HEADERS = {
   "Cache-Control": "private, no-store",
   "Netlify-CDN-Cache-Control": "no-store",

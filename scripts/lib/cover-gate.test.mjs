@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
+  canonicalHostRedirect,
   decideCover,
   secretsMatch,
 } from "../../apps/web/src/lib/cover-gate.ts";
@@ -18,6 +19,49 @@ function decide(overrides) {
     internalCover: overrides.internalCover ?? false,
   });
 }
+
+test("www redirects to the apex and keeps the path and query", () => {
+  const target = canonicalHostRedirect(
+    new URL(
+      "http://www.fundacja.dramaway.pl/projekty?podglad=sekret&wersja=2",
+    ),
+  );
+  assert.ok(target);
+  assert.equal(
+    target.href,
+    "https://fundacja.dramaway.pl/projekty?podglad=sekret&wersja=2",
+  );
+  assert.equal(
+    canonicalHostRedirect(
+      new URL("https://WWW.Fundacja.dramaway.pl/?podglad=&wersja=1"),
+    )?.href,
+    "https://fundacja.dramaway.pl/?podglad=&wersja=1",
+  );
+});
+
+test("the apex, netlify.app and localhost are not redirected", () => {
+  for (const href of [
+    "https://fundacja.dramaway.pl/",
+    "https://fundacja.dramaway.pl/projekty?podglad=sekret&wersja=3",
+    "https://dramaway.netlify.app/",
+    "https://deploy-preview-12--dramaway.netlify.app/projekty?wersja=1",
+    "http://localhost:3000/",
+    "http://localhost:3000/projekty?podglad=sekret",
+  ]) {
+    assert.equal(canonicalHostRedirect(new URL(href)), null);
+  }
+});
+
+test("the ACME challenge on www is not redirected", () => {
+  assert.equal(
+    canonicalHostRedirect(
+      new URL(
+        "http://www.fundacja.dramaway.pl/.well-known/acme-challenge/token",
+      ),
+    ),
+    null,
+  );
+});
 
 test("the gate stays open when cover mode is off", () => {
   assert.deepEqual(

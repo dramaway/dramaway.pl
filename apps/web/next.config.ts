@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 import path from "path";
 import { contentSecurityPolicy } from "./src/lib/content-security-policy";
+import { siteIndexingEnabled } from "./src/lib/site-url";
 
 /**
  * CSP limits what the *page* may load (scripts, images, iframes).
@@ -34,19 +35,21 @@ const PermissionsPolicy = [
   'picture-in-picture=(self "https://www.youtube-nocookie.com")',
 ].join(", ");
 
-const indexing = process.env.NEXT_PUBLIC_SITE_INDEX === "true";
-
-const securityHeaders = [
-  {
-    key: "X-Robots-Tag",
-    value: indexing ? "index, follow" : "noindex, nofollow",
-  },
+const securityHeaders: { key: string; value: string }[] = [
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "X-Frame-Options", value: "DENY" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   { key: "Permissions-Policy", value: PermissionsPolicy },
   { key: "Content-Security-Policy", value: ContentSecurityPolicy },
 ];
+
+// headers() covers every HTML and file response Next serves, and the flag is fixed at build with the metadata.
+if (!siteIndexingEnabled()) {
+  securityHeaders.unshift({
+    key: "X-Robots-Tag",
+    value: "noindex, nofollow",
+  });
+}
 
 const nextConfig: NextConfig = {
   turbopack: {
