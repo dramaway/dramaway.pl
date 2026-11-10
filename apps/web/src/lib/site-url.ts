@@ -1,10 +1,9 @@
 /**
  * Public origin and whether search engines may index.
  *
- * Preview (dramaway.netlify.app) stays noindex until cutover.
- * At domain launch set both in Netlify:
- *   NEXT_PUBLIC_SITE_URL=https://fundacja.dramaway.pl
- *   NEXT_PUBLIC_SITE_INDEX=true
+ * NEXT_PUBLIC_SITE_URL is the apex and is set on domain day.
+ * Indexing stays off while the cover is up. At premiere set
+ * NEXT_PUBLIC_SITE_INDEX=true and rebuild. Any other value stays noindex.
  */
 
 const FALLBACK_ORIGIN = "https://dramaway.netlify.app";
