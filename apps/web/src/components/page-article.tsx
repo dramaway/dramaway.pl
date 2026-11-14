@@ -16,7 +16,10 @@ export function PageArticle({
   parent?: Crumb;
   bodyId?: string;
 }) {
-  const textOnlyHero = /^(sprawozdania|statut|deklaracja-dostepnosci)(?:-|$)/i.test(page.slug);
+  const textOnlyHero =
+    /^(sprawozdania|statut|deklaracja-dostepnosci|polityka-prywatnosci|regulamin)(?:-|$)/i.test(
+      page.slug,
+    );
   const content = (
     <>
       <PageHero

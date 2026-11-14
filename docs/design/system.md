@@ -159,6 +159,8 @@ Hero homepage jest w `siteSettings` (heading, lead, CTA, lista `heroImages`). Re
 | Slider hero (kropki, zatrzymaj / wznów) | `subpage-copy.hero.slider` | chrome; jedno zdjęcie nie pokazuje sterowania |
 | Historia — rozwiń / zwiń całość | `subpage-copy.history` | chrome nad osią; scroll sam rozwija 2–3 lata przy środku, przycisk otwiera wszystkie i wyłącza ten efekt |
 | Newsletter w stopce | `subpage-copy.newsletter` (lead, placeholder, „zapisz”, komunikaty) | chrome z ramki. Włącznik to `siteSettings.newsletter.enabled`; brak wartości = formularz widoczny |
+| Formularz kontaktu — informacja o danych | `subpage-copy.contact.form.notice` i link do `/polityka-prywatnosci` | checkbox potwierdza, że osoba widzi informację. Podstawą odpowiedzi nie jest zgoda |
+| Stopka — polityka, regulamin, deklaracja | linki w kodzie stopki, pod adresem | dokumenty `page` w Sanity; nie wpis w `footer.links` |
 
 ## Stan na teraz
 

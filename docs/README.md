@@ -48,7 +48,7 @@ Mapa dokumentów projektu. Treść po polsku; nazwy plików ADR i ścieżek kodu
 | [guides/sanity-roles.md](guides/sanity-roles.md) | Role Sanity przy przekazaniu (org vs projekt, Editor vs Admin) |
 | [guides/cutover.md](guides/cutover.md) | Przekazanie kont (skrzynka, GitHub, Netlify, Sanity/NGO) i dzień domeny |
 | [guides/cutover-foundation.md](guides/cutover-foundation.md) | Mail i checklista RODO / analityki dla Fundacji przed cutoverem. Decyzja: Umami Cloud Hobby, region UE |
-| [guides/polityka-prywatnosci-analityka-szkic.md](guides/polityka-prywatnosci-analityka-szkic.md) | Szkic akapitu o statystykach. Do zatwierdzenia przez Fundację, nie publikować w Sanity |
+| [guides/polityka-prywatnosci-analityka-szkic.md](guides/polityka-prywatnosci-analityka-szkic.md) | Notatka o akapicie statystyk. Tekst jest w opublikowanej polityce; prawnik może go jeszcze poprawić |
 | [guides/dependencies.md](guides/dependencies.md) | Aktualizacja deps: catalog pnpm, Dependabot, skrypty |
 
 ## Redakcja

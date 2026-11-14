@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import {
   CONTACT_FORM_ENDPOINT,
@@ -27,7 +28,7 @@ export function ContactForm() {
         subject: String(data.get("subject") ?? ""),
         message: String(data.get("message") ?? ""),
         website: String(data.get("website") ?? ""),
-        consent: data.get("consent") === "on" ? "tak" : "",
+        privacyNotice: data.get("privacyNotice") === "on" ? "tak" : "",
       });
       const response = await fetch(CONTACT_FORM_ENDPOINT, {
         method: "POST",
@@ -113,10 +114,22 @@ export function ContactForm() {
           autoComplete="off"
         />
       </div>
-      <label className="contact-consent">
-        <input type="checkbox" name="consent" required disabled={disabled} />
-        <span>{copy.consent}</span>
-      </label>
+      <div className="contact-consent">
+        <input
+          id="contact-privacy-notice"
+          name="privacyNotice"
+          type="checkbox"
+          required
+          disabled={disabled}
+        />
+        <label htmlFor="contact-privacy-notice">
+          {copy.notice}{" "}
+          <Link href="/polityka-prywatnosci" className="contact-consent-link">
+            {copy.noticeLink}
+          </Link>
+          .
+        </label>
+      </div>
       <div className="contact-actions">
         <button type="submit" className="cta" disabled={disabled}>
           <span>{disabled ? copy.pending : copy.submit}</span>

@@ -1,6 +1,8 @@
-# Szkic akapitu o statystykach — do zatwierdzenia przez Fundację
+# Akapit o statystykach — opublikowany
 
-To nie jest tekst na stronie. Nie wklejać go do Sanity i nie publikować, dopóki Fundacja (albo jej prawnik) nie zatwierdzi brzmienia. Po zatwierdzeniu trafia do polityki prywatności, którą redakcja publikuje w Studio.
+Fundacja 2026-11-14 przeczytała politykę prywatności (akapit o Umami jest w tym dokumencie) i napisała, że tekst jest jasny i można go publikować. Porada prawna dla NGO ma przyjść później; ewentualne poprawki wchodzą wtedy w Studio, w dokumencie „Polityka prywatności”.
+
+Poniższy akapit został włączony w opublikowaną politykę. Został tu jako notatka, skąd wzięło się brzmienie. Nie wklejać go drugi raz.
 
 Sprawdzić przed publikacją z [umową powierzenia Umami](https://umami.is/dpa): DPA opisuje też przejściowe dane sieciowe (bezpieczeństwo, routing, przybliżona lokalizacja). Zdanie o braku zapisu adresu IP jest zgodne z opisem narzędzia i z tym zleceniem; Fundacja potwierdza je przed publikacją. Plan Hobby przechowuje statystyki 6 miesięcy. Podmiot z DPA to Umami Software, Inc.
 

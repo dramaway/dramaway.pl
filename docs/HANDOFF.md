@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-10 — statystyki Umami Cloud (Hobby, region UE) na `feat/umami-analytics`. Skrypt i zakładka Studio są w kodzie, wyłączone bez zmiennych. ID i link udostępniania nie wchodzą do repo. Z `main` doszło przekierowanie `www` na apex. |
-| **Gałąź / HEAD** | `feat/umami-analytics` |
-| **Zmiana bieżąca** | 2026-11-10 — Umami za flagą `NEXT_PUBLIC_UMAMI_WEBSITE_ID`. Studio: narzędzie Statystyki, gdy jest `SANITY_STUDIO_UMAMI_SHARE_URL`. Szkic akapitu polityki czeka na Fundację. |
+| **Ostatnia aktualizacja** | 2026-11-14 — w polityce prywatności pocztę trzyma SEOHOST Sp. z o.o., nie pośrednik z faktury. |
+| **Gałąź / HEAD** | `cursor/publish-legal-pages-7a9c` |
+| **Zmiana bieżąca** | 2026-11-14 — polityka wskazuje SEOHOST Sp. z o.o. (Poznań) jako dostawcę poczty. ARTIGA zostaje poza tekstem: faktura nie oznacza, że ta firma przechowuje wiadomości. |
 | **Poprzednia zmiana** | 2026-11-10 — `www.fundacja.dramaway.pl` dostaje 301 na apex w middleware. `X-Robots-Tag` nie jest już na sztywno w `netlify.toml`. |
 | **Poprzednia zmiana** | 2026-11-09 — zajawka: ruch publiczny ląduje na `/`, podgląd przez `?podglad=` i ciasteczko. Indeksowanie dopiero po zdjęciu zajawki. |
 | **Poprzednia zmiana** | 2026-11-07 — H3 w tekstach Portable Text mają jawny styl MuseoModerno SemiBold 18 px, kolor `#282828` i zapis bez wersalików. |
@@ -31,7 +31,11 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 ---
 
-Aktualizacja 2026-11-10: statystyki to Umami Cloud Hobby, region UE, konto `admin@dramaway.pl`, DPA na https://umami.is/dpa. Skrypt w layoutcie jest wyłączony bez `NEXT_PUBLIC_UMAMI_WEBSITE_ID` (liczy tylko `fundacja.dramaway.pl`) i wysyła na `https://gateway.umami.is/api/send`. CSP: origin skryptu w `script-src`, gateway w `connect-src`, chyba że ustawione jest `NEXT_PUBLIC_UMAMI_HOST_URL`. Studio ma zakładkę Statystyki, gdy sekret `SANITY_STUDIO_UMAMI_SHARE_URL` jest ustawiony poza repo. Szkic akapitu polityki nie idzie do Sanity: [guides/polityka-prywatnosci-analityka-szkic.md](guides/polityka-prywatnosci-analityka-szkic.md). Wtyczka `sanity-plugin-umami-analytics-tool` odpada (Sanity ^3).
+Aktualizacja 2026-11-14: poczta w polityce to SEOHOST Sp. z o.o. (Poznań). Rekordy DNS domeny i nazwa zwrotna serwera poczty wskazują SEOHOST, a KRS tej spółki nie zawiera ARTIGI Piotra Tymoszuka. ARTIGA jest na fakturze Fundacji i zostaje poza polityką, dopóki nie wiadomo, czy ma dostęp do skrzynek.
+
+Aktualizacja 2026-11-14: Fundacja zaakceptowała politykę prywatności i regulamin do publikacji przed poradą prawną. Oba dokumenty `page` są opublikowane (`/polityka-prywatnosci`, `/regulamin`). W polityce: retencja formularza 12 miesięcy, brak inspektora ochrony danych, wizerunek warsztatów ze zgody, spektakle tylko gdy osoba jest elementem większej całości. Stopka linkuje te strony i deklarację dostępności. Formularz kontaktu nie zbiera zgody z art. 6 ust. 1 lit. a — checkbox potwierdza informację i linkuje politykę. Prawnik poprawia teksty później w Studio.
+
+Aktualizacja 2026-11-10: statystyki to Umami Cloud Hobby, region UE, konto `admin@dramaway.pl`, DPA na https://umami.is/dpa. Skrypt w layoutcie jest wyłączony bez `NEXT_PUBLIC_UMAMI_WEBSITE_ID` (liczy tylko `fundacja.dramaway.pl`) i wysyła na `https://gateway.umami.is/api/send`. CSP: origin skryptu w `script-src`, gateway w `connect-src`, chyba że ustawione jest `NEXT_PUBLIC_UMAMI_HOST_URL`. Studio ma zakładkę Statystyki, gdy sekret `SANITY_STUDIO_UMAMI_SHARE_URL` jest ustawiony poza repo. Akapit o statystykach jest w opublikowanej polityce; notatka: [guides/polityka-prywatnosci-analityka-szkic.md](guides/polityka-prywatnosci-analityka-szkic.md). Wtyczka `sanity-plugin-umami-analytics-tool` odpada (Sanity ^3).
 
 Aktualizacja 2026-11-10: middleware odpowiada 301 z `www.fundacja.dramaway.pl` na apex (ta sama ścieżka i zapytanie, także `?podglad=` i `?wersja=`), przed bramką zajawki i także po premierze. Netlify tego nie przekierowuje — apex jest domeną główną, www aliasem. `X-Robots-Tag: noindex, nofollow` zniknął z `netlify.toml`. Ustawia go `headers()` w `next.config.ts`, tylko gdy `siteIndexingEnabled()` zwraca false, więc po `NEXT_PUBLIC_SITE_INDEX=true` i przebudowie nagłówek schodzi. `NEXT_PUBLIC_SITE_URL` jest już apexem; ustawia się je w dniu domeny, nie w premierę.
 
@@ -128,7 +132,7 @@ Przy przejęciu `fundacja.dramaway.pl`:
 - **Zajawka** — przed DNS włącz `COVER_MODE` i `COVER_SECRET` na produkcji i sprawdź `dramaway.netlify.app`. Indeksowanie zostaje wyłączone. Kolejność: [guides/cutover.md](guides/cutover.md).
 - **301** — stary Drupal (`node/N`, aliasy `teatrzaangazowany…`, landingi edycji) → trasy z `apps/web/src/lib/routes.ts` / [ia.md](concept/ia.md). Mapa = osobne zadanie; nie zgadywać z palca. Sitemap indeksujący = ta sama fala (teraz `robots.ts` celowo nie wskazuje sitemapy).
 - **Zdjąć noindex** — dopiero po usunięciu `COVER_MODE` w dniu premiery. Netlify env `NEXT_PUBLIC_SITE_INDEX=true` (przebudowa). `NEXT_PUBLIC_SITE_URL` zostaje adresem z dnia domeny. Potem `robots.ts` wpuszcza crawlera i wskazuje sitemap; `layout.tsx` ustawia `index, follow`, a `next.config.ts` przestaje wysyłać `X-Robots-Tag`. Świadomie, nie „przy okazji”.
-- **Legal / RODO** — [guides/cutover-foundation.md](guides/cutover-foundation.md) (mail + checklista). Treści pisze Fundacja.
+- **Legal / RODO** — polityka i regulamin opublikowane 2026-11-14. Dalsze poprawki prawnika: te same dokumenty w Studio. Szczegóły: [guides/cutover-foundation.md](guides/cutover-foundation.md).
 - **Treść** — `news-syrena` → draft; puste hero/cover.
 - **Studio** — `pnpm --filter studio run deploy` po ostatniej zmianie schematu.
 - **Netlify env** — `NEXT_PUBLIC_SANITY_*`, `SANITY_REVALIDATE_SECRET` (webhook, nie write). **Brak** `SANITY_API_WRITE_TOKEN`. CORS Studio: origin produkcji w Sanity Manage.

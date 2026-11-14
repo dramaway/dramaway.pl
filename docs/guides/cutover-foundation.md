@@ -49,18 +49,29 @@ Pozdrawiamy
 
 ---
 
+## Odpowiedź Fundacji (2026-11-14)
+
+Fundacja przeczytała politykę i regulamin w Studio i napisała, że oba teksty są jasne. Porada prawna dla NGO ma zająć około miesiąca. Decyzja: publikujemy teraz, prawnik wnosi poprawki później, w tych samych dokumentach.
+
+Ustalenia wpisane w opublikowaną politykę:
+
+- Wiadomości z formularza: 12 miesięcy od zakończenia korespondencji.
+- Poczta: SEOHOST Sp. z o.o. (Poznań). DNS domeny wskazuje `ns1.seohost.pl` i `ns2.seohost.pl`, a skrzynka `mail.dramaway.pl` ma nazwę zwrotną w `seohost-mail.eu`. Dostawcą tej usługi w impressum jest SEOHOST Sp. z o.o. (KRS 0000939910, wspólnicy Szymon Perski i Damian Jerzy Manikowski). ARTIGA Piotr Tymoszuk nie jest w tym KRS. Faktura Fundacji na ARTIGĘ opisuje pośrednika rozliczeniowego, nie firmę, która trzyma wiadomości. Polityka wymienia SEOHOST. ARTIGĘ dopisać dopiero, gdy okaże się, że ma dostęp do skrzynek.
+- Inspektora ochrony danych nie ma. Przy tej skali działalności obowiązek wyznaczenia go nie powstaje.
+- Wizerunek: zgody zbierane od uczestników warsztatów (przy osobach niepełnoletnich — rodzic albo opiekun). Spektakle: brak osobnych zgód; polityka opisuje wyjątek dla osoby będącej elementem większej całości (art. 81 ust. 2 pkt 2 prawa autorskiego), nie zwolnienie dla każdego zdjęcia ze spektaklu. Zespół: publikacja imienia, zdjęcia i służbowego maila na podstawie prawnie uzasadnionego interesu. Osobnego potwierdzenia umów z zespołem nie było.
+
 ## Checklista (Fundacja odhacza)
 
-- [ ] Administrator danych (Fundacja, adres, e-mail kontaktowy) — zdanie do polityki
-- [ ] Tekst polityki prywatności (kto, po co maile/zdjęcia, Sanity, Netlify, YouTube)
-- [ ] Zatwierdzenie szkicu akapitu o statystykach: [polityka-prywatnosci-analityka-szkic.md](polityka-prywatnosci-analityka-szkic.md). Do tego czasu nie publikować go w Sanity
-- [ ] Potwierdzenie, że osoby na stronie Kontakt / O fundacji zgadzają się na publikację maili i zdjęć
+- [x] Administrator danych (Fundacja, adres, e-mail kontaktowy) — zdanie w opublikowanej polityce
+- [x] Tekst polityki prywatności (kto, po co maile/zdjęcia, Sanity, Netlify, YouTube). Prawnik może go jeszcze poprawić
+- [x] Akapit o statystykach jest w opublikowanej polityce. Notatka: [polityka-prywatnosci-analityka-szkic.md](polityka-prywatnosci-analityka-szkic.md)
+- [x] Publikacja wizerunku — w zakresie z odpowiedzi z 2026-11-14 (warsztaty tak, spektakle jako wydarzenie zbiorowe, zespół przez interes Fundacji)
 - [x] Decyzja: Umami Cloud, plan Hobby, region danych UE, konto `admin@dramaway.pl`
 - [ ] ID witryny z panelu Umami wklejone w Netlify (nie do repozytorium, nie hasło)
 
 ## Checklista (my, po ich odpowiedzi)
 
-- [ ] Podstrona polityki w Sanity + link w stopce — dopiero po zatwierdzeniu tekstu przez Fundację
+- [x] Podstrona polityki i regulaminu w Sanity + linki w stopce. Opublikowane 2026-11-14
 - [x] Skrypt Umami i dopisek w CSP (`script-src` / `connect-src`). Skrypt milczy, dopóki w Netlify nie ma `NEXT_PUBLIC_UMAMI_WEBSITE_ID`
 - [ ] Mapa 301 starych URL (osobne zadanie, tuż przed przełączeniem DNS)
 - [ ] Netlify: `NEXT_PUBLIC_SITE_URL=https://fundacja.dramaway.pl` i `NEXT_PUBLIC_SITE_INDEX=true`
