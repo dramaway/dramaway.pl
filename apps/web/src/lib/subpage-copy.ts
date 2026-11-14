@@ -55,8 +55,9 @@ export const SUBPAGE = {
       email: "E-mail",
       subject: "Temat (opcjonalnie)",
       message: "Wiadomość",
-      consent:
-        "Wyrażam zgodę na przetwarzanie moich danych osobowych w celu udzielenia odpowiedzi na wiadomość.",
+      notice:
+        "Wiem, że Fundacja użyje tych danych, żeby odpowiedzieć na wiadomość. Szczegóły są w",
+      noticeLink: "polityce prywatności",
       submit: "wyślij wiadomość",
       pending: "Wysyłam…",
       success: "Dziękujemy! Wiadomość została wysłana. Odezwiemy się wkrótce.",

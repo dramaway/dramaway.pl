@@ -43,14 +43,28 @@ export function SiteFooter({
             {address ? (
               <p className="footer-address text-body">{address}</p>
             ) : null}
-            <Link
-              href="/deklaracja-dostepnosci"
-              className="footer-contact-link footer-accessibility-link"
-            >
-              <span className="footer-contact-text">
-                Deklaracja dostępności
-              </span>
-            </Link>
+            <nav className="footer-legal" aria-label="Informacje prawne">
+              <Link
+                href="/polityka-prywatnosci"
+                className="footer-contact-link footer-legal-link"
+              >
+                <span className="footer-contact-text">Polityka prywatności</span>
+              </Link>
+              <Link
+                href="/regulamin"
+                className="footer-contact-link footer-legal-link"
+              >
+                <span className="footer-contact-text">Regulamin</span>
+              </Link>
+              <Link
+                href="/deklaracja-dostepnosci"
+                className="footer-contact-link footer-accessibility-link"
+              >
+                <span className="footer-contact-text">
+                  Deklaracja dostępności
+                </span>
+              </Link>
+            </nav>
           </div>
         </div>
         <FooterLinks links={links} />
