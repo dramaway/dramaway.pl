@@ -114,7 +114,7 @@ export const SUBPAGE = {
     },
     file: {
       title: "Ten plik był na naszej poprzedniej stronie",
-      lead: "Pod tym adresem już go nie ma. Wiele naszych publikacji i\u00a0materiałów znajdziesz w\u00a0Czytelni. Jeśli potrzebujesz konkretnego dokumentu, napisz do nas: biuro@dramaway.pl – chętnie go prześlemy.",
+      lead: "Pod tym adresem już go nie ma. Wiele naszych publikacji i\u00a0materiałów znajdziesz w\u00a0Czytelni. Jeśli potrzebujesz konkretnego dokumentu, napisz do nas: biuro@dramaway.pl\u00a0– chętnie go prześlemy.",
       cta: "Przejdź do Czytelni",
     },
     unknown: {

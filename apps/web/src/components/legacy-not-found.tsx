@@ -1,22 +1,25 @@
+"use client";
+
 import Link from "next/link";
-import { headers } from "next/headers";
-import { PageHero } from "@/components/sections/page-hero";
+import { Suspense, useEffect, useState } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 import { Section } from "@/components/layout/section";
 import { CtaLink } from "@/components/visual/cta-link";
 import { LegacyNotFoundEvent } from "@/components/legacy-not-found-event";
-import { getLegacySuggestionSources } from "@/lib/sanity/fetch";
 import {
-  LEGACY_PATH_HEADER,
-  classifyLegacyMiss,
   normalizeLegacyPath,
-  type LegacyPathEntry,
   type LegacySuggestion,
 } from "@/lib/legacy-redirects";
-import { mainNav, personPath, publicationPath } from "@/lib/routes";
+import { personPath, projectPath, publicationPath } from "@/lib/routes";
 import { SUBPAGE } from "@/lib/subpage-copy";
-import pathsJson from "@/data/legacy-paths.json";
 
-const legacyPaths = pathsJson as LegacyPathEntry[];
+type Kind = "A" | "B" | "C";
+
+type Miss = {
+  path: string;
+  kind: Kind;
+  suggestions: LegacySuggestion[];
+};
 
 function mailtoText(text: string) {
   const email = SUBPAGE.notFound.email;
@@ -26,7 +29,7 @@ function mailtoText(text: string) {
     index === 0
       ? [part]
       : [
-          <a key={email + index} href={`mailto:${email}`}>
+          <a key={`${email}-${index}`} href={`mailto:${email}`}>
             {email}
           </a>,
           part,
@@ -35,38 +38,38 @@ function mailtoText(text: string) {
 }
 
 function sectionLinks() {
-  const czytelnia = publicationPath("x").replace(/\/x$/, "");
-  const team = personPath("x").replace(/\/x$/, "");
-  const nav = mainNav().filter((item) => item.href !== "/");
-  const projects = nav.find((item) => item.href === "/projekty");
-  const rest = nav.filter((item) => item.href !== "/projekty");
   return [
-    projects,
-    { href: czytelnia, label: "Czytelnia" },
-    { href: team, label: "Zespół" },
-    ...rest,
-  ].filter((item): item is { href: string; label: string } => Boolean(item));
+    { href: projectPath("x").replace(/\/x$/, ""), label: "Projekty" },
+    { href: publicationPath("x").replace(/\/x$/, ""), label: "Czytelnia" },
+    { href: personPath("x").replace(/\/x$/, ""), label: "Zespół" },
+    { href: "/fundacja", label: "O fundacji" },
+    { href: "/kontakt", label: "Kontakt" },
+  ];
 }
 
 function SuggestionList({
   items,
-  withCta,
+  single,
 }: {
   items: LegacySuggestion[];
-  withCta: boolean;
+  single: boolean;
 }) {
   return (
     <ul className="stack-narrow mt-8" data-testid="not-found-suggestions">
       {items.map((item) => (
         <li key={item.href}>
-          <Link href={item.href} className="text-listing-title">
-            {item.title}
-          </Link>
+          {single ? (
+            <p className="text-listing-title">{item.title}</p>
+          ) : (
+            <Link href={item.href} className="text-listing-title">
+              {item.title}
+            </Link>
+          )}
           <p className="mt-2 text-small">{item.typeLabel}</p>
           {item.excerpt ? (
             <p className="mt-2 line-clamp-2 text-small">{item.excerpt}</p>
           ) : null}
-          {withCta ? (
+          {single ? (
             <CtaLink href={item.href} className="mt-6">
               {SUBPAGE.notFound.moved.cta}
             </CtaLink>
@@ -77,59 +80,59 @@ function SuggestionList({
   );
 }
 
-export async function LegacyNotFound() {
-  const headerList = await headers();
-  const requested = headerList.get(LEGACY_PATH_HEADER) || "";
-  const [pathname, search = ""] = requested.split("?");
-  const path = normalizeLegacyPath(pathname || "/", search ? `?${search}` : "");
-  const entry = legacyPaths.find((row) => row.path === path) ?? null;
-  const documents = await getLegacySuggestionSources();
-  const miss = classifyLegacyMiss({ path, entry, documents });
+function NotFoundBody({
+  path,
+  kind,
+  suggestions,
+  track,
+}: {
+  path: string;
+  kind: Kind;
+  suggestions: LegacySuggestion[];
+  track: boolean;
+}) {
   const copy = SUBPAGE.notFound;
   const title =
-    miss.kind === "A"
-      ? copy.moved.title
-      : miss.kind === "B"
-        ? copy.file.title
-        : copy.unknown.title;
-  const lead =
-    miss.kind === "A"
-      ? copy.moved.lead
-      : miss.kind === "B"
-        ? copy.file.lead
-        : copy.unknown.lead;
+    kind === "A" ? copy.moved.title : kind === "B" ? copy.file.title : copy.unknown.title;
+  const lead = kind === "A" ? copy.moved.lead : kind === "C" ? copy.unknown.lead : null;
   const czytelnia = publicationPath("x").replace(/\/x$/, "");
+  const single = kind === "A" && suggestions.length === 1;
 
   return (
-    <div className="page-article-text-only" data-testid="not-found" data-kind={miss.kind}>
-      <LegacyNotFoundEvent kind={miss.kind} path={path} />
-      <PageHero layout="stack" title={title} lead={lead} slides={[]} showBand={false} />
+    <div className="page-article-text-only" data-testid="not-found" data-kind={kind}>
+      {track ? <LegacyNotFoundEvent kind={kind} path={path} /> : null}
+      <section className="hero hero-stack" data-text-align="left">
+        <div className="hero-heading">
+          <h1 className="hero-title font-display text-display font-black">{title}</h1>
+        </div>
+        <div className="hero-copy">
+          {lead ? <p className="text-lead">{lead}</p> : null}
+          {kind === "B" ? <p className="text-lead">{mailtoText(copy.file.lead)}</p> : null}
+        </div>
+      </section>
       <Section>
         <div className="stack-narrow">
-          {miss.kind === "A" ? (
+          {kind === "A" && suggestions.length > 0 ? (
             <>
               <h2 className="font-display text-h3 font-black normal-case">
-                {miss.suggestions.length === 1
-                  ? copy.moved.oneHeading
-                  : copy.moved.manyHeading}
+                {single ? copy.moved.oneHeading : copy.moved.manyHeading}
               </h2>
-              <SuggestionList
-                items={miss.suggestions}
-                withCta={miss.suggestions.length === 1}
-              />
+              <SuggestionList items={suggestions} single={single} />
               <p className="not-found-note mt-8 text-small">{mailtoText(copy.moved.note)}</p>
             </>
           ) : null}
-          {miss.kind === "B" ? (
-            <CtaLink href={czytelnia}>{copy.file.cta}</CtaLink>
-          ) : null}
-          {miss.kind === "C" && miss.suggestions.length > 0 ? (
+          {kind === "B" ? <CtaLink href={czytelnia}>{copy.file.cta}</CtaLink> : null}
+          {kind === "C" && suggestions.length > 0 ? (
             <>
-              <h2 className="font-display text-h3 font-black normal-case">{copy.unknown.suggestions}</h2>
-              <SuggestionList items={miss.suggestions} withCta={false} />
+              <h2 className="font-display text-h3 font-black normal-case">
+                {copy.unknown.suggestions}
+              </h2>
+              <SuggestionList items={suggestions} single={false} />
             </>
           ) : null}
-          <h2 className="mt-12 font-display text-h3 font-black normal-case">{copy.sectionsHeading}</h2>
+          <h2 className="mt-12 font-display text-h3 font-black normal-case">
+            {copy.sectionsHeading}
+          </h2>
           <ul className="mt-6">
             {sectionLinks().map((item) => (
               <li key={item.href} className="mt-3">
@@ -146,4 +149,61 @@ export async function LegacyNotFound() {
       </Section>
     </div>
   );
+}
+
+function SearchQuery({ onQuery }: { onQuery: (q: string) => void }) {
+  const q = useSearchParams().get("q") ?? "";
+  useEffect(() => {
+    onQuery(q);
+  }, [q, onQuery]);
+  return null;
+}
+
+function LegacyNotFoundClient() {
+  const pathname = usePathname() || "/";
+  const [query, setQuery] = useState("");
+  const [miss, setMiss] = useState<Miss | null>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams({ path: pathname });
+    if (query) params.set("q", query);
+    const controller = new AbortController();
+    fetch(`/api/legacy-404?${params}`, { signal: controller.signal })
+      .then((response) => (response.ok ? response.json() : null))
+      .then((body: Miss | null) => {
+        if (!body || (body.kind !== "A" && body.kind !== "B" && body.kind !== "C")) return;
+        setMiss({
+          path: typeof body.path === "string" ? body.path : pathname,
+          kind: body.kind,
+          suggestions: Array.isArray(body.suggestions) ? body.suggestions : [],
+        });
+      })
+      .catch(() => {
+        // Keep the static C shell when the classifier is unreachable.
+      });
+    return () => controller.abort();
+  }, [pathname, query]);
+
+  const path = miss?.path || normalizeLegacyPath(pathname, query ? `?q=${query}` : "");
+  const kind = miss?.kind ?? "C";
+  const suggestions = miss?.suggestions ?? [];
+
+  return (
+    <>
+      <Suspense fallback={null}>
+        <SearchQuery onQuery={setQuery} />
+      </Suspense>
+      <NotFoundBody
+        path={path}
+        kind={kind}
+        suggestions={suggestions}
+        track={miss !== null}
+      />
+    </>
+  );
+}
+
+/** Static 404 shell. Variant C until the classifier answers, so the layout does not jump to a spinner. */
+export function LegacyNotFound() {
+  return <LegacyNotFoundClient />;
 }
