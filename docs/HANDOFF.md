@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-14 — opublikowana polityka prywatności i regulamin. Fundacja zaakceptowała teksty do startu; prawnik ma je przejrzeć później. |
+| **Ostatnia aktualizacja** | 2026-11-14 — w polityce prywatności pocztę trzyma SEOHOST Sp. z o.o., nie pośrednik z faktury. |
 | **Gałąź / HEAD** | `cursor/publish-legal-pages-7a9c` |
-| **Zmiana bieżąca** | 2026-11-14 — dokumenty `page-polityka-prywatnosci` i `page-regulamin` opublikowane w Sanity. Stopka linkuje oba oraz deklarację dostępności. Formularz kontaktu potwierdza informację o danych i prowadzi do polityki. |
+| **Zmiana bieżąca** | 2026-11-14 — polityka wskazuje SEOHOST Sp. z o.o. (Poznań) jako dostawcę poczty. ARTIGA zostaje poza tekstem: faktura nie oznacza, że ta firma przechowuje wiadomości. |
 | **Poprzednia zmiana** | 2026-11-10 — `www.fundacja.dramaway.pl` dostaje 301 na apex w middleware. `X-Robots-Tag` nie jest już na sztywno w `netlify.toml`. |
 | **Poprzednia zmiana** | 2026-11-09 — zajawka: ruch publiczny ląduje na `/`, podgląd przez `?podglad=` i ciasteczko. Indeksowanie dopiero po zdjęciu zajawki. |
 | **Poprzednia zmiana** | 2026-11-07 — H3 w tekstach Portable Text mają jawny styl MuseoModerno SemiBold 18 px, kolor `#282828` i zapis bez wersalików. |
@@ -31,7 +31,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 ---
 
-Aktualizacja 2026-11-14: Fundacja zaakceptowała politykę prywatności i regulamin do publikacji przed poradą prawną. Oba dokumenty `page` są opublikowane (`/polityka-prywatnosci`, `/regulamin`). W polityce: retencja formularza 12 miesięcy, brak inspektora ochrony danych, poczta i hosting jako ARTIGA Piotr Tymoszuk (Michałowice, usługa SEOHOST), wizerunek warsztatów ze zgody, spektakle tylko gdy osoba jest elementem większej całości. Stopka linkuje te strony i deklarację dostępności. Formularz kontaktu nie zbiera zgody z art. 6 ust. 1 lit. a — checkbox potwierdza informację i linkuje politykę. Prawnik poprawia teksty później w Studio.
+Aktualizacja 2026-11-14: poczta w polityce to SEOHOST Sp. z o.o. (Poznań). Rekordy DNS domeny i nazwa zwrotna serwera poczty wskazują SEOHOST, a KRS tej spółki nie zawiera ARTIGI Piotra Tymoszuka. ARTIGA jest na fakturze Fundacji i zostaje poza polityką, dopóki nie wiadomo, czy ma dostęp do skrzynek.
+
+Aktualizacja 2026-11-14: Fundacja zaakceptowała politykę prywatności i regulamin do publikacji przed poradą prawną. Oba dokumenty `page` są opublikowane (`/polityka-prywatnosci`, `/regulamin`). W polityce: retencja formularza 12 miesięcy, brak inspektora ochrony danych, wizerunek warsztatów ze zgody, spektakle tylko gdy osoba jest elementem większej całości. Stopka linkuje te strony i deklarację dostępności. Formularz kontaktu nie zbiera zgody z art. 6 ust. 1 lit. a — checkbox potwierdza informację i linkuje politykę. Prawnik poprawia teksty później w Studio.
 
 Aktualizacja 2026-11-10: statystyki to Umami Cloud Hobby, region UE, konto `admin@dramaway.pl`, DPA na https://umami.is/dpa. Skrypt w layoutcie jest wyłączony bez `NEXT_PUBLIC_UMAMI_WEBSITE_ID` (liczy tylko `fundacja.dramaway.pl`) i wysyła na `https://gateway.umami.is/api/send`. CSP: origin skryptu w `script-src`, gateway w `connect-src`, chyba że ustawione jest `NEXT_PUBLIC_UMAMI_HOST_URL`. Studio ma zakładkę Statystyki, gdy sekret `SANITY_STUDIO_UMAMI_SHARE_URL` jest ustawiony poza repo. Akapit o statystykach jest w opublikowanej polityce; notatka: [guides/polityka-prywatnosci-analityka-szkic.md](guides/polityka-prywatnosci-analityka-szkic.md). Wtyczka `sanity-plugin-umami-analytics-tool` odpada (Sanity ^3).
 

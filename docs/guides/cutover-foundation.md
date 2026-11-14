@@ -56,7 +56,7 @@ Fundacja przeczytała politykę i regulamin w Studio i napisała, że oba teksty
 Ustalenia wpisane w opublikowaną politykę:
 
 - Wiadomości z formularza: 12 miesięcy od zakończenia korespondencji.
-- Poczta i hosting z faktury: ARTIGA Piotr Tymoszuk, jednoosobowa działalność gospodarcza, Michałowice. W polityce jest nazwa i miejscowość, bez ulicy. Ulica z faktury nie jest wymagana przy wskazaniu odbiorcy (art. 13 ust. 1 lit. e RODO). To nie jest spółka. Marka usługi to SEOHOST; operatorem marki jest SEOHOST Sp. z o.o. w Poznaniu, ale faktura Fundacji jest na ARTIGĘ, więc w polityce stroną jest ARTIGA.
+- Poczta: SEOHOST Sp. z o.o. (Poznań). DNS domeny wskazuje `ns1.seohost.pl` i `ns2.seohost.pl`, a skrzynka `mail.dramaway.pl` ma nazwę zwrotną w `seohost-mail.eu`. Dostawcą tej usługi w impressum jest SEOHOST Sp. z o.o. (KRS 0000939910, wspólnicy Szymon Perski i Damian Jerzy Manikowski). ARTIGA Piotr Tymoszuk nie jest w tym KRS. Faktura Fundacji na ARTIGĘ opisuje pośrednika rozliczeniowego, nie firmę, która trzyma wiadomości. Polityka wymienia SEOHOST. ARTIGĘ dopisać dopiero, gdy okaże się, że ma dostęp do skrzynek.
 - Inspektora ochrony danych nie ma. Przy tej skali działalności obowiązek wyznaczenia go nie powstaje.
 - Wizerunek: zgody zbierane od uczestników warsztatów (przy osobach niepełnoletnich — rodzic albo opiekun). Spektakle: brak osobnych zgód; polityka opisuje wyjątek dla osoby będącej elementem większej całości (art. 81 ust. 2 pkt 2 prawa autorskiego), nie zwolnienie dla każdego zdjęcia ze spektaklu. Zespół: publikacja imienia, zdjęcia i służbowego maila na podstawie prawnie uzasadnionego interesu. Osobnego potwierdzenia umów z zespołem nie było.
 
