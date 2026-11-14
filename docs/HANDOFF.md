@@ -5,9 +5,9 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 
 | | |
 |--|--|
-| **Ostatnia aktualizacja** | 2026-11-14 — w polityce prywatności pocztę trzyma SEOHOST Sp. z o.o., nie pośrednik z faktury. |
-| **Gałąź / HEAD** | `cursor/publish-legal-pages-7a9c` |
-| **Zmiana bieżąca** | 2026-11-14 — polityka wskazuje SEOHOST Sp. z o.o. (Poznań) jako dostawcę poczty. ARTIGA zostaje poza tekstem: faktura nie oznacza, że ta firma przechowuje wiadomości. |
+| **Ostatnia aktualizacja** | 2026-11-14 — pewne stare `/node/{nid}` dostają 301 w middleware. Reszta ląduje na stronie „nie znaleziono” z podpowiedziami. |
+| **Gałąź / HEAD** | `feat/legacy-redirects` |
+| **Zmiana bieżąca** | 2026-11-14 — mapa 301 z numerów nodów migracji (30 adresów). Aliasy i pliki czekają na zrzut SQL. Strona 404 ma trzy warianty i zdarzenie Umami `legacy-404`. |
 | **Poprzednia zmiana** | 2026-11-10 — `www.fundacja.dramaway.pl` dostaje 301 na apex w middleware. `X-Robots-Tag` nie jest już na sztywno w `netlify.toml`. |
 | **Poprzednia zmiana** | 2026-11-09 — zajawka: ruch publiczny ląduje na `/`, podgląd przez `?podglad=` i ciasteczko. Indeksowanie dopiero po zdjęciu zajawki. |
 | **Poprzednia zmiana** | 2026-11-07 — H3 w tekstach Portable Text mają jawny styl MuseoModerno SemiBold 18 px, kolor `#282828` i zapis bez wersalików. |
@@ -30,6 +30,8 @@ Start: ten plik + `CLAUDE.md` + [migration/fundacja-status.md](migration/fundacj
 | **Owner Sanity** | Organizacja na `admin@dramaway.pl`, plan NGO. `admin@dramaway.pl` = project Admin; redakcja = Editor |
 
 ---
+
+Aktualizacja 2026-11-14: middleware robi 301 ze starych `/node/{nid}` na aktualną trasę, przed bramką zajawki. Bez zrzutu `drama_mfund` w mapie nie ma aliasów ani plików. Niepewne adresy zostają 404 z podpowiedziami (A/B/C) i zdarzeniem Umami `legacy-404`. Jeden link w treści nadal wskazuje stary PDF; Sanity nie było ruszane. Raport: [migration/redirects-report.md](migration/redirects-report.md).
 
 Aktualizacja 2026-11-14: poczta w polityce to SEOHOST Sp. z o.o. (Poznań). Rekordy DNS domeny i nazwa zwrotna serwera poczty wskazują SEOHOST, a KRS tej spółki nie zawiera ARTIGI Piotra Tymoszuka. ARTIGA jest na fakturze Fundacji i zostaje poza polityką, dopóki nie wiadomo, czy ma dostęp do skrzynek.
 
@@ -117,7 +119,7 @@ Treść fundacji jest w Sanity. Publiczne URL-e z IA działają. **Strona głów
 - Studio deploy: `.github/workflows/studio-deploy.yml` po merge'u zmian w `apps/studio/**` do `main` (sekret repo `SANITY_AUTH_TOKEN`, token „Deploy Studio”).
 - Zmiany w kodzie po przekazaniu: Copilot coding agent (zgłoszenie „Zmiana na stronie” → PR → Netlify Deploy Preview → merge). Środowisko agenta: `.github/workflows/copilot-setup-steps.yml`, zasady: `AGENTS.md`, instrukcja: [redakcja/zmiany-w-kodzie.md](redakcja/zmiany-w-kodzie.md).
 - Zależności: catalog w `pnpm-workspace.yaml`, lockfile, Dependabot (tydzień), skrypty `pnpm deps:outdated` / `pnpm deps:update`. Kanwa: [guides/dependencies.md](guides/dependencies.md). Next 16 / TS 6+ / ESLint 10 zostają poza automatami.
-- Mapa 301 na premierę = **osobne zadanie tuż przed DNS**, nie teraz. Kolejność przekazania kont i dnia domeny: [guides/cutover.md](guides/cutover.md). Mail/checklista dla Fundacji (RODO + analityka): [guides/cutover-foundation.md](guides/cutover-foundation.md). Manual redakcji: [redakcja/README.md](redakcja/README.md).
+- Mapa 301: pewne `/node/{nid}` są w middleware. Aliasy i pliki dopisuje `pnpm build:redirects` ze zrzutu. Reszta to strona 404. Pierwszy tydzień po premierze: [guides/cutover.md](guides/cutover.md). Mail/checklista dla Fundacji (RODO + analityka): [guides/cutover-foundation.md](guides/cutover-foundation.md). Manual redakcji: [redakcja/README.md](redakcja/README.md).
 
 Pełny kanon migracji: [fundacja-status.md](migration/fundacja-status.md). Role i przekazanie: [guides/sanity-roles.md](guides/sanity-roles.md).
 
@@ -130,13 +132,13 @@ Preview (`dramaway.netlify.app`) **zostaje noindex** (`metadata.robots`, `X-Robo
 Przy przejęciu `fundacja.dramaway.pl`:
 
 - **Zajawka** — przed DNS włącz `COVER_MODE` i `COVER_SECRET` na produkcji i sprawdź `dramaway.netlify.app`. Indeksowanie zostaje wyłączone. Kolejność: [guides/cutover.md](guides/cutover.md).
-- **301** — stary Drupal (`node/N`, aliasy `teatrzaangazowany…`, landingi edycji) → trasy z `apps/web/src/lib/routes.ts` / [ia.md](concept/ia.md). Mapa = osobne zadanie; nie zgadywać z palca. Sitemap indeksujący = ta sama fala (teraz `robots.ts` celowo nie wskazuje sitemapy).
+- **301** — pewne `/node/{nid}` idą w middleware na trasy z `apps/web/src/lib/routes.ts`. Aliasy i pliki dopisać ze zrzutu, nie zgadywać po tytule. Sitemap indeksujący zostaje wyłączony, dopóki `NEXT_PUBLIC_SITE_INDEX` nie jest `true`.
 - **Zdjąć noindex** — dopiero po usunięciu `COVER_MODE` w dniu premiery. Netlify env `NEXT_PUBLIC_SITE_INDEX=true` (przebudowa). `NEXT_PUBLIC_SITE_URL` zostaje adresem z dnia domeny. Potem `robots.ts` wpuszcza crawlera i wskazuje sitemap; `layout.tsx` ustawia `index, follow`, a `next.config.ts` przestaje wysyłać `X-Robots-Tag`. Świadomie, nie „przy okazji”.
 - **Legal / RODO** — polityka i regulamin opublikowane 2026-11-14. Dalsze poprawki prawnika: te same dokumenty w Studio. Szczegóły: [guides/cutover-foundation.md](guides/cutover-foundation.md).
 - **Treść** — `news-syrena` → draft; puste hero/cover.
 - **Studio** — `pnpm --filter studio run deploy` po ostatniej zmianie schematu.
 - **Netlify env** — `NEXT_PUBLIC_SANITY_*`, `SANITY_REVALIDATE_SECRET` (webhook, nie write). **Brak** `SANITY_API_WRITE_TOKEN`. CORS Studio: origin produkcji w Sanity Manage.
-- **DNS / TLS** + smoke po wgraniu `_redirects`.
+- **DNS / TLS** + smoke. Stare 301 są w middleware, nie w `_redirects`.
 
 Rollback: poprzedni deploy Netlify (Deploys → Publish deploy) + eksport datasetu z dysku Fundacji.
 

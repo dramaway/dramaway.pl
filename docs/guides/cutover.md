@@ -72,7 +72,7 @@ Treści prawnych nie piszemy za Fundację. Gotowy mail i checklista: [cutover-fo
 
 - [x] Podstrona polityki i regulaminu w Sanity oraz linki w stopce. Opublikowane 2026-11-14 po odpowiedzi Fundacji. Prawnik może później poprawić brzmienie w Studio.
 - [x] Skrypt Umami i CSP są w kodzie. Pomiar rusza dopiero ze zmienną w Netlify. Zakładka Studio → Statystyki rusza z linkiem udostępniania poza repozytorium.
-- [ ] Mapa 301, tuż przed DNS: stare `node/N`, aliasy portalu, landingi edycji. Nie zgadywać z palca.
+- [x] Pewne 301 są w middleware, nie w `_redirects`. Dziś to `/node/{nid}` dla dokumentów z numerem w `_id`. Aliasy, łańcuchy i pliki dochodzą po `pnpm build:redirects` na zrzucie `private/dumps/drama_mfund_*.sql`. Reszta starych adresów zostaje na stronie 404. Raport: [redirects-report.md](../migration/redirects-report.md).
 - [ ] `news-syrena` do szkicu.
 
 ## Zajawka przed dniem domeny
@@ -100,9 +100,15 @@ Do tego dnia `dramaway.netlify.app` zostaje noindex.
 - [ ] `fundacja.dramaway.pl` na Netlify, TLS. Zajawka z sekcji wyżej jest już włączona.
 - [ ] Env: `NEXT_PUBLIC_SITE_URL=https://fundacja.dramaway.pl`. `NEXT_PUBLIC_SITE_INDEX` zostaje wyłączone, dopóki zajawka wisi.
 - [ ] Apex zostaje domeną główną, `www` aliasem. Przekierowanie na apex robi middleware, nie reguła w Netlify.
-- [ ] Wgrać `_redirects` z mapy 301.
+- [x] Mapa 301 jest w middleware (`legacy-redirects.json`), nie w pliku `_redirects`.
 - [ ] CORS Studio: origin produkcji w Sanity Manage.
 - [ ] Smoke, Search Console.
 - [ ] Webhook Sanity na docelową domenę.
 
 Rollback: poprzedni deploy Netlify (Deploys → Publish deploy) + eksport datasetu z dysku Fundacji.
+
+## Priorytety po premierze
+
+### Pierwszy tydzień
+
+- [ ] W Umami przejrzeć odsłony strony „nie znaleziono” i zdarzenie `legacy-404` (`kind` A, B albo C oraz `path`). Pewne dopasowania dopisać do mapy (`pnpm build:redirects` tam, gdzie jest zrzut). Reszta zostaje na stronie 404, bez zgadywania po tytule.
