@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
+import { notFoundMetadata } from "@/lib/not-found-metadata";
 import { NewsArticle } from "@/components/news-article";
 import { PageArticle } from "@/components/page-article";
 import {
@@ -38,7 +39,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const page = await getPageByPublicSlug(slug);
   if (page) return { title: page.title };
   const news = await resolveNews(slug);
-  return { title: news?.title ?? "Fundacja Drama Way" };
+  if (news?.title) return { title: news.title };
+  return notFoundMetadata;
 }
 
 async function resolveNews(slug: string) {

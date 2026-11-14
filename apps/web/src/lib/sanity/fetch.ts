@@ -27,6 +27,7 @@ import {
   publicationsListQuery,
   readingMethodsQuery,
   siteSettingsQuery,
+  legacySuggestionQuery,
 } from "./queries";
 import type {
   AboutPage,
@@ -48,6 +49,7 @@ import type {
   SiteSettings,
 } from "./types";
 import { NEWS_SLUG_PREFIX } from "@/lib/routes";
+import { suggestionFromDoc, type LegacySuggestion } from "@/lib/legacy-redirects";
 import { SANITY_CACHE_TAG } from "./cache";
 
 const revalidate = {
@@ -187,4 +189,22 @@ export async function getPublicationSlugs(): Promise<string[]> {
 
 export async function getPublicationRoutes(): Promise<PublicationRoute[]> {
   return sanityClient.fetch(publicationRoutesQuery, {}, revalidate);
+}
+
+export async function getLegacySuggestionSources(): Promise<LegacySuggestion[]> {
+  const rows = await sanityClient.fetch<
+    {
+      _type: string;
+      title: string | null;
+      slug: string | null;
+      excerpt: string | null;
+    }[]
+  >(legacySuggestionQuery, {}, revalidate);
+  const projectSlugs = new Set(
+    rows.filter((row) => row._type === "project" && row.slug).map((row) => row.slug as string),
+  );
+  return rows.flatMap((row) => {
+    const suggestion = suggestionFromDoc(row, projectSlugs);
+    return suggestion ? [suggestion] : [];
+  });
 }

@@ -1,12 +1,15 @@
-import { StatusScreen } from "@/components/status-screen";
-import { SUBPAGE } from "@/lib/subpage-copy";
+import { LegacyNotFound } from "@/components/legacy-not-found";
+import { SiteFrame } from "@/components/site-frame";
+import { notFoundMetadata } from "@/lib/not-found-metadata";
+import { getResolvedSite } from "@/lib/site";
 
-export default function NotFound() {
+export const metadata = notFoundMetadata;
+
+export default async function NotFound() {
+  const site = await getResolvedSite();
   return (
-    <StatusScreen
-      title={SUBPAGE.notFound.title}
-      lead={SUBPAGE.notFound.lead}
-      cta={SUBPAGE.notFound.cta}
-    />
+    <SiteFrame site={site}>
+      <LegacyNotFound />
+    </SiteFrame>
   );
 }

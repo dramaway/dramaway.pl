@@ -4765,6 +4765,10 @@ h3:focus-within:not(.listing-spec-title):not(.portable-heading-display) {
   color: var(--color-ink);
 }
 
+.not-found-note {
+  color: var(--text-secondary);
+}
+
 .page-article-text-only > .hero-stack {
   padding-block-end: 1.5rem;
 }

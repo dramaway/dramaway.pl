@@ -446,3 +446,15 @@ export const readingMethodsQuery = `*[_type == "readingMethod"] | order(order as
 }`;
 
 export const publicationSlugsQuery = `*[_type == "publication" && defined(slug.current)].slug.current`;
+
+/** Published titles and slugs for the not-found suggestions. */
+export const legacySuggestionQuery = `*[
+  _type in ["project", "page", "news", "publication", "person"] &&
+  !(_id in path("drafts.**")) &&
+  defined(slug.current)
+]{
+  _type,
+  "title": coalesce(title, name, ""),
+  "slug": slug.current,
+  "excerpt": coalesce(excerpt, summary, "")
+}`;

@@ -103,9 +103,28 @@ export const SUBPAGE = {
     footerLinks: "Kontakt i media społecznościowe",
   },
   notFound: {
-    title: "Nie znaleziono strony",
-    lead: "Ten adres nie istnieje albo treść została przeniesiona.",
-    cta: "wróć na stronę główną",
+    documentTitle: "Nie znaleziono strony — Fundacja Drama Way",
+    moved: {
+      title: "Ta strona się przeprowadziła",
+      lead: "Ten link prowadzi do naszej poprzedniej strony internetowej. Mamy nową stronę i\u00a0część adresów się zmieniła.",
+      oneHeading: "Wygląda na to, że chodzi\u00a0o:",
+      manyHeading: "Może chodzi o\u00a0jedną z\u00a0tych stron:",
+      cta: "Przejdź do strony",
+      note: "Dopasowaliśmy to automatycznie, więc możemy się mylić. Jeśli to nie to, czego szukasz, zajrzyj do działów poniżej albo napisz do nas: biuro@dramaway.pl.",
+    },
+    file: {
+      title: "Ten plik był na naszej poprzedniej stronie",
+      lead: "Pod tym adresem już go nie ma. Wiele naszych publikacji i\u00a0materiałów znajdziesz w\u00a0Czytelni. Jeśli potrzebujesz konkretnego dokumentu, napisz do nas: biuro@dramaway.pl – chętnie go prześlemy.",
+      cta: "Przejdź do Czytelni",
+    },
+    unknown: {
+      title: "Nie znaleźliśmy tej strony",
+      lead: "Możliwe, że pochodzi z\u00a0naszej poprzedniej strony internetowej, została przeniesiona albo w\u00a0adresie jest literówka.",
+      suggestions: "Może zainteresuje Cię:",
+    },
+    sectionsHeading: "Zajrzyj do działów:",
+    pathLabel: "Szukany adres:",
+    email: "biuro@dramaway.pl",
   },
   error: {
     title: "Coś poszło nie tak",
