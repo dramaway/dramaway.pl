@@ -2,11 +2,13 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
   classifyLegacyMiss,
+  isAllowedLegacyTarget,
   isLegacyFilePath,
   lookupLegacyRedirect,
   normalizeLegacyPath,
   rankLegacySuggestions,
 } from "../../apps/web/src/lib/legacy-redirects.ts";
+import { applyLegacyPolicy } from "./legacy-redirect-build.mjs";
 
 const redirects = {
   "/node/2": "/kontakt",
@@ -29,6 +31,24 @@ test("a real alias keeps its path when q is also present", () => {
   assert.equal(
     normalizeLegacyPath("/kontakt", "?q=node/2"),
     "/kontakt",
+  );
+});
+
+test("an external target is kept only for the Sanity CDN over https", () => {
+  const cdn = "https://cdn.sanity.io/files/tr2qdg9j/production/report.pdf";
+  assert.equal(isAllowedLegacyTarget("/kontakt"), true);
+  assert.equal(isAllowedLegacyTarget(cdn), true);
+  assert.equal(isAllowedLegacyTarget("http://cdn.sanity.io/files/a.pdf"), false);
+  assert.equal(isAllowedLegacyTarget("https://evil.example/a"), false);
+  assert.equal(isAllowedLegacyTarget("https://cdn.sanity.io.evil.example/a"), false);
+  assert.equal(lookupLegacyRedirect("/plik", "", { "/plik": cdn }), cdn);
+  assert.equal(
+    lookupLegacyRedirect("/plik", "", { "/plik": "https://evil.example/a.pdf" }),
+    null,
+  );
+  assert.equal(
+    lookupLegacyRedirect("/plik", "", { "/plik": "http://cdn.sanity.io/files/a.pdf" }),
+    null,
   );
 });
 
@@ -130,6 +150,35 @@ test("a known old path with a match is kind A, otherwise C without guesses", () 
   });
   assert.equal(weak.kind, "C");
   if (weak.kind === "C") assert.deepEqual(weak.suggestions, []);
+});
+
+test("a denylisted chain is not a redirect and an override can replace a target", () => {
+  const result = applyLegacyPolicy(
+    {
+      redirects: {
+        "/zespol/monika-zielinska": "/zespol/inna-osoba",
+        "/1-dla-drama-way": "/harmonia-artgeneracje",
+        "/milosc-w-gorznie": "/harmonia-artgeneracje",
+        "/node/48": "/art-generacje-0",
+      },
+      paths: [],
+    },
+    ["/zespol/monika-zielinska", "/1-dla-drama-way", "/milosc-w-gorznie"],
+    {
+      "/node/35": "/projekty/art-generacje",
+      "/projekty/art-generacje": "/projekty/art-generacje",
+      "/projekty/art-generacje-0": "/projekty/art-generacje",
+      "/evil": "https://evil.example/phish",
+    },
+  );
+  assert.equal(result.redirects["/zespol/monika-zielinska"], undefined);
+  assert.equal(result.redirects["/1-dla-drama-way"], undefined);
+  assert.equal(result.redirects["/milosc-w-gorznie"], undefined);
+  assert.equal(result.redirects["/node/35"], "/projekty/art-generacje");
+  assert.equal(result.redirects["/projekty/art-generacje"], undefined);
+  assert.equal(result.redirects["/projekty/art-generacje-0"], "/projekty/art-generacje");
+  assert.equal(result.redirects["/evil"], undefined);
+  assert.equal(result.redirects["/node/48"], "/art-generacje-0");
 });
 
 test("an old file is kind B and an unknown slug can still suggest", () => {

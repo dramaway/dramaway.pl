@@ -7,12 +7,13 @@
  *   pnpm build:redirects
  */
 
-import { readFileSync, writeFileSync, mkdirSync, readdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync } from "node:fs";
 import { gunzipSync } from "node:zlib";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import {
+  applyLegacyPolicy,
   assembleLegacyMaps,
   collectFileLinks,
   legacyReport,
@@ -23,6 +24,11 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dumpsDir = path.join(root, "private", "dumps");
 const dataDir = path.join(root, "apps", "web", "src", "data");
 const reportPath = path.join(root, "docs", "migration", "redirects-report.md");
+
+function readJson(file, fallback) {
+  if (!existsSync(file)) return fallback;
+  return JSON.parse(readFileSync(file, "utf8"));
+}
 
 function findDump() {
   let names = [];
@@ -131,7 +137,10 @@ async function main() {
     ["page", "news", "person", "project", "publication"].includes(doc._type),
   );
   if (!drupal) drupal = drupalFromSanityNids(routed);
-  const { redirects, paths } = assembleLegacyMaps(drupal, routed, assets);
+  const denylist = readJson(path.join(root, "scripts/legacy-redirects-denylist.json"), []);
+  const overrides = readJson(path.join(root, "scripts/legacy-redirects-overrides.json"), {});
+  const assembled = assembleLegacyMaps(drupal, routed, assets, denylist);
+  const { redirects, paths } = applyLegacyPolicy(assembled, denylist, overrides);
   const fileLinks = collectFileLinks(documents, redirects);
 
   mkdirSync(dataDir, { recursive: true });

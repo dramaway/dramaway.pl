@@ -1,7 +1,10 @@
-import { normalizeLegacyPath } from "../../apps/web/src/lib/legacy-redirects.ts";
+import {
+  isAllowedLegacyTarget,
+  normalizeLegacyPath,
+} from "../../apps/web/src/lib/legacy-redirects.ts";
 import { columnIndex, readInsert, splitSqlRows, tableColumns } from "./sql-inserts.mjs";
 
-const FILE_PREFIXES = ["/sites/fundacja/files/", "/sites/default/files/"];
+const FILE_PREFIXES = ["/sites/fundacja/files/"];
 
 /**
  * Published nodes, aliases, redirect rows and public files from a fundacja dump.
@@ -129,7 +132,7 @@ function resolveChain(start, hops) {
  * A node matches only by nid. A file matches only when one Sanity asset
  * has the same original filename.
  */
-export function assembleLegacyMaps(drupal, documents, assets) {
+export function assembleLegacyMaps(drupal, documents, assets, denylist = []) {
   const projectSlugs = new Set(
     documents.filter((doc) => doc._type === "project" && doc.slug).map((doc) => doc.slug),
   );
@@ -192,13 +195,20 @@ export function assembleLegacyMaps(drupal, documents, assets) {
     hops.set(source, target);
   }
 
+  const denied = new Set(denylist.map((path) => normalizeLegacyPath(path)));
   const redirects = {};
   const paths = [];
   const seenPaths = new Set();
 
-  function addRedirect(rawPath, target) {
+  function addRedirect(rawPath, target, fallback) {
     const path = normalizeLegacyPath(rawPath.startsWith("/") ? rawPath : `/${rawPath}`);
     if (!path || path === "/" || path === target) return;
+    if (denied.has(path) || !isAllowedLegacyTarget(target)) {
+      if (fallback && fallback.type !== "plik") {
+        addPath(path, fallback.title, fallback.type);
+      }
+      return;
+    }
     if (redirects[path] && redirects[path] !== target) return;
     redirects[path] = target;
   }
@@ -217,7 +227,12 @@ export function assembleLegacyMaps(drupal, documents, assets) {
     const sources = [`/node/${node.nid}`];
     if (aliasPath) sources.push(aliasPath);
     if (target) {
-      for (const source of sources) addRedirect(source, target);
+      for (const source of sources) {
+        addRedirect(source, target, {
+          title: node.title,
+          type: pathType(node, aliasPath || source),
+        });
+      }
     } else {
       for (const source of sources) {
         addPath(source, node.title, pathType(node, aliasPath || source));
@@ -235,17 +250,19 @@ export function assembleLegacyMaps(drupal, documents, assets) {
     const node = nid != null ? nodeById.get(nid) : null;
     const target =
       (nid != null ? certainByNid.get(nid) : null) || fileTarget.get(finalPath) || null;
-    if (target) addRedirect(source, target);
-    else if (node) addPath(source, node.title, pathType(node, finalPath));
+    if (target) {
+      addRedirect(
+        source,
+        target,
+        node ? { title: node.title, type: pathType(node, finalPath) } : null,
+      );
+    } else if (node) addPath(source, node.title, pathType(node, finalPath));
   }
 
   for (const file of drupal.files) {
     const urls = uniqueAssetUrls(file, assetsByName);
-    for (const raw of file.paths) {
-      const path = normalizeLegacyPath(raw);
-      if (urls.length === 1) addRedirect(path, urls[0]);
-      else addPath(path, file.filename, "plik");
-    }
+    if (urls.length !== 1 || !isAllowedLegacyTarget(urls[0])) continue;
+    for (const raw of file.paths) addRedirect(raw, urls[0], null);
   }
 
   const redirectEntries = Object.fromEntries(
@@ -255,6 +272,42 @@ export function assembleLegacyMaps(drupal, documents, assets) {
     .filter((row) => !redirectEntries[row.path])
     .sort((a, b) => a.path.localeCompare(b.path, "pl"));
   return { redirects: redirectEntries, paths: leftover };
+}
+
+/**
+ * Denylist paths stay on the 404. Overrides replace a generated target and
+ * are dropped when the destination is not an allowed internal path or the Sanity CDN.
+ * A override whose target is the same path clears a wrong redirect instead of looping.
+ */
+export function applyLegacyPolicy(maps, denylist = [], overrides = {}) {
+  const denied = new Set(denylist.map((path) => normalizeLegacyPath(path)));
+  const redirects = { ...maps.redirects };
+  const paths = maps.paths.map((row) => ({ ...row }));
+
+  for (const [rawPath, rawTarget] of Object.entries(overrides)) {
+    if (typeof rawTarget !== "string" || !isAllowedLegacyTarget(rawTarget)) continue;
+    const path = normalizeLegacyPath(rawPath);
+    if (denied.has(path)) continue;
+    const target = rawTarget.startsWith("/")
+      ? normalizeLegacyPath(rawTarget)
+      : rawTarget;
+    const index = paths.findIndex((row) => row.path === path);
+    if (index >= 0) paths.splice(index, 1);
+    if (!path || path === "/" || path === target) {
+      delete redirects[path];
+      continue;
+    }
+    redirects[path] = target;
+  }
+
+  for (const path of denied) delete redirects[path];
+
+  return {
+    redirects: Object.fromEntries(
+      Object.entries(redirects).sort(([a], [b]) => a.localeCompare(b, "pl")),
+    ),
+    paths: paths.sort((a, b) => a.path.localeCompare(b.path, "pl")),
+  };
 }
 
 function uniqueAssetUrls(file, assetsByName) {

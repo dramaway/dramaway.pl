@@ -1,7 +1,6 @@
 import { knowledgeHubPath, projectPath, publicationPath, personPath, publicPathForPage } from "./routes";
 
-/** Request header carrying the path the visitor asked for, for the 404 page. */
-export const LEGACY_PATH_HEADER = "x-dw-path";
+const SANITY_CDN_HOST = "cdn.sanity.io";
 
 export type LegacyPathType = "strona" | "aktualność" | "projekt" | "plik";
 
@@ -141,6 +140,20 @@ function decodeLegacyPath(value: string): string {
   return current;
 }
 
+/**
+ * Internal paths stay. An absolute target is kept only for the Sanity CDN
+ * over HTTPS. Anything else is dropped so a bad Drupal chain cannot leave the site.
+ */
+export function isAllowedLegacyTarget(target: string): boolean {
+  if (target.startsWith("/") && !target.startsWith("//")) return true;
+  try {
+    const url = new URL(target);
+    return url.protocol === "https:" && url.hostname === SANITY_CDN_HOST;
+  } catch {
+    return false;
+  }
+}
+
 export function lookupLegacyRedirect(
   pathname: string,
   search: string,
@@ -148,7 +161,7 @@ export function lookupLegacyRedirect(
 ): string | null {
   const key = normalizeLegacyPath(pathname, search);
   const target = redirects[key];
-  if (!target || target === key) return null;
+  if (!target || target === key || !isAllowedLegacyTarget(target)) return null;
   return target;
 }
 

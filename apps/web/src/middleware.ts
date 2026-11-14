@@ -11,7 +11,10 @@ import {
   PREVIEW_MAX_AGE,
 } from "@/lib/cover-gate";
 import redirectsJson from "@/data/legacy-redirects.json";
-import { LEGACY_PATH_HEADER, lookupLegacyRedirect } from "@/lib/legacy-redirects";
+import {
+  isAllowedLegacyTarget,
+  lookupLegacyRedirect,
+} from "@/lib/legacy-redirects";
 
 const legacyRedirects = redirectsJson as Record<string, string>;
 
@@ -55,7 +58,10 @@ export function middleware(request: NextRequest) {
     request.nextUrl.search,
     legacyRedirects,
   );
-  if (legacyTarget) return redirectLegacy(request, legacyTarget);
+  if (legacyTarget) {
+    const redirect = redirectLegacy(request, legacyTarget);
+    if (redirect) return redirect;
+  }
 
   const secret = process.env.COVER_SECRET?.trim() ?? "";
   const decision = decideCover({
@@ -109,9 +115,7 @@ export function middleware(request: NextRequest) {
     return response;
   }
 
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set(LEGACY_PATH_HEADER, legacyDisplayPath(request));
-  const response = NextResponse.next({ request: { headers: requestHeaders } });
+  const response = NextResponse.next();
   if (decision.noStore) {
     for (const [key, value] of Object.entries(coverNoStoreHeaders())) {
       response.headers.set(key, value);
@@ -121,6 +125,7 @@ export function middleware(request: NextRequest) {
 }
 
 function redirectLegacy(request: NextRequest, target: string) {
+  if (!isAllowedLegacyTarget(target)) return null;
   if (/^https?:\/\//i.test(target)) return NextResponse.redirect(target, 301);
   const url = new URL((visitorUrls(request)[0] ?? request.nextUrl).href);
   const next = new URL(target, url.origin);
@@ -128,17 +133,6 @@ function redirectLegacy(request: NextRequest, target: string) {
   url.search = next.search;
   url.hash = "";
   return NextResponse.redirect(url, 301);
-}
-
-function legacyDisplayPath(request: NextRequest): string {
-  const pathname = request.nextUrl.pathname;
-  const q = request.nextUrl.searchParams.get("q");
-  const bare = pathname.replace(/\/+$/, "") || "/";
-  const raw =
-    q && (bare === "/" || bare === "/index.php" || bare.endsWith("/index.php"))
-      ? `${bare}?q=${q}`
-      : pathname;
-  return raw.slice(0, 512);
 }
 
 export const config = {
